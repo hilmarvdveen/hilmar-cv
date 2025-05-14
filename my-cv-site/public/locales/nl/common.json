@@ -1,0 +1,13 @@
+{
+  "home": {
+    "name": "Hilmar van der Veen",
+    "role": "Senior Frontend Developer",
+    "summary": "Met meer dan 7 jaar ervaring bouw ik schaalbare en toegankelijke webapplicaties in React, Next.js en Angular. Ik leid teams, begeleid junioren en werk aan design systems en datagedreven architecturen.",
+    "downloadCv": "Download mijn CV (PDF)"
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projecten",
+    "contact": "Contact"
+  }
+}

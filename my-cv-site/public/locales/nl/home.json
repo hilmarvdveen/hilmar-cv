@@ -1,0 +1,60 @@
+{
+    "hero": {
+        "greeting": "Hallo",
+        "title": {
+            "start": "Ik ben",
+            "name": "Hilmar van der Veen",
+            "end": ""
+        },
+        "description": "Ik bouw toegankelijke, schaalbare en toekomstbestendige frontends met React, Angular en Next.js – voor overheden en bedrijven met complexe eisen.",
+        "downloadCv": "Download CV",
+        "contact": "Contact",
+        "imageAlt": "Portret van Hilmar van der Veen",
+        "name": "Hilmar van der Veen"
+    },
+    "usp": {
+        "title": "Waarom met mij werken?",
+        "items": [
+            {
+                "title": "Schaalbare architectuur",
+                "description": "Ik ontwerp modulaire frontends die snel te onderhouden en uit te breiden zijn – met oog voor performance en maintainability."
+            },
+            {
+                "title": "Toegankelijke interfaces",
+                "description": "Altijd WCAG-conform, getest met echte gebruikers en toegankelijk voor iedereen."
+            },
+            {
+                "title": "Teamlead en mentor",
+                "description": "Ik help teams groeien met structuur, code reviews, documentatie en technische begeleiding."
+            }
+        ]
+    },
+    "about": {
+        "title": "Over mij",
+        "intro": "Ik ben Hilmar van der Veen, een senior frontend developer met meer dan 10 jaar ervaring in het bouwen van schaalbare, toegankelijke en toekomstbestendige webapplicaties.",
+        "body": [
+            "Ik heb gewerkt aan complexe projecten voor overheidsinstellingen, loterijen en grote organisaties. Mijn focus ligt op kwaliteit, schaalbaarheid en gebruiksvriendelijkheid.",
+            "Wat mij onderscheidt is mijn vermogen om niet alleen te bouwen, maar ook om te begeleiden. Ik neem eigenaarschap, help teams groeien en ben niet bang om kritisch mee te denken over de beste oplossing – technisch én functioneel.",
+            "Of het nu gaat om het opzetten van een design system, migratie van legacy code of het bouwen van een configuratiegedreven interface: ik lever gestructureerd, getest en gedocumenteerd werk af."
+        ],
+        "cta": "Bekijk mijn projecten"
+    },
+    "tech": {
+        "title": "Technologieën",
+        "frontend": "Frontend",
+        "backend": "Backend & API",
+        "architecture": "Architectuur & Patterns",
+        "devops": "Tooling & DevOps",
+        "testing": "Testing",
+        "databases": "Databases",
+        "platforms": "Platforms & Cloud"
+    },
+    "map": {
+        "workedIn": "Gewerkt in",
+        "legend": {
+            "city": "Stad waar ik heb gewerkt",
+            "highlighted": "Provincie waar ik heb gewerkt",
+            "other": "Overige provincie"
+        }
+    }
+}

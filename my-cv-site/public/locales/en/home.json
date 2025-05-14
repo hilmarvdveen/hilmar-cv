@@ -1,0 +1,60 @@
+{
+    "hero": {
+        "greeting": "Hello",
+        "title": {
+            "start": "I'm",
+            "name": "Hilmar van der Veen",
+            "end": ""
+        },
+        "description": "I build accessible, scalable and future-proof frontends in React, Angular and Next.js – for governments and organizations with complex needs.",
+        "downloadCv": "Download CV",
+        "contact": "Contact",
+        "imageAlt": "Portrait of Hilmar van der Veen",
+        "name": "Hilmar van der Veen"
+    },
+    "usp": {
+        "title": "Why work with me?",
+        "items": [
+            {
+                "title": "Scalable architecture",
+                "description": "I design modular frontends that are easy to maintain and extend – with performance and long-term value in mind."
+            },
+            {
+                "title": "Accessible interfaces",
+                "description": "Always WCAG-compliant and tested with real users to ensure usability for everyone."
+            },
+            {
+                "title": "Team lead & mentor",
+                "description": "I help teams grow with structure, code reviews, documentation and technical coaching."
+            }
+        ]
+    },
+    "about": {
+        "title": "About Me",
+        "intro": "I'm Hilmar van der Veen, a senior frontend developer with over 10 years of experience building scalable, accessible and future-proof web applications.",
+        "body": [
+            "I've worked on complex projects for governments, lottery organizations and large enterprises. My focus is on quality, scalability and user experience.",
+            "What sets me apart is that I don't just build – I lead. I take ownership, help teams grow, and think critically about technical and functional solutions.",
+            "Whether it's setting up a design system, migrating legacy code or building configuration-driven UI tools – I deliver structured, tested and documented results."
+        ],
+        "cta": "See my projects"
+    },
+    "tech": {
+        "title": "Technologieën",
+        "frontend": "Frontend",
+        "backend": "Backend & API",
+        "architecture": "Architectuur & Patterns",
+        "devops": "Tooling & DevOps",
+        "testing": "Testing",
+        "databases": "Databases",
+        "platforms": "Platforms & Cloud"
+    },
+    "map": {
+        "workedIn": "Worked in",
+        "legend": {
+            "city": "City where I worked",
+            "highlighted": "Province I worked in",
+            "other": "Other province"
+        }
+    }
+}
