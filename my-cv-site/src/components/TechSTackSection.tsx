@@ -1,89 +1,141 @@
 import { useTranslation } from "next-i18next";
 import { SectionTitle } from "./SectionTitle";
+import { Tech } from "../../public/data/workHistory";
 
 export const TechStackSection = () => {
-  const { t } = useTranslation("home");
+  const { t: tHome } = useTranslation("home");
+  const { t: tWork } = useTranslation("work"); // if you ever need it
 
   const stackGroups = [
     {
-      label: t("tech.frontend", "Frontend"),
+      label: tHome("tech.frontend", "Frontend"),
       items: [
-        "React",
-        "Next.js",
-        "Angular (2–18)",
-        "Vue.js",
-        "Tailwind CSS",
-        "SCSS / BEM",
-        "Stencil",
-        "RxJS",
-        "Web Components",
-        "Storybook",
+        Tech.HTML5,
+        Tech.CSS3,
+        Tech.SCSS,
+        Tech.BEM,
+        Tech.JavaScript,
+        Tech.TypeScript,
+        Tech.React,
+        Tech.NextJS,
+        Tech.Angular,
+        Tech.AngularMaterial,
+        Tech.Vue,
+        Tech.TailwindCSS,
+        Tech.Stencil,
+        Tech.WebComponents,
+        Tech.RxJS,
+        Tech.Storybook,
+        Tech.Redux,
+        Tech.ReactQuery,
+        Tech.Zustand,
+        Tech.ReactRouter,
+        Tech.ComponentDesign,
+        Tech.SVG,
+        Tech.UIKit,
       ],
     },
     {
-      label: t("tech.backend", "Backend & API"),
+      label: tHome("tech.backend", "Backend & API"),
       items: [
-        "C#",
-        ".NET (Core, 6+)",
-        "ASP.NET MVC",
+        Tech.CSharp,
+        Tech.DotNetCore,
+        Tech.AspNetMVC,
+        Tech.Java8,
         "Node.js",
         "Express",
-        "REST",
+        Tech.REST,
+        Tech.OpenAPI,
+        Tech.JWT,
         "GraphQL",
-        "OpenAPI / Swagger",
-        "CQRS",
-        "MediatR",
+        Tech.API,
+        Tech.CQRS,
+        Tech.MediatorPattern,
+        Tech.MediatR,
+        Tech.NHibernate,
+        Tech.EntityFramework,
+        Tech.AzureAppServices,
       ],
     },
     {
-      label: t("tech.architecture", "Architectuur & Patterns"),
+      label: tHome("tech.architecture", "Architectuur & Patterns"),
       items: [
         "Monorepos (Nx)",
         "Clean Architecture",
         "Domain-Driven Design (DDD)",
-        "CQRS",
+        Tech.CQRS,
         "Event-driven design",
-        "Microservices",
+        Tech.Microservices,
+        Tech.ConfigurationDrivenUI,
+        Tech.DataDrivenUI,
         "SSR / SSG",
       ],
     },
     {
-      label: t("tech.devops", "Tooling & DevOps"),
+      label: tHome("tech.devops", "Tooling & DevOps"),
       items: [
-        "Git",
+        Tech.Git,
+        Tech.Gitlab,
+        Tech.Gitlabs,
         "GitHub Actions",
-        "Azure DevOps",
-        "Docker",
+        "Bitbucket",
+        Tech.AzureDevOps,
         "CI/CD pipelines",
-        "Jenkins",
-        "SonarQube",
-        "ESLint / Prettier",
+        Tech.Jenkins,
+        Tech.Tekton,
+        Tech.ArgoCD,
+        Tech.Docker,
+        Tech.SonarQube,
+        Tech.SPLUNK,
+        Tech.ESLint,
+        Tech.TSLint,
+        Tech.Prettier,
+        Tech.Confluence,
+        Tech.Jira,
+        Tech.SourceTree,
+        Tech.OctopusDeploy,
       ],
     },
     {
-      label: t("tech.testing", "Testing"),
+      label: tHome("tech.testing", "Testing"),
       items: [
-        "Jest",
+        Tech.Jest,
         "React Testing Library",
-        "Playwright",
-        "Cypress",
+        Tech.Playwright,
+        Tech.Cypress,
         "Vitest",
-        "xUnit",
+        Tech.IntegrationTesting,
+        Tech.xUnit,
       ],
     },
     {
-      label: t("tech.databases", "Databases"),
-      items: ["PostgreSQL", "MSSQL", "MySQL", "Cosmos DB", "Neo4j"],
+      label: tHome("tech.databases", "Databases"),
+      items: [
+        "PostgreSQL",
+        Tech.MSSQL,
+        Tech.MySQL,
+        Tech.AzureCosmosDB,
+        Tech.Neo4J,
+        Tech.SQLServer,
+      ],
     },
     {
-      label: t("tech.platforms", "Platforms & Cloud"),
-      items: ["Azure", "Vercel", "Netlify", "Firebase"],
+      label: tHome("tech.platforms", "Platforms & Cloud"),
+      items: [
+        Tech.Azure,
+        Tech.AzureCloud,
+        "Vercel",
+        "Netlify",
+        "Firebase",
+        Tech.AWSLambda,
+        Tech.Kubernetes,
+      ],
     },
   ];
 
   return (
     <section className="py-10 bg-bgLight text-textMain">
-      <SectionTitle title={t("tech.title", "Tech Stack")} />
+      <SectionTitle title={tHome("tech.title", "Tech Stack")} />
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
         {stackGroups.map((group, idx) => (
           <div key={idx}>
@@ -96,7 +148,7 @@ export const TechStackSection = () => {
                   key={i}
                   className="px-3 py-1 border border-gray-300 rounded-full bg-white shadow-sm"
                 >
-                  {item}
+                  {tWork(item)}
                 </li>
               ))}
             </ul>

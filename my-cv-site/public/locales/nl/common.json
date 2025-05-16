@@ -2,12 +2,67 @@
   "home": {
     "name": "Hilmar van der Veen",
     "role": "Senior Frontend Developer",
-    "summary": "Met meer dan 7 jaar ervaring bouw ik schaalbare en toegankelijke webapplicaties in React, Next.js en Angular. Ik leid teams, begeleid junioren en werk aan design systems en datagedreven architecturen.",
-    "downloadCv": "Download mijn CV (PDF)"
+    "summary": "With over 7 years of experience, I build scalable and accessible web applications using React, Next.js and Angular. I lead teams, mentor juniors and work on design systems and data-driven architectures.",
+    "downloadCv": "Download my CV (PDF)"
   },
   "nav": {
     "home": "Home",
-    "projects": "Projecten",
+    "projects": "Projects",
     "contact": "Contact"
+  },
+  "workMode": {
+    "remote": "Remote",
+    "onSite": "On-site",
+    "hybrid": "Hybrid"
+  },
+  "language": {
+    "dutch": "Nederlands",
+    "english": "Engels"
+  },
+  "tech": {
+    "html5": "HTML5",
+    "css3": "CSS3",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "angular": "Angular",
+    "react": "React",
+    "vue": "Vue.js",
+    "webComponents": "Web Components",
+    "stencil": "Stencil",
+    "wcag": "WCAG 2.0",
+    "playwright": "Playwright",
+    "cypress": "Cypress",
+    "rest": "REST",
+    "openapi": "OpenAPI 3.0",
+    "jwt": "JWT",
+    "java8": "Java 8",
+    "maven": "Maven",
+    "gitlabs": "GitLab",
+    "git": "Git",
+    "npm": "NPM",
+    "jenkins": "Jenkins",
+    "tekton": "Tekton",
+    "argocd": "Argo CD",
+    "splunk": "Splunk",
+    "docker": "Docker",
+    "sonarqube": "SonarQube",
+    "eslint": "ESLint",
+    "storybook": "Storybook",
+    "confluence": "Confluence",
+    "jira": "Jira",
+    "mysql": "MySQL",
+    "csharp": "C#",
+    "Neo4J": "Neo4J",
+    "Redux": "Redux",
+    "WPF": "WPF",
+    "MVVM": "MVVM",
+    "WebForms": "WebForms",
+    "API": "API",
+    "Azure": "Azure",
+    "MSSQL": "MSSQL",
+    "TailwindCSS": "TailwindCSS",
+    "NextJS": "NextJS",
+    "RxJS": "RxJS",
+    "BEM": "BEM"
   }
 }

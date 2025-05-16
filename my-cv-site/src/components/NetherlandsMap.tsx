@@ -4,6 +4,30 @@ import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { useTranslation } from "next-i18next";
 import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
+import {
+  BriefcaseIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+} from "@heroicons/react/16/solid";
+import { workHistory, WorkMode } from "../../public/data/workHistory";
+
+// Constants
+const HOME_CITY_NAME = "Zandvoort";
+
+const COLORS = {
+  highlighted: "#0070f3",
+  defaultProvince: "#e5e5e5",
+  cityDot: "#dc2626",
+  cityDotStroke: "#fff",
+  tooltipBg: "white",
+  tooltipText: "black",
+};
+
+const FONT = {
+  family: "system-ui, sans-serif",
+  size: 12,
+  color: "#111",
+};
 
 const highlightedRegions = [
   "Noord-Holland",
@@ -23,7 +47,7 @@ type CityLocation = {
 
 const workCities: CityLocation[] = [
   {
-    name: "Zandvoort",
+    name: HOME_CITY_NAME,
     coordinates: [4.5386, 52.3749],
     companies: ["Home Location"],
   },
@@ -63,174 +87,170 @@ export const NetherlandsMap = () => {
     const svg = d3.select(svgRef.current);
     const tooltip = d3.select(tooltipRef.current);
     const container = containerRef.current;
-    const width = 600;
-    const height = 700;
-
     if (!svgRef.current || !tooltipRef.current || !container) return;
-    svg.selectAll("*").remove(); // clear svg on rerender
+
+    svg.selectAll("*").remove();
+
+    const containerWidth = container.offsetWidth;
+    const aspectRatio = 600 / 700;
+    const mapWidth = containerWidth;
+    const mapHeight = containerWidth / aspectRatio;
 
     const projection = d3
       .geoMercator()
       .center([5.4, 52.2])
-      .scale(8000)
-      .translate([width / 2, height / 2]);
+      .scale(mapWidth * 13) // schaal evenredig met breedte
+      .translate([mapWidth / 2, mapHeight / 2]);
 
     const pathGenerator = d3.geoPath().projection(projection);
 
-    d3.json<ProvinceGeoJSON>("/data/geo-provinces.json").then((geoData) => {
+    const getRelativePosition = (event: MouseEvent) => {
+      const bounds = container.getBoundingClientRect();
+      return {
+        left: event.clientX - bounds.left + 10,
+        top: event.clientY - bounds.top - 20,
+      };
+    };
+
+    const showTooltip = (event: MouseEvent, html: string) => {
+      const { left, top } = getRelativePosition(event);
+      tooltip
+        .style("opacity", "1")
+        .style("left", `${left}px`)
+        .style("top", `${top}px`)
+        .html(html);
+    };
+
+    const hideTooltip = () => {
+      tooltip.style("opacity", "0");
+    };
+
+    const createCompanyTooltip = (
+      city: string,
+      companies: string[],
+      homeCity?: string
+    ) => `
+      <div>
+        <div style="font-weight:600; margin-bottom: 0.25rem;">
+          ${
+            city === homeCity
+              ? t("map.legend.home", "My home location")
+              : t("map.workedIn", "Worked in")
+          } ${city}
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none;">
+          ${companies
+            .map(
+              (c) =>
+                `<li style="padding-left: 1em; text-indent: -1em;">• ${c}</li>`
+            )
+            .join("")}
+        </ul>
+      </div>
+    `;
+
+    const drawMap = async () => {
+      const geoData = await d3.json<ProvinceGeoJSON>(
+        "/data/geo-provinces.json"
+      );
       if (!geoData) return;
 
-      const getFill = (name: string) =>
-        highlightedRegions.includes(name) ? "#0070f3" : "#e5e5e5";
-
-      const getRelativePosition = (event: MouseEvent) => {
-        const bounds = container.getBoundingClientRect();
-        return {
-          left: event.clientX - bounds.left + 10,
-          top: event.clientY - bounds.top - 20,
-        };
-      };
-
-      // 🗺 Provinces
       svg
         .selectAll<SVGPathElement, ProvinceFeature>("path")
         .data(geoData.features)
         .join("path")
         .attr("d", (d) => pathGenerator(d) ?? "")
-        .attr("fill", (d) => getFill(d.properties.statnaam))
+        .attr("fill", (d) =>
+          highlightedRegions.includes(d.properties.statnaam)
+            ? COLORS.highlighted
+            : COLORS.defaultProvince
+        )
         .attr("stroke", "#333")
         .attr("stroke-width", 0.5)
         .on("mouseenter", (event, d) => {
           d3.select(event.currentTarget).attr("fill", "#60a5fa");
-          const { left, top } = getRelativePosition(event);
-          tooltip
-            .style("opacity", "1")
-            .style("left", `${left}px`)
-            .style("top", `${top}px`)
-            .html(`<strong>${d.properties.statnaam}</strong>`);
+          showTooltip(event, `<strong>${d.properties.statnaam}</strong>`);
         })
-        .on("mousemove", (event) => {
-          const { left, top } = getRelativePosition(event);
-          tooltip.style("left", `${left}px`).style("top", `${top}px`);
-        })
+        .on("mousemove", (event, d) =>
+          showTooltip(event, `<strong>${d.properties.statnaam}</strong>`)
+        )
         .on("mouseleave", (event, d) => {
           d3.select(event.currentTarget).attr(
             "fill",
-            getFill(d.properties.statnaam)
+            highlightedRegions.includes(d.properties.statnaam)
+              ? COLORS.highlighted
+              : COLORS.defaultProvince
           );
-          tooltip.style("opacity", "0");
+          hideTooltip();
         });
 
-      // 🏠 Home icon for Zandvoort
-      const home = workCities.find((c) => c.name === "Zandvoort")!;
-      const [x, y] = projection(home.coordinates)!;
-      if (home) {
-        svg
-          .append("foreignObject")
-          .attr("x", x - 10)
-          .attr("y", y - 10)
-          .attr("width", 20)
-          .attr("height", 20)
-          .html(`<icon>🏠</icon>`)
-          .on("mouseenter", (event) => {
-            const { left, top } = getRelativePosition(event);
-            tooltip
-              .style("opacity", "1")
-              .style("left", `${left}px`)
-              .style("top", `${top}px`)
-              .html(
-                `<div>
-                  <div style="font-weight:600; margin-bottom: 0.25rem;">
-                    ${t("map.workedIn", "Worked in")} ${home.name}
-                  </div>
-                  <ul style="margin: 0; padding: 0; list-style: none;">
-                    ${home.companies
-                      .map(
-                        (c) =>
-                          `<li style="padding-left: 1em; text-indent: -1em;">• ${c}</li>`
-                      )
-                      .join("")}
-                  </ul>
-                </div>`
-              );
-          })
-          .on("mousemove", (event) => {
-            const { left, top } = getRelativePosition(event);
-            tooltip.style("left", `${left}px`).style("top", `${top}px`);
-          })
-          .on("mouseleave", () => {
-            tooltip.style("opacity", "0");
-          });
-      }
+      // 🏠 Home
+      const home = workCities.find((c) => c.name === HOME_CITY_NAME)!;
+      const [homeX, homeY] = projection(home.coordinates)!;
+      svg
+        .append("foreignObject")
+        .attr("x", homeX - 10)
+        .attr("y", homeY - 10)
+        .attr("width", 20)
+        .attr("height", 20)
+        .html(
+          `<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 16px;">🏠</div>`
+        )
+        .on("mouseenter", (e) =>
+          showTooltip(
+            e,
+            createCompanyTooltip(home.name, home.companies, HOME_CITY_NAME)
+          )
+        )
+        .on("mousemove", (e) =>
+          showTooltip(
+            e,
+            createCompanyTooltip(home.name, home.companies, HOME_CITY_NAME)
+          )
+        )
+        .on("mouseleave", hideTooltip);
 
-      // 📍 Other cities
+      // 📍 Cities
       svg
         .selectAll("circle")
-        .data(workCities.filter((c) => c.name !== "Zandvoort"))
+        .data(workCities.filter((c) => c.name !== HOME_CITY_NAME))
         .join("circle")
         .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
         .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
         .attr("r", 5)
-        .attr("fill", "#dc2626")
-        .attr("stroke", "#fff")
+        .attr("fill", COLORS.cityDot)
+        .attr("stroke", COLORS.cityDotStroke)
         .attr("stroke-width", 1.5)
-        .on("mouseenter", (event, d) => {
-          const { left, top } = getRelativePosition(event);
-          tooltip
-            .style("opacity", "1")
-            .style("left", `${left}px`)
-            .style("top", `${top}px`)
-            .html(
-              `<div>
-                <div style="font-weight:600; margin-bottom: 0.25rem;">
-                  ${t("map.workedIn", "Worked in")} ${d.name}
-                </div>
-                <ul style="margin: 0; padding: 0; list-style: none;">
-                  ${d.companies
-                    .map(
-                      (c) =>
-                        `<li style="padding-left: 1em; text-indent: -1em;">• ${c}</li>`
-                    )
-                    .join("")}
-                </ul>
-              </div>`
-            );
-        })
-        .on("mousemove", (event) => {
-          const { left, top } = getRelativePosition(event);
-          tooltip.style("left", `${left}px`).style("top", `${top}px`);
-        })
-        .on("mouseleave", () => {
-          tooltip.style("opacity", "0");
-        });
+        .on("mouseenter", (e, d) =>
+          showTooltip(e, createCompanyTooltip(d.name, d.companies))
+        )
+        .on("mousemove", (e, d) =>
+          showTooltip(e, createCompanyTooltip(d.name, d.companies))
+        )
+        .on("mouseleave", hideTooltip);
 
       // 🧭 Legend
-      const legend = svg
-        .append("g")
-        .attr("class", "legend")
-        .attr("transform", `translate(10, 40)`);
-
       const legendItems = [
+        { type: "home", label: t("map.legend.home", "My home location") },
         {
-          type: "home",
-          label: t("map.legend.home", "My home location"),
-        },
-        {
-          color: "#dc2626",
+          color: COLORS.cityDot,
           label: t("map.legend.city", "City where I worked"),
         },
         {
-          color: "#0070f3",
+          color: COLORS.highlighted,
           label: t("map.legend.highlighted", "Province I worked in"),
         },
-        { color: "#e5e5e5", label: t("map.legend.other", "Other province") },
+        {
+          color: COLORS.defaultProvince,
+          label: t("map.legend.other", "Other province"),
+        },
       ];
 
+      const legend = svg.append("g").attr("transform", "translate(10, 40)");
       legendItems.forEach((item, i) => {
         const group = legend
           .append("g")
           .attr("transform", `translate(0, ${i * 24})`);
-
         if (item.type === "home") {
           group
             .append("foreignObject")
@@ -239,9 +259,7 @@ export const NetherlandsMap = () => {
             .attr("width", 16)
             .attr("height", 16)
             .html(
-              `<svg xmlns="http://www.w3.org/2000/svg" fill="#0f172a" viewBox="0 0 24 24">
-                 <path fill-rule="evenodd" d="M2.47 12.53a.75.75...Z" clip-rule="evenodd"/>
-               </svg>`
+              `<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 16px;">🏠</div>`
             );
         } else {
           group
@@ -251,29 +269,30 @@ export const NetherlandsMap = () => {
             .attr("r", 6)
             .attr("fill", item.color!);
         }
-
         group
           .append("text")
           .attr("x", 28)
           .attr("y", 12)
           .attr("dominant-baseline", "middle")
-          .attr("font-size", 12)
-          .style("font-family", "system-ui, sans-serif")
-          .style("fill", "#111")
+          .attr("font-size", FONT.size)
+          .style("font-family", FONT.family)
+          .style("fill", FONT.color)
           .style("shape-rendering", "geometricPrecision")
           .text(item.label);
       });
-    });
+    };
+
+    drawMap();
   }, [i18n.language, t]);
 
   return (
-    <section className="container mx-auto max-w-7xl">
-      <div ref={containerRef} className="relative m-2">
+    <section className="container mx-auto flex flex-col lg:flex-row gap-6 lg:max-w-7xl">
+      <div ref={containerRef} className="relative w-full">
         <svg
           ref={svgRef}
-          width={600}
-          height={700}
-          className="rounded shadow"
+          viewBox="0 0 600 700"
+          preserveAspectRatio="xMidYMid meet"
+          className="w-full md:aspect-[6/7] rounded shadow"
           aria-label="Map of the Netherlands showing provinces and cities where Hilmar worked"
         />
         <div
@@ -288,6 +307,51 @@ export const NetherlandsMap = () => {
           }}
         />
       </div>
+      <div className="w-full  min-w-[300px] p-6 sm:p-8 bg-white rounded-lg shadow-sm">
+        <h2 className="text-xl font-semibold mb-6 text-gray-900">
+          {t("map.companiesWorked")}
+        </h2>
+
+        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {workHistory.map((entry) => (
+            <li
+              key={`${entry.company}-${entry.from}`}
+              className="rounded-xl border border-gray-200 p-4 shadow-sm bg-gray-50 hover:shadow-md transition-shadow"
+            >
+              <p className="font-semibold text-gray-900 text-base">
+                {entry.company}
+              </p>
+
+              <div className="flex flex-col gap-x-3 gap-y-1 mt-2 text-sm text-gray-700">
+                <span className="inline-flex items-center">
+                  <MapPinIcon className="w-4 h-4 mr-1" />
+                  {entry.location}
+                </span>
+
+                <span className="inline-flex items-center">
+                  <BriefcaseIcon className="w-4 h-4 mr-1" />
+                  {formatPeriod(entry.from, entry.to)}
+                </span>
+
+                <span className="inline-flex items-center">
+                  <GlobeAltIcon className="w-4 h-4 mr-1" />
+                  {entry.mode === WorkMode.Remote
+                    ? "Remote"
+                    : entry.mode === WorkMode.OnSite
+                    ? "On-site"
+                    : "Hybrid"}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 };
+
+function formatPeriod(from: string, to: string) {
+  const [fromYear, fromMonth] = from.split("-");
+  const [toYear, toMonth] = to.split("-");
+  return `${fromMonth}/${fromYear} – ${toMonth}/${toYear}`;
+}

@@ -1,14 +1,14 @@
 {
     "hero": {
-        "greeting": "Hello",
+        "greeting": "Looking for a technical partner?",
         "title": {
-            "start": "I'm",
-            "name": "Hilmar van der Veen",
-            "end": ""
+            "first": "From concept to delivery,",
+            "second": "built and delivered by",
+            "name": "Hilmar van der Veen"
         },
-        "description": "I build accessible, scalable and future-proof frontends in React, Angular and Next.js – for governments and organizations with complex needs.",
+        "description": "I help companies and entrepreneurs build scalable websites, smart web apps, and technical integrations. Whether it’s a marketing site or a configuration-driven enterprise frontend: I deliver accessible interfaces, solid architecture, and backend connections that just work.",
         "downloadCv": "Download CV",
-        "contact": "Contact",
+        "contact": "Schedule a call",
         "imageAlt": "Portrait of Hilmar van der Veen",
         "name": "Hilmar van der Veen"
     },
@@ -16,28 +16,34 @@
         "title": "Why work with me?",
         "items": [
             {
-                "title": "Scalable architecture",
-                "description": "I design modular frontends that are easy to maintain and extend – with performance and long-term value in mind."
+                "title": "Project-based delivery",
+                "description": "From scoping to deployment, I take ownership of complete frontend projects — modular, tested, and tailored to your goals."
             },
             {
-                "title": "Accessible interfaces",
-                "description": "Always WCAG-compliant and tested with real users to ensure usability for everyone."
+                "title": "Hands-on expertise",
+                "description": "With over 10 years of experience, I solve real problems — from building design systems to replacing legacy code at scale."
             },
             {
-                "title": "Team lead & mentor",
-                "description": "I help teams grow with structure, code reviews, documentation and technical coaching."
+                "title": "Freelance partner",
+                "description": "Hire me by the hour or per sprint. I plug into your team and deliver structure, mentoring, and clean, maintainable code."
             }
         ]
     },
     "about": {
         "title": "About Me",
-        "intro": "I'm Hilmar van der Veen, a senior frontend developer with over 10 years of experience building scalable, accessible and future-proof web applications.",
-        "body": [
-            "I've worked on complex projects for governments, lottery organizations and large enterprises. My focus is on quality, scalability and user experience.",
-            "What sets me apart is that I don't just build – I lead. I take ownership, help teams grow, and think critically about technical and functional solutions.",
-            "Whether it's setting up a design system, migrating legacy code or building configuration-driven UI tools – I deliver structured, tested and documented results."
+        "intro": "With over 10 years of experience, I help companies and entrepreneurs build accessible, scalable and future-proof digital platforms.",
+        "summary": "I combine technical depth with strategic insight. From UI architecture and static marketing websites to backend integrations and team mentoring — I deliver solutions that work and grow with your organization.",
+        "solutionsTitle": "How I can help you",
+        "solutions": [
+            "Migrate legacy frontends to modern stacks (React, Angular, Next.js)",
+            "Build static or dynamic marketing websites",
+            "Integrate with REST or GraphQL backends (.NET, CQRS, APIs)",
+            "Set up scalable component libraries and design systems",
+            "Deliver accessible, high-performance UIs (WCAG-compliant)",
+            "Mentor frontend teams and clean up existing codebases"
         ],
-        "cta": "See my projects"
+        "cta": "See my projects",
+        "contact": "Schedule a meeting"
     },
     "tech": {
         "title": "Technologieën",
@@ -50,6 +56,7 @@
         "platforms": "Platforms & Cloud"
     },
     "map": {
+        "companiesWorked": "Companies I worked for:",
         "workedIn": "Worked in",
         "legend": {
             "city": "City where I worked",

@@ -1,14 +1,14 @@
 {
     "hero": {
-        "greeting": "Hallo",
+        "greeting": "Op zoek naar een technisch partner?",
         "title": {
-            "start": "Ik ben",
-            "name": "Hilmar van der Veen",
-            "end": ""
+            "first": "Van idee tot resultaat —",
+            "second": "gebouwd en geleverd door",
+            "name": "Hilmar van der Veen"
         },
-        "description": "Ik bouw toegankelijke, schaalbare en toekomstbestendige frontends met React, Angular en Next.js – voor overheden en bedrijven met complexe eisen.",
+        "description": "Ik help bedrijven en ondernemers met schaalbare websites, slimme webapplicaties en technische integraties. Of het nu gaat om een marketingwebsite of een configuratiegestuurde enterprise frontend: ik lever toegankelijke interfaces, een duurzame architectuur én backendkoppelingen die gewoon werken.",
         "downloadCv": "Download CV",
-        "contact": "Contact",
+        "contact": "Plan een kennismaking",
         "imageAlt": "Portret van Hilmar van der Veen",
         "name": "Hilmar van der Veen"
     },
@@ -16,28 +16,34 @@
         "title": "Waarom met mij werken?",
         "items": [
             {
-                "title": "Schaalbare architectuur",
-                "description": "Ik ontwerp modulaire frontends die snel te onderhouden en uit te breiden zijn – met oog voor performance en maintainability."
+                "title": "Projectmatige levering",
+                "description": "Van intake tot oplevering neem ik het volledige frontendproject in handen – modulair opgebouwd, getest en afgestemd op jouw doelen."
             },
             {
-                "title": "Toegankelijke interfaces",
-                "description": "Altijd WCAG-conform, getest met echte gebruikers en toegankelijk voor iedereen."
+                "title": "Praktische expertise",
+                "description": "Met meer dan 10 jaar ervaring los ik echte problemen op – van het opzetten van design systems tot het vervangen van legacy code."
             },
             {
-                "title": "Teamlead en mentor",
-                "description": "Ik help teams groeien met structuur, code reviews, documentatie en technische begeleiding."
+                "title": "Freelance partner",
+                "description": "Beschikbaar per uur of per sprint. Ik versterk jouw team met structuur, coaching en duurzame codekwaliteit."
             }
         ]
     },
     "about": {
         "title": "Over mij",
-        "intro": "Ik ben Hilmar van der Veen, een senior frontend developer met meer dan 10 jaar ervaring in het bouwen van schaalbare, toegankelijke en toekomstbestendige webapplicaties.",
-        "body": [
-            "Ik heb gewerkt aan complexe projecten voor overheidsinstellingen, loterijen en grote organisaties. Mijn focus ligt op kwaliteit, schaalbaarheid en gebruiksvriendelijkheid.",
-            "Wat mij onderscheidt is mijn vermogen om niet alleen te bouwen, maar ook om te begeleiden. Ik neem eigenaarschap, help teams groeien en ben niet bang om kritisch mee te denken over de beste oplossing – technisch én functioneel.",
-            "Of het nu gaat om het opzetten van een design system, migratie van legacy code of het bouwen van een configuratiegedreven interface: ik lever gestructureerd, getest en gedocumenteerd werk af."
+        "intro": "Met meer dan 10 jaar ervaring help ik bedrijven en ondernemers bij het bouwen van toegankelijke, schaalbare en toekomstbestendige digitale platforms.",
+        "summary": "Ik combineer technische diepgang met strategisch inzicht. Van moderne UI-architecturen en statische marketingwebsites tot backend-integraties en teambegeleiding — ik lever oplossingen die werken én meegroeien met jouw organisatie.",
+        "solutionsTitle": "Waar ik jou bij help",
+        "solutions": [
+            "Migratie van legacy frontends naar moderne stacks (React, Angular, Next.js)",
+            "Ontwikkeling van statische of dynamische marketingwebsites",
+            "Koppelingen met REST- of GraphQL-backends (inclusief .NET, CQRS)",
+            "Opzetten van schaalbare component libraries en design systems",
+            "Toegankelijke en performante UI’s (WCAG-compliant)",
+            "Begeleiding van frontend-teams en code-opschoning"
         ],
-        "cta": "Bekijk mijn projecten"
+        "cta": "Bekijk mijn projecten",
+        "contact": "Plan een kennismaking"
     },
     "tech": {
         "title": "Technologieën",
@@ -50,6 +56,7 @@
         "platforms": "Platforms & Cloud"
     },
     "map": {
+        "companiesWorked": "Bedrijven waarin ik heb gewerkt:",
         "workedIn": "Gewerkt in",
         "legend": {
             "city": "Stad waar ik heb gewerkt",

@@ -6,29 +6,70 @@ import Link from "next/link";
 export const AboutSection = () => {
   const { t } = useTranslation("home");
 
-  const paragraphs = t("about.body", { returnObjects: true }) as Array<string>;
+  const bulletPoints = t("about.solutions", {
+    returnObjects: true,
+  }) as string[];
 
   return (
-    <section className="bg-white py-10 text-textMain">
-      <div className="max-w-4xl mx-auto px-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6 text-primary">
-          {t("about.title")}
-        </h2>
+    <section className="bg-white py-16 text-textMain">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 px-6 items-start">
+        {/* Linkerzijde: korte bio */}
+        <div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6 text-primary">
+            {t("about.title")}
+          </h2>
 
-        <p className="text-lg text-textMuted mb-6">{t("about.intro")}</p>
+          <p className="text-lg text-textMuted leading-relaxed mb-6">
+            {t("about.intro")}
+          </p>
 
-        <div className="space-y-4 text-base text-textMain leading-relaxed mb-8">
-          {paragraphs.map((p, idx) => (
-            <p key={idx}>{p}</p>
-          ))}
+          <p className="text-base text-textMain leading-relaxed">
+            {t("about.summary")}
+          </p>
+
+          <Link
+            href="/contact"
+            className="mt-6 inline-block px-6 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-sky-400"
+          >
+            {t("about.contact")}
+          </Link>
+          <Link
+            href="/projects"
+            className="mt-6 md:ml-4 inline-block px-6 py-3 border border-sky-600 text-sky-600 font-medium rounded-lg hover:bg-sky-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-sky-600"
+          >
+            {t("about.cta")}
+          </Link>
         </div>
 
-        <Link
-          href="/projects"
-          className="inline-block px-6 py-3 bg-sky-200 text-white font-semibold rounded hover:brightness-110 transition focus:outline focus:ring-2 focus:ring-primary"
-        >
-          {t("about.cta")}
-        </Link>
+        {/* Rechterzijde: oplossingen */}
+        <div>
+          <h3 className="text-xl font-semibold text-primary mb-4">
+            {t("about.solutionsTitle")}
+          </h3>
+          <ul className="space-y-3 text-base text-textMain">
+            {bulletPoints.map((point, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="text-emerald-600 mt-1 align-middle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="size-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m4.5 12.75 6 6 9-13.5"
+                    />
+                  </svg>
+                </span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

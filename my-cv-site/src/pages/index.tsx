@@ -7,6 +7,9 @@ import { TechStackSection } from "@/components/TechSTackSection";
 import { CallToActionSection } from "@/components/CallToActionSection";
 import { AboutSection } from "@/components/AboutSection";
 import { NetherlandsMap } from "@/components/NetherlandsMap";
+import { WorkExperienceSection } from "@/components/WorkExperienceSection";
+import { CertificationsSection } from "@/components/CertificationSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -23,10 +26,16 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <UspSection />
-        <TechStackSection />
-        <ProjectHighlightsSection />
+        <CallToActionSection />
+        <WorkExperienceSection />
         <CallToActionSection />
         <NetherlandsMap />
+        <TechStackSection />
+        <CallToActionSection />
+        <ProjectHighlightsSection />
+        <TestimonialsSection />
+        <CertificationsSection />
+        <CallToActionSection />
       </main>
     </>
   );
@@ -35,7 +44,7 @@ export default function Home() {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "home"])),
+      ...(await serverSideTranslations(locale, ["common", "home", "work"])),
     },
   };
 }
