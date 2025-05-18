@@ -312,22 +312,20 @@ export const NetherlandsMap = () => {
           {t("map.companiesWorked")}
         </h2>
 
-        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <ul className="grid gap-4">
           {workHistory.map((entry) => (
             <li
               key={`${entry.company}-${entry.from}`}
-              className="rounded-xl border border-gray-200 p-4 shadow-sm bg-gray-50 hover:shadow-md transition-shadow"
+              className="p-4 flex flex-wrap  gap-x-3  gap-y-1  text-sm shadow-sm bg-gray-50 hover:shadow-md transition-shadow"
             >
               <p className="font-semibold text-gray-900 text-base">
                 {entry.company}
               </p>
-
-              <div className="flex flex-col gap-x-3 gap-y-1 mt-2 text-sm text-gray-700">
-                <span className="inline-flex items-center">
-                  <MapPinIcon className="w-4 h-4 mr-1" />
-                  {entry.location}
-                </span>
-
+              <span className="inline-flex items-center text-gray-700">
+                <MapPinIcon className="w-4 h-4 mr-1" />
+                {entry.location}
+              </span>
+              <div className="flex gap-x-3 gap-y-1 mt-2 text-xs text-gray-700">
                 <span className="inline-flex items-center">
                   <BriefcaseIcon className="w-4 h-4 mr-1" />
                   {formatPeriod(entry.from, entry.to)}

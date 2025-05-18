@@ -13,37 +13,49 @@
         "name": "Hilmar van der Veen"
     },
     "usp": {
-        "title": "Why work with me?",
+        "title": "How I help your organization move forward",
         "items": [
             {
-                "title": "Project-based delivery",
-                "description": "From scoping to deployment, I take ownership of complete frontend projects — modular, tested, and tailored to your goals."
+                "title": "From idea to scalable digital platform",
+                "description": "I help organizations turn complex challenges into scalable, future-proof platforms. From wireframe to frontend, backend, and database – I deliver complete, working solutions."
             },
             {
-                "title": "Hands-on expertise",
-                "description": "With over 10 years of experience, I solve real problems — from building design systems to replacing legacy code at scale."
+                "title": "AI implementation & digital transformation",
+                "description": "I use AI where it adds real value. I integrate machine learning and data analysis into new or existing systems to automate processes, generate insights, and serve customers smarter."
             },
             {
-                "title": "Freelance partner",
-                "description": "Hire me by the hour or per sprint. I plug into your team and deliver structure, mentoring, and clean, maintainable code."
+                "title": "Design Systems & frontend excellence",
+                "description": "I build scalable design systems that accelerate teams. With a focus on performance, accessibility (WCAG), reusability, and consistent branding across all channels."
+            },
+            {
+                "title": "API integrations & low-code component architecture",
+                "description": "I create seamless connections between frontend and backend – REST, GraphQL, CQRS. With a configuration-driven frontend, editors can manage content without touching code."
+            },
+            {
+                "title": "Mentoring & structure in your development team",
+                "description": "I help your team grow: coaching, quality assurance, refactoring legacy code, and setting technical standards. This builds sustainable teams and stable software."
+            },
+            {
+                "title": "Rapid scaling within your project or department",
+                "description": "Whether it’s an MVP, redesign or replatforming: I quickly integrate into existing teams or deliver results independently. Focused on impact within sprints, aligned with your deadlines."
             }
         ]
     },
     "about": {
         "title": "About Me",
-        "intro": "With over 10 years of experience, I help companies and entrepreneurs build accessible, scalable and future-proof digital platforms.",
-        "summary": "I combine technical depth with strategic insight. From UI architecture and static marketing websites to backend integrations and team mentoring — I deliver solutions that work and grow with your organization.",
-        "solutionsTitle": "How I can help you",
+        "intro": "With over 10 years of experience, I help companies and entrepreneurs build accessible, scalable, and future-proof digital platforms.",
+        "summary": "I combine technical depth with strategic insight. From modern UI architecture and static marketing sites to backend integrations and team mentoring — I deliver solutions that work and grow with your organization.",
+        "contact": "Schedule a strategy session",
+        "cta": "See my projects",
+        "solutionsTitle": "How I help you succeed",
         "solutions": [
             "Migrate legacy frontends to modern stacks (React, Angular, Next.js)",
             "Build static or dynamic marketing websites",
-            "Integrate with REST or GraphQL backends (.NET, CQRS, APIs)",
+            "Integrate REST or GraphQL backends (including .NET, CQRS)",
             "Set up scalable component libraries and design systems",
             "Deliver accessible, high-performance UIs (WCAG-compliant)",
-            "Mentor frontend teams and clean up existing codebases"
-        ],
-        "cta": "See my projects",
-        "contact": "Schedule a meeting"
+            "Mentor frontend teams and clean up codebases"
+        ]
     },
     "tech": {
         "title": "Technologieën",

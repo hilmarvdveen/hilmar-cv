@@ -1,15 +1,31 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { i18n, useTranslation } from "next-i18next";
+import { useCallback, useEffect } from "react";
 
 export const Header = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const { locale, locales, pathname, asPath, query } = router;
 
-  const switchLocale = (lng: string) => {
-    router.push({ pathname, query }, asPath, { locale: lng });
-  };
+  // 🔁 Ensure i18n stays in sync with router locale
+  useEffect(() => {
+    if (i18n?.language !== locale) {
+      i18n?.changeLanguage(locale);
+    }
+  }, [locale]);
+
+  const changeLanguage = useCallback(
+    async (newLocale: string) => {
+      await router.push({ pathname, query }, asPath, {
+        locale: newLocale,
+        shallow: true,
+        scroll: false,
+      });
+      await i18n?.reloadResources?.(newLocale);
+    },
+    [pathname, query, asPath, router]
+  );
 
   const navItems = [
     { href: "/", label: t("nav.home") },
@@ -46,12 +62,12 @@ export const Header = () => {
           <li>
             <select
               value={locale}
-              onChange={(e) => switchLocale(e.target.value)}
-              className="border border-gray-300 rounded px-2 py-1 text-sm bg-white"
+              onChange={(e) => changeLanguage(e.target.value)}
+              className="ml-4"
             >
-              {locales?.map((lng) => (
-                <option key={lng} value={lng}>
-                  {lng.toUpperCase()}
+              {locales?.map((loc) => (
+                <option key={loc} value={loc}>
+                  {loc.toUpperCase()}
                 </option>
               ))}
             </select>
