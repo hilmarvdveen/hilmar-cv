@@ -18,6 +18,17 @@
         "required": "This field is required",
         "invalidEmail": "Please enter a valid email address",
         "successMessage": "Thank you! I’ll get back to you soon.",
-        "serverError": "Oops, something went wrong. Please try again."
+        "serverError": "Oops, something went wrong. Please try again.",
+        "interestsLabel": "I'm interested in...",
+        "interests": [
+            "Composable Frontends",
+            "Design Systems",
+            "API Integrations",
+            "AI Features",
+            "Data-driven UIs",
+            "End-to-End Delivery",
+            "Mentoring & Team Coaching",
+            "Other"
+        ]
     }
 }

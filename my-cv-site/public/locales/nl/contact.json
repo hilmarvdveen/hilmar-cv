@@ -1,4 +1,34 @@
 {
-    "title": "Contact",
-    "description": "Neem gerust contact op om samenwerkingen of vragen te bespreken."
+    "meta": {
+        "title": "Contact – Hilmar van der Veen",
+        "description": "Get in touch to discuss your project, schedule a strategy session or explore collaboration opportunities."
+    },
+    "title": "Let’s talk about your project",
+    "intro": "Whether you need a frontend expert, system integration or end-to-end delivery — I’d love to hear more.",
+    "emailTitle": "Email",
+    "phoneTitle": "Phone",
+    "calendlyTitle": "Schedule a call",
+    "calendlyLink": "Book a free strategy session via Calendly",
+    "form": {
+        "name": "Your name",
+        "email": "Your email",
+        "message": "Your message",
+        "submit": "Send message",
+        "sending": "Sending...",
+        "required": "This field is required",
+        "invalidEmail": "Please enter a valid email address",
+        "successMessage": "Thank you! I’ll get back to you soon.",
+        "serverError": "Oops, something went wrong. Please try again.",
+        "interestsLabel": "Ik ben geïnteresseerd in...",
+        "interests": [
+            "Schaalbare Frontends",
+            "Design Systems",
+            "API-koppelingen",
+            "AI-integraties",
+            "Datagedreven Interfaces",
+            "Eind-tot-eind levering",
+            "Teamcoaching & mentoring",
+            "Anders"
+        ]
+    }
 }

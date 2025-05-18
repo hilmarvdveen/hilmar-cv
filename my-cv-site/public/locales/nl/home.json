@@ -75,5 +75,29 @@
             "highlighted": "Provincie waar ik heb gewerkt",
             "other": "Overige provincie"
         }
+    },
+    "projects": {
+        "title": "Project Highlights",
+        "canvas": {
+            "title": "Belastingdienst – CANVAS Formuliereneditor",
+            "description": "Als lead developer bij dit project voor de Belastingdienst bouwde hij aan een toekomstbestendig low-code platform waarmee redacteuren zelfstandig complexe formulieren kunnen ontwerpen en beheren. Door slimme configuratie, meertaligheid en een visuele interface werd de time-to-market drastisch verkort en de afhankelijkheid van ontwikkelaars geminimaliseerd. Voor een overheidsorganisatie is dat een directe kostenbesparing en kwaliteitsimpuls."
+        },
+        "postcodeloterij": {
+            "title": "Nationale Postcode Loterij – Design System",
+            "description": "In slechts zes maanden ontwikkelde hij een schaalbaar design system voor meerdere marketingmerken binnen één architectuur. Door middel van thematisering en herbruikbare componenten werden campagnes zoals 'Geniet van het Goede' en 'VIP-kaarten Vriendenloterij' snel uitgerold met minimale overhead. Dit leverde niet alleen visuele consistentie op, maar ook een flinke versnelling in livegang en hogere conversie."
+        },
+        "athlon": {
+            "title": "Athlon – Migratie & Herbouw",
+            "description": "Voor Athlon leidde hij de complete herbouw van een Angular 1.6 applicatie naar een moderne architectuur gebaseerd op RxJS en configuratiegedreven componenten. Resultaat: een schaalbare, WCAG-conforme frontend waarmee de business nu zelf dynamische formulieren beheert. De nieuwe stack reduceert onderhoudskosten, versnelt ontwikkeling en voldoet aan de hoogste toegankelijkheidsnormen."
+        },
+        "cta": {
+            "text": "Bent u op zoek naar een ontwikkelaar die niet alleen bouwt, maar ook strategisch meedenkt over schaalbaarheid, snelheid en design? Iemand die UX, toegankelijkheid en samenwerking met business écht begrijpt?",
+            "button": "Neem contact op"
+        }
+    },
+    "cta": {
+        "title": "Klaar om samen te bouwen?",
+        "subtitle": "Neem contact op en ontdek hoe ik jouw frontend naar het volgende niveau kan tillen.",
+        "button": "Plan een kennismaking"
     }
 }

@@ -1,7 +1,7 @@
 {
-    "sectionTitle": "Werkervaring",
-    "role": "Rol",
-    "technologies": "Technieken",
+    "sectionTitle": "Work experience",
+    "role": "Role",
+    "technologies": "Technologies",
     "workMode": {
         "remote": "Remote",
         "onSite": "On-site",
@@ -95,5 +95,255 @@
         "UIKit": "UI-Kit",
         "IceLib": "IceLib",
         "IntegrationTesting": "Integration Testing"
+    },
+    "belastingdienst": {
+        "company": "Belastingdienst",
+        "location": "Apeldoorn",
+        "role": "Senior Frontend Developer / Technical Lead",
+        "mode": "Hybrid",
+        "language": "Dutch",
+        "heading": "At the Dutch Tax and Customs Administration, I worked on three complex projects:",
+        "body": [
+            {
+                "title": "Project 1: BOLD Web Components – Design System Governance & Framework Integration",
+                "paragraph": "At the Dutch Tax Administration, I supported teams in using the centralized BOLD design system, built with Stencil Web Components. Since developers used Angular, React, or Vue, and the documentation was often incomplete or outdated, integration issues and inconsistent behavior arose across projects. I analyzed all components and rewrote the technical documentation in Confluence, including framework-specific examples, edge cases, and limitations. I also created wrappers and polyfills to ensure compatibility with Angular, React, and Vue. For missing functionality, I provided temporary bridge components linked to deprecation tickets. I acted as the technical liaison between UX designers, frontend teams, and the central BOLD team. My work improved integration, accelerated adoption, and ensured components were reusable, consistent, and WCAG-compliant across frameworks."
+            },
+            {
+                "title": "Project 2: CANVAS – Visual Form Editor (Greenfield Low-code Project)",
+                "paragraph": "In the CANVAS project, I developed a visual low-code editor enabling editors to build complex form flows without programming. The frontend was structured around a component-based, data-driven architecture with a central canvas, a left panel for navigation and form blocks, and a right panel for component configuration. Users could drag components onto the canvas and edit them inline. When a component was selected, the right panel displayed tabs for editing properties (like labels, validations, conditions, and dependencies), adding comments, and managing versions. I also worked on the backend: I extended API endpoints to persist edits in configuration files and developed handlers to store relevant properties in the MySQL database. The state of each form became fully manageable and reproducible from the backend. I implemented a tryout view that let users test their form in a simulated frontend. The editor supported conditional logic, multilingual content, semantic HTML editing, and validations — all configurable through the UI. CANVAS evolved into a full-fledged low-code platform enabling editors to independently build accessible, dynamic forms without relying on developers."
+            },
+            {
+                "title": "Project 3: Entrepreneurs Portal – Data-driven Frontend Architecture",
+                "paragraph": "For the Entrepreneurs Portal, I designed a data-driven frontend architecture that allowed pages to be built faster, more consistently, and without code duplication. The goal was to generate various tax pages (VAT, payroll, dividend, flight tax) modularly based on backend configuration using reusable components and dynamic behavior. I built a set of generic Angular components whose logic and presentation were driven by injectable services and configuration files. Input fields, info blocks, validations, and help texts dynamically adapted based on other component values or backend data. The architecture supported conditional visibility, multilingual labels, and validation rules loaded via JSON schemas. I also implemented frontend filters with dropdowns, search fields, and removable chips. For small tables, I created a wrapper component that enabled client-side sorting without extra backend calls — respecting column types, accessibility, and sorting specs from the BOLD design system. This approach allowed new pages to be rolled out with minimal effort while maintaining WCAG compliance, reusability, and consistency. The architecture proved scalable, maintainable, and reusable for similar portals within the organization."
+            }
+        ]
+    },
+    "postcode-loterij": {
+        "company": "Postcode Loterij",
+        "location": "Amsterdam",
+        "role": "Frontend Developer / Design System Specialist",
+        "mode": "Hybrid",
+        "language": "English",
+        "heading": "Scalable Design System for Multi-Brand Campaign Sites",
+        "body": [
+            {
+                "title": "Project 1: Geniet van het Goede – Design System Foundation",
+                "paragraph": "In a greenfield environment, I led the creation of a modular and accessible design system intended for marketing campaigns of the Nationale Postcode Loterij. The system was first applied to the campaign site 'Geniet van het Goede', which served as a proving ground for the design tokens, component flexibility, and cross-team collaboration. I implemented React components in TypeScript and Next.js, styled with SCSS and TailwindCSS, and ensured WCAG 2.0 compliance through semantic markup and accessible interactions. SVG animations and headless CMS integrations were included to support dynamic campaign content."
+            },
+            {
+                "title": "Project 2: VriendenLoterij VIP-Kaarten – Multi-brand Theming Strategy",
+                "paragraph": "After validating the core design system, I expanded it to support multi-brand marketing sites by introducing a theme-based architecture. This enabled full reuse of components across campaigns, with dynamic theming for brand identity, such as switching from Nationale Postcode Loterij to VriendenLoterij (VIP-Kaarten). Theme-specific styling controlled colors, button behavior, and animations without altering component logic. This approach reduced duplication and significantly accelerated the rollout of new campaign sites."
+            },
+            {
+                "title": "Deployment & Impact",
+                "paragraph": "I established a CI/CD workflow using GitLab pipelines, Docker, and AWS Lambda to enable rapid campaign deployments. REST APIs (OpenAPI 3.0) supported dynamic content delivery. The design system improved developer velocity, ensured visual and functional consistency, and scaled across multiple brands and markets with minimal engineering overhead."
+            }
+        ]
+    },
+    "athlon": {
+        "company": "Athlon",
+        "location": "Remote",
+        "role": "Lead Frontend Developer",
+        "mode": "Remote",
+        "language": "English",
+        "heading": "Migration & Rebuild of Legacy Application to Modern Angular Stack",
+        "body": [
+            {
+                "paragraph": "The existing Angular 1.6 application no longer met modern requirements in terms of performance, maintainability, and accessibility. My assignment was to completely renew both the technical architecture and the user interface, while preserving existing functionality, using a modern Angular stack."
+            },
+            {
+                "paragraph": "I led the migration to Angular 12 and designed a new frontend architecture based on RxJS and reactive programming. The focus was on scalability, WCAG compliance, and performance optimization. I restructured the UI using modern styling principles and guided junior and medior developers in writing high-quality, well-tested frontend code. I also integrated the frontend with multiple backend REST APIs via OpenAPI 3.0."
+            },
+            {
+                "paragraph": "I developed a flexible component library and built a generic self-service platform with conditional logic and validation, based on low-code principles. For dashboards, I implemented dynamic data visualizations with responsive charts and sortable tables. In close collaboration with UX designers, I translated wireframes and user feedback into a consistent, accessible frontend."
+            },
+            {
+                "paragraph": "The result was a future-proof application built on modern standards, fully WCAG compliant and easily extensible. The rebuilt application enabled smoother user interactions, reduced error rates, and lowered support pressure thanks to clear, well-designed self-service functionality."
+            }
+        ]
+    },
+    "randstad": {
+        "company": "Randstad",
+        "location": "Amsterdam",
+        "role": "Frontend Developer / UI Coach",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "Rebranding and Component Development for Randstad and Yacht Websites",
+        "body": [
+            {
+                "paragraph": "Randstad and Yacht underwent a visual and technical rebranding that required the redevelopment and extension of existing websites using accessible, consistent UI components aligned with the new brand identity."
+            },
+            {
+                "paragraph": "I worked on the redevelopment of frontend components in vanilla JavaScript, Angular, and React. I applied SCSS and the BEM methodology to ensure structural consistency and reusability. I created modular components with a strong focus on accessibility (WCAG 2.0), and I coached colleagues in applying Angular best practices and component-driven principles. As a UI Coach, I helped teams increase consistency and quality while maintaining flexibility across platforms."
+            },
+            {
+                "paragraph": "I also developed styling components for the Hippo Bloomreach headless CMS and tested all visual and functional elements for accessibility and responsive behavior. I collaborated closely with UX designers and business stakeholders to align pages and flows, ensuring new components fit seamlessly within the renewed brand identity."
+            },
+            {
+                "paragraph": "The result was a uniform, scalable UI library that significantly improved the visual quality, accessibility, and performance of the Randstad and Yacht platforms. Thanks to my coaching and technical support, development speed increased and release quality became more stable."
+            }
+        ]
+    },
+    "opinity": {
+        "company": "Opinity",
+        "location": "Rotterdam",
+        "role": "Fullstack Developer / Technical Lead",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "Freight Tracking Application with Angular and .NET Core",
+        "body": [
+            {
+                "paragraph": "As the technical lead, I designed and built a business-critical application that enabled truck drivers and managers to track and validate freight data in real-time. Due to strict delivery constraints, I took full ownership of both frontend and backend development, making hands-on architectural decisions to meet the four-month deadline."
+            },
+            {
+                "paragraph": "The frontend was developed in Angular and the backend in ASP.NET Core (C#), with features including user authentication, structured data entry, and secure role-based access. Drivers could input key details such as truck number, pickup and delivery locations, departure and arrival weights, and the number of packages loaded and unloaded."
+            },
+            {
+                "paragraph": "The application supported role-specific views: drivers could submit entries, while managers were able to monitor and verify submissions. I implemented data validation at both UI and API levels, ensuring correctness and immediate feedback to users."
+            },
+            {
+                "paragraph": "The system was successfully delivered on time, fully responsive, and optimized for field use. My role included hands-on coding, system design, stakeholder communication, and maintaining high quality despite the compressed timeline."
+            }
+        ]
+    },
+    "omniplan": {
+        "company": "Omniplan",
+        "location": "Amsterdam",
+        "role": "Fullstack Developer / Frontend Lead (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "Dutch",
+        "heading": "Modular Authentication Platform & Low-code Frontend",
+        "body": [
+            {
+                "paragraph": "Omniplan overhauled its platform architecture to enable secure integration with external parties. Both the frontend and backend were fully rebuilt. I was responsible for implementing a new Angular 7 frontend alongside a redesigned .NET Core backend, including architecture and a flexible authorization and configuration system."
+            },
+            {
+                "paragraph": "I built a modular frontend using HTML, CSS, TypeScript, and RxJS, focused on reusability, accessibility, and performance. On the backend, I designed a Microsoft Identity and JWT-based authorization system, enabling secure access to Omniplan’s REST APIs for external organizations. This hybrid setup allowed cross-organization authentication without direct system coupling."
+            },
+            {
+                "paragraph": "I also designed a new microservices architecture using Azure App Services and Docker/Kubernetes, and restructured the data model in Entity Framework on MSSQL for scalability. On the frontend, I implemented a dynamically configurable interface where validations, permissions, and input fields were driven by backend configuration — similar to a low-code environment."
+            },
+            {
+                "paragraph": "The result was a scalable, secure, and maintainable platform that could easily adapt to new functional requirements with minimal development effort and maximum integration flexibility."
+            }
+        ]
+    },
+    "ortec": {
+        "company": "Ortec",
+        "location": "Zoetermeer",
+        "role": "Fullstack Developer (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "FedEx Logistics Portal – Route Insight & Optimization",
+        "body": [
+            {
+                "paragraph": "At Ortec, I developed a logistics portal for FedEx that gave employees real-time insight into routes, cargo, and delivery locations. My responsibility was to build a scalable, high-performance Angular frontend fully integrated with a .NET Core backend architecture."
+            },
+            {
+                "paragraph": "I created Angular 7 components using Angular Material, TypeScript, HTML, SCSS, and RxJS. The UI featured interactive data tables with sorting, filtering, and route optimization support. I implemented modals and robust input validation that provided immediate visual feedback, significantly reducing error rates."
+            },
+            {
+                "paragraph": "I integrated RxJS observables for real-time updates and handled all API communication via REST endpoints built on OpenAPI and .NET Core microservices. The frontend used configuration-driven principles, enabling reusable and adaptable UI behavior. The application was deployed via Docker to Azure Cloud Services in a CI/CD-driven DevOps environment."
+            },
+            {
+                "paragraph": "The end result was a robust, scalable portal that gave FedEx staff direct control over logistics data, reduced errors, and improved operational efficiency. The architecture allowed for easy future expansion and external integration."
+            }
+        ]
+    },
+    "bluefield": {
+        "company": "Bluefield",
+        "location": "Maarssen Utrecht",
+        "role": "Fullstack Developer (ReactJS, .NET Core, Neo4J)",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "Data Visualization, Access Management & Network Monitoring",
+        "body": [
+            {
+                "title": "Project 1: Data-driven Web Application for Cycle Visualization",
+                "paragraph": "At Bluefield, I designed and developed a visual dashboard that clearly displayed complex cyclical processes. Data was sourced from CSV files stored in a Neo4J graph database. Each cycle received a color-coded status ('successful', 'failed', 'unknown') and was rendered in a tile-based interface. Users could drill down into diagnostic details or initiate recovery actions. The frontend was built in ReactJS (ES6+), HTML, and CSS, with a .NET Web API backend. I used a scalable Redux/Redux-Thunk architecture to ensure maintainability."
+            },
+            {
+                "title": "Project 2: Tommy Hilfiger – Access Control & Parking Management",
+                "paragraph": "For Tommy Hilfiger, I built an intuitive web application enabling employees to reserve parking spots and generate access tickets. I implemented a dynamic calendar interface in React that allowed users to plan parking efficiently. The interface was designed for ease of use, visual consistency, and minimal learning curve."
+            },
+            {
+                "title": "Project 3: Ziggo – Network Management & Incident Visualization",
+                "paragraph": "For Ziggo, I built a WPF desktop app for network administrators and a ReactJS web map interface that visualized real-time network incidents. Faulty nodes were clearly marked on the map for quick response. The frontend communicated with C# microservices via an Angular 6 layer. Messaging and integration were handled using RabbitMQ and MassTransit, running in a Docker-based CI/CD DevOps pipeline."
+            },
+            {
+                "title": "Impact",
+                "paragraph": "All three applications improved operational control, error visibility, and user experience. With reusable components, a configuration-driven UI, and a scalable Redux architecture, teams were able to quickly adapt and respond. The result: higher efficiency, fewer errors, and tools ready for future growth."
+            }
+        ]
+    },
+    "niped": {
+        "company": "Niped",
+        "location": "Hoorn",
+        "role": "Frontend Developer (ReactJS & WPF)",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "Health Platform and Desktop Management Tool",
+        "body": [
+            {
+                "paragraph": "At Niped, I developed both a web application and a desktop tool to support their health platform, providing users with insights into vitality and health risks. My responsibilities included expanding and optimizing the existing ReactJS frontend, and building a WPF desktop interface in C# for internal content editors."
+            },
+            {
+                "paragraph": "In the ReactJS application, I implemented functional components, improved performance and error handling, and focused on accessibility improvements using HTML5 and CSS3. I applied consistent styling, reusable logic in ES6+, and a scalable architecture using Redux and React Router."
+            },
+            {
+                "paragraph": "In parallel, I designed and built a new WPF desktop application based on the MVVM pattern, enabling content editors to manage text and media assets. The application supported version control, multimedia editing, and communicated with backend services through RESTful APIs."
+            },
+            {
+                "paragraph": "I actively participated in a cross-functional Scrum team, contributing to refinements, planning sessions, and demos. I ensured code quality using SonarQube, Prettier, and ESLint, and collaborated closely with backend developers to deliver maintainable and high-quality releases."
+            }
+        ]
+    },
+    "conclusion": {
+        "company": "Conclusion",
+        "location": "Amsterdam",
+        "role": "Fullstack Software Developer / Migration Specialist (VueJS & .NET)",
+        "mode": "OnSite",
+        "language": "Dutch",
+        "heading": "Modernization of CLASS Learning Environment",
+        "body": [
+            {
+                "paragraph": "The existing CLASS learning platform, built in ASP.NET Web Forms, no longer met modern standards for accessibility, UX, and maintainability. My dual responsibility was to maintain the legacy application while modernizing the frontend using VueJS, focusing on performance, reusability, and user-friendliness."
+            },
+            {
+                "paragraph": "I developed a modular frontend in VueJS using HTML, CSS, and JavaScript (ECMA 5/6). Components followed component-based design principles and emphasized accessibility, semantics, and scalability. I implemented reusable UI elements and made performance, validation, and error-handling improvements."
+            },
+            {
+                "paragraph": "The frontend communicated via RESTful WebAPIs with a backend in ASP.NET Web Forms, utilizing CQRS and NHibernate. I performed root cause analysis, documented findings, and initiated improvements. The backend was tested using xUnit, with code quality ensured via SonarQube."
+            },
+            {
+                "paragraph": "Within the Scrum team, I actively contributed to planning, demos, and sprint reviews. I was the main point of contact for SLA- and performance-related client issues. The successful migration led to a faster, more user-friendly learning environment and improved customer satisfaction."
+            }
+        ]
+    },
+    "transdev": {
+        "company": "Transdev",
+        "location": "Hilversum",
+        "role": "Fullstack Software Developer (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "English",
+        "heading": "Generic API Layer and Traveler Interfaces for Mobility Systems",
+        "body": [
+            {
+                "title": "Project 1: API Garden – Standardized API Layer for Legacy Integration",
+                "paragraph": "Transdev operated on a legacy Delphi backend, which needed to be made accessible for modern web and mobile applications. I designed and developed a generic API layer (‘API Garden’) using RESTful Web APIs in .NET Core. This API served as a secure and reusable gateway between modern frontends and legacy systems. It incorporated modern security principles, including authentication and authorization at the application level. Thanks to this architecture, external systems could securely and uniformly communicate with the backend. The API Garden marked a key step toward a modular and future-proof application landscape."
+            },
+            {
+                "title": "Project 2: Telephony Integration – Real-Time Call Queue Status",
+                "paragraph": "Travelers calling Transdev's support had no insight into their queue status, which led to frustration and repeated calls. I developed a queue integration module that provided real-time call status using the ICE-lib platform. When a caller was placed in the queue, users received a visual overview of their position and expected wait time. This significantly increased transparency and reduced pressure on the support center. The module was successfully adopted across broader service chains and contributed measurably to improved customer satisfaction."
+            },
+            {
+                "title": "Project 3: Travel Portal – Angular App for Real-Time Trip Info",
+                "paragraph": "I built an Angular 2 application allowing travelers to check real-time information about bus and taxi trips. The frontend featured accessible, mobile-optimized components built with TypeScript, RxJS, HTML, and CSS. The data was fetched from the API layer and displayed in a user-friendly and intuitive format. The app improved customer self-service and reduced dependency on manual support."
+            },
+            {
+                "title": "Impact",
+                "paragraph": "These three projects resulted in faster communication, improved user experiences, and a scalable backend foundation. The generic API layer, modern Angular portal, and telephony integration formed a robust platform for Transdev’s future digital mobility services."
+            }
+        ]
     }
 }

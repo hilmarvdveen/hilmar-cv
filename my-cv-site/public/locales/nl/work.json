@@ -96,5 +96,255 @@
         "UIKit": "UI-Kit",
         "IceLib": "IceLib",
         "IntegrationTesting": "Integratie Testen"
+    },
+    "belastingdienst": {
+        "company": "Belastingdienst",
+        "location": "Apeldoorn",
+        "role": "Senior Frontend Developer / Technisch Lead",
+        "mode": "Hybride",
+        "language": "Nederlands",
+        "heading": "Binnen de Belastingdienst werkte ik aan drie complexe projecten:",
+        "body": [
+            {
+                "title": "Project 1: BOLD Web Components – Design System Governance & Frameworkintegratie",
+                "paragraph": "Binnen de Belastingdienst ondersteunde ik teams bij het gebruik van het centrale BOLD design system, opgebouwd uit Stencil Web Components. Omdat ontwikkelaars werkten met Angular, React of Vue en de documentatie vaak onvolledig of verouderd was, ontstonden er integratieproblemen en inconsistent gedrag tussen projecten. Ik analyseerde alle componenten en herschreef de technische documentatie in Confluence, inclusief framework-specifieke voorbeelden, edge cases en beperkingen. Daarnaast ontwikkelde ik wrappers en polyfills om compatibiliteit met Angular, React en Vue te waarborgen. Voor ontbrekende functionaliteit leverde ik tijdelijke bridge-components, gekoppeld aan tickets voor gecontroleerde uitfasering zodra het officiële component beschikbaar was. Ik fungeerde als technisch aanspreekpunt tussen UX-designers, frontendteams en het centrale BOLD-team. Mijn inzet verbeterde de integratie, versnelde de implementatie en zorgde ervoor dat componenten herbruikbaar, consistent en WCAG-conform konden worden toegepast — ongeacht het framework."
+            },
+            {
+                "title": "Project 2: CANVAS – Visuele Formuliereneditor (Greenfield Low-code Project)",
+                "paragraph": "Binnen het CANVAS-project ontwikkelde ik een visuele low-code editor waarmee redacteuren zonder programmeerkennis complexe formulierflows konden samenstellen. De frontend werd opgebouwd rond een componentgebaseerde, datagedreven architectuur met een centrale canvas, een linkerpaneel voor navigatie en bouwblokken, en een rechterpaneel voor componentconfiguratie. Gebruikers konden componenten slepen naar het canvas en die daar inline bewerken. In het rechterpaneel verschenen, zodra een component geselecteerd werd, tabs voor het aanpassen van eigenschappen (zoals labels, validaties, condities en dependencies), voor commentaar per component en voor versiebeheer. Naast de frontendontwikkelingen werkte ik ook aan de backend: ik breidde API-endpoints uit zodat bewerkingen correct werden opgeslagen in configuratiebestanden en ontwikkelde handlers die de relevante properties persistenteerden naar de MySQL-database. Hierdoor werd de state van elk formulier volledig beheerd en reproduceerbaar vanuit backendconfiguraties. Ik implementeerde tevens een tryout-weergave waarin gebruikers hun formulier in een gesimuleerde frontend konden testen. De editor ondersteunde conditionele logica, meertalige content, semantische HTML-bewerking en validaties, allemaal configureerbaar via de UI. CANVAS groeide uit tot een volwaardig low-code platform waarin redacteuren zelfstandig toegankelijke, dynamische formulieren konden bouwen en beheren, volledig los van de traditionele ontwikkelketen."
+            },
+            {
+                "title": "Project 3: Ondernemersportaal – Datagedreven Frontend Architectuur",
+                "paragraph": "Voor het Ondernemersportaal ontwierp ik een datagedreven frontendarchitectuur die het mogelijk maakte om pagina’s sneller, consistenter en zonder code duplicatie op te bouwen. De wens was om meerdere aangiftepagina’s, zoals btw, loonheffing, dividendbelasting en vliegbelasting, modulair te genereren op basis van backendconfiguratie, met herbruikbare componenten en flexibele gedragsaanpassing. Ik ontwikkelde een set generieke Angular-componenten waarvan de logica en weergave werden aangestuurd via injectable services en configuratiebestanden. Invoervelden, infoblokken, validaties en hulpteksten pasten hun gedrag dynamisch aan op basis van waarden uit andere componenten of data uit de backend. De architectuur maakte gebruik van conditionele zichtbaarheid, meertalige labels en validatieregels die via JSON-schema’s werden ingeladen. Daarnaast implementeerde ik frontendfilters die bestonden uit dropdowns, zoekvelden en chips, inclusief verwijderbare chips voor actieve filters. Voor tabellen met beperkte datasets schreef ik een wrappercomponent die client-side sortering mogelijk maakte, zonder dat de backend opnieuw aangesproken hoefde te worden. Deze wrapper hield rekening met kolomtypes, toegankelijkheidseisen en sorteerlogica volgens de specificaties van het BOLD design system. Door deze aanpak konden nieuwe pagina’s met minimale effort worden uitgerold, terwijl toegankelijkheid (WCAG), herbruikbaarheid en consistentie geborgd bleven. De architectuur bleek schaalbaar, onderhoudsvriendelijk en zeer geschikt voor hergebruik in soortgelijke portalen binnen de organisatie."
+            }
+        ]
+    },
+    "postcode-loterij": {
+        "company": "Postcode Loterij",
+        "location": "Amsterdam",
+        "role": "Frontend Developer / Design System Specialist",
+        "mode": "Hybrid",
+        "language": "Dutch",
+        "heading": "Schaalbaar design system voor multi-brand campagnesites",
+        "body": [
+            {
+                "title": "Project 1: Geniet van het Goede – Fundament van het Design System",
+                "paragraph": "In een greenfield-context ontwikkelde ik een modulair en toegankelijk design system voor de marketingcampagnes van de Nationale Postcode Loterij. De campagnewebsite ‘Geniet van het Goede’ diende als eerste implementatie en validatieomgeving voor componentflexibiliteit, toegankelijkheid en samenwerking met UX-designers. Ik bouwde React-componenten met TypeScript en Next.js, gestyled met TailwindCSS en SCSS, en borg WCAG 2.0-compliance. SVG-animaties en headless CMS-integraties zorgden voor dynamische en onderhoudbare content."
+            },
+            {
+                "title": "Project 2: VriendenLoterij VIP-Kaarten – Multi-brand thematisering",
+                "paragraph": "Na validatie van de componenten breidde ik het design system uit met een thematiseringsstrategie, zodat componenten herbruikbaar waren voor meerdere merken zoals VriendenLoterij. Door het scheiden van logica en styling konden we eenvoudig wisselen tussen thema’s zoals kleurgebruik, knoppatronen en animaties zonder technische duplicatie. Deze aanpak versnelde het opleveren van nieuwe campagnesites aanzienlijk."
+            },
+            {
+                "title": "Deployment & impact",
+                "paragraph": "Ik zette GitLab CI/CD-pijplijnen op en ontwikkelde microservices met AWS Lambda en REST API's (OpenAPI 3.0). Hierdoor konden campagnes snel uitgerold worden, met consistente UX, performance en toegankelijkheid. Het design system vergrootte de ontwikkelsnelheid en schaalbaarheid aanzienlijk."
+            }
+        ]
+    },
+    "athlon": {
+        "company": "Athlon",
+        "location": "Thuis",
+        "role": "Lead Frontend Developer",
+        "mode": "Remote",
+        "language": "English",
+        "heading": "Migratie & herbouw van legacy-applicatie naar moderne Angular stack",
+        "body": [
+            {
+                "paragraph": "De bestaande Angular 1.6-applicatie voldeed niet meer aan de hedendaagse eisen op het gebied van performance, onderhoudbaarheid en toegankelijkheid. Mijn opdracht was om zowel de technische architectuur als de gebruikersinterface volledig te vernieuwen, met behoud van bestaande functionaliteit, naar binnen een moderne Angular-stack."
+            },
+            {
+                "paragraph": "Ik leidde de migratie naar Angular 12 en ontwierp een nieuwe frontendarchitectuur gebaseerd op RxJS en reactive programming. Hierbij stond schaalbaarheid, WCAG-compliance en performance-optimalisatie centraal. Ik herstructureerde de UI op basis van moderne stylingprincipes en begeleidde junior- en medior-developers bij het schrijven van kwalitatieve, goed geteste frontendcode. Daarnaast integreerde ik de frontend met meerdere backend REST API’s via OpenAPI 3.0."
+            },
+            {
+                "paragraph": "Ik ontwikkelde een flexibele componentbibliotheek en bouwde een generiek selfservice-platform met conditionele logica en validatie, gericht op low-code principes. Voor dashboards realiseerde ik dynamische datavisualisaties, met responsive grafieken en sorteerbare tabellen. In samenwerking met UX-designers vertaalde ik wireframes en gebruikersfeedback naar een consistente, toegankelijke frontend."
+            },
+            {
+                "paragraph": "Het eindresultaat was een toekomstbestendige applicatie, gebouwd op moderne standaarden, volledig WCAG-conform en eenvoudig uitbreidbaar. De herbouwde applicatie maakte snellere interactie mogelijk, verlaagde de foutkans en resulteerde in minder druk op support dankzij duidelijke, goed ontworpen selfservice-functionaliteit."
+            }
+        ]
+    },
+    "randstad": {
+        "company": "Randstad",
+        "location": "Amsterdam",
+        "role": "Frontend Developer / UI Coach",
+        "mode": "OnSite",
+        "language": "Engels",
+        "heading": "Rebranding en Componentontwikkeling voor Randstad- en Yacht-websites",
+        "body": [
+            {
+                "paragraph": "Randstad en Yacht ondergingen een visuele en technische herpositionering waarbij bestaande websites vernieuwd en uitgebreid moesten worden met toegankelijke, consistente UI-componenten conform de nieuwe merkidentiteit."
+            },
+            {
+                "paragraph": "Ik werkte aan de herontwikkeling van front-endcomponenten in vanilla JavaScript, Angular en React. Hiervoor gebruikte ik SCSS en de BEM-methodiek om structuur en herbruikbaarheid te waarborgen. Ik ontwikkelde modulaire componenten met focus op toegankelijkheid (WCAG 2.0) en begeleidde collega’s in het toepassen van Angular best practices en componentgedreven ontwikkelprincipes. Mijn rol als UI Coach hielp teams consistentie en kwaliteit verhogen, met behoud van flexibiliteit tussen platforms."
+            },
+            {
+                "paragraph": "Daarnaast ontwikkelde ik stylingcomponenten voor het Hippo Bloomreach headless CMS en testte ik alle visuele en functionele elementen op toegankelijkheid en responsive gedrag. Ik werkte nauw samen met UX-designers en business stakeholders om pagina’s en flows op elkaar af te stemmen en ervoor te zorgen dat de nieuwe componenten naadloos aansloten op de vernieuwde merkidentiteit."
+            },
+            {
+                "paragraph": "Het resultaat was een uniforme, schaalbare UI-bibliotheek die de visuele kwaliteit, toegankelijkheid en performance van de Randstad- en Yacht-platformen merkbaar verbeterde. Door mijn coaching en technische begeleiding nam de ontwikkelsnelheid toe en werd de kwaliteit van releases stabieler."
+            }
+        ]
+    },
+    "opinity": {
+        "company": "Opinity",
+        "location": "Rotterdam",
+        "role": "Fullstack Developer / Technical Lead",
+        "mode": "OnSite",
+        "language": "Engels",
+        "heading": "Registratiesysteem voor vrachtgegevens met Angular en .NET",
+        "body": [
+            {
+                "paragraph": "Als technisch eindverantwoordelijke ontwierp en ontwikkelde ik een bedrijfsapplicatie waarmee vrachtwagenchauffeurs en managers real-time gegevens konden registreren en controleren over ritten, belading en gewichten. De applicatie moest binnen vier maanden operationeel zijn; ik nam daarom de technische leiding en maakte pragmatische keuzes om de deadline te halen."
+            },
+            {
+                "paragraph": "Ik bouwde de frontend in Angular en de backend in ASP.NET Core (C#), inclusief authenticatie, dataopslag en rechtenbeheer. Truckchauffeurs konden via een gebruiksvriendelijke tabelinterface gegevens invoeren zoals het vrachtwagennummer, vertrek- en aankomstlocatie, gewicht bij vertrek en aankomst, en het aantal geladen en geloste pakketten."
+            },
+            {
+                "paragraph": "Het platform ondersteunde rolgebaseerde toegang: chauffeurs konden hun eigen ritten invoeren en managers konden de volledige data valideren. Dit vereiste een robuuste datamodellering, validatieregels in de UI, en veilige API-integratie met directe feedback over ingevoerde gegevens."
+            },
+            {
+                "paragraph": "De applicatie werd binnen de gestelde termijn opgeleverd, volledig responsive en geschikt voor mobiel gebruik op de werkvloer. Mijn rol omvatte architectuurkeuzes, implementatie, afstemming met stakeholders en het garanderen van kwaliteit onder tijdsdruk."
+            }
+        ]
+    },
+    "omniplan": {
+        "company": "Omniplan",
+        "location": "Amsterdam",
+        "role": "Fullstack Developer / Frontend-Lead (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "Nederlands",
+        "heading": "Modulaire Authenticatieomgeving & Low-code Frontend",
+        "body": [
+            {
+                "paragraph": "Omniplan vernieuwde haar platformarchitectuur om veilige integratie met externe partijen mogelijk te maken. Zowel de frontend als backend werd volledig herbouwd. Ik was verantwoordelijk voor de implementatie van een nieuwe Angular 7 frontend in combinatie met een herontworpen .NET Core backend, inclusief architectuur en een flexibel autorisatie- en configuratiesysteem."
+            },
+            {
+                "paragraph": "Ik ontwikkelde een modulaire frontend met HTML, CSS, TypeScript en RxJS, gericht op herbruikbaarheid, toegankelijkheid en performance. Voor de backend ontwierp ik een op Microsoft Identity en JWT gebaseerde autorisatiestructuur, waarmee externe organisaties veilig toegang konden krijgen tot REST API’s van Omniplan. Deze hybride architectuur maakte veilige authenticatie mogelijk tussen partijen zonder directe systeemkoppeling."
+            },
+            {
+                "paragraph": "Daarnaast ontwierp ik een nieuwe microservicesarchitectuur op basis van Azure App Services en Docker/Kubernetes, en herstructureerde ik het datamodel in Entity Framework op MSSQL voor betere schaalbaarheid. Aan de frontendzijde realiseerde ik een dynamisch configureerbare interface, waarin validaties, permissies en invoervelden direct gestuurd werden via backendconfiguraties — vergelijkbaar met een low-code omgeving."
+            },
+            {
+                "paragraph": "Het resultaat was een schaalbaar, veilig en onderhoudsvriendelijk platform dat eenvoudig kon worden aangepast aan nieuwe functionele wensen, met minimale ontwikkelinspanning en maximale flexibiliteit in externe integraties."
+            }
+        ]
+    },
+    "ortec": {
+        "company": "Ortec",
+        "location": "Zoetermeer",
+        "role": "Fullstack Developer (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "Engels",
+        "heading": "Logistiek Portaal voor FedEx – Route-inzicht en Optimalisatie",
+        "body": [
+            {
+                "paragraph": "Voor FedEx ontwikkelde ik bij Ortec een logistiek portaal waarmee medewerkers realtime inzicht kregen in routes, ladingen en bezorglocaties. Mijn verantwoordelijkheid lag in het bouwen van een toegankelijke, performante Angular-frontend met integratie op een schaalbare .NET Core-backendarchitectuur."
+            },
+            {
+                "paragraph": "Ik bouwde Angular 7-componenten met Angular Material, TypeScript, HTML, SCSS en RxJS. De UI bevatte interactieve datatabellen met sorting, filtering en ondersteuning voor route-optimalisatie. Ik implementeerde modals, ingebouwde validatie en foutafhandeling waarmee gebruikers direct visuele feedback kregen bij invoerfouten, wat de foutgevoeligheid sterk verminderde."
+            },
+            {
+                "paragraph": "Daarnaast integreerde ik RxJS-observables voor realtime updates, en verzorgde ik de volledige connectie met REST API’s op basis van OpenAPI en .NET Core microservices. De interface werd ingericht met configuration-based principes, waardoor gedrag en layout flexibel en herbruikbaar bleven. Deployment verliep via Docker naar Azure Cloud Services binnen een CI/CD-gedreven DevOps-aanpak."
+            },
+            {
+                "paragraph": "Het eindresultaat was een schaalbaar portaal waarmee FedEx-medewerkers directe controle kregen over routes. De oplossing was robuust, toekomstbestendig en makkelijk uit te breiden met externe integraties."
+            }
+        ]
+    },
+    "bluefield": {
+        "company": "Bluefield",
+        "location": "Maarssen Utrecht",
+        "role": "Fullstack Developer (ReactJS, .NET Core, Neo4J)",
+        "mode": "OnSite",
+        "language": "Dutch",
+        "heading": "Datavisualisatie, Toegangsbeheer & Netwerkbewaking",
+        "body": [
+            {
+                "title": "Project 1: Data-driven Webapplicatie met Cyclusvisualisatie",
+                "paragraph": "Binnen Bluefield ontwierp en ontwikkelde ik een visueel dashboard waarin complexe cycli duidelijk weergegeven werden. De data kwam uit CSV-bestanden opgeslagen in een Neo4J graph-database. Elke cyclus kreeg een kleurgecodeerde status (zoals 'succesvol', 'mislukt', 'onbekend') en werd weergegeven in een tegelinterface. Gebruikers konden per cyclus doorklikken naar detailweergaves met foutdiagnostiek of herstelopties. De frontend was gebouwd in ReactJS (ES6+), HTML en CSS, met een .NET Web API als backend. Ik gebruikte Redux/Redux-Thunk voor schaalbaarheid en onderhoudbaarheid."
+            },
+            {
+                "title": "Project 2: Tommy Hilfiger – Toegangscontrole & Parkeerbeheer",
+                "paragraph": "Voor Tommy Hilfiger bouwde ik een gebruiksvriendelijke webapplicatie waarmee medewerkers parkeerplaatsen konden reserveren en toegangstickets konden genereren. Ik implementeerde een dynamische kalenderinterface in React waarmee gebruikers intuïtief parkeerplaatsen konden inplannen. De nadruk lag op gebruiksgemak, consistente visuele stijl en minimale leercurve."
+            },
+            {
+                "title": "Project 3: Ziggo – Netwerkbeheer & Storingsvisualisatie",
+                "paragraph": "Voor Ziggo bouwde ik een WPF desktopapplicatie voor netwerkbeheerders en een ReactJS-kaartweergave waarmee realtime storingen inzichtelijk werden gemaakt. Foutieve netwerknodes werden visueel gemarkeerd. De frontend communiceerde via een Angular 6-laag met C# microservices. Berichtenverwerking en integratie verliepen via RabbitMQ en MassTransit. Alles draaide binnen een CI/CD-pipeline op Docker in een DevOps-omgeving."
+            },
+            {
+                "title": "Impact",
+                "paragraph": "De drie applicaties verbeterden operationele grip, foutdetectie en gebruikerservaring. Door herbruikbare componenten, configuratiegestuurde UI en een schaalbare Redux-architectuur kon snel worden bijgestuurd. Resultaat: hogere efficiëntie, lagere foutkans en toekomstbestendige tools."
+            }
+        ]
+    },
+    "niped": {
+        "company": "Niped",
+        "location": "Hoorn",
+        "role": "Frontend Developer (ReactJS & WPF)",
+        "mode": "OnSite",
+        "language": "Engels",
+        "heading": "Gezondheidsplatform en beheerinterface",
+        "body": [
+            {
+                "paragraph": "Voor Niped ontwikkelde ik zowel een webapplicatie als een desktoptool ter ondersteuning van hun gezondheidsplatform, waarmee gebruikers inzicht kregen in vitaliteit en gezondheidsrisico’s. Mijn opdracht was tweeledig: enerzijds optimaliseren en uitbreiden van de bestaande frontend in ReactJS, anderzijds het bouwen van een beheerinterface in WPF (C#) voor interne contentredactie."
+            },
+            {
+                "paragraph": "In de ReactJS-applicatie ontwikkelde ik functionele componenten, verbeterde ik de performance en foutafhandeling, en implementeerde ik HTML5/CSS3 toegankelijkheidsverbeteringen. Ik richtte me op styling-consistentie, herbruikbaarheid van logica (ES6+) en een schaalbare architectuur gebaseerd op Redux en React Router."
+            },
+            {
+                "paragraph": "Parallel ontwierp en ontwikkelde ik een nieuwe WPF-desktopapplicatie volgens het MVVM-patroon, waarmee redacteuren eenvoudig content zoals teksten en afbeeldingen konden beheren. De applicatie ondersteunde multimediale bewerkingen, contentversiebeheer en was gekoppeld aan RESTful API’s."
+            },
+            {
+                "paragraph": "Binnen een Scrumteam was ik actief betrokken bij refinements, demo’s en planningen. Ik bewaakte codekwaliteit met SonarQube, Prettier en ESLint en werkte nauw samen met backend developers aan een stabiele, onderhoudbare releasecyclus."
+            }
+        ]
+    },
+    "conclusion": {
+        "company": "Conclusion",
+        "location": "Amsterdam",
+        "role": "Fullstack software developer / Migratie-specialist (VueJS & .NET)",
+        "mode": "OnSite",
+        "language": "Nederlands",
+        "heading": "Modernisering van CLASS Leeromgeving",
+        "body": [
+            {
+                "paragraph": "De bestaande CLASS-leeromgeving voldeed als ASP.NET Web Forms-applicatie niet langer aan moderne eisen voor toegankelijkheid, UX en onderhoudbaarheid. Mijn opdracht was tweeledig: enerzijds het beheren van de legacy-applicatie, anderzijds het moderniseren van de frontend naar VueJS, met focus op performance, herbruikbaarheid en gebruikersvriendelijkheid."
+            },
+            {
+                "paragraph": "Ik ontwikkelde een modulaire frontend met VueJS, gebaseerd op HTML, CSS en JavaScript (ECMA 5/6). Componenten werden opgebouwd volgens component-based designprincipes, met focus op toegankelijkheid, semantiek en schaalbaarheid. Ik implementeerde herbruikbare UI-elementen en voerde optimalisaties uit voor foutafhandeling, validatie en performance."
+            },
+            {
+                "paragraph": "De frontend communiceerde via RESTful WebAPI’s met een backend in ASP.NET Web Forms, en maakte gebruik van CQRS en NHibernate. Ik werkte mee aan root cause-analyses, documenteerde verbeterpunten en initieerde technische optimalisaties. De backend werd getest met xUnit, en kwaliteit werd geborgd via SonarQube."
+            },
+            {
+                "paragraph": "Binnen het Scrumteam leverde ik actief input tijdens planningen, demo’s en sprintreviews. Ik was het eerste aanspreekpunt voor SLA-issues en performancevragen van klanten. De succesvolle migratie resulteerde in een stabielere, snellere en gebruiksvriendelijkere leeromgeving met betere klanttevredenheid."
+            }
+        ]
+    },
+    "transdev": {
+        "company": "Transdev",
+        "location": "Hilversum",
+        "role": "Fullstack software developer (Angular & .NET Core)",
+        "mode": "OnSite",
+        "language": "Engels",
+        "heading": "Generieke API-laag en Reizigersinterface voor Mobiliteitssystemen",
+        "body": [
+            {
+                "title": "Project 1: API Garden – Gestandaardiseerde API-laag voor legacy-integratie",
+                "paragraph": "Transdev beschikte over een verouderde Delphi-backend waarvan de functionaliteit toegankelijk moest worden gemaakt voor moderne web- en mobiele applicaties. Ik ontwierp en bouwde een generieke API-laag (‘API Garden’) met RESTful WebAPI’s in .NET Core, die fungeerde als veilige en herbruikbare koppellaag tussen nieuwe frontends en legacy-logica. Deze API werd voorzien van moderne securityprincipes, authenticatie en autorisatie op applicatieniveau. Dankzij de nieuwe architectuur konden externe systemen veilig en uniform communiceren met het bestaande backendsysteem. De API Garden was een belangrijke stap richting een modulair en toekomstbestendig applicatielandschap."
+            },
+            {
+                "title": "Project 2: Telefonie-integratie – Wachtrijmodule met real-time statusinformatie",
+                "paragraph": "Reizigers die Transdev telefonisch benaderden kregen geen inzicht in wachttijden, wat tot onvrede en herhaalverkeer leidde. Ik ontwikkelde een wachtrij-integratiemodule waarmee realtime statusinformatie van bellers inzichtelijk werd via het ICE-lib platform. Wanneer een beller in de wachtrij werd geplaatst, kregen gebruikers direct een visuele weergave van wachttijd en positie. Deze uitbreiding verhoogde de transparantie richting klanten en verminderde de druk op de telefonische service. Het leverde aantoonbaar meer klanttevredenheid op en werd structureel opgenomen in de bredere serviceketen."
+            },
+            {
+                "title": "Project 3: Reizigersportaal – Angular-app voor real-time ritinformatie",
+                "paragraph": "Voor het reizigersportaal bouwde ik een Angular 2-applicatie waarmee reizigers real-time informatie over bus- en taxiritten konden opvragen. Ik ontwikkelde componenten met TypeScript en RxJS en bouwde een dynamische frontend waarmee gebruikersinformatie uit de API op een toegankelijke en gebruiksvriendelijke manier werd gepresenteerd. De UI was opgebouwd met HTML en CSS en geoptimaliseerd voor mobiel gebruik. De applicatie verbeterde de selfserviceopties voor reizigers en verminderde de druk op klantcontactkanalen."
+            },
+            {
+                "title": "Impact",
+                "paragraph": "Deze drie oplossingen leidden tot snellere communicatie, betere gebruikerservaringen en schaalbare backendintegratie. De generieke API-laag, moderne frontend en telefonie-integratie vormden een solide basis voor toekomstige digitale mobiliteitsdiensten binnen Transdev."
+            }
+        ]
     }
 }

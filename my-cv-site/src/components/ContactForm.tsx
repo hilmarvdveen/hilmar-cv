@@ -1,79 +1,154 @@
 import { useState } from "react";
+import { useTranslation } from "next-i18next";
 
-export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+export default function ContactForm() {
+  const { t } = useTranslation("contact");
+  const interestTags = t("form.interests", { returnObjects: true }) as string[];
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("sending");
+    setIsSubmitting(true);
+    setSuccessMessage("");
+    setErrorMessage("");
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...formData, interests: selectedTags }),
       });
 
       if (!res.ok) throw new Error("Failed to send");
 
-      setStatus("sent");
-      setForm({ name: "", email: "", message: "" });
-    } catch {
-      setStatus("error");
+      console.log("Submitted:", { ...formData, interests: selectedTags });
+      setSuccessMessage(t("form.successMessage"));
+      setFormData({ name: "", email: "", message: "" });
+      setSelectedTags([]);
+    } catch (error) {
+      setErrorMessage(t("form.serverError"));
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <main className="max-w-xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Contact me</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-[#f1f5f9] p-6 rounded-lg shadow space-y-6"
+    >
+      <h2 className="text-xl font-semibold">{t("form.title", "Contact me")}</h2>
+
+      <div>
+        <p className="text-sm font-medium text-gray-800 mb-2">
+          {t("form.interestsLabel")}
+        </p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {interestTags.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => toggleTag(tag)}
+              className={`px-4 py-1 rounded-full text-sm font-medium transition ${
+                selectedTags.includes(tag)
+                  ? "bg-emerald-600 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="sr-only" htmlFor="name">
+          {t("form.name")}
+        </label>
         <input
+          id="name"
           name="name"
-          placeholder="Your name"
-          value={form.name}
+          value={formData.name}
           onChange={handleChange}
+          type="text"
+          placeholder={t("form.name")}
+          className="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-600"
           required
-          className="w-full p-2 border rounded"
         />
+      </div>
+
+      <div>
+        <label className="sr-only" htmlFor="email">
+          {t("form.email")}
+        </label>
         <input
+          id="email"
           name="email"
-          placeholder="Your email"
+          value={formData.email}
+          onChange={handleChange}
           type="email"
-          value={form.email}
-          onChange={handleChange}
+          placeholder={t("form.email")}
+          className="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-600"
           required
-          className="w-full p-2 border rounded"
         />
+      </div>
+
+      <div>
+        <label className="sr-only" htmlFor="message">
+          {t("form.message")}
+        </label>
         <textarea
+          id="message"
           name="message"
-          placeholder="Your message"
-          value={form.message}
+          value={formData.message}
           onChange={handleChange}
+          placeholder={t("form.message")}
+          className="w-full border border-gray-300 rounded px-4 py-2 text-sm h-32 resize-none focus:ring-2 focus:ring-emerald-600"
           required
-          className="w-full p-2 border rounded h-32"
         />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          disabled={status === "sending"}
-        >
-          {status === "sending" ? "Sending..." : "Send Message"}
-        </button>
-        {status === "sent" && <p className="text-green-600">Message sent!</p>}
-        {status === "error" && (
-          <p className="text-red-600">Something went wrong.</p>
-        )}
-      </form>
-    </main>
+      </div>
+
+      {successMessage && (
+        <p className="text-green-600 text-sm font-medium">{successMessage}</p>
+      )}
+      {errorMessage && (
+        <p className="text-red-600 text-sm font-medium">{errorMessage}</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={`w-full font-semibold py-2 rounded transition ${
+          isSubmitting
+            ? "bg-emerald-300 cursor-not-allowed"
+            : "bg-emerald-600 hover:bg-emerald-500 text-white"
+        }`}
+      >
+        {isSubmitting ? t("form.sending") : t("form.submit")}
+      </button>
+    </form>
   );
 }

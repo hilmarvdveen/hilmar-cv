@@ -75,5 +75,29 @@
             "highlighted": "Province I worked in",
             "other": "Other province"
         }
+    },
+    "projects": {
+        "title": "Project Highlights",
+        "canvas": {
+            "title": "Dutch Tax Authority – CANVAS Form Editor",
+            "description": "As lead developer on this project for the Dutch Tax Authority, he built a future-proof low-code platform that enables editors to independently design and manage complex forms. Through smart configuration, multilingual support, and a visual interface, time-to-market was drastically reduced and developer dependency minimized. For a government organization, this means direct cost savings and a boost in quality."
+        },
+        "postcodeloterij": {
+            "title": "Nationale Postcode Loterij – Design System",
+            "description": "In just six months, he developed a scalable design system for multiple marketing brands within a single architecture. By applying theming and reusable components, campaigns such as 'Geniet van het Goede' and 'VIP-kaarten Vriendenloterij' were rolled out quickly with minimal overhead. This resulted not only in visual consistency, but also in faster go-lives and higher conversion rates."
+        },
+        "athlon": {
+            "title": "Athlon – Migration & Rebuild",
+            "description": "For Athlon, he led the complete rebuild of an Angular 1.6 application into a modern architecture based on RxJS and configuration-driven components. The result: a scalable, WCAG-compliant frontend that enables the business to manage dynamic forms independently. The new stack reduces maintenance costs, speeds up development, and meets the highest accessibility standards."
+        },
+        "cta": {
+            "text": "Are you looking for a developer who not only builds, but also thinks strategically about scalability, performance, and design? Someone who truly understands UX, accessibility, and collaboration with business?",
+            "button": "Get in touch"
+        }
+    },
+    "cta": {
+        "title": "Ready to build together?",
+        "subtitle": "Get in touch and discover how I can take your frontend to the next level.",
+        "button": "Book an introduction"
     }
 }
