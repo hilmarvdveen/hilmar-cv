@@ -29,12 +29,11 @@ export default function Home() {
         <CallToActionSection />
         <WorkExperienceSection />
         <CallToActionSection />
-        <NetherlandsMap />
-        <TechStackSection />
-        <CallToActionSection />
         <ProjectHighlightsSection />
+        <TechStackSection />
         <TestimonialsSection />
         <CertificationsSection />
+        <NetherlandsMap />
         <CallToActionSection />
       </main>
     </>

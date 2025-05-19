@@ -5,7 +5,15 @@ export const CertificationsSection = () => {
       date: "2020",
     },
     {
-      title: "Scrum Master – Young Capital",
+      title: "Angular Advanced – Udemy",
+      date: "2020",
+    },
+    {
+      title: "70–483 Programming in C# – Young Capital",
+      date: "2016",
+    },
+    {
+      title: "Professional Scrum Master™ I Certification – Scrum.org",
       date: "2016",
     },
   ];

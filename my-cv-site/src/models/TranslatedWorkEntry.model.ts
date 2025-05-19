@@ -6,10 +6,10 @@ export interface TranslatedWorkEntry {
     role: string;
     mode: WorkMode;
     language: string;
-    heading?: string;
     body: {
       title: string;
       paragraph: string;
     }[];
+    heading?: string;
   }
   

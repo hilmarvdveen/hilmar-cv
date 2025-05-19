@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { workHistory } from "../../public/data/workHistory";
+import Image from "next/image";
 import {
   MapPinIcon,
   GlobeAltIcon,
@@ -23,17 +24,28 @@ export const WorkExperienceSection = () => {
               returnObjects: true,
             }) as TranslatedWorkEntry;
 
+            const isHexColor = /^#([0-9A-F]{3}){1,2}$/i.test(entry.color || "");
+
             return (
               <div
                 key={`${entryData.company}-${entry.from}`}
                 className="bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center mb-4">
-                  <img
-                    src={`/logos/${entry.logo}`}
-                    alt={`${entryData.company} logo`}
-                    className="w-30 h-10 mr-4 object-contain rounded"
-                  />
+                  <div
+                    className="relative w-32 h-10 mr-4 rounded"
+                    style={
+                      isHexColor ? { backgroundColor: entry.color } : undefined
+                    }
+                  >
+                    <Image
+                      src={`/logos/${entry.logo}`}
+                      alt={`${entry.company} logo`}
+                      fill
+                      className="object-contain rounded"
+                    />
+                  </div>
+
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900">
                       {entryData.company}

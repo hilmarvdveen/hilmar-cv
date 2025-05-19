@@ -106,6 +106,7 @@ export interface WorkEntry {
   mode: WorkMode;
   language: Language;
   tech: Tech[];
+  color?: string;
 }
 
 export const workHistory: WorkEntry[] = [
@@ -118,7 +119,6 @@ export const workHistory: WorkEntry[] = [
     location: "Apeldoorn",
     mode: WorkMode.Hybrid,
     language: Language.Dutch,
-
     tech: [
       Tech.HTML5,
       Tech.CSS3,
@@ -285,6 +285,7 @@ export const workHistory: WorkEntry[] = [
     location: "Amsterdam",
     mode: WorkMode.OnSite,
     language: Language.Dutch,
+    color:"#324e64",
     tech: [
       Tech.Angular,
       Tech.TypeScript,
@@ -444,6 +445,7 @@ export const workHistory: WorkEntry[] = [
     location: "Hilversum",
     mode: WorkMode.OnSite,
     language: Language.English,
+    color:"#DB0717",
     tech: [
       Tech.Angular,
       Tech.TypeScript,

@@ -13,7 +13,6 @@ export const AboutSection = () => {
   return (
     <section className="bg-white py-16 text-textMain">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 px-6 items-start">
-        {/* Linkerzijde: korte bio */}
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-6 text-primary">
             {t("about.title")}
@@ -29,19 +28,18 @@ export const AboutSection = () => {
 
           <Link
             href="/contact"
-            className="mt-6 inline-block px-6 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-sky-400"
+            className="mt-6 w-full text-center md:w-auto inline-block px-6 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-sky-400"
           >
             {t("about.contact")}
           </Link>
           <Link
             href="/projects"
-            className="mt-6 md:ml-4 inline-block px-6 py-3 border border-sky-600 text-sky-600 font-medium rounded-lg hover:bg-sky-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-sky-600"
+            className="mt-6 w-full text-center md:w-auto md:ml-4 inline-block px-6 py-3 border border-sky-600 text-sky-600 font-medium rounded-lg hover:bg-sky-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-sky-600"
           >
             {t("about.cta")}
           </Link>
         </div>
 
-        {/* Rechterzijde: oplossingen */}
         <div>
           <h3 className="text-xl font-semibold text-primary mb-4">
             {t("about.solutionsTitle")}
@@ -54,13 +52,13 @@ export const AboutSection = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     className="size-5"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="m4.5 12.75 6 6 9-13.5"
                     />
                   </svg>
