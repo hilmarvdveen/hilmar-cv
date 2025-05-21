@@ -48,7 +48,7 @@ export default function ContactPage() {
                   {t("calendlyTitle")}
                 </h2>
                 <a
-                  href="https://calendly.com/hilmar-ict/kennismaking"
+                  href="https://calendly.com/hilmarvdveen/kennismaking"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-600 hover:underline"
