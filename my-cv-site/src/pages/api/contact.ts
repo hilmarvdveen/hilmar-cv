@@ -1,24 +1,58 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { Resend } from "resend";
 
-// Use your real mail handler (e.g. nodemailer or third-party API)
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+interface ContactFormRequest {
+  name: string;
+  email: string;
+  message: string;
+  interests?: string[];
+}
+
+const resendApiKey = process.env.RESEND_API_KEY!;
+const emailFrom = process.env.EMAIL_FROM!;
+const emailTo = process.env.EMAIL_TO!;
+
+if (!resendApiKey || !emailFrom || !emailTo) {
+  throw new Error("❌ Missing RESEND_API_KEY, EMAIL_FROM, or EMAIL_TO env variables.");
+}
+
+const resend = new Resend(resendApiKey);
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<{ success?: boolean; error?: string }>
+): Promise<void> {
+  console.log("hello i reach this points!!!!!!!!!!!!!!!!")
   if (req.method !== "POST") {
-    return res.status(405).end();
+    res.setHeader("Allow", "POST");
+    res.status(405).json({ error: "Method Not Allowed" });
+    return;
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, message, interests } = req.body as Partial<ContactFormRequest>;
 
   if (!name || !email || !message) {
-    return res.status(400).json({ error: "Missing fields" });
+    res.status(400).json({ error: "All fields (name, email, message) are required." });
+    return;
   }
 
   try {
-    // 🔔 Replace with real email logic
-    console.log("Send email", { name, email, message });
+    const interestText = interests?.length
+      ? `\n\nInteresses:\n- ${interests.join("\n- ")}`
+      : "";
+
+    await resend.emails.send({
+      from: emailFrom,
+      to: emailTo,
+      subject: `Nieuw bericht van ${name}`,
+      replyTo: email,
+      text: `Afzender: ${name}\nEmail: ${email}\n\nBericht:\n${message}${interestText}`,
+    });
 
     res.status(200).json({ success: true });
-  } catch (error) {
-    console.error("Error sending contact form:", error);
-    res.status(500).json({ error: "Failed to send message" });
+  } catch (err) {
+    console.error("Email sending failed:", err);
+    const error = err instanceof Error ? err.message : "Unexpected error occurred.";
+    res.status(500).json({ error });
   }
 }

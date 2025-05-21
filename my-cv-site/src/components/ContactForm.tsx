@@ -41,14 +41,22 @@ export default function ContactForm() {
         body: JSON.stringify({ ...formData, interests: selectedTags }),
       });
 
-      if (!res.ok) throw new Error("Failed to send");
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || t("form.serverError"));
+      }
 
       console.log("Submitted:", { ...formData, interests: selectedTags });
       setSuccessMessage(t("form.successMessage"));
       setFormData({ name: "", email: "", message: "" });
       setSelectedTags([]);
-    } catch (error) {
-      setErrorMessage(t("form.serverError"));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage(t("form.serverError"));
+      }
       console.error(error);
     } finally {
       setIsSubmitting(false);

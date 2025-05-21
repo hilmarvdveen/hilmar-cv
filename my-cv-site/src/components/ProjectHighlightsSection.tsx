@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { SectionTitle } from "./SectionTitle";
+import Link from "next/link";
 
 export const ProjectHighlightsSection = () => {
   const { t } = useTranslation("home");
@@ -60,12 +61,12 @@ export const ProjectHighlightsSection = () => {
       </p>
 
       <div className="mt-6 text-center">
-        <a
+        <Link
           href="/contact"
           className="mt-6 inline-block px-6 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-sky-400"
         >
           {t("projects.cta.button", "Neem contact op")}
-        </a>
+        </Link>
       </div>
     </section>
   );
