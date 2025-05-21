@@ -13,7 +13,7 @@ const emailFrom = process.env.EMAIL_FROM!;
 const emailTo = process.env.EMAIL_TO!;
 
 if (!resendApiKey || !emailFrom || !emailTo) {
-  throw new Error("❌ Missing RESEND_API_KEY, EMAIL_FROM, or EMAIL_TO env variables.");
+  throw new Error("EMAIL_FROM, or EMAIL_TO env variables.");
 }
 
 const resend = new Resend(resendApiKey);
