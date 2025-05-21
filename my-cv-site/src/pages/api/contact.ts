@@ -22,7 +22,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{ success?: boolean; error?: string }>
 ): Promise<void> {
-  console.log("hello i reach this points!!!!!!!!!!!!!!!!")
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     res.status(405).json({ error: "Method Not Allowed" });
