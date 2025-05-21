@@ -19,7 +19,6 @@ export const Header = () => {
     async (newLocale: string) => {
       await router.push({ pathname, query }, asPath, {
         locale: newLocale,
-        shallow: true,
         scroll: false,
       });
       await i18n?.reloadResources?.(newLocale);
@@ -63,11 +62,11 @@ export const Header = () => {
             <select
               value={locale}
               onChange={(e) => changeLanguage(e.target.value)}
-              className="ml-4"
+              className="ml-4 cursor-pointer"
             >
-              {locales?.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc.toUpperCase()}
+              {locales?.map((locale) => (
+                <option key={locale} value={locale}>
+                  {locale.toUpperCase()}
                 </option>
               ))}
             </select>

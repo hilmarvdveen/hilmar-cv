@@ -15,7 +15,6 @@ export default function ContactPage() {
 
       <main className="bg-[#f8fafc] text-gray-800 py-20 px-6">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start bg-white rounded-lg shadow-lg p-8">
-          {/* Left Panel */}
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               {t("title")}
@@ -59,7 +58,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <ContactForm />
         </div>
       </main>

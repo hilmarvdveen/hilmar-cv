@@ -8,7 +8,7 @@ export default function ProjectsPage() {
   return (
     <>
       <Head>
-        <title>{t("title")} – Hilmar van der Veen</title>
+        <title>{t("title")}</title>
         <meta name="description" content={t("description")} />
       </Head>
 
