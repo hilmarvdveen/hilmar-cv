@@ -1,31 +1,48 @@
-import { useTranslation } from "next-i18next";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { SectionTitle } from "./SectionTitle";
 import Link from "next/link";
 
 export const ProjectHighlightsSection = () => {
-  const { t } = useTranslation("home");
+  const t = useTranslations("home");
 
   const highlights = [
     {
-      title: t("projects.canvas.title"),
-      description: t("projects.canvas.description"),
+      title: t("projects.canvas.title", { defaultValue: "Canvas" }),
+      description: t("projects.canvas.description", {
+        defaultValue:
+          "Canvas is a platform for creating and managing projects.",
+      }),
       tech: ["React", "TypeScript", "Angular", "Stencil", "MySQL", "JAVA"],
     },
     {
-      title: t("projects.postcodeloterij.title"),
-      description: t("projects.postcodeloterij.description"),
+      title: t("projects.postcodeloterij.title", {
+        defaultValue: "Postcode Loterij",
+      }),
+      description: t("projects.postcodeloterij.description", {
+        defaultValue:
+          "Postcode Loterij is a platform for creating and managing projects.",
+      }),
       tech: ["Next.js", "Tailwind CSS", "React", "AWS Lambda", "Gitlab CI"],
     },
     {
-      title: t("projects.athlon.title", "Athlon – Migratie & Herbouw"),
-      description: t("projects.athlon.description"),
+      title: t("projects.athlon.title", {
+        defaultValue: "Athlon – Migratie & Herbouw",
+      }),
+      description: t("projects.athlon.description", {
+        defaultValue:
+          "Athlon is a platform for creating and managing projects.",
+      }),
       tech: ["Angular", "RxJS", "SCSS", "JAVA", "KeyCloak"],
     },
   ];
 
   return (
     <section className="py-16 bg-white text-textMain">
-      <SectionTitle title={t("projects.title", "Project Highlights")} />
+      <SectionTitle
+        title={t("projects.title", { defaultValue: "Project Highlights" })}
+      />
 
       <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
         {highlights.map((project, i) => (
@@ -54,10 +71,10 @@ export const ProjectHighlightsSection = () => {
       </div>
 
       <p className="mt-12 text-center text-base text-textMuted max-w-3xl mx-auto px-6">
-        {t(
-          "projects.cta.text",
-          "Bent u op zoek naar een ontwikkelaar die niet alleen bouwt, maar ook strategisch meedenkt over schaalbaarheid, snelheid en design? Iemand die UX, toegankelijkheid en samenwerking met business écht begrijpt?"
-        )}
+        {t("projects.cta.text", {
+          defaultValue:
+            "Bent u op zoek naar een ontwikkelaar die niet alleen bouwt, maar ook strategisch meedenkt over schaalbaarheid, snelheid en design? Iemand die UX, toegankelijkheid en samenwerking met business écht begrijpt?",
+        })}
       </p>
 
       <div className="mt-6 text-center">
@@ -65,7 +82,7 @@ export const ProjectHighlightsSection = () => {
           href="/contact"
           className="mt-6 inline-block px-6 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition focus:outline-none focus:ring-2 focus:ring-sky-400"
         >
-          {t("projects.cta.button", "Neem contact op")}
+          {t("projects.cta.button", { defaultValue: "Neem contact op" })}
         </Link>
       </div>
     </section>

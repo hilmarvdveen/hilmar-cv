@@ -1,14 +1,15 @@
-import { useTranslation } from "next-i18next";
+"use client";
+import { useTranslations } from "next-intl";
 import { SectionTitle } from "./SectionTitle";
-import { Tech } from "../../public/data/workHistory";
+import { Tech } from "../data/workHistory";
 
 export const TechStackSection = () => {
-  const { t: tHome } = useTranslation("home");
-  const { t: tWork } = useTranslation("work"); // if you ever need it
+  const tHome = useTranslations("home");
+  const tWork = useTranslations("work"); // if you ever need it
 
   const stackGroups = [
     {
-      label: tHome("tech.frontend", "Frontend"),
+      label: tHome("tech.frontend", { defaultValue: "Frontend" }),
       items: [
         Tech.HTML5,
         Tech.CSS3,
@@ -36,18 +37,18 @@ export const TechStackSection = () => {
       ],
     },
     {
-      label: tHome("tech.backend", "Backend & API"),
+      label: tHome("tech.backend", { defaultValue: "Backend & API" }),
       items: [
         Tech.CSharp,
         Tech.DotNetCore,
         Tech.AspNetMVC,
         Tech.Java8,
-        "Node.js",
-        "Express",
+        Tech.NodeJS,
+        Tech.Express,
         Tech.REST,
         Tech.OpenAPI,
         Tech.JWT,
-        "GraphQL",
+        Tech.GraphQL,
         Tech.API,
         Tech.CQRS,
         Tech.MediatorPattern,
@@ -58,29 +59,31 @@ export const TechStackSection = () => {
       ],
     },
     {
-      label: tHome("tech.architecture", "Architectuur & Patterns"),
+      label: tHome("tech.architecture", {
+        defaultValue: "Architectuur & Patterns",
+      }),
       items: [
-        "Monorepos (Nx)",
-        "Clean Architecture",
-        "Domain-Driven Design (DDD)",
+        Tech.MonoreposNx,
+        Tech.CleanArchitecture,
+        Tech.DomainDrivenDesign,
         Tech.CQRS,
-        "Event-driven design",
+        Tech.EventDrivenDesign,
         Tech.Microservices,
         Tech.ConfigurationDrivenUI,
         Tech.DataDrivenUI,
-        "SSR / SSG",
+        Tech.SSRSSG,
       ],
     },
     {
-      label: tHome("tech.devops", "Tooling & DevOps"),
+      label: tHome("tech.devops", { defaultValue: "Tooling & DevOps" }),
       items: [
         Tech.Git,
         Tech.Gitlab,
         Tech.Gitlabs,
-        "GitHub Actions",
-        "Bitbucket",
+        Tech.GitHubActions,
+        Tech.Bitbucket,
         Tech.AzureDevOps,
-        "CI/CD pipelines",
+        Tech.CICDPipelines,
         Tech.Jenkins,
         Tech.Tekton,
         Tech.ArgoCD,
@@ -97,21 +100,21 @@ export const TechStackSection = () => {
       ],
     },
     {
-      label: tHome("tech.testing", "Testing"),
+      label: tHome("tech.testing", { defaultValue: "Testing" }),
       items: [
         Tech.Jest,
-        "React Testing Library",
+        Tech.ReactTestingLibrary,
         Tech.Playwright,
         Tech.Cypress,
-        "Vitest",
+        Tech.Vitest,
         Tech.IntegrationTesting,
         Tech.xUnit,
       ],
     },
     {
-      label: tHome("tech.databases", "Databases"),
+      label: tHome("tech.databases", { defaultValue: "Databases" }),
       items: [
-        "PostgreSQL",
+        Tech.PostgreSQL,
         Tech.MSSQL,
         Tech.MySQL,
         Tech.AzureCosmosDB,
@@ -120,13 +123,13 @@ export const TechStackSection = () => {
       ],
     },
     {
-      label: tHome("tech.platforms", "Platforms & Cloud"),
+      label: tHome("tech.platforms", { defaultValue: "Platforms & Cloud" }),
       items: [
         Tech.Azure,
         Tech.AzureCloud,
-        "Vercel",
-        "Netlify",
-        "Firebase",
+        Tech.Vercel,
+        Tech.Netlify,
+        Tech.Firebase,
         Tech.AWSLambda,
         Tech.Kubernetes,
       ],
@@ -135,7 +138,7 @@ export const TechStackSection = () => {
 
   return (
     <section className="py-10 bg-bgLight text-textMain">
-      <SectionTitle title={tHome("tech.title", "Tech Stack")} />
+      <SectionTitle title={tHome("tech.title")} />
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
         {stackGroups.map((group, idx) => (
           <div key={idx}>
@@ -148,7 +151,7 @@ export const TechStackSection = () => {
                   key={i}
                   className="px-3 py-1 border border-gray-300 rounded-full bg-white shadow-sm"
                 >
-                  {tWork(item)}
+                  {tWork(item) || item}
                 </li>
               ))}
             </ul>

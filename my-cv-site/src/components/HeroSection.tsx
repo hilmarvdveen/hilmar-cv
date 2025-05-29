@@ -1,9 +1,10 @@
-import { useTranslation } from "next-i18next";
+"use client";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 
 export const HeroSection = () => {
-  const { t } = useTranslation("home");
+  const t = useTranslations("home");
 
   return (
     <section
@@ -39,7 +40,6 @@ export const HeroSection = () => {
             </Link>
             <Link
               href="/cv/hilmar-van-der-veen.pdf"
-              locale={false}
               download
               className="px-6 py-3 border border-emerald-600 text-emerald-700 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-emerald-600"
             >

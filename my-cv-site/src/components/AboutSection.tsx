@@ -1,14 +1,11 @@
 "use client";
-
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export const AboutSection = () => {
-  const { t } = useTranslation("home");
+  const t = useTranslations("home");
 
-  const bulletPoints = t("about.solutions", {
-    returnObjects: true,
-  }) as string[];
+  const bulletPoints = t.raw("about.solutions") as string[];
 
   return (
     <section className="bg-white py-16 text-textMain">

@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { useTranslation } from "next-i18next";
-import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
+import { useTranslations } from "next-intl";
 import {
   BriefcaseIcon,
   GlobeAltIcon,
   MapPinIcon,
 } from "@heroicons/react/16/solid";
-import { workHistory, WorkMode } from "../../public/data/workHistory";
+import { workHistory, WorkMode } from "../data/workHistory";
+import { ProvinceFeature, ProvinceGeoJSON } from "../models/Geo.model";
 
 // Constants
 const HOME_CITY_NAME = "Zandvoort";
@@ -81,7 +81,7 @@ export const NetherlandsMap = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { t, i18n } = useTranslation("home");
+  const t = useTranslations("home");
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -134,8 +134,8 @@ export const NetherlandsMap = () => {
         <div style="font-weight:600; margin-bottom: 0.25rem;">
           ${
             city === homeCity
-              ? t("map.legend.home", "My home location")
-              : t("map.workedIn", "Worked in")
+              ? t("map.legend.home", { defaultValue: "My home location" })
+              : t("map.workedIn", { defaultValue: "Worked in" })
           } ${city}
         </div>
         <ul style="margin: 0; padding: 0; list-style: none;">
@@ -231,18 +231,23 @@ export const NetherlandsMap = () => {
 
       // 🧭 Legend
       const legendItems = [
-        { type: "home", label: t("map.legend.home", "My home location") },
+        {
+          type: "home",
+          label: t("map.legend.home", { defaultValue: "My home location" }),
+        },
         {
           color: COLORS.cityDot,
-          label: t("map.legend.city", "City where I worked"),
+          label: t("map.legend.city", { defaultValue: "City where I worked" }),
         },
         {
           color: COLORS.highlighted,
-          label: t("map.legend.highlighted", "Province I worked in"),
+          label: t("map.legend.highlighted", {
+            defaultValue: "Province I worked in",
+          }),
         },
         {
           color: COLORS.defaultProvince,
-          label: t("map.legend.other", "Other province"),
+          label: t("map.legend.other", { defaultValue: "Other province" }),
         },
       ];
 
@@ -283,7 +288,7 @@ export const NetherlandsMap = () => {
     };
 
     drawMap();
-  }, [i18n.language, t]);
+  }, [t]);
 
   return (
     <section className="container mx-auto flex flex-col lg:flex-row gap-6 lg:max-w-7xl">
@@ -336,8 +341,8 @@ export const NetherlandsMap = () => {
                   {entry.mode === WorkMode.Remote
                     ? "Remote"
                     : entry.mode === WorkMode.OnSite
-                    ? "On-site"
-                    : "Hybrid"}
+                      ? "On-site"
+                      : "Hybrid"}
                 </span>
               </div>
             </li>

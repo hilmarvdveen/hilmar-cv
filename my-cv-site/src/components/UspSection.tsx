@@ -1,4 +1,5 @@
-import { useTranslation } from "next-i18next";
+"use client";
+import { useTranslations } from "next-intl";
 import { SectionTitle } from "./SectionTitle";
 import { Icon, IconName } from "./Icon";
 
@@ -12,11 +13,11 @@ const iconNames: IconName[] = [
 ];
 
 export const UspSection = () => {
-  const { t } = useTranslation("home");
+  const t = useTranslations("home");
 
   return (
     <section className="py-16 bg-bgLight text-textMain">
-      <SectionTitle title={t("usp.title")} />
+      <SectionTitle title={t("usp.title", { defaultValue: "Usp" })} />
       <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
         {iconNames.map((iconName, i) => (
           <div

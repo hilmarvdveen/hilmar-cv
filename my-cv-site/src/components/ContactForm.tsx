@@ -1,9 +1,11 @@
+"use client";
+
 import { useState } from "react";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 export default function ContactForm() {
-  const { t } = useTranslation("contact");
-  const interestTags = t("form.interests", { returnObjects: true }) as string[];
+  const t = useTranslations("contact");
+  const interestTags = t.raw("form.interests") as string[];
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [formData, setFormData] = useState({
@@ -25,7 +27,10 @@ export default function ContactForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +73,7 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       className="bg-[#f1f5f9] p-6 rounded-lg shadow space-y-6"
     >
-      <h2 className="text-xl font-semibold">{t("form.title", "Contact me")}</h2>
+      <h2 className="text-xl font-semibold">{t("form.title")}</h2>
 
       <div>
         <p className="text-sm font-medium text-gray-800 mb-2">
