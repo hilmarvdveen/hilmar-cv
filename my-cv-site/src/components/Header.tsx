@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   User,
+  Calendar,
 } from "lucide-react";
 
 export const Header = () => {
@@ -40,6 +41,12 @@ export const Header = () => {
         label: t("nav.projects"),
         icon: FolderOpen,
         description: "My work portfolio",
+      },
+      {
+        href: "/book",
+        label: "Book Me",
+        icon: Calendar,
+        description: "Start a project",
       },
       {
         href: "/contact",

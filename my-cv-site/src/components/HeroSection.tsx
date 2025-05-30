@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Download } from "lucide-react";
+import { Download, Calendar, Phone } from "lucide-react";
 
 export const HeroSection = () => {
   const t = useTranslations("home");
@@ -32,22 +32,35 @@ export const HeroSection = () => {
             {t("hero.description")}
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Primary CTA - Book Me Now */}
             <Link
-              href="/contact"
-              className="group flex items-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-lg hover:scale-105"
+              href="/book"
+              className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-xl hover:scale-105 text-base"
             >
-              <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-              <span>{t("hero.contact")}</span>
+              <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+              <span>Book Me Now</span>
             </Link>
-            <Link
-              href="/cv/hilmar-van-der-veen.pdf"
-              download
-              className="group flex items-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-700 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg hover:scale-105"
-            >
-              <Download className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-              <span>{t("hero.downloadCv")}</span>
-            </Link>
+
+            {/* Secondary Actions */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
+              >
+                <Phone className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                <span>Schedule a call</span>
+              </Link>
+
+              <Link
+                href="/cv/hilmar-van-der-veen.pdf"
+                download
+                className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
+              >
+                <Download className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                <span>Download CV</span>
+              </Link>
+            </div>
           </div>
         </div>
 
