@@ -2,6 +2,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
+import { Mail, Download } from "lucide-react";
 
 export const HeroSection = () => {
   const t = useTranslations("home");
@@ -34,16 +35,18 @@ export const HeroSection = () => {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/contact"
-              className="px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-700"
+              className="group flex items-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-lg hover:scale-105"
             >
-              {t("hero.contact")}
+              <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+              <span>{t("hero.contact")}</span>
             </Link>
             <Link
               href="/cv/hilmar-van-der-veen.pdf"
               download
-              className="px-6 py-3 border border-emerald-600 text-emerald-700 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              className="group flex items-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-700 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg hover:scale-105"
             >
-              {t("hero.downloadCv")}
+              <Download className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+              <span>{t("hero.downloadCv")}</span>
             </Link>
           </div>
         </div>

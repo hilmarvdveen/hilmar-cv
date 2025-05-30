@@ -3,11 +3,7 @@
 import { useTranslations, useMessages } from "next-intl";
 import { workHistory } from "../data/workHistory";
 import Image from "next/image";
-import {
-  MapPinIcon,
-  GlobeAltIcon,
-  LanguageIcon,
-} from "@heroicons/react/24/outline";
+import { MapPin, Globe, Languages } from "lucide-react";
 
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
@@ -70,15 +66,15 @@ export const WorkExperienceSection = () => {
 
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600 mb-4">
                   <span className="inline-flex items-center gap-1">
-                    <MapPinIcon className="w-4 h-4" />
+                    <MapPin className="w-4 h-4" />
                     {location}
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <GlobeAltIcon className="w-4 h-4" />
+                    <Globe className="w-4 h-4" />
                     {t(entry.mode, { defaultValue: entry.mode })}
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <LanguageIcon className="w-4 h-4" />
+                    <Languages className="w-4 h-4" />
                     {t(entry.language, { defaultValue: entry.language })}
                   </span>
                 </div>
