@@ -4,13 +4,7 @@ import { Client } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import nodemailer from 'nodemailer';
 
-// This should be stored securely (e.g. in Vercel environment variables)
-const MICROSOFT_CLIENT_ID = process.env.MS_CLIENT_ID!;
-const MICROSOFT_CLIENT_SECRET = process.env.MS_CLIENT_SECRET!;
-const MICROSOFT_TENANT_ID = process.env.MS_TENANT_ID!;
 const BOOKING_EMAIL = "booking@hilmarvanderveen.com";
-const SMTP_USER = process.env.SMTP_USER!;
-const SMTP_PASS = process.env.SMTP_PASS!;
 
 interface BookingData {
   name: string;
@@ -19,14 +13,14 @@ interface BookingData {
   message?: string;
 }
 
-async function getMicrosoftAccessToken() {
-  const res = await fetch(`https://login.microsoftonline.com/${MICROSOFT_TENANT_ID}/oauth2/v2.0/token`, {
+async function getMicrosoftAccessToken(clientId: string, clientSecret: string, tenantId: string) {
+  const res = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      client_id: MICROSOFT_CLIENT_ID,
-      client_secret: MICROSOFT_CLIENT_SECRET,
+      client_id: clientId,
+      client_secret: clientSecret,
       scope: "https://graph.microsoft.com/.default"
     }),
   });
@@ -65,17 +59,17 @@ async function createCalendarEvent(accessToken: string, { name, email, date, mes
   });
 }
 
-async function sendConfirmationEmail({ name, email, date }: BookingData) {
+async function sendConfirmationEmail({ name, email, date }: BookingData, smtpUser: string, smtpPass: string) {
   const transporter = nodemailer.createTransport({
     service: "Office365",
     auth: {
-      user: SMTP_USER,
-      pass: SMTP_PASS,
+      user: smtpUser,
+      pass: smtpPass,
     },
   });
 
   await transporter.sendMail({
-    from: `Hilmar van der Veen <${SMTP_USER}>`,
+    from: `Hilmar van der Veen <${smtpUser}>`,
     to: email,
     subject: "Booking Confirmation",
     html: `<p>Hi ${name},</p><p>Your booking has been scheduled for <strong>${new Date(date).toLocaleString('nl-NL')}</strong>.</p><p>We'll contact you soon!</p>`,
@@ -84,6 +78,18 @@ async function sendConfirmationEmail({ name, email, date }: BookingData) {
 
 export async function POST(req: NextRequest) {
   try {
+    // Get environment variables
+    const clientId = process.env.MS_CLIENT_ID;
+    const clientSecret = process.env.MS_CLIENT_SECRET;
+    const tenantId = process.env.MS_TENANT_ID;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+
+    if (!clientId || !clientSecret || !tenantId || !smtpUser || !smtpPass) {
+      console.error("Missing required environment variables for booking service");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
+
     const body = await req.json();
     const { name, email, date, message } = body;
 
@@ -91,9 +97,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const token = await getMicrosoftAccessToken();
+    const token = await getMicrosoftAccessToken(clientId, clientSecret, tenantId);
     await createCalendarEvent(token, { name, email, date, message });
-    await sendConfirmationEmail({ name, email, date });
+    await sendConfirmationEmail({ name, email, date }, smtpUser, smtpPass);
 
     return NextResponse.json({ success: true });
   } catch (error) {

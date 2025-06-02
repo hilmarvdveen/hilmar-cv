@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
 interface ContactFormRequest {
@@ -8,36 +8,34 @@ interface ContactFormRequest {
   interests?: string[];
 }
 
-const resendApiKey = process.env.RESEND_API_KEY!;
-const emailFrom = process.env.EMAIL_FROM!;
-const emailTo = process.env.EMAIL_TO!;
-
-if (!resendApiKey || !emailFrom || !emailTo) {
-  throw new Error("EMAIL_FROM, or EMAIL_TO env variables.");
-}
-
-const resend = new Resend(resendApiKey);
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<{ success?: boolean; error?: string }>
-): Promise<void> {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    res.status(405).json({ error: "Method Not Allowed" });
-    return;
-  }
-
-  const { name, email, message, interests } = req.body as Partial<ContactFormRequest>;
-
-  if (!name || !email || !message) {
-    res.status(400).json({ error: "All fields (name, email, message) are required." });
-    return;
-  }
-
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM;
+    const emailTo = process.env.EMAIL_TO;
+
+    if (!resendApiKey || !emailFrom || !emailTo) {
+      console.error("Missing required environment variables: RESEND_API_KEY, EMAIL_FROM, or EMAIL_TO");
+      return NextResponse.json(
+        { error: "Server configuration error. Please contact administrator." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
+
+    const body = await request.json() as Partial<ContactFormRequest>;
+    const { name, email, message, interests } = body;
+
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: "All fields (name, email, message) are required." },
+        { status: 400 }
+      );
+    }
+
     const interestText = interests?.length
-      ? `\n\nInteresses:\n- ${interests.join("\n- ")}`
+      ? `\n\nInteressen:\n- ${interests.join("\n- ")}`
       : "";
 
     await resend.emails.send({
@@ -48,10 +46,13 @@ export default async function handler(
       text: `Afzender: ${name}\nEmail: ${email}\n\nBericht:\n${message}${interestText}`,
     });
 
-    res.status(200).json({ success: true });
+    return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Email sending failed:", err);
     const error = err instanceof Error ? err.message : "Unexpected error occurred.";
-    res.status(500).json({ error });
+    return NextResponse.json(
+      { error },
+      { status: 500 }
+    );
   }
 }
