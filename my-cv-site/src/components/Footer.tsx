@@ -193,16 +193,20 @@ export const Footer = () => {
               <p className="text-gray-400 text-sm mb-4">
                 Get tech insights and project updates delivered to your inbox.
               </p>
-              <div className="flex">
+              <form className="flex">
                 <input
                   type="email"
+                  name="newsletter-email"
                   placeholder="your@email.com"
                   className="flex-1 px-4 py-2 bg-white/10 border border-emerald-600/30 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
                 />
-                <button className="px-4 py-2 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-500 transition-colors duration-200 flex items-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-500 transition-colors duration-200 flex items-center"
+                >
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
-              </div>
+              </form>
             </div>
 
             {/* Social Links */}

@@ -8,6 +8,9 @@
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 
+  /* Header height for consistent spacing */
+  --header-height: 73px;
+
   --color-red-500: oklch(63.7% 0.237 25.331);
   --color-red-600: oklch(57.7% 0.245 27.325);
   --color-orange-500: oklch(70.5% 0.213 47.604);
@@ -205,4 +208,28 @@
     --width: 120px; /* Smaller for very small screens */
     --height: 60px;
   }
+}
+
+/* Mobile Drawer Animation */
+.mobile-drawer-enter {
+  transform: translateX(100%);
+}
+
+.mobile-drawer-enter-active {
+  transform: translateX(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.mobile-drawer-exit {
+  transform: translateX(0);
+}
+
+.mobile-drawer-exit-active {
+  transform: translateX(100%);
+  transition: transform 300ms ease-in-out;
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.mobile-menu-open {
+  overflow: hidden;
 }

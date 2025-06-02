@@ -183,7 +183,11 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="h-full flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
-          <main className="flex-1" role="main">
+          <main
+            className="flex-1"
+            role="main"
+            style={{ paddingTop: "var(--header-height)" }}
+          >
             {children}
           </main>
           <Footer />
