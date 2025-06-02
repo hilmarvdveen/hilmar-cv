@@ -79,7 +79,7 @@ export const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-5000 w-full bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
       <nav className="max-w-7xl mx-auto px-6 py-2">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -143,7 +143,7 @@ export const Header = () => {
               </button>
 
               {isLanguageOpen && (
-                <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
+                <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-[60]">
                   {locales.map((locale) => (
                     <button
                       key={locale.code}
@@ -166,19 +166,20 @@ export const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+            className="lg:hidden p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             ) : (
-              <Menu className="w-5 h-5" />
+              <Menu className="w-6 h-6" />
             )}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-4 pt-4 border-t border-gray-200">
+          <div className="lg:hidden mt-4 pt-4 border-t border-gray-200 relative z-[55]">
             <div className="space-y-1">
               {navItems.map((item) => {
                 const isActive =
@@ -192,36 +193,35 @@ export const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    locale={currentLocale}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-3 px-3 py-3 text-sm font-medium rounded-md transition-colors duration-200 ${
+                    className={`flex items-center space-x-3 px-4 py-4 text-base font-medium rounded-lg transition-colors duration-200 touch-manipulation ${
                       isActive
                         ? "text-blue-600 bg-blue-50"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-5 h-5" />
                     <span>{item.label}</span>
                   </Link>
                 );
               })}
 
               {/* Mobile Language Switcher */}
-              <div className="pt-3 mt-3 border-t border-gray-200">
-                <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="pt-4 mt-4 border-t border-gray-200">
+                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Language
                 </div>
                 {locales.map((locale) => (
                   <button
                     key={locale.code}
                     onClick={() => changeLanguage(locale.code)}
-                    className={`w-full flex items-center space-x-2 px-3 py-2 text-sm text-left rounded-md transition-colors duration-200 ${
+                    className={`w-full flex items-center space-x-3 px-4 py-4 text-base text-left rounded-lg transition-colors duration-200 touch-manipulation ${
                       currentLocale === locale.code
                         ? "text-blue-600 bg-blue-50"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
                     }`}
                   >
-                    <span className="text-base">{locale.flag}</span>
+                    <span className="text-lg">{locale.flag}</span>
                     <span>{locale.label}</span>
                   </button>
                 ))}
@@ -234,8 +234,12 @@ export const Header = () => {
       {/* Backdrop */}
       {(isLanguageOpen || isMobileMenuOpen) && (
         <div
-          className="fixed inset-0 bg-black/10 z-40"
+          className="fixed inset-0 bg-black/10 z-[45]"
           onClick={() => {
+            setIsLanguageOpen(false);
+            setIsMobileMenuOpen(false);
+          }}
+          onTouchEnd={() => {
             setIsLanguageOpen(false);
             setIsMobileMenuOpen(false);
           }}
