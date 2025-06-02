@@ -3,7 +3,7 @@ import { Rocket, Star, Headphones, ArrowDown } from "lucide-react";
 
 export default function BookPage() {
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 text-white py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6">

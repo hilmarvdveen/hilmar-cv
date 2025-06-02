@@ -1,12 +1,12 @@
 import { FC } from "react";
 import {
-  LightBulbIcon,
-  CpuChipIcon,
-  PaintBrushIcon,
-  ArrowsRightLeftIcon,
-  UsersIcon,
-  RocketLaunchIcon,
-} from "@heroicons/react/24/outline";
+  Lightbulb,
+  Cpu,
+  Paintbrush,
+  ArrowLeftRight,
+  Users,
+  Rocket,
+} from "lucide-react";
 
 export type IconName =
   | "idea"
@@ -17,12 +17,12 @@ export type IconName =
   | "scale";
 
 const iconMap: Record<IconName, FC<{ className?: string }>> = {
-  idea: LightBulbIcon,
-  ai: CpuChipIcon,
-  design: PaintBrushIcon,
-  integration: ArrowsRightLeftIcon,
-  mentorship: UsersIcon,
-  scale: RocketLaunchIcon,
+  idea: Lightbulb,
+  ai: Cpu,
+  design: Paintbrush,
+  integration: ArrowLeftRight,
+  mentorship: Users,
+  scale: Rocket,
 };
 
 interface IconProps {

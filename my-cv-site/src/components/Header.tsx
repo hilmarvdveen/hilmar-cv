@@ -11,9 +11,10 @@ import {
   ChevronDown,
   Menu,
   X,
-  User,
   Calendar,
+  Briefcase,
 } from "lucide-react";
+import Image from "next/image";
 
 export const Header = () => {
   const t = useTranslations("common");
@@ -34,7 +35,13 @@ export const Header = () => {
         href: "/",
         label: t("nav.home"),
         icon: Home,
-        description: "Homepage",
+        description: "Back to homepage",
+      },
+      {
+        href: "/services",
+        label: t("nav.services"),
+        icon: Briefcase,
+        description: "Services overview",
       },
       {
         href: "/projects",
@@ -62,7 +69,7 @@ export const Header = () => {
     const segments = pathname.split("/");
     segments[1] = newLocale;
     const newPath = segments.join("/");
-    router.replace(newPath);
+    router.replace(newPath, { scroll: false });
     setIsLanguageOpen(false);
     setIsMobileMenuOpen(false);
   };
@@ -72,13 +79,19 @@ export const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
-      <nav className="max-w-7xl mx-auto px-6 py-4">
+    <header className="sticky top-0 z-5000 w-full bg-white border-b border-gray-200">
+      <nav className="max-w-7xl mx-auto px-6 py-2">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <span className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
-              <User className="w-4 h-4" />
+            <span className="w-14 h-14  rounded-lg flex items-center justify-center text-white">
+              <Image
+                className="w-14 h-14"
+                src="/images/logo_v1.svg"
+                alt={t("images.logoAlt")}
+                width={56}
+                height={56}
+              />
             </span>
             <span className="text-lg font-semibold text-gray-900">
               {t("home.name")}

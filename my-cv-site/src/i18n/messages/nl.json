@@ -4,13 +4,13 @@
             "greeting": "Op zoek naar een technische partner?",
             "title": {
                 "first": "Van concept tot oplevering,",
-                "second": "gebouwd en geleverd door",
+                "second": "gebouwd en opgeleverd door",
                 "name": "Hilmar van der Veen"
             },
-            "description": "Ik help bedrijven en ondernemers bij het bouwen van schaalbare websites, slimme webapplicaties en technische integraties. Of het nu gaat om een marketingsite of een configuratiegedreven enterprise frontend: ik lever toegankelijke interfaces, solide architectuur en backend-koppelingen die gewoon werken.",
-            "downloadCv": "Download CV",
+            "description": "Ik help bedrijven en ondernemers om schaalbare websites, slimme web-apps en technische integraties te bouwen. Of het nu gaat om een marketing site of een configuratie-gedreven enterprise frontend: ik lever toegankelijke interfaces, solide architectuur en backend-koppelingen die gewoon werken.",
+            "downloadCv": "CV downloaden",
             "contact": "Plan een gesprek",
-            "imageAlt": "Portret van Hilmar van der Veen",
+            "imageAlt": "Portret van Hilmar van der Veen, Senior Frontend Developer",
             "name": "Hilmar van der Veen"
         },
         "usp": {
@@ -101,6 +101,13 @@
             "title": "Klaar om samen te bouwen?",
             "subtitle": "Neem contact op en ontdek hoe ik jouw frontend naar het volgende niveau kan tillen.",
             "button": "Plan een kennismaking"
+        },
+        "clientLogos": {
+            "title": "Vertrouwd door toonaangevende organisaties",
+            "subtitle": "Ik werk samen met vooraanstaande bedrijven en organisaties om hun digitale ambities waar te maken",
+            "indicator1": "15+ jaar ervaring",
+            "indicator2": "50+ projecten opgeleverd",
+            "indicator3": "Overheden & enterprise"
         }
     },
     "work": {
@@ -522,16 +529,173 @@
         "home": {
             "name": "Hilmar van der Veen",
             "role": "Senior Frontend Developer",
-            "summary": "Met meer dan 7 jaar ervaring bouw ik schaalbare en toegankelijke webapplicaties met React, Next.js en Angular. Ik leid teams, begeleid junioren en werk aan design systems en datagedreven architecturen.",
+            "summary": "Met meer dan 7 jaar ervaring bouw ik schaalbare en toegankelijke web applicaties met React, Next.js en Angular. Ik leid teams, mentor junioren en werk aan design systems en data-gedreven architecturen.",
             "downloadCv": "Download mijn CV (PDF)"
         },
         "nav": {
             "home": "Home",
             "projects": "Projecten",
-            "contact": "Contact"
+            "contact": "Contact",
+            "faq": "FAQ",
+            "services": "Diensten"
+        },
+        "images": {
+            "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
+            "companyLogoAlt": "{company} bedrijfslogo"
         }
     },
     "notFound": {
         "title": "Pagina niet gevonden"
+    },
+    "faq": {
+        "breadcrumb": "FAQ",
+        "badge": "Veelgestelde Vragen",
+        "hero": {
+            "title": "Alles Wat Je Moet",
+            "subtitle": "Weten",
+            "description": "Vind antwoorden op de meest gestelde vragen over samenwerken met mij, mijn diensten, prijzen en projectaanpak. Kan je niet vinden wat je zoekt? Neem gerust direct contact op.",
+            "features": {
+                "quick": "Snelle reacties",
+                "expert": "Expert begeleiding",
+                "remote": "Remote samenwerking"
+            }
+        },
+        "quickNav": {
+            "title": "Blader per Categorie"
+        },
+        "categories": {
+            "general": {
+                "title": "Algemene Vragen",
+                "questions": [
+                    {
+                        "question": "Wie is Hilmar en wat doet hij?",
+                        "answer": "Ik ben Hilmar van der Veen, een senior full-stack ontwikkelaar met 15+ jaar ervaring. Ik ben gespecialiseerd in het bouwen van schaalbare webapplicaties, frontend development, design systems en technisch advies. Ik help bedrijven hun digitale aanwezigheid transformeren en ontwikkelprocessen optimaliseren."
+                    },
+                    {
+                        "question": "Wat maakt jouw aanpak anders?",
+                        "answer": "Ik combineer technische expertise met strategisch denken. Ik programmeer niet alleen - ik analyseer je zakelijke behoeften, beveel optimale oplossingen aan en bouw voor lange termijn schaalbaarheid. Mijn focus ligt op het creëren van onderhoudbare, toegankelijke en performance-geoptimaliseerde applicaties die meegroeien met je business."
+                    },
+                    {
+                        "question": "Werk je met startups of alleen enterprise bedrijven?",
+                        "answer": "Ik werk met beide! Van early-stage startups die hun eerste MVP nodig hebben tot enterprise organisaties die complexe systeemintegraties vereisen. Ik pas mijn aanpak aan op basis van je fase, budget en technische vereisten."
+                    },
+                    {
+                        "question": "In welke technologieën ben je gespecialiseerd?",
+                        "answer": "Mijn core expertise omvat:\n• Frontend: React, Next.js, Vue.js, Angular, TypeScript\n• Backend: Node.js, .NET Core, REST/GraphQL APIs\n• Styling: Tailwind CSS, styled-components, SCSS\n• Tools: Storybook, Jest, Docker, AWS, Azure\n• Methodieken: Agile, TDD, Design Systems, WCAG compliance"
+                    },
+                    {
+                        "question": "Ben je beschikbaar voor remote werk?",
+                        "answer": "Ja, ik werk voornamelijk remote en heb uitgebreide ervaring met gedistribueerde teams. Ik ben gevestigd in Nederland maar werk effectief samen met internationale klanten. Ik ben ook beschikbaar voor on-site werk wanneer nodig, vooral voor strategische sessies of team workshops."
+                    }
+                ]
+            },
+            "services": {
+                "title": "Diensten & Expertise",
+                "questions": [
+                    {
+                        "question": "Welke frontend development diensten bied je aan?",
+                        "answer": "Ik bied uitgebreide frontend development diensten:\n• Moderne React/Next.js applicaties\n• Vue.js en Angular projecten\n• Mobile-responsive design implementatie\n• Performance optimalisatie en SEO\n• Toegankelijkheid (WCAG) compliance\n• Progressive Web Apps (PWAs)\n• Integratie met headless CMS systemen"
+                    },
+                    {
+                        "question": "Kun je helpen met full-stack development?",
+                        "answer": "Absoluut! Ik bied end-to-end development diensten:\n• Backend API development (Node.js, .NET Core)\n• Database ontwerp en optimalisatie\n• Authenticatie en security implementatie\n• Cloud deployment en DevOps\n• Third-party integraties\n• Real-time features met WebSockets"
+                    },
+                    {
+                        "question": "Maak je design systems?",
+                        "answer": "Ja, ik ben gespecialiseerd in het bouwen van schaalbare design systems:\n• Component libraries met Storybook documentatie\n• Design tokens en theming systemen\n• Herbruikbare UI componenten\n• Brand consistentie richtlijnen\n• Developer documentatie en gebruiksvoorbeelden\n• Integratie met design tools zoals Figma"
+                    },
+                    {
+                        "question": "Wat voor technisch advies bied je?",
+                        "answer": "Mijn advies diensten omvatten:\n• Architectuur reviews en aanbevelingen\n• Code kwaliteit audits en optimalisatie\n• Team mentoring en skill development\n• Technology stack planning\n• Performance analyse en verbeteringen\n• Legacy systeem modernisatie strategieën\n• DevOps en deployment optimalisatie"
+                    },
+                    {
+                        "question": "Kun je helpen met het migreren van legacy applicaties?",
+                        "answer": "Ja, ik heb uitgebreide ervaring met legacy modernisatie:\n• Angular 1.x naar moderne Angular/React migratie\n• jQuery naar moderne JavaScript frameworks\n• Monoliet naar microservices architectuur\n• Legacy CSS naar moderne CSS frameworks\n• Database migratie en optimalisatie\n• Geleidelijke migratie strategieën om downtime te minimaliseren"
+                    }
+                ]
+            },
+            "pricing": {
+                "title": "Prijzen & Samenwerking",
+                "questions": [
+                    {
+                        "question": "Hoe structureer je je prijzen?",
+                        "answer": "Ik bied flexibele prijsmodellen voor verschillende behoeften:\n• Uurtarief: €85-125/uur afhankelijk van project complexiteit\n• Dagtarief: €650-950/dag voor langere samenwerkingen\n• Vaste project prijzen: Voor goed gedefinieerde scopes\n• Retainer overeenkomsten: Voor lopende support en development\n\nIk verstrek gedetailleerde schattingen na het begrijpen van je vereisten."
+                    },
+                    {
+                        "question": "Bied je gratis consultaties aan?",
+                        "answer": "Ja! Ik bied een gratis 30-minuten initiële consultatie om:\n• Je project vereisten te begrijpen\n• Mogelijke benaderingen en oplossingen te bespreken\n• Globale tijd en kosten schattingen te geven\n• Te bepalen of we een goede match zijn voor samenwerking\n\nDit helpt ons beide om geïnformeerde beslissingen te nemen voordat we beginnen met betaald werk."
+                    },
+                    {
+                        "question": "Wat is inbegrepen in je project schattingen?",
+                        "answer": "Mijn schattingen bevatten:\n• Gedetailleerde project breakdown en timeline\n• Technische architectuur aanbevelingen\n• Risico assessment en mitigatie strategieën\n• Testing en kwaliteitsborging aanpak\n• Deployment en go-live support\n• Documentatie en knowledge transfer\n• Post-launch support opties"
+                    },
+                    {
+                        "question": "Vraag je vooruitbetaling?",
+                        "answer": "Voor project werk vraag ik doorgaans:\n• 25-50% vooruit voor projecten onder €10.000\n• Milestone-gebaseerde betalingen voor grotere projecten\n• Maandelijkse facturering voor lopende retainers\n• Netto 30 betalingsvoorwaarden voor vaste klanten\n\nDit zorgt voor project momentum terwijl beide partijen beschermd zijn."
+                    },
+                    {
+                        "question": "Wat gebeurt er als de project scope verandert?",
+                        "answer": "Scope veranderingen zijn gebruikelijk en beheersbaar:\n• Ik documenteer alle veranderingen met impact analyse\n• Verstrek bijgewerkte timelines en kostenschattingen\n• Verkrijg schriftelijke goedkeuring voordat ik doorgaan\n• Gebruik agile methodieken om veranderingen te accommoderen\n• Behoud transparante communicatie gedurende het hele proces\n\nMijn doel is flexibiliteit terwijl project succes behouden blijft."
+                    }
+                ]
+            },
+            "process": {
+                "title": "Proces & Timeline",
+                "questions": [
+                    {
+                        "question": "Hoe ziet je ontwikkelproces eruit?",
+                        "answer": "Mijn typische proces omvat:\n\n1. Discovery & Planning (1-2 weken)\n   • Requirements gathering\n   • Technische architectuur ontwerp\n   • Project timeline creatie\n\n2. Design & Prototyping (1-3 weken)\n   • UI/UX design of review\n   • Technische proof of concepts\n   • Stakeholder feedback integratie\n\n3. Development & Testing (varieert)\n   • Agile development sprints\n   • Regelmatige demo's en feedback\n   • Continue testing en kwaliteitsborging\n\n4. Deployment & Launch\n   • Productie deployment\n   • Performance monitoring\n   • Gebruikerstraining en documentatie"
+                    },
+                    {
+                        "question": "Hoe lang duurt een typisch project?",
+                        "answer": "Project timelines variëren significant op basis van complexiteit:\n\n• Eenvoudige landing pages: 1-2 weken\n• Business websites: 2-6 weken\n• Web applicaties: 2-6 maanden\n• Enterprise systemen: 6-18 maanden\n• Design systems: 1-3 maanden\n\nIk verstrek gedetailleerde timeline schattingen tijdens de planning fase en gebruik agile methodieken om incrementeel waarde te leveren."
+                    },
+                    {
+                        "question": "Hoe ga je om met project communicatie?",
+                        "answer": "Ik houd transparante communicatie door:\n• Wekelijkse voortgangsrapporten en demo's\n• Slack/Teams voor dagelijkse communicatie\n• Video calls voor complexe discussies\n• Project management tools (Jira, Trello, etc.)\n• Gedeelde documentatie en code repositories\n• Regelmatige stakeholder check-ins\n\nJe weet altijd de project status en volgende stappen."
+                    },
+                    {
+                        "question": "Wat als ik veranderingen nodig heb tijdens development?",
+                        "answer": "Ik gebruik agile methodieken specifiek om veranderingen te accommoderen:\n• Regelmatige sprint reviews voor feedback\n• Flexibele scope binnen sprint grenzen\n• Change request proces voor grote wijzigingen\n• Impact analyse voor timeline en kosten implicaties\n• Continue stakeholder betrokkenheid\n\nHet doel is om exact te bouwen wat je nodig hebt, zelfs als vereisten evolueren."
+                    },
+                    {
+                        "question": "Bied je post-launch support?",
+                        "answer": "Ja, ik bied verschillende post-launch support opties:\n• 30-dagen garantie voor bug fixes\n• Maandelijkse retainer voor lopend onderhoud\n• On-demand support voor urgente issues\n• Performance monitoring en optimalisatie\n• Feature updates en verbeteringen\n• Security updates en patches\n\nIk zorg ervoor dat je applicatie veilig, performant en up-to-date blijft."
+                    }
+                ]
+            },
+            "collaboration": {
+                "title": "Samenwerking & Teams",
+                "questions": [
+                    {
+                        "question": "Kun je samenwerken met ons bestaande development team?",
+                        "answer": "Absoluut! Ik werk regelmatig samen met bestaande teams:\n• Code reviews en kwaliteitsverbeteringen\n• Knowledge transfer en mentoring\n• Pair programming sessies\n• Architectuur begeleiding en planning\n• Tijdelijke capaciteit uitbreiding\n• Legacy code modernisatie\n\nIk pas me aan je team's workflows en processen aan terwijl ik expertise en best practices bijdraag."
+                    },
+                    {
+                        "question": "Bied je team training en mentoring?",
+                        "answer": "Ja, ik bied uitgebreide team development:\n• Frontend best practices workshops\n• Code kwaliteit en review training\n• Moderne JavaScript/TypeScript educatie\n• React/Vue/Angular deep dives\n• Testing strategieën en implementatie\n• Performance optimalisatie technieken\n• Toegankelijkheid en WCAG compliance training\n\nInvestering in team skills biedt lange termijn waarde en zelfstandigheid."
+                    },
+                    {
+                        "question": "Hoe ga je om met intellectueel eigendom en NDA's?",
+                        "answer": "Ik neem IP bescherming serieus:\n• Onderteken uitgebreide NDA's voor project discussies\n• Alle werk product behoort toe aan de klant\n• Gebruik veilige development practices en tools\n• Handhaaf strikte vertrouwelijkheidsstandaarden\n• Verstrek schone code eigendom overdracht\n• Verwijder alle project materialen na voltooiing (indien gewenst)\n\nJe eigendomsinformatie en code zijn volledig beschermd."
+                    },
+                    {
+                        "question": "Kun je werken in onze tijdzone?",
+                        "answer": "Ik ben gevestigd in Nederland (CET/CEST) maar bied flexibele planning:\n• Core overlap uren met Europese teams\n• Vroege/late meetings voor US samenwerking\n• Asynchrone communicatie voor globale teams\n• Flexibele dagelijkse schema's tijdens project sprints\n• Weekend beschikbaarheid voor kritieke deployments\n\nIk zorg voor effectieve samenwerking ongeacht geografische locatie."
+                    },
+                    {
+                        "question": "Welke project management tools gebruik je?",
+                        "answer": "Ik heb ervaring met verschillende PM en development tools:\n• Project Management: Jira, Trello, Asana, Monday.com\n• Communicatie: Slack, Microsoft Teams, Discord\n• Code Management: GitHub, GitLab, Bitbucket\n• Documentatie: Confluence, Notion, GitBook\n• Design Samenwerking: Figma, Sketch, Adobe XD\n• Time Tracking: Toggl, Harvest, Clockify\n\nIk pas me aan je bestaande toolchain aan terwijl ik verbeteringen voorstel waar nuttig."
+                    }
+                ]
+            }
+        },
+        "cta": {
+            "title": "Nog Vragen?",
+            "description": "Ik ben er om te helpen! Neem contact op voor een gratis consultatie waar we je specifieke behoeften kunnen bespreken en hoe ik kan helpen je doelen te bereiken.",
+            "contact": "Stuur Bericht",
+            "book": "Boek Consultatie",
+            "call": "Bel Nu"
+        }
     }
 }

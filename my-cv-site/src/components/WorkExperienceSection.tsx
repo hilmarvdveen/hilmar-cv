@@ -7,6 +7,7 @@ import { MapPin, Globe, Languages } from "lucide-react";
 
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
+  const commonT = useTranslations("common");
   const messages = useMessages();
 
   return (
@@ -48,7 +49,9 @@ export const WorkExperienceSection = () => {
                   >
                     <Image
                       src={`/logos/${entry.logo}`}
-                      alt={`${entry.company} logo`}
+                      alt={commonT("images.companyLogoAlt", {
+                        company: entry.company,
+                      })}
                       fill
                       className="object-contain rounded"
                     />

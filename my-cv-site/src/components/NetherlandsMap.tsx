@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { useTranslations } from "next-intl";
-import {
-  BriefcaseIcon,
-  GlobeAltIcon,
-  MapPinIcon,
-} from "@heroicons/react/16/solid";
+import { Briefcase, Globe, MapPin, Home, Calendar, Users } from "lucide-react";
 import { workHistory, WorkMode } from "../data/workHistory";
 import { ProvinceFeature, ProvinceGeoJSON } from "../models/Geo.model";
 
@@ -15,18 +10,13 @@ import { ProvinceFeature, ProvinceGeoJSON } from "../models/Geo.model";
 const HOME_CITY_NAME = "Zandvoort";
 
 const COLORS = {
-  highlighted: "#0070f3",
-  defaultProvince: "#e5e5e5",
-  cityDot: "#dc2626",
-  cityDotStroke: "#fff",
-  tooltipBg: "white",
-  tooltipText: "black",
-};
-
-const FONT = {
-  family: "system-ui, sans-serif",
-  size: 12,
-  color: "#111",
+  primary: "#3b82f6",
+  primaryLight: "#dbeafe",
+  secondary: "#f3f4f6",
+  accent: "#10b981",
+  danger: "#ef4444",
+  text: "#1f2937",
+  textLight: "#6b7280",
 };
 
 const highlightedRegions = [
@@ -43,13 +33,15 @@ type CityLocation = {
   name: string;
   coordinates: [number, number];
   companies: string[];
+  isHome?: boolean;
 };
 
 const workCities: CityLocation[] = [
   {
     name: HOME_CITY_NAME,
     coordinates: [4.5386, 52.3749],
-    companies: ["Home Location"],
+    companies: ["Home Base"],
+    isHome: true,
   },
   {
     name: "Amsterdam",
@@ -81,7 +73,18 @@ export const NetherlandsMap = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const t = useTranslations("home");
+  const [selectedCity, setSelectedCity] = useState<CityLocation | null>(null);
+
+  const getWorkModeIcon = (mode: WorkMode) => {
+    switch (mode) {
+      case WorkMode.Remote:
+        return <Globe className="w-3 h-3" />;
+      case WorkMode.OnSite:
+        return <Briefcase className="w-3 h-3" />;
+      default:
+        return <Users className="w-3 h-3" />;
+    }
+  };
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -92,62 +95,34 @@ export const NetherlandsMap = () => {
     svg.selectAll("*").remove();
 
     const containerWidth = container.offsetWidth;
-    const aspectRatio = 600 / 700;
-    const mapWidth = containerWidth;
-    const mapHeight = containerWidth / aspectRatio;
+    const mapWidth = Math.min(containerWidth - 32, 500); // Account for padding
+    const mapHeight = mapWidth * 0.85;
 
     const projection = d3
       .geoMercator()
       .center([5.4, 52.2])
-      .scale(mapWidth * 13) // schaal evenredig met breedte
+      .scale(mapWidth * 11)
       .translate([mapWidth / 2, mapHeight / 2]);
 
     const pathGenerator = d3.geoPath().projection(projection);
 
-    const getRelativePosition = (event: MouseEvent) => {
-      const bounds = container.getBoundingClientRect();
-      return {
-        left: event.clientX - bounds.left + 10,
-        top: event.clientY - bounds.top - 20,
-      };
-    };
+    const isMobile = window.innerWidth < 768;
 
-    const showTooltip = (event: MouseEvent, html: string) => {
-      const { left, top } = getRelativePosition(event);
+    const showTooltip = (event: MouseEvent, content: string) => {
+      const bounds = container.getBoundingClientRect();
+      const left = event.clientX - bounds.left + 10;
+      const top = event.clientY - bounds.top - 10;
+
       tooltip
         .style("opacity", "1")
-        .style("left", `${left}px`)
-        .style("top", `${top}px`)
-        .html(html);
+        .style("left", `${Math.min(left, containerWidth - 200)}px`)
+        .style("top", `${Math.max(top, 10)}px`)
+        .html(content);
     };
 
     const hideTooltip = () => {
       tooltip.style("opacity", "0");
     };
-
-    const createCompanyTooltip = (
-      city: string,
-      companies: string[],
-      homeCity?: string
-    ) => `
-      <div>
-        <div style="font-weight:600; margin-bottom: 0.25rem;">
-          ${
-            city === homeCity
-              ? t("map.legend.home", { defaultValue: "My home location" })
-              : t("map.workedIn", { defaultValue: "Worked in" })
-          } ${city}
-        </div>
-        <ul style="margin: 0; padding: 0; list-style: none;">
-          ${companies
-            .map(
-              (c) =>
-                `<li style="padding-left: 1em; text-indent: -1em;">• ${c}</li>`
-            )
-            .join("")}
-        </ul>
-      </div>
-    `;
 
     const drawMap = async () => {
       const geoData = await d3.json<ProvinceGeoJSON>(
@@ -155,6 +130,7 @@ export const NetherlandsMap = () => {
       );
       if (!geoData) return;
 
+      // Draw provinces
       svg
         .selectAll<SVGPathElement, ProvinceFeature>("path")
         .data(geoData.features)
@@ -162,199 +138,344 @@ export const NetherlandsMap = () => {
         .attr("d", (d) => pathGenerator(d) ?? "")
         .attr("fill", (d) =>
           highlightedRegions.includes(d.properties.statnaam)
-            ? COLORS.highlighted
-            : COLORS.defaultProvince
+            ? COLORS.primaryLight
+            : COLORS.secondary
         )
-        .attr("stroke", "#333")
-        .attr("stroke-width", 0.5)
-        .on("mouseenter", (event, d) => {
-          d3.select(event.currentTarget).attr("fill", "#60a5fa");
-          showTooltip(event, `<strong>${d.properties.statnaam}</strong>`);
-        })
-        .on("mousemove", (event, d) =>
-          showTooltip(event, `<strong>${d.properties.statnaam}</strong>`)
-        )
-        .on("mouseleave", (event, d) => {
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", 1)
+        .style("cursor", "pointer")
+        .style("transition", "all 0.2s ease")
+        .on("mouseenter touchstart", (event, d) => {
           d3.select(event.currentTarget).attr(
             "fill",
             highlightedRegions.includes(d.properties.statnaam)
-              ? COLORS.highlighted
-              : COLORS.defaultProvince
+              ? COLORS.primary
+              : "#e5e7eb"
           );
-          hideTooltip();
+          if (!isMobile) {
+            showTooltip(
+              event,
+              `<div class="font-medium">${d.properties.statnaam}</div>`
+            );
+          }
+        })
+        .on("mouseleave touchend", (event, d) => {
+          d3.select(event.currentTarget).attr(
+            "fill",
+            highlightedRegions.includes(d.properties.statnaam)
+              ? COLORS.primaryLight
+              : COLORS.secondary
+          );
+          if (!isMobile) {
+            hideTooltip();
+          }
         });
 
-      // 🏠 Home
-      const home = workCities.find((c) => c.name === HOME_CITY_NAME)!;
-      const [homeX, homeY] = projection(home.coordinates)!;
-      svg
-        .append("foreignObject")
-        .attr("x", homeX - 10)
-        .attr("y", homeY - 10)
-        .attr("width", 20)
-        .attr("height", 20)
-        .html(
-          `<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 16px;">🏠</div>`
-        )
-        .on("mouseenter", (e) =>
-          showTooltip(
-            e,
-            createCompanyTooltip(home.name, home.companies, HOME_CITY_NAME)
-          )
-        )
-        .on("mousemove", (e) =>
-          showTooltip(
-            e,
-            createCompanyTooltip(home.name, home.companies, HOME_CITY_NAME)
-          )
-        )
-        .on("mouseleave", hideTooltip);
+      // Draw work cities with larger touch targets on mobile
+      const cityRadius = isMobile ? 8 : 6;
+      const cityHoverRadius = isMobile ? 12 : 8;
 
-      // 📍 Cities
       svg
-        .selectAll("circle")
-        .data(workCities.filter((c) => c.name !== HOME_CITY_NAME))
+        .selectAll(".work-city")
+        .data(workCities.filter((c) => !c.isHome))
         .join("circle")
+        .attr("class", "work-city")
         .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
         .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
-        .attr("r", 5)
-        .attr("fill", COLORS.cityDot)
-        .attr("stroke", COLORS.cityDotStroke)
-        .attr("stroke-width", 1.5)
-        .on("mouseenter", (e, d) =>
-          showTooltip(e, createCompanyTooltip(d.name, d.companies))
-        )
-        .on("mousemove", (e, d) =>
-          showTooltip(e, createCompanyTooltip(d.name, d.companies))
-        )
-        .on("mouseleave", hideTooltip);
-
-      // 🧭 Legend
-      const legendItems = [
-        {
-          type: "home",
-          label: t("map.legend.home", { defaultValue: "My home location" }),
-        },
-        {
-          color: COLORS.cityDot,
-          label: t("map.legend.city", { defaultValue: "City where I worked" }),
-        },
-        {
-          color: COLORS.highlighted,
-          label: t("map.legend.highlighted", {
-            defaultValue: "Province I worked in",
-          }),
-        },
-        {
-          color: COLORS.defaultProvince,
-          label: t("map.legend.other", { defaultValue: "Other province" }),
-        },
-      ];
-
-      const legend = svg.append("g").attr("transform", "translate(10, 40)");
-      legendItems.forEach((item, i) => {
-        const group = legend
-          .append("g")
-          .attr("transform", `translate(0, ${i * 24})`);
-        if (item.type === "home") {
-          group
-            .append("foreignObject")
-            .attr("x", 4)
-            .attr("y", 2)
-            .attr("width", 16)
-            .attr("height", 16)
-            .html(
-              `<div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 16px;">🏠</div>`
+        .attr("r", cityRadius)
+        .attr("fill", COLORS.accent)
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", 2)
+        .style("cursor", "pointer")
+        .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
+        .on("mouseenter touchstart", (e, d) => {
+          d3.select(e.currentTarget).attr("r", cityHoverRadius);
+          if (!isMobile) {
+            showTooltip(
+              e,
+              `
+              <div class="font-medium">${d.name}</div>
+              <div class="text-sm text-gray-600">${d.companies.length} company${d.companies.length > 1 ? "ies" : ""}</div>
+            `
             );
-        } else {
-          group
-            .append("circle")
-            .attr("cx", 10)
-            .attr("cy", 10)
-            .attr("r", 6)
-            .attr("fill", item.color!);
-        }
-        group
-          .append("text")
-          .attr("x", 28)
-          .attr("y", 12)
-          .attr("dominant-baseline", "middle")
-          .attr("font-size", FONT.size)
-          .style("font-family", FONT.family)
-          .style("fill", FONT.color)
-          .style("shape-rendering", "geometricPrecision")
-          .text(item.label);
-      });
+          }
+        })
+        .on("mouseleave", (e) => {
+          if (!isMobile) {
+            d3.select(e.currentTarget).attr("r", cityRadius);
+            hideTooltip();
+          }
+        })
+        .on("click touchend", (e, d) => {
+          e.preventDefault();
+          e.stopPropagation();
+          d3.select(e.currentTarget).attr("r", cityRadius);
+          setSelectedCity(d);
+          if (isMobile) {
+            hideTooltip();
+          }
+        });
+
+      // Draw home location with larger touch target on mobile
+      const homeRadius = isMobile ? 10 : 8;
+      const homeHoverRadius = isMobile ? 14 : 10;
+
+      const home = workCities.find((c) => c.isHome)!;
+      const [homeX, homeY] = projection(home.coordinates)!;
+
+      svg
+        .append("circle")
+        .attr("cx", homeX)
+        .attr("cy", homeY)
+        .attr("r", homeRadius)
+        .attr("fill", COLORS.danger)
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", 3)
+        .style("cursor", "pointer")
+        .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
+        .on("mouseenter touchstart", (e) => {
+          d3.select(e.currentTarget).attr("r", homeHoverRadius);
+          if (!isMobile) {
+            showTooltip(
+              e,
+              `
+              <div class="font-medium flex items-center gap-1">
+                <span>🏠</span> ${home.name}
+              </div>
+              <div class="text-sm text-gray-600">Home Base</div>
+            `
+            );
+          }
+        })
+        .on("mouseleave", (e) => {
+          if (!isMobile) {
+            d3.select(e.currentTarget).attr("r", homeRadius);
+            hideTooltip();
+          }
+        })
+        .on("click touchend", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          d3.select(e.currentTarget).attr("r", homeRadius);
+          setSelectedCity(home);
+          if (isMobile) {
+            hideTooltip();
+          }
+        });
     };
 
     drawMap();
-  }, [t]);
+
+    // Handle window resize for mobile responsiveness
+    const handleResize = () => {
+      drawMap();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const totalCompanies = workHistory.length;
+  const totalCities = workCities.length - 1; // Exclude home
+  const totalProvinces = highlightedRegions.length;
 
   return (
-    <section className="container mx-auto flex flex-col lg:flex-row gap-6 lg:max-w-7xl">
-      <div ref={containerRef} className="relative w-full">
-        <svg
-          ref={svgRef}
-          viewBox="0 0 600 700"
-          preserveAspectRatio="xMidYMid meet"
-          className="w-full md:aspect-[6/7] rounded shadow"
-          aria-label="Map of the Netherlands showing provinces and cities where Hilmar worked"
-        />
-        <div
-          ref={tooltipRef}
-          className="absolute pointer-events-none bg-white text-black text-sm px-2 py-1 rounded shadow"
-          style={{
-            opacity: 0,
-            zIndex: 999,
-            lineHeight: "1.4",
-            maxWidth: "200px",
-            transition: "opacity 0.2s ease-in-out",
-          }}
-        />
-      </div>
-      <div className="w-full  min-w-[300px] p-6 sm:p-8 bg-white rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-6 text-gray-900">
-          {t("map.companiesWorked")}
+    <section className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8">
+      {/* SEO-friendly header */}
+      <div className="text-center mb-6 md:mb-8">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
+          Work Experience Across the Netherlands
         </h2>
-
-        <ul className="grid gap-4">
-          {workHistory.map((entry) => (
-            <li
-              key={`${entry.company}-${entry.from}`}
-              className="p-4 flex flex-wrap  gap-x-3  gap-y-1  text-sm shadow-sm bg-gray-50 hover:shadow-md transition-shadow"
-            >
-              <p className="font-semibold text-gray-900 text-base">
-                {entry.company}
-              </p>
-              <span className="inline-flex items-center text-gray-700">
-                <MapPinIcon className="w-4 h-4 mr-1" />
-                {entry.location}
-              </span>
-              <div className="flex gap-x-3 gap-y-1 mt-2 text-xs text-gray-700">
-                <span className="inline-flex items-center">
-                  <BriefcaseIcon className="w-4 h-4 mr-1" />
-                  {formatPeriod(entry.from, entry.to)}
-                </span>
-
-                <span className="inline-flex items-center">
-                  <GlobeAltIcon className="w-4 h-4 mr-1" />
-                  {entry.mode === WorkMode.Remote
-                    ? "Remote"
-                    : entry.mode === WorkMode.OnSite
-                      ? "On-site"
-                      : "Hybrid"}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          Over my career, I&apos;ve worked with {totalCompanies} companies
+          across {totalCities} cities in {totalProvinces} provinces throughout
+          the Netherlands.
+        </p>
       </div>
+
+      {/* Stats cards */}
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8 max-w-sm md:max-w-md mx-auto">
+        <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
+          <div className="text-xl md:text-2xl font-bold text-blue-600">
+            {totalCompanies}
+          </div>
+          <div className="text-xs md:text-sm text-gray-600">Companies</div>
+        </div>
+        <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
+          <div className="text-xl md:text-2xl font-bold text-emerald-600">
+            {totalCities}
+          </div>
+          <div className="text-xs md:text-sm text-gray-600">Cities</div>
+        </div>
+        <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
+          <div className="text-xl md:text-2xl font-bold text-red-600">
+            {totalProvinces}
+          </div>
+          <div className="text-xs md:text-sm text-gray-600">Provinces</div>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-4 md:gap-8">
+        {/* Map */}
+        <div className="lg:col-span-2 order-1 lg:order-1">
+          <div
+            ref={containerRef}
+            className="relative bg-white rounded-xl shadow-sm border p-4 md:p-6"
+          >
+            <svg
+              ref={svgRef}
+              viewBox="0 0 500 425"
+              className="w-full h-auto"
+              aria-label="Interactive map of the Netherlands showing work locations"
+            />
+
+            {/* Tooltip */}
+            <div
+              ref={tooltipRef}
+              className="absolute pointer-events-none bg-gray-900 text-white text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 rounded-lg shadow-lg z-10"
+              style={{ opacity: 0, transition: "opacity 0.2s ease" }}
+            />
+
+            {/* Legend */}
+            <div className="mt-3 md:mt-4 flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-full border-2 border-white shadow"></div>
+                <span>Home Location</span>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-emerald-500 rounded-full border-2 border-white shadow"></div>
+                <span>Work Cities</span>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-200 border border-blue-300"></div>
+                <span>Active Provinces</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* City Details Panel */}
+        <div className="lg:col-span-1 order-2 lg:order-2">
+          <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 h-fit">
+            {selectedCity ? (
+              <div>
+                <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                  {selectedCity.isHome ? (
+                    <Home className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-shrink-0" />
+                  ) : (
+                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-emerald-500 flex-shrink-0" />
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold text-gray-900 text-sm md:text-base truncate">
+                      {selectedCity.name}
+                    </h3>
+                    <p className="text-xs md:text-sm text-gray-600">
+                      {selectedCity.isHome
+                        ? "Home Base"
+                        : `${selectedCity.companies.length} company${selectedCity.companies.length > 1 ? "ies" : ""}`}
+                    </p>
+                  </div>
+                </div>
+
+                {!selectedCity.isHome && (
+                  <div className="space-y-2 md:space-y-3">
+                    {selectedCity.companies.map((company) => {
+                      const workEntry = workHistory.find(
+                        (w) => w.company === company
+                      );
+                      return (
+                        <div
+                          key={company}
+                          className="p-2 md:p-3 bg-gray-50 rounded-lg"
+                        >
+                          <div className="font-medium text-gray-900 text-sm md:text-base">
+                            {company}
+                          </div>
+                          {workEntry && (
+                            <div className="mt-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs text-gray-600">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                <span className="text-xs">
+                                  {workEntry.from.split("-")[1]}/
+                                  {workEntry.from.split("-")[0]} -{" "}
+                                  {workEntry.to.split("-")[1]}/
+                                  {workEntry.to.split("-")[0]}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                {getWorkModeIcon(workEntry.mode)}
+                                <span className="text-xs">
+                                  {workEntry.mode === WorkMode.Remote
+                                    ? "Remote"
+                                    : workEntry.mode === WorkMode.OnSite
+                                      ? "On-site"
+                                      : "Hybrid"}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center text-gray-500 py-4 md:py-6">
+                <MapPin className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 opacity-50" />
+                <p className="text-xs md:text-sm">
+                  Tap on a location to see details
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Quick Facts */}
+          <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-xl p-4 md:p-6 mt-4 md:mt-6">
+            <h3 className="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">
+              Career Highlights
+            </h3>
+            <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-gray-700">
+              <li>• Based in {HOME_CITY_NAME}, Noord-Holland</li>
+              <li>• Worked across {totalProvinces} provinces</li>
+              <li>• Experience with remote, hybrid & on-site work</li>
+              <li>
+                • {new Date().getFullYear() - 2016}+ years of professional
+                experience
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* SEO-friendly structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Hilmar van der Voort",
+            jobTitle: "Software Developer",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: HOME_CITY_NAME,
+              addressCountry: "Netherlands",
+            },
+            workLocation: workCities
+              .filter((c) => !c.isHome)
+              .map((city) => ({
+                "@type": "Place",
+                name: city.name,
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: city.name,
+                  addressCountry: "Netherlands",
+                },
+              })),
+          }),
+        }}
+      />
     </section>
   );
 };
-
-function formatPeriod(from: string, to: string) {
-  const [fromYear, fromMonth] = from.split("-");
-  const [toYear, toMonth] = to.split("-");
-  return `${fromMonth}/${fromYear} – ${toMonth}/${toYear}`;
-}

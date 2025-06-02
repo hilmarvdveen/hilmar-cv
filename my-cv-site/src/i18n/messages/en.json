@@ -10,7 +10,7 @@
             "description": "I help companies and entrepreneurs build scalable websites, smart web apps, and technical integrations. Whether it's a marketing site or a configuration-driven enterprise frontend: I deliver accessible interfaces, solid architecture, and backend connections that just work.",
             "downloadCv": "Download CV",
             "contact": "Schedule a call",
-            "imageAlt": "Portrait of Hilmar van der Veen",
+            "imageAlt": "Portrait of Hilmar van der Veen, Senior Frontend Developer",
             "name": "Hilmar van der Veen"
         },
         "usp": {
@@ -101,6 +101,13 @@
             "title": "Ready to build together?",
             "subtitle": "Get in touch and discover how I can take your frontend to the next level.",
             "button": "Book an introduction"
+        },
+        "clientLogos": {
+            "title": "Trusted by leading organizations",
+            "subtitle": "I collaborate with prominent companies and organizations to realize their digital ambitions",
+            "indicator1": "15+ years experience",
+            "indicator2": "50+ projects delivered",
+            "indicator3": "Government & enterprise"
         }
     },
     "common": {
@@ -113,7 +120,13 @@
         "nav": {
             "home": "Home",
             "projects": "Projects",
-            "contact": "Contact"
+            "contact": "Contact",
+            "faq": "FAQ",
+            "services": "Services"
+        },
+        "images": {
+            "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
+            "companyLogoAlt": "{company} company logo"
         }
     },
     "work": {
@@ -533,5 +546,156 @@
             "Whether it's setting up a design system, migrating legacy code or building configuration-driven UI tools – I deliver structured, tested and documented results."
         ],
         "cta": "See my projects"
+    },
+    "faq": {
+        "breadcrumb": "FAQ",
+        "badge": "Frequently Asked Questions",
+        "hero": {
+            "title": "Everything You Need",
+            "subtitle": "to Know",
+            "description": "Find answers to the most common questions about working with me, my services, pricing, and project approach. Can't find what you're looking for? Feel free to reach out directly.",
+            "features": {
+                "quick": "Quick responses",
+                "expert": "Expert guidance",
+                "remote": "Remote collaboration"
+            }
+        },
+        "quickNav": {
+            "title": "Browse by Category"
+        },
+        "categories": {
+            "general": {
+                "title": "General Questions",
+                "questions": [
+                    {
+                        "question": "Who is Hilmar and what does he do?",
+                        "answer": "I'm Hilmar van der Veen, a senior full-stack developer with 15+ years of experience. I specialize in building scalable web applications, frontend development, design systems, and technical consulting. I help companies transform their digital presence and optimize their development processes."
+                    },
+                    {
+                        "question": "What makes your approach different?",
+                        "answer": "I combine technical expertise with strategic thinking. I don't just code - I analyze your business needs, recommend optimal solutions, and build for long-term scalability. My focus is on creating maintainable, accessible, and performance-optimized applications that grow with your business."
+                    },
+                    {
+                        "question": "Do you work with startups or only enterprise companies?",
+                        "answer": "I work with both! From early-stage startups needing their first MVP to enterprise organizations requiring complex system integrations. I adapt my approach based on your stage, budget, and technical requirements."
+                    },
+                    {
+                        "question": "What technologies do you specialize in?",
+                        "answer": "My core expertise includes:\n• Frontend: React, Next.js, Vue.js, Angular, TypeScript\n• Backend: Node.js, .NET Core, REST/GraphQL APIs\n• Styling: Tailwind CSS, styled-components, SCSS\n• Tools: Storybook, Jest, Docker, AWS, Azure\n• Methodologies: Agile, TDD, Design Systems, WCAG compliance"
+                    },
+                    {
+                        "question": "Are you available for remote work?",
+                        "answer": "Yes, I work primarily remotely and have extensive experience with distributed teams. I'm based in the Netherlands but collaborate effectively with international clients. I'm also available for on-site work when needed, particularly for strategic sessions or team workshops."
+                    }
+                ]
+            },
+            "services": {
+                "title": "Services & Expertise",
+                "questions": [
+                    {
+                        "question": "What frontend development services do you offer?",
+                        "answer": "I provide comprehensive frontend development including:\n• Modern React/Next.js applications\n• Vue.js and Angular projects\n• Mobile-responsive design implementation\n• Performance optimization and SEO\n• Accessibility (WCAG) compliance\n• Progressive Web Apps (PWAs)\n• Integration with headless CMS systems"
+                    },
+                    {
+                        "question": "Can you help with full-stack development?",
+                        "answer": "Absolutely! I offer end-to-end development services including:\n• Backend API development (Node.js, .NET Core)\n• Database design and optimization\n• Authentication and security implementation\n• Cloud deployment and DevOps\n• Third-party integrations\n• Real-time features with WebSockets"
+                    },
+                    {
+                        "question": "Do you create design systems?",
+                        "answer": "Yes, I specialize in building scalable design systems that include:\n• Component libraries with Storybook documentation\n• Design tokens and theming systems\n• Reusable UI components\n• Brand consistency guidelines\n• Developer documentation and usage examples\n• Integration with design tools like Figma"
+                    },
+                    {
+                        "question": "What kind of technical consulting do you provide?",
+                        "answer": "My consulting services include:\n• Architecture reviews and recommendations\n• Code quality audits and optimization\n• Team mentoring and skill development\n• Technology stack planning\n• Performance analysis and improvements\n• Legacy system modernization strategies\n• DevOps and deployment optimization"
+                    },
+                    {
+                        "question": "Can you help migrate legacy applications?",
+                        "answer": "Yes, I have extensive experience with legacy modernization:\n• Angular 1.x to modern Angular/React migration\n• jQuery to modern JavaScript frameworks\n• Monolith to microservices architecture\n• Legacy CSS to modern CSS frameworks\n• Database migration and optimization\n• Gradual migration strategies to minimize downtime"
+                    }
+                ]
+            },
+            "pricing": {
+                "title": "Pricing & Engagement",
+                "questions": [
+                    {
+                        "question": "How do you structure your pricing?",
+                        "answer": "I offer flexible pricing models to suit different needs:\n• Hourly rate: €85-125/hour depending on project complexity\n• Daily rate: €650-950/day for longer engagements\n• Fixed project pricing: For well-defined scopes\n• Retainer agreements: For ongoing support and development\n\nI provide detailed estimates after understanding your requirements."
+                    },
+                    {
+                        "question": "Do you offer free consultations?",
+                        "answer": "Yes! I offer a free 30-minute initial consultation to:\n• Understand your project requirements\n• Discuss potential approaches and solutions\n• Provide high-level time and cost estimates\n• Determine if we're a good fit for collaboration\n\nThis helps both of us make informed decisions before starting any paid work."
+                    },
+                    {
+                        "question": "What's included in your project estimates?",
+                        "answer": "My estimates include:\n• Detailed project breakdown and timeline\n• Technical architecture recommendations\n• Risk assessment and mitigation strategies\n• Testing and quality assurance approach\n• Deployment and go-live support\n• Documentation and knowledge transfer\n• Post-launch support options"
+                    },
+                    {
+                        "question": "Do you require payment upfront?",
+                        "answer": "For project work, I typically request:\n• 25-50% upfront for projects under €10,000\n• Milestone-based payments for larger projects\n• Monthly invoicing for ongoing retainers\n• Net 30 payment terms for established clients\n\nThis ensures project momentum while protecting both parties."
+                    },
+                    {
+                        "question": "What happens if project scope changes?",
+                        "answer": "Scope changes are common and manageable:\n• I document all changes with impact analysis\n• Provide updated timelines and cost estimates\n• Obtain written approval before proceeding\n• Use agile methodologies to accommodate changes\n• Maintain transparent communication throughout\n\nMy goal is flexibility while maintaining project success."
+                    }
+                ]
+            },
+            "process": {
+                "title": "Process & Timeline",
+                "questions": [
+                    {
+                        "question": "What does your development process look like?",
+                        "answer": "My typical process includes:\n\n1. Discovery & Planning (1-2 weeks)\n   • Requirements gathering\n   • Technical architecture design\n   • Project timeline creation\n\n2. Design & Prototyping (1-3 weeks)\n   • UI/UX design or review\n   • Technical proof of concepts\n   • Stakeholder feedback integration\n\n3. Development & Testing (varies)\n   • Agile development sprints\n   • Regular demos and feedback\n   • Continuous testing and quality assurance\n\n4. Deployment & Launch\n   • Production deployment\n   • Performance monitoring\n   • User training and documentation"
+                    },
+                    {
+                        "question": "How long does a typical project take?",
+                        "answer": "Project timelines vary significantly based on complexity:\n\n• Simple landing pages: 1-2 weeks\n• Business websites: 2-6 weeks\n• Web applications: 2-6 months\n• Enterprise systems: 6-18 months\n• Design systems: 1-3 months\n\nI provide detailed timeline estimates during the planning phase and use agile methodologies to deliver value incrementally."
+                    },
+                    {
+                        "question": "How do you handle project communication?",
+                        "answer": "I maintain transparent communication through:\n• Weekly progress reports and demos\n• Slack/Teams for daily communication\n• Video calls for complex discussions\n• Project management tools (Jira, Trello, etc.)\n• Shared documentation and code repositories\n• Regular stakeholder check-ins\n\nYou'll always know the project status and next steps."
+                    },
+                    {
+                        "question": "What if I need changes during development?",
+                        "answer": "I use agile methodologies specifically to accommodate changes:\n• Regular sprint reviews for feedback\n• Flexible scope within sprint boundaries\n• Change request process for major modifications\n• Impact analysis for timeline and cost implications\n• Continuous stakeholder involvement\n\nThe goal is to build exactly what you need, even if requirements evolve."
+                    },
+                    {
+                        "question": "Do you provide post-launch support?",
+                        "answer": "Yes, I offer several post-launch support options:\n• 30-day warranty for bug fixes\n• Monthly retainer for ongoing maintenance\n• On-demand support for urgent issues\n• Performance monitoring and optimization\n• Feature updates and enhancements\n• Security updates and patches\n\nI ensure your application remains secure, performant, and up-to-date."
+                    }
+                ]
+            },
+            "collaboration": {
+                "title": "Collaboration & Teams",
+                "questions": [
+                    {
+                        "question": "Can you work with our existing development team?",
+                        "answer": "Absolutely! I frequently collaborate with existing teams:\n• Code reviews and quality improvements\n• Knowledge transfer and mentoring\n• Pair programming sessions\n• Architecture guidance and planning\n• Temporary capacity augmentation\n• Legacy code modernization\n\nI adapt to your team's workflows and processes while contributing expertise and best practices."
+                    },
+                    {
+                        "question": "Do you provide team training and mentoring?",
+                        "answer": "Yes, I offer comprehensive team development:\n• Frontend best practices workshops\n• Code quality and review training\n• Modern JavaScript/TypeScript education\n• React/Vue/Angular deep dives\n• Testing strategies and implementation\n• Performance optimization techniques\n• Accessibility and WCAG compliance training\n\nInvestment in team skills provides long-term value and self-sufficiency."
+                    },
+                    {
+                        "question": "How do you handle intellectual property and NDAs?",
+                        "answer": "I take IP protection seriously:\n• Sign comprehensive NDAs before project discussions\n• All work product belongs to the client\n• Use secure development practices and tools\n• Maintain strict confidentiality standards\n• Provide clean code ownership transfer\n• Delete all project materials after completion (if requested)\n\nYour proprietary information and code are completely protected."
+                    },
+                    {
+                        "question": "Can you work in our timezone?",
+                        "answer": "I'm based in the Netherlands (CET/CEST) but offer flexible scheduling:\n• Core overlap hours with European teams\n• Early/late meetings for US collaboration\n• Asynchronous communication for global teams\n• Flexible daily schedules during project sprints\n• Weekend availability for critical deployments\n\nI ensure effective collaboration regardless of geographic location."
+                    },
+                    {
+                        "question": "What project management tools do you use?",
+                        "answer": "I'm experienced with various PM and development tools:\n• Project Management: Jira, Trello, Asana, Monday.com\n• Communication: Slack, Microsoft Teams, Discord\n• Code Management: GitHub, GitLab, Bitbucket\n• Documentation: Confluence, Notion, GitBook\n• Design Collaboration: Figma, Sketch, Adobe XD\n• Time Tracking: Toggl, Harvest, Clockify\n\nI adapt to your existing toolchain while suggesting improvements where beneficial."
+                    }
+                ]
+            }
+        },
+        "cta": {
+            "title": "Still Have Questions?",
+            "description": "I'm here to help! Reach out for a free consultation where we can discuss your specific needs and how I can help achieve your goals.",
+            "contact": "Send Message",
+            "book": "Book Consultation",
+            "call": "Call Now"
+        }
     }
 }

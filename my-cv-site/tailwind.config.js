@@ -107,6 +107,16 @@ export const theme = {
       out: "cubic-bezier(0,0,.2,1)",
       "in-out": "cubic-bezier(.4,0,.2,1)",
     },
+    keyframes: {
+      scroll: {
+        "0%": { transform: "translateX(0%)" },
+        "100%": { transform: "translateX(-50%)" },
+      },
+    },
+    animation: {
+      "scroll-infinite": "scroll 30s linear infinite",
+    },
   },
+  safelist: ["pause"],
 };
 export const plugins = [];
