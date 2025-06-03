@@ -81,8 +81,8 @@ Implemented a marketing-focused CV download modal that captures user information
 ### Environment Variables Required
 
 ```env
-EMAIL_USER=hilmar@hilmarvanderveen.com
-EMAIL_PASSWORD=your-app-password
+SMTP_USER=hilmar@hilmarvanderveen.com
+SMTP_PASS=your-app-password
 ```
 
 ## Marketing Benefits

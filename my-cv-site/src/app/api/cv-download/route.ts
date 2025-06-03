@@ -38,8 +38,8 @@ export async function POST(request: NextRequest) {
       port: 587,
       secure: false,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS ,
       },
     });
 
@@ -71,8 +71,8 @@ This lead was generated from the CV download modal on hilmarvanderveen.com
 
     // Send notification email to yourself
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to yourself
+      from: process.env.SMTP_USER,
+      to: process.env.SMTP_USER, // Send to yourself
       subject: emailSubject,
       text: emailBody,
     });
@@ -112,7 +112,7 @@ Senior Frontend Developer`;
 
     // Send thank you email (optional - you can enable this if desired)
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.SMTP_USER,
       to: data.email,
       subject: thankYouSubject,
       text: thankYouBody,
