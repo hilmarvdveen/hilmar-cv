@@ -1,82 +1,119 @@
-# Contact API Office 365 Update
+# Contact & CV Download API Microsoft Graph Update
 
 ## Overview
 
-Updated the contact form API to use Office 365 SMTP with nodemailer instead of Resend, bringing it in line with the CV download and booking APIs for consistent email infrastructure.
+Updated both the contact form and CV download APIs to use Microsoft Graph instead of SMTP, bringing them in line with the booking API for a unified email infrastructure using Azure App Registration.
 
 ## Changes Made
 
 ### 🔄 Email Service Migration
 
-**From:** Resend service  
-**To:** Office 365 SMTP with nodemailer
+**From:** SMTP with nodemailer  
+**To:** Microsoft Graph API with Azure App Registration
 
 ### 📧 Environment Variables Updated
 
 **Old Variables (Removed):**
 
-- `RESEND_API_KEY`
-- `EMAIL_FROM`
-- `EMAIL_TO`
+- `SMTP_USER`
+- `SMTP_PASS`
 
 **New Variables (Required):**
 
-- `SMTP_USER` - Your Office 365 email address
-- `SMTP_PASS` - Your Office 365 app password
+- `MS_CLIENT_ID` - Azure App Registration Client ID
+- `MS_CLIENT_SECRET` - Azure App Registration Client Secret
+- `MS_TENANT_ID` - Azure Active Directory Tenant ID
 
 ### 🛠️ Technical Changes
 
 #### 1. Dependencies
 
-- **Removed:** `import { Resend } from "resend"`
-- **Added:** `import nodemailer from "nodemailer"`
-- **Added:** `export const runtime = "nodejs"`
+- **Removed:** `import nodemailer from "nodemailer"`
+- **Added:** `import { Client } from "@microsoft/microsoft-graph-client"`
+- **Added:** `import "isomorphic-fetch"`
+- **Consistent:** `export const runtime = "nodejs"`
 
-#### 2. SMTP Configuration
+#### 2. Microsoft Graph Configuration
 
 ```typescript
-const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+async function getMicrosoftAccessToken(
+  clientId: string,
+  clientSecret: string,
+  tenantId: string
+) {
+  const res = await fetch(
+    `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        client_id: clientId,
+        client_secret: clientSecret,
+        scope: "https://graph.microsoft.com/.default",
+      }),
+    }
+  );
+  return data.access_token;
+}
 ```
 
-#### 3. Enhanced Features
+#### 3. Enhanced Email Features
 
-- **Email Validation:** Server-side email format validation
-- **Error Handling:** Improved error messages and logging
-- **Confirmation Emails:** Automatic confirmation sent to form submitters
-- **Better Formatting:** Professional email templates with timestamps
-- **Reply-To Support:** Direct reply capability to sender's email
+- **HTML Support:** Rich email formatting with links and styling
+- **Reply-To Support:** Direct reply capability (contact form)
+- **Professional Templates:** Better formatting and branding
+- **Centralized Authentication:** Single token for all email operations
+- **Error Handling:** Better Microsoft Graph error messages
 
-### 📨 Email Flow
+### 📨 Updated Email Flow
 
-#### For Site Owner (You)
+#### Contact Form
+
+**For Site Owner (You):**
 
 ```
 Subject: Nieuw bericht van [Name]
 Content:
-- Sender details
-- Message content
-- Interests (if selected)
-- Timestamp
+- Sender details with reply-to capability
+- Message content and interests
+- Timestamp with Europe/Amsterdam timezone
 - Source tracking
 ```
 
-#### For Form Submitter
+**For Form Submitter:**
 
 ```
 Subject: Bedankt voor je bericht - Hilmar van der Veen
 Content:
-- Thank you message
-- Response time expectation (24 hours)
-- Direct contact information
+- Professional HTML email with links
+- 24-hour response commitment
+- Direct contact information (phone, email, LinkedIn)
 - Professional signature
+```
+
+#### CV Download
+
+**For Site Owner (You):**
+
+```
+Subject: CV Download Lead: [Name]
+Content:
+- Lead information and purpose
+- Localized purpose text (EN/NL)
+- Timestamp tracking
+- Source identification
+```
+
+**For Downloader:**
+
+```
+Subject: Bedankt voor het downloaden van mijn CV / Thank you for downloading my CV
+Content:
+- Localized thank you message (HTML)
+- Complete contact information with clickable links
+- Professional branding
+- Follow-up encouragement
 ```
 
 ### 🔧 Configuration Required
@@ -86,81 +123,103 @@ Content:
 Create/update your `.env.local` file:
 
 ```env
-SMTP_USER=hilmar@hilmarvanderveen.com
-SMTP_PASS=your-office365-app-password
+MS_CLIENT_ID=your-azure-app-client-id
+MS_CLIENT_SECRET=your-azure-app-client-secret
+MS_TENANT_ID=your-azure-tenant-id
 ```
 
-#### Office 365 App Password Setup
+#### Azure App Registration Setup
 
-1. Go to Microsoft Account Security settings
-2. Enable 2-factor authentication (required)
-3. Generate an app-specific password
-4. Use this password in `SMTP_PASS`
+1. Go to Azure Portal → App Registrations
+2. Create new registration or use existing
+3. Add Microsoft Graph permissions:
+   - `Mail.Send` (Application permission)
+   - `Calendars.ReadWrite` (for booking integration)
+4. Generate client secret
+5. Grant admin consent for permissions
 
 ### ✅ Benefits
 
-#### 🎯 Consistency
+#### 🎯 Unified Infrastructure
 
-- All APIs now use the same email infrastructure
-- Unified environment variable naming
+- All APIs use the same authentication mechanism
 - Consistent error handling patterns
+- Single Azure App Registration for all services
 
-#### 🛡️ Reliability
+#### 🛡️ Enterprise Security
 
-- Office 365 enterprise-grade delivery
-- Better spam filtering compliance
-- Professional email authentication
+- OAuth 2.0 client credentials flow
+- Azure Active Directory authentication
+- Application-level permissions
+- Enterprise-grade security
 
 #### 📊 Enhanced Features
 
-- Automatic confirmation emails
-- Better error logging
-- Email validation
-- Professional formatting
+- Rich HTML email formatting
+- Better deliverability through Microsoft infrastructure
+- Professional email templates
+- Clickable links and proper formatting
 
-#### 💰 Cost Efficiency
+#### 💰 Cost & Scalability
 
-- No external service fees (Resend)
-- Uses existing Office 365 subscription
-- No API rate limits
+- Uses existing Microsoft 365 subscription
+- No SMTP rate limits
+- Better scalability for high volume
+- Unified monitoring and logging
 
 ### 🚀 Testing
 
-#### Test Contact Form
+#### Test Both APIs
 
-1. Fill out contact form on `/contact`
-2. Check for email delivery to your Office 365 inbox
-3. Verify confirmation email sent to form submitter
-4. Test error handling with invalid email
+1. **Contact Form:** Fill out form on `/contact`
+2. **CV Download:** Use CV download modal
+3. **Verify Emails:** Check HTML formatting and links
+4. **Error Handling:** Test with invalid data
+5. **Console Logs:** Check Microsoft Graph responses
 
 #### Environment Setup
 
 ```bash
 # Test environment variables
 npm run dev
-# Submit test form
-# Check console logs for successful submission
+# Test contact form submission
+# Test CV download modal
+# Check Azure App Registration logs
 ```
 
 ### 📋 Migration Checklist
 
-- [x] Updated contact API route
-- [x] Removed Resend dependency references
-- [x] Added nodemailer SMTP configuration
-- [x] Updated environment variable names
-- [x] Added email validation
-- [x] Enhanced error handling
-- [x] Added confirmation emails
-- [x] Updated documentation
+#### Contact API
+
+- [x] Updated to Microsoft Graph
+- [x] Removed nodemailer dependency
+- [x] Added HTML email templates
+- [x] Enhanced reply-to functionality
+- [x] Added proper TypeScript types
+
+#### CV Download API
+
+- [x] Updated to Microsoft Graph
+- [x] Removed nodemailer dependency
+- [x] Added HTML email templates
+- [x] Enhanced localization support
+- [x] Professional contact information
+
+#### Environment
+
+- [x] Updated environment variable requirements
+- [x] Documented Azure setup process
+- [x] Updated all documentation
 
 ### 🔍 Verification Steps
 
-1. **Environment Variables:** Ensure `SMTP_USER` and `SMTP_PASS` are set
-2. **Email Delivery:** Test contact form submission
-3. **Confirmation Emails:** Verify users receive confirmation
-4. **Error Handling:** Test with invalid data
-5. **Console Logging:** Check for successful submission logs
+1. **Environment Variables:** Ensure all MS\_\* variables are set
+2. **Azure Permissions:** Verify Mail.Send permission granted
+3. **Email Delivery:** Test both contact and CV download flows
+4. **HTML Rendering:** Verify email formatting and links
+5. **Error Handling:** Test with invalid/missing data
+6. **Console Logging:** Check for successful Graph API calls
 
 ## Result
 
-The contact API now seamlessly integrates with your Office 365 email infrastructure, providing a consistent, reliable, and professional email experience across all your website's communication features.
+Both APIs now use Microsoft Graph for enterprise-grade email delivery with professional HTML templates, unified authentication, and better scalability. This completes the migration to a fully integrated Microsoft 365 email infrastructure across all website communication features.

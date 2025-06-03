@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Client } from "@microsoft/microsoft-graph-client";
+import "isomorphic-fetch";
 
 export const runtime = "nodejs";
 
@@ -9,6 +10,55 @@ interface CVDownloadData {
   purpose: string;
   locale: string;
   timestamp: string;
+}
+
+async function getMicrosoftAccessToken(clientId: string, clientSecret: string, tenantId: string) {
+  const res = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: "https://graph.microsoft.com/.default"
+    }),
+  });
+  
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error_description || 'Failed to get Microsoft Graph token');
+  }
+  return data.access_token;
+}
+
+async function sendEmailViaGraph(accessToken: string, emailData: {
+  to: string;
+  toName?: string;
+  subject: string;
+  body: string;
+  isHtml?: boolean;
+}) {
+  const client = Client.init({
+    authProvider: (done) => done(null, accessToken),
+  });
+
+  const message = {
+    subject: emailData.subject,
+    body: {
+      contentType: emailData.isHtml ? "HTML" : "Text",
+      content: emailData.body,
+    },
+    toRecipients: [
+      {
+        emailAddress: {
+          address: emailData.to,
+          name: emailData.toName || emailData.to,
+        },
+      },
+    ],
+  };
+
+  await client.api('/me/sendMail').post({ message });
 }
 
 export async function POST(request: NextRequest) {
@@ -32,16 +82,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create email transporter
-    const transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS ,
-      },
-    });
+    // Get environment variables
+    const clientId = process.env.MS_CLIENT_ID;
+    const clientSecret = process.env.MS_CLIENT_SECRET;
+    const tenantId = process.env.MS_TENANT_ID;
+
+    if (!clientId || !clientSecret || !tenantId) {
+      console.error("Missing required Microsoft Graph environment variables");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
+    // Get Microsoft Graph access token
+    const accessToken = await getMicrosoftAccessToken(clientId, clientSecret, tenantId);
 
     // Prepare email content
     const purposeMap: Record<string, { en: string; nl: string }> = {
@@ -55,67 +110,72 @@ export async function POST(request: NextRequest) {
 
     const purposeText = purposeMap[data.purpose]?.[data.locale as 'en' | 'nl'] || data.purpose;
 
-    const emailSubject = `CV Download Lead: ${data.name}`;
-    const emailBody = `
-New CV Download Lead:
+    // Send notification email to yourself
+    const notificationSubject = `CV Download Lead: ${data.name}`;
+    const notificationBody = `New CV Download Lead:
 
 Name: ${data.name}
 Email: ${data.email}
 Purpose: ${purposeText}
 Language: ${data.locale.toUpperCase()}
-Timestamp: ${new Date(data.timestamp).toLocaleString()}
+Timestamp: ${new Date(data.timestamp).toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}
 
 ---
-This lead was generated from the CV download modal on hilmarvanderveen.com
-    `;
+This lead was generated from the CV download modal on hilmarvanderveen.com`;
 
-    // Send notification email to yourself
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.SMTP_USER, // Send to yourself
-      subject: emailSubject,
-      text: emailBody,
+    await sendEmailViaGraph(accessToken, {
+      to: "hilmar@hilmarvanderveen.com",
+      toName: "Hilmar van der Veen",
+      subject: notificationSubject,
+      body: notificationBody,
+      isHtml: false,
     });
 
-    // Optional: Send thank you email to the user
+    // Send thank you email to the user
     const thankYouSubject = data.locale === 'nl' 
       ? "Bedankt voor het downloaden van mijn CV"
       : "Thank you for downloading my CV";
     
     const thankYouBody = data.locale === 'nl'
-      ? `Hallo ${data.name},
+      ? `<p>Hallo ${data.name},</p>
 
-Bedankt voor het downloaden van mijn CV! Ik stel je interesse zeer op prijs.
+<p>Bedankt voor het downloaden van mijn CV! Ik stel je interesse zeer op prijs.</p>
 
-Als je vragen hebt of een gesprek wilt plannen, aarzel dan niet om contact met me op te nemen via:
-- Email: hilmar@hilmarvanderveen.com
-- LinkedIn: linkedin.com/in/hilmarvanderveen
+<p>Als je vragen hebt of een gesprek wilt plannen, aarzel dan niet om contact met me op te nemen via:</p>
+<ul>
+<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
+<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+</ul>
 
-Ik kijk ernaar uit om van je te horen!
+<p>Ik kijk ernaar uit om van je te horen!</p>
 
-Met vriendelijke groet,
-Hilmar van der Veen
-Senior Frontend Developer`
-      : `Hello ${data.name},
+<p>Met vriendelijke groet,<br>
+<strong>Hilmar van der Veen</strong><br>
+Senior Frontend Developer</p>`
+      : `<p>Hello ${data.name},</p>
 
-Thank you for downloading my CV! I really appreciate your interest.
+<p>Thank you for downloading my CV! I really appreciate your interest.</p>
 
-If you have any questions or would like to schedule a conversation, please don't hesitate to reach out:
-- Email: hilmar@hilmarvanderveen.com
-- LinkedIn: linkedin.com/in/hilmarvanderveen
+<p>If you have any questions or would like to schedule a conversation, please don't hesitate to reach out:</p>
+<ul>
+<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>Phone: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
+<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+</ul>
 
-I look forward to hearing from you!
+<p>I look forward to hearing from you!</p>
 
-Best regards,
-Hilmar van der Veen
-Senior Frontend Developer`;
+<p>Best regards,<br>
+<strong>Hilmar van der Veen</strong><br>
+Senior Frontend Developer</p>`;
 
-    // Send thank you email (optional - you can enable this if desired)
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
+    await sendEmailViaGraph(accessToken, {
       to: data.email,
+      toName: data.name,
       subject: thankYouSubject,
-      text: thankYouBody,
+      body: thankYouBody,
+      isHtml: true,
     });
 
     console.log(`CV download tracked: ${data.email} - ${purposeText}`);

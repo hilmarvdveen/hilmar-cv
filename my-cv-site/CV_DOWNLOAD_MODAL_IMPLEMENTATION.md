@@ -81,9 +81,16 @@ Implemented a marketing-focused CV download modal that captures user information
 ### Environment Variables Required
 
 ```env
-SMTP_USER=hilmar@hilmarvanderveen.com
-SMTP_PASS=your-app-password
+MS_CLIENT_ID=your-azure-app-client-id
+MS_CLIENT_SECRET=your-azure-app-client-secret
+MS_TENANT_ID=your-azure-tenant-id
 ```
+
+### Azure App Registration Required
+
+- Microsoft Graph permissions: `Mail.Send` (Application permission)
+- Admin consent granted for your tenant
+- Client secret generated and configured
 
 ## Marketing Benefits
 

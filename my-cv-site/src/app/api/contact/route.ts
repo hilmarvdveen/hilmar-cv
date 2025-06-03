@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Client } from "@microsoft/microsoft-graph-client";
+import "isomorphic-fetch";
 
 export const runtime = "nodejs";
 
@@ -8,6 +9,89 @@ interface ContactFormRequest {
   email: string;
   message: string;
   interests?: string[];
+}
+
+async function getMicrosoftAccessToken(clientId: string, clientSecret: string, tenantId: string) {
+  const res = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: "https://graph.microsoft.com/.default"
+    }),
+  });
+  
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error_description || 'Failed to get Microsoft Graph token');
+  }
+  return data.access_token;
+}
+
+async function sendEmailViaGraph(accessToken: string, emailData: {
+  to: string;
+  toName?: string;
+  subject: string;
+  body: string;
+  isHtml?: boolean;
+  replyTo?: string;
+  replyToName?: string;
+}) {
+  const client = Client.init({
+    authProvider: (done) => done(null, accessToken),
+  });
+
+  interface EmailMessage {
+    subject: string;
+    body: {
+      contentType: string;
+      content: string;
+    };
+    toRecipients: Array<{
+      emailAddress: {
+        address: string;
+        name: string;
+      };
+    }>;
+    replyTo?: Array<{
+      emailAddress: {
+        address: string;
+        name: string;
+      };
+    }>;
+  }
+
+  const message: EmailMessage = {
+    subject: emailData.subject,
+    body: {
+      contentType: emailData.isHtml ? "HTML" : "Text",
+      content: emailData.body,
+    },
+    toRecipients: [
+      {
+        emailAddress: {
+          address: emailData.to,
+          name: emailData.toName || emailData.to,
+        },
+      },
+    ],
+  };
+
+  // Add reply-to if specified
+  if (emailData.replyTo) {
+    message.replyTo = [
+      {
+        emailAddress: {
+          address: emailData.replyTo,
+          name: emailData.replyToName || emailData.replyTo,
+        },
+      },
+    ];
+  }
+
+  await client.api('/me/sendMail').post({ message });
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -32,34 +116,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Check environment variables
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      console.error("Missing required environment variables: SMTP_USER or SMTP_PASS");
+    // Get environment variables
+    const clientId = process.env.MS_CLIENT_ID;
+    const clientSecret = process.env.MS_CLIENT_SECRET;
+    const tenantId = process.env.MS_TENANT_ID;
+
+    if (!clientId || !clientSecret || !tenantId) {
+      console.error("Missing required Microsoft Graph environment variables");
       return NextResponse.json(
-        { error: "Server configuration error. Please contact administrator." },
+        { error: "Server configuration error" },
         { status: 500 }
       );
     }
 
-    // Create email transporter
-    const transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    // Get Microsoft Graph access token
+    const accessToken = await getMicrosoftAccessToken(clientId, clientSecret, tenantId);
 
     // Prepare interests text
     const interestText = interests?.length
       ? `\n\nInteressen:\n- ${interests.join("\n- ")}`
       : "";
 
-    // Email content
-    const emailSubject = `Nieuw bericht van ${name}`;
-    const emailBody = `Nieuw contactformulier bericht:
+    // Send notification email to yourself
+    const notificationSubject = `Nieuw bericht van ${name}`;
+    const notificationBody = `Nieuw contactformulier bericht:
 
 Afzender: ${name}
 Email: ${email}
@@ -71,38 +151,42 @@ ${message}${interestText}
 Dit bericht is verzonden via het contactformulier op hilmarvanderveen.com
 Tijdstempel: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}`;
 
-    // Send email to yourself
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.SMTP_USER,
-      subject: emailSubject,
-      text: emailBody,
-      replyTo: email, // This allows you to reply directly to the sender
+    await sendEmailViaGraph(accessToken, {
+      to: "hilmar@hilmarvanderveen.com",
+      toName: "Hilmar van der Veen",
+      subject: notificationSubject,
+      body: notificationBody,
+      isHtml: false,
+      replyTo: email,
+      replyToName: name,
     });
 
-    // Optional: Send confirmation email to the sender
+    // Send confirmation email to the sender
     const confirmationSubject = "Bedankt voor je bericht - Hilmar van der Veen";
-    const confirmationBody = `Hallo ${name},
+    const confirmationBody = `<p>Hallo ${name},</p>
 
-Bedankt voor je bericht! Ik heb je contactformulier ontvangen en zal binnen 24 uur reageren.
+<p>Bedankt voor je bericht! Ik heb je contactformulier ontvangen en zal binnen 24 uur reageren.</p>
 
-Voor dringende zaken kun je me ook direct bereiken:
-- Telefoon: +31 6 8014 9947
-- Email: hilmar@hilmarvanderveen.com
+<p>Voor dringende zaken kun je me ook direct bereiken:</p>
+<ul>
+<li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
+<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+</ul>
 
-Met vriendelijke groet,
-Hilmar van der Veen
-Senior Frontend Developer
+<p>Met vriendelijke groet,<br>
+<strong>Hilmar van der Veen</strong><br>
+Senior Frontend Developer</p>
 
----
-Dit is een automatisch gegenereerd bericht.`;
+<hr>
+<p><small>Dit is een automatisch gegenereerd bericht.</small></p>`;
 
-    // Send confirmation email to sender
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
+    await sendEmailViaGraph(accessToken, {
       to: email,
+      toName: name,
       subject: confirmationSubject,
-      text: confirmationBody,
+      body: confirmationBody,
+      isHtml: true,
     });
 
     console.log(`Contact form submitted by: ${name} (${email})`);
