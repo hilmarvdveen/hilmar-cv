@@ -1,27 +1,47 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://hilmarvanderveen.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.hilmarvanderveen.com';
   
-  const robotsTxt = `User-agent: *
-Allow: /
+  const crawlRules = `
+Disallow: /api/*
+Disallow: /_next/*
+Disallow: /admin/*
+Disallow: /dashboard/*
 
-# Sitemap
-Sitemap: ${baseUrl}/sitemap.xml
-
-# Block unnecessary crawling
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
-Disallow: /dashboard/
-
-# Allow specific important paths
 Allow: /en/
 Allow: /nl/
 Allow: /services/
 Allow: /contact/
 Allow: /faq/
-Allow: /projects/`;
+Allow: /projects/
+`;
+
+  const robotsTxt = `
+# Allow Googlebot
+User-agent: Googlebot
+${crawlRules}
+
+# Allow Bingbot
+User-agent: Bingbot
+Crawl-delay: 10
+${crawlRules}
+
+# Allow DuckDuckBot
+User-agent: DuckDuckBot
+${crawlRules}
+
+# Allow Applebot
+User-agent: Applebot
+${crawlRules}
+
+# Block all other bots
+User-agent: *
+Disallow: /
+
+# Sitemap
+Sitemap: ${baseUrl}/sitemap.xml
+`;
 
   return new NextResponse(robotsTxt, {
     headers: {

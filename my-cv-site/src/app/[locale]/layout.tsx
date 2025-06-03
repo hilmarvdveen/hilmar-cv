@@ -10,6 +10,7 @@ import { BookingFormProvider } from "@/contexts/BookingFormContext";
 import "@/app/globals.css";
 import { Metadata, Viewport } from "next";
 import { siteConfig } from "@/lib/seo.config";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -211,6 +212,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
           )}
         </NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

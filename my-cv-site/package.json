@@ -13,6 +13,7 @@
     "@formatjs/intl-localematcher": "^0.6.1",
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "d3": "^7.9.0",
     "isomorphic-fetch": "^3.0.0",
     "lucide-react": "^0.511.0",
