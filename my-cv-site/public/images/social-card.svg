@@ -1,0 +1,75 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Accent gradient -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="1200" height="8" fill="url(#accentGradient)"/>
+  
+  <!-- Logo Container -->
+  <g transform="translate(80, 180)">
+    <!-- Logo background circle -->
+    <circle cx="120" cy="120" r="120" fill="#ffffff" fill-opacity="0.1"/>
+    <circle cx="120" cy="120" r="100" fill="#ffffff" fill-opacity="0.95"/>
+    
+    <!-- Logo (centered and scaled) -->
+    <g transform="translate(20, 30) scale(1.6)">
+      <g transform="translate(-1.6666203,-41.033937)">
+        <path style="opacity:1;fill:#008033;" d="m 113.25546,78.295184 c -1.64804,14.365175 -41.6938,31.751926 -53.374009,35.850736 -13.903734,4.87908 -15.963889,5.01907 -28.790447,12.21722 3.81353,-6.49706 21.226807,-11.19949 26.443164,-14.16693 23.856978,-7.35095 37.595995,-15.683032 55.721292,-33.901026 z" />
+        <path style="opacity:1;fill:#217867;" d="m 72.461128,46.791103 c 3.041458,10.572523 3.997243,18.164368 2.248772,25.909848 -2.28837,10.137152 -7.429065,15.531013 -16.606612,21.608954 -0.401527,-7.088571 -8.307493,-14.84249 -2.654365,-22.895302 6.514548,-9.306158 7.580884,-8.000011 17.012205,-24.6235 z" />
+        <path style="opacity:1;fill:#217831;" d="m 50.308955,63.799031 c -3.041458,10.572523 -3.997243,18.164368 -2.248772,25.909848 2.28837,10.137152 7.429065,15.531011 16.606612,21.608951 0.401527,-7.08857 8.307493,-14.842487 2.654365,-22.895299 -6.514548,-9.306158 -7.580884,-8.000011 -17.012205,-24.6235 z" />
+        <path style="opacity:0.95;fill:#008000;" d="m 78.548394,63.799029 c 3.041458,10.572523 3.997243,18.164368 2.248772,25.909848 -2.28837,10.137152 -7.429065,15.531013 -16.606612,21.608953 -0.401527,-7.08857 -8.307493,-14.842489 -2.654365,-22.895301 6.514548,-9.306158 7.580884,-8.000011 17.012205,-24.6235 z" />
+        <path style="opacity:0.93;fill:#44aa00;" d="m 31.626702,73.919743 c 1.579499,10.88733 3.833049,18.199735 8.614424,24.539135 6.257782,8.296912 13.162873,11.096942 24.028598,12.858952 -2.551549,-6.62559 1.462415,-16.946242 -7.004057,-21.958677 -9.767397,-5.80016 -10.201649,-4.17089 -25.638965,-15.43941 z" />
+        <path style="opacity:0.93;fill:#44aa00;" d="m 96.9372,73.919738 c -1.579499,10.88733 -3.833049,18.199735 -8.614424,24.53914 -6.257782,8.296912 -13.162873,11.096942 -24.028598,12.858952 2.551549,-6.62559 -1.46241,-16.946247 7.004057,-21.958682 9.767397,-5.80016 10.201649,-4.17089 25.638965,-15.43941 z" />
+      </g>
+      <path style="opacity:0.93;fill:#2c5aa0;" d="M 24.268286,0.00997899 0.00999995,42.821278 24.268286,88.336423 4.8219351,43.827406 Z" />
+      <path style="opacity:0.93;fill:#2c5aa0;" d="M 103.69051,0.00998299 127.9488,42.821282 103.69051,88.336423 123.13686,43.82741 Z" />
+    </g>
+  </g>
+  
+  <!-- Text Content -->
+  <g transform="translate(340, 0)">
+    <!-- Main title -->
+    <text x="0" y="220" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="72" font-weight="800" fill="white">
+      Hilmar van der Veen
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="280" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="36" font-weight="600" fill="#10b981">
+      Senior Frontend Developer
+    </text>
+    
+    <!-- Skills -->
+    <text x="0" y="340" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="24" font-weight="400" fill="#cbd5e1">
+      React • Next.js • Angular • TypeScript
+    </text>
+    
+    <!-- Experience -->
+    <text x="0" y="390" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="20" font-weight="400" fill="#94a3b8">
+      15+ Years Experience • Netherlands
+    </text>
+    
+    <!-- Website -->
+    <text x="0" y="480" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="18" font-weight="500" fill="#64748b">
+      hilmarvanderveen.com
+    </text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="1050" cy="150" r="80" fill="#059669" fill-opacity="0.1"/>
+  <circle cx="1100" cy="400" r="60" fill="#10b981" fill-opacity="0.08"/>
+  <circle cx="950" cy="500" r="40" fill="#34d399" fill-opacity="0.06"/>
+</svg> 

@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { BookingFormProvider } from "@/contexts/BookingFormContext";
 import "@/app/globals.css";
 import { Metadata, Viewport } from "next";
 import { siteConfig } from "@/lib/seo.config";
@@ -75,11 +76,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: siteConfig.description,
       images: [
         {
-          url: `${baseUrl}/images/og-image.jpg`,
+          url: `${baseUrl}/images/social-card.svg`,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} - ${siteConfig.title}`,
-          type: "image/jpeg",
+          alt: `${siteConfig.name} - Senior Frontend Developer`,
+          type: "image/svg+xml",
+        },
+        {
+          url: `${baseUrl}/images/logo_v1.png`,
+          width: 400,
+          height: 400,
+          alt: `${siteConfig.name} Logo`,
+          type: "image/png",
         },
       ],
     },
@@ -87,7 +95,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${siteConfig.name} - ${siteConfig.title}`,
       description: siteConfig.description,
-      images: [`${baseUrl}/images/og-image.jpg`],
+      images: [`${baseUrl}/images/social-card.svg`],
       creator: siteConfig.author.twitter,
       site: siteConfig.author.twitter,
     },
@@ -103,8 +111,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       google: process.env.GOOGLE_SITE_VERIFICATION,
     },
     other: {
-      "msapplication-TileColor": "#3b82f6",
-      "theme-color": "#3b82f6",
+      "msapplication-TileColor": "#059669",
+      "theme-color": "#059669",
     },
   };
 }
@@ -141,6 +149,12 @@ export default async function LocaleLayout({ children, params }: Props) {
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+          rel="icon"
+          href="/favicon-32x32.png"
+          type="image/png"
+          sizes="32x32"
+        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
 
@@ -182,15 +196,17 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className="h-full flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main
-            className="flex-1"
-            role="main"
-            style={{ paddingTop: "var(--header-height)" }}
-          >
-            {children}
-          </main>
-          <Footer />
+          <BookingFormProvider>
+            <Header />
+            <main
+              className="flex-1"
+              role="main"
+              style={{ paddingTop: "var(--header-height)" }}
+            >
+              {children}
+            </main>
+            <Footer />
+          </BookingFormProvider>
           {process.env.NEXT_PUBLIC_GA_ID && (
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
           )}
