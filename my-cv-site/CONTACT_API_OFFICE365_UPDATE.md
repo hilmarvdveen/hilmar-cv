@@ -56,6 +56,12 @@ async function getMicrosoftAccessToken(
   );
   return data.access_token;
 }
+
+// Important: Use specific user endpoint for application authentication
+await client
+  .api("/users/hilmar@hilmarvanderveen.com/sendMail")
+  .post({ message });
+// NOT: client.api('/me/sendMail') - this only works with delegated auth
 ```
 
 #### 3. Enhanced Email Features

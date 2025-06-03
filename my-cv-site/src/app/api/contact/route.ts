@@ -91,7 +91,8 @@ async function sendEmailViaGraph(accessToken: string, emailData: {
     ];
   }
 
-  await client.api('/me/sendMail').post({ message });
+  // Use specific user email instead of /me for application authentication
+  await client.api(`/users/${process.env.SMTP_USER}/sendMail`).post({ message });
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

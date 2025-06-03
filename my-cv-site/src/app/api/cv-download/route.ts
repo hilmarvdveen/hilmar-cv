@@ -58,7 +58,8 @@ async function sendEmailViaGraph(accessToken: string, emailData: {
     ],
   };
 
-  await client.api('/me/sendMail').post({ message });
+  await client.api(`/users/${process.env.SMTP_USER}/sendMail`).post({ message });
+
 }
 
 export async function POST(request: NextRequest) {
@@ -86,6 +87,7 @@ export async function POST(request: NextRequest) {
     const clientId = process.env.MS_CLIENT_ID;
     const clientSecret = process.env.MS_CLIENT_SECRET;
     const tenantId = process.env.MS_TENANT_ID;
+    const smtpUser = process.env.SMTP_USER;
 
     if (!clientId || !clientSecret || !tenantId) {
       console.error("Missing required Microsoft Graph environment variables");
@@ -124,7 +126,7 @@ Timestamp: ${new Date(data.timestamp).toLocaleString('nl-NL', { timeZone: 'Europ
 This lead was generated from the CV download modal on hilmarvanderveen.com`;
 
     await sendEmailViaGraph(accessToken, {
-      to: "hilmar@hilmarvanderveen.com",
+      to: smtpUser as string,
       toName: "Hilmar van der Veen",
       subject: notificationSubject,
       body: notificationBody,
