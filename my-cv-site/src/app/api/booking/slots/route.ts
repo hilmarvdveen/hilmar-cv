@@ -4,7 +4,6 @@ import 'isomorphic-fetch';
 
 export const runtime = 'nodejs';
 
-const BOOKING_EMAIL = 'hilmar@hilmarvanderveen.com';
 const TIMEZONE = 'Europe/Amsterdam';
 
 function getMicrosoftGraphClient(accessToken: string) {
@@ -86,8 +85,9 @@ export async function GET(req: NextRequest) {
     const clientId = process.env.MS_CLIENT_ID;
     const clientSecret = process.env.MS_CLIENT_SECRET;
     const tenantId = process.env.MS_TENANT_ID;
+    const smtpUser = process.env.SMTP_USER;
 
-    if (!clientId || !clientSecret || !tenantId) {
+    if (!clientId || !clientSecret || !tenantId || !smtpUser) {
       console.error("Missing required environment variables for calendar service");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
     const endOfDay = new Date(`${date}T23:59:59`);
 
     const result = await client
-      .api(`/users/${BOOKING_EMAIL}/calendarview`)
+      .api(`/users/${smtpUser}/calendarview`)
       .query({
         startDateTime: startOfDay.toISOString(),
         endDateTime: endOfDay.toISOString(),

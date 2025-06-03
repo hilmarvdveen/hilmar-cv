@@ -121,8 +121,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const clientId = process.env.MS_CLIENT_ID;
     const clientSecret = process.env.MS_CLIENT_SECRET;
     const tenantId = process.env.MS_TENANT_ID;
+    const smtpUser = process.env.SMTP_USER;
 
-    if (!clientId || !clientSecret || !tenantId) {
+    if (!clientId || !clientSecret || !tenantId || !smtpUser) {
       console.error("Missing required Microsoft Graph environment variables");
       return NextResponse.json(
         { error: "Server configuration error" },
@@ -153,7 +154,7 @@ Dit bericht is verzonden via het contactformulier op hilmarvanderveen.com
 Tijdstempel: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}`;
 
     await sendEmailViaGraph(accessToken, {
-      to: "hilmar@hilmarvanderveen.com",
+      to: smtpUser,
       toName: "Hilmar van der Veen",
       subject: notificationSubject,
       body: notificationBody,
@@ -171,7 +172,7 @@ Tijdstempel: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam'
 <p>Voor dringende zaken kun je me ook direct bereiken:</p>
 <ul>
 <li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
-<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>Email: <a href="mailto:${smtpUser}">${smtpUser}</a></li>
 <li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
 </ul>
 

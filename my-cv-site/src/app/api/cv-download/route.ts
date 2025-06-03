@@ -145,7 +145,7 @@ This lead was generated from the CV download modal on hilmarvanderveen.com`;
 
 <p>Als je vragen hebt of een gesprek wilt plannen, aarzel dan niet om contact met me op te nemen via:</p>
 <ul>
-<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>Email: <a href="mailto:${smtpUser}">${smtpUser}</a></li>
 <li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
 <li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
 </ul>
@@ -161,7 +161,7 @@ Senior Frontend Developer</p>`
 
 <p>If you have any questions or would like to schedule a conversation, please don't hesitate to reach out:</p>
 <ul>
-<li>Email: <a href="mailto:hilmar@hilmarvanderveen.com">hilmar@hilmarvanderveen.com</a></li>
+<li>Email: <a href="mailto:${smtpUser}">${smtpUser}</a></li>
 <li>Phone: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
 <li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
 </ul>

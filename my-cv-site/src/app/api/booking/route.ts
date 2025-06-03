@@ -2,11 +2,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Client } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
-import nodemailer from 'nodemailer';
 
 export const runtime = "nodejs"; // Ensures Node.js runtime, not Edge
-
-const BOOKING_EMAIL = "hilmar@hilmarvanderveen.com";
 
 interface BookingData {
   name: string;
@@ -33,7 +30,7 @@ async function getMicrosoftAccessToken(clientId: string, clientSecret: string, t
   return data.access_token;
 }
 
-async function createCalendarEvent(accessToken: string, { name, email, date, message }: BookingData) {
+async function createCalendarEvent(accessToken: string, userEmail: string, { name, email, date, message }: BookingData) {
   const client = Client.init({
     authProvider: (done) => done(null, accessToken),
   });
@@ -42,7 +39,7 @@ async function createCalendarEvent(accessToken: string, { name, email, date, mes
   const startDate = new Date(date);
   const endDate = new Date(startDate.getTime() + 30 * 60000); // 30 minutes later
 
-  await client.api(`/users/${BOOKING_EMAIL}/events`).post({
+  await client.api(`/users/${userEmail}/events`).post({
     subject: `New Booking from ${name}`,
     body: {
       contentType: "HTML",
@@ -68,23 +65,81 @@ async function createCalendarEvent(accessToken: string, { name, email, date, mes
   });
 }
 
-async function sendConfirmationEmail({ name, email, date }: BookingData, smtpUser: string, smtpPass: string) {
-  // Use explicit SMTP settings for better compatibility on Vercel
-  const transporter = nodemailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false, // Use STARTTLS
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
+async function sendEmailViaGraph(accessToken: string, userEmail: string, emailData: {
+  to: string;
+  toName?: string;
+  subject: string;
+  body: string;
+  isHtml?: boolean;
+}) {
+  const client = Client.init({
+    authProvider: (done) => done(null, accessToken),
   });
 
-  await transporter.sendMail({
-    from: `Hilmar van der Veen <${smtpUser}>`,
+  const message = {
+    subject: emailData.subject,
+    body: {
+      contentType: emailData.isHtml ? "HTML" : "Text",
+      content: emailData.body,
+    },
+    toRecipients: [
+      {
+        emailAddress: {
+          address: emailData.to,
+          name: emailData.toName || emailData.to,
+        },
+      },
+    ],
+  };
+
+  await client.api(`/users/${userEmail}/sendMail`).post({ message });
+}
+
+async function sendConfirmationEmail(accessToken: string, userEmail: string, { name, email, date }: BookingData) {
+  const formattedDate = new Date(date).toLocaleString('nl-NL', { 
+    timeZone: 'Europe/Amsterdam',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  const confirmationSubject = "Booking Confirmation - Hilmar van der Veen";
+  const confirmationBody = `<p>Hi ${name},</p>
+
+<p>Thank you for booking a consultation with me! Your booking has been confirmed for:</p>
+
+<div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+<p style="margin: 0; font-size: 18px; font-weight: bold; color: #059669;">
+📅 ${formattedDate}
+</p>
+</div>
+
+<p>I'm looking forward to our conversation! If you have any questions or need to reschedule, please don't hesitate to reach out:</p>
+
+<ul>
+<li>Email: <a href="mailto:${userEmail}">${userEmail}</a></li>
+<li>Phone: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
+<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+</ul>
+
+<p>I'll send you a calendar invitation shortly with all the details.</p>
+
+<p>Best regards,<br>
+<strong>Hilmar van der Veen</strong><br>
+Senior Frontend Developer</p>
+
+<hr style="margin-top: 30px; border: none; border-top: 1px solid #e5e7eb;">
+<p style="font-size: 12px; color: #6b7280;">This is an automated confirmation email.</p>`;
+
+  await sendEmailViaGraph(accessToken, userEmail, {
     to: email,
-    subject: "Booking Confirmation",
-    html: `<p>Hi ${name},</p><p>Your booking has been scheduled for <strong>${new Date(date).toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}</strong>.</p><p>We'll contact you soon!</p>`,
+    toName: name,
+    subject: confirmationSubject,
+    body: confirmationBody,
+    isHtml: true,
   });
 }
 
@@ -95,9 +150,8 @@ export async function POST(req: NextRequest) {
     const clientSecret = process.env.MS_CLIENT_SECRET;
     const tenantId = process.env.MS_TENANT_ID;
     const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
 
-    if (!clientId || !clientSecret || !tenantId || !smtpUser || !smtpPass) {
+    if (!clientId || !clientSecret || !tenantId || !smtpUser) {
       console.error("Missing required environment variables for booking service");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
@@ -119,10 +173,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Booking date cannot be in the past" }, { status: 400 });
     }
 
-    // Create calendar event and send confirmation email
+    // Get Microsoft Graph access token
     const token = await getMicrosoftAccessToken(clientId, clientSecret, tenantId);
-    await createCalendarEvent(token, { name, email, date, message });
-    await sendConfirmationEmail({ name, email, date }, smtpUser, smtpPass);
+    
+    // Create calendar event and send confirmation email
+    await createCalendarEvent(token, smtpUser, { name, email, date, message });
+    await sendConfirmationEmail(token, smtpUser, { name, email, date });
+
+    console.log(`Booking created for: ${name} (${email}) on ${new Date(date).toLocaleString()}`);
 
     return NextResponse.json({ success: true, message: "Booking created successfully" });
   } catch (error: unknown) {
