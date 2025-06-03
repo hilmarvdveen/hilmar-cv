@@ -3,9 +3,15 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { Download, Calendar, Phone } from "lucide-react";
+import { useState } from "react";
+import { CVDownloadModal } from "./CVDownloadModal";
+import { useParams } from "next/navigation";
 
 export const HeroSection = () => {
   const t = useTranslations("home");
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <section
@@ -52,14 +58,13 @@ export const HeroSection = () => {
                 <span>Schedule a call</span>
               </Link>
 
-              <Link
-                href="/cv/hilmar-van-der-veen.pdf"
-                download
+              <button
+                onClick={() => setIsCVModalOpen(true)}
                 className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
               >
                 <Download className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                 <span>Download CV</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -78,6 +83,13 @@ export const HeroSection = () => {
           </figure>
         </div>
       </div>
+
+      {/* CV Download Modal */}
+      <CVDownloadModal
+        isOpen={isCVModalOpen}
+        onClose={() => setIsCVModalOpen(false)}
+        locale={locale}
+      />
     </section>
   );
 };

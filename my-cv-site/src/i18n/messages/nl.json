@@ -525,6 +525,42 @@
         ],
         "cta": "Bekijk mijn projecten"
     },
+    "cvModal": {
+        "title": "CV Downloaden",
+        "subtitle": "Hilmar van der Veen",
+        "description": "Bedankt voor je interesse! Om je de beste service te bieden en bij te houden wie mijn CV downloadt, vul je deze korte vorm in.",
+        "close": "Modal sluiten",
+        "fields": {
+            "name": "Volledige Naam",
+            "email": "E-mailadres",
+            "purpose": "Doel van Download"
+        },
+        "placeholders": {
+            "name": "Voer je volledige naam in",
+            "email": "Voer je e-mailadres in",
+            "purpose": "Selecteer de reden voor downloaden"
+        },
+        "purposes": {
+            "recruitment": "Werving / Vacature",
+            "projectInquiry": "Project Aanvraag",
+            "businessPartnership": "Zakelijke Samenwerking",
+            "networking": "Netwerken",
+            "research": "Onderzoek / Informatie",
+            "other": "Anders"
+        },
+        "validation": {
+            "nameRequired": "Naam is verplicht",
+            "emailRequired": "E-mail is verplicht",
+            "emailInvalid": "Voer een geldig e-mailadres in",
+            "purposeRequired": "Selecteer een doel"
+        },
+        "privacy": "Je gegevens worden alleen gebruikt om te begrijpen wie geïnteresseerd is in mijn profiel en worden niet gedeeld met derden.",
+        "buttons": {
+            "cancel": "Annuleren",
+            "download": "CV Downloaden",
+            "downloading": "Verwerken..."
+        }
+    },
     "common": {
         "home": {
             "name": "Hilmar van der Veen",

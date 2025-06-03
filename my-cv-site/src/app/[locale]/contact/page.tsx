@@ -3,6 +3,9 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
+import { useState } from "react";
+import { CVDownloadModal } from "@/components/CVDownloadModal";
+import { useParams } from "next/navigation";
 import {
   Mail,
   Phone,
@@ -21,6 +24,10 @@ import {
 } from "lucide-react";
 
 export default function ContactPage() {
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+  const params = useParams();
+  const locale = params.locale as string;
+
   const clients = [
     { name: "Belastingdienst", logo: "/logos/belastingdienst.svg" },
     { name: "Postcode Loterij", logo: "/logos/postcode-loterij.svg" },
@@ -85,8 +92,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      value: "hilmar.van.der.veen@the-future-group.com",
-      href: "mailto:hilmar.van.der.veen@the-future-group.com",
+      value: "hilmar@hilmarvanderveen.com",
+      href: "mailto:hilmar@hilmarvanderveen.com",
       description: "For project inquiries and detailed discussions",
     },
     {
@@ -416,14 +423,13 @@ export default function ContactPage() {
                 Quick Resources
               </h3>
               <div className="space-y-4">
-                <a
-                  href="/cv/hilmar-van-der-veen.pdf"
-                  download
-                  className="flex items-center space-x-3 text-emerald-600 hover:text-emerald-700 font-medium"
+                <button
+                  onClick={() => setIsCVModalOpen(true)}
+                  className="flex items-center space-x-3 text-emerald-600 hover:text-emerald-700 font-medium w-full text-left"
                 >
                   <Download className="w-5 h-5" />
                   <span>Download CV</span>
-                </a>
+                </button>
                 <Link
                   href="/projects"
                   className="flex items-center space-x-3 text-emerald-600 hover:text-emerald-700 font-medium"
@@ -443,6 +449,13 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* CV Download Modal */}
+      <CVDownloadModal
+        isOpen={isCVModalOpen}
+        onClose={() => setIsCVModalOpen(false)}
+        locale={locale}
+      />
     </div>
   );
 }

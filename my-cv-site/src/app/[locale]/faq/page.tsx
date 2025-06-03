@@ -231,7 +231,7 @@ export default function FAQPage() {
             </Link>
 
             <a
-              href="tel:+31612345678"
+              href="tel:+31680149947"
               className="inline-flex items-center justify-center space-x-2 border-2 border-blue-300 text-blue-300 px-8 py-4 rounded-lg font-bold hover:bg-blue-300 hover:text-blue-900 transition-all duration-300"
             >
               <Phone className="w-5 h-5" />

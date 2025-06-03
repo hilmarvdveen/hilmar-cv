@@ -538,14 +538,50 @@
         "title": "Page not found"
     },
     "about": {
-        "title": "About Me",
-        "intro": "I'm Hilmar van der Veen, a senior frontend developer with over 10 years of experience building scalable, accessible and future-proof web applications.",
+        "title": "About me",
+        "intro": "I'm Hilmar van der Veen, a senior frontend developer with over 10 years of experience building scalable, accessible, and future-proof web applications.",
         "body": [
-            "I've worked on complex projects for governments, lottery organizations and large enterprises. My focus is on quality, scalability and user experience.",
-            "What sets me apart is that I don't just build – I lead. I take ownership, help teams grow, and think critically about technical and functional solutions.",
-            "Whether it's setting up a design system, migrating legacy code or building configuration-driven UI tools – I deliver structured, tested and documented results."
+            "I've worked on complex projects for government institutions, lotteries, and large organizations. My focus is on quality, scalability, and user-friendliness.",
+            "What sets me apart is my ability to not only build, but also guide. I take ownership, help teams grow, and I'm not afraid to think critically about the best solution – both technically and functionally.",
+            "Whether it's setting up a design system, migrating legacy code, or building a configuration-driven interface: I deliver structured, tested, and documented work."
         ],
-        "cta": "See my projects"
+        "cta": "View my projects"
+    },
+    "cvModal": {
+        "title": "Download CV",
+        "subtitle": "Hilmar van der Veen",
+        "description": "Thank you for your interest! To provide you with the best service and keep track of who downloads my CV, please fill out this quick form.",
+        "close": "Close modal",
+        "fields": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "purpose": "Purpose of Download"
+        },
+        "placeholders": {
+            "name": "Enter your full name",
+            "email": "Enter your email address",
+            "purpose": "Select the reason for downloading"
+        },
+        "purposes": {
+            "recruitment": "Recruitment / Job Opportunity",
+            "projectInquiry": "Project Inquiry",
+            "businessPartnership": "Business Partnership",
+            "networking": "Networking",
+            "research": "Research / Information",
+            "other": "Other"
+        },
+        "validation": {
+            "nameRequired": "Name is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Please enter a valid email address",
+            "purposeRequired": "Please select a purpose"
+        },
+        "privacy": "Your information will only be used to understand who is interested in my profile and will not be shared with third parties.",
+        "buttons": {
+            "cancel": "Cancel",
+            "download": "Download CV",
+            "downloading": "Processing..."
+        }
     },
     "faq": {
         "breadcrumb": "FAQ",

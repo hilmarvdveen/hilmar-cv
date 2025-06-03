@@ -171,19 +171,19 @@ export const Footer = () => {
 
             <div className="space-y-4 mb-8">
               <a
-                href="mailto:hilmar@example.com"
-                className="group flex items-center space-x-3 text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                href="mailto:hilmar@hilmarvanderveen.com"
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
-                <Mail className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span>hilmar@example.com</span>
+                <Mail className="w-4 h-4" />
+                <span>hilmar@hilmarvanderveen.com</span>
               </a>
 
               <a
-                href="tel:+31612345678"
-                className="group flex items-center space-x-3 text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                href="tel:+31680149947"
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
-                <Phone className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span>+31 6 12345678</span>
+                <Phone className="w-4 h-4" />
+                <span>+31 6 8014 9947</span>
               </a>
             </div>
 
