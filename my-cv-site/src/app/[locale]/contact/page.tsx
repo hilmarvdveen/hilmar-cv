@@ -22,20 +22,12 @@ import {
   Download,
   ExternalLink,
 } from "lucide-react";
+import { ClientLogosCarousel } from "@/components/ClientLogosCarousel";
 
 export default function ContactPage() {
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const params = useParams();
   const locale = params.locale as string;
-
-  const clients = [
-    { name: "Belastingdienst", logo: "/logos/belastingdienst.svg" },
-    { name: "Postcode Loterij", logo: "/logos/postcode-loterij.svg" },
-    { name: "Randstad", logo: "/logos/randstad.svg" },
-    { name: "FedEx", logo: "/logos/fedex.svg" },
-    { name: "Athlon", logo: "/logos/athlon.svg" },
-    { name: "Canvas", logo: "/logos/canvas.svg" },
-  ];
 
   const testimonials = [
     {
@@ -210,34 +202,7 @@ export default function ContactPage() {
       </section>
 
       {/* Client Logos */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Trusted by Leading Organizations
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              I&apos;ve had the privilege of working with industry leaders
-              across government, finance, and enterprise sectors.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-            {clients.map((client) => (
-              <div
-                key={client.name}
-                className="group flex items-center justify-center p-6 rounded-lg border border-gray-200 bg-gray-50 hover:bg-white transition-all duration-300 hover:shadow-md"
-              >
-                <div className="w-full h-16 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-400 group-hover:text-gray-600 transition-colors duration-300">
-                    {client.name}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ClientLogosCarousel />
 
       {/* Testimonials */}
       <section className="py-20 bg-gray-50">

@@ -15,30 +15,41 @@
         },
         "usp": {
             "title": "How I help your organization move forward",
+            "businessImpact": "Business Impact",
+            "actions": {
+                "bookConsultation": "Book consultation",
+                "readMore": "Read more"
+            },
             "items": [
                 {
                     "title": "From idea to scalable digital platform",
-                    "description": "I help organizations turn complex challenges into scalable, future-proof platforms. From wireframe to frontend, backend, and database – I deliver complete, working solutions."
+                    "description": "I help organizations turn complex challenges into scalable, future-proof platforms. From wireframe to frontend, backend, and database – I deliver complete, working solutions.",
+                    "impact": "6-8 weeks from concept to live platform. Full ownership of technical architecture that grows with your organization."
                 },
                 {
                     "title": "AI implementation & digital transformation",
-                    "description": "I use AI where it adds real value. I integrate machine learning and data analysis into new or existing systems to automate processes, generate insights, and serve customers smarter."
+                    "description": "I use AI where it adds real value. I integrate machine learning and data analysis into new or existing systems to automate processes, generate insights, and serve customers smarter.",
+                    "impact": "30-50% efficiency gains through smart automation. Real-time data insights that directly drive better business decisions."
                 },
                 {
                     "title": "Design Systems & frontend excellence",
-                    "description": "I build scalable design systems that accelerate teams. With a focus on performance, accessibility (WCAG), reusability, and consistent branding across all channels."
+                    "description": "I build scalable design systems that accelerate teams. With a focus on performance, accessibility (WCAG), reusability, and consistent branding across all channels.",
+                    "impact": "40% faster development through reusable components. Consistent brand experience and WCAG compliance that eliminates legal risks."
                 },
                 {
                     "title": "API integrations & low-code component architecture",
-                    "description": "I create seamless connections between frontend and backend – REST, GraphQL, CQRS. With a configuration-driven frontend, editors can manage content without touching code."
+                    "description": "I create seamless connections between frontend and backend – REST, GraphQL, CQRS. With a configuration-driven frontend, editors can manage content without touching code.",
+                    "impact": "75% less developer dependency for content management. Faster time-to-market for new features and campaigns."
                 },
                 {
                     "title": "Mentoring & structure in your development team",
-                    "description": "I help your team grow: coaching, quality assurance, refactoring legacy code, and setting technical standards. This builds sustainable teams and stable software."
+                    "description": "I help your team grow: coaching, quality assurance, refactoring legacy code, and setting technical standards. This builds sustainable teams and stable software.",
+                    "impact": "50% fewer bugs and technical debt. Self-sufficient teams that can continue developing and innovating without external help."
                 },
                 {
                     "title": "Rapid scaling within your project or department",
-                    "description": "Whether it's an MVP, redesign or replatforming: I quickly integrate into existing teams or deliver results independently. Focused on impact within sprints, aligned with your deadlines."
+                    "description": "Whether it's an MVP, redesign or replatforming: I quickly integrate into existing teams or deliver results independently. Focused on impact within sprints, aligned with your deadlines.",
+                    "impact": "Immediate productive deployment without onboarding time. Deadline-focused delivery with measurable results within the first sprint."
                 }
             ]
         },
@@ -496,8 +507,206 @@
         }
     },
     "projects": {
-        "title": "Projects – Hilmar van der Veen",
-        "description": "A selection of recent work I've done as a frontend developer and technical lead."
+        "meta": {
+            "title": "Projects & Case Studies – Hilmar van der Veen",
+            "description": "Discover detailed case studies of successful projects. From scalable platforms to AI implementations and design systems – see how I help organizations grow."
+        },
+        "hero": {
+            "badge": "Project Portfolio",
+            "title": "Proven Results, Measurable Impact",
+            "description": "From MVP to enterprise systems, from legacy modernization to AI implementations. Discover how I help organizations realize their digital ambitions with concrete, measurable results.",
+            "stats": {
+                "projects": "50+",
+                "projectsLabel": "Completed projects",
+                "impact": "$2M+",
+                "impactLabel": "Generated value",
+                "industries": "15+",
+                "industriesLabel": "Different industries"
+            }
+        },
+        "showcase": {
+            "title": "Detailed Case Studies",
+            "description": "Every project tells a story of challenge, solution, and success. See how I combine technical expertise with business impact for lasting results.",
+            "challengeTitle": "The Challenge",
+            "solutionTitle": "My Approach",
+            "resultsTitle": "Achieved Results",
+            "businessImpact": "Business Impact",
+            "technologiesUsed": "Technologies Used",
+            "actions": {
+                "discuss": "Discuss your project",
+                "moreInfo": "More information"
+            },
+            "cases": [
+                {
+                    "title": "Scalable Platforms",
+                    "description": "From idea to fully working platform in 6-8 weeks. I help organizations turn complex challenges into future-proof digital solutions.",
+                    "visualTitle": "End-to-End Delivery",
+                    "visualSubtitle": "From concept to production",
+                    "challenge": "Organizations have great ideas but lack the technical expertise, structured approach, or team to make their vision reality. They want to quickly build an MVP to validate and grow.",
+                    "solution": "I start with thorough business case and technical requirements analysis. Then I design scalable architecture and build a fully working platform. Through agile development and regular feedback loops, I deliver tangible results quickly.",
+                    "results": [
+                        "6-8 weeks from concept to live platform",
+                        "Full ownership of technical architecture",
+                        "Scalable system for future growth",
+                        "Integrated testing and quality assurance",
+                        "Knowledge transfer and documentation",
+                        "Ready for funding and investors"
+                    ],
+                    "impact": "Clients can quickly validate their idea and go to market. The structured approach ensures lower development costs and avoids expensive refactoring later.",
+                    "technologies": [
+                        "React",
+                        "Next.js",
+                        "TypeScript",
+                        "Node.js",
+                        "PostgreSQL",
+                        "AWS",
+                        "Docker",
+                        "CI/CD"
+                    ]
+                },
+                {
+                    "title": "AI & Data-driven Transformation",
+                    "description": "Smart integration of AI and machine learning where it adds real value. I automate processes, generate insights, and improve customer experience.",
+                    "visualTitle": "Smart Automation",
+                    "visualSubtitle": "AI where it matters",
+                    "challenge": "Companies struggle with manual processes, have data but lack insights, or want to implement AI but don't know where to start. They seek concrete business value, not trendy tech.",
+                    "solution": "I identify processes suitable for automation and data analysis. Through strategic AI implementation and machine learning integrations, I create solutions that deliver measurable value from day one.",
+                    "results": [
+                        "30-50% efficiency gains through automation",
+                        "Real-time data insights and dashboards",
+                        "Predictive models for better decisions",
+                        "Automated workflows and notifications",
+                        "Improved customer experience through personalization",
+                        "Cost savings through smart processes"
+                    ],
+                    "impact": "Organizations make data-driven decisions, improve operational efficiency, and increase customer value through targeted AI implementation.",
+                    "technologies": [
+                        "Python",
+                        "TensorFlow",
+                        "React",
+                        "D3.js",
+                        "FastAPI",
+                        "PostgreSQL",
+                        "Redis",
+                        "Azure ML"
+                    ]
+                },
+                {
+                    "title": "Design Systems & Frontend Excellence",
+                    "description": "Scalable design systems that accelerate teams. With focus on performance, accessibility, and consistent brand experience across all channels.",
+                    "visualTitle": "Scalable Components",
+                    "visualSubtitle": "Reusable UI excellence",
+                    "challenge": "Teams keep rebuilding the same components, brand experience is inconsistent between platforms, and accessibility compliance is a stumbling block. Development speed stagnates due to code duplication.",
+                    "solution": "I develop a central design system with reusable components, documentation, and governance. All components are WCAG-compliant, tested, and optimally performing. Teams can develop quickly and consistently.",
+                    "results": [
+                        "40% faster development of new features",
+                        "100% WCAG compliance and accessibility",
+                        "Consistent brand experience across platforms",
+                        "Shared components and design tokens",
+                        "Automated testing and quality control",
+                        "Complete documentation and examples"
+                    ],
+                    "impact": "Faster time-to-market, lower development costs, improved user experience, and compliance with accessibility legislation.",
+                    "technologies": [
+                        "React",
+                        "Storybook",
+                        "TypeScript",
+                        "Tailwind CSS",
+                        "Jest",
+                        "Chromatic",
+                        "Figma",
+                        "Design Tokens"
+                    ]
+                },
+                {
+                    "title": "API Integrations & Low-code Architecture",
+                    "description": "Seamless connections between systems. Configuration-driven frontends that allow editors to manage content without developers.",
+                    "visualTitle": "Smart Integrations",
+                    "visualSubtitle": "Code-free content management",
+                    "challenge": "Systems work in silos, content updates require developers, and new integrations are time-consuming and expensive. Business teams want to manage content and flows independently.",
+                    "solution": "I build configuration-driven architectures with REST/GraphQL APIs, CQRS patterns, and low-code interfaces. Editors can manage content, forms, and flows through intuitive admin interfaces.",
+                    "results": [
+                        "75% less developer dependency",
+                        "Faster content updates and campaigns",
+                        "Seamless system integrations",
+                        "Self-service for business teams",
+                        "Flexible workflow configuration",
+                        "Real-time data synchronization"
+                    ],
+                    "impact": "Lower operational costs, faster time-to-market for campaigns, and autonomous business teams that can innovate independently.",
+                    "technologies": [
+                        "GraphQL",
+                        "REST APIs",
+                        "CQRS",
+                        "React",
+                        "Node.js",
+                        "MongoDB",
+                        "RabbitMQ",
+                        "Docker"
+                    ]
+                },
+                {
+                    "title": "Team Mentoring & Technical Structure",
+                    "description": "Building sustainable teams through coaching, quality assurance, and technical standards. From legacy modernization to team empowerment.",
+                    "visualTitle": "Team Excellence",
+                    "visualSubtitle": "Sustainable development",
+                    "challenge": "Development teams struggle with legacy code, inconsistent quality, lack of standards, and knowledge gaps. External dependencies slow innovation and increase costs.",
+                    "solution": "I coach teams in modern development practices, conduct code reviews, establish technical standards, and refactor legacy systems. Through knowledge transfer and mentoring, I build independent, high-performing teams.",
+                    "results": [
+                        "50% fewer bugs and technical debt",
+                        "Independent teams without external help",
+                        "Modern development workflows",
+                        "Standardized code quality",
+                        "Effective knowledge sharing",
+                        "Faster onboarding of new developers"
+                    ],
+                    "impact": "Lower recruitment costs, more stable software, increased team autonomy, and sustainable technical growth without external dependencies.",
+                    "technologies": [
+                        "Git",
+                        "ESLint",
+                        "Jest",
+                        "SonarQube",
+                        "Docker",
+                        "CI/CD",
+                        "Agile",
+                        "Code Reviews"
+                    ]
+                },
+                {
+                    "title": "Rapid Scaling & Project Acceleration",
+                    "description": "Quickly integrate into existing teams or deliver independently. Focused on impact within sprints and alignment with deadlines.",
+                    "visualTitle": "Fast Delivery",
+                    "visualSubtitle": "Deadline-focused results",
+                    "challenge": "Projects are falling behind schedule, teams lack expertise for critical deadlines, or organizations need temporary capacity for MVPs, redesigns, or replatforming.",
+                    "solution": "I integrate quickly without long onboarding time, take ownership of deliverables, and work agile with concrete milestones. Through experience and structured approach, I deliver measurable results within the first sprint.",
+                    "results": [
+                        "Immediately productive without onboarding",
+                        "Deadline-focused project delivery",
+                        "Measurable results in first sprint",
+                        "Increased team velocity",
+                        "Risk reduction through experience",
+                        "Flexible remote collaboration"
+                    ],
+                    "impact": "Projects stay on track, teams meet deadlines, and organizations can quickly respond to market opportunities without long recruitment processes.",
+                    "technologies": [
+                        "Agile",
+                        "Scrum",
+                        "React",
+                        "Angular",
+                        "Node.js",
+                        "Docker",
+                        "AWS",
+                        "Remote Collaboration"
+                    ]
+                }
+            ],
+            "cta": {
+                "title": "Ready for Your Next Project?",
+                "description": "Every organization has unique challenges. Let's discuss how my expertise can realize your specific goals.",
+                "book": "Schedule a strategy session",
+                "contact": "Get in touch"
+            }
+        }
     },
     "contact": {
         "meta": {

@@ -15,30 +15,41 @@
         },
         "usp": {
             "title": "Hoe ik jouw organisatie verder help",
+            "businessImpact": "Zakelijke Impact",
+            "actions": {
+                "bookConsultation": "Boek consultatie",
+                "readMore": "Lees meer"
+            },
             "items": [
                 {
                     "title": "Van idee naar schaalbaar digitaal platform",
-                    "description": "Ik help organisaties complexe uitdagingen om te zetten naar schaalbare, toekomstbestendige platforms. Van wireframe tot frontend, backend en database — ik lever complete, werkende oplossingen."
+                    "description": "Ik help organisaties complexe uitdagingen om te zetten naar schaalbare, toekomstbestendige platforms. Van wireframe tot frontend, backend en database — ik lever complete, werkende oplossingen.",
+                    "impact": "6-8 weken van concept naar live platform. Volledige eigenaarschap van technische architectuur die meegroeit met je organisatie."
                 },
                 {
                     "title": "AI-implementatie & digitale transformatie",
-                    "description": "Ik zet AI in waar het echte waarde toevoegt. Ik integreer machine learning en data-analyse in nieuwe of bestaande systemen om processen te automatiseren, inzichten te genereren en klanten slimmer te bedienen."
+                    "description": "Ik zet AI in waar het echte waarde toevoegt. Ik integreer machine learning en data-analyse in nieuwe of bestaande systemen om processen te automatiseren, inzichten te genereren en klanten slimmer te bedienen.",
+                    "impact": "30-50% efficiëntiewinst door slimme automatisering. Realtime data-inzichten die direct leiden tot betere business beslissingen."
                 },
                 {
                     "title": "Design Systems & frontend excellentie",
-                    "description": "Ik bouw schaalbare design systems die teams versnellen. Met focus op performance, toegankelijkheid (WCAG), herbruikbaarheid en consistente branding over alle kanalen."
+                    "description": "Ik bouw schaalbare design systems die teams versnellen. Met focus op performance, toegankelijkheid (WCAG), herbruikbaarheid en consistente branding over alle kanalen.",
+                    "impact": "40% snellere ontwikkeling door herbruikbare componenten. Consistente merkbeleving en WCAG-compliance die juridische risico's elimineert."
                 },
                 {
                     "title": "API-integraties & low-code componentarchitectuur",
-                    "description": "Ik creëer naadloze verbindingen tussen frontend en backend — REST, GraphQL, CQRS. Met een configuratiegedreven frontend kunnen redacteuren content beheren zonder code aan te raken."
+                    "description": "Ik creëer naadloze verbindingen tussen frontend en backend — REST, GraphQL, CQRS. Met een configuratiegedreven frontend kunnen redacteuren content beheren zonder code aan te raken.",
+                    "impact": "75% minder developer-afhankelijkheid voor contentbeheer. Snellere time-to-market voor nieuwe features en campagnes."
                 },
                 {
                     "title": "Mentoring & structuur in jouw ontwikkelteam",
-                    "description": "Ik help jouw team groeien: coaching, kwaliteitsborging, refactoring van legacy code en het stellen van technische standaarden. Dit bouwt duurzame teams en stabiele software."
+                    "description": "Ik help jouw team groeien: coaching, kwaliteitsborging, refactoring van legacy code en het stellen van technische standaarden. Dit bouwt duurzame teams en stabiele software.",
+                    "impact": "50% minder bugs en technische schuld. Zelfstandige teams die zonder externe hulp kunnen doorontwikkelen en innoveren."
                 },
                 {
                     "title": "Snel opschalen in je project of afdeling",
-                    "description": "Of het nu gaat om een MVP, redesign of replatforming: ik schakel snel in bestaande teams of lever zelfstandig resultaat. Gericht op impact binnen sprints, afgestemd op jouw deadlines."
+                    "description": "Of het nu gaat om een MVP, redesign of replatforming: ik schakel snel in bestaande teams of lever zelfstandig resultaat. Gericht op impact binnen sprints, afgestemd op jouw deadlines.",
+                    "impact": "Direct productieve inzet zonder inwerktijd. Deadline-gerichte levering met meetbare resultaten binnen de eerste sprint."
                 }
             ]
         },
@@ -477,8 +488,206 @@
         }
     },
     "projects": {
-        "title": "Projecten – Hilmar van der Veen",
-        "description": "Een selectie van recente projecten waar ik aan heb gewerkt als front-end developer en technisch lead."
+        "meta": {
+            "title": "Projecten & Case Studies – Hilmar van der Veen",
+            "description": "Ontdek gedetailleerde case studies van succesvolle projecten. Van schaalbare platforms tot AI-implementaties en design systems – zie hoe ik organisaties help groeien."
+        },
+        "hero": {
+            "badge": "Project Portfolio",
+            "title": "Bewezen Resultaten, Meetbare Impact",
+            "description": "Van MVP tot enterprise systemen, van legacy modernisatie tot AI-implementaties. Ontdek hoe ik organisaties help hun digitale ambities waar te maken met concrete, meetbare resultaten.",
+            "stats": {
+                "projects": "50+",
+                "projectsLabel": "Afgeronde projecten",
+                "impact": "€2M+",
+                "impactLabel": "Gegenereerde waarde",
+                "industries": "15+",
+                "industriesLabel": "Verschillende sectoren"
+            }
+        },
+        "showcase": {
+            "title": "Gedetailleerde Case Studies",
+            "description": "Elk project vertelt een verhaal van uitdaging, oplossing en succes. Zie hoe ik technische expertise combineer met business impact voor blijvende resultaten.",
+            "challengeTitle": "De Uitdaging",
+            "solutionTitle": "Mijn Aanpak",
+            "resultsTitle": "Behaalde Resultaten",
+            "businessImpact": "Zakelijke Impact",
+            "technologiesUsed": "Gebruikte Technologieën",
+            "actions": {
+                "discuss": "Bespreek je project",
+                "moreInfo": "Meer informatie"
+            },
+            "cases": [
+                {
+                    "title": "Schaalbare Platforms",
+                    "description": "Van idee naar volledig werkend platform in 6-8 weken. Ik help organisaties complexe uitdagingen omzetten naar toekomstbestendige digitale oplossingen.",
+                    "visualTitle": "End-to-End Delivery",
+                    "visualSubtitle": "Van concept tot productie",
+                    "challenge": "Organisaties hebben een geweldig idee maar missen de technische expertise, gestructureerde aanpak of het team om hun visie werkelijkheid te maken. Ze willen snel een MVP bouwen om te valideren en te groeien.",
+                    "solution": "Ik begin met een grondige analyse van de business case en technische vereisten. Vervolgens ontwerp ik een schaalbare architectuur en bouw een volledig werkend platform. Door agile development en regelmatige feedback loops lever ik snel tastbare resultaten.",
+                    "results": [
+                        "6-8 weken van concept tot live platform",
+                        "Volledig eigendom van technische architectuur",
+                        "Schaalbaar systeem voor toekomstige groei",
+                        "Geïntegreerde testing en kwaliteitsborging",
+                        "Overdracht van kennis en documentatie",
+                        "Klaar voor funding en investeerders"
+                    ],
+                    "impact": "Clients kunnen hun idee snel valideren en naar markt brengen. De gestructureerde aanpak zorgt voor lagere ontwikkelkosten en vermijdt dure refactoring later.",
+                    "technologies": [
+                        "React",
+                        "Next.js",
+                        "TypeScript",
+                        "Node.js",
+                        "PostgreSQL",
+                        "AWS",
+                        "Docker",
+                        "CI/CD"
+                    ]
+                },
+                {
+                    "title": "AI & Data-gedreven Transformatie",
+                    "description": "Slimme integratie van AI en machine learning waar het echte waarde toevoegt. Ik automatiseer processen, genereer inzichten en verbeter klantbeleving.",
+                    "visualTitle": "Smart Automation",
+                    "visualSubtitle": "AI waar het telt",
+                    "challenge": "Bedrijven worstelen met handmatige processen, hebben data maar missen inzichten, of willen AI implementeren maar weten niet waar te beginnen. Ze zoeken concrete business value, niet trendy tech.",
+                    "solution": "Ik identificeer processen die geschikt zijn voor automatisering en data-analyse. Door strategische AI-implementatie en machine learning integraties creëer ik oplossingen die meetbare waarde leveren vanaf dag één.",
+                    "results": [
+                        "30-50% efficiëntiewinst door automatisering",
+                        "Realtime data-inzichten en dashboards",
+                        "Predictieve modellen voor betere beslissingen",
+                        "Geautomatiseerde workflows en notificaties",
+                        "Verbeterde klantbeleving door personalisatie",
+                        "Kostenbesparing door slimme processen"
+                    ],
+                    "impact": "Organisaties maken data-gedreven beslissingen, verbeteren operationele efficiëntie en verhogen klantwaarde door gerichte AI-implementatie.",
+                    "technologies": [
+                        "Python",
+                        "TensorFlow",
+                        "React",
+                        "D3.js",
+                        "FastAPI",
+                        "PostgreSQL",
+                        "Redis",
+                        "Azure ML"
+                    ]
+                },
+                {
+                    "title": "Design Systems & Frontend Excellence",
+                    "description": "Schaalbare design systems die teams versnellen. Met focus op performance, toegankelijkheid en consistente merkbeleving over alle kanalen.",
+                    "visualTitle": "Scalable Components",
+                    "visualSubtitle": "Herbruikbare UI excellence",
+                    "challenge": "Teams bouwen steeds opnieuw dezelfde componenten, de merkbeleving is inconsistent tussen platforms, en accessibility compliance is een struikelblok. Ontwikkelsnelheid stagneert door code duplicatie.",
+                    "solution": "Ik ontwikkel een centraal design system met herbruikbare componenten, documentatie en governance. Alle componenten zijn WCAG-compliant, getest en optimaal presteerend. Teams kunnen snel en consistent ontwikkelen.",
+                    "results": [
+                        "40% snellere ontwikkeling nieuwe features",
+                        "100% WCAG compliance en accessibility",
+                        "Consistente merkbeleving alle platforms",
+                        "Gedeelde componenten en design tokens",
+                        "Automatische testing en kwaliteitscontrole",
+                        "Volledige documentatie en voorbeelden"
+                    ],
+                    "impact": "Snellere time-to-market, lagere ontwikkelkosten, verbeterde gebruikerservaring en compliance met accessibility wetgeving.",
+                    "technologies": [
+                        "React",
+                        "Storybook",
+                        "TypeScript",
+                        "Tailwind CSS",
+                        "Jest",
+                        "Chromatic",
+                        "Figma",
+                        "Design Tokens"
+                    ]
+                },
+                {
+                    "title": "API-integraties & Low-code Architectuur",
+                    "description": "Naadloze verbindingen tussen systemen. Configuration-driven frontends waarmee redacteuren content beheren zonder developers.",
+                    "visualTitle": "Smart Integrations",
+                    "visualSubtitle": "Code-vrije content beheer",
+                    "challenge": "Systemen werken in silo's, content updates vereisen developers, en nieuwe integraties zijn tijdrovend en duur. Business teams willen zelfstandig content en flows beheren.",
+                    "solution": "Ik bouw configuratie-gedreven architecturen met REST/GraphQL APIs, CQRS patterns en low-code interfaces. Redacteuren kunnen content, formulieren en flows beheren via intuïtieve admin interfaces.",
+                    "results": [
+                        "75% minder developer-afhankelijkheid",
+                        "Snellere content updates en campaigns",
+                        "Naadloze systeem integraties",
+                        "Self-service voor business teams",
+                        "Flexibele workflow configuratie",
+                        "Real-time data synchronisatie"
+                    ],
+                    "impact": "Lagere operationele kosten, snellere time-to-market voor campaigns en autonome business teams die zelf kunnen innoveren.",
+                    "technologies": [
+                        "GraphQL",
+                        "REST APIs",
+                        "CQRS",
+                        "React",
+                        "Node.js",
+                        "MongoDB",
+                        "RabbitMQ",
+                        "Docker"
+                    ]
+                },
+                {
+                    "title": "Team Mentoring & Technische Structuur",
+                    "description": "Duurzame teams bouwen door coaching, kwaliteitsborging en technische standaarden. Van legacy modernisatie tot team empowerment.",
+                    "visualTitle": "Team Excellence",
+                    "visualSubtitle": "Duurzame ontwikkeling",
+                    "challenge": "Development teams worstelen met legacy code, inconsistente kwaliteit, gebrek aan standaarden en knowledge gaps. Externe dependencies remmen innovatie en verhogen kosten.",
+                    "solution": "Ik coach teams in moderne development practices, voer code reviews uit, stel technische standaarden op en refactor legacy systemen. Door knowledge transfer en mentoring bouw ik zelfstandige, hoogpresterend teams.",
+                    "results": [
+                        "50% minder bugs en technische schuld",
+                        "Zelfstandige teams zonder externe hulp",
+                        "Moderne development workflows",
+                        "Gestandaardiseerde code kwaliteit",
+                        "Effectieve knowledge sharing",
+                        "Snellere onboarding nieuwe developers"
+                    ],
+                    "impact": "Lagere recruitment kosten, stabielere software, verhoogde team autonomie en duurzame technische groei zonder externe dependencies.",
+                    "technologies": [
+                        "Git",
+                        "ESLint",
+                        "Jest",
+                        "SonarQube",
+                        "Docker",
+                        "CI/CD",
+                        "Agile",
+                        "Code Reviews"
+                    ]
+                },
+                {
+                    "title": "Rapid Scaling & Project Acceleration",
+                    "description": "Snel inschakelen in bestaande teams of zelfstandig leveren. Gericht op impact binnen sprints en afstemming op deadlines.",
+                    "visualTitle": "Fast Delivery",
+                    "visualSubtitle": "Deadline-gerichte resultaten",
+                    "challenge": "Projecten lopen vertraging op, teams missen expertise voor kritieke deadlines, of organisaties hebben tijdelijke capaciteit nodig voor MVP's, redesigns of replatforming.",
+                    "solution": "Ik schakel snel in zonder lange inwerktijd, neem eigenaarschap van deliverables en werk agile met concrete milestones. Door ervaring en gestructureerde aanpak lever ik meetbare resultaten binnen de eerste sprint.",
+                    "results": [
+                        "Direct productief zonder onboarding",
+                        "Deadline-gerichte project delivery",
+                        "Meetbare resultaten eerste sprint",
+                        "Verhoogde team velocity",
+                        "Risicoreductie door ervaring",
+                        "Flexibele samenwerking op afstand"
+                    ],
+                    "impact": "Projecten blijven on-track, teams behalen deadlines en organisaties kunnen snel reageren op marktmogelijkheden zonder lange recruitment processen.",
+                    "technologies": [
+                        "Agile",
+                        "Scrum",
+                        "React",
+                        "Angular",
+                        "Node.js",
+                        "Docker",
+                        "AWS",
+                        "Remote Collaboration"
+                    ]
+                }
+            ],
+            "cta": {
+                "title": "Klaar voor Jouw Volgende Project?",
+                "description": "Iedere organisatie heeft unieke uitdagingen. Laten we bespreken hoe mijn expertise jouw specifieke doelen kan realiseren.",
+                "book": "Plan een strategiesessie",
+                "contact": "Neem contact op"
+            }
+        }
     },
     "contact": {
         "meta": {

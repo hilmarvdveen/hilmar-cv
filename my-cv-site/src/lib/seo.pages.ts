@@ -4,7 +4,7 @@ import { siteConfig } from '@/lib/seo.config';
 export const homepageSEO = (locale: string): SEOPageConfig => ({
   seo: {
     title: `${siteConfig.name} - Senior Frontend Developer | React, Next.js, Angular Expert`,
-    description: "Experienced Senior Frontend Developer from the Netherlands specializing in React, Next.js, and Angular. 8+ years building scalable, accessible web applications for top companies. Available for freelance projects.",
+    description: "Experienced Senior Frontend Developer from the Netherlands specializing in React, Next.js, and Angular. 10+ years building scalable, accessible web applications for top companies. Available for freelance projects.",
     keywords: [
       "Senior Frontend Developer",
       "React Developer Netherlands", 
@@ -33,7 +33,7 @@ export const homepageSEO = (locale: string): SEOPageConfig => ({
         "name": siteConfig.author.name,
         "alternateName": "Hilmar",
         "jobTitle": "Senior Frontend Developer",
-        "description": "Experienced Senior Frontend Developer with 8+ years of expertise in React, Next.js, Angular, and TypeScript",
+        "description": "Experienced Senior Frontend Developer with 10+ years of expertise in React, Next.js, Angular, and TypeScript",
         "url": siteConfig.url,
         "image": `${siteConfig.url}/images/hilmar-profile.jpg`,
         "sameAs": [
@@ -145,7 +145,7 @@ export const servicesSEO = (locale: string): SEOPageConfig => ({
 export const aboutSEO = (locale: string): SEOPageConfig => ({
   seo: {
     title: "About Hilmar van der Veen - Senior Frontend Developer",
-    description: "Learn about Hilmar van der Veen, a Senior Frontend Developer with 8+ years of experience in React, Next.js, and Angular. Based in Amsterdam, Netherlands.",
+    description: "Learn about Hilmar van der Veen, a Senior Frontend Developer with 10+ years of experience in React, Next.js, and Angular. Based in Amsterdam, Netherlands.",
     keywords: [
       "About Hilmar van der Veen",
       "Senior Frontend Developer Amsterdam",
