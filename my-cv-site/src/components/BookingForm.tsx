@@ -445,7 +445,7 @@ ${formData.description}
             {/* Project Type Selection */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                {t("steps.step1.engagementType")}
+                {t("steps.step1.projectType")}
               </h3>
               <div className="space-y-4">
                 {projectTypes.map((type) => {
