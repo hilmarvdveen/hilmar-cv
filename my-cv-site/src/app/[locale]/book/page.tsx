@@ -1,7 +1,26 @@
 import { BookingForm } from "@/components/BookingForm";
 import { Rocket, Star, Headphones, ArrowDown } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
 
-export default function BookPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "booking.meta" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
+
+export default async function BookPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "booking" });
+
   return (
     <div>
       {/* Hero Section */}
@@ -12,21 +31,21 @@ export default function BookPage() {
             <div>
               <div className="inline-flex items-center space-x-2 bg-emerald-800/50 px-4 py-2 rounded-full text-emerald-100 text-sm font-medium mb-6">
                 <Star className="w-4 h-4" />
-                <span>15+ Years Experience</span>
+                <span>{t("hero.badge")}</span>
               </div>
 
               <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-                Let&apos;s Build
+                {t("hero.title.line1")}
                 <br />
-                <span className="text-emerald-300">Something Amazing</span>
+                <span className="text-emerald-300">
+                  {t("hero.title.line2")}
+                </span>
                 <br />
-                Together
+                {t("hero.title.line3")}
               </h1>
 
               <p className="text-xl text-emerald-100 mb-8 max-w-xl leading-relaxed">
-                Ready to bring your vision to life? From quick consultations to
-                complete projects, I&apos;m here to help you succeed with
-                professional development solutions.
+                {t("hero.description")}
               </p>
 
               {/* Key Benefits */}
@@ -34,18 +53,22 @@ export default function BookPage() {
                 <div className="flex items-center space-x-3 bg-emerald-800/30 rounded-lg p-4">
                   <Rocket className="w-6 h-6 text-emerald-300 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-white">Fast Delivery</h3>
+                    <h3 className="font-semibold text-white">
+                      {t("hero.benefits.fastDelivery.title")}
+                    </h3>
                     <p className="text-sm text-emerald-200">
-                      2-8 weeks typical
+                      {t("hero.benefits.fastDelivery.description")}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3 bg-emerald-800/30 rounded-lg p-4">
                   <Headphones className="w-6 h-6 text-emerald-300 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-white">Full Support</h3>
+                    <h3 className="font-semibold text-white">
+                      {t("hero.benefits.fullSupport.title")}
+                    </h3>
                     <p className="text-sm text-emerald-200">
-                      Ongoing maintenance
+                      {t("hero.benefits.fullSupport.description")}
                     </p>
                   </div>
                 </div>
@@ -57,14 +80,14 @@ export default function BookPage() {
                   href="#booking-form"
                   className="inline-flex items-center space-x-2 bg-white text-emerald-700 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
-                  <span>Start Your Project</span>
+                  <span>{t("hero.cta.button")}</span>
                   <ArrowDown className="w-5 h-5" />
                 </a>
                 <div className="text-emerald-200 text-sm">
                   <div className="font-semibold">
-                    Free consultation included
+                    {t("hero.cta.freeConsultation")}
                   </div>
-                  <div>€85-150/hour • Projects from €5k</div>
+                  <div>{t("hero.cta.pricing")}</div>
                 </div>
               </div>
             </div>
@@ -74,44 +97,48 @@ export default function BookPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-emerald-400/20">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">
-                    Hourly Consulting
+                    {t("pricing.hourly.title")}
                   </h3>
                   <div className="bg-emerald-300 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold">
-                    Flexible
+                    {t("pricing.hourly.badge")}
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-emerald-300 mb-2">
-                  €85-150/hour
+                  {t("pricing.hourly.price")}
                 </div>
                 <p className="text-emerald-100 mb-4">
-                  Perfect for ongoing work and quick fixes
+                  {t("pricing.hourly.description")}
                 </p>
                 <ul className="space-y-2 text-emerald-200 text-sm">
-                  <li>✓ Pay as you go</li>
-                  <li>✓ Maximum flexibility</li>
-                  <li>✓ €150/hour for urgent projects</li>
+                  {(t.raw("pricing.hourly.features") as string[]).map(
+                    (feature, index) => (
+                      <li key={index}>✓ {feature}</li>
+                    )
+                  )}
                 </ul>
               </div>
 
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-emerald-400/20">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">
-                    Fixed Projects
+                    {t("pricing.project.title")}
                   </h3>
                   <div className="bg-emerald-300 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold">
-                    Popular
+                    {t("pricing.project.badge")}
                   </div>
                 </div>
                 <div className="text-3xl font-bold text-emerald-300 mb-2">
-                  €5k - €50k+
+                  {t("pricing.project.price")}
                 </div>
                 <p className="text-emerald-100 mb-4">
-                  Complete solutions with defined scope
+                  {t("pricing.project.description")}
                 </p>
                 <ul className="space-y-2 text-emerald-200 text-sm">
-                  <li>✓ Fixed timeline & scope</li>
-                  <li>✓ Better value for large projects</li>
-                  <li>✓ Comprehensive deliverables</li>
+                  {(t.raw("pricing.project.features") as string[]).map(
+                    (feature, index) => (
+                      <li key={index}>✓ {feature}</li>
+                    )
+                  )}
                 </ul>
               </div>
             </div>
@@ -124,11 +151,10 @@ export default function BookPage() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Ready to Get Started?
+              {t("form.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Tell me about your project and I&apos;ll get back to you within 24
-              hours with a detailed proposal.
+              {t("form.description")}
             </p>
           </div>
 

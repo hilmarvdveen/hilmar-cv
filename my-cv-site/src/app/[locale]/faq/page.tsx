@@ -82,8 +82,6 @@ export default function FAQPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <Breadcrumb items={[{ label: "FAQ", translationKey: "nav.faq" }]} />
-
           <div className="max-w-4xl">
             <div className="flex items-center space-x-3 mb-6">
               <HelpCircle className="w-8 h-8 text-blue-300" />
@@ -123,6 +121,8 @@ export default function FAQPage() {
           </div>
         </div>
       </section>
+
+      <Breadcrumb />
 
       {/* FAQ Content */}
       <section className="py-20">

@@ -17,240 +17,104 @@ import {
   RefreshCw,
   Target,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
 
-export default function DesignSystemsPage() {
-  const technologies = [
-    {
-      category: "Design Tools",
-      items: [
-        {
-          name: "Figma",
-          description: "Collaborative interface design",
-          level: "Expert",
-        },
-        {
-          name: "Sketch",
-          description: "Vector-based design tool",
-          level: "Advanced",
-        },
-        {
-          name: "Adobe Creative Suite",
-          description: "Professional design software",
-          level: "Advanced",
-        },
-        {
-          name: "Principle",
-          description: "Interactive prototyping",
-          level: "Intermediate",
-        },
-      ],
-    },
-    {
-      category: "Development",
-      items: [
-        {
-          name: "React/Storybook",
-          description: "Component development & documentation",
-          level: "Expert",
-        },
-        {
-          name: "Styled Components",
-          description: "CSS-in-JS styling solution",
-          level: "Expert",
-        },
-        {
-          name: "Design Tokens",
-          description: "Systematic design decisions",
-          level: "Advanced",
-        },
-        {
-          name: "TypeScript",
-          description: "Type-safe component development",
-          level: "Advanced",
-        },
-      ],
-    },
-    {
-      category: "Documentation",
-      items: [
-        {
-          name: "GitBook",
-          description: "Team documentation platform",
-          level: "Advanced",
-        },
-        {
-          name: "Notion",
-          description: "Collaborative workspace",
-          level: "Advanced",
-        },
-        {
-          name: "Markdown",
-          description: "Lightweight markup language",
-          level: "Expert",
-        },
-      ],
-    },
-  ];
+interface DesignSystemsPageProps {
+  params: Promise<{ locale: string }>;
+}
 
-  const processes = [
-    {
-      title: "Design Audit & Discovery",
-      description:
-        "Analyzing existing patterns and identifying opportunities for systematization",
-      icon: Target,
-      details: [
-        "Current design inventory",
-        "Component pattern analysis",
-        "Brand guideline review",
-        "User experience assessment",
-      ],
-    },
-    {
-      title: "System Architecture",
-      description: "Creating the foundational structure and design principles",
-      icon: Grid,
-      details: [
-        "Design token definition",
-        "Component hierarchy planning",
-        "Naming convention standards",
-        "Accessibility guidelines",
-      ],
-    },
-    {
-      title: "Component Library",
-      description:
-        "Building reusable, documented components with clear guidelines",
-      icon: Code,
-      details: [
-        "Interactive component development",
-        "Usage documentation",
-        "Code examples & snippets",
-        "Responsive behavior definitions",
-      ],
-    },
-    {
-      title: "Implementation & Training",
-      description:
-        "Rolling out the system with team education and ongoing support",
-      icon: Users,
-      details: [
-        "Team training sessions",
-        "Implementation guidelines",
-        "Version control workflows",
-        "Continuous improvement process",
-      ],
-    },
-  ];
+interface TechItem {
+  name: string;
+  description: string;
+  level: string;
+}
 
-  const benefits = [
-    {
-      icon: Zap,
-      title: "Development Velocity",
-      description:
-        "Accelerate product development with pre-built, tested components",
-    },
-    {
-      icon: Layers,
-      title: "Consistent Experience",
-      description:
-        "Maintain brand coherence across all touchpoints and platforms",
-    },
-    {
-      icon: RefreshCw,
-      title: "Reduced Maintenance",
-      description:
-        "Centralized updates automatically propagate across all products",
-    },
-    {
-      icon: Users,
-      title: "Team Collaboration",
-      description:
-        "Bridge design and development with shared language and tools",
-    },
-    {
-      icon: Globe,
-      title: "Scalable Foundation",
-      description:
-        "Support rapid growth without compromising quality or consistency",
-    },
-    {
-      icon: BookOpen,
-      title: "Self-Service Design",
-      description:
-        "Empower team members to create on-brand designs independently",
-    },
-  ];
+interface TechCategory {
+  name: string;
+  items: TechItem[];
+}
 
-  const deliverables = [
-    {
-      title: "Design Token Library",
-      description:
-        "Colors, typography, spacing, and other foundational design decisions",
-      icon: Palette,
-    },
-    {
-      title: "Component Library",
-      description: "Reusable UI components with variants and states",
-      icon: Grid,
-    },
-    {
-      title: "Usage Guidelines",
-      description: "Clear documentation on when and how to use each component",
-      icon: BookOpen,
-    },
-    {
-      title: "Code Implementation",
-      description: "Production-ready React components with TypeScript",
-      icon: Code,
-    },
-  ];
+interface ProcessStep {
+  title: string;
+  description: string;
+  details: string[];
+}
+
+interface Benefit {
+  title: string;
+  description: string;
+}
+
+interface Deliverable {
+  title: string;
+  description: string;
+}
+
+export async function generateMetadata({
+  params,
+}: DesignSystemsPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({
+    locale,
+    namespace: "services.designSystems.meta",
+  });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
+
+export default async function DesignSystemsPage({
+  params,
+}: DesignSystemsPageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({
+    locale,
+    namespace: "services.designSystems",
+  });
+
+  const technologies = t.raw("technologies.categories");
+  const processes = t.raw("process.steps");
+  const benefits = t.raw("benefits.items");
+  const deliverables = t.raw("deliverables.items");
+  const heroFeatures = t.raw("hero.features");
 
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-900 via-purple-800 to-purple-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <Breadcrumb
-            items={[
-              {
-                label: "Services",
-                href: "/services",
-                translationKey: "nav.services",
-              },
-              { label: "Design Systems" },
-            ]}
-          />
-
           <div className="max-w-4xl">
             <div className="flex items-center space-x-3 mb-6">
               <Palette className="w-8 h-8 text-purple-300" />
               <span className="text-purple-300 font-medium">
-                Design Systems
+                {t("hero.badge")}
               </span>
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              Scalable Design
+              {t("hero.title")}
               <br />
-              <span className="text-purple-300">Consistency</span>
+              <span className="text-purple-300">{t("hero.titleAccent")}</span>
             </h1>
 
             <p className="text-xl text-purple-100 mb-8 max-w-3xl leading-relaxed">
-              I create comprehensive design systems and component libraries that
-              ensure consistency across your digital products. From style guides
-              to reusable React components, I help teams build faster and
-              maintain brand coherence.
+              {t("hero.description")}
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="flex items-center space-x-3">
-                <Sparkles className="w-5 h-5 text-purple-300" />
-                <span className="text-purple-100">Brand consistency</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Workflow className="w-5 h-5 text-purple-300" />
-                <span className="text-purple-100">Streamlined workflow</span>
-              </div>
+              {heroFeatures.map((feature: string, index: number) => (
+                <div key={index} className="flex items-center space-x-3">
+                  {index === 0 ? (
+                    <Sparkles className="w-5 h-5 text-purple-300" />
+                  ) : (
+                    <Workflow className="w-5 h-5 text-purple-300" />
+                  )}
+                  <span className="text-purple-100">{feature}</span>
+                </div>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -259,36 +123,38 @@ export default function DesignSystemsPage() {
                 className="inline-flex items-center space-x-2 bg-white text-purple-700 px-8 py-4 rounded-lg font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <Calendar className="w-5 h-5" />
-                <span>Book Consultation</span>
+                <span>{t("hero.cta.book")}</span>
               </Link>
 
               <Link
                 href="/contact"
                 className="inline-flex items-center space-x-2 border-2 border-purple-300 text-purple-300 px-8 py-4 rounded-lg font-bold hover:bg-purple-300 hover:text-purple-900 transition-all duration-300"
               >
-                <span>Discuss Project</span>
+                <span>{t("hero.cta.discuss")}</span>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
+      <Breadcrumb />
+
       {/* What You Get */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Complete Design System Package
+              {t("deliverables.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Everything your team needs to create consistent, scalable digital
-              experiences.
+              {t("deliverables.description")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {deliverables.map((deliverable) => {
-              const Icon = deliverable.icon;
+            {deliverables.map((deliverable: Deliverable, index: number) => {
+              const iconMap = [Palette, Grid, BookOpen, Code];
+              const Icon = iconMap[index] || Grid;
               return (
                 <div
                   key={deliverable.title}
@@ -307,8 +173,9 @@ export default function DesignSystemsPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit) => {
-              const Icon = benefit.icon;
+            {benefits.map((benefit: Benefit, index: number) => {
+              const iconMap = [Zap, Layers, RefreshCw, Users, Globe, BookOpen];
+              const Icon = iconMap[index] || Zap;
               return (
                 <div
                   key={benefit.title}
@@ -333,23 +200,22 @@ export default function DesignSystemsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Tools & Technologies
+              {t("technologies.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Industry-leading tools for creating, maintaining, and implementing
-              design systems.
+              {t("technologies.description")}
             </p>
           </div>
 
           <div className="space-y-12">
-            {technologies.map((category) => (
-              <div key={category.category}>
+            {technologies.map((category: TechCategory) => (
+              <div key={category.name}>
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <div className="w-2 h-8 bg-purple-600 rounded-full mr-4"></div>
-                  {category.category}
+                  {category.name}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {category.items.map((tech) => (
+                  {category.items.map((tech: TechItem) => (
                     <div
                       key={tech.name}
                       className="bg-gray-50 rounded-xl p-6 border border-gray-200"
@@ -362,7 +228,8 @@ export default function DesignSystemsPage() {
                           className={`px-2 py-1 rounded-full text-xs font-medium ${
                             tech.level === "Expert"
                               ? "bg-green-100 text-green-700"
-                              : tech.level === "Advanced"
+                              : tech.level === "Advanced" ||
+                                  tech.level === "Gevorderd"
                                 ? "bg-blue-100 text-blue-700"
                                 : "bg-gray-100 text-gray-700"
                           }`}
@@ -385,17 +252,17 @@ export default function DesignSystemsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Design System Development Process
+              {t("process.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              A strategic approach to creating design systems that truly scale
-              with your organization.
+              {t("process.description")}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {processes.map((process, index) => {
-              const Icon = process.icon;
+            {processes.map((process: ProcessStep, index: number) => {
+              const iconMap = [Target, Grid, Code, Users];
+              const Icon = iconMap[index] || Target;
               return (
                 <div
                   key={process.title}
@@ -417,7 +284,7 @@ export default function DesignSystemsPage() {
                   </div>
 
                   <ul className="space-y-2">
-                    {process.details.map((detail) => (
+                    {process.details.map((detail: string) => (
                       <li key={detail} className="flex items-center space-x-2">
                         <CheckCircle className="w-4 h-4 text-purple-600 flex-shrink-0" />
                         <span className="text-gray-700">{detail}</span>
@@ -435,11 +302,10 @@ export default function DesignSystemsPage() {
       <section className="bg-purple-900 py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            Ready to Scale Your Design Process?
+            {t("cta.title")}
           </h2>
           <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-            Let&apos;s create a design system that empowers your team and
-            ensures consistent experiences across all your products.
+            {t("cta.description")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -448,14 +314,14 @@ export default function DesignSystemsPage() {
               className="inline-flex items-center justify-center space-x-2 bg-white text-purple-700 px-8 py-4 rounded-lg font-bold hover:bg-purple-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
               <Calendar className="w-5 h-5" />
-              <span>Book Consultation</span>
+              <span>{t("cta.bookConsultation")}</span>
             </Link>
 
             <Link
               href="/services"
               className="inline-flex items-center justify-center space-x-2 border-2 border-purple-300 text-purple-300 px-8 py-4 rounded-lg font-bold hover:bg-purple-300 hover:text-purple-900 transition-all duration-300"
             >
-              <span>View All Services</span>
+              <span>{t("cta.viewAllServices")}</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

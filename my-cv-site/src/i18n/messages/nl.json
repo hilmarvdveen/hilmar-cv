@@ -15,59 +15,147 @@
         },
         "usp": {
             "title": "Hoe ik jouw organisatie verder help",
-            "businessImpact": "Zakelijke Impact",
+            "businessImpact": "Zakelijke impact",
+            "expand": "Meer details",
+            "collapse": "Minder details",
+            "solutionTitle": "Mijn aanpak",
+            "resultTitle": "Resultaat",
+            "techUsed": "Tech gebruikt",
             "actions": {
                 "bookConsultation": "Boek consultatie",
                 "readMore": "Lees meer"
             },
             "items": [
                 {
-                    "title": "Van idee naar schaalbaar digitaal platform",
-                    "description": "Ik help organisaties complexe uitdagingen om te zetten naar schaalbare, toekomstbestendige platforms. Van wireframe tot frontend, backend en database — ik lever complete, werkende oplossingen.",
-                    "impact": "6-8 weken van concept naar live platform. Volledige eigenaarschap van technische architectuur die meegroeit met je organisatie."
+                    "title": "Eén lijn in je digitale uitstraling",
+                    "problem": "Wanneer teams werken met verschillende stijlen en bouwstenen, ontstaat verwarring en frustratie bij gebruikers.",
+                    "solution": "Ik zorg voor één centrale werkwijze waarmee al je teams consistent ontwerpen en bouwen.",
+                    "result": "Dat versnelt ontwikkeling en zorgt voor een herkenbare en professionele uitstraling.",
+                    "impact": [
+                        "Minder dubbel werk en correctierondes",
+                        "Eén herkenbaar merkbeeld in al je kanalen",
+                        "Minder risico's door heldere toegankelijkheidsstandaarden"
+                    ],
+                    "techUsed": "React, Storybook, Design Tokens, WCAG 2.0"
                 },
                 {
-                    "title": "AI-implementatie & digitale transformatie",
-                    "description": "Ik zet AI in waar het echte waarde toevoegt. Ik integreer machine learning en data-analyse in nieuwe of bestaande systemen om processen te automatiseren, inzichten te genereren en klanten slimmer te bedienen.",
-                    "impact": "30-50% efficiëntiewinst door slimme automatisering. Realtime data-inzichten die direct leiden tot betere business beslissingen."
+                    "title": "Van idee naar live platform in 6 weken",
+                    "problem": "Een sterk idee heeft geen maanden nodig om vorm te krijgen.",
+                    "solution": "Ik bouw een eerste, volledig werkende versie van je digitale product binnen 6 tot 8 weken.",
+                    "result": "Je kunt direct testen, presenteren of doorontwikkelen — zonder lange voorbereidingstrajecten.",
+                    "impact": [
+                        "Sneller naar de markt dan je concurrent",
+                        "Volledige controle over je eigen platform",
+                        "Snel bewijs of een idee werkt voor klanten of investeerders"
+                    ],
+                    "techUsed": "React, Next.js, Node.js, PostgreSQL, AWS"
                 },
                 {
-                    "title": "Design Systems & frontend excellentie",
-                    "description": "Ik bouw schaalbare design systems die teams versnellen. Met focus op performance, toegankelijkheid (WCAG), herbruikbaarheid en consistente branding over alle kanalen.",
-                    "impact": "40% snellere ontwikkeling door herbruikbare componenten. Consistente merkbeleving en WCAG-compliance die juridische risico's elimineert."
+                    "title": "Nieuwe tools snel gekoppeld aan je systemen",
+                    "problem": "Nieuwe applicaties moeten soepel samenwerken met wat je al hebt.",
+                    "solution": "Ik sluit tools slim aan op je bestaande systemen, zonder vertraging of extra afhankelijkheid van IT.",
+                    "result": "Zo kan je team sneller schakelen en hou je grip op je processen.",
+                    "impact": [
+                        "Minder IT-afhankelijkheid bij integraties",
+                        "Sneller nieuwe functies of campagnes live",
+                        "Lagere beheerkosten en minder gedoe"
+                    ],
+                    "techUsed": "REST/GraphQL APIs, CQRS, CMS integrations"
                 },
                 {
-                    "title": "API-integraties & low-code componentarchitectuur",
-                    "description": "Ik creëer naadloze verbindingen tussen frontend en backend — REST, GraphQL, CQRS. Met een configuratiegedreven frontend kunnen redacteuren content beheren zonder code aan te raken.",
-                    "impact": "75% minder developer-afhankelijkheid voor contentbeheer. Snellere time-to-market voor nieuwe features en campagnes."
+                    "title": "Extra slagkracht wanneer deadlines naderen",
+                    "problem": "Soms loopt een project vast door een gebrek aan capaciteit.",
+                    "solution": "Ik stap snel in en lever vanaf dag één concrete resultaten.",
+                    "result": "Zo houd je vaart in je project zonder dat je eerst maanden moet zoeken naar versterking.",
+                    "impact": [
+                        "Direct inzetbaar zonder inwerktijd",
+                        "Deadlines blijven haalbaar",
+                        "Minder risico op uitloop en faalkosten"
+                    ],
+                    "techUsed": "Agile, Remote collaboration, Multiple frameworks"
                 },
                 {
-                    "title": "Mentoring & structuur in jouw ontwikkelteam",
-                    "description": "Ik help jouw team groeien: coaching, kwaliteitsborging, refactoring van legacy code en het stellen van technische standaarden. Dit bouwt duurzame teams en stabiele software.",
-                    "impact": "50% minder bugs en technische schuld. Zelfstandige teams die zonder externe hulp kunnen doorontwikkelen en innoveren."
+                    "title": "Teams die zelfstandig kunnen doorontwikkelen",
+                    "problem": "Teams zijn sterker als ze niet steeds hulp van buitenaf nodig hebben.",
+                    "solution": "Ik help jouw mensen slimmer samenwerken, betere keuzes maken en hun eigen software beheren.",
+                    "result": "Zo groeit de kennis in je organisatie — en daalt de afhankelijkheid van externen.",
+                    "impact": [
+                        "Minder uitgaven aan externe consultants",
+                        "Meer eigenaarschap binnen je team",
+                        "Kortere wachttijden voor nieuwe functies"
+                    ],
+                    "techUsed": "Code reviews, Testing strategies, Team mentoring"
                 },
                 {
-                    "title": "Snel opschalen in je project of afdeling",
-                    "description": "Of het nu gaat om een MVP, redesign of replatforming: ik schakel snel in bestaande teams of lever zelfstandig resultaat. Gericht op impact binnen sprints, afgestemd op jouw deadlines.",
-                    "impact": "Direct productieve inzet zonder inwerktijd. Deadline-gerichte levering met meetbare resultaten binnen de eerste sprint."
+                    "title": "Automatiseer het juiste — en bespaar tijd én geld",
+                    "problem": "Veel processen kosten dagelijks tijd zonder echt waarde toe te voegen.",
+                    "solution": "Ik help die taken automatiseren op een manier die logisch en veilig is.",
+                    "result": "Dat levert sneller inzicht, minder fouten en meer ruimte op voor werk dat er toe doet.",
+                    "impact": [
+                        "30–50% efficiënter werken",
+                        "Beter inzicht voor betere besluiten",
+                        "Minder handwerk, minder fouten, meer resultaat"
+                    ],
+                    "techUsed": "Machine Learning, Data Analysis, Process Automation"
                 }
             ]
         },
         "about": {
             "title": "Over mij",
-            "intro": "Met meer dan 10 jaar ervaring help ik bedrijven en ondernemers bij het bouwen van toegankelijke, schaalbare en toekomstbestendige digitale platforms.",
-            "summary": "Ik combineer technische diepgang met strategisch inzicht. Van moderne UI-architecturen en statische marketingwebsites tot backend-integraties en teambegeleiding — ik lever oplossingen die werken én meegroeien met jouw organisatie.",
-            "contact": "Plan een strategiesessie",
-            "cta": "Bekijk mijn projecten",
-            "solutionsTitle": "Waar ik jou bij help",
-            "solutions": [
-                "Migratie van legacy frontends naar moderne stacks (React, Angular, Next.js)",
-                "Ontwikkeling van statische of dynamische marketingwebsites",
-                "Koppelingen met REST- of GraphQL-backends (inclusief .NET, CQRS)",
-                "Opzetten van schaalbare component libraries en design systems",
-                "Toegankelijke en performante UI's leveren (WCAG-compliant)",
-                "Begeleiding van frontend-teams en code-opschoning"
-            ]
+            "intro": "Met meer dan 10 jaar ervaring help ik bedrijven en teams om ideeën om te zetten in robuuste, schaalbare oplossingen, van eerste versie tot volwassen platform.",
+            "summary": {
+                "part1": "Ik werk direct met productteams, founders en stakeholders om systemen te bouwen die technische stabiliteit combineren met strategische impact.",
+                "part2": "Of het nu gaat om modernisering, een nieuw product of het versnellen van je ontwikkelproces: ik sluit aan op je team, lever concrete resultaten en zorg dat je sneller vooruit kunt. Geen abstracte plannen. Geen ruis. Gewoon werkende oplossingen die vandaag waarde leveren, en morgen nog steeds kloppen."
+            },
+            "contact": "Neem contact op",
+            "cta": "Bekijk projecten",
+            "tiles": {
+                "businessImpact": {
+                    "title": "Business Impact",
+                    "items": [
+                        "Tot 50% lagere ontwikkelkosten door slimme herbruikbare onderdelen",
+                        "Kortere time-to-market voor nieuwe digitale proposities",
+                        "Meer klanttevredenheid dankzij betere performance en toegankelijkheid",
+                        "Minder afhankelijkheid van development door configureerbare oplossingen",
+                        "Hogere conversie door gebruiksvriendelijke en snelle interfaces"
+                    ]
+                },
+                "structural": {
+                    "title": "Wat ik structureel oplos",
+                    "items": [
+                        "Minder fouten en bugs dankzij automatische kwaliteitscontroles",
+                        "Snellere releases van nieuwe functies zonder technische vertraging",
+                        "Duidelijke documentatie en patronen die teams sneller maken",
+                        "Digitale producten die makkelijk mee kunnen groeien met je organisatie",
+                        "Minder chaos in de code, meer rust, overzicht en flexibiliteit"
+                    ]
+                },
+                "frontend": {
+                    "title": "Frontend-oplossingen die klanten merken",
+                    "items": [
+                        "Snelle, vloeiende gebruikerservaringen op elk apparaat",
+                        "Interfaces die voldoen aan toegankelijkheidsnormen (WCAG)",
+                        "Ontwerpen die consistent zijn en makkelijk door te voeren",
+                        "Zoekmachinevriendelijk (SEO) voor betere zichtbaarheid",
+                        "Flexibele componenten die herbruikbaar zijn in het hele platform"
+                    ]
+                },
+                "backend": {
+                    "title": "Backend-oplossingen die je proces versnellen",
+                    "items": [
+                        "Veilige systemen met duidelijke rechtenstructuur",
+                        "Slimme koppelingen met bestaande systemen of API's",
+                        "Minder handwerk door automatisering en configuratie",
+                        "Goed schaalbare logica die voorbereid is op groei",
+                        "Sneller testen, opleveren en bijsturen van functionaliteit"
+                    ]
+                }
+            },
+            "stats": {
+                "experience": "Jaar Ervaring",
+                "projects": "Projecten Opgeleverd",
+                "industries": "Sectoren"
+            }
         },
         "tech": {
             "title": "Technologieën",
@@ -78,16 +166,6 @@
             "testing": "Testing",
             "databases": "Databases",
             "platforms": "Platforms & Cloud"
-        },
-        "map": {
-            "companiesWorked": "Bedrijven waarin ik heb gewerkt:",
-            "workedIn": "Gewerkt in",
-            "legend": {
-                "home": "Mijn thuisplaats",
-                "city": "Stad waar ik heb gewerkt",
-                "highlighted": "Provincie waar ik heb gewerkt",
-                "other": "Overige provincie"
-            }
         },
         "projects": {
             "title": "Project Highlights",
@@ -110,13 +188,50 @@
         },
         "cta": {
             "title": "Klaar om samen te bouwen?",
-            "subtitle": "Neem contact op en ontdek hoe ik jouw frontend naar het volgende niveau kan tillen.",
-            "button": "Plan een kennismaking"
+            "subtitle": "Laten we uw visie bespreken en deze tot leven brengen. Boek een gratis consultatie en ontvang binnen 24 uur een voorstel op maat.",
+            "button": "Boek gratis consultatie",
+            "buttonAlt": "Of stuur een bericht"
+        },
+        "map": {
+            "companiesWorked": "Werkervaring door heel Nederland",
+            "workedIn": "In mijn carrière heb ik gewerkt met",
+            "workMode": {
+                "remote": "Remote",
+                "onSite": "On-site",
+                "hybrid": "Hybride"
+            },
+            "stats": {
+                "companies": "bedrijven",
+                "across": "verdeeld over",
+                "cities": "steden",
+                "in": "in",
+                "provinces": "provincies",
+                "companiesLabel": "Bedrijven",
+                "citiesLabel": "Steden",
+                "provincesLabel": "Provincies"
+            },
+            "mapAriaLabel": "Interactieve kaart van Nederland met werklocaties",
+            "legend": {
+                "home": "Thuisbasis",
+                "city": "Werksteden",
+                "highlighted": "Actieve provincies",
+                "company": "bedrijf",
+                "companies": "bedrijven"
+            },
+            "tapLocation": "Tik op een locatie voor details",
+            "highlights": {
+                "title": "Carrière hoogtepunten",
+                "basedIn": "Gevestigd in",
+                "workedAcross": "Gewerkt in",
+                "provinces": "provincies",
+                "experience": "Ervaring met remote, hybride & on-site werk",
+                "years": "jaar professionele ervaring"
+            }
         },
         "clientLogos": {
             "title": "Vertrouwd door toonaangevende organisaties",
             "subtitle": "Ik werk samen met vooraanstaande bedrijven en organisaties om hun digitale ambities waar te maken",
-            "indicator1": "15+ jaar ervaring",
+            "indicator1": "10+ jaar ervaring",
             "indicator2": "50+ projecten opgeleverd",
             "indicator3": "Overheden & enterprise"
         }
@@ -501,7 +616,7 @@
                 "projectsLabel": "Afgeronde projecten",
                 "impact": "€2M+",
                 "impactLabel": "Gegenereerde waarde",
-                "industries": "15+",
+                "industries": "10+",
                 "industriesLabel": "Verschillende sectoren"
             }
         },
@@ -691,37 +806,911 @@
     },
     "contact": {
         "meta": {
-            "title": "Contact – Hilmar van der Veen",
-            "description": "Neem contact op om je project te bespreken, een strategiesessie in te plannen of samenwerkingsmogelijkheden te verkennen."
+            "title": "Contact – Hilmar van der Veen | Software Ontwikkelaar",
+            "description": "Neem contact op voor uw software ontwikkelingsproject. 10+ jaar ervaring in React, Next.js en full-stack development. Gratis consultatie beschikbaar."
         },
-        "title": "Laten we praten over jouw project",
-        "intro": "Of je nu een frontend expert, systeemintegratie of end-to-end levering nodig hebt — ik hoor graag meer.",
-        "emailTitle": "E-mail",
-        "phoneTitle": "Telefoon",
-        "calendlyTitle": "Plan een gesprek",
-        "calendlyLink": "Boek een gratis strategiesessie via Calendly",
+        "hero": {
+            "badge": "Laten we praten",
+            "title": "Klaar om uw volgende project te starten?",
+            "description": "Of u nu een nieuwe applicatie wilt bouwen, uw bestaande systeem wilt verbeteren, of technisch advies nodig heeft – ik help u graag verder. Laten we bespreken hoe ik uw visie tot leven kan brengen."
+        },
         "form": {
-            "title": "Contacteer me",
-            "name": "Jouw naam",
-            "email": "Jouw e-mail",
-            "message": "Jouw bericht",
-            "submit": "Verstuur bericht",
-            "sending": "Verzenden...",
-            "required": "Dit veld is verplicht",
-            "invalidEmail": "Voer een geldig e-mailadres in",
-            "successMessage": "Bedankt! Ik neem binnenkort contact met je op.",
-            "serverError": "Oeps, er ging iets mis. Probeer het opnieuw.",
-            "interestsLabel": "Ik ben geïnteresseerd in...",
+            "title": "Stuur een bericht",
+            "description": "Vertel me over uw project en ik neem binnen 24 uur contact met u op.",
+            "interestsLabel": "Ik ben geïnteresseerd in",
             "interests": [
-                "Schaalbare Frontends",
-                "Design Systems",
-                "API-koppelingen",
-                "AI-integraties",
-                "Datagedreven Interfaces",
-                "Eind-tot-eind levering",
-                "Teamcoaching & mentoring",
-                "Anders"
-            ]
+                "Frontend Ontwikkeling",
+                "Full-Stack Ontwikkeling",
+                "Design Systemen",
+                "Technisch Advies",
+                "Team Begeleiding",
+                "Legacy Migratie",
+                "Performance Optimalisatie",
+                "MVP Ontwikkeling"
+            ],
+            "name": "Uw naam",
+            "email": "E-mailadres",
+            "message": "Vertel me over uw project",
+            "submit": "Verstuur bericht",
+            "sending": "Versturen...",
+            "successMessage": "Bedankt! Ik neem binnen 24 uur contact met u op.",
+            "serverError": "Er ging iets mis. Probeer het opnieuw of mail me direct."
+        },
+        "info": {
+            "title": "Contact informatie",
+            "email": "E-mail",
+            "phone": "Telefoon",
+            "location": "Locatie",
+            "availability": "Beschikbaarheid",
+            "availabilityText": "Maandag - Zaterdag, 8:00 - 20:00 CET",
+            "response": "Reactietijd",
+            "responseText": "Binnen 24 uur"
+        },
+        "cta": {
+            "title": "Liever direct contact?",
+            "description": "Boek een gratis 30-minuten kennismakingsgesprek om uw project te bespreken.",
+            "button": "Boek gratis gesprek"
+        }
+    },
+    "services": {
+        "meta": {
+            "title": "Diensten – Hilmar van der Veen | Software Ontwikkelaar",
+            "description": "Professional software ontwikkelingsdiensten: Frontend, Full-Stack, Design Systemen en Technisch Advies. 10+ jaar ervaring met React, Next.js en moderne technologieën."
+        },
+        "hero": {
+            "badge": "Professionele Diensten",
+            "title": "Schaalbare Software Oplossingen",
+            "description": "Van MVP tot enterprise systemen – ik help organisaties hun digitale ambities realiseren met moderne, betrouwbare technologieën en 10+ jaar ervaring."
+        },
+        "overview": {
+            "title": "Mijn Diensten",
+            "description": "Gespecialiseerd in moderne web development met focus op schaalbare, onderhoudbare oplossingen"
+        },
+        "main": {
+            "title": "Uitgebreide Webontwikkelingsdiensten",
+            "description": "Of je nu een complete applicatie, frontend expertise, of strategisch advies nodig hebt, ik heb de ervaring om uitzonderlijke resultaten te leveren met moderne technologieën zoals React, Next.js en TypeScript.",
+            "services": {
+                "frontend": {
+                    "title": "Frontend Ontwikkeling",
+                    "shortDescription": "Moderne, responsieve gebruikersinterfaces die gebruikers betrekken en conversies stimuleren.",
+                    "fullDescription": "Ik ben gespecialiseerd in het bouwen van high-performance frontend applicaties met React, Next.js, Vue.js en modern JavaScript. Van interactieve dashboards tot e-commerce platforms, ik creëer gebruikerservaringen die zowel mooi als functioneel zijn.",
+                    "technologies": {
+                        "title": "Technologieën & Tools"
+                    },
+                    "benefits": {
+                        "title": "Belangrijkste Voordelen",
+                        "items": [
+                            "Mobile-first responsive design",
+                            "SEO geoptimaliseerde architectuur",
+                            "Bliksemsnelle prestaties",
+                            "Toegankelijkheid conform (WCAG 2.1)"
+                        ]
+                    }
+                },
+                "fullstack": {
+                    "title": "Full-Stack Oplossingen",
+                    "shortDescription": "Complete webapplicaties met robuuste backend architectuur en naadloze integraties.",
+                    "fullDescription": "End-to-end ontwikkeling van schaalbare webapplicaties. Ik behandel alles van database ontwerp en API ontwikkeling tot frontend implementatie en deployment, zodat jouw applicatie betrouwbaar presteert op schaal.",
+                    "benefits": {
+                        "items": [
+                            "Schaalbaar architectuurontwerp",
+                            "API ontwikkeling & integratie",
+                            "Database optimalisatie",
+                            "Cloud deployment & DevOps"
+                        ]
+                    }
+                },
+                "designSystems": {
+                    "title": "Design Systems",
+                    "shortDescription": "Consistente, schaalbare componentbibliotheken die ontwikkeling stroomlijnen en gebruikerservaring verbeteren.",
+                    "fullDescription": "Ik creëer uitgebreide design systems en componentbibliotheken die consistentie verzekeren in je digitale producten. Van stijlgidsen tot herbruikbare React componenten, ik help teams sneller bouwen en merkconsistentie behouden.",
+                    "benefits": {
+                        "items": [
+                            "Verbeterde ontwikkelsnelheid",
+                            "Consistente merkervaring",
+                            "Verminderde design schuld",
+                            "Verbeterde teamsamenwerking"
+                        ]
+                    }
+                },
+                "consulting": {
+                    "title": "Technisch Advies",
+                    "shortDescription": "Strategische technische begeleiding, code reviews en team mentoring vanuit 15+ jaar ervaring.",
+                    "fullDescription": "Benut mijn uitgebreide ervaring om complexe technische uitdagingen op te lossen. Ik bied architectuurreviews, prestatie-optimalisatie, team mentoring en strategische begeleiding om je projecten te laten slagen en je team te laten groeien.",
+                    "benefits": {
+                        "items": [
+                            "Verminderde technische schuld",
+                            "Verbeterde teamproductiviteit",
+                            "Geoptimaliseerde prestaties",
+                            "Strategische technologiebeslissingen"
+                        ]
+                    }
+                }
+            },
+            "learnMore": "Meer Informatie"
+        },
+        "finalCta": {
+            "title": "Klaar om je Project te Starten?",
+            "description": "Laten we je behoeften bespreken en de perfecte oplossing vinden voor je bedrijfsdoelen.",
+            "bookConsultation": "Boek Consultatie",
+            "getInTouch": "Neem Contact Op"
+        },
+        "cta": {
+            "title": "Klaar om te beginnen?",
+            "description": "Laten we bespreken hoe ik uw project tot leven kan brengen.",
+            "book": "Plan een strategiesessie",
+            "contact": "Neem contact op"
+        },
+        "frontend": {
+            "meta": {
+                "title": "Frontend Ontwikkelingsdiensten – Hilmar van der Veen",
+                "description": "Expert frontend ontwikkeling met React, Next.js, Vue.js en modern JavaScript. Bouwen van gebruikersgerichte, high-performance applicaties die resultaten opleveren."
+            },
+            "hero": {
+                "badge": "Frontend Ontwikkeling",
+                "title": "Moderne Frontend",
+                "titleAccent": "Die Converteert",
+                "description": "Ik bouw high-performance, gebruikersgerichte frontend applicaties met React, Next.js en modern JavaScript. Van interactieve dashboards tot e-commerce platforms, ik creëer ervaringen die gebruikers betrekken en bedrijfsresultaten opleveren.",
+                "features": [
+                    "Cross-platform compatibiliteit",
+                    "Geoptimaliseerde prestaties"
+                ],
+                "cta": {
+                    "book": "Boek Consultatie",
+                    "discuss": "Bespreek Project"
+                }
+            },
+            "benefits": {
+                "title": "Wat Je Krijgt",
+                "description": "Moderne frontend oplossingen gebouwd met prestaties, toegankelijkheid en gebruikerservaring als kernprincipes.",
+                "items": [
+                    {
+                        "title": "Mobile-First Design",
+                        "description": "Responsieve layouts die naadloos werken op alle apparaten en schermformaten"
+                    },
+                    {
+                        "title": "Bliksemsnelle Prestaties",
+                        "description": "Geoptimaliseerd voor snelheid met lazy loading, code splitting en efficiënte bundeling"
+                    },
+                    {
+                        "title": "Toegankelijkheidsfocus",
+                        "description": "WCAG 2.1 conforme interfaces die werken voor gebruikers met alle vaardigheden"
+                    },
+                    {
+                        "title": "SEO Geoptimaliseerd",
+                        "description": "Gebouwd met zoekmachine optimalisatie en vindbaarheid in gedachten"
+                    },
+                    {
+                        "title": "Gebruikersgericht",
+                        "description": "Interfaces ontworpen met gebruikerservaring en conversie-optimalisatie als prioriteiten"
+                    },
+                    {
+                        "title": "Analytics Klaar",
+                        "description": "Geïntegreerde tracking en analytics om succes en gebruikersgedrag te meten"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Technologieën & Tools",
+                "description": "Ik werk met moderne, bewezen technologieën om ervoor te zorgen dat je applicatie schaalbaar, onderhoudbaar en toekomstbestendig is.",
+                "items": [
+                    {
+                        "name": "React",
+                        "description": "Component-gebaseerde UI bibliotheek",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Next.js",
+                        "description": "Full-stack React framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Vue.js",
+                        "description": "Progressief JavaScript framework",
+                        "level": "Gevorderd"
+                    },
+                    {
+                        "name": "TypeScript",
+                        "description": "Type-veilig JavaScript",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Tailwind CSS",
+                        "description": "Utility-first CSS framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Redux/Zustand",
+                        "description": "State management",
+                        "level": "Gevorderd"
+                    },
+                    {
+                        "name": "Angular",
+                        "description": "Uitgebreid TypeScript framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "NgRx",
+                        "description": "Reactief state management voor Angular",
+                        "level": "Gevorderd"
+                    },
+                    {
+                        "name": "Signals",
+                        "description": "Moderne reactieve primitieven",
+                        "level": "Gevorderd"
+                    }
+                ]
+            },
+            "process": {
+                "title": "Mijn Ontwikkelproces",
+                "description": "Een bewezen methodologie die kwaliteit, prestaties en afstemming op je bedrijfsdoelen waarborgt.",
+                "steps": [
+                    {
+                        "title": "Discovery & Planning",
+                        "description": "Begrijpen van je gebruikers, bedrijfsdoelen en technische vereisten",
+                        "details": [
+                            "Gebruikersonderzoek en persona's",
+                            "Technische architectuurplanning",
+                            "Prestatie budget definitie",
+                            "Toegankelijkheidsvereisten"
+                        ]
+                    },
+                    {
+                        "title": "Design System Creatie",
+                        "description": "Bouwen van consistente, schaalbare design fundamenten",
+                        "details": [
+                            "Component library ontwikkeling",
+                            "Design token implementatie",
+                            "Stijlgids creatie",
+                            "Merkconsistentie richtlijnen"
+                        ]
+                    },
+                    {
+                        "title": "Ontwikkeling & Testen",
+                        "description": "Bouwen van robuuste, performante frontend applicaties",
+                        "details": [
+                            "Component-gedreven ontwikkeling",
+                            "Cross-browser testen",
+                            "Prestatie optimalisatie",
+                            "Toegankelijkheid compliance"
+                        ]
+                    },
+                    {
+                        "title": "Deployment & Optimalisatie",
+                        "description": "Lanceren en continu verbeteren van je applicatie",
+                        "details": [
+                            "CI/CD pipeline setup",
+                            "Prestatie monitoring",
+                            "SEO optimalisatie",
+                            "Analytics integratie"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Klaar om Iets Geweldigs te Bouwen?",
+                "description": "Laten we jouw frontend behoeften bespreken en een oplossing creëren die je gebruikers verrast en je bedrijf vooruit helpt.",
+                "bookConsultation": "Boek Consultatie",
+                "viewAllServices": "Bekijk Alle Diensten"
+            }
+        },
+        "fullstack": {
+            "meta": {
+                "title": "Full-Stack Ontwikkelingsdiensten – Hilmar van der Veen",
+                "description": "Complete webapplicatie ontwikkeling van backend tot frontend. Expert in Node.js, .NET, Python, databases en cloud deployment voor schaalbare oplossingen."
+            },
+            "hero": {
+                "badge": "Full-Stack Ontwikkeling",
+                "title": "Complete Digitale",
+                "titleAccent": "Oplossingen",
+                "description": "End-to-end ontwikkeling van schaalbare webapplicaties. Ik behandel alles van database ontwerp en API ontwikkeling tot frontend implementatie en cloud deployment, zodat jouw applicatie betrouwbaar presteert op schaal.",
+                "features": [
+                    "High-performance backend",
+                    "Enterprise-grade beveiliging"
+                ],
+                "cta": {
+                    "book": "Boek Consultatie",
+                    "discuss": "Bespreek Project"
+                }
+            },
+            "benefits": {
+                "title": "Complete Systeemoplossingen",
+                "description": "Uitgebreide applicaties gebouwd met moderne architectuur, beveiligings best practices en schaalbare infrastructuur.",
+                "items": [
+                    {
+                        "title": "Schaalbare Architectuur",
+                        "description": "Gebouwd om mee te groeien met je bedrijf, van MVP tot enterprise schaal"
+                    },
+                    {
+                        "title": "Beveiliging Voorop",
+                        "description": "Industriestandaard beveiligingspraktijken met encryptie en authenticatie"
+                    },
+                    {
+                        "title": "Geoptimaliseerde Prestaties",
+                        "description": "Snelle queries, efficiënte caching en geoptimaliseerde dataflow"
+                    },
+                    {
+                        "title": "API-First Design",
+                        "description": "Flexibele API's die toekomstige integraties en mobiele apps mogelijk maken"
+                    },
+                    {
+                        "title": "Cloud Native",
+                        "description": "Moderne deployment met auto-scaling en hoge beschikbaarheid"
+                    },
+                    {
+                        "title": "DevOps Integratie",
+                        "description": "Geautomatiseerde test-, deployment- en monitoring workflows"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Technology Stack",
+                "description": "Moderne, bewezen technologieën gekozen voor betrouwbaarheid, prestaties en lange termijn onderhoud.",
+                "categories": [
+                    {
+                        "name": "Backend",
+                        "items": [
+                            {
+                                "name": "Node.js",
+                                "description": "Schaalbare server-side runtime",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Express",
+                                "description": "Snelle, minimale web framework",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "C# .NET",
+                                "description": "Enterprise-grade web framework",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Python (FastAPI)",
+                                "description": "High-performance async API framework",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "GraphQL",
+                                "description": "Efficiënte API query taal",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "REST APIs",
+                                "description": "RESTful service architectuur",
+                                "level": "Expert"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Databases",
+                        "items": [
+                            {
+                                "name": "PostgreSQL",
+                                "description": "Robuuste relationele database",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "MongoDB",
+                                "description": "Flexibele document database",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "MSSQL",
+                                "description": "Microsoft SQL Server database",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Redis",
+                                "description": "In-memory data structure store",
+                                "level": "Gemiddeld"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Cloud & DevOps",
+                        "items": [
+                            {
+                                "name": "Azure",
+                                "description": "Microsoft cloud platform",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "AWS",
+                                "description": "Uitgebreid cloud platform",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Kubernetes",
+                                "description": "Container orchestratie platform",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Docker",
+                                "description": "Containerisatie platform",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Nginx",
+                                "description": "High-performance web server",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "CI/CD",
+                                "description": "Continue integratie/deployment",
+                                "level": "Gevorderd"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Ontwikkelproces",
+                "description": "Een systematische benadering voor het bouwen van robuuste, schaalbare applicaties van concept tot productie.",
+                "steps": [
+                    {
+                        "title": "Architectuur Design",
+                        "description": "Strategische systeemplanning voor schaalbaarheid en onderhoudbaarheid",
+                        "details": [
+                            "Systeemarchitectuur planning",
+                            "Database schema ontwerp",
+                            "API architectuur definitie",
+                            "Prestatie vereisten analyse"
+                        ]
+                    },
+                    {
+                        "title": "Backend Ontwikkeling",
+                        "description": "Robuuste server-side logica en database integratie",
+                        "details": [
+                            "RESTful API ontwikkeling",
+                            "Database ontwerp & optimalisatie",
+                            "Authenticatie & autorisatie",
+                            "Third-party integraties"
+                        ]
+                    },
+                    {
+                        "title": "Frontend Integratie",
+                        "description": "Naadloze verbinding tussen gebruikersinterface en backend systemen",
+                        "details": [
+                            "State management implementatie",
+                            "API client ontwikkeling",
+                            "Real-time features (WebSockets)",
+                            "Progressive Web App features"
+                        ]
+                    },
+                    {
+                        "title": "Deployment & Monitoring",
+                        "description": "Productie deployment met continue monitoring en optimalisatie",
+                        "details": [
+                            "Cloud infrastructuur setup",
+                            "Geautomatiseerde deployment pipelines",
+                            "Prestatie monitoring",
+                            "Beveiligingsaudits & updates"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Klaar om je Applicatie te Bouwen?",
+                "description": "Laten we jouw vereisten bespreken en een schaalbare oplossing creëren die meegroeit met je bedrijf.",
+                "bookConsultation": "Boek Consultatie",
+                "viewAllServices": "Bekijk Alle Diensten"
+            }
+        },
+        "designSystems": {
+            "meta": {
+                "title": "Design Systems Diensten – Hilmar van der Veen",
+                "description": "Uitgebreide design systems en componentbibliotheken. Creëer consistente, schaalbare digitale ervaringen met herbruikbare componenten en design tokens."
+            },
+            "hero": {
+                "badge": "Design Systems",
+                "title": "Schaalbare Design",
+                "titleAccent": "Consistentie",
+                "description": "Ik creëer uitgebreide design systems en componentbibliotheken die consistentie verzekeren in je digitale producten. Van stijlgidsen tot herbruikbare React componenten, ik help teams sneller bouwen en merkconsistentie behouden.",
+                "features": [
+                    "Merkconsistentie",
+                    "Gestroomlijnde workflow"
+                ],
+                "cta": {
+                    "book": "Boek Consultatie",
+                    "discuss": "Bespreek Project"
+                }
+            },
+            "deliverables": {
+                "title": "Complete Design System Pakket",
+                "description": "Alles wat je team nodig heeft om consistente, schaalbare digitale ervaringen te creëren.",
+                "items": [
+                    {
+                        "title": "Design Token Bibliotheek",
+                        "description": "Kleuren, typografie, spacing en andere fundamentele designbeslissingen"
+                    },
+                    {
+                        "title": "Component Bibliotheek",
+                        "description": "Herbruikbare UI componenten met varianten en staten"
+                    },
+                    {
+                        "title": "Gebruiksrichtlijnen",
+                        "description": "Duidelijke documentatie over wanneer en hoe elk component te gebruiken"
+                    },
+                    {
+                        "title": "Code Implementatie",
+                        "description": "Productie-klare React componenten met TypeScript"
+                    }
+                ]
+            },
+            "benefits": {
+                "items": [
+                    {
+                        "title": "Ontwikkelsnelheid",
+                        "description": "Versnel productontwikkeling met voorgebouwde, geteste componenten"
+                    },
+                    {
+                        "title": "Consistente Ervaring",
+                        "description": "Behoud merkconsistentie over alle touchpoints en platforms"
+                    },
+                    {
+                        "title": "Verminderd Onderhoud",
+                        "description": "Gecentraliseerde updates propageren automatisch naar alle producten"
+                    },
+                    {
+                        "title": "Team Samenwerking",
+                        "description": "Verbind design en development met gedeelde taal en tools"
+                    },
+                    {
+                        "title": "Schaalbare Basis",
+                        "description": "Ondersteun snelle groei zonder kwaliteit of consistentie te compromitteren"
+                    },
+                    {
+                        "title": "Zelfbediening Design",
+                        "description": "Stel teamleden in staat om zelfstandig on-brand designs te creëren"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Tools & Technologieën",
+                "description": "Toonaangevende tools voor het creëren, onderhouden en implementeren van design systems.",
+                "categories": [
+                    {
+                        "name": "Design Tools",
+                        "items": [
+                            {
+                                "name": "Figma",
+                                "description": "Collaboratief interface design",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Sketch",
+                                "description": "Vector-gebaseerde design tool",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Adobe Creative Suite",
+                                "description": "Professionele design software",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Principle",
+                                "description": "Interactieve prototyping",
+                                "level": "Gemiddeld"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Development",
+                        "items": [
+                            {
+                                "name": "React/Storybook",
+                                "description": "Component ontwikkeling & documentatie",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Styled Components",
+                                "description": "CSS-in-JS styling oplossing",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Design Tokens",
+                                "description": "Systematische design beslissingen",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "TypeScript",
+                                "description": "Type-veilige component ontwikkeling",
+                                "level": "Gevorderd"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Documentation",
+                        "items": [
+                            {
+                                "name": "GitBook",
+                                "description": "Team documentatie platform",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Notion",
+                                "description": "Collaboratieve workspace",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Markdown",
+                                "description": "Lightweight markup taal",
+                                "level": "Expert"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Design System Ontwikkelproces",
+                "description": "Een strategische benadering voor het creëren van design systems die echt meeschalen met je organisatie.",
+                "steps": [
+                    {
+                        "title": "Design Audit & Discovery",
+                        "description": "Analyseren van bestaande patronen en identificeren van mogelijkheden voor systematisering",
+                        "details": [
+                            "Huidige design inventaris",
+                            "Component patroon analyse",
+                            "Brand guideline review",
+                            "Gebruikerservaring beoordeling"
+                        ]
+                    },
+                    {
+                        "title": "Systeem Architectuur",
+                        "description": "Creëren van de fundamentele structuur en design principes",
+                        "details": [
+                            "Design token definitie",
+                            "Component hiërarchie planning",
+                            "Naamgevingsconventie standaarden",
+                            "Toegankelijkheidsrichtlijnen"
+                        ]
+                    },
+                    {
+                        "title": "Component Bibliotheek",
+                        "description": "Bouwen van herbruikbare, gedocumenteerde componenten met duidelijke richtlijnen",
+                        "details": [
+                            "Interactieve component ontwikkeling",
+                            "Gebruiksdocumentatie",
+                            "Code voorbeelden & snippets",
+                            "Responsive gedrag definities"
+                        ]
+                    },
+                    {
+                        "title": "Implementatie & Training",
+                        "description": "Uitrollen van het systeem met team educatie en doorlopende ondersteuning",
+                        "details": [
+                            "Team training sessies",
+                            "Implementatie richtlijnen",
+                            "Versiecontrole workflows",
+                            "Continue verbeteringsproces"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Klaar om je Design Proces te Schalen?",
+                "description": "Laten we een design system creëren dat je team versterkt en consistente ervaringen verzekert over al je producten.",
+                "bookConsultation": "Boek Consultatie",
+                "viewAllServices": "Bekijk Alle Diensten"
+            }
+        },
+        "consulting": {
+            "meta": {
+                "title": "Technische Consultancy Diensten – Hilmar van der Veen",
+                "description": "Strategische technische begeleiding en consultancy. Architectuur reviews, performance optimalisatie, team mentoring en strategische planning voor software ontwikkelingssucces."
+            },
+            "hero": {
+                "badge": "Technische Consultancy",
+                "title": "Strategische Technische",
+                "titleAccent": "Begeleiding",
+                "description": "Benut mijn uitgebreide ervaring om complexe technische uitdagingen op te lossen. Ik bied architectuur reviews, performance optimalisatie, team mentoring en strategische begeleiding om je projecten te laten slagen en je team te laten groeien.",
+                "features": [
+                    "Strategische inzichten",
+                    "Duidelijke communicatie"
+                ],
+                "cta": {
+                    "book": "Boek Consultatie",
+                    "discuss": "Bespreek Uitdagingen"
+                }
+            },
+            "deliverables": {
+                "title": "Uitgebreid Consultancy Pakket",
+                "description": "Strategische begeleiding, uitvoerbare inzichten en hands-on ondersteuning om je technische initiatieven te versnellen.",
+                "items": [
+                    {
+                        "title": "Technische Assessment Rapport",
+                        "description": "Uitgebreide analyse van huidige systemen, processen en kansen"
+                    },
+                    {
+                        "title": "Strategische Roadmap",
+                        "description": "Gedetailleerd plan met tijdlijnen, mijlpalen en resource vereisten"
+                    },
+                    {
+                        "title": "Implementatie Richtlijnen",
+                        "description": "Stap-voor-stap instructies en best practices voor uitvoering"
+                    },
+                    {
+                        "title": "Team Training Programma",
+                        "description": "Maatwerk educatie en vaardigheidsontwikkelingsplan"
+                    }
+                ]
+            },
+            "benefits": {
+                "items": [
+                    {
+                        "title": "Expert Inzichten",
+                        "description": "10+ jaar ervaring met het oplossen van complexe technische uitdagingen"
+                    },
+                    {
+                        "title": "Versnelde Voortgang",
+                        "description": "Vermijd veelvoorkomende valkuilen en bereik je doelen sneller"
+                    },
+                    {
+                        "title": "Risico Mitigatie",
+                        "description": "Identificeer en addresseer potentiële problemen voordat ze problemen worden"
+                    },
+                    {
+                        "title": "Strategisch Voordeel",
+                        "description": "Neem geïnformeerde beslissingen die je positioneren voor langetermijn succes"
+                    },
+                    {
+                        "title": "Team Ontwikkeling",
+                        "description": "Versterk je team en bouw interne capaciteiten op"
+                    },
+                    {
+                        "title": "Meetbare Resultaten",
+                        "description": "Duidelijke KPI's en metrieken om verbetering en ROI te volgen"
+                    }
+                ]
+            },
+            "expertise": {
+                "title": "Expertise Gebieden",
+                "description": "Uitgebreide technische consultancy over alle aspecten van software ontwikkeling en team leiderschap.",
+                "categories": [
+                    {
+                        "name": "Architectuur & Strategie",
+                        "items": [
+                            {
+                                "name": "Systeem Architectuur Review",
+                                "description": "Schaalbaarheid en onderhoudbaarheid assessment",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Technology Stack Planning",
+                                "description": "Toekomstbestendige technologie beslissingen",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Performance Optimalisatie",
+                                "description": "Snelheid en efficiëntie verbeteringen",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Security Auditing",
+                                "description": "Kwetsbaarheid assessment & best practices",
+                                "level": "Gevorderd"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Team & Proces",
+                        "items": [
+                            {
+                                "name": "Code Review & Kwaliteit",
+                                "description": "Best practices en code standaarden",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Development Workflows",
+                                "description": "CI/CD en deployment optimalisatie",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Team Mentoring",
+                                "description": "Vaardigheidsontwikkeling en kennisoverdracht",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Agile Implementatie",
+                                "description": "Proces optimalisatie en team efficiëntie",
+                                "level": "Gevorderd"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Technisch Leiderschap",
+                        "items": [
+                            {
+                                "name": "Project Planning",
+                                "description": "Tijdlijn en resource schatting",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Risico Assessment",
+                                "description": "Technische en zakelijke risico evaluatie",
+                                "level": "Gevorderd"
+                            },
+                            {
+                                "name": "Vendor Evaluatie",
+                                "description": "Technologie partner selectie begeleiding",
+                                "level": "Gevorderd"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Consultancy Proces",
+                "description": "Een gestructureerde benadering om je uitdagingen te begrijpen en uitvoerbare oplossingen te leveren die echte resultaten opleveren.",
+                "steps": [
+                    {
+                        "title": "Discovery & Assessment",
+                        "description": "Begrip van je huidige staat, uitdagingen en doelstellingen",
+                        "details": [
+                            "Huidige systeem analyse",
+                            "Team capaciteit assessment",
+                            "Bedrijfsdoel afstemming",
+                            "Uitdaging identificatie"
+                        ]
+                    },
+                    {
+                        "title": "Strategische Planning",
+                        "description": "Ontwikkelen van uitvoerbare aanbevelingen en roadmaps",
+                        "details": [
+                            "Oplossing architectuur design",
+                            "Implementatie roadmap",
+                            "Resource vereiste planning",
+                            "Risico mitigatie strategieën"
+                        ]
+                    },
+                    {
+                        "title": "Implementatie Ondersteuning",
+                        "description": "Hands-on begeleiding tijdens uitvoering en kennisoverdracht",
+                        "details": [
+                            "Technische implementatie begeleiding",
+                            "Team training en mentoring",
+                            "Voortgang monitoring",
+                            "Probleemoplossing ondersteuning"
+                        ]
+                    },
+                    {
+                        "title": "Optimalisatie & Groei",
+                        "description": "Continue verbetering en schaling voor langetermijn succes",
+                        "details": [
+                            "Performance monitoring",
+                            "Proces verfijning",
+                            "Schaling strategie ontwikkeling",
+                            "Doorlopende advisory ondersteuning"
+                        ]
+                    }
+                ]
+            },
+            "experience": {
+                "yearsLabel": "Jaar Ervaring",
+                "title": "Bewezen Track Record",
+                "description": "Ik heb tientallen bedrijven geholpen technische uitdagingen te overwinnen, hun ontwikkelingsprocessen te optimaliseren en sterkere engineering teams op te bouwen. Van startups tot enterprise organisaties, mijn consultancy levert meetbare resultaten.",
+                "stats": [
+                    {
+                        "number": "50+",
+                        "label": "Projecten Geconsulteerd"
+                    },
+                    {
+                        "number": "100+",
+                        "label": "Developers Gementord"
+                    },
+                    {
+                        "number": "25+",
+                        "label": "Bedrijven Gediend"
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Klaar om je Technische Uitdagingen te Overwinnen?",
+                "description": "Laten we je specifieke uitdagingen bespreken en een strategisch plan creëren om je technische doelen te bereiken.",
+                "bookConsultation": "Boek Consultatie",
+                "viewAllServices": "Bekijk Alle Diensten"
+            }
         }
     },
     "about": {
@@ -814,7 +1803,7 @@
                 "questions": [
                     {
                         "question": "Wie is Hilmar en wat doet hij?",
-                        "answer": "Ik ben Hilmar van der Veen, een senior full-stack ontwikkelaar met 15+ jaar ervaring. Ik ben gespecialiseerd in het bouwen van schaalbare webapplicaties, frontend development, design systems en technisch advies. Ik help bedrijven hun digitale aanwezigheid transformeren en ontwikkelprocessen optimaliseren."
+                        "answer": "Ik ben Hilmar van der Veen, een senior full-stack ontwikkelaar met 10+ jaar ervaring. Ik ben gespecialiseerd in het bouwen van schaalbare webapplicaties, frontend development, design systems en technisch advies. Ik help bedrijven hun digitale aanwezigheid transformeren en ontwikkelprocessen optimaliseren."
                     },
                     {
                         "question": "Wat maakt jouw aanpak anders?",
@@ -941,6 +1930,314 @@
             "contact": "Stuur Bericht",
             "book": "Boek Consultatie",
             "call": "Bel Nu"
+        }
+    },
+    "breadcrumb": {
+        "home": "Home",
+        "services": "Diensten",
+        "frontend": "Frontend Development",
+        "backend": "Backend Development",
+        "fullstack": "Full-Stack Development",
+        "designSystems": "Design Systemen",
+        "consulting": "Consultancy",
+        "projects": "Projecten",
+        "about": "Over Mij",
+        "contact": "Contact",
+        "book": "Afspraak Boeken",
+        "faq": "Veelgestelde Vragen",
+        "privacy": "Privacy",
+        "blog": "Blog"
+    },
+    "booking": {
+        "meta": {
+            "title": "Boek Consultatie – Hilmar van der Veen | Expert Ontwikkelaar",
+            "description": "Boek een gratis consultatie met Hilmar van der Veen. 10+ jaar ervaring in React, Next.js en full-stack development. Start vandaag nog met je project."
+        },
+        "hero": {
+            "badge": "10+ Jaar Ervaring",
+            "title": {
+                "line1": "Laten we",
+                "line2": "Iets Geweldigs",
+                "line3": "Samen Bouwen"
+            },
+            "description": "Klaar om je visie tot leven te brengen? Van snelle consultaties tot complete projecten, ik ben er om je te helpen slagen met professionele ontwikkeloplossingen.",
+            "benefits": {
+                "fastDelivery": {
+                    "title": "Snelle Oplevering",
+                    "description": "2-8 weken typisch"
+                },
+                "fullSupport": {
+                    "title": "Volledige Ondersteuning",
+                    "description": "Doorlopend onderhoud"
+                }
+            },
+            "cta": {
+                "button": "Start Je Project",
+                "freeConsultation": "Gratis consultatie inbegrepen",
+                "pricing": "€85-150/uur • Projecten vanaf €5k"
+            }
+        },
+        "pricing": {
+            "hourly": {
+                "title": "Uurconsultancy",
+                "badge": "Flexibel",
+                "price": "€85-150/uur",
+                "description": "Perfect voor doorlopend werk en snelle oplossingen",
+                "features": [
+                    "Betaal per gebruik",
+                    "Maximale flexibiliteit",
+                    "€150/uur voor urgente projecten"
+                ]
+            },
+            "project": {
+                "title": "Vaste Projecten",
+                "badge": "Populair",
+                "price": "€5k - €50k+",
+                "description": "Complete oplossingen met gedefinieerde scope",
+                "features": [
+                    "Vaste timeline & scope",
+                    "Betere waarde voor grote projecten",
+                    "Uitgebreide deliverables"
+                ]
+            }
+        },
+        "form": {
+            "title": "Klaar om te Beginnen?",
+            "description": "Vertel me over je project en ik neem binnen 24 uur contact op met een gedetailleerd voorstel.",
+            "steps": {
+                "step1": {
+                    "title": "Waarmee kan ik je helpen?",
+                    "description": "Kies de service en samenwerkingsvorm die het beste bij je behoeften past.",
+                    "serviceType": "Service Type",
+                    "services": {
+                        "frontend": {
+                            "title": "Frontend Development",
+                            "description": "React, Next.js, Vue.js applicaties"
+                        },
+                        "fullstack": {
+                            "title": "Full-Stack Development",
+                            "description": "Complete webapplicaties met backend"
+                        },
+                        "designSystem": {
+                            "title": "Design System",
+                            "description": "Component libraries en style guides"
+                        },
+                        "consultation": {
+                            "title": "Technische Consultatie",
+                            "description": "Architectuurreview en team mentoring"
+                        }
+                    },
+                    "projectType": "Project Type",
+                    "projectTypes": {
+                        "project": {
+                            "title": "Vast-Prijs Project",
+                            "description": "Compleet project met gedefinieerde scope en deliverables",
+                            "pricing": "€5k - €50k+",
+                            "benefits": [
+                                "Vaste timeline",
+                                "Gedefinieerde scope",
+                                "Betere waarde voor grotere projecten"
+                            ]
+                        },
+                        "hourly": {
+                            "title": "Uurconsultancy",
+                            "description": "Flexibele consultancy en ontwikkelingswerk",
+                            "pricing": "€85/uur standaard",
+                            "benefits": [
+                                "Maximale flexibiliteit",
+                                "Betaal per gebruik",
+                                "Perfect voor doorlopend werk"
+                            ]
+                        },
+                        "hourlyUrgent": {
+                            "title": "Urgente Consultancy",
+                            "description": "Spoed projecten met 1-2 weken oplevering",
+                            "pricing": "€150/uur voor urgent",
+                            "benefits": [
+                                "Directe start",
+                                "Prioriteit ondersteuning",
+                                "Snelle doorlooptijd"
+                            ]
+                        }
+                    },
+                    "popular": "Populair"
+                },
+                "step2": {
+                    "title": "Project Details",
+                    "description": "Help me je timeline en budget verwachtingen te begrijpen.",
+                    "when": "Wanneer heb je dit afgerond nodig?",
+                    "whatTimeWorksBest": "Welke tijd komt je het beste uit?",
+                    "loadingSlots": "Beschikbare tijdslots laden...",
+                    "pleaseSelectDate": "Selecteer eerst een datum om beschikbare tijdslots te zien",
+                    "noAvailableTimeSlots": "Geen beschikbare tijdslots voor deze datum. Kies een andere datum.",
+                    "selectTimeSlot": "Selecteer een tijdslot",
+                    "availableTimeSlots": "beschikbare tijdslots",
+                    "budget": "Wat is je budgetbereik?",
+                    "hourlyRates": "Uurtarieven",
+                    "tellAboutProject": "Vertel me over je project",
+                    "describeProject": "Beschrijf je projectdoelen, huidige uitdagingen en hoe succes eruit ziet...",
+                    "budgets": {
+                        "project": [
+                            {
+                                "id": "5k-10k",
+                                "label": "€5k - €10k"
+                            },
+                            {
+                                "id": "10k-25k",
+                                "label": "€10k - €25k"
+                            },
+                            {
+                                "id": "25k-50k",
+                                "label": "€25k - €50k"
+                            },
+                            {
+                                "id": "50k+",
+                                "label": "€50k+"
+                            }
+                        ],
+                        "hourly": [
+                            {
+                                "id": "10-25h",
+                                "label": "10-25 uur",
+                                "estimate": "€850 - €3.750"
+                            },
+                            {
+                                "id": "25-50h",
+                                "label": "25-50 uur",
+                                "estimate": "€2.125 - €7.500"
+                            },
+                            {
+                                "id": "50-100h",
+                                "label": "50-100 uur",
+                                "estimate": "€4.250 - €15.000"
+                            },
+                            {
+                                "id": "100h+",
+                                "label": "100+ uur",
+                                "estimate": "€8.500+"
+                            }
+                        ]
+                    },
+                    "rateInfo": {
+                        "standard": "€85/uur standaard tarief",
+                        "urgent": "€150/uur voor urgente projecten"
+                    },
+                    "descriptionPlaceholder": {
+                        "base": "Beschrijf je projectdoelen, huidige uitdagingen en hoe succes eruit ziet...",
+                        "hourly": "\n\nVoor uurwerk: Bij welke specifieke taken of gebieden heb je hulp nodig?",
+                        "project": "\n\nVoor projectwerk: Wat zijn je hoofdvereisten en verwachte deliverables?"
+                    }
+                },
+                "step3": {
+                    "title": "Contactinformatie",
+                    "description": "Hoe kan ik je bereiken om je project te bespreken?",
+                    "fullName": "Volledige Naam",
+                    "company": "Bedrijf",
+                    "email": "E-mailadres",
+                    "phone": "Telefoonnummer",
+                    "fullNamePlaceholder": "Je volledige naam",
+                    "companyPlaceholder": "Bedrijfsnaam",
+                    "emailPlaceholder": "jouw@email.com",
+                    "phonePlaceholder": "+31 6 12345678"
+                },
+                "step4": {
+                    "title": "Klaar om te Versturen",
+                    "description": "Controleer je informatie voordat je verzendt.",
+                    "serviceType": "Service & Type",
+                    "dateTime": "Datum & Tijd",
+                    "budget": "Budget",
+                    "contact": "Contact",
+                    "notSelected": "Niet geselecteerd",
+                    "whatHappensNext": "Wat gebeurt er hierna?",
+                    "reviewRequest": "Ik bekijk je verzoek binnen 24 uur",
+                    "scheduleCall": "We plannen een gratis 30-minuten discovery call",
+                    "provideProposal": "Ik verstrek een gedetailleerd voorstel en timeline",
+                    "startBuilding": "We beginnen met het bouwen van iets geweldigs samen"
+                }
+            },
+            "success": {
+                "title": "Verzoek Succesvol Verzonden!",
+                "message": "Dank je wel, {name}! Ik heb je boekingsverzoek ontvangen en neem binnen 24 uur contact op met een gedetailleerd voorstel.",
+                "nextSteps": {
+                    "title": "Wat is de Volgende Stap?",
+                    "steps": [
+                        "Ik bekijk je verzoek en bereid een op maat gemaakt voorstel voor",
+                        "We plannen een gratis 30-minuten discovery call",
+                        "Beginnen met het bouwen van iets geweldigs samen!"
+                    ]
+                },
+                "emailConfirmation": "Je ontvangt binnenkort een bevestigingsmail op {email}.",
+                "submitAnother": "Verstuur Nog een Verzoek"
+            },
+            "errors": {
+                "submissionFailed": "Verzending mislukt",
+                "generic": "Er ging iets mis. Probeer het opnieuw.",
+                "loadSlotsFailed": "Kon beschikbare tijdslots niet laden"
+            },
+            "navigation": {
+                "back": "Terug",
+                "continue": "Verder",
+                "sendRequest": "Verstuur Verzoek",
+                "submitting": "Versturen..."
+            }
+        }
+    },
+    "footer": {
+        "about": {
+            "name": "Hilmar van der Veen",
+            "title": "Senior Full-Stack Engineer",
+            "description": "10+ jaar ervaring met het bouwen van schaalbare webapplicaties, slimme integraties en technische oplossingen voor bedrijven en ondernemers door heel Europa.",
+            "location": "Nederland • Beschikbaar voor remote werk",
+            "availability": "Momenteel nieuwe projecten aannemend"
+        },
+        "services": {
+            "title": "Diensten",
+            "items": {
+                "frontend": "Frontend Development",
+                "fullstack": "Full-Stack Oplossingen",
+                "designSystems": "Design Systemen",
+                "consulting": "Technische Consultancy"
+            },
+            "bookConsultation": "Boek Consultatie"
+        },
+        "quickLinks": {
+            "title": "Snelle Links",
+            "items": {
+                "about": "Over Mij",
+                "projects": "Projecten",
+                "blog": "Blog",
+                "faq": "Veelgestelde Vragen",
+                "book": "Boek Mij",
+                "contact": "Contact"
+            }
+        },
+        "legal": {
+            "title": "Juridisch",
+            "items": {
+                "privacy": "Privacybeleid",
+                "terms": "Algemene Voorwaarden",
+                "cookies": "Cookiebeleid",
+                "disclaimer": "Disclaimer"
+            }
+        },
+        "contact": {
+            "title": "Neem Contact Op",
+            "newsletter": {
+                "title": "Blijf op de Hoogte",
+                "description": "Ontvang tech inzichten en projectupdates in je inbox.",
+                "placeholder": "jouw@email.com"
+            },
+            "social": {
+                "title": "Verbinden"
+            }
+        },
+        "bottom": {
+            "copyright": "Alle rechten voorbehouden.",
+            "builtWith": "Gebouwd met",
+            "location": {
+                "netherlands": "Nederland",
+                "euBased": "EU Gevestigd"
+            }
         }
     }
 }

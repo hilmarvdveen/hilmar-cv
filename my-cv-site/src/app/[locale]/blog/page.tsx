@@ -10,7 +10,7 @@ export default function BlogPage() {
           </p>
           <p className="text-gray-600">
             Blog posts coming soon. Follow my journey and get valuable insights
-            from 15+ years of experience.
+            from 10+ years of experience.
           </p>
         </div>
       </div>

@@ -15,59 +15,147 @@
         },
         "usp": {
             "title": "How I help your organization move forward",
-            "businessImpact": "Business Impact",
+            "businessImpact": "Business impact",
+            "expand": "More details",
+            "collapse": "Less details",
+            "solutionTitle": "My approach",
+            "resultTitle": "Result",
+            "techUsed": "Tech used",
             "actions": {
                 "bookConsultation": "Book consultation",
                 "readMore": "Read more"
             },
             "items": [
                 {
-                    "title": "From idea to scalable digital platform",
-                    "description": "I help organizations turn complex challenges into scalable, future-proof platforms. From wireframe to frontend, backend, and database – I deliver complete, working solutions.",
-                    "impact": "6-8 weeks from concept to live platform. Full ownership of technical architecture that grows with your organization."
+                    "title": "One consistent digital presence",
+                    "problem": "When teams work with different styles and building blocks, it creates confusion and frustration for users.",
+                    "solution": "I establish one central approach that enables all your teams to design and build consistently.",
+                    "result": "This accelerates development and ensures a recognizable and professional presence.",
+                    "impact": [
+                        "Less duplicate work and correction rounds",
+                        "One recognizable brand image across all channels",
+                        "Reduced risks through clear accessibility standards"
+                    ],
+                    "techUsed": "React, Storybook, Design Tokens, WCAG 2.0"
                 },
                 {
-                    "title": "AI implementation & digital transformation",
-                    "description": "I use AI where it adds real value. I integrate machine learning and data analysis into new or existing systems to automate processes, generate insights, and serve customers smarter.",
-                    "impact": "30-50% efficiency gains through smart automation. Real-time data insights that directly drive better business decisions."
+                    "title": "From idea to live platform in 6 weeks",
+                    "problem": "A strong idea doesn't need months to take shape.",
+                    "solution": "I build a first, fully working version of your digital product within 6 to 8 weeks.",
+                    "result": "You can immediately test, present, or develop further — without long preparation processes.",
+                    "impact": [
+                        "Faster to market than your competitor",
+                        "Full control over your own platform",
+                        "Quick proof whether an idea works for customers or investors"
+                    ],
+                    "techUsed": "React, Next.js, Node.js, PostgreSQL, AWS"
                 },
                 {
-                    "title": "Design Systems & frontend excellence",
-                    "description": "I build scalable design systems that accelerate teams. With a focus on performance, accessibility (WCAG), reusability, and consistent branding across all channels.",
-                    "impact": "40% faster development through reusable components. Consistent brand experience and WCAG compliance that eliminates legal risks."
+                    "title": "New tools quickly connected to your systems",
+                    "problem": "New applications must work smoothly with what you already have.",
+                    "solution": "I smartly connect tools to your existing systems, without delay or extra IT dependency.",
+                    "result": "This way your team can switch faster and you maintain control over your processes.",
+                    "impact": [
+                        "Less IT dependency for integrations",
+                        "Faster new features or campaigns live",
+                        "Lower management costs and less hassle"
+                    ],
+                    "techUsed": "REST/GraphQL APIs, CQRS, CMS integrations"
                 },
                 {
-                    "title": "API integrations & low-code component architecture",
-                    "description": "I create seamless connections between frontend and backend – REST, GraphQL, CQRS. With a configuration-driven frontend, editors can manage content without touching code.",
-                    "impact": "75% less developer dependency for content management. Faster time-to-market for new features and campaigns."
+                    "title": "Extra momentum when deadlines approach",
+                    "problem": "Sometimes a project gets stuck due to lack of capacity.",
+                    "solution": "I step in quickly and deliver concrete results from day one.",
+                    "result": "This way you maintain momentum in your project without having to search for reinforcement for months.",
+                    "impact": [
+                        "Immediately deployable without onboarding time",
+                        "Deadlines remain achievable",
+                        "Less risk of delays and failure costs"
+                    ],
+                    "techUsed": "Agile, Remote collaboration, Multiple frameworks"
                 },
                 {
-                    "title": "Mentoring & structure in your development team",
-                    "description": "I help your team grow: coaching, quality assurance, refactoring legacy code, and setting technical standards. This builds sustainable teams and stable software.",
-                    "impact": "50% fewer bugs and technical debt. Self-sufficient teams that can continue developing and innovating without external help."
+                    "title": "Teams that can develop independently",
+                    "problem": "Teams are stronger when they don't constantly need outside help.",
+                    "solution": "I help your people collaborate smarter, make better choices, and manage their own software.",
+                    "result": "This way knowledge grows within your organization — and dependency on external parties decreases.",
+                    "impact": [
+                        "Less spending on external consultants",
+                        "More ownership within your team",
+                        "Shorter waiting times for new features"
+                    ],
+                    "techUsed": "Code reviews, Testing strategies, Team mentoring"
                 },
                 {
-                    "title": "Rapid scaling within your project or department",
-                    "description": "Whether it's an MVP, redesign or replatforming: I quickly integrate into existing teams or deliver results independently. Focused on impact within sprints, aligned with your deadlines.",
-                    "impact": "Immediate productive deployment without onboarding time. Deadline-focused delivery with measurable results within the first sprint."
+                    "title": "Automate the right things — and save time and money",
+                    "problem": "Many processes cost time daily without really adding value.",
+                    "solution": "I help automate those tasks in a way that is logical and secure.",
+                    "result": "This delivers faster insights, fewer errors, and more room for work that matters.",
+                    "impact": [
+                        "30–50% more efficient working",
+                        "Better insights for better decisions",
+                        "Less manual work, fewer errors, more results"
+                    ],
+                    "techUsed": "Machine Learning, Data Analysis, Process Automation"
                 }
             ]
         },
         "about": {
             "title": "About Me",
-            "intro": "With over 10 years of experience, I help companies and entrepreneurs build accessible, scalable, and future-proof digital platforms.",
-            "summary": "I combine technical depth with strategic insight. From modern UI architecture and static marketing sites to backend integrations and team mentoring — I deliver solutions that work and grow with your organization.",
-            "contact": "Schedule a strategy session",
-            "cta": "See my projects",
-            "solutionsTitle": "How I help you succeed",
-            "solutions": [
-                "Migrate legacy frontends to modern stacks (React, Angular, Next.js)",
-                "Build static or dynamic marketing websites",
-                "Integrate REST or GraphQL backends (including .NET, CQRS)",
-                "Set up scalable component libraries and design systems",
-                "Deliver accessible, high-performance UIs (WCAG-compliant)",
-                "Mentor frontend teams and clean up codebases"
-            ]
+            "intro": "With over 10 years of experience, I help companies and teams turn ideas into robust, scalable solutions, from first release to mature platform.",
+            "summary": {
+                "part1": "I work closely with product teams, founders, and stakeholders to build systems that combine technical reliability with strategic impact.",
+                "part2": "Whether it’s modernizing existing platforms, launching something new, or streamlining your development process — I join your team, deliver real results, and help you move forward. No vague plans. No noise. Just solutions that work today, and still make sense tomorrow."
+            },
+            "contact": "Get in touch",
+            "cta": "View projects",
+            "tiles": {
+                "businessImpact": {
+                    "title": "Business Impact",
+                    "items": [
+                        "Up to 50% lower development costs through smart reusable components",
+                        "Shorter time-to-market for new digital propositions",
+                        "More customer satisfaction through better performance and accessibility",
+                        "Less development dependency through configurable solutions",
+                        "Higher conversion through user-friendly and fast interfaces"
+                    ]
+                },
+                "structural": {
+                    "title": "What I solve structurally",
+                    "items": [
+                        "Fewer errors and bugs through automatic quality controls",
+                        "Faster releases of new features without technical delays",
+                        "Clear documentation and patterns that make teams faster",
+                        "Digital products that can easily grow with your organization",
+                        "Less code chaos, more calm, overview and flexibility"
+                    ]
+                },
+                "frontend": {
+                    "title": "Frontend solutions that customers notice",
+                    "items": [
+                        "Fast, smooth user experiences on any device",
+                        "Interfaces that meet accessibility standards (WCAG)",
+                        "Designs that are consistent and easy to implement",
+                        "Search engine friendly (SEO) for better visibility",
+                        "Flexible components that are reusable throughout the platform"
+                    ]
+                },
+                "backend": {
+                    "title": "Backend solutions that accelerate your process",
+                    "items": [
+                        "Secure systems with clear permission structure",
+                        "Smart connections with existing systems or APIs",
+                        "Less manual work through automation and configuration",
+                        "Well-scalable logic prepared for growth",
+                        "Faster testing, delivery and adjustment of functionality"
+                    ]
+                }
+            },
+            "stats": {
+                "experience": "Years Experience",
+                "projects": "Projects Delivered",
+                "industries": "Industries"
+            }
         },
         "tech": {
             "title": "Technologies",
@@ -78,16 +166,6 @@
             "testing": "Testing",
             "databases": "Databases",
             "platforms": "Platforms & Cloud"
-        },
-        "map": {
-            "companiesWorked": "Companies I worked for:",
-            "workedIn": "Worked in",
-            "legend": {
-                "home": "My home location",
-                "city": "City where I worked",
-                "highlighted": "Province I worked in",
-                "other": "Other province"
-            }
         },
         "projects": {
             "title": "Project Highlights",
@@ -110,15 +188,52 @@
         },
         "cta": {
             "title": "Ready to build together?",
-            "subtitle": "Get in touch and discover how I can take your frontend to the next level.",
-            "button": "Book an introduction"
+            "subtitle": "Let's discuss your vision and turn it into reality. Book a free consultation and get a custom proposal within 24 hours.",
+            "button": "Book free consultation",
+            "buttonAlt": "Or send message"
         },
         "clientLogos": {
             "title": "Trusted by leading organizations",
             "subtitle": "I collaborate with prominent companies and organizations to realize their digital ambitions",
-            "indicator1": "15+ years experience",
+            "indicator1": "10+ years experience",
             "indicator2": "50+ projects delivered",
             "indicator3": "Government & enterprise"
+        },
+        "map": {
+            "companiesWorked": "Work Experience Across the Netherlands",
+            "workedIn": "Over my career, I've worked with",
+            "workMode": {
+                "remote": "Remote",
+                "onSite": "On-site",
+                "hybrid": "Hybrid"
+            },
+            "stats": {
+                "companies": "companies",
+                "across": "across",
+                "cities": "cities",
+                "in": "in",
+                "provinces": "provinces",
+                "companiesLabel": "Companies",
+                "citiesLabel": "Cities",
+                "provincesLabel": "Provinces"
+            },
+            "mapAriaLabel": "Interactive map of the Netherlands showing work locations",
+            "legend": {
+                "home": "Home Location",
+                "city": "Work Cities",
+                "highlighted": "Active Provinces",
+                "company": "company",
+                "companies": "companies"
+            },
+            "tapLocation": "Tap on a location to see details",
+            "highlights": {
+                "title": "Career Highlights",
+                "basedIn": "Based in",
+                "workedAcross": "Worked across",
+                "provinces": "provinces",
+                "experience": "Experience with remote, hybrid & on-site work",
+                "years": "years of professional experience"
+            }
         }
     },
     "common": {
@@ -520,7 +635,7 @@
                 "projectsLabel": "Completed projects",
                 "impact": "$2M+",
                 "impactLabel": "Generated value",
-                "industries": "15+",
+                "industries": "10+",
                 "industriesLabel": "Different industries"
             }
         },
@@ -710,37 +825,910 @@
     },
     "contact": {
         "meta": {
-            "title": "Contact – Hilmar van der Veen",
-            "description": "Get in touch to discuss your project, schedule a strategy session or explore collaboration opportunities."
+            "title": "Contact – Hilmar van der Veen | Software Developer",
+            "description": "Get in touch for your software development project. 10+ years experience in React, Next.js and full-stack development. Free consultation available."
         },
-        "title": "Let's talk about your project",
-        "intro": "Whether you need a frontend expert, system integration or end-to-end delivery — I'd love to hear more.",
-        "emailTitle": "Email",
-        "phoneTitle": "Phone",
-        "calendlyTitle": "Schedule a call",
-        "calendlyLink": "Book a free strategy session via Calendly",
+        "hero": {
+            "badge": "Let's talk",
+            "title": "Ready to start your next project?",
+            "description": "Whether you want to build a new application, improve your existing system, or need technical advice – I'm here to help. Let's discuss how I can bring your vision to life."
+        },
         "form": {
-            "title": "Contact me",
+            "title": "Send a message",
+            "description": "Tell me about your project and I'll get back to you within 24 hours.",
+            "interestsLabel": "I'm interested in",
+            "interests": [
+                "Frontend Development",
+                "Full-Stack Development",
+                "Design Systems",
+                "Technical Consulting",
+                "Team Mentoring",
+                "Legacy Migration",
+                "Performance Optimization",
+                "MVP Development"
+            ],
             "name": "Your name",
-            "email": "Your email",
-            "message": "Your message",
+            "email": "Email address",
+            "message": "Tell me about your project",
             "submit": "Send message",
             "sending": "Sending...",
-            "required": "This field is required",
-            "invalidEmail": "Please enter a valid email address",
-            "successMessage": "Thank you! I'll get back to you soon.",
-            "serverError": "Oops, something went wrong. Please try again.",
-            "interestsLabel": "I'm interested in...",
-            "interests": [
-                "Composable Frontends",
-                "Design Systems",
-                "API Integrations",
-                "AI Features",
-                "Data-driven UIs",
-                "End-to-End Delivery",
-                "Mentoring & Team Coaching",
-                "Other"
-            ]
+            "successMessage": "Thank you! I'll get back to you within 24 hours.",
+            "serverError": "Something went wrong. Please try again or email me directly."
+        },
+        "info": {
+            "title": "Contact information",
+            "email": "Email",
+            "phone": "Phone",
+            "location": "Location",
+            "availability": "Availability",
+            "availabilityText": "Monday - Saturday, 8:00 - 20:00 CET",
+            "response": "Response time",
+            "responseText": "Within 24 hours"
+        },
+        "cta": {
+            "title": "Prefer direct contact?",
+            "description": "Book a free 30-minute discovery call to discuss your project.",
+            "button": "Book free call"
+        }
+    },
+    "services": {
+        "meta": {
+            "title": "Services – Hilmar van der Veen | Software Developer",
+            "description": "Professional software development services: Frontend, Full-Stack, Design Systems and Technical Consulting. 10+ years experience with React, Next.js and modern technologies."
+        },
+        "hero": {
+            "badge": "Professional Services",
+            "title": "Scalable Software Solutions",
+            "description": "From MVP to enterprise systems – I help organizations realize their digital ambitions with modern, reliable technologies and 10+ years of experience."
+        },
+        "overview": {
+            "title": "My Services",
+            "description": "Specialized in modern web development with focus on scalable, maintainable solutions"
+        },
+        "main": {
+            "title": "Comprehensive Web Development Services",
+            "description": "Whether you need a complete application, frontend expertise, or strategic guidance, I have the experience to deliver exceptional results using modern technologies like React, Next.js, and TypeScript.",
+            "services": {
+                "frontend": {
+                    "title": "Frontend Development",
+                    "shortDescription": "Modern, responsive user interfaces that engage users and drive conversions.",
+                    "fullDescription": "I specialize in building high-performance frontend applications using React, Next.js, Vue.js, and modern JavaScript. From interactive dashboards to e-commerce platforms, I create user experiences that are both beautiful and functional.",
+                    "technologies": {
+                        "title": "Technologies & Tools"
+                    },
+                    "benefits": {
+                        "title": "Key Benefits",
+                        "items": [
+                            "Mobile-first responsive design",
+                            "SEO optimized architecture",
+                            "Lightning-fast performance",
+                            "Accessibility compliant (WCAG 2.1)"
+                        ]
+                    }
+                },
+                "fullstack": {
+                    "title": "Full-Stack Solutions",
+                    "shortDescription": "Complete web applications with robust backend architecture and seamless integrations.",
+                    "fullDescription": "End-to-end development of scalable web applications. I handle everything from database design and API development to frontend implementation and deployment, ensuring your application performs reliably at scale.",
+                    "benefits": {
+                        "items": [
+                            "Scalable architecture design",
+                            "API development & integration",
+                            "Database optimization",
+                            "Cloud deployment & DevOps"
+                        ]
+                    }
+                },
+                "designSystems": {
+                    "title": "Design Systems",
+                    "shortDescription": "Consistent, scalable component libraries that streamline development and enhance user experience.",
+                    "fullDescription": "I create comprehensive design systems and component libraries that ensure consistency across your digital products. From style guides to reusable React components, I help teams build faster and maintain brand coherence.",
+                    "benefits": {
+                        "items": [
+                            "Improved development velocity",
+                            "Consistent brand experience",
+                            "Reduced design debt",
+                            "Enhanced team collaboration"
+                        ]
+                    }
+                },
+                "consulting": {
+                    "title": "Technical Consulting",
+                    "shortDescription": "Strategic technical guidance, code reviews, and team mentoring from 15+ years of experience.",
+                    "fullDescription": "Leverage my extensive experience to solve complex technical challenges. I provide architecture reviews, performance optimization, team mentoring, and strategic guidance to help your projects succeed and your team grow.",
+                    "benefits": {
+                        "items": [
+                            "Reduced technical debt",
+                            "Improved team productivity",
+                            "Optimized performance",
+                            "Strategic technology decisions"
+                        ]
+                    }
+                }
+            },
+            "learnMore": "Learn More"
+        },
+        "finalCta": {
+            "title": "Ready to Start Your Project?",
+            "description": "Let's discuss your needs and find the perfect solution for your business goals.",
+            "bookConsultation": "Book Consultation",
+            "getInTouch": "Get In Touch"
+        },
+        "cta": {
+            "title": "Ready to get started?",
+            "book": "Schedule a strategy session",
+            "contact": "Get in touch"
+        },
+        "frontend": {
+            "meta": {
+                "title": "Frontend Development Services – Hilmar van der Veen",
+                "description": "Expert frontend development with React, Next.js, Vue.js and modern JavaScript. Building user-centered, high-performance applications that drive results."
+            },
+            "hero": {
+                "badge": "Frontend Development",
+                "title": "Modern Frontend",
+                "titleAccent": "That Converts",
+                "description": "I build high-performance, user-centered frontend applications using React, Next.js, and modern JavaScript. From interactive dashboards to e-commerce platforms, I create experiences that engage users and drive business results.",
+                "features": [
+                    "Cross-platform compatibility",
+                    "Optimized performance"
+                ],
+                "cta": {
+                    "book": "Book Consultation",
+                    "discuss": "Discuss Project"
+                }
+            },
+            "benefits": {
+                "title": "What You Get",
+                "description": "Modern frontend solutions built with performance, accessibility, and user experience as core principles.",
+                "items": [
+                    {
+                        "title": "Mobile-First Design",
+                        "description": "Responsive layouts that work flawlessly across all devices and screen sizes"
+                    },
+                    {
+                        "title": "Lightning Performance",
+                        "description": "Optimized for speed with lazy loading, code splitting, and efficient bundling"
+                    },
+                    {
+                        "title": "Accessibility Focus",
+                        "description": "WCAG 2.1 compliant interfaces that work for users with all abilities"
+                    },
+                    {
+                        "title": "SEO Optimized",
+                        "description": "Built with search engine optimization and discoverability in mind"
+                    },
+                    {
+                        "title": "User-Centered",
+                        "description": "Interfaces designed with user experience and conversion optimization as priorities"
+                    },
+                    {
+                        "title": "Analytics Ready",
+                        "description": "Integrated tracking and analytics to measure success and user behavior"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Technologies & Tools",
+                "description": "I work with modern, battle-tested technologies to ensure your application is scalable, maintainable, and future-proof.",
+                "items": [
+                    {
+                        "name": "React",
+                        "description": "Component-based UI library",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Next.js",
+                        "description": "Full-stack React framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Vue.js",
+                        "description": "Progressive JavaScript framework",
+                        "level": "Advanced"
+                    },
+                    {
+                        "name": "TypeScript",
+                        "description": "Type-safe JavaScript",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Tailwind CSS",
+                        "description": "Utility-first CSS framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "Redux/Zustand",
+                        "description": "State management",
+                        "level": "Advanced"
+                    },
+                    {
+                        "name": "Angular",
+                        "description": "Full-featured TypeScript framework",
+                        "level": "Expert"
+                    },
+                    {
+                        "name": "NgRx",
+                        "description": "Reactive state management for Angular",
+                        "level": "Advanced"
+                    },
+                    {
+                        "name": "Signals",
+                        "description": "Modern reactive primitives",
+                        "level": "Advanced"
+                    }
+                ]
+            },
+            "process": {
+                "title": "My Development Process",
+                "description": "A proven methodology that ensures quality, performance, and alignment with your business goals.",
+                "steps": [
+                    {
+                        "title": "Discovery & Planning",
+                        "description": "Understanding your users, business goals, and technical requirements",
+                        "details": [
+                            "User research and personas",
+                            "Technical architecture planning",
+                            "Performance budget definition",
+                            "Accessibility requirements"
+                        ]
+                    },
+                    {
+                        "title": "Design System Creation",
+                        "description": "Building consistent, scalable design foundations",
+                        "details": [
+                            "Component library development",
+                            "Design token implementation",
+                            "Style guide creation",
+                            "Brand consistency guidelines"
+                        ]
+                    },
+                    {
+                        "title": "Development & Testing",
+                        "description": "Building robust, performant frontend applications",
+                        "details": [
+                            "Component-driven development",
+                            "Cross-browser testing",
+                            "Performance optimization",
+                            "Accessibility compliance"
+                        ]
+                    },
+                    {
+                        "title": "Deployment & Optimization",
+                        "description": "Launching and continuously improving your application",
+                        "details": [
+                            "CI/CD pipeline setup",
+                            "Performance monitoring",
+                            "SEO optimization",
+                            "Analytics integration"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Ready to Build Something Amazing?",
+                "description": "Let's discuss your frontend needs and create a solution that delights your users and drives your business forward.",
+                "bookConsultation": "Book Consultation",
+                "viewAllServices": "View All Services"
+            }
+        },
+        "fullstack": {
+            "meta": {
+                "title": "Full-Stack Development Services – Hilmar van der Veen",
+                "description": "Complete web application development from backend to frontend. Expert in Node.js, .NET, Python, databases, and cloud deployment for scalable solutions."
+            },
+            "hero": {
+                "badge": "Full-Stack Development",
+                "title": "Complete Digital",
+                "titleAccent": "Solutions",
+                "description": "End-to-end development of scalable web applications. I handle everything from database design and API development to frontend implementation and cloud deployment, ensuring your application performs reliably at scale.",
+                "features": [
+                    "High-performance backend",
+                    "Enterprise-grade security"
+                ],
+                "cta": {
+                    "book": "Book Consultation",
+                    "discuss": "Discuss Project"
+                }
+            },
+            "benefits": {
+                "title": "Complete System Solutions",
+                "description": "Comprehensive applications built with modern architecture, security best practices, and scalable infrastructure.",
+                "items": [
+                    {
+                        "title": "Scalable Architecture",
+                        "description": "Built to grow with your business, from MVP to enterprise scale"
+                    },
+                    {
+                        "title": "Security First",
+                        "description": "Industry-standard security practices with encryption and authentication"
+                    },
+                    {
+                        "title": "Optimized Performance",
+                        "description": "Fast queries, efficient caching, and optimized data flow"
+                    },
+                    {
+                        "title": "API-First Design",
+                        "description": "Flexible APIs that enable future integrations and mobile apps"
+                    },
+                    {
+                        "title": "Cloud Native",
+                        "description": "Modern deployment with auto-scaling and high availability"
+                    },
+                    {
+                        "title": "DevOps Integration",
+                        "description": "Automated testing, deployment, and monitoring workflows"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Technology Stack",
+                "description": "Modern, proven technologies chosen for reliability, performance, and long-term maintainability.",
+                "categories": [
+                    {
+                        "name": "Backend",
+                        "items": [
+                            {
+                                "name": "Node.js",
+                                "description": "Scalable server-side runtime",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Express",
+                                "description": "Fast, minimal web framework",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "C# .NET",
+                                "description": "Enterprise-grade web framework",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Python (FastAPI)",
+                                "description": "High-performance async API framework",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "GraphQL",
+                                "description": "Efficient API query language",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "REST APIs",
+                                "description": "RESTful service architecture",
+                                "level": "Expert"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Databases",
+                        "items": [
+                            {
+                                "name": "PostgreSQL",
+                                "description": "Robust relational database",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "MongoDB",
+                                "description": "Flexible document database",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "MSSQL",
+                                "description": "Microsoft SQL Server database",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Redis",
+                                "description": "In-memory data structure store",
+                                "level": "Intermediate"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Cloud & DevOps",
+                        "items": [
+                            {
+                                "name": "Azure",
+                                "description": "Microsoft cloud platform",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "AWS",
+                                "description": "Comprehensive cloud platform",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Kubernetes",
+                                "description": "Container orchestration platform",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Docker",
+                                "description": "Containerization platform",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Nginx",
+                                "description": "High-performance web server",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "CI/CD",
+                                "description": "Continuous integration/deployment",
+                                "level": "Advanced"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Development Process",
+                "description": "A systematic approach to building robust, scalable applications from concept to production.",
+                "steps": [
+                    {
+                        "title": "Architecture Design",
+                        "description": "Strategic system planning for scalability and maintainability",
+                        "details": [
+                            "System architecture planning",
+                            "Database schema design",
+                            "API architecture definition",
+                            "Performance requirements analysis"
+                        ]
+                    },
+                    {
+                        "title": "Backend Development",
+                        "description": "Robust server-side logic and database integration",
+                        "details": [
+                            "RESTful API development",
+                            "Database design & optimization",
+                            "Authentication & authorization",
+                            "Third-party integrations"
+                        ]
+                    },
+                    {
+                        "title": "Frontend Integration",
+                        "description": "Seamless connection between user interface and backend systems",
+                        "details": [
+                            "State management implementation",
+                            "API client development",
+                            "Real-time features (WebSockets)",
+                            "Progressive Web App features"
+                        ]
+                    },
+                    {
+                        "title": "Deployment & Monitoring",
+                        "description": "Production deployment with continuous monitoring and optimization",
+                        "details": [
+                            "Cloud infrastructure setup",
+                            "Automated deployment pipelines",
+                            "Performance monitoring",
+                            "Security auditing & updates"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Ready to Build Your Application?",
+                "description": "Let's discuss your requirements and create a scalable solution that grows with your business.",
+                "bookConsultation": "Book Consultation",
+                "viewAllServices": "View All Services"
+            }
+        },
+        "designSystems": {
+            "meta": {
+                "title": "Design Systems Services – Hilmar van der Veen",
+                "description": "Comprehensive design systems and component libraries. Create consistent, scalable digital experiences with reusable components and design tokens."
+            },
+            "hero": {
+                "badge": "Design Systems",
+                "title": "Scalable Design",
+                "titleAccent": "Consistency",
+                "description": "I create comprehensive design systems and component libraries that ensure consistency across your digital products. From style guides to reusable React components, I help teams build faster and maintain brand coherence.",
+                "features": [
+                    "Brand consistency",
+                    "Streamlined workflow"
+                ],
+                "cta": {
+                    "book": "Book Consultation",
+                    "discuss": "Discuss Project"
+                }
+            },
+            "deliverables": {
+                "title": "Complete Design System Package",
+                "description": "Everything your team needs to create consistent, scalable digital experiences.",
+                "items": [
+                    {
+                        "title": "Design Token Library",
+                        "description": "Colors, typography, spacing, and other foundational design decisions"
+                    },
+                    {
+                        "title": "Component Library",
+                        "description": "Reusable UI components with variants and states"
+                    },
+                    {
+                        "title": "Usage Guidelines",
+                        "description": "Clear documentation on when and how to use each component"
+                    },
+                    {
+                        "title": "Code Implementation",
+                        "description": "Production-ready React components with TypeScript"
+                    }
+                ]
+            },
+            "benefits": {
+                "items": [
+                    {
+                        "title": "Development Velocity",
+                        "description": "Accelerate product development with pre-built, tested components"
+                    },
+                    {
+                        "title": "Consistent Experience",
+                        "description": "Maintain brand coherence across all touchpoints and platforms"
+                    },
+                    {
+                        "title": "Reduced Maintenance",
+                        "description": "Centralized updates automatically propagate across all products"
+                    },
+                    {
+                        "title": "Team Collaboration",
+                        "description": "Bridge design and development with shared language and tools"
+                    },
+                    {
+                        "title": "Scalable Foundation",
+                        "description": "Support rapid growth without compromising quality or consistency"
+                    },
+                    {
+                        "title": "Self-Service Design",
+                        "description": "Empower team members to create on-brand designs independently"
+                    }
+                ]
+            },
+            "technologies": {
+                "title": "Tools & Technologies",
+                "description": "Industry-leading tools for creating, maintaining, and implementing design systems.",
+                "categories": [
+                    {
+                        "name": "Design Tools",
+                        "items": [
+                            {
+                                "name": "Figma",
+                                "description": "Collaborative interface design",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Sketch",
+                                "description": "Vector-based design tool",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Adobe Creative Suite",
+                                "description": "Professional design software",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Principle",
+                                "description": "Interactive prototyping",
+                                "level": "Intermediate"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Development",
+                        "items": [
+                            {
+                                "name": "React/Storybook",
+                                "description": "Component development & documentation",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Styled Components",
+                                "description": "CSS-in-JS styling solution",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Design Tokens",
+                                "description": "Systematic design decisions",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "TypeScript",
+                                "description": "Type-safe component development",
+                                "level": "Advanced"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Documentation",
+                        "items": [
+                            {
+                                "name": "GitBook",
+                                "description": "Team documentation platform",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Notion",
+                                "description": "Collaborative workspace",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Markdown",
+                                "description": "Lightweight markup language",
+                                "level": "Expert"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Design System Development Process",
+                "description": "A strategic approach to creating design systems that truly scale with your organization.",
+                "steps": [
+                    {
+                        "title": "Design Audit & Discovery",
+                        "description": "Analyzing existing patterns and identifying opportunities for systematization",
+                        "details": [
+                            "Current design inventory",
+                            "Component pattern analysis",
+                            "Brand guideline review",
+                            "User experience assessment"
+                        ]
+                    },
+                    {
+                        "title": "System Architecture",
+                        "description": "Creating the foundational structure and design principles",
+                        "details": [
+                            "Design token definition",
+                            "Component hierarchy planning",
+                            "Naming convention standards",
+                            "Accessibility guidelines"
+                        ]
+                    },
+                    {
+                        "title": "Component Library",
+                        "description": "Building reusable, documented components with clear guidelines",
+                        "details": [
+                            "Interactive component development",
+                            "Usage documentation",
+                            "Code examples & snippets",
+                            "Responsive behavior definitions"
+                        ]
+                    },
+                    {
+                        "title": "Implementation & Training",
+                        "description": "Rolling out the system with team education and ongoing support",
+                        "details": [
+                            "Team training sessions",
+                            "Implementation guidelines",
+                            "Version control workflows",
+                            "Continuous improvement process"
+                        ]
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Ready to Scale Your Design Process?",
+                "description": "Let's create a design system that empowers your team and ensures consistent experiences across all your products.",
+                "bookConsultation": "Book Consultation",
+                "viewAllServices": "View All Services"
+            }
+        },
+        "consulting": {
+            "meta": {
+                "title": "Technical Consulting Services – Hilmar van der Veen",
+                "description": "Strategic technical guidance and consulting. Architecture reviews, performance optimization, team mentoring, and strategic planning for software development success."
+            },
+            "hero": {
+                "badge": "Technical Consulting",
+                "title": "Strategic Technical",
+                "titleAccent": "Guidance",
+                "description": "Leverage my extensive experience to solve complex technical challenges. I provide architecture reviews, performance optimization, team mentoring, and strategic guidance to help your projects succeed and your team grow.",
+                "features": [
+                    "Strategic insights",
+                    "Clear communication"
+                ],
+                "cta": {
+                    "book": "Book Consultation",
+                    "discuss": "Discuss Challenges"
+                }
+            },
+            "deliverables": {
+                "title": "Comprehensive Consulting Package",
+                "description": "Strategic guidance, actionable insights, and hands-on support to accelerate your technical initiatives.",
+                "items": [
+                    {
+                        "title": "Technical Assessment Report",
+                        "description": "Comprehensive analysis of current systems, processes, and opportunities"
+                    },
+                    {
+                        "title": "Strategic Roadmap",
+                        "description": "Detailed plan with timelines, milestones, and resource requirements"
+                    },
+                    {
+                        "title": "Implementation Guidelines",
+                        "description": "Step-by-step instructions and best practices for execution"
+                    },
+                    {
+                        "title": "Team Training Program",
+                        "description": "Customized education and skill development plan"
+                    }
+                ]
+            },
+            "benefits": {
+                "items": [
+                    {
+                        "title": "Expert Insights",
+                        "description": "10+ years of experience solving complex technical challenges"
+                    },
+                    {
+                        "title": "Accelerated Progress",
+                        "description": "Avoid common pitfalls and reach your goals faster"
+                    },
+                    {
+                        "title": "Risk Mitigation",
+                        "description": "Identify and address potential issues before they become problems"
+                    },
+                    {
+                        "title": "Strategic Advantage",
+                        "description": "Make informed decisions that position you for long-term success"
+                    },
+                    {
+                        "title": "Team Development",
+                        "description": "Upskill your team and build internal capabilities"
+                    },
+                    {
+                        "title": "Measurable Results",
+                        "description": "Clear KPIs and metrics to track improvement and ROI"
+                    }
+                ]
+            },
+            "expertise": {
+                "title": "Areas of Expertise",
+                "description": "Comprehensive technical consulting across all aspects of software development and team leadership.",
+                "categories": [
+                    {
+                        "name": "Architecture & Strategy",
+                        "items": [
+                            {
+                                "name": "System Architecture Review",
+                                "description": "Scalability and maintainability assessment",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Technology Stack Planning",
+                                "description": "Future-proof technology decisions",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Performance Optimization",
+                                "description": "Speed and efficiency improvements",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Security Auditing",
+                                "description": "Vulnerability assessment & best practices",
+                                "level": "Advanced"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Team & Process",
+                        "items": [
+                            {
+                                "name": "Code Review & Quality",
+                                "description": "Best practices and code standards",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Development Workflows",
+                                "description": "CI/CD and deployment optimization",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Team Mentoring",
+                                "description": "Skills development and knowledge transfer",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Agile Implementation",
+                                "description": "Process optimization and team efficiency",
+                                "level": "Advanced"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Technical Leadership",
+                        "items": [
+                            {
+                                "name": "Project Planning",
+                                "description": "Timeline and resource estimation",
+                                "level": "Expert"
+                            },
+                            {
+                                "name": "Risk Assessment",
+                                "description": "Technical and business risk evaluation",
+                                "level": "Advanced"
+                            },
+                            {
+                                "name": "Vendor Evaluation",
+                                "description": "Technology partner selection guidance",
+                                "level": "Advanced"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "process": {
+                "title": "Consulting Process",
+                "description": "A structured approach to understanding your challenges and delivering actionable solutions that drive real results.",
+                "steps": [
+                    {
+                        "title": "Discovery & Assessment",
+                        "description": "Understanding your current state, challenges, and objectives",
+                        "details": [
+                            "Current system analysis",
+                            "Team capability assessment",
+                            "Business goal alignment",
+                            "Challenge identification"
+                        ]
+                    },
+                    {
+                        "title": "Strategic Planning",
+                        "description": "Developing actionable recommendations and roadmaps",
+                        "details": [
+                            "Solution architecture design",
+                            "Implementation roadmap",
+                            "Resource requirement planning",
+                            "Risk mitigation strategies"
+                        ]
+                    },
+                    {
+                        "title": "Implementation Support",
+                        "description": "Hands-on guidance during execution and knowledge transfer",
+                        "details": [
+                            "Technical implementation guidance",
+                            "Team training and mentoring",
+                            "Progress monitoring",
+                            "Problem-solving support"
+                        ]
+                    },
+                    {
+                        "title": "Optimization & Growth",
+                        "description": "Continuous improvement and scaling for long-term success",
+                        "details": [
+                            "Performance monitoring",
+                            "Process refinement",
+                            "Scaling strategy development",
+                            "Ongoing advisory support"
+                        ]
+                    }
+                ]
+            },
+            "experience": {
+                "yearsLabel": "Years Experience",
+                "title": "Proven Track Record",
+                "description": "I've helped dozens of companies overcome technical challenges, optimize their development processes, and build stronger engineering teams. From startups to enterprise organizations, my consulting delivers measurable results.",
+                "stats": [
+                    {
+                        "number": "50+",
+                        "label": "Projects Consulted"
+                    },
+                    {
+                        "number": "100+",
+                        "label": "Developers Mentored"
+                    },
+                    {
+                        "number": "25+",
+                        "label": "Companies Served"
+                    }
+                ]
+            },
+            "cta": {
+                "title": "Ready to Overcome Your Technical Challenges?",
+                "description": "Let's discuss your specific challenges and create a strategic plan to achieve your technical goals.",
+                "bookConsultation": "Book Consultation",
+                "viewAllServices": "View All Services"
+            }
         }
     },
     "notFound": {
@@ -814,7 +1802,7 @@
                 "questions": [
                     {
                         "question": "Who is Hilmar and what does he do?",
-                        "answer": "I'm Hilmar van der Veen, a senior full-stack developer with 15+ years of experience. I specialize in building scalable web applications, frontend development, design systems, and technical consulting. I help companies transform their digital presence and optimize their development processes."
+                        "answer": "I'm Hilmar van der Veen, a senior full-stack developer with 10+ years of experience. I specialize in building scalable web applications, frontend development, design systems, and technical consulting. I help companies transform their digital presence and optimize their development processes."
                     },
                     {
                         "question": "What makes your approach different?",
@@ -941,6 +1929,314 @@
             "contact": "Send Message",
             "book": "Book Consultation",
             "call": "Call Now"
+        }
+    },
+    "breadcrumb": {
+        "home": "Home",
+        "services": "Services",
+        "frontend": "Frontend Development",
+        "backend": "Backend Development",
+        "fullstack": "Full-Stack Development",
+        "designSystems": "Design Systems",
+        "consulting": "Consulting",
+        "projects": "Projects",
+        "about": "About",
+        "contact": "Contact",
+        "book": "Book Appointment",
+        "faq": "FAQ",
+        "privacy": "Privacy",
+        "blog": "Blog"
+    },
+    "booking": {
+        "meta": {
+            "title": "Book Consultation – Hilmar van der Veen | Expert Developer",
+            "description": "Book a free consultation with Hilmar van der Veen. 10+ years experience in React, Next.js, and full-stack development. Get your project started today."
+        },
+        "hero": {
+            "badge": "10+ Years Experience",
+            "title": {
+                "line1": "Let's Build",
+                "line2": "Something Amazing",
+                "line3": "Together"
+            },
+            "description": "Ready to bring your vision to life? From quick consultations to complete projects, I'm here to help you succeed with professional development solutions.",
+            "benefits": {
+                "fastDelivery": {
+                    "title": "Fast Delivery",
+                    "description": "2-8 weeks typical"
+                },
+                "fullSupport": {
+                    "title": "Full Support",
+                    "description": "Ongoing maintenance"
+                }
+            },
+            "cta": {
+                "button": "Start Your Project",
+                "freeConsultation": "Free consultation included",
+                "pricing": "€85-150/hour • Projects from €5k"
+            }
+        },
+        "pricing": {
+            "hourly": {
+                "title": "Hourly Consulting",
+                "badge": "Flexible",
+                "price": "€85-150/hour",
+                "description": "Perfect for ongoing work and quick fixes",
+                "features": [
+                    "Pay as you go",
+                    "Maximum flexibility",
+                    "€150/hour for urgent projects"
+                ]
+            },
+            "project": {
+                "title": "Fixed Projects",
+                "badge": "Popular",
+                "price": "€5k - €50k+",
+                "description": "Complete solutions with defined scope",
+                "features": [
+                    "Fixed timeline & scope",
+                    "Better value for large projects",
+                    "Comprehensive deliverables"
+                ]
+            }
+        },
+        "form": {
+            "title": "Ready to Get Started?",
+            "description": "Tell me about your project and I'll get back to you within 24 hours with a detailed proposal.",
+            "steps": {
+                "step1": {
+                    "title": "What can I help you with?",
+                    "description": "Choose the service and engagement type that best fits your needs.",
+                    "serviceType": "Service Type",
+                    "services": {
+                        "frontend": {
+                            "title": "Frontend Development",
+                            "description": "React, Next.js, Vue.js applications"
+                        },
+                        "fullstack": {
+                            "title": "Full-Stack Development",
+                            "description": "Complete web applications with backend"
+                        },
+                        "designSystem": {
+                            "title": "Design System",
+                            "description": "Component libraries and style guides"
+                        },
+                        "consultation": {
+                            "title": "Technical Consultation",
+                            "description": "Architecture review and team mentoring"
+                        }
+                    },
+                    "projectType": "Project Type",
+                    "projectTypes": {
+                        "project": {
+                            "title": "Fixed-Price Project",
+                            "description": "Complete project with defined scope and deliverables",
+                            "pricing": "€5k - €50k+",
+                            "benefits": [
+                                "Fixed timeline",
+                                "Defined scope",
+                                "Better value for larger projects"
+                            ]
+                        },
+                        "hourly": {
+                            "title": "Hourly Consulting",
+                            "description": "Flexible consulting and development work",
+                            "pricing": "€85/hour standard",
+                            "benefits": [
+                                "Maximum flexibility",
+                                "Pay as you go",
+                                "Perfect for ongoing work"
+                            ]
+                        },
+                        "hourlyUrgent": {
+                            "title": "Urgent Consulting",
+                            "description": "Rush projects with 1-2 week delivery",
+                            "pricing": "€150/hour for urgent",
+                            "benefits": [
+                                "Immediate start",
+                                "Priority support",
+                                "Fast turnaround"
+                            ]
+                        }
+                    },
+                    "popular": "Popular"
+                },
+                "step2": {
+                    "title": "Project Details",
+                    "description": "Help me understand your timeline and budget expectations.",
+                    "when": "When do you need this completed?",
+                    "whatTimeWorksBest": "What time works best for you?",
+                    "loadingSlots": "Loading available time slots...",
+                    "pleaseSelectDate": "Please select a date first to see available time slots",
+                    "noAvailableTimeSlots": "No available time slots for this date. Please choose another date.",
+                    "selectTimeSlot": "Select a time slot",
+                    "availableTimeSlots": "available time slots",
+                    "budget": "What's your budget range?",
+                    "hourlyRates": "Hourly rates",
+                    "tellAboutProject": "Tell me about your project",
+                    "describeProject": "Describe your project goals, current challenges, and what success looks like to you...",
+                    "budgets": {
+                        "project": [
+                            {
+                                "id": "5k-10k",
+                                "label": "€5k - €10k"
+                            },
+                            {
+                                "id": "10k-25k",
+                                "label": "€10k - €25k"
+                            },
+                            {
+                                "id": "25k-50k",
+                                "label": "€25k - €50k"
+                            },
+                            {
+                                "id": "50k+",
+                                "label": "€50k+"
+                            }
+                        ],
+                        "hourly": [
+                            {
+                                "id": "10-25h",
+                                "label": "10-25 hours",
+                                "estimate": "€850 - €3,750"
+                            },
+                            {
+                                "id": "25-50h",
+                                "label": "25-50 hours",
+                                "estimate": "€2,125 - €7,500"
+                            },
+                            {
+                                "id": "50-100h",
+                                "label": "50-100 hours",
+                                "estimate": "€4,250 - €15,000"
+                            },
+                            {
+                                "id": "100h+",
+                                "label": "100+ hours",
+                                "estimate": "€8,500+"
+                            }
+                        ]
+                    },
+                    "rateInfo": {
+                        "standard": "€85/hour standard rate",
+                        "urgent": "€150/hour for urgent projects"
+                    },
+                    "descriptionPlaceholder": {
+                        "base": "Describe your project goals, current challenges, and what success looks like to you...",
+                        "hourly": "\n\nFor hourly work: What specific tasks or areas do you need help with?",
+                        "project": "\n\nFor project work: What are your main requirements and expected deliverables?"
+                    }
+                },
+                "step3": {
+                    "title": "Contact Information",
+                    "description": "How can I reach you to discuss your project?",
+                    "fullName": "Full Name",
+                    "company": "Company",
+                    "email": "Email Address",
+                    "phone": "Phone Number",
+                    "fullNamePlaceholder": "Your full name",
+                    "companyPlaceholder": "Company name",
+                    "emailPlaceholder": "your@email.com",
+                    "phonePlaceholder": "+31 6 12345678"
+                },
+                "step4": {
+                    "title": "Ready to Submit",
+                    "description": "Please review your information before submitting.",
+                    "serviceType": "Service & Type",
+                    "dateTime": "Date & Time",
+                    "budget": "Budget",
+                    "contact": "Contact",
+                    "notSelected": "Not selected",
+                    "whatHappensNext": "What happens next?",
+                    "reviewRequest": "I'll review your request within 24 hours",
+                    "scheduleCall": "Schedule a free 30-minute discovery call",
+                    "provideProposal": "Provide a detailed proposal and timeline",
+                    "startBuilding": "Start building something amazing together"
+                }
+            },
+            "success": {
+                "title": "Request Submitted Successfully!",
+                "message": "Thank you, {name}! I've received your booking request and will get back to you within 24 hours with a detailed proposal.",
+                "nextSteps": {
+                    "title": "What's Next?",
+                    "steps": [
+                        "I'll review your request and prepare a tailored proposal",
+                        "We'll schedule a free 30-minute discovery call",
+                        "Start building something amazing together!"
+                    ]
+                },
+                "emailConfirmation": "You should receive a confirmation email at {email} shortly.",
+                "submitAnother": "Submit Another Request"
+            },
+            "errors": {
+                "submissionFailed": "Submission failed",
+                "generic": "Something went wrong. Please try again.",
+                "loadSlotsFailed": "Failed to load available time slots"
+            },
+            "navigation": {
+                "back": "Back",
+                "continue": "Continue",
+                "sendRequest": "Send Request",
+                "submitting": "Submitting..."
+            }
+        }
+    },
+    "footer": {
+        "about": {
+            "name": "Hilmar van der Veen",
+            "title": "Senior Full-Stack Engineer",
+            "description": "10+ years of experience building scalable web applications, smart integrations, and technical solutions for companies and entrepreneurs across Europe.",
+            "location": "Netherlands • Available for remote work",
+            "availability": "Currently accepting new projects"
+        },
+        "services": {
+            "title": "Services",
+            "items": {
+                "frontend": "Frontend Development",
+                "fullstack": "Full-Stack Solutions",
+                "designSystems": "Design Systems",
+                "consulting": "Technical Consulting"
+            },
+            "bookConsultation": "Book Consultation"
+        },
+        "quickLinks": {
+            "title": "Quick Links",
+            "items": {
+                "about": "About Me",
+                "projects": "Projects",
+                "blog": "Blog",
+                "faq": "FAQ",
+                "book": "Book Me",
+                "contact": "Contact"
+            }
+        },
+        "legal": {
+            "title": "Legal",
+            "items": {
+                "privacy": "Privacy Policy",
+                "terms": "Terms of Service",
+                "cookies": "Cookie Policy",
+                "disclaimer": "Disclaimer"
+            }
+        },
+        "contact": {
+            "title": "Get In Touch",
+            "newsletter": {
+                "title": "Stay Updated",
+                "description": "Get tech insights and project updates delivered to your inbox.",
+                "placeholder": "your@email.com"
+            },
+            "social": {
+                "title": "Connect"
+            }
+        },
+        "bottom": {
+            "copyright": "All rights reserved.",
+            "builtWith": "Built with",
+            "location": {
+                "netherlands": "Netherlands",
+                "euBased": "EU Based"
+            }
         }
     }
 }

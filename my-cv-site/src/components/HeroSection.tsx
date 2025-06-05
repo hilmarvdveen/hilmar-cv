@@ -18,8 +18,8 @@ export const HeroSection = () => {
       aria-labelledby="hero-heading"
       className="bg-[#12314e] text-gray-800 py-24 sm:py-28"
     >
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div>
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-16 items-center">
+        <div className="md:col-span-2">
           <p className="text-md text-gray-100 mb-2 tracking-widest uppercase">
             {t("hero.greeting")}
           </p>
@@ -31,6 +31,7 @@ export const HeroSection = () => {
             {t("hero.title.first")}
             <br />
             {t("hero.title.second")}
+            <br />
             <span className="text-emerald-600"> {t("hero.title.name")} </span>
           </h1>
 

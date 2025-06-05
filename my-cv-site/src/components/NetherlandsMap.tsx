@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Briefcase, Globe, MapPin, Home, Calendar, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { workHistory, WorkMode } from "../data/workHistory";
 import { ProvinceFeature, ProvinceGeoJSON } from "../models/Geo.model";
 
@@ -70,6 +71,7 @@ const workCities: CityLocation[] = [
 ];
 
 export const NetherlandsMap = () => {
+  const t = useTranslations("home.map");
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -83,6 +85,17 @@ export const NetherlandsMap = () => {
         return <Briefcase className="w-3 h-3" />;
       default:
         return <Users className="w-3 h-3" />;
+    }
+  };
+
+  const getWorkModeText = (mode: WorkMode) => {
+    switch (mode) {
+      case WorkMode.Remote:
+        return t("workMode.remote");
+      case WorkMode.OnSite:
+        return t("workMode.onSite");
+      default:
+        return t("workMode.hybrid");
     }
   };
 
@@ -191,92 +204,91 @@ export const NetherlandsMap = () => {
         .on("mouseenter touchstart", (e, d) => {
           d3.select(e.currentTarget).attr("r", cityHoverRadius);
           if (!isMobile) {
+            const companiesText =
+              d.companies.length === 1
+                ? t("legend.company")
+                : t("legend.companies");
             showTooltip(
               e,
               `
               <div class="font-medium">${d.name}</div>
-              <div class="text-sm text-gray-600">${d.companies.length} company${d.companies.length > 1 ? "ies" : ""}</div>
+              <div class="text-sm text-white">${d.companies.length} ${companiesText}</div>
             `
             );
           }
         })
-        .on("mouseleave", (e) => {
-          if (!isMobile) {
+        .on("mouseleave touchend", (e, d) => {
+          if (!selectedCity || selectedCity.name !== d.name) {
             d3.select(e.currentTarget).attr("r", cityRadius);
+          }
+          if (!isMobile) {
             hideTooltip();
           }
         })
         .on("click touchend", (e, d) => {
-          e.preventDefault();
-          e.stopPropagation();
-          d3.select(e.currentTarget).attr("r", cityRadius);
           setSelectedCity(d);
-          if (isMobile) {
-            hideTooltip();
-          }
+          svg.selectAll(".work-city").attr("r", cityRadius);
+          d3.select(e.currentTarget).attr("r", cityHoverRadius);
         });
 
-      // Draw home location with larger touch target on mobile
-      const homeRadius = isMobile ? 10 : 8;
-      const homeHoverRadius = isMobile ? 14 : 10;
-
-      const home = workCities.find((c) => c.isHome)!;
-      const [homeX, homeY] = projection(home.coordinates)!;
-
-      svg
-        .append("circle")
-        .attr("cx", homeX)
-        .attr("cy", homeY)
-        .attr("r", homeRadius)
-        .attr("fill", COLORS.danger)
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 3)
-        .style("cursor", "pointer")
-        .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
-        .on("mouseenter touchstart", (e) => {
-          d3.select(e.currentTarget).attr("r", homeHoverRadius);
-          if (!isMobile) {
-            showTooltip(
-              e,
+      // Draw home city
+      const homeCity = workCities.find((c) => c.isHome);
+      if (homeCity) {
+        svg
+          .selectAll(".home-city")
+          .data([homeCity])
+          .join("circle")
+          .attr("class", "home-city")
+          .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
+          .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
+          .attr("r", cityRadius)
+          .attr("fill", COLORS.danger)
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 2)
+          .style("cursor", "pointer")
+          .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
+          .on("mouseenter touchstart", (e, d) => {
+            d3.select(e.currentTarget).attr("r", cityHoverRadius);
+            if (!isMobile) {
+              showTooltip(
+                e,
+                `
+                <div class="font-medium">${d.name}</div>
+                <div class="text-sm text-white">${t("legend.home")}</div>
               `
-              <div class="font-medium flex items-center gap-1">
-                <span>🏠</span> ${home.name}
-              </div>
-              <div class="text-sm text-gray-600">Home Base</div>
-            `
-            );
-          }
-        })
-        .on("mouseleave", (e) => {
-          if (!isMobile) {
-            d3.select(e.currentTarget).attr("r", homeRadius);
-            hideTooltip();
-          }
-        })
-        .on("click touchend", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          d3.select(e.currentTarget).attr("r", homeRadius);
-          setSelectedCity(home);
-          if (isMobile) {
-            hideTooltip();
-          }
-        });
+              );
+            }
+          })
+          .on("mouseleave touchend", (e, d) => {
+            if (!selectedCity || selectedCity.name !== d.name) {
+              d3.select(e.currentTarget).attr("r", cityRadius);
+            }
+            if (!isMobile) {
+              hideTooltip();
+            }
+          })
+          .on("click touchend", (e, d) => {
+            setSelectedCity(d);
+            svg.selectAll(".home-city").attr("r", cityHoverRadius);
+            svg.selectAll(".work-city").attr("r", cityRadius);
+          });
+      }
     };
 
     drawMap();
 
-    // Handle window resize for mobile responsiveness
     const handleResize = () => {
       drawMap();
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [t]);
 
-  const totalCompanies = workHistory.length;
-  const totalCities = workCities.length - 1; // Exclude home
+  // Calculate stats
+  const totalCompanies = [...new Set(workCities.flatMap((c) => c.companies))]
+    .length;
+  const totalCities = workCities.length;
   const totalProvinces = highlightedRegions.length;
 
   return (
@@ -284,12 +296,12 @@ export const NetherlandsMap = () => {
       {/* SEO-friendly header */}
       <div className="text-center mb-6 md:mb-8">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
-          Work Experience Across the Netherlands
+          {t("companiesWorked")}
         </h2>
         <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Over my career, I&apos;ve worked with {totalCompanies} companies
-          across {totalCities} cities in {totalProvinces} provinces throughout
-          the Netherlands.
+          {t("workedIn")} {totalCompanies} {t("stats.companies")}{" "}
+          {t("stats.across")} {totalCities} {t("stats.cities")} {t("stats.in")}{" "}
+          {totalProvinces} {t("stats.provinces")}.
         </p>
       </div>
 
@@ -299,19 +311,25 @@ export const NetherlandsMap = () => {
           <div className="text-xl md:text-2xl font-bold text-blue-600">
             {totalCompanies}
           </div>
-          <div className="text-xs md:text-sm text-gray-600">Companies</div>
+          <div className="text-xs md:text-sm text-gray-600">
+            {t("stats.companiesLabel")}
+          </div>
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
           <div className="text-xl md:text-2xl font-bold text-emerald-600">
             {totalCities}
           </div>
-          <div className="text-xs md:text-sm text-gray-600">Cities</div>
+          <div className="text-xs md:text-sm text-gray-600">
+            {t("stats.citiesLabel")}
+          </div>
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
           <div className="text-xl md:text-2xl font-bold text-red-600">
             {totalProvinces}
           </div>
-          <div className="text-xs md:text-sm text-gray-600">Provinces</div>
+          <div className="text-xs md:text-sm text-gray-600">
+            {t("stats.provincesLabel")}
+          </div>
         </div>
       </div>
 
@@ -326,7 +344,7 @@ export const NetherlandsMap = () => {
               ref={svgRef}
               viewBox="0 0 500 425"
               className="w-full h-auto"
-              aria-label="Interactive map of the Netherlands showing work locations"
+              aria-label={t("mapAriaLabel")}
             />
 
             {/* Tooltip */}
@@ -340,15 +358,15 @@ export const NetherlandsMap = () => {
             <div className="mt-3 md:mt-4 flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-1 md:gap-2">
                 <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-full border-2 border-white shadow"></div>
-                <span>Home Location</span>
+                <span>{t("legend.home")}</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2">
                 <div className="w-3 h-3 md:w-4 md:h-4 bg-emerald-500 rounded-full border-2 border-white shadow"></div>
-                <span>Work Cities</span>
+                <span>{t("legend.city")}</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2">
                 <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-200 border border-blue-300"></div>
-                <span>Active Provinces</span>
+                <span>{t("legend.highlighted")}</span>
               </div>
             </div>
           </div>
@@ -371,8 +389,8 @@ export const NetherlandsMap = () => {
                     </h3>
                     <p className="text-xs md:text-sm text-gray-600">
                       {selectedCity.isHome
-                        ? "Home Base"
-                        : `${selectedCity.companies.length} company${selectedCity.companies.length > 1 ? "ies" : ""}`}
+                        ? t("legend.home")
+                        : `${selectedCity.companies.length} ${selectedCity.companies.length === 1 ? t("legend.company") : t("legend.companies")}`}
                     </p>
                   </div>
                 </div>
@@ -405,11 +423,7 @@ export const NetherlandsMap = () => {
                               <div className="flex items-center gap-1">
                                 {getWorkModeIcon(workEntry.mode)}
                                 <span className="text-xs">
-                                  {workEntry.mode === WorkMode.Remote
-                                    ? "Remote"
-                                    : workEntry.mode === WorkMode.OnSite
-                                      ? "On-site"
-                                      : "Hybrid"}
+                                  {getWorkModeText(workEntry.mode)}
                                 </span>
                               </div>
                             </div>
@@ -423,9 +437,7 @@ export const NetherlandsMap = () => {
             ) : (
               <div className="text-center text-gray-500 py-4 md:py-6">
                 <MapPin className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 opacity-50" />
-                <p className="text-xs md:text-sm">
-                  Tap on a location to see details
-                </p>
+                <p className="text-xs md:text-sm">{t("tapLocation")}</p>
               </div>
             )}
           </div>
@@ -433,15 +445,19 @@ export const NetherlandsMap = () => {
           {/* Quick Facts */}
           <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-xl p-4 md:p-6 mt-4 md:mt-6">
             <h3 className="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">
-              Career Highlights
+              {t("highlights.title")}
             </h3>
             <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-gray-700">
-              <li>• Based in {HOME_CITY_NAME}, Noord-Holland</li>
-              <li>• Worked across {totalProvinces} provinces</li>
-              <li>• Experience with remote, hybrid & on-site work</li>
               <li>
-                • {new Date().getFullYear() - 2016}+ years of professional
-                experience
+                • {t("highlights.basedIn")} {HOME_CITY_NAME}, Noord-Holland
+              </li>
+              <li>
+                • {t("highlights.workedAcross")} {totalProvinces}{" "}
+                {t("highlights.provinces")}
+              </li>
+              <li>• {t("highlights.experience")}</li>
+              <li>
+                • {new Date().getFullYear() - 2016}+ {t("highlights.years")}
               </li>
             </ul>
           </div>

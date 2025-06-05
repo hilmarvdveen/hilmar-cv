@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useBookingForm } from "@/contexts/BookingFormContext";
+import { useTranslations } from "next-intl";
 import {
   ChevronRight,
   ChevronLeft,
@@ -43,6 +44,8 @@ interface TimeSlot {
 }
 
 export const BookingForm = () => {
+  const t = useTranslations("booking.form");
+
   const {
     formData,
     formState,
@@ -58,29 +61,29 @@ export const BookingForm = () => {
   const services = [
     {
       id: "frontend",
-      title: "Frontend Development",
-      description: "React, Next.js, Vue.js applications",
+      title: t("steps.step1.services.frontend.title"),
+      description: t("steps.step1.services.frontend.description"),
       icon: Code,
       popular: true,
     },
     {
       id: "fullstack",
-      title: "Full-Stack Development",
-      description: "Complete web applications with backend",
+      title: t("steps.step1.services.fullstack.title"),
+      description: t("steps.step1.services.fullstack.description"),
       icon: Zap,
       popular: false,
     },
     {
       id: "design-system",
-      title: "Design System",
-      description: "Component libraries and style guides",
+      title: t("steps.step1.services.designSystem.title"),
+      description: t("steps.step1.services.designSystem.description"),
       icon: Palette,
       popular: false,
     },
     {
       id: "consultation",
-      title: "Technical Consultation",
-      description: "Architecture review and team mentoring",
+      title: t("steps.step1.services.consultation.title"),
+      description: t("steps.step1.services.consultation.description"),
       icon: Users,
       popular: false,
     },
@@ -89,52 +92,39 @@ export const BookingForm = () => {
   const projectTypes = [
     {
       id: "project",
-      title: "Fixed-Price Project",
-      description: "Complete project with defined scope and deliverables",
+      title: t("steps.step1.projectTypes.project.title"),
+      description: t("steps.step1.projectTypes.project.description"),
       icon: Briefcase,
-      pricing: "€5k - €50k+",
-      benefits: [
-        "Fixed timeline",
-        "Defined scope",
-        "Better value for larger projects",
-      ],
+      pricing: t("steps.step1.projectTypes.project.pricing"),
+      benefits: t.raw("steps.step1.projectTypes.project.benefits") as string[],
     },
     {
       id: "hourly",
-      title: "Hourly Consulting",
-      description: "Flexible consulting and development work",
+      title: t("steps.step1.projectTypes.hourly.title"),
+      description: t("steps.step1.projectTypes.hourly.description"),
       icon: Clock,
-      pricing: "€85/hour standard",
-      benefits: [
-        "Maximum flexibility",
-        "Pay as you go",
-        "Perfect for ongoing work",
-      ],
+      pricing: t("steps.step1.projectTypes.hourly.pricing"),
+      benefits: t.raw("steps.step1.projectTypes.hourly.benefits") as string[],
     },
     {
       id: "hourly-urgent",
-      title: "Urgent Consulting",
-      description: "Rush projects with 1-2 week delivery",
+      title: t("steps.step1.projectTypes.hourlyUrgent.title"),
+      description: t("steps.step1.projectTypes.hourlyUrgent.description"),
       icon: Zap,
-      pricing: "€150/hour",
-      benefits: ["Immediate start", "Priority support", "Fast turnaround"],
+      pricing: t("steps.step1.projectTypes.hourlyUrgent.pricing"),
+      benefits: t.raw(
+        "steps.step1.projectTypes.hourlyUrgent.benefits"
+      ) as string[],
       urgent: true,
     },
   ];
 
-  const projectBudgets: ProjectBudget[] = [
-    { id: "5k-10k", label: "€5k - €10k" },
-    { id: "10k-25k", label: "€10k - €25k" },
-    { id: "25k-50k", label: "€25k - €50k" },
-    { id: "50k+", label: "€50k+" },
-  ];
-
-  const hourlyBudgets: HourlyBudget[] = [
-    { id: "10-25h", label: "10-25 hours", estimate: "€850 - €3,750" },
-    { id: "25-50h", label: "25-50 hours", estimate: "€2,125 - €7,500" },
-    { id: "50-100h", label: "50-100 hours", estimate: "€4,250 - €15,000" },
-    { id: "100h+", label: "100+ hours", estimate: "€8,500+" },
-  ];
+  const projectBudgets: ProjectBudget[] = t.raw(
+    "steps.step2.budgets.project"
+  ) as ProjectBudget[];
+  const hourlyBudgets: HourlyBudget[] = t.raw(
+    "steps.step2.budgets.hourly"
+  ) as HourlyBudget[];
 
   const nextStep = () => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
@@ -251,61 +241,61 @@ ${formData.description}
   const budgetOptions = isHourlyType ? hourlyBudgets : projectBudgets;
 
   // Load available slots when date changes
-  const loadAvailableSlots = async (date: string) => {
-    if (!date) {
-      setAvailableSlots([]);
-      return;
-    }
-
-    setFormState((prev) => ({ ...prev, loadingSlots: true }));
-
-    try {
-      const response = await fetch(`/api/booking/slots?date=${date}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to load available slots");
+  const loadAvailableSlots = useCallback(
+    async (date: string, currentBookingTime: string) => {
+      if (!date) {
+        setAvailableSlots([]);
+        return;
       }
 
-      setAvailableSlots(data.slots || []);
+      setFormState((prev) => ({ ...prev, loadingSlots: true }));
 
-      // Clear selected time if it's no longer available
-      if (
-        formData.bookingTime &&
-        !data.slots.some(
-          (slot: TimeSlot) => slot.value === formData.bookingTime
-        )
-      ) {
-        updateFormData("bookingTime", "");
+      try {
+        const response = await fetch(`/api/booking/slots?date=${date}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to load available slots");
+        }
+
+        setAvailableSlots(data.slots || []);
+
+        if (
+          currentBookingTime &&
+          !data.slots.some(
+            (slot: TimeSlot) => slot.value === currentBookingTime
+          )
+        ) {
+          updateFormData("bookingTime", "");
+        }
+      } catch (error) {
+        console.error("Error loading slots:", error);
+        setAvailableSlots([]);
+        setFormState((prev) => ({
+          ...prev,
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to load available time slots",
+        }));
+      } finally {
+        setFormState((prev) => ({ ...prev, loadingSlots: false }));
       }
-    } catch (error) {
-      console.error("Error loading slots:", error);
-      setAvailableSlots([]);
-      setFormState((prev) => ({
-        ...prev,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to load available time slots",
-      }));
-    } finally {
-      setFormState((prev) => ({ ...prev, loadingSlots: false }));
-    }
-  };
+    },
+    [setAvailableSlots, setFormState, updateFormData]
+  );
 
-  // Handle date change
   const handleDateChange = (date: string) => {
     updateFormData("bookingDate", date);
     updateFormData("bookingTime", ""); // Clear selected time
-    loadAvailableSlots(date);
+    loadAvailableSlots(date, formData.bookingTime);
   };
 
-  // Load slots when component mounts and has a date
   useEffect(() => {
     if (formData.bookingDate) {
-      loadAvailableSlots(formData.bookingDate);
+      loadAvailableSlots(formData.bookingDate, formData.bookingTime);
     }
-  }, []); // Only run on mount
+  }, [formData.bookingDate, formData.bookingTime, loadAvailableSlots]);
 
   // Show success message if form was submitted successfully
   if (formState.isSubmitted) {
@@ -317,46 +307,47 @@ ${formData.description}
           </div>
 
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Request Submitted Successfully!
+            {t("success.title")}
           </h2>
 
           <p className="text-gray-600 mb-8 leading-relaxed">
-            Thank you, <strong>{formData.name}</strong>! I&apos;ve received your
-            booking request and will get back to you within 24 hours with a
-            detailed proposal.
+            {t("success.message", { name: formData.name })}
           </p>
 
           <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 mb-8">
             <h3 className="font-semibold text-emerald-900 mb-3 flex items-center justify-center">
               <Calendar className="w-5 h-5 mr-2" />
-              What&apos;s Next?
+              {t("success.nextSteps.title")}
             </h3>
             <ul className="text-emerald-700 text-sm space-y-2 text-left max-w-md mx-auto">
-              <li className="flex items-start">
-                <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                I&apos;ll review your request and prepare a tailored proposal
-              </li>
-              <li className="flex items-start">
-                <Headphones className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                We&apos;ll schedule a free 30-minute discovery call
-              </li>
-              <li className="flex items-start">
-                <Rocket className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                Start building something amazing together!
-              </li>
+              {(t.raw("success.nextSteps.steps") as string[]).map(
+                (step, index) => (
+                  <li key={index} className="flex items-start">
+                    {index === 0 && (
+                      <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
+                    )}
+                    {index === 1 && (
+                      <Headphones className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
+                    )}
+                    {index === 2 && (
+                      <Rocket className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
+                    )}
+                    {step}
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
           <div className="text-sm text-gray-500 mb-6">
-            You should receive a confirmation email at{" "}
-            <strong>{formData.email}</strong> shortly.
+            {t("success.emailConfirmation", { email: formData.email })}
           </div>
 
           <button
             onClick={resetForm}
             className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors duration-200"
           >
-            <span>Submit Another Request</span>
+            <span>{t("success.submitAnother")}</span>
           </button>
         </div>
       </div>
@@ -399,16 +390,14 @@ ${formData.description}
         {currentStep === 1 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              What can I help you with?
+              {t("steps.step1.title")}
             </h2>
-            <p className="text-gray-600 mb-8">
-              Choose the service and engagement type that best fits your needs.
-            </p>
+            <p className="text-gray-600 mb-8">{t("steps.step1.description")}</p>
 
             {/* Service Selection */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Service Type
+                {t("steps.step1.serviceType")}
               </h3>
               <div className="space-y-3">
                 {services.map((service) => {
@@ -425,7 +414,7 @@ ${formData.description}
                     >
                       {service.popular && (
                         <span className="absolute top-3 right-3 bg-emerald-600 text-white text-xs px-2 py-1 rounded-full">
-                          Popular
+                          {t("steps.step1.popular")}
                         </span>
                       )}
                       <div className="flex items-center space-x-3">
@@ -456,7 +445,7 @@ ${formData.description}
             {/* Project Type Selection */}
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Engagement Type
+                {t("steps.step1.engagementType")}
               </h3>
               <div className="space-y-4">
                 {projectTypes.map((type) => {
@@ -471,11 +460,6 @@ ${formData.description}
                           : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       }`}
                     >
-                      {type.urgent && (
-                        <span className="absolute top-4 right-4 bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-full">
-                          €150/h for urgent
-                        </span>
-                      )}
                       <div className="flex items-start space-x-4">
                         <div
                           className={`p-3 rounded-lg ${
@@ -491,9 +475,15 @@ ${formData.description}
                             <h4 className="font-semibold text-gray-900">
                               {type.title}
                             </h4>
-                            <span className="text-sm font-medium text-blue-600">
-                              {type.pricing}
-                            </span>
+                            {type.urgent ? (
+                              <span className="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-full">
+                                {type.pricing}
+                              </span>
+                            ) : (
+                              <span className="text-sm font-medium text-blue-600">
+                                {type.pricing}
+                              </span>
+                            )}
                           </div>
                           <p className="text-gray-600 text-sm mb-3">
                             {type.description}
@@ -522,20 +512,16 @@ ${formData.description}
         {currentStep === 2 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Project Details
+              {t("steps.step2.title")}
             </h2>
-            <p className="text-gray-600 mb-8">
-              Help me understand your timeline and{" "}
-              {isHourlyType ? "estimated hours" : "budget"} expectations.
-            </p>
+            <p className="text-gray-600 mb-8">{t("steps.step2.description")}</p>
 
             <div className="space-y-8">
               {/* Date */}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-4">
                   <Calendar className="w-4 h-4 inline mr-2" />
-                  When do you need this {isHourlyType ? "started" : "completed"}
-                  ?
+                  {t("steps.step2.when")}
                 </label>
                 <input
                   type="date"
@@ -550,24 +536,23 @@ ${formData.description}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-4">
                   <Clock className="w-4 h-4 inline mr-2" />
-                  What time works best for you?
+                  {t("steps.step2.whatTimeWorksBest")}
                 </label>
 
                 {formState.loadingSlots ? (
                   <div className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
                     <div className="w-5 h-5 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mr-2" />
                     <span className="text-gray-600">
-                      Loading available time slots...
+                      {t("steps.step2.loadingSlots")}
                     </span>
                   </div>
                 ) : !formData.bookingDate ? (
                   <div className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 text-center">
-                    Please select a date first to see available time slots
+                    {t("steps.step2.pleaseSelectDate")}
                   </div>
                 ) : availableSlots.length === 0 ? (
                   <div className="w-full p-4 border border-gray-300 rounded-lg bg-orange-50 text-orange-700 text-center">
-                    No available time slots for this date. Please choose another
-                    date.
+                    {t("steps.step2.noAvailableTimeSlots")}
                   </div>
                 ) : (
                   <select
@@ -577,7 +562,9 @@ ${formData.description}
                     }
                     className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
                   >
-                    <option value="">-- Select a time slot --</option>
+                    <option value="">
+                      -- {t("steps.step2.selectTimeSlot")} --
+                    </option>
                     {availableSlots.map((slot) => (
                       <option key={slot.value} value={slot.value}>
                         {slot.label}
@@ -588,9 +575,8 @@ ${formData.description}
 
                 {availableSlots.length > 0 && (
                   <p className="mt-2 text-sm text-gray-600">
-                    {availableSlots.length} available time slot
-                    {availableSlots.length !== 1 ? "s" : ""} for{" "}
-                    {formData.bookingDate}
+                    {availableSlots.length}{" "}
+                    {t("steps.step2.availableTimeSlots")}
                   </p>
                 )}
               </div>
@@ -599,9 +585,7 @@ ${formData.description}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-4">
                   <Euro className="w-4 h-4 inline mr-2" />
-                  {isHourlyType
-                    ? "Estimated hours needed?"
-                    : "What's your budget range?"}
+                  {t("steps.step2.budget")}
                 </label>
                 <div className="grid grid-cols-1 gap-3">
                   {budgetOptions.map((budget) => (
@@ -629,10 +613,10 @@ ${formData.description}
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                     <p className="text-sm text-blue-700">
                       <Clock className="w-4 h-4 inline mr-1" />
-                      <strong>Hourly rates:</strong>{" "}
+                      <strong>{t("steps.step2.hourlyRates")}:</strong>{" "}
                       {isUrgentType
-                        ? "€150/hour for urgent projects"
-                        : "€85/hour standard rate"}
+                        ? t("steps.step2.rateInfo.urgent")
+                        : t("steps.step2.rateInfo.standard")}
                     </p>
                   </div>
                 )}
@@ -642,17 +626,17 @@ ${formData.description}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-4">
                   <MessageSquare className="w-4 h-4 inline mr-2" />
-                  Tell me about your project
+                  {t("steps.step2.tellAboutProject")}
                 </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) =>
                     updateFormData("description", e.target.value)
                   }
-                  placeholder={`Describe your project goals, current challenges, and what success looks like to you...${
+                  placeholder={`${t("steps.step2.descriptionPlaceholder.base")}${
                     isHourlyType
-                      ? "\n\nFor hourly work: What specific tasks or areas do you need help with?"
-                      : "\n\nFor project work: What are your main requirements and expected deliverables?"
+                      ? t("steps.step2.descriptionPlaceholder.hourly")
+                      : t("steps.step2.descriptionPlaceholder.project")
                   }`}
                   className="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
                 />
@@ -665,39 +649,37 @@ ${formData.description}
         {currentStep === 3 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Contact Information
+              {t("steps.step3.title")}
             </h2>
-            <p className="text-gray-600 mb-8">
-              How can I reach you to discuss your project?
-            </p>
+            <p className="text-gray-600 mb-8">{t("steps.step3.description")}</p>
 
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-3">
                     <User className="w-4 h-4 inline mr-2" />
-                    Full Name *
+                    {t("steps.step3.fullName")} *
                   </label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => updateFormData("name", e.target.value)}
                     className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                    placeholder="Your full name"
+                    placeholder={t("steps.step3.fullNamePlaceholder")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-3">
                     <Building className="w-4 h-4 inline mr-2" />
-                    Company
+                    {t("steps.step3.company")}
                   </label>
                   <input
                     type="text"
                     value={formData.company}
                     onChange={(e) => updateFormData("company", e.target.value)}
                     className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                    placeholder="Company name"
+                    placeholder={t("steps.step3.companyPlaceholder")}
                   />
                 </div>
               </div>
@@ -705,28 +687,28 @@ ${formData.description}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-3">
                   <Mail className="w-4 h-4 inline mr-2" />
-                  Email Address *
+                  {t("steps.step3.email")} *
                 </label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => updateFormData("email", e.target.value)}
                   className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                  placeholder="your@email.com"
+                  placeholder={t("steps.step3.emailPlaceholder")}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-3">
                   <Phone className="w-4 h-4 inline mr-2" />
-                  Phone Number
+                  {t("steps.step3.phone")}
                 </label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => updateFormData("phone", e.target.value)}
                   className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                  placeholder="+31 6 12345678"
+                  placeholder={t("steps.step3.phonePlaceholder")}
                 />
               </div>
             </div>
@@ -737,18 +719,16 @@ ${formData.description}
         {currentStep === 4 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Ready to Submit
+              {t("steps.step4.title")}
             </h2>
-            <p className="text-gray-600 mb-8">
-              Please review your information before submitting.
-            </p>
+            <p className="text-gray-600 mb-8">{t("steps.step4.description")}</p>
 
             <div className="space-y-6">
               {/* Summary */}
               <div className="bg-gray-50 rounded-lg p-6 space-y-4">
                 <div>
                   <h3 className="font-semibold text-gray-900">
-                    Service & Type
+                    {t("steps.step4.serviceType")}
                   </h3>
                   <p className="text-gray-600">
                     {services.find((s) => s.id === formData.service)?.title} •{" "}
@@ -760,7 +740,9 @@ ${formData.description}
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900">Date & Time</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {t("steps.step4.dateTime")}
+                  </h3>
                   <p className="text-gray-600">
                     {formData.bookingDate && formData.bookingTime ? (
                       <>
@@ -778,21 +760,25 @@ ${formData.description}
                         )}
                       </>
                     ) : (
-                      "Not selected"
+                      t("steps.step4.notSelected")
                     )}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900">Budget</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {t("steps.step4.budget")}
+                  </h3>
                   <p className="text-gray-600">
                     {budgetOptions.find((b) => b.id === formData.budget)
-                      ?.label || "Not selected"}
+                      ?.label || t("steps.step4.notSelected")}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900">Contact</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {t("steps.step4.contact")}
+                  </h3>
                   <p className="text-gray-600">
                     {formData.name} • {formData.email}
                   </p>
@@ -802,24 +788,24 @@ ${formData.description}
               <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
                 <h3 className="font-semibold text-emerald-900 mb-2 flex items-center">
                   <Rocket className="w-5 h-5 mr-2" />
-                  What happens next?
+                  {t("steps.step4.whatHappensNext")}
                 </h3>
                 <ul className="text-emerald-700 text-sm space-y-2">
                   <li className="flex items-start">
                     <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    I&apos;ll review your request within 24 hours
+                    {t("steps.step4.reviewRequest")}
                   </li>
                   <li className="flex items-start">
                     <Headphones className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    Schedule a free 30-minute discovery call
+                    {t("steps.step4.scheduleCall")}
                   </li>
                   <li className="flex items-start">
                     <Star className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    Provide a detailed proposal and timeline
+                    {t("steps.step4.provideProposal")}
                   </li>
                   <li className="flex items-start">
                     <Shield className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    Start building something amazing together
+                    {t("steps.step4.startBuilding")}
                   </li>
                 </ul>
               </div>
@@ -834,7 +820,7 @@ ${formData.description}
           <div className="flex items-center space-x-2">
             <div className="w-5 h-5 text-red-600">⚠️</div>
             <div className="text-red-800">
-              <p className="font-medium">Submission failed</p>
+              <p className="font-medium">{t("errors.submissionFailed")}</p>
               <p className="text-sm">{formState.error}</p>
             </div>
           </div>
@@ -853,7 +839,7 @@ ${formData.description}
           }`}
         >
           <ChevronLeft className="w-4 h-4" />
-          <span>Back</span>
+          <span>{t("navigation.back")}</span>
         </button>
 
         {currentStep < 4 ? (
@@ -866,7 +852,7 @@ ${formData.description}
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
-            <span>Continue</span>
+            <span>{t("navigation.continue")}</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         ) : (
@@ -882,11 +868,11 @@ ${formData.description}
             {formState.isSubmitting ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Submitting...</span>
+                <span>{t("navigation.submitting")}</span>
               </>
             ) : (
               <>
-                <span>Send Request</span>
+                <span>{t("navigation.sendRequest")}</span>
                 <Check className="w-4 h-4" />
               </>
             )}

@@ -80,7 +80,7 @@ export const homepageSEO = (locale: string): SEOPageConfig => ({
 export const servicesSEO = (locale: string): SEOPageConfig => ({
   seo: {
     title: "Frontend Development Services | React, Next.js, Angular Expert",
-    description: "Professional frontend development services in React, Next.js, Angular, and TypeScript. Full-stack solutions, design systems, and technical consulting. 15+ years experience in the Netherlands.",
+    description: "Professional frontend development services in React, Next.js, Angular, and TypeScript. Full-stack solutions, design systems, and technical consulting. 10+ years experience in the Netherlands.",
     keywords: [
       "Frontend Development Services",
       "React Development Netherlands",

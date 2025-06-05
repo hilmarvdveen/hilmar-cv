@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Send, Loader2 } from "lucide-react";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
@@ -69,99 +70,153 @@ export default function ContactForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-[#f1f5f9] p-6 rounded-lg shadow space-y-6"
-    >
-      <h2 className="text-xl font-semibold">{t("form.title")}</h2>
-
-      <div>
-        <p className="text-sm font-medium text-gray-800 mb-2">
-          {t("form.interestsLabel")}
+    <div className="max-w-2xl mx-auto">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          {t("form.title")}
+        </h2>
+        <p className="text-lg text-gray-600 max-w-lg mx-auto">
+          {t("form.description")}
         </p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {interestTags.map((tag) => (
-            <button
-              key={tag}
-              type="button"
-              onClick={() => toggleTag(tag)}
-              className={`px-4 py-1 rounded-full text-sm font-medium transition ${
-                selectedTags.includes(tag)
-                  ? "bg-emerald-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+      </div>
+
+      {/* Form Container */}
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+        <form onSubmit={handleSubmit} className="p-8 space-y-8" noValidate>
+          {/* Interest Tags */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-4">
+              {t("form.interestsLabel")}
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {interestTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => toggleTag(tag)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 ${
+                    selectedTags.includes(tag)
+                      ? "bg-emerald-600 border-emerald-600 text-white shadow-md hover:bg-emerald-700 hover:border-emerald-700"
+                      : "bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50"
+                  }`}
+                  aria-pressed={selectedTags.includes(tag)}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Form Fields */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Name Field */}
+            <div>
+              <label
+                htmlFor="contact-name"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+              >
+                {t("form.name")}
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                type="text"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
+                required
+                aria-required="true"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div>
+              <label
+                htmlFor="contact-email"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+              >
+                {t("form.email")}
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="email"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
+                required
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          {/* Message Field */}
+          <div>
+            <label
+              htmlFor="contact-message"
+              className="block text-sm font-semibold text-gray-900 mb-3"
             >
-              {tag}
-            </button>
-          ))}
-        </div>
+              {t("form.message")}
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={6}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200 resize-none"
+              required
+              aria-required="true"
+            />
+          </div>
+
+          {/* Status Messages */}
+          {successMessage && (
+            <div
+              className="bg-emerald-50 border-2 border-emerald-200 text-emerald-800 px-6 py-4 rounded-xl text-center font-medium"
+              role="alert"
+              aria-live="polite"
+            >
+              {successMessage}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div
+              className="bg-red-50 border-2 border-red-200 text-red-800 px-6 py-4 rounded-xl text-center font-medium"
+              role="alert"
+              aria-live="assertive"
+            >
+              {errorMessage}
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
+              isSubmitting
+                ? "bg-gray-300 cursor-not-allowed text-gray-600"
+                : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            }`}
+            aria-describedby={isSubmitting ? "submit-status" : undefined}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
+                <span id="submit-status">{t("form.sending")}</span>
+              </>
+            ) : (
+              <>
+                <Send className="w-5 h-5" aria-hidden="true" />
+                {t("form.submit")}
+              </>
+            )}
+          </button>
+        </form>
       </div>
-
-      <div>
-        <label className="sr-only" htmlFor="name">
-          {t("form.name")}
-        </label>
-        <input
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          type="text"
-          placeholder={t("form.name")}
-          className="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-600"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="sr-only" htmlFor="email">
-          {t("form.email")}
-        </label>
-        <input
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          type="email"
-          placeholder={t("form.email")}
-          className="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-600"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="sr-only" htmlFor="message">
-          {t("form.message")}
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder={t("form.message")}
-          className="w-full border border-gray-300 rounded px-4 py-2 text-sm h-32 resize-none focus:ring-2 focus:ring-emerald-600"
-          required
-        />
-      </div>
-
-      {successMessage && (
-        <p className="text-green-600 text-sm font-medium">{successMessage}</p>
-      )}
-      {errorMessage && (
-        <p className="text-red-600 text-sm font-medium">{errorMessage}</p>
-      )}
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className={`w-full font-semibold py-2 rounded transition ${
-          isSubmitting
-            ? "bg-emerald-300 cursor-not-allowed"
-            : "bg-emerald-600 hover:bg-emerald-500 text-white"
-        }`}
-      >
-        {isSubmitting ? t("form.sending") : t("form.submit")}
-      </button>
-    </form>
+    </div>
   );
 }

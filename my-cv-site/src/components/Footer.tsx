@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Mail,
   Phone,
@@ -17,27 +18,45 @@ import {
 } from "lucide-react";
 
 export const Footer = () => {
+  const t = useTranslations("footer");
+
   const services = [
-    { name: "Frontend Development", icon: Code, href: "/services/frontend" },
-    { name: "Full-Stack Solutions", icon: Zap, href: "/services/fullstack" },
-    { name: "Design Systems", icon: Palette, href: "/services/design-systems" },
-    { name: "Technical Consulting", icon: Users, href: "/services/consulting" },
+    {
+      name: t("services.items.frontend"),
+      icon: Code,
+      href: "/services/frontend",
+    },
+    {
+      name: t("services.items.fullstack"),
+      icon: Zap,
+      href: "/services/fullstack",
+    },
+    {
+      name: t("services.items.designSystems"),
+      icon: Palette,
+      href: "/services/design-systems",
+    },
+    {
+      name: t("services.items.consulting"),
+      icon: Users,
+      href: "/services/consulting",
+    },
   ];
 
   const quickLinks = [
-    { name: "About Me", href: "/about" },
-    { name: "Projects", href: "/projects" },
-    { name: "Blog", href: "/blog" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Book Me", href: "/book" },
-    { name: "Contact", href: "/contact" },
+    { name: t("quickLinks.items.about"), href: "/about" },
+    { name: t("quickLinks.items.projects"), href: "/projects" },
+    { name: t("quickLinks.items.blog"), href: "/blog" },
+    { name: t("quickLinks.items.faq"), href: "/faq" },
+    { name: t("quickLinks.items.book"), href: "/book" },
+    { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 
   const legalLinks = [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
-    { name: "Disclaimer", href: "/disclaimer" },
+    { name: t("legal.items.privacy"), href: "/privacy" },
+    { name: t("legal.items.terms"), href: "/terms" },
+    { name: t("legal.items.cookies"), href: "/cookies" },
+    { name: t("legal.items.disclaimer"), href: "/disclaimer" },
   ];
 
   const socialLinks = [
@@ -74,35 +93,33 @@ export const Footer = () => {
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg">
-                  Hilmar van der Veen
+                  {t("about.name")}
                 </h3>
-                <p className="text-emerald-400 text-sm">
-                  Senior Full-Stack Engineer
-                </p>
+                <p className="text-emerald-400 text-sm">{t("about.title")}</p>
               </div>
             </div>
 
             <p className="text-gray-400 mb-6 leading-relaxed">
-              15+ years of experience building scalable web applications, smart
-              integrations, and technical solutions for companies and
-              entrepreneurs across Europe.
+              {t("about.description")}
             </p>
 
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Netherlands • Available for remote work</span>
+                <span>{t("about.location")}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Calendar className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Currently accepting new projects</span>
+                <span>{t("about.availability")}</span>
               </div>
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Services</h4>
+            <h4 className="font-semibold text-white mb-6">
+              {t("services.title")}
+            </h4>
             <ul className="space-y-4">
               {services.map((service) => {
                 const Icon = service.icon;
@@ -127,14 +144,16 @@ export const Footer = () => {
                 className="inline-flex items-center space-x-2 bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-500 transition-all duration-200 hover:scale-105"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Book Consultation</span>
+                <span>{t("services.bookConsultation")}</span>
               </Link>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Quick Links</h4>
+            <h4 className="font-semibold text-white mb-6">
+              {t("quickLinks.title")}
+            </h4>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -149,7 +168,9 @@ export const Footer = () => {
             </ul>
 
             <div className="mt-8">
-              <h5 className="font-medium text-white mb-4">Legal</h5>
+              <h5 className="font-medium text-white mb-4">
+                {t("legal.title")}
+              </h5>
               <ul className="space-y-3">
                 {legalLinks.map((link) => (
                   <li key={link.name}>
@@ -167,7 +188,9 @@ export const Footer = () => {
 
           {/* Contact & Newsletter */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Get In Touch</h4>
+            <h4 className="font-semibold text-white mb-6">
+              {t("contact.title")}
+            </h4>
 
             <div className="space-y-4 mb-8">
               <a
@@ -189,15 +212,17 @@ export const Footer = () => {
 
             {/* Newsletter Signup */}
             <div className="bg-emerald-900/20 rounded-lg p-6 mb-8">
-              <h5 className="font-medium text-white mb-2">Stay Updated</h5>
+              <h5 className="font-medium text-white mb-2">
+                {t("contact.newsletter.title")}
+              </h5>
               <p className="text-gray-400 text-sm mb-4">
-                Get tech insights and project updates delivered to your inbox.
+                {t("contact.newsletter.description")}
               </p>
-              <form className="flex">
+              <form className="flex" suppressHydrationWarning={true}>
                 <input
                   type="email"
                   name="newsletter-email"
-                  placeholder="your@email.com"
+                  placeholder={t("contact.newsletter.placeholder")}
                   className="flex-1 px-4 py-2 bg-white/10 border border-emerald-600/30 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
                 />
                 <button
@@ -211,7 +236,9 @@ export const Footer = () => {
 
             {/* Social Links */}
             <div>
-              <h5 className="font-medium text-white mb-4">Connect</h5>
+              <h5 className="font-medium text-white mb-4">
+                {t("contact.social.title")}
+              </h5>
               <div className="flex space-x-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
@@ -239,12 +266,12 @@ export const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Hilmar van der Veen. All rights
-              reserved.
+              © {new Date().getFullYear()} {t("about.name")}.{" "}
+              {t("bottom.copyright")}
             </div>
 
             <div className="flex items-center space-x-6 text-sm">
-              <span className="text-gray-500">Built with</span>
+              <span className="text-gray-500">{t("bottom.builtWith")}</span>
               <div className="flex items-center space-x-2">
                 <span className="text-emerald-400">Next.js</span>
                 <span className="text-gray-500">•</span>
@@ -255,9 +282,9 @@ export const Footer = () => {
             </div>
 
             <div className="flex items-center space-x-4 text-sm text-gray-500">
-              <span>🇳🇱 Netherlands</span>
+              <span>🇳🇱 {t("bottom.location.netherlands")}</span>
               <span>•</span>
-              <span>🇪🇺 EU Based</span>
+              <span>🇪🇺 {t("bottom.location.euBased")}</span>
             </div>
           </div>
         </div>

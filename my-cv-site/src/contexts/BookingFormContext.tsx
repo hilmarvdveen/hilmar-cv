@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 
 interface BookingFormData {
   service: string;
@@ -116,11 +122,14 @@ export function BookingFormProvider({
     }
   }, [formData, currentStep, isInitialized]);
 
-  const updateFormData = (field: keyof BookingFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  const updateFormData = useCallback(
+    (field: keyof BookingFormData, value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData(initialFormData);
     setFormState(initialFormState);
     setCurrentStep(1);
@@ -133,7 +142,7 @@ export function BookingFormProvider({
         error
       );
     }
-  };
+  }, []);
 
   const contextValue: BookingFormContextType = {
     formData,

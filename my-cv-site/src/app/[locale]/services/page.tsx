@@ -1,25 +1,21 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { ServicesHero } from "@/components/ServicesHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import Link from "next/link";
 import {
-  Code,
-  Zap,
-  Palette,
-  Users,
   ArrowRight,
   CheckCircle,
-  Star,
-  Clock,
-  Globe,
+  Code,
+  Palette,
+  Users,
+  Zap,
 } from "lucide-react";
 import { PageSEO } from "@/components/SEO/PageSEO";
-import { servicesSEO } from "@/lib/seo.pages";
-import {
-  generateSEOMetadata,
-  generateStructuredData,
-} from "@/lib/generateSEOMetadata";
+import { generateStructuredData } from "@/lib/generateSEOMetadata";
 import { siteConfig } from "@/lib/seo.config";
+import { servicesSEO } from "@/lib/seo.pages";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -27,13 +23,18 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const config = servicesSEO(locale);
-  return generateSEOMetadata(locale, config);
+  const t = await getTranslations({ locale, namespace: "services" });
+
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+  };
 }
 
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("services");
 
   const config = servicesSEO(locale);
   const currentUrl = `${siteConfig.url}/${locale}/services`;
@@ -42,12 +43,10 @@ export default async function ServicesPage({ params }: Props) {
   const services = [
     {
       id: "frontend",
-      title: "Frontend Development",
+      title: t("main.services.frontend.title"),
       icon: Code,
-      shortDescription:
-        "Modern, responsive user interfaces that engage users and drive conversions.",
-      fullDescription:
-        "I specialize in building high-performance frontend applications using React, Next.js, Vue.js, and modern JavaScript. From interactive dashboards to e-commerce platforms, I create user experiences that are both beautiful and functional.",
+      shortDescription: t("main.services.frontend.shortDescription"),
+      fullDescription: t("main.services.frontend.fullDescription"),
       technologies: [
         "React",
         "Next.js",
@@ -56,24 +55,17 @@ export default async function ServicesPage({ params }: Props) {
         "Tailwind CSS",
         "Redux",
       ],
-      benefits: [
-        "Mobile-first responsive design",
-        "SEO optimized architecture",
-        "Lightning-fast performance",
-        "Accessibility compliant (WCAG 2.1)",
-      ],
+      benefits: t.raw("main.services.frontend.benefits.items") as string[],
       href: "/services/frontend",
       color: "bg-blue-500",
       accent: "text-blue-600",
     },
     {
       id: "fullstack",
-      title: "Full-Stack Solutions",
+      title: t("main.services.fullstack.title"),
       icon: Zap,
-      shortDescription:
-        "Complete web applications with robust backend architecture and seamless integrations.",
-      fullDescription:
-        "End-to-end development of scalable web applications. I handle everything from database design and API development to frontend implementation and deployment, ensuring your application performs reliably at scale.",
+      shortDescription: t("main.services.fullstack.shortDescription"),
+      fullDescription: t("main.services.fullstack.fullDescription"),
       technologies: [
         "Node.js",
         "Express",
@@ -82,24 +74,17 @@ export default async function ServicesPage({ params }: Props) {
         "AWS",
         "Docker",
       ],
-      benefits: [
-        "Scalable architecture design",
-        "API development & integration",
-        "Database optimization",
-        "Cloud deployment & DevOps",
-      ],
+      benefits: t.raw("main.services.fullstack.benefits.items") as string[],
       href: "/services/fullstack",
       color: "bg-emerald-500",
       accent: "text-emerald-600",
     },
     {
       id: "design-systems",
-      title: "Design Systems",
+      title: t("main.services.designSystems.title"),
       icon: Palette,
-      shortDescription:
-        "Consistent, scalable component libraries that streamline development and enhance user experience.",
-      fullDescription:
-        "I create comprehensive design systems and component libraries that ensure consistency across your digital products. From style guides to reusable React components, I help teams build faster and maintain brand coherence.",
+      shortDescription: t("main.services.designSystems.shortDescription"),
+      fullDescription: t("main.services.designSystems.fullDescription"),
       technologies: [
         "Storybook",
         "Figma",
@@ -108,24 +93,17 @@ export default async function ServicesPage({ params }: Props) {
         "Sass",
         "Design Tokens",
       ],
-      benefits: [
-        "Improved development velocity",
-        "Consistent brand experience",
-        "Reduced design debt",
-        "Enhanced team collaboration",
-      ],
+      benefits: t.raw("main.services.designSystems.benefits.items") as string[],
       href: "/services/design-systems",
       color: "bg-purple-500",
       accent: "text-purple-600",
     },
     {
       id: "consulting",
-      title: "Technical Consulting",
+      title: t("main.services.consulting.title"),
       icon: Users,
-      shortDescription:
-        "Strategic technical guidance, code reviews, and team mentoring from 15+ years of experience.",
-      fullDescription:
-        "Leverage my extensive experience to solve complex technical challenges. I provide architecture reviews, performance optimization, team mentoring, and strategic guidance to help your projects succeed and your team grow.",
+      shortDescription: t("main.services.consulting.shortDescription"),
+      fullDescription: t("main.services.consulting.fullDescription"),
       technologies: [
         "Architecture Review",
         "Performance Audit",
@@ -133,12 +111,7 @@ export default async function ServicesPage({ params }: Props) {
         "Team Training",
         "Process Optimization",
       ],
-      benefits: [
-        "Reduced technical debt",
-        "Improved team productivity",
-        "Optimized performance",
-        "Strategic technology decisions",
-      ],
+      benefits: t.raw("main.services.consulting.benefits.items") as string[],
       href: "/services/consulting",
       color: "bg-orange-500",
       accent: "text-orange-600",
@@ -150,71 +123,17 @@ export default async function ServicesPage({ params }: Props) {
       <PageSEO structuredData={structuredData} />
 
       <div className="bg-gray-50">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 text-white py-20">
-          <div className="max-w-7xl mx-auto px-6">
-            <Breadcrumb
-              items={[{ label: "Services", translationKey: "nav.services" }]}
-            />
-
-            <header className="max-w-4xl">
-              <div className="flex items-center space-x-3 mb-6">
-                <Star className="w-6 h-6 text-emerald-300" />
-                <span className="text-emerald-300 font-medium">
-                  15+ Years Experience
-                </span>
-              </div>
-
-              <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-                Frontend Development Services
-                <br />
-                <span className="text-emerald-300">That Drive Results</span>
-              </h1>
-
-              <p className="text-xl text-emerald-100 mb-8 max-w-3xl leading-relaxed">
-                From concept to delivery, I provide comprehensive technical
-                solutions that help companies and entrepreneurs build scalable,
-                successful digital products using React, Next.js, and Angular.
-              </p>
-
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="flex items-center space-x-3">
-                  <Globe className="w-5 h-5 text-emerald-300" />
-                  <span className="text-emerald-100">Remote & On-site</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Clock className="w-5 h-5 text-emerald-300" />
-                  <span className="text-emerald-100">Flexible Engagement</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-emerald-300" />
-                  <span className="text-emerald-100">Proven Track Record</span>
-                </div>
-              </div>
-
-              <Link
-                href="/book"
-                className="inline-flex items-center space-x-2 bg-white text-emerald-700 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-              >
-                <span>Get Started</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </header>
-          </div>
-        </section>
-
+        <ServicesHero />
+        <Breadcrumb />
         {/* Services Grid */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-6">
             <header className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Comprehensive Web Development Services
+                {t("main.title")}
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Whether you need a complete application, frontend expertise, or
-                strategic guidance, I have the experience to deliver exceptional
-                results using modern technologies like React, Next.js, and
-                TypeScript.
+                {t("main.description")}
               </p>
             </header>
 
@@ -249,7 +168,7 @@ export default async function ServicesPage({ params }: Props) {
                     {/* Technologies */}
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-900 mb-3">
-                        Technologies & Tools
+                        {t("main.services.frontend.technologies.title")}
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {service.technologies.map((tech) => (
@@ -266,12 +185,12 @@ export default async function ServicesPage({ params }: Props) {
                     {/* Benefits */}
                     <div className="mb-8">
                       <h4 className="font-semibold text-gray-900 mb-3">
-                        Key Benefits
+                        {t("main.services.frontend.benefits.title")}
                       </h4>
                       <ul className="space-y-2">
-                        {service.benefits.map((benefit) => (
+                        {service.benefits.map((benefit, index) => (
                           <li
-                            key={benefit}
+                            key={index}
                             className="flex items-center space-x-2"
                           >
                             <CheckCircle
@@ -287,7 +206,7 @@ export default async function ServicesPage({ params }: Props) {
                       href={service.href}
                       className={`group inline-flex items-center space-x-2 ${service.accent} font-semibold hover:underline`}
                     >
-                      <span>Learn More</span>
+                      <span>{t("main.learnMore")}</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                     </Link>
                   </div>
@@ -301,11 +220,10 @@ export default async function ServicesPage({ params }: Props) {
         <section className="bg-gray-900 py-20">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Ready to Start Your Project?
+              {t("finalCta.title")}
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let&apos;s discuss your needs and find the perfect solution for
-              your business goals.
+              {t("finalCta.description")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -313,7 +231,7 @@ export default async function ServicesPage({ params }: Props) {
                 href="/book"
                 className="inline-flex items-center justify-center space-x-2 bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
-                <span>Book Consultation</span>
+                <span>{t("finalCta.bookConsultation")}</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
 
@@ -321,7 +239,7 @@ export default async function ServicesPage({ params }: Props) {
                 href="/contact"
                 className="inline-flex items-center justify-center space-x-2 border-2 border-emerald-600 text-emerald-400 px-8 py-4 rounded-lg font-bold hover:bg-emerald-600 hover:text-white transition-all duration-300"
               >
-                <span>Get In Touch</span>
+                <span>{t("finalCta.getInTouch")}</span>
               </Link>
             </div>
           </div>

@@ -65,7 +65,7 @@ Implemented comprehensive branding setup using your logo across all touchpoints 
 │  ┌───┐    Hilmar van der Veen                          │
 │  │ L │    Senior Frontend Developer                     │
 │  │ O │    React • Next.js • Angular • TypeScript       │
-│  │ G │    15+ Years Experience • Netherlands            │
+│  │ G │    10+ Years Experience • Netherlands            │
 │  │ O │    hilmarvanderveen.com                          │
 │  └───┘                                                  │
 │                                                         │

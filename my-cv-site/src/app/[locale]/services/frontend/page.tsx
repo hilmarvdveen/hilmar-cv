@@ -1,3 +1,6 @@
+import { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import {
@@ -15,171 +18,79 @@ import {
   Calendar,
 } from "lucide-react";
 
-export default function FrontendDevelopmentPage() {
-  const technologies = [
-    {
-      name: "React",
-      description: "Component-based UI library",
-      level: "Expert",
-    },
-    {
-      name: "Next.js",
-      description: "Full-stack React framework",
-      level: "Expert",
-    },
-    {
-      name: "Vue.js",
-      description: "Progressive JavaScript framework",
-      level: "Advanced",
-    },
-    {
-      name: "TypeScript",
-      description: "Type-safe JavaScript",
-      level: "Expert",
-    },
-    {
-      name: "Tailwind CSS",
-      description: "Utility-first CSS framework",
-      level: "Expert",
-    },
-    {
-      name: "Redux/Zustand",
-      description: "State management",
-      level: "Advanced",
-    },
-  ];
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-  const processes = [
-    {
-      title: "Discovery & Planning",
-      description:
-        "Understanding your users, business goals, and technical requirements",
-      icon: Search,
-      details: [
-        "User research and personas",
-        "Technical architecture planning",
-        "Performance budget definition",
-        "Accessibility requirements",
-      ],
-    },
-    {
-      title: "Design System Creation",
-      description: "Building consistent, scalable design foundations",
-      icon: Palette,
-      details: [
-        "Component library development",
-        "Design token implementation",
-        "Style guide creation",
-        "Brand consistency guidelines",
-      ],
-    },
-    {
-      title: "Development & Testing",
-      description: "Building robust, performant frontend applications",
-      icon: Code,
-      details: [
-        "Component-driven development",
-        "Cross-browser testing",
-        "Performance optimization",
-        "Accessibility compliance",
-      ],
-    },
-    {
-      title: "Deployment & Optimization",
-      description: "Launching and continuously improving your application",
-      icon: Zap,
-      details: [
-        "CI/CD pipeline setup",
-        "Performance monitoring",
-        "SEO optimization",
-        "Analytics integration",
-      ],
-    },
-  ];
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "services.frontend" });
 
-  const benefits = [
-    {
-      icon: Smartphone,
-      title: "Mobile-First Design",
-      description:
-        "Responsive layouts that work flawlessly across all devices and screen sizes",
-    },
-    {
-      icon: Zap,
-      title: "Lightning Performance",
-      description:
-        "Optimized for speed with lazy loading, code splitting, and efficient bundling",
-    },
-    {
-      icon: Eye,
-      title: "Accessibility Focus",
-      description:
-        "WCAG 2.1 compliant interfaces that work for users with all abilities",
-    },
-    {
-      icon: Search,
-      title: "SEO Optimized",
-      description:
-        "Built with search engine optimization and discoverability in mind",
-    },
-    {
-      icon: Users,
-      title: "User-Centered",
-      description:
-        "Interfaces designed with user experience and conversion optimization as priorities",
-    },
-    {
-      icon: BarChart3,
-      title: "Analytics Ready",
-      description:
-        "Integrated tracking and analytics to measure success and user behavior",
-    },
-  ];
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+  };
+}
+
+export default async function FrontendDevelopmentPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "services.frontend" });
+
+  const technologies = t.raw("technologies.items") as Array<{
+    name: string;
+    description: string;
+    level: string;
+  }>;
+
+  const processes = t.raw("process.steps") as Array<{
+    title: string;
+    description: string;
+    details: string[];
+  }>;
+
+  const benefits = t.raw("benefits.items") as Array<{
+    title: string;
+    description: string;
+  }>;
+
+  const benefitIcons = [Smartphone, Zap, Eye, Search, Users, BarChart3];
+  const processIcons = [Search, Palette, Code, Zap];
 
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <Breadcrumb
-            items={[
-              { label: "Services", href: "/services" },
-              { label: "Frontend Development" },
-            ]}
-          />
-
           <div className="max-w-4xl">
             <div className="flex items-center space-x-3 mb-6">
               <Code className="w-8 h-8 text-blue-300" />
               <span className="text-blue-300 font-medium">
-                Frontend Development
+                {t("hero.badge")}
               </span>
             </div>
 
             <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              Modern Frontend
+              {t("hero.title")}
               <br />
-              <span className="text-blue-300">That Converts</span>
+              <span className="text-blue-300">{t("hero.titleAccent")}</span>
             </h1>
 
             <p className="text-xl text-blue-100 mb-8 max-w-3xl leading-relaxed">
-              I build high-performance, user-centered frontend applications
-              using React, Next.js, and modern JavaScript. From interactive
-              dashboards to e-commerce platforms, I create experiences that
-              engage users and drive business results.
+              {t("hero.description")}
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="flex items-center space-x-3">
-                <Globe className="w-5 h-5 text-blue-300" />
-                <span className="text-blue-100">
-                  Cross-platform compatibility
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Zap className="w-5 h-5 text-blue-300" />
-                <span className="text-blue-100">Optimized performance</span>
-              </div>
+              {(t.raw("hero.features") as string[]).map((feature, index) => (
+                <div key={index} className="flex items-center space-x-3">
+                  {index === 0 ? (
+                    <Globe className="w-5 h-5 text-blue-300" />
+                  ) : (
+                    <Zap className="w-5 h-5 text-blue-300" />
+                  )}
+                  <span className="text-blue-100">{feature}</span>
+                </div>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -188,36 +99,37 @@ export default function FrontendDevelopmentPage() {
                 className="inline-flex items-center space-x-2 bg-white text-blue-700 px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <Calendar className="w-5 h-5" />
-                <span>Book Consultation</span>
+                <span>{t("hero.cta.book")}</span>
               </Link>
 
               <Link
                 href="/contact"
                 className="inline-flex items-center space-x-2 border-2 border-blue-300 text-blue-300 px-8 py-4 rounded-lg font-bold hover:bg-blue-300 hover:text-blue-900 transition-all duration-300"
               >
-                <span>Discuss Project</span>
+                <span>{t("hero.cta.discuss")}</span>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
+      <Breadcrumb />
+
       {/* What I Deliver */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              What You Get
+              {t("benefits.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Modern frontend solutions built with performance, accessibility,
-              and user experience as core principles.
+              {t("benefits.description")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit) => {
-              const Icon = benefit.icon;
+            {benefits.map((benefit, index) => {
+              const Icon = benefitIcons[index];
               return (
                 <div
                   key={benefit.title}
@@ -242,11 +154,10 @@ export default function FrontendDevelopmentPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Technologies & Tools
+              {t("technologies.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              I work with modern, battle-tested technologies to ensure your
-              application is scalable, maintainable, and future-proof.
+              {t("technologies.description")}
             </p>
           </div>
 
@@ -264,7 +175,8 @@ export default function FrontendDevelopmentPage() {
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
                       tech.level === "Expert"
                         ? "bg-green-100 text-green-700"
-                        : tech.level === "Advanced"
+                        : tech.level === "Advanced" ||
+                            tech.level === "Gevorderd"
                           ? "bg-blue-100 text-blue-700"
                           : "bg-gray-100 text-gray-700"
                     }`}
@@ -284,17 +196,16 @@ export default function FrontendDevelopmentPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              My Development Process
+              {t("process.title")}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              A proven methodology that ensures quality, performance, and
-              alignment with your business goals.
+              {t("process.description")}
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {processes.map((process, index) => {
-              const Icon = process.icon;
+              const Icon = processIcons[index];
               return (
                 <div
                   key={process.title}
@@ -316,8 +227,11 @@ export default function FrontendDevelopmentPage() {
                   </div>
 
                   <ul className="space-y-2">
-                    {process.details.map((detail) => (
-                      <li key={detail} className="flex items-center space-x-2">
+                    {process.details.map((detail, detailIndex) => (
+                      <li
+                        key={detailIndex}
+                        className="flex items-center space-x-2"
+                      >
                         <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0" />
                         <span className="text-gray-700">{detail}</span>
                       </li>
@@ -334,11 +248,10 @@ export default function FrontendDevelopmentPage() {
       <section className="bg-blue-900 py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            Ready to Build Something Amazing?
+            {t("cta.title")}
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Let&apos;s discuss your frontend needs and create a solution that
-            delights your users and drives your business forward.
+            {t("cta.description")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -347,14 +260,14 @@ export default function FrontendDevelopmentPage() {
               className="inline-flex items-center justify-center space-x-2 bg-white text-blue-700 px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
               <Calendar className="w-5 h-5" />
-              <span>Book Consultation</span>
+              <span>{t("cta.bookConsultation")}</span>
             </Link>
 
             <Link
               href="/services"
               className="inline-flex items-center justify-center space-x-2 border-2 border-blue-300 text-blue-300 px-8 py-4 rounded-lg font-bold hover:bg-blue-300 hover:text-blue-900 transition-all duration-300"
             >
-              <span>View All Services</span>
+              <span>{t("cta.viewAllServices")}</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import { ProjectsHero } from "@/components/ProjectsHero";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -25,6 +26,7 @@ export default async function ProjectsPage({ params }: Props) {
   return (
     <main>
       <ProjectsHero />
+      <Breadcrumb />
       <ProjectShowcase />
     </main>
   );
