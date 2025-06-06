@@ -102,7 +102,7 @@ export const ContactHero = () => {
                       href="tel:+31612345678"
                       className="hover:text-emerald-400 transition-colors"
                     >
-                      +31 6 12345678
+                      +31 6 80149947
                     </a>
                   </dd>
                 </div>
