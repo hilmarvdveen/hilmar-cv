@@ -119,7 +119,7 @@ export const Breadcrumb = () => {
       "@type": "ListItem",
       position: index + 1,
       name: item.label,
-      item: `https://hilmarvanderveen.nl${item.href}`,
+      item: `https://hilmarvanderveen.com${item.href}`,
     })),
   };
 
