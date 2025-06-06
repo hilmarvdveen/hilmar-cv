@@ -19,6 +19,9 @@ const inter = Inter({
   preload: true,
 });
 
+// Cache-busting version for favicons
+const FAVICON_VERSION = "v2024-01-15";
+
 type Props = {
   children: ReactNode;
   params: Promise<{ locale: string }>;
@@ -84,7 +87,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           type: "image/jpeg",
         },
         {
-          url: `${baseUrl}/android-chrome-512x512.png`,
+          url: `${baseUrl}/android-chrome-512x512.png?${FAVICON_VERSION}`,
           width: 512,
           height: 512,
           alt: `${siteConfig.name} Logo`,
@@ -143,17 +146,26 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        {/* Favicons & Icons for all platforms */}
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        {/* Favicons & Icons for all platforms - with cache busting */}
         <link
           rel="icon"
-          href="/favicon-16x16.png"
+          href={`/favicon.svg?${FAVICON_VERSION}`}
+          type="image/svg+xml"
+        />
+        <link
+          rel="icon"
+          href={`/favicon.ico?${FAVICON_VERSION}`}
+          sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href={`/favicon-16x16.png?${FAVICON_VERSION}`}
           type="image/png"
           sizes="16x16"
         />
         <link
           rel="icon"
-          href="/favicon-32x32.png"
+          href={`/favicon-32x32.png?${FAVICON_VERSION}`}
           type="image/png"
           sizes="32x32"
         />
@@ -161,20 +173,20 @@ export default async function LocaleLayout({ children, params }: Props) {
         {/* Apple Touch Icon */}
         <link
           rel="apple-touch-icon"
-          href="/apple-touch-icon.png"
+          href={`/apple-touch-icon.png?${FAVICON_VERSION}`}
           sizes="180x180"
         />
 
         {/* Android Chrome Icons */}
         <link
           rel="icon"
-          href="/android-chrome-192x192.png"
+          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
           type="image/png"
           sizes="192x192"
         />
         <link
           rel="icon"
-          href="/android-chrome-512x512.png"
+          href={`/android-chrome-512x512.png?${FAVICON_VERSION}`}
           type="image/png"
           sizes="512x512"
         />
@@ -185,7 +197,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         {/* Microsoft Tiles */}
         <meta
           name="msapplication-TileImage"
-          content="/android-chrome-192x192.png"
+          content={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
         />
         <meta name="msapplication-TileColor" content="#059669" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -198,7 +210,37 @@ export default async function LocaleLayout({ children, params }: Props) {
         <meta name="mobile-web-app-capable" content="yes" />
 
         {/* WhatsApp & Social Media Favicon */}
-        <link rel="shortcut icon" href="/android-chrome-192x192.png" />
+        <link
+          rel="shortcut icon"
+          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="196x196"
+          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
+        />
+
+        {/* Additional Social Media Meta Tags */}
+        <meta
+          property="og:image"
+          content={`${siteConfig.url}/android-chrome-512x512.png?${FAVICON_VERSION}`}
+        />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta property="og:image:type" content="image/png" />
+        <meta
+          name="twitter:image"
+          content={`${siteConfig.url}/android-chrome-512x512.png?${FAVICON_VERSION}`}
+        />
+
+        {/* WhatsApp specific meta tags */}
+        <meta property="og:site_name" content={siteConfig.name} />
+        <meta
+          property="og:locale"
+          content={locale === "nl" ? "nl_NL" : "en_US"}
+        />
+        <meta name="theme-color" content="#059669" />
 
         {/* Font loading optimizations */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

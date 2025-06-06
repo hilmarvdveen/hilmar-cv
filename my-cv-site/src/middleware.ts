@@ -8,5 +8,5 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ['/((?!_next|favicon.ico|images|assets|api|.*\\..*).*)'], // Match root and locale-prefix
+  matcher: ['/((?!_next|favicon|android-chrome|apple-touch-icon|images|assets|api|.*\\..*).*)'], // Match root and locale-prefix
 }; 

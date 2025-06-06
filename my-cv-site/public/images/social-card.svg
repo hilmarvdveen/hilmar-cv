@@ -49,12 +49,12 @@
     
     <!-- Subtitle -->
     <text x="0" y="280" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="36" font-weight="600" fill="#10b981">
-      Senior Frontend Developer
+      Senior Fullstack Developer
     </text>
     
     <!-- Skills -->
     <text x="0" y="340" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="24" font-weight="400" fill="#cbd5e1">
-      React • Next.js • Angular • TypeScript
+      React • Angular • C# .Net
     </text>
     
     <!-- Experience -->
@@ -64,7 +64,7 @@
     
     <!-- Website -->
     <text x="0" y="480" font-family="Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="18" font-weight="500" fill="#64748b">
-      hilmarvanderveen.com
+      www.hilmarvanderveen.com
     </text>
   </g>
   
