@@ -1,12 +1,11 @@
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from '../i18n';
+import { routing } from '../i18n/routing';
 
-export default createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'always' // Force prefix, e.g. /nl, /en
-});
+export default createMiddleware(routing);
 
 export const config = {
-  matcher: ['/((?!_next|favicon|android-chrome|apple-touch-icon|images|assets|api|.*\\..*).*)'], // Match root and locale-prefix
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/_next` or `/_vercel` 
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: ['/((?!api|_next|_vercel|favicon|android-chrome|apple-touch-icon|images|assets|.*\\..*).*)']
 }; 

@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { useMemo, useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { Link, usePathname, useRouter } from "../../i18n/navigation";
 import {
   Home,
   FolderOpen,
@@ -80,10 +79,7 @@ export const Header = () => {
   );
 
   const changeLanguage = (newLocale: string) => {
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    const newPath = segments.join("/");
-    router.replace(newPath, { scroll: false });
+    router.replace(pathname, { locale: newLocale });
     setIsLanguageOpen(false);
     setIsMobileMenuOpen(false);
   };
@@ -116,11 +112,7 @@ export const Header = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === `/${currentLocale}` ||
-                      pathname === `/${currentLocale}/`
-                    : pathname === `/${currentLocale}${item.href}`;
+                const isActive = pathname === item.href;
                 const Icon = item.icon;
 
                 return (
