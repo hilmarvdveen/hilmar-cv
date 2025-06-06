@@ -77,16 +77,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: siteConfig.description,
       images: [
         {
-          url: `${baseUrl}/images/social-card.svg`,
+          url: `${baseUrl}/images/social-card.jpg`,
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} - Senior Frontend Developer`,
-          type: "image/svg+xml",
+          type: "image/jpeg",
         },
         {
-          url: `${baseUrl}/images/logo_v1.png`,
-          width: 400,
-          height: 400,
+          url: `${baseUrl}/android-chrome-512x512.png`,
+          width: 512,
+          height: 512,
           alt: `${siteConfig.name} Logo`,
           type: "image/png",
         },
@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${siteConfig.name} - ${siteConfig.title}`,
       description: siteConfig.description,
-      images: [`${baseUrl}/images/social-card.svg`],
+      images: [`${baseUrl}/images/social-card.jpg`],
       creator: siteConfig.author.twitter,
       site: siteConfig.author.twitter,
     },
@@ -125,13 +125,16 @@ export const viewport: Viewport = {
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params;
-
-  if (!["en", "nl"].includes(locale)) {
-    notFound();
-  }
-
-  const messages = await getMessages({ locale });
+  // Parallelize the async operations for better performance
+  const [{ locale }, messages] = await Promise.all([
+    params,
+    params.then(({ locale }) => {
+      if (!["en", "nl"].includes(locale)) {
+        notFound();
+      }
+      return getMessages({ locale });
+    }),
+  ]);
 
   return (
     <html
@@ -140,24 +143,70 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-
-        {/* Favicons */}
+        {/* Favicons & Icons for all platforms */}
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+          rel="icon"
+          href="/favicon-16x16.png"
+          type="image/png"
+          sizes="16x16"
+        />
         <link
           rel="icon"
           href="/favicon-32x32.png"
           type="image/png"
           sizes="32x32"
         />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        {/* Apple Touch Icon */}
+        <link
+          rel="apple-touch-icon"
+          href="/apple-touch-icon.png"
+          sizes="180x180"
+        />
+
+        {/* Android Chrome Icons */}
+        <link
+          rel="icon"
+          href="/android-chrome-192x192.png"
+          type="image/png"
+          sizes="192x192"
+        />
+        <link
+          rel="icon"
+          href="/android-chrome-512x512.png"
+          type="image/png"
+          sizes="512x512"
+        />
+
+        {/* Web App Manifest */}
         <link rel="manifest" href="/manifest.json" />
+
+        {/* Microsoft Tiles */}
+        <meta
+          name="msapplication-TileImage"
+          content="/android-chrome-192x192.png"
+        />
+        <meta name="msapplication-TileColor" content="#059669" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+
+        {/* Additional SEO and Social Media Meta Tags */}
+        <meta name="application-name" content="Hilmar van der Veen" />
+        <meta name="apple-mobile-web-app-title" content="Hilmar vdV" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="mobile-web-app-capable" content="yes" />
+
+        {/* WhatsApp & Social Media Favicon */}
+        <link rel="shortcut icon" href="/android-chrome-192x192.png" />
+
+        {/* Font loading optimizations */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
 
         {/* Schema.org markup for Organization */}
         <script

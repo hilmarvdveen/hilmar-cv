@@ -76,6 +76,13 @@
   --tw-tracking: *;
 }
 
+/* Fix webkit text size adjust for mobile browsers */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* Infinite Carousel Animation */
 .slider {
   position: relative;
@@ -232,4 +239,26 @@
 /* Prevent body scroll when mobile menu is open */
 body.mobile-menu-open {
   overflow: hidden;
+}
+
+/* Fix webkit appearance for better cross-browser consistency */
+button,
+input,
+select,
+textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Fix for custom element styles to avoid :host() warnings */
+.custom-element {
+  display: block;
+}
+
+/* Prevent text inflation on mobile */
+body {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import dynamic from "next/dynamic";
 
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -9,13 +10,68 @@ import { CallToActionSection } from "@/components/CallToActionSection";
 import { WorkExperienceSection } from "@/components/WorkExperienceSection";
 import { ProjectHighlightsSection } from "@/components/ProjectHighlightsSection";
 import { TechStackSection } from "@/components/TechSTackSection";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
-import { CertificationsSection } from "@/components/CertificationSection";
-import { NetherlandsMap } from "@/components/NetherlandsMap";
 import { PageSEO } from "@/components/SEO/PageSEO";
 import { homepageSEO } from "@/lib/seo.pages";
 import { generatePageSEO } from "@/lib/seo.config";
 import { siteConfig } from "@/lib/seo.config";
+
+// Lazy load heavy components for better performance
+const TestimonialsSection = dynamic(
+  () =>
+    import("@/components/TestimonialsSection").then((mod) => ({
+      default: mod.TestimonialsSection,
+    })),
+  {
+    loading: () => (
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    ),
+  }
+);
+
+const CertificationsSection = dynamic(
+  () =>
+    import("@/components/CertificationSection").then((mod) => ({
+      default: mod.CertificationsSection,
+    })),
+  {
+    loading: () => (
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    ),
+  }
+);
+
+const NetherlandsMap = dynamic(
+  () =>
+    import("@/components/NetherlandsMap").then((mod) => ({
+      default: mod.NetherlandsMap,
+    })),
+  {
+    loading: () => (
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+            <div className="h-64 bg-gray-200 rounded mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    ),
+  }
+);
 
 type Props = {
   params: Promise<{ locale: string }>;

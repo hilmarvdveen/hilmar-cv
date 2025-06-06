@@ -283,7 +283,7 @@ export const NetherlandsMap = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [t]);
+  }, [t, selectedCity]);
 
   // Calculate stats
   const totalCompanies = [...new Set(workCities.flatMap((c) => c.companies))]

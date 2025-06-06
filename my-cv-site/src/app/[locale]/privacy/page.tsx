@@ -26,7 +26,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-gray-600">
               If you have questions about this Privacy Policy, please contact us
-              at privacy@hilmar.example.com
+              at hilmar@hilmarvanderveen.com
             </p>
           </section>
 
