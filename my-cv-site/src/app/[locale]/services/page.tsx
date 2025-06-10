@@ -12,10 +12,8 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { PageSEO } from "@/components/SEO/PageSEO";
-import { generateStructuredData } from "@/lib/generateSEOMetadata";
-import { siteConfig } from "@/lib/seo.config";
-import { servicesSEO } from "@/lib/seo.pages";
+import { SEOFactory } from "@/lib/seo";
+import type { Locale } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -23,12 +21,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "services" });
+  const seoData = SEOFactory.services(locale as Locale);
 
-  return {
-    title: t("meta.title"),
-    description: t("meta.description"),
-  };
+  return seoData.metadata;
 }
 
 export default async function ServicesPage({ params }: Props) {
@@ -36,9 +31,7 @@ export default async function ServicesPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("services");
 
-  const config = servicesSEO(locale);
-  const currentUrl = `${siteConfig.url}/${locale}/services`;
-  const structuredData = generateStructuredData(config, locale, currentUrl);
+  const seoData = SEOFactory.services(locale as Locale);
 
   const services = [
     {
@@ -120,7 +113,12 @@ export default async function ServicesPage({ params }: Props) {
 
   return (
     <>
-      <PageSEO structuredData={structuredData} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: seoData.structuredData,
+        }}
+      />
 
       <div className="bg-gray-50">
         <ServicesHero />

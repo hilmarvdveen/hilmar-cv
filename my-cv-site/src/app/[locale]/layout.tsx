@@ -1,16 +1,20 @@
-import { Inter } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
 import { ReactNode } from "react";
+import { NextIntlClientProvider } from "next-intl";
+import { Inter } from "next/font/google";
+import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { BookingFormProvider } from "@/contexts/BookingFormContext";
+import { GoogleTagManager } from "@/components/GoogleTagManager";
+import { getMessages } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import "@/app/globals.css";
 import { Metadata, Viewport } from "next";
-import { siteConfig } from "@/lib/seo.config";
+import { SEOEngine } from "@/lib/seo";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Locale } from "@/lib/seo/types/seo-types";
+import { BookingFormProvider } from "@/contexts/BookingFormContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,10 +23,12 @@ const inter = Inter({
   preload: true,
 });
 
-// Cache-busting version for favicons
 const FAVICON_VERSION = "v2024-01-15";
 
-type Props = {
+// Initialize SEO Engine
+const seoEngine = new SEOEngine();
+
+export type Props = {
   children: ReactNode;
   params: Promise<{ locale: string }>;
 };
@@ -30,93 +36,48 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
-  const baseUrl = siteConfig.url;
-  const currentUrl = `${baseUrl}/${locale}`;
+  // Validate locale
+  if (!["en", "nl"].includes(locale)) {
+    notFound();
+  }
 
+  // Generate SEO metadata using our comprehensive SEO system
+  const { metadata } = seoEngine.createHomepageSEO(locale as Locale);
+
+  // Add additional layout-specific metadata
   return {
-    metadataBase: new URL(baseUrl),
-    title: {
-      template: `%s | ${siteConfig.name} - ${siteConfig.title}`,
-      default: `${siteConfig.name} - ${siteConfig.title} | React, Next.js, Angular Expert`,
-    },
-    description: siteConfig.description,
-    keywords: [
-      "Frontend Developer",
-      "React Developer",
-      "Next.js Developer",
-      "Angular Developer",
-      "TypeScript Expert",
-      "Netherlands",
-      "Web Development",
-      "UI/UX Development",
-      "Accessible Web Design",
-      "Senior Developer",
-      "Freelance Developer",
-      "Amsterdam",
-      "Utrecht",
-      "Rotterdam",
-    ],
-    authors: [{ name: siteConfig.author.name }],
-    creator: siteConfig.author.name,
-    publisher: siteConfig.author.name,
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-    openGraph: {
-      type: "website",
-      locale: locale === "nl" ? "nl_NL" : "en_US",
-      alternateLocale: locale === "nl" ? "en_US" : "nl_NL",
-      url: currentUrl,
-      siteName: siteConfig.name,
-      title: `${siteConfig.name} - ${siteConfig.title}`,
-      description: siteConfig.description,
-      images: [
+    ...metadata,
+    // Enhance with favicon and PWA metadata
+    icons: {
+      icon: [
+        { url: `/favicon.ico?${FAVICON_VERSION}`, sizes: "any" },
+        { url: `/favicon.svg?${FAVICON_VERSION}`, type: "image/svg+xml" },
         {
-          url: `${baseUrl}/images/social-card.jpg`,
-          width: 1200,
-          height: 630,
-          alt: `${siteConfig.name} - Senior Frontend Developer`,
-          type: "image/jpeg",
+          url: `/android-chrome-192x192.png?${FAVICON_VERSION}`,
+          sizes: "192x192",
         },
         {
-          url: `${baseUrl}/android-chrome-512x512.png?${FAVICON_VERSION}`,
-          width: 512,
-          height: 512,
-          alt: `${siteConfig.name} Logo`,
-          type: "image/png",
+          url: `/android-chrome-512x512.png?${FAVICON_VERSION}`,
+          sizes: "512x512",
         },
       ],
+      apple: [
+        { url: `/apple-touch-icon.png?${FAVICON_VERSION}`, sizes: "180x180" },
+      ],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${siteConfig.name} - ${siteConfig.title}`,
-      description: siteConfig.description,
-      images: [`${baseUrl}/images/social-card.jpg`],
-      creator: siteConfig.author.twitter,
-      site: siteConfig.author.twitter,
-    },
-    alternates: {
-      canonical: currentUrl,
-      languages: {
-        en: `${baseUrl}/en`,
-        nl: `${baseUrl}/nl`,
-        "x-default": `${baseUrl}/nl`,
-      },
-    },
+    manifest: "/manifest.json",
     verification: {
       google: process.env.GOOGLE_SITE_VERIFICATION,
     },
     other: {
-      "msapplication-TileColor": "#059669",
       "theme-color": "#059669",
+      "msapplication-TileColor": "#059669",
+      "apple-mobile-web-app-title": "Hilmar vdV",
+      "application-name": BUSINESS_PROFILE.NAME,
+      "apple-mobile-web-app-capable": "yes",
+      "apple-mobile-web-app-status-bar-style": "default",
+      "mobile-web-app-capable": "yes",
+      "msapplication-TileImage": `/android-chrome-192x192.png?${FAVICON_VERSION}`,
     },
   };
 }
@@ -125,19 +86,19 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  themeColor: "#059669",
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  // Parallelize the async operations for better performance
   const [{ locale }, messages] = await Promise.all([
     params,
     params.then(({ locale }) => {
-      if (!["en", "nl"].includes(locale)) {
-        notFound();
-      }
+      if (![`en`, `nl`].includes(locale)) notFound();
       return getMessages({ locale });
     }),
   ]);
+
+  setRequestLocale(locale);
 
   return (
     <html
@@ -146,163 +107,72 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        {/* Favicons & Icons for all platforms - with cache busting */}
-        <link
-          rel="icon"
-          href={`/favicon.svg?${FAVICON_VERSION}`}
-          type="image/svg+xml"
-        />
-        <link
-          rel="icon"
-          href={`/favicon.ico?${FAVICON_VERSION}`}
-          sizes="32x32"
-        />
-        <link
-          rel="icon"
-          href={`/favicon-16x16.png?${FAVICON_VERSION}`}
-          type="image/png"
-          sizes="16x16"
-        />
-        <link
-          rel="icon"
-          href={`/favicon-32x32.png?${FAVICON_VERSION}`}
-          type="image/png"
-          sizes="32x32"
-        />
-
-        {/* Apple Touch Icon */}
-        <link
-          rel="apple-touch-icon"
-          href={`/apple-touch-icon.png?${FAVICON_VERSION}`}
-          sizes="180x180"
-        />
-
-        {/* Android Chrome Icons */}
-        <link
-          rel="icon"
-          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
-          type="image/png"
-          sizes="192x192"
-        />
-        <link
-          rel="icon"
-          href={`/android-chrome-512x512.png?${FAVICON_VERSION}`}
-          type="image/png"
-          sizes="512x512"
-        />
-
-        {/* Web App Manifest */}
-        <link rel="manifest" href="/manifest.json" />
-
-        {/* Microsoft Tiles */}
-        <meta
-          name="msapplication-TileImage"
-          content={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
-        />
-        <meta name="msapplication-TileColor" content="#059669" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-
-        {/* Additional SEO and Social Media Meta Tags */}
-        <meta name="application-name" content="Hilmar van der Veen" />
-        <meta name="apple-mobile-web-app-title" content="Hilmar vdV" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="mobile-web-app-capable" content="yes" />
-
-        {/* WhatsApp & Social Media Favicon */}
-        <link
-          rel="shortcut icon"
-          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="196x196"
-          href={`/android-chrome-192x192.png?${FAVICON_VERSION}`}
-        />
-
-        {/* Additional Social Media Meta Tags */}
-        <meta
-          property="og:image"
-          content={`${siteConfig.url}/android-chrome-512x512.png?${FAVICON_VERSION}`}
-        />
-        <meta property="og:image:width" content="512" />
-        <meta property="og:image:height" content="512" />
-        <meta property="og:image:type" content="image/png" />
-        <meta
-          name="twitter:image"
-          content={`${siteConfig.url}/android-chrome-512x512.png?${FAVICON_VERSION}`}
-        />
-
-        {/* WhatsApp specific meta tags */}
-        <meta property="og:site_name" content={siteConfig.name} />
-        <meta
-          property="og:locale"
-          content={locale === "nl" ? "nl_NL" : "en_US"}
-        />
-        <meta name="theme-color" content="#059669" />
-
-        {/* Font loading optimizations */}
+        {/* Enhanced DNS prefetch and preconnect for performance */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
-          crossOrigin=""
+          crossOrigin="anonymous"
         />
 
-        {/* Schema.org markup for Organization */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: siteConfig.author.name,
-              jobTitle: siteConfig.title,
-              description: siteConfig.description,
-              url: siteConfig.url,
-              sameAs: [
-                siteConfig.author.linkedin,
-                siteConfig.author.github,
-                `https://twitter.com/${siteConfig.social.twitter.replace("@", "")}`,
-              ],
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: siteConfig.location.city,
-                addressRegion: siteConfig.location.region,
-                addressCountry: "Netherlands",
-              },
-              knowsAbout: [
-                "React.js",
-                "Next.js",
-                "Angular",
-                "TypeScript",
-                "JavaScript",
-                "Frontend Development",
-                "Web Development",
-                "UI/UX Design",
-              ],
-            }),
-          }}
+        {/* Professional geo metadata */}
+        <meta name="geo.region" content="NL-NH" />
+        <meta name="geo.placename" content="Amsterdam" />
+        <meta name="geo.position" content="52.3676;4.9041" />
+        <meta name="ICBM" content="52.3676, 4.9041" />
+
+        {/* Preload critical resources */}
+        <link
+          rel="preload"
+          href="/fonts/inter-var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
+
+        {/* Google Tag Manager - Load as high as possible */}
+        {process.env.NODE_ENV === "production" &&
+          process.env.NEXT_PUBLIC_GTM_ID && (
+            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+          )}
       </head>
-      <body className="h-full flex flex-col" suppressHydrationWarning>
+
+      <body
+        className="min-h-screen bg-white text-gray-900 font-sans antialiased"
+        suppressHydrationWarning
+      >
+        {/* GTM NoScript fallback - immediately after body tag */}
+        {process.env.NODE_ENV === "production" &&
+          process.env.NEXT_PUBLIC_GTM_ID && (
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+          )}
+
         <NextIntlClientProvider locale={locale} messages={messages}>
           <BookingFormProvider>
-            <Header />
-            <main
-              className="flex-1"
-              role="main"
-              style={{ paddingTop: "var(--header-height)" }}
-            >
-              {children}
-            </main>
-            <Footer />
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
           </BookingFormProvider>
-          {process.env.NEXT_PUBLIC_GA_ID && (
-            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-          )}
         </NextIntlClientProvider>
+
+        {/* Analytics - GA4 with GTM integration */}
+        {process.env.NODE_ENV === "production" &&
+          process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+          )}
+
+        {/* Performance monitoring */}
         <SpeedInsights />
       </body>
     </html>

@@ -92,13 +92,10 @@ export function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
   );
 }
 
-// Extend Window interface for TypeScript
+// Extend Window interface for TypeScript (matches analytics-manager.ts)
 declare global {
   interface Window {
-    gtag: (
-      command: string,
-      ...args: (string | Date | Record<string, unknown>)[]
-    ) => void;
-    dataLayer: Record<string, unknown>[];
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
   }
 }

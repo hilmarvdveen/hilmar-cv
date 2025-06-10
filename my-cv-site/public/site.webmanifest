@@ -1,34 +1,16 @@
 {
     "name": "Hilmar van der Veen - Senior Frontend Developer",
-    "short_name": "Hilmar vdV",
-    "description": "Senior Fullstack Developer specializing in React, Angular and C# .Net development",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#059669",
-    "orientation": "portrait-primary",
+    "short_name": "Hilmar dev",
+    "description": "Senior Fullstack Developer specializing in React, Angular, and .NET development.",
+    "start_url": "/?source=pwa",
     "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "theme_color": "#059669",
+    "background_color": "#ffffff",
     "lang": "en",
     "dir": "ltr",
     "icons": [
-        {
-            "src": "/favicon-16x16.png",
-            "sizes": "16x16",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "/favicon-32x32.png",
-            "sizes": "32x32",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "/apple-touch-icon.png",
-            "sizes": "180x180",
-            "type": "image/png",
-            "purpose": "any"
-        },
         {
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
@@ -42,16 +24,29 @@
             "purpose": "maskable any"
         },
         {
-            "src": "/favicon.ico",
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon-32x32.png",
             "sizes": "32x32",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48",
             "type": "image/x-icon",
             "purpose": "any"
         }
-    ],
-    "categories": [
-        "business",
-        "developer",
-        "productivity"
     ],
     "screenshots": [
         {
@@ -60,5 +55,11 @@
             "type": "image/jpeg",
             "platform": "wide"
         }
+    ],
+    "categories": [
+        "business",
+        "developer",
+        "portfolio",
+        "productivity"
     ]
 }
