@@ -13,6 +13,7 @@ import { Metadata, Viewport } from "next";
 import { SEOEngine } from "@/lib/seo";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import type { Locale } from "@/lib/seo/types/seo-types";
 import { BookingFormProvider } from "@/contexts/BookingFormContext";
 
@@ -111,6 +112,8 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
+        <link rel="dns-prefetch" href="//vercel.live" />
+        <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -172,8 +175,9 @@ export default async function LocaleLayout({ children, params }: Props) {
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
           )}
 
-        {/* Performance monitoring */}
+        {/* Performance monitoring and analytics */}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
