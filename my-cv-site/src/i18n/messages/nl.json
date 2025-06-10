@@ -2187,7 +2187,7 @@
             "foundation": {
                 "title": "Technische Basis",
                 "description": "Mijn achtergrond in de natuurkunde heeft me geleerd complexe problemen systematisch op te lossen. In softwareontwikkeling betekent dit dat ik niet alleen codeer - ik architect oplossingen die schalen.",
-                "education": "Master of Science in de Natuurkunde van de Universiteit van Amsterdam gecombineerd met 10+ jaar hands-on ontwikkelervaring betekent dat ik zowel analytisch denken als praktische expertise naar je project breng."
+                "education": "Bachelor of Science in de Natuurkunde van de Universiteit van Amsterdam gecombineerd met 10+ jaar hands-on ontwikkelervaring betekent dat ik zowel analytisch denken als praktische expertise naar je project breng."
             }
         },
         "strengths": {
@@ -2326,7 +2326,8 @@
             "newsletter": {
                 "title": "Blijf op de Hoogte",
                 "description": "Ontvang tech inzichten en projectupdates in je inbox.",
-                "placeholder": "jouw@email.com"
+                "placeholder": "jouw@email.com",
+                "subscribe": "Inschrijven voor nieuwsbrief"
             },
             "social": {
                 "title": "Verbinden"

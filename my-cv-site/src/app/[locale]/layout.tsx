@@ -126,15 +126,6 @@ export default async function LocaleLayout({ children, params }: Props) {
         <meta name="geo.position" content="52.3676;4.9041" />
         <meta name="ICBM" content="52.3676, 4.9041" />
 
-        {/* Preload critical resources */}
-        <link
-          rel="preload"
-          href="/fonts/inter-var.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-
         {/* Google Tag Manager - Load as high as possible */}
         {process.env.NODE_ENV === "production" &&
           process.env.NEXT_PUBLIC_GTM_ID && (

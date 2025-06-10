@@ -231,11 +231,7 @@ export const Header = () => {
           {/* Navigation Links */}
           <div className="px-6 py-4 space-y-1">
             {navItems.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === `/${currentLocale}` ||
-                    pathname === `/${currentLocale}/`
-                  : pathname === `/${currentLocale}${item.href}`;
+              const isActive = pathname === item.href;
               const Icon = item.icon;
 
               return (

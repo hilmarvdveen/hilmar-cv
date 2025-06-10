@@ -105,7 +105,7 @@
             "intro": "With over 10 years of experience, I help companies and teams turn ideas into robust, scalable solutions, from first release to mature platform.",
             "summary": {
                 "part1": "I work closely with product teams, founders, and stakeholders to build systems that combine technical reliability with strategic impact.",
-                "part2": "Whether it’s modernizing existing platforms, launching something new, or streamlining your development process — I join your team, deliver real results, and help you move forward. No vague plans. No noise. Just solutions that work today, and still make sense tomorrow."
+                "part2": "Whether it's modernizing existing platforms, launching something new, or streamlining your development process — I join your team, deliver real results, and help you move forward. No vague plans. No noise. Just solutions that work today, and still make sense tomorrow."
             },
             "contact": "Get in touch",
             "cta": "View projects",
@@ -2325,7 +2325,8 @@
             "newsletter": {
                 "title": "Stay Updated",
                 "description": "Get tech insights and project updates delivered to your inbox.",
-                "placeholder": "your@email.com"
+                "placeholder": "your@email.com",
+                "subscribe": "Subscribe to newsletter"
             },
             "social": {
                 "title": "Connect"

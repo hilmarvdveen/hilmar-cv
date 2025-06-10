@@ -227,6 +227,7 @@ export const Footer = () => {
                 />
                 <button
                   type="submit"
+                  aria-label={t("contact.newsletter.subscribe")}
                   className="px-4 py-2 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-500 transition-colors duration-200 flex items-center"
                 >
                   <ArrowUpRight className="w-4 h-4" />
