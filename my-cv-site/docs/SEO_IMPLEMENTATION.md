@@ -96,7 +96,7 @@ Comprehensive professional targeting:
 - Name: Hilmar van der Veen
 - Title: Senior Frontend Developer
 - Location: Amsterdam, Netherlands
-- Experience: 8+ years
+- Experience:10+ years
 - Education: MSc Physics, University of Amsterdam
 - Specialization: React, Angular, Next.js, TypeScript
 
@@ -110,7 +110,7 @@ Comprehensive professional targeting:
 **Professional Credibility:**
 
 - Previous clients: Belastingdienst, Ziggo, NPL
-- Pricing: €95-125/hour (transparent pricing for trust)
+- Pricing: €85-125/hour (transparent pricing for trust)
 - Certifications: Google Cloud, AWS, Microsoft Azure
 
 ### 5. Multilingual SEO Implementation
@@ -219,7 +219,7 @@ analytics?.trackServiceInquiry({
 ### E-E-A-T Signals
 
 1. **Experience**: Real project examples, client testimonials, GitHub portfolio
-2. **Expertise**: MSc Physics degree, 8+ years experience, technical certifications
+2. **Expertise**: MSc Physics degree,10+ years experience, technical certifications
 3. **Authoritativeness**: Major client work (Belastingdienst, Ziggo, NPL)
 4. **Trustworthiness**: Transparent contact info, clear pricing, privacy policy
 

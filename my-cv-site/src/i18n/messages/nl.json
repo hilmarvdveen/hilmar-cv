@@ -1713,16 +1713,6 @@
             }
         }
     },
-    "about": {
-        "title": "Over mij",
-        "intro": "Ik ben Hilmar van der Veen, een senior frontend developer met meer dan 10 jaar ervaring in het bouwen van schaalbare, toegankelijke en toekomstbestendige webapplicaties.",
-        "body": [
-            "Ik heb gewerkt aan complexe projecten voor overheidsinstellingen, loterijen en grote organisaties. Mijn focus ligt op kwaliteit, schaalbaarheid en gebruiksvriendelijkheid.",
-            "Wat mij onderscheidt is mijn vermogen om niet alleen te bouwen, maar ook om te begeleiden. Ik neem eigenaarschap, help teams groeien en ben niet bang om kritisch mee te denken over de beste oplossing – technisch én functioneel.",
-            "Of het nu gaat om het opzetten van een design system, migratie van legacy code of het bouwen van een configuratiegedreven interface: ik lever gestructureerd, getest en gedocumenteerd werk af."
-        ],
-        "cta": "Bekijk mijn projecten"
-    },
     "cvModal": {
         "title": "CV Downloaden",
         "subtitle": "Hilmar van der Veen",
@@ -2180,6 +2170,117 @@
                 "sendRequest": "Verstuur Verzoek",
                 "submitting": "Versturen..."
             }
+        }
+    },
+    "about": {
+        "title": "Ontmoet je volgende Senior Developer",
+        "subtitle": "Ik ben Hilmar van der Veen, een hands-on software engineer die complexe technische uitdagingen omzet in schaalbare bedrijfsoplossingen. Met 10+ jaar ervaring in het bouwen van enterprise applicaties, sluit ik de brug tussen technische excellentie en zakelijke impact.",
+        "purpose": {
+            "title": "Waarom deze pagina bestaat",
+            "intro": "Je bent hier omdat je een senior developer nodig hebt die daadwerkelijk kan leveren. Niet alleen iemand die over technologie praat, maar iemand die echte oplossingen bouwt die echte bedrijfsproblemen oplossen.",
+            "mission": "Mijn doel is simpel: groeiende bedrijven helpen betere software sneller te bouwen. Of je nu je frontend wilt schalen, een nieuw platform wilt architecturen, of je ontwikkelteam wilt mentoren - ik ben er geweest, heb het gedaan, en heb resultaten geleverd.",
+            "features": [
+                "€85-125/uur transparante prijsstelling",
+                "Beschikbaar voor projecten 2-40 uur/week",
+                "Remote-first met Amsterdam gebied on-site opties"
+            ],
+            "foundation": {
+                "title": "Technische Basis",
+                "description": "Mijn achtergrond in de natuurkunde heeft me geleerd complexe problemen systematisch op te lossen. In softwareontwikkeling betekent dit dat ik niet alleen codeer - ik architect oplossingen die schalen.",
+                "education": "Master of Science in de Natuurkunde van de Universiteit van Amsterdam gecombineerd met 10+ jaar hands-on ontwikkelervaring betekent dat ik zowel analytisch denken als praktische expertise naar je project breng."
+            }
+        },
+        "strengths": {
+            "title": "Wat Product Managers zeggen",
+            "items": [
+                {
+                    "title": "Hij levert daadwerkelijk op",
+                    "description": "Terwijl anderen praten over best practices, lever ik werkende software. Mijn klanten zien resultaten in weken, niet maanden. Ik focus op wat het bedrijf vooruit helpt."
+                },
+                {
+                    "title": "Spreekt bedrijfstaal",
+                    "description": "Ik vertaal technische complexiteit naar zakelijke impact. Je begrijpt wat we bouwen, waarom het belangrijk is, en hoe het je bottom line beïnvloedt."
+                },
+                {
+                    "title": "Tilt teams naar hoger niveau",
+                    "description": "Jouw developers worden beter door met mij samen te werken. Ik deel kennis, vestig patronen, en laat je team sterker achter dan ik het vond."
+                }
+            ]
+        },
+        "experience": {
+            "title": "Bewezen Track Record",
+            "intro": "Ik heb enterprise-grade oplossingen geleverd voor enkele van Nederlands grootste organisaties. Hier heb ik impact gemaakt:",
+            "impact": {
+                "title": "Echte Impact, Echte Resultaten",
+                "belastingdienst": {
+                    "title": "Bij Belastingdienst",
+                    "items": [
+                        "Toegankelijke webcomponenten gebouwd gebruikt door miljoenen Nederlandse burgers",
+                        "WCAG compliance geïmplementeerd voor overheidsstandaarden",
+                        "Team van 8 developers gementord in moderne frontend practices"
+                    ]
+                },
+                "postcodeloterij": {
+                    "title": "Bij Postcode Loterij",
+                    "items": [
+                        "Next.js platform opgeleverd dat miljoenen aan loterij transacties verwerkt",
+                        "Paginalaadtijden met 60% verbeterd door optimalisatie",
+                        "Responsive componenten gebouwd voor mobile-first ervaring"
+                    ]
+                }
+            }
+        },
+        "technical": {
+            "title": "Technische Toolkit",
+            "intro": "Ik ben niet alleen een frontend developer - ik ben een full-stack engineer die kan werken over je gehele technologie stack:",
+            "categories": [
+                {
+                    "name": "Frontend",
+                    "technologies": [
+                        "React",
+                        "Angular",
+                        "Vue.js",
+                        "Next.js",
+                        "TypeScript"
+                    ]
+                },
+                {
+                    "name": "Backend",
+                    "technologies": [
+                        "Node.js",
+                        "C#",
+                        ".NET Core",
+                        "PostgreSQL",
+                        "REST APIs"
+                    ]
+                },
+                {
+                    "name": "Cloud & DevOps",
+                    "technologies": [
+                        "Azure",
+                        "Docker",
+                        "Kubernetes",
+                        "CI/CD",
+                        "Git"
+                    ]
+                },
+                {
+                    "name": "Architectuur",
+                    "technologies": [
+                        "Microservices",
+                        "Design Systems",
+                        "Clean Code",
+                        "Testing"
+                    ]
+                }
+            ]
+        },
+        "cta": {
+            "title": "Klaar om iets geweldigs te bouwen?",
+            "subtitle": "Of je nu je frontend wilt schalen, een nieuw platform wilt bouwen, of je ontwikkelteam wilt mentoren, ik ben er om te helpen. Laten we bespreken hoe ik impact kan maken op je project.",
+            "consultation": "Boek een Consultatie",
+            "contact": "Neem Contact Op",
+            "features": "Gratis 30-minuten consultatie • €85-125/uur transparante prijsstelling • Direct beschikbaar"
         }
     },
     "footer": {

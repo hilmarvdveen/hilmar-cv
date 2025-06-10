@@ -16,9 +16,9 @@
 - **Name:** Hilmar van der Veen
 - **Title:** Senior Frontend Developer
 - **Location:** Amsterdam, Netherlands
-- **Experience:** 8+ years professional experience
+- **Experience:**10+ years professional experience
 - **Education:** MSc Physics, University of Amsterdam
-- **Rates:** €95-125/hour
+- **Rates:** €85-125/hour
 - **Previous Clients:** Belastingdienst, Ziggo, NPL, Others
 - **Technologies:** React, Angular, Next.js, TypeScript, JavaScript
 - **Contact:** hilmar@hilmarvanderveen.com, +31 6 8014 9947
@@ -165,10 +165,10 @@
 
 ### Professional Positioning:
 
-- ✅ 8+ years experience clearly communicated
+- ✅10+ years experience clearly communicated
 - ✅ MSc Physics education highlighted for credibility
 - ✅ Previous client work (Belastingdienst, Ziggo, NPL) featured
-- ✅ €95-125/hour rate range professionally presented
+- ✅ €85-125/hour rate range professionally presented
 - ✅ Amsterdam location for local business advantage
 
 ### Technical Credibility:

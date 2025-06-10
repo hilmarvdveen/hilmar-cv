@@ -26,8 +26,8 @@
 1. **Homepage** (`/[locale]/page.tsx`) ✅
 
    - Professional identity optimization: "Senior Frontend Developer Amsterdam"
-   - 8+ years experience & MSc Physics UvA credentials
-   - €95-125/hour rate positioning
+     -10+ years experience & MSc Physics UvA credentials
+   - €85-125/hour rate positioning
    - Complete Schema.org Person + Organization markup
 
 2. **About Page** (`/[locale]/about/page.tsx`) ✅
@@ -137,9 +137,9 @@
 
 ### **Professional Positioning Successfully Achieved:**
 
-- **Experience**: 8+ years clearly communicated across all pages
+- **Experience**:10+ years clearly communicated across all pages
 - **Education**: MSc Physics University of Amsterdam for credibility
-- **Rate Range**: €95-125/hour professionally presented
+- **Rate Range**: €85-125/hour professionally presented
 - **Location**: Amsterdam focus for local business advantage
 - **Expertise**: React, Angular, Next.js, TypeScript prominence
 - **Clients**: Belastingdienst, Ziggo, NPL credibility signals
@@ -149,7 +149,7 @@
 - **Local SEO**: Amsterdam + Netherlands geographic targeting
 - **Technology Focus**: Modern frontend frameworks and languages
 - **Business Model**: Freelance/consultation services clarity
-- **Rate Positioning**: Premium developer (€95-125/hour)
+- **Rate Positioning**: Premium developer (€85-125/hour)
 - **Industry Credibility**: Government + Enterprise client work
 
 ---
@@ -223,7 +223,7 @@
 - **Conversion Tracking**: Complete analytics for business optimization
 - **Lead Generation**: Optimized contact and booking pages
 - **Credibility**: MSc Physics + Enterprise client positioning
-- **Market Positioning**: Premium developer (€95-125/hour) clear
+- **Market Positioning**: Premium developer (€85-125/hour) clear
 
 ---
 

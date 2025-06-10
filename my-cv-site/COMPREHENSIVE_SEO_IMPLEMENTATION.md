@@ -10,7 +10,7 @@ This document details the enterprise-level SEO implementation completed for Hilm
 - **Role**: Senior Frontend Developer (8+ years experience)
 - **Location**: Amsterdam, Netherlands
 - **Specialties**: React, Next.js, Angular, TypeScript
-- **Rate**: €95-125/hour (€750-950/day)
+- **Rate**: €85-125/hour (€750-950/day)
 - **Education**: Master of Science in Physics (AMEP) - University of Amsterdam
 - **Major Clients**: Belastingdienst, Ziggo, Nationale Postcode Loterij, Athlon, Randstad
 

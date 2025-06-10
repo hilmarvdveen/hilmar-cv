@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     {
       question: "What frontend technologies do you specialize in?",
       answer:
-        "I specialize in React, Angular, Next.js, TypeScript, and modern JavaScript frameworks with 8+ years of professional experience.",
+        "I specialize in React, Angular, Next.js, TypeScript, and modern JavaScript frameworks with10+ years of professional experience.",
     },
     {
       question: "What are your hourly rates for frontend development?",
       answer:
-        "My rates range from €95-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
+        "My rates range from €85-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
     },
     {
       question: "Do you work remotely or on-site in Amsterdam?",
@@ -53,12 +53,12 @@ export default async function FAQPage({ params }: Props) {
     {
       question: "What frontend technologies do you specialize in?",
       answer:
-        "I specialize in React, Angular, Next.js, TypeScript, and modern JavaScript frameworks with 8+ years of professional experience.",
+        "I specialize in React, Angular, Next.js, TypeScript, and modern JavaScript frameworks with10+ years of professional experience.",
     },
     {
       question: "What are your hourly rates for frontend development?",
       answer:
-        "My rates range from €95-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
+        "My rates range from €85-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
     },
     {
       question: "Do you work remotely or on-site in Amsterdam?",

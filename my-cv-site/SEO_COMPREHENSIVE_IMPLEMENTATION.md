@@ -10,7 +10,7 @@ This document outlines the enterprise-level SEO implementation completed for Hil
 - **Role**: Senior Frontend Developer (10+ years experience)
 - **Location**: Amsterdam, Netherlands
 - **Specialties**: React, Next.js, Angular, TypeScript
-- **Rate**: €95-125/hour (€750-950/day)
+- **Rate**: €85-125/hour (€750-950/day)
 - **Major Clients**: Belastingdienst, Ziggo, Nationale Postcode Loterij
 - **Education**: Master's in Physics, University of Amsterdam
 

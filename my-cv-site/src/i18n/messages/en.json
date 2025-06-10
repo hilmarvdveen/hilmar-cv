@@ -1735,14 +1735,115 @@
         "title": "Page not found"
     },
     "about": {
-        "title": "About me",
-        "intro": "I'm Hilmar van der Veen, a senior frontend developer with over 10 years of experience building scalable, accessible, and future-proof web applications.",
-        "body": [
-            "I've worked on complex projects for government institutions, lotteries, and large organizations. My focus is on quality, scalability, and user-friendliness.",
-            "What sets me apart is my ability to not only build, but also guide. I take ownership, help teams grow, and I'm not afraid to think critically about the best solution – both technically and functionally.",
-            "Whether it's setting up a design system, migrating legacy code, or building a configuration-driven interface: I deliver structured, tested, and documented work."
-        ],
-        "cta": "View my projects"
+        "title": "Meet Your Next Senior Developer",
+        "subtitle": "I'm Hilmar van der Veen, a hands-on software engineer who turns complex technical challenges into scalable business solutions. With 10+ years building enterprise applications, I bridge the gap between technical excellence and business impact.",
+        "purpose": {
+            "title": "Why This Page Exists",
+            "intro": "You're here because you need a senior developer who can actually deliver. Not just someone who talks about technology, but someone who builds real solutions that solve real business problems.",
+            "mission": "My purpose is simple: help growing companies build better software, faster. Whether you need to scale your frontend, architect a new platform, or mentor your development team - I've been there, done that, and delivered results.",
+            "features": [
+                "€85-125/hour transparent pricing",
+                "Available for projects 2-40 hours/week",
+                "Remote-first with Amsterdam area on-site options"
+            ],
+            "foundation": {
+                "title": "Technical Foundation",
+                "description": "My background in physics taught me to solve complex problems systematically. In software development, this means I don't just code - I architect solutions that scale.",
+                "education": "Bachelor of Science in Physics from University of Amsterdam combined with 10+ years of hands-on development experience means I bring both analytical thinking and practical expertise to your project."
+            }
+        },
+        "strengths": {
+            "title": "What Product Managers Say",
+            "items": [
+                {
+                    "title": "He Actually Ships",
+                    "description": "While others talk about best practices, I deliver working software. My clients see results in weeks, not months. I focus on what moves the business forward."
+                },
+                {
+                    "title": "Speaks Business Language",
+                    "description": "I translate technical complexity into business impact. You'll understand what we're building, why it matters, and how it affects your bottom line."
+                },
+                {
+                    "title": "Elevates Teams",
+                    "description": "Your developers get better by working with me. I share knowledge, establish patterns, and leave your team stronger than I found them."
+                }
+            ]
+        },
+        "experience": {
+            "title": "Proven Track Record",
+            "intro": "I've delivered enterprise-grade solutions for some of the Netherlands' largest organizations. Here's where I've made an impact:",
+            "impact": {
+                "title": "Real Impact, Real Results",
+                "belastingdienst": {
+                    "title": "At Belastingdienst (Dutch Tax Authority)",
+                    "items": [
+                        "Built accessible web components used by millions of Dutch citizens",
+                        "Implemented WCAG compliance for government standards",
+                        "Mentored team of 8 developers on modern frontend practices"
+                    ]
+                },
+                "postcodeloterij": {
+                    "title": "At Postcode Loterij",
+                    "items": [
+                        "Delivered Next.js platform handling millions in lottery transactions",
+                        "Improved page load times by 60% through optimization",
+                        "Built responsive components for mobile-first experience"
+                    ]
+                }
+            }
+        },
+        "technical": {
+            "title": "Technical Toolkit",
+            "intro": "I'm not just a frontend developer - I'm a full-stack engineer who can work across your entire technology stack:",
+            "categories": [
+                {
+                    "name": "Frontend",
+                    "technologies": [
+                        "React",
+                        "Angular",
+                        "Vue.js",
+                        "Next.js",
+                        "TypeScript"
+                    ]
+                },
+                {
+                    "name": "Backend",
+                    "technologies": [
+                        "Node.js",
+                        "C#",
+                        ".NET Core",
+                        "PostgreSQL",
+                        "REST APIs"
+                    ]
+                },
+                {
+                    "name": "Cloud & DevOps",
+                    "technologies": [
+                        "Azure",
+                        "Docker",
+                        "Kubernetes",
+                        "CI/CD",
+                        "Git"
+                    ]
+                },
+                {
+                    "name": "Architecture",
+                    "technologies": [
+                        "Microservices",
+                        "Design Systems",
+                        "Clean Code",
+                        "Testing"
+                    ]
+                }
+            ]
+        },
+        "cta": {
+            "title": "Ready to Build Something Great?",
+            "subtitle": "Whether you need to scale your frontend, build a new platform, or mentor your development team, I'm here to help. Let's discuss how I can make an impact on your project.",
+            "consultation": "Book a Consultation",
+            "contact": "Get in Touch",
+            "features": "Free 30-minute consultation • €85-125/hour transparent pricing • Available immediately"
+        }
     },
     "cvModal": {
         "title": "Download CV",

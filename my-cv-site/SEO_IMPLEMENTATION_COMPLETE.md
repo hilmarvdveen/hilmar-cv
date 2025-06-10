@@ -19,9 +19,9 @@
 **Hilmar van der Veen** - Senior Fullstack Developer
 
 - 📍 **Location**: Amsterdam, Netherlands
-- 💼 **Experience**: 8+ years frontend development
+- 💼 **Experience**:10+ years frontend development
 - 🎓 **Education**: Master of Science Physics (AMEP) - University of Amsterdam
-- 💰 **Rate**: €95-125/hour (€750-950/day)
+- 💰 **Rate**: €85-125/hour (€750-950/day)
 - 🏢 **Major Clients**: Belastingdienst, Ziggo, Nationale Postcode Loterij, Athlon, Randstad
 
 **Core Technologies**: React, Next.js, Angular, TypeScript, Vue.js, Node.js, .NET Core, Azure
@@ -68,7 +68,7 @@
   "@type": "ProfessionalService",
   "name": "Frontend Development Services",
   "provider": "Hilmar van der Veen",
-  "priceRange": "€95-125 per hour",
+  "priceRange": "€85-125 per hour",
   "areaServed": ["Netherlands", "Europe"],
   "review": [
     /* 5-star reviews from major clients */
@@ -98,7 +98,7 @@
 
 **Service Keywords** (Business focused):
 
-- "Frontend Development Services Netherlands €95-125"
+- "Frontend Development Services Netherlands €85-125"
 - "Design Systems Development Amsterdam"
 - "Enterprise Web Development"
 - "Government Software Development"
@@ -137,8 +137,8 @@
 
 ### **✅ Services Page** - **COMPLETE**
 
-- **Title**: "Frontend Development Services | €95-125/uur | React Next.js Angular | Amsterdam Expert"
-- **Description**: Professional services with 8+ years experience, major clients
+- **Title**: "Frontend Development Services | €85-125/uur | React Next.js Angular | Amsterdam Expert"
+- **Description**: Professional services with10+ years experience, major clients
 - **Keywords**: 80+ targeted keywords including technology stack and location
 - **Structured Data**: ProfessionalService, reviews from major clients
 - **Content**: Service offerings, pricing, technologies, benefits
@@ -232,7 +232,7 @@ Enhanced SEO metadata system created for:
 When someone searches for "Senior Frontend Developer Amsterdam" or "React Developer Netherlands", Hilmar's site will appear with:
 
 - ⭐ **5-star ratings** from major clients
-- 💰 **Transparent pricing** (€95-125/hour)
+- 💰 **Transparent pricing** (€85-125/hour)
 - 🎓 **Educational credentials** (Master's Physics UvA)
 - 🏢 **Enterprise experience** (Belastingdienst, Ziggo, NPL)
 - 📍 **Amsterdam location** with service area coverage

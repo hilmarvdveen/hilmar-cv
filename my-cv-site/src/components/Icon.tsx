@@ -6,6 +6,18 @@ import {
   ArrowLeftRight,
   Users,
   Rocket,
+  Code2,
+  Building2,
+  TrendingUp,
+  Zap,
+  Award,
+  MapPin,
+  GraduationCap,
+  Database,
+  Cloud,
+  Layers,
+  Calendar,
+  Phone,
 } from "lucide-react";
 
 export type IconName =
@@ -14,7 +26,19 @@ export type IconName =
   | "design"
   | "integration"
   | "mentorship"
-  | "scale";
+  | "scale"
+  | "code"
+  | "enterprise"
+  | "results"
+  | "shipping"
+  | "award"
+  | "location"
+  | "education"
+  | "database"
+  | "cloud"
+  | "architecture"
+  | "calendar"
+  | "phone";
 
 const iconMap: Record<IconName, FC<{ className?: string }>> = {
   idea: Lightbulb,
@@ -23,6 +47,18 @@ const iconMap: Record<IconName, FC<{ className?: string }>> = {
   integration: ArrowLeftRight,
   mentorship: Users,
   scale: Rocket,
+  code: Code2,
+  enterprise: Building2,
+  results: TrendingUp,
+  shipping: Zap,
+  award: Award,
+  location: MapPin,
+  education: GraduationCap,
+  database: Database,
+  cloud: Cloud,
+  architecture: Layers,
+  calendar: Calendar,
+  phone: Phone,
 };
 
 interface IconProps {
