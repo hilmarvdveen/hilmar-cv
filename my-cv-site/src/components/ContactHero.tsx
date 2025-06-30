@@ -99,7 +99,7 @@ export const ContactHero = () => {
                   <dt className="text-sm text-gray-400">{t("info.phone")}</dt>
                   <dd className="font-medium">
                     <a
-                      href="tel:+31612345678"
+                      href="tel:+31680149947"
                       className="hover:text-emerald-400 transition-colors"
                     >
                       +31 6 80149947
