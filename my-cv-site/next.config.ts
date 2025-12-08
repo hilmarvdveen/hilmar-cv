@@ -40,10 +40,11 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "connect-src 'self' https://www.google-analytics.com https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live",
-              "frame-ancestors 'none'",
+              "frame-src 'self'",
+              "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "object-src 'none'",
+              "frame-ancestors 'none'",
               "upgrade-insecure-requests"
             ].join('; '),
           },

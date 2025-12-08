@@ -5,7 +5,7 @@ import { routing } from '../i18n/routing';
 // Create the base middleware from next-intl
 const intlMiddleware = createMiddleware(routing);
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   // Generate a unique nonce for each request using crypto.randomUUID()
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   
@@ -16,10 +16,11 @@ export default async function middleware(request: NextRequest) {
   const nextResponse = response || NextResponse.next();
   
   // Enhanced CSP following 2024 best practices with strict-dynamic and nonce
+  // Note: 'unsafe-inline' is required for React inline styles (style prop) and CSS-in-JS
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://vitals.vercel-analytics.com;
-    style-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://fonts.googleapis.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https: w3.org;
     font-src 'self' https://fonts.gstatic.com;
     connect-src 'self' https://www.google-analytics.com https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live;
@@ -29,7 +30,6 @@ export default async function middleware(request: NextRequest) {
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
-    block-all-mixed-content;
   `.replace(/\s{2,}/g, ' ').trim();
 
   // Security headers following 2024 best practices
@@ -82,4 +82,4 @@ export const config = {
       ],
     },
   ]
-}; 
+};

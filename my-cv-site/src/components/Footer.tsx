@@ -167,7 +167,7 @@ export const Footer = () => {
               ))}
             </ul>
 
-            <div className="mt-8">
+           {/* <div className="mt-8">
               <h5 className="font-medium text-white mb-4">
                 {t("legal.title")}
               </h5>
@@ -183,7 +183,7 @@ export const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* Contact & Newsletter */}
@@ -211,7 +211,7 @@ export const Footer = () => {
             </div>
 
             {/* Newsletter Signup */}
-            <div className="bg-emerald-900/20 rounded-lg p-6 mb-8">
+            {/*<div className="bg-emerald-900/20 rounded-lg p-6 mb-8">
               <h5 className="font-medium text-white mb-2">
                 {t("contact.newsletter.title")}
               </h5>
@@ -233,7 +233,7 @@ export const Footer = () => {
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
               </form>
-            </div>
+            </div>  */}
 
             {/* Social Links */}
             <div>
@@ -283,9 +283,9 @@ export const Footer = () => {
             </div>
 
             <div className="flex items-center space-x-4 text-sm text-gray-500">
-              <span>🇳🇱 {t("bottom.location.netherlands")}</span>
+              <span>{t("bottom.location.netherlands")}</span>
               <span>•</span>
-              <span>🇪🇺 {t("bottom.location.euBased")}</span>
+              <span>{t("bottom.location.euBased")}</span>
             </div>
           </div>
         </div>

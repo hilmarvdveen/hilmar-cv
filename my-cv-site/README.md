@@ -1,28 +1,88 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-## Getting Started
+A multilingual personal portfolio and CV built with Next.js 15, featuring project highlights, skills, contact forms, and booking functionality.
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Before installing, make sure you have the following installed:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Node.js** 18.x or higher ([Download](https://nodejs.org/))
+- **npm** (comes with Node.js) or **yarn** / **pnpm** / **bun**
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <repository-url>
+   cd hilmar-cv/my-cv-site
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Set up environment variables**:
+   
+   Create a `.env.local` file in the `my-cv-site` directory with the following variables:
+
+   ```env
+   # Microsoft Graph API (Required for contact form and booking functionality)
+   MS_CLIENT_ID=your_microsoft_client_id
+   MS_CLIENT_SECRET=your_microsoft_client_secret
+   MS_TENANT_ID=your_microsoft_tenant_id
+   SMTP_USER=your_email@domain.com
+
+   # Site Configuration (Optional but recommended)
+   NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+   GOOGLE_SITE_VERIFICATION=your_google_verification_code
+
+   # Analytics (Optional - for production)
+   NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+   NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+   ```
+
+   **Note**: 
+   - The Microsoft Graph API credentials are required if you want the contact form and booking features to work
+   - Analytics variables are optional and only used in production
+   - If `NEXT_PUBLIC_SITE_URL` is not set, the site will use a default value
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
+
+5. **Open your browser**:
+   
+   Navigate to [http://localhost:3000](http://localhost:3000) to see the result.
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm run start` - Start the production server (after building)
+- `npm run lint` - Run ESLint to check for code issues
+
+## Project Structure
+
+This project uses the Next.js App Router with:
+- **Internationalization (i18n)** - Supports multiple languages (English/Dutch)
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Microsoft Graph API** - For email sending and calendar integration
+- **SEO Optimization** - Comprehensive SEO implementation
 
 ## Learn More
 
