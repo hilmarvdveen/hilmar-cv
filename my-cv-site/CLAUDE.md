@@ -105,9 +105,13 @@ Vitest + React Testing Library + jsdom (`vitest.config.ts`). Run `npm test`,
 - **API routes** are tested with a mocked `@/lib/graph`.
 - **Interactive components** (ContactForm, CVDownloadModal, BookingForm, Header)
   have RTL tests with mocked `fetch` / `next-intl`.
-- **Coverage gate**: `test:coverage` enforces thresholds (70/70/70 lines/funcs/
-  stmts, 60 branches) on `src/lib` + `src/hooks`. Pages/components are excluded
-  from the gate but still tested for regression.
+- **Coverage gate**: `test:coverage` enforces **100%** lines/functions/statements
+  and **90%** branches over `src/lib`, `src/hooks`, and all components. A short
+  list of browser-only / E2E-appropriate / dead-code files is excluded in
+  `vitest.config.ts` (`analytics-manager`, `NetherlandsMap`, `BookingForm`,
+  `Header`, `ComprehensiveSEO`) — they still have smoke/regression tests.
+- Use `@/test/intl` for the shared `next-intl` component mock. Components are
+  also a type-definition surface: prefer `type` over `interface` (enforced).
 
 Add/adjust tests when changing route validation, Graph calls, form payloads, or
-SEO output.
+SEO output. Keep new components in the gate (add a co-located `*.test.tsx`).

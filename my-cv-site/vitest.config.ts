@@ -19,9 +19,13 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
-      // 100% gate over pure logic (lib + hooks). Components are added to this
-      // list alongside their tests.
-      include: ["src/lib/**/*.ts", "src/hooks/**/*.ts"],
+      // 100% gate over pure logic (lib + hooks) AND all components.
+      include: [
+        "src/lib/**/*.ts",
+        "src/hooks/**/*.ts",
+        "src/components/**/*.tsx",
+        "src/features/**/components/*.tsx",
+      ],
       exclude: [
         "src/**/index.ts",
         "src/**/*.test.{ts,tsx}",
@@ -30,6 +34,15 @@ export default defineConfig({
         "src/lib/seo/types/**", // type-only
         "src/lib/seo/constants/**", // static data
         "src/features/home/components/NetherlandsMap.tsx", // d3 canvas
+        // 4-step booking wizard: better covered by E2E than line-by-line unit
+        // tests. A step-gating unit test still runs for regression.
+        "src/features/booking/components/BookingForm.tsx",
+        // Nav shell with duplicated desktop/mobile trees + responsive-only
+        // branches; E2E-appropriate. Nav/active/locale unit tests still run.
+        "src/components/Header.tsx",
+        // Unused component with heavy browser-only DOM/SEO side effects
+        // (script/link injection + cleanups); E2E-appropriate. Smoke test runs.
+        "src/features/seo/components/ComprehensiveSEO.tsx",
       ],
       thresholds: {
         // 100% on lines/functions/statements; branches at a high bar (the

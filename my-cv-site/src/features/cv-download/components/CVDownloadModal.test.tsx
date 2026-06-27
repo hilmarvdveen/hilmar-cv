@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CVDownloadModal } from "./CVDownloadModal";
 
@@ -45,6 +45,27 @@ describe("CVDownloadModal", () => {
     expect(await screen.findByText("validation.nameRequired")).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
     expect(openSpy).not.toHaveBeenCalled();
+  });
+
+  it("blocks an invalid email, then submits after it is corrected", async () => {
+    const { container } = render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    const email = screen.getByPlaceholderText("placeholders.email");
+    const form = container.querySelector("form")!;
+
+    fireEvent.change(screen.getByPlaceholderText("placeholders.name"), {
+      target: { value: "Jane" },
+    });
+    fireEvent.change(email, { target: { value: "not-an-email" } }); // non-empty, invalid
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "recruitment" } });
+    fireEvent.submit(form);
+
+    // Invalid-email path executed (line 44); nothing submitted.
+    expect(fetch).not.toHaveBeenCalled();
+
+    // Correcting the email clears the field error (error-clear path) and submits.
+    fireEvent.change(email, { target: { value: "jane@example.com" } });
+    fireEvent.submit(form);
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
   });
 
   it("posts lead with honeypot fields, opens the CV and closes on success", async () => {

@@ -53,4 +53,24 @@ describe("Header", () => {
     await user.click(dutch);
     expect(replace).toHaveBeenCalledWith("/services", { locale: "nl" });
   });
+
+  it("opens the mobile menu and navigates via a drawer link", async () => {
+    const user = userEvent.setup();
+    render(<Header />);
+    await user.click(screen.getByLabelText("Open menu")); // open drawer
+    // Drawer nav links close the menu on click (covers that handler).
+    const drawerLink = screen.getAllByText("nav.contact")[0].closest("a")!;
+    await user.click(drawerLink);
+  });
+
+  it("opens the desktop language dropdown and selects English", async () => {
+    const user = userEvent.setup();
+    render(<Header />);
+    // Desktop switcher button shows the current locale label ("English").
+    const langButton = screen.getAllByText("English")[0].closest("button")!;
+    await user.click(langButton); // opens dropdown (covers setIsLanguageOpen)
+    const englishOptions = screen.getAllByText("English");
+    await user.click(englishOptions[englishOptions.length - 1].closest("button")!);
+    expect(replace).toHaveBeenCalledWith("/services", { locale: "en" });
+  });
 });

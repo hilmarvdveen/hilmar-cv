@@ -49,6 +49,34 @@ describe("ContactForm", () => {
     expect(Array.isArray(body.interests)).toBe(true);
   });
 
+  it("toggles interest tags on and off", async () => {
+    const user = userEvent.setup();
+    render(<ContactForm />);
+    const tag = screen.getByRole("button", { name: "React" });
+    await user.click(tag); // select
+    expect(tag).toHaveAttribute("aria-pressed", "true");
+    await user.click(tag); // deselect (covers both filter branches)
+    expect(tag).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("falls back to the generic error message on a non-Error rejection", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw "boom"; // non-Error rejection
+      })
+    );
+    const user = userEvent.setup();
+    render(<ContactForm />);
+    await user.type(screen.getByLabelText("form.name"), "Jane");
+    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
+    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.click(screen.getByRole("button", { name: /form\.submit/ }));
+    await waitFor(() =>
+      expect(screen.getByText("form.serverError")).toBeInTheDocument()
+    );
+  });
+
   it("shows a success message after submitting", async () => {
     const user = userEvent.setup();
     render(<ContactForm />);
