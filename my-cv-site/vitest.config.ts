@@ -14,5 +14,26 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      // The gate covers our pure, unit-tested logic (lib + hooks). Components
+      // and pages are exercised by RTL/route tests for regression but are not
+      // in the threshold (heavy JSX/d3/window code skews the numbers).
+      include: ["src/lib/**/*.ts", "src/hooks/**/*.ts"],
+      exclude: [
+        "src/**/index.ts",
+        "src/**/*.test.{ts,tsx}",
+        "src/lib/seo/core/analytics-manager.ts",
+        "src/lib/seo/types/**",
+        "src/lib/seo/constants/**",
+      ],
+      thresholds: {
+        lines: 70,
+        functions: 70,
+        statements: 70,
+        branches: 60,
+      },
+    },
   },
 });

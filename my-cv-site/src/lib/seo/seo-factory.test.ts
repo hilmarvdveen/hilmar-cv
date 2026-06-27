@@ -1,0 +1,78 @@
+import { describe, it, expect } from "vitest";
+import { SEOFactory } from "./factory";
+import type { Locale } from "./types/seo-types";
+
+// Exercising SEOFactory transitively covers SEOEngine + MetadataGenerator +
+// SchemaGenerator (the bulk of the SEO logic) with no mocking.
+
+const PAGES = [
+  "homepage",
+  "about",
+  "services",
+  "projects",
+  "contact",
+  "booking",
+  "privacy",
+] as const;
+
+const locales: Locale[] = ["en", "nl"];
+
+describe("SEOFactory page builders", () => {
+  for (const locale of locales) {
+    for (const page of PAGES) {
+      it(`${page} (${locale}) returns metadata + jsonLd + structuredData`, () => {
+        const result = SEOFactory[page](locale);
+        expect(typeof result.metadata.title).toBe("string");
+        expect((result.metadata.title as string).length).toBeGreaterThan(0);
+        expect(typeof result.metadata.description).toBe("string");
+
+        // canonical + language alternates present
+        expect(result.metadata.alternates?.canonical).toBeTruthy();
+        expect(result.metadata.alternates?.languages).toBeTruthy();
+
+        // at least one JSON-LD schema, each with an @type
+        expect(Array.isArray(result.jsonLd)).toBe(true);
+        expect(result.jsonLd.length).toBeGreaterThan(0);
+        for (const schema of result.jsonLd) {
+          expect(schema).toHaveProperty("@type");
+        }
+
+        // structuredData is a serialized <script>-ready string
+        expect(typeof result.structuredData).toBe("string");
+        expect(result.structuredData).toContain("@type");
+      });
+    }
+  }
+
+  it("produces locale-specific canonical URLs", () => {
+    const en = SEOFactory.homepage("en");
+    const nl = SEOFactory.homepage("nl");
+    expect(en.metadata.alternates?.canonical).not.toEqual(
+      nl.metadata.alternates?.canonical
+    );
+  });
+
+  it("builds the FAQ page schema from provided items", () => {
+    const result = SEOFactory.faq("en", [
+      { question: "Q1?", answer: "A1" },
+      { question: "Q2?", answer: "A2" },
+    ]);
+    const hasFaq = result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "FAQPage");
+    expect(hasFaq).toBe(true);
+  });
+});
+
+describe("SEOFactory.generateSitemapData", () => {
+  const entries = SEOFactory.generateSitemapData();
+  it("returns entries with url, priority and hreflang alternates", () => {
+    expect(entries.length).toBeGreaterThan(0);
+    for (const e of entries) {
+      expect(typeof e.url).toBe("string");
+      expect(typeof e.priority).toBe("number");
+      expect(Array.isArray(e.alternates)).toBe(true);
+      expect(e.alternates.length).toBeGreaterThan(0);
+      expect(e.alternates[0]).toHaveProperty("hreflang");
+      expect(e.alternates[0]).toHaveProperty("href");
+    }
+  });
+});

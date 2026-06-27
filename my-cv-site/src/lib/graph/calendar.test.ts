@@ -1,5 +1,11 @@
-import { describe, it, expect } from "vitest";
-import { generateTimeSlots, isSlotAvailable, type CalendarEvent } from "./calendar";
+import { describe, it, expect, vi } from "vitest";
+import {
+  generateTimeSlots,
+  isSlotAvailable,
+  createCalendarEvent,
+  type CalendarEvent,
+} from "./calendar";
+import type { Client } from "@microsoft/microsoft-graph-client";
 
 describe("generateTimeSlots", () => {
   const slots = generateTimeSlots("2026-07-01");
@@ -47,5 +53,35 @@ describe("isSlotAvailable", () => {
   it("is unavailable when fully contained in a long event", () => {
     const events = [makeEvent("2026-07-01T08:00:00Z", "2026-07-01T12:00:00Z")];
     expect(isSlotAvailable(new Date("2026-07-01T09:00:00Z"), events)).toBe(false);
+  });
+});
+
+describe("createCalendarEvent", () => {
+  it("posts a 30-minute Amsterdam event with the requester as required attendee", async () => {
+    const post = vi.fn().mockResolvedValue(undefined);
+    const api = vi.fn(() => ({ post }));
+    const client = { api } as unknown as Client;
+
+    await createCalendarEvent(client, "owner@example.com", {
+      name: "Jane Doe",
+      email: "jane@example.com",
+      date: "2026-07-01T10:00:00.000Z",
+      htmlBody: "<p>Meeting</p>",
+      subject: "Consultation",
+    });
+
+    expect(api).toHaveBeenCalledWith("/users/owner@example.com/events");
+    const event = post.mock.calls[0][0];
+    expect(event.subject).toBe("Consultation");
+    expect(event.body).toEqual({ contentType: "HTML", content: "<p>Meeting</p>" });
+    expect(event.start.timeZone).toBe("Europe/Amsterdam");
+    expect(event.end.timeZone).toBe("Europe/Amsterdam");
+    expect(event.attendees).toEqual([
+      { emailAddress: { address: "jane@example.com", name: "Jane Doe" }, type: "required" },
+    ]);
+
+    const durationMs =
+      new Date(event.end.dateTime).getTime() - new Date(event.start.dateTime).getTime();
+    expect(durationMs).toBe(30 * 60000);
   });
 });
