@@ -14,6 +14,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import Image from "next/image";
+import { Flag } from "@/components/Flag";
 
 export const Header = () => {
   const t = useTranslations("common");
@@ -38,8 +39,8 @@ export const Header = () => {
   }, [isMobileMenuOpen]);
 
   const locales = [
-    { code: "en", label: "English", flag: "🇺🇸" },
-    { code: "nl", label: "Nederlands", flag: "🇳🇱" },
+    { code: "en", label: "English" },
+    { code: "nl", label: "Nederlands" },
   ];
 
   const navItems = useMemo(
@@ -140,7 +141,7 @@ export const Header = () => {
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
                   className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200"
                 >
-                  <span className="text-base">{currentLocaleData?.flag}</span>
+                  <Flag code={currentLocale} className="w-5 h-3.5 rounded-sm" />
                   <span>{currentLocaleData?.label}</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-200 ${
@@ -161,7 +162,7 @@ export const Header = () => {
                             : "text-gray-700"
                         }`}
                       >
-                        <span className="text-base">{locale.flag}</span>
+                        <Flag code={locale.code} className="w-5 h-3.5 rounded-sm" />
                         <span>{locale.label}</span>
                       </button>
                     ))}
@@ -268,7 +269,7 @@ export const Header = () => {
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
                   }`}
                 >
-                  <span className="text-lg">{locale.flag}</span>
+                  <Flag code={locale.code} className="w-6 h-4 rounded-sm" />
                   <span>{locale.label}</span>
                 </button>
               ))}
