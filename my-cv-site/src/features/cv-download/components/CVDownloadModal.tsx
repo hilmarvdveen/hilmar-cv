@@ -166,7 +166,9 @@ export const CVDownloadModal = ({
                   <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                   <input
                     id="cv-name"
+                    name="name"
                     type="text"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
@@ -192,7 +194,9 @@ export const CVDownloadModal = ({
                   <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                   <input
                     id="cv-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${

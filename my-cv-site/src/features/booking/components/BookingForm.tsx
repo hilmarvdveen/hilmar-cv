@@ -524,11 +524,15 @@ ${formData.description}
             <div className="space-y-8">
               {/* Date */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-4">
+                <label
+                  htmlFor="booking-date"
+                  className="block text-sm font-semibold text-gray-900 mb-4"
+                >
                   <Calendar className="w-4 h-4 inline mr-2" />
                   {t("steps.step2.when")}
                 </label>
                 <input
+                  id="booking-date"
                   type="date"
                   value={formData.bookingDate}
                   onChange={(e) => handleDateChange(e.target.value)}
@@ -539,7 +543,10 @@ ${formData.description}
 
               {/* Time */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-4">
+                <label
+                  htmlFor="booking-time"
+                  className="block text-sm font-semibold text-gray-900 mb-4"
+                >
                   <Clock className="w-4 h-4 inline mr-2" />
                   {t("steps.step2.whatTimeWorksBest")}
                 </label>
@@ -561,6 +568,7 @@ ${formData.description}
                   </div>
                 ) : (
                   <select
+                    id="booking-time"
                     value={formData.bookingTime}
                     onChange={(e) =>
                       updateFormData("bookingTime", e.target.value)
@@ -629,11 +637,15 @@ ${formData.description}
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-4">
+                <label
+                  htmlFor="booking-description"
+                  className="block text-sm font-semibold text-gray-900 mb-4"
+                >
                   <MessageSquare className="w-4 h-4 inline mr-2" />
                   {t("steps.step2.tellAboutProject")}
                 </label>
                 <textarea
+                  id="booking-description"
                   value={formData.description}
                   maxLength={2000}
                   onChange={(e) =>
@@ -662,12 +674,18 @@ ${formData.description}
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  <label
+                    htmlFor="booking-name"
+                    className="block text-sm font-semibold text-gray-900 mb-3"
+                  >
                     <User className="w-4 h-4 inline mr-2" />
                     {t("steps.step3.fullName")} *
                   </label>
                   <input
+                    id="booking-name"
+                    name="name"
                     type="text"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => updateFormData("name", e.target.value)}
                     className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
@@ -676,12 +694,18 @@ ${formData.description}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  <label
+                    htmlFor="booking-company"
+                    className="block text-sm font-semibold text-gray-900 mb-3"
+                  >
                     <Building className="w-4 h-4 inline mr-2" />
                     {t("steps.step3.company")}
                   </label>
                   <input
+                    id="booking-company"
+                    name="organization"
                     type="text"
+                    autoComplete="organization"
                     value={formData.company}
                     onChange={(e) => updateFormData("company", e.target.value)}
                     className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
@@ -691,12 +715,18 @@ ${formData.description}
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                <label
+                  htmlFor="booking-email"
+                  className="block text-sm font-semibold text-gray-900 mb-3"
+                >
                   <Mail className="w-4 h-4 inline mr-2" />
                   {t("steps.step3.email")} *
                 </label>
                 <input
+                  id="booking-email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={(e) => updateFormData("email", e.target.value)}
                   className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
@@ -705,12 +735,18 @@ ${formData.description}
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                <label
+                  htmlFor="booking-phone"
+                  className="block text-sm font-semibold text-gray-900 mb-3"
+                >
                   <Phone className="w-4 h-4 inline mr-2" />
                   {t("steps.step3.phone")}
                 </label>
                 <input
+                  id="booking-phone"
+                  name="tel"
                   type="tel"
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={(e) => updateFormData("phone", e.target.value)}
                   className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"

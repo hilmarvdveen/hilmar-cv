@@ -41,6 +41,7 @@ export function SearchPageContent({ locale, initialQuery = "" }: SearchPageConte
         <input
           type="search"
           autoFocus
+          autoComplete="off"
           aria-label={labels.heading}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
