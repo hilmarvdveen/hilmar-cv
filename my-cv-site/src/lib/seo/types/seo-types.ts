@@ -72,10 +72,10 @@ export type OpenGraphMetadata = {
 
 export type TwitterMetadata = {
   card: 'summary' | 'summary_large_image' | 'app' | 'player';
-  site: string;
-  creator: string;
   title: string;
   description: string;
+  site?: string;
+  creator?: string;
 }
 
 export type ExtendedMetadata = BaseMetadata & {

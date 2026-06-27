@@ -105,7 +105,7 @@ Tijdstempel: ${new Date().toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam"
 <ul>
 <li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
 <li>Email: <a href="mailto:${smtpUser}">${smtpUser}</a></li>
-<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/hilmar-van-der-veen/">linkedin.com/in/hilmar-van-der-veen</a></li>
 </ul>
 
 <p>Met vriendelijke groet,<br>

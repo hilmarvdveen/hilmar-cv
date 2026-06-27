@@ -211,10 +211,11 @@ export class MetadataGenerator {
    * `twitter-image` route.
    */
   private generateTwitterMetadata(config: SEOPageConfig): TwitterMetadata {
+    // No X/Twitter account, so we omit twitter:site / twitter:creator. The card
+    // (+ twitter-image route) still produces a rich preview when others share
+    // the link on X.
     return {
       card: SOCIAL_OPTIMIZATION.TWITTER.CARD,
-      site: SOCIAL_OPTIMIZATION.TWITTER.SITE,
-      creator: SOCIAL_OPTIMIZATION.TWITTER.CREATOR,
       title: config.title,
       description: config.description,
     };
@@ -240,7 +241,7 @@ export class MetadataGenerator {
       // Professional metadata (E-E-A-T signals)
       'profile:first_name': BUSINESS_PROFILE.NAME.split(' ')[0],
       'profile:last_name': BUSINESS_PROFILE.NAME.split(' ').slice(1).join(' '),
-      'profile:username': 'hilmarvdv',
+      'profile:username': 'hilmarvdveen',
       
       // Business information
       'business:contact_data:locality': BUSINESS_PROFILE.LOCATION.CITY,

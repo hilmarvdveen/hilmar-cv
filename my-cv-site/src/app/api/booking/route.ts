@@ -55,7 +55,7 @@ function buildConfirmationEmail(name: string, date: string, userEmail: string): 
 <ul>
 <li>Email: <a href="mailto:${userEmail}">${userEmail}</a></li>
 <li>Phone: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
-<li>LinkedIn: <a href="https://linkedin.com/in/hilmarvanderveen">linkedin.com/in/hilmarvanderveen</a></li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/hilmar-van-der-veen/">linkedin.com/in/hilmar-van-der-veen</a></li>
 </ul>
 
 <p>I'll send you a calendar invitation shortly with all the details.</p>

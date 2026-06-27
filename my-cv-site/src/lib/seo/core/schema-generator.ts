@@ -152,8 +152,7 @@ export class SchemaGenerator {
       },
       sameAs: [
         BUSINESS_PROFILE.SOCIAL.LINKEDIN,
-        BUSINESS_PROFILE.SOCIAL.GITHUB,
-        BUSINESS_PROFILE.SOCIAL.X_URL
+        BUSINESS_PROFILE.SOCIAL.GITHUB
       ]
     };
   }
@@ -178,8 +177,7 @@ export class SchemaGenerator {
       image: `${this.baseUrl}/images/profile.jpg`,
       sameAs: [
         BUSINESS_PROFILE.SOCIAL.LINKEDIN,
-        BUSINESS_PROFILE.SOCIAL.GITHUB,
-        BUSINESS_PROFILE.SOCIAL.X_URL
+        BUSINESS_PROFILE.SOCIAL.GITHUB
       ],
       address: {
         '@type': 'PostalAddress',

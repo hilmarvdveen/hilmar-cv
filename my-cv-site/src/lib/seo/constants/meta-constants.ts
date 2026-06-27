@@ -23,17 +23,15 @@ export const BUSINESS_PROFILE = {
     }
   },
   CONTACT: {
-    EMAIL: 'info@hilmarvanderveen.com',
-    PHONE: '+31-20-123-4567',
+    EMAIL: 'hilmar@hilmarvanderveen.com',
+    PHONE: '+31680149947',
+    WHATSAPP: 'https://wa.me/31680149947',
     WEBSITE: 'https://hilmarvanderveen.com'
   },
   SOCIAL: {
-    LINKEDIN: 'https://linkedin.com/in/hilmarvdv',
-    GITHUB: 'https://github.com/hilmarvdv',
-    // @handle for the twitter:creator meta tag; X_URL is the canonical profile
-    // URL for schema.org `sameAs` (which requires a URL, not a handle).
-    TWITTER: '@hilmarvdv',
-    X_URL: 'https://x.com/hilmarvdv'
+    LINKEDIN: 'https://www.linkedin.com/in/hilmar-van-der-veen/',
+    GITHUB: 'https://github.com/hilmarvdveen',
+    WHATSAPP: 'https://wa.me/31680149947'
   },
   ESTABLISHED: '2016',
   YEARS_EXPERIENCE: '8+',
@@ -398,9 +396,7 @@ export const SOCIAL_OPTIMIZATION = {
     IMAGE_TYPE: 'image/jpeg'
   },
   TWITTER: {
-    CARD: 'summary_large_image',
-    SITE: '@hilmarvdv',
-    CREATOR: '@hilmarvdv'
+    CARD: 'summary_large_image'
   },
   LINKEDIN: {
     COMPANY: 'hvd-consulting'

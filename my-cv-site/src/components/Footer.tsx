@@ -13,7 +13,7 @@ import {
   Users,
   Github,
   Linkedin,
-  Twitter,
+  MessageCircle,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -61,22 +61,22 @@ export const Footer = () => {
 
   const socialLinks = [
     {
-      name: "GitHub",
-      icon: Github,
-      href: "https://github.com/hilmarvanderveen",
-      color: "hover:text-gray-900",
-    },
-    {
       name: "LinkedIn",
       icon: Linkedin,
-      href: "https://linkedin.com/in/hilmarvanderveen",
+      href: "https://www.linkedin.com/in/hilmar-van-der-veen/",
       color: "hover:text-blue-600",
     },
     {
-      name: "Twitter",
-      icon: Twitter,
-      href: "https://twitter.com/hilmarvdv",
-      color: "hover:text-blue-400",
+      name: "GitHub",
+      icon: Github,
+      href: "https://github.com/hilmarvdveen",
+      color: "hover:text-gray-900",
+    },
+    {
+      name: "WhatsApp",
+      icon: MessageCircle,
+      href: "https://wa.me/31680149947",
+      color: "hover:text-emerald-500",
     },
   ];
 

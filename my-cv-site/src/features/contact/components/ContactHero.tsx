@@ -102,7 +102,27 @@ export const ContactHero = () => {
                       href="tel:+31680149947"
                       className="hover:text-emerald-400 transition-colors"
                     >
-                      +31 6 80149947
+                      +31 6 8014 9947
+                    </a>
+                  </dd>
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <MessageSquare
+                  className="w-4 h-4 mr-3 text-emerald-400"
+                  aria-hidden="true"
+                />
+                <div>
+                  <dt className="text-sm text-gray-400">WhatsApp</dt>
+                  <dd className="font-medium">
+                    <a
+                      href="https://wa.me/31680149947"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-emerald-400 transition-colors"
+                    >
+                      +31 6 8014 9947
                     </a>
                   </dd>
                 </div>
