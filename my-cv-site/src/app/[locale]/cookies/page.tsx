@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
 
-const SLUG = "privacy" as const;
+const SLUG = "cookies" as const;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PrivacyPage({ params }: Props) {
+export default async function CookiesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const doc = getLegalDoc(SLUG, locale);

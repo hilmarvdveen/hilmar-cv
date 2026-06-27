@@ -52,10 +52,11 @@ export const Footer = () => {
     { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 
-  // Only link to pages that exist. Add /terms, /cookies, /disclaimer back here
-  // once those routes are created.
   const legalLinks = [
     { name: t("legal.items.privacy"), href: "/privacy" },
+    { name: t("legal.items.cookies"), href: "/cookies" },
+    { name: t("legal.items.terms"), href: "/terms" },
+    { name: t("legal.items.disclaimer"), href: "/disclaimer" },
   ];
 
   const socialLinks = [
