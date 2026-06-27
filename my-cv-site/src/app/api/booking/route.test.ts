@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
+import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
 const sendMail = vi.fn();
 const createCalendarEvent = vi.fn();
@@ -39,6 +40,7 @@ function post(body: unknown, headers: Record<string, string> = {}) {
 }
 
 beforeEach(() => {
+  __resetRateLimitStore();
   sendMail.mockReset().mockResolvedValue(undefined);
   createCalendarEvent.mockReset().mockResolvedValue(undefined);
   getGraphCredentials.mockReset().mockReturnValue(CREDS);

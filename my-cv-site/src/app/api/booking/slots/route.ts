@@ -7,12 +7,15 @@ import {
   isSlotAvailable,
   BOOKING_TIMEZONE,
 } from "@/lib/graph";
-import { serverErrorResponse } from "@/lib/security";
+import { serverErrorResponse, enforceRateLimit } from "@/lib/security";
 
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
+    const limited = enforceRateLimit(req, "read");
+    if (limited) return limited;
+
     const { searchParams } = new URL(req.url);
     const date = searchParams.get("date"); // YYYY-MM-DD
 

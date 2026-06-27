@@ -63,6 +63,8 @@ application credentials; without them those routes return a generic
   `next.config.ts`.
 - The public API routes validate + length-cap input, escape user content in
   HTML emails, check the request `Origin`, and use a honeypot + timing guard
-  against bots. IP rate limiting is delegated to the Vercel platform.
+  against bots, and a per-IP sliding-window rate limit (5/min on the email
+  endpoints, 30/min on slots). For multi-region scale the in-memory limiter can
+  be swapped for Upstash Redis without touching the call sites.
 
 See `CLAUDE.md` for the full conventions.

@@ -64,12 +64,10 @@ export type OpenGraphMetadata = {
   title: string;
   description: string;
   type: 'website' | 'article' | 'profile';
-  image?: string;
-  imageAlt?: string;
   url: string;
   siteName: string;
   locale: string;
-  alternateLocales: string[];
+  alternateLocale: string[];
 }
 
 export type TwitterMetadata = {
@@ -78,8 +76,6 @@ export type TwitterMetadata = {
   creator: string;
   title: string;
   description: string;
-  image?: string;
-  imageAlt?: string;
 }
 
 export type ExtendedMetadata = BaseMetadata & {

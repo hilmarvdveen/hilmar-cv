@@ -3,6 +3,7 @@ import { getGraphCredentials, getAccessToken, getGraphClient, sendMail } from "@
 import {
   escapeHtml,
   isAllowedOrigin,
+  enforceRateLimit,
   looksAutomated,
   validateFields,
   serverErrorResponse,
@@ -35,6 +36,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!isAllowedOrigin(request)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    const limited = enforceRateLimit(request, "email");
+    if (limited) return limited;
 
     const data = (await request.json()) as Partial<CVDownloadData>;
 

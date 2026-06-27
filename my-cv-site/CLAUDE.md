@@ -42,15 +42,25 @@ and optional `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_GTM_ID`. See
   token fetch or `Client.init` in a route again.
 - **Every public API route must**, before doing any work:
   1. `isAllowedOrigin(request)` → 403 on cross-site/`null` origin (prod).
-  2. `looksAutomated(body, Date.now())` → silently succeed (honeypot + timing).
-  3. `validateFields(...)` / `validateStringArray(...)` → 400, with length caps
+  2. `enforceRateLimit(request, "email" | "read")` → 429 + `Retry-After` when the
+     per-IP sliding window is exceeded (5/min email routes, 30/min slots).
+  3. `looksAutomated(body, Date.now())` → silently succeed (honeypot + timing).
+  4. `validateFields(...)` / `validateStringArray(...)` → 400, with length caps
      from `LIMITS`.
-  4. Escape user input with `escapeHtml()` before putting it in any HTML email
+  5. Escape user input with `escapeHtml()` before putting it in any HTML email
      or calendar body.
-  5. Use `serverErrorResponse(error, publicMessage)` for 500s — details are only
+  6. Use `serverErrorResponse(error, publicMessage)` for 500s — details are only
      included in development.
-- IP rate limiting is delegated to the **Vercel platform** (firewall / WAF), not
-  application code.
+- Rate limiting is an in-memory sliding window (per serverless instance). For
+  multi-region scale, back `rate-limit.ts` with Upstash Redis — call sites stay
+  the same. Tests reset it via `__resetRateLimitStore()`.
+
+### Social / Open Graph
+- og:image and twitter:image come from the generated branded cards
+  `src/app/[locale]/{opengraph-image,twitter-image}.tsx` (1200×630, logo + name
+  + title). Do **not** add `images` to the SEO metadata generator — that would
+  override the generated card. og:title/description/locale come from the SEO
+  metadata; keep Next's canonical keys (`alternateLocale`, not `alternateLocales`).
 
 ### Forms
 

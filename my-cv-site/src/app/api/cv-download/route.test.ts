@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
+import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
 const sendMail = vi.fn();
 const getGraphCredentials = vi.fn();
@@ -41,6 +42,7 @@ const valid = () => ({
 });
 
 beforeEach(() => {
+  __resetRateLimitStore();
   sendMail.mockReset().mockResolvedValue(undefined);
   getGraphCredentials.mockReset().mockReturnValue(CREDS);
 });

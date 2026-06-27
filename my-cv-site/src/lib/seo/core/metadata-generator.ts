@@ -188,8 +188,8 @@ export class MetadataGenerator {
    * Generate Open Graph metadata with proper image optimization
    */
   private generateOpenGraphMetadata(config: SEOPageConfig, canonicalUrl: string): OpenGraphMetadata {
-    const imageUrl = this.getOptimizedImageUrl(config.pageType);
-    
+    // Note: og:image is provided by the file-based `opengraph-image` route
+    // (a generated 1200x630 branded card), so it is intentionally not set here.
     return {
       title: config.title,
       description: config.description,
@@ -197,32 +197,25 @@ export class MetadataGenerator {
       url: canonicalUrl,
       siteName: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
       locale: LOCALE_CONFIG.HREFLANG[config.locale],
-      alternateLocales: Object.values(LOCALE_CONFIG.HREFLANG).filter(
+      // Next.js metadata key is `alternateLocale` (was previously the invalid
+      // `alternateLocales`, which Next silently ignored).
+      alternateLocale: Object.values(LOCALE_CONFIG.HREFLANG).filter(
         locale => locale !== LOCALE_CONFIG.HREFLANG[config.locale]
       ),
-      ...(imageUrl && {
-        image: imageUrl,
-        imageAlt: `${config.title} - ${BUSINESS_PROFILE.NAME}`,
-      }),
     };
   }
 
   /**
-   * Generate Twitter Card metadata
+   * Generate Twitter Card metadata. twitter:image is provided by the file-based
+   * `twitter-image` route.
    */
   private generateTwitterMetadata(config: SEOPageConfig): TwitterMetadata {
-    const imageUrl = this.getOptimizedImageUrl(config.pageType);
-    
     return {
       card: SOCIAL_OPTIMIZATION.TWITTER.CARD,
       site: SOCIAL_OPTIMIZATION.TWITTER.SITE,
       creator: SOCIAL_OPTIMIZATION.TWITTER.CREATOR,
       title: config.title,
       description: config.description,
-      ...(imageUrl && {
-        image: imageUrl,
-        imageAlt: `${config.title} - ${BUSINESS_PROFILE.NAME}`,
-      }),
     };
   }
 
@@ -422,24 +415,4 @@ export class MetadataGenerator {
     return categories[pageType] || 'Professional Services';
   }
 
-  /**
-   * Get optimized image URL for social sharing
-   */
-  private getOptimizedImageUrl(pageType: PageType): string {
-    const baseUrl = this.baseUrl;
-    const imageMap = {
-      homepage: `${baseUrl}/images/og/homepage.jpg`,
-      about: `${baseUrl}/images/og/about.jpg`,
-      services: `${baseUrl}/images/og/services.jpg`,
-      projects: `${baseUrl}/images/og/projects.jpg`,
-      contact: `${baseUrl}/images/og/contact.jpg`,
-      faq: `${baseUrl}/images/og/faq.jpg`,
-      blog: `${baseUrl}/images/og/blog.jpg`,
-      'blog-post': `${baseUrl}/images/og/blog-post.jpg`,
-      privacy: `${baseUrl}/images/og/privacy.jpg`,
-      booking: `${baseUrl}/images/og/booking.jpg`
-    };
-    
-    return imageMap[pageType] || `${baseUrl}/images/og/default.jpg`;
-  }
 } 

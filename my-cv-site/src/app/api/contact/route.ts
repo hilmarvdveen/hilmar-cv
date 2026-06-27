@@ -3,6 +3,7 @@ import { getGraphCredentials, getAccessToken, getGraphClient, sendMail } from "@
 import {
   escapeHtml,
   isAllowedOrigin,
+  enforceRateLimit,
   looksAutomated,
   validateFields,
   validateStringArray,
@@ -27,6 +28,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!isAllowedOrigin(request)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    // 2. Per-IP rate limit (spam / mailbomb / denial-of-wallet).
+    const limited = enforceRateLimit(request, "email");
+    if (limited) return limited;
 
     const body = (await request.json()) as Partial<ContactFormRequest>;
     const { name, email, message, interests } = body;

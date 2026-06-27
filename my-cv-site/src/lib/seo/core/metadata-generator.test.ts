@@ -45,6 +45,16 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(en.alternates?.canonical).not.toEqual(nl.alternates?.canonical);
   });
 
+  it("uses Next-compatible Open Graph keys (alternateLocale, no inline image)", () => {
+    const og = gen.generateMetadata(cfg({ locale: "en" })).openGraph as Record<string, unknown>;
+    // og:image is provided by the file-based opengraph-image route, not inline.
+    expect(og.image).toBeUndefined();
+    expect(og.imageAlt).toBeUndefined();
+    // Correct Next key (previously the ignored `alternateLocales`).
+    expect(Array.isArray(og.alternateLocale)).toBe(true);
+    expect(og.alternateLocale).toContain("nl-NL");
+  });
+
   it("keeps a short title/description un-truncated", () => {
     const meta = gen.generateMetadata(cfg({ title: "Hi", description: "Short." }));
     expect(meta.title).toBeTruthy();

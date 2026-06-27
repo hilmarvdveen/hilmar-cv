@@ -11,6 +11,7 @@ import {
 import {
   escapeHtml,
   isAllowedOrigin,
+  enforceRateLimit,
   looksAutomated,
   validateFields,
   serverErrorResponse,
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!isAllowedOrigin(req)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    const limited = enforceRateLimit(req, "email");
+    if (limited) return limited;
 
     const body = (await req.json()) as Partial<BookingData>;
     const { name, email, date, message } = body;

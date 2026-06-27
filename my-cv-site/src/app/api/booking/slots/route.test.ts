@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
+import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
 // Graph client.calendarview chain is mocked so the happy path is exercisable.
 const getEvents = vi.fn();
@@ -41,6 +42,7 @@ function futureDate(daysAhead = 5) {
 }
 
 beforeEach(() => {
+  __resetRateLimitStore();
   getEvents.mockReset().mockResolvedValue({ value: [] });
   getGraphCredentials.mockReset().mockReturnValue(CREDS);
 });

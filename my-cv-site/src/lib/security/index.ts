@@ -15,3 +15,12 @@ export {
   looksAutomated,
 } from "./honeypot";
 export { serverErrorResponse } from "./http";
+export {
+  enforceRateLimit,
+  getClientIp,
+  checkRateLimit,
+  RATE_LIMITS,
+  type RateLimitName,
+  type RateLimitRule,
+  type RateLimitResult,
+} from "./rate-limit";

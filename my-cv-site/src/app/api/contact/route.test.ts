@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
+import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
 // Mock the Graph layer so no network calls happen.
 const sendMail = vi.fn();
@@ -40,6 +41,7 @@ const valid = {
 };
 
 beforeEach(() => {
+  __resetRateLimitStore();
   sendMail.mockReset();
   sendMail.mockResolvedValue(undefined);
   getGraphCredentials.mockReset();
