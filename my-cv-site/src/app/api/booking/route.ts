@@ -1,7 +1,21 @@
 // app/api/booking/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { Client } from "@microsoft/microsoft-graph-client";
-import "isomorphic-fetch";
+import { NextRequest, NextResponse } from "next/server";
+import {
+  getGraphCredentials,
+  getAccessToken,
+  getGraphClient,
+  sendMail,
+  createCalendarEvent,
+  BOOKING_TIMEZONE,
+} from "@/lib/graph";
+import {
+  escapeHtml,
+  isAllowedOrigin,
+  looksAutomated,
+  validateFields,
+  serverErrorResponse,
+  LIMITS,
+} from "@/lib/security";
 
 export const runtime = "nodejs"; // Ensures Node.js runtime, not Edge
 
@@ -10,104 +24,22 @@ interface BookingData {
   email: string;
   date: string; // ISO string
   message?: string;
+  company_website?: string; // honeypot
+  formStartedAt?: number;
 }
 
-async function getMicrosoftAccessToken(clientId: string, clientSecret: string, tenantId: string) {
-  const res = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-      client_id: clientId,
-      client_secret: clientSecret,
-      scope: "https://graph.microsoft.com/.default"
-    }),
-  });
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.error_description || 'Failed to get Microsoft Graph token');
-  }
-  return data.access_token;
-}
-
-async function createCalendarEvent(accessToken: string, userEmail: string, { name, email, date, message }: BookingData) {
-  const client = Client.init({
-    authProvider: (done) => done(null, accessToken),
+function buildConfirmationEmail(name: string, date: string, userEmail: string): string {
+  const formattedDate = new Date(date).toLocaleString("nl-NL", {
+    timeZone: BOOKING_TIMEZONE,
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
-  // Parse date once and create both start and end in ISO format
-  const startDate = new Date(date);
-  const endDate = new Date(startDate.getTime() + 30 * 60000); // 30 minutes later
-
-  await client.api(`/users/${userEmail}/events`).post({
-    subject: `New Booking from ${name}`,
-    body: {
-      contentType: "HTML",
-      content: `Booking message: ${message || "(no message)"}`,
-    },
-    start: {
-      dateTime: startDate.toISOString(),
-      timeZone: "Europe/Amsterdam",
-    },
-    end: {
-      dateTime: endDate.toISOString(),
-      timeZone: "Europe/Amsterdam",
-    },
-    attendees: [
-      {
-        emailAddress: {
-          address: email,
-          name,
-        },
-        type: "required",
-      },
-    ],
-  });
-}
-
-async function sendEmailViaGraph(accessToken: string, userEmail: string, emailData: {
-  to: string;
-  toName?: string;
-  subject: string;
-  body: string;
-  isHtml?: boolean;
-}) {
-  const client = Client.init({
-    authProvider: (done) => done(null, accessToken),
-  });
-
-  const message = {
-    subject: emailData.subject,
-    body: {
-      contentType: emailData.isHtml ? "HTML" : "Text",
-      content: emailData.body,
-    },
-    toRecipients: [
-      {
-        emailAddress: {
-          address: emailData.to,
-          name: emailData.toName || emailData.to,
-        },
-      },
-    ],
-  };
-
-  await client.api(`/users/${userEmail}/sendMail`).post({ message });
-}
-
-async function sendConfirmationEmail(accessToken: string, userEmail: string, { name, email, date }: BookingData) {
-  const formattedDate = new Date(date).toLocaleString('nl-NL', { 
-    timeZone: 'Europe/Amsterdam',
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-
-  const confirmationSubject = "Booking Confirmation - Hilmar van der Veen";
-  const confirmationBody = `<p>Hi ${name},</p>
+  return `<p>Hi ${escapeHtml(name)},</p>
 
 <p>Thank you for booking a consultation with me! Your booking has been confirmed for:</p>
 
@@ -133,67 +65,75 @@ Senior Frontend Developer</p>
 
 <hr style="margin-top: 30px; border: none; border-top: 1px solid #e5e7eb;">
 <p style="font-size: 12px; color: #6b7280;">This is an automated confirmation email.</p>`;
-
-  await sendEmailViaGraph(accessToken, userEmail, {
-    to: email,
-    toName: name,
-    subject: confirmationSubject,
-    body: confirmationBody,
-    isHtml: true,
-  });
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    // Get environment variables
-    const clientId = process.env.MS_CLIENT_ID;
-    const clientSecret = process.env.MS_CLIENT_SECRET;
-    const tenantId = process.env.MS_TENANT_ID;
-    const smtpUser = process.env.SMTP_USER;
-
-    if (!clientId || !clientSecret || !tenantId || !smtpUser) {
-      console.error("Missing required environment variables for booking service");
-      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    if (!isAllowedOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const body = await req.json();
-    const { name, email, date, message } = body as BookingData;
+    const body = (await req.json()) as Partial<BookingData>;
+    const { name, email, date, message } = body;
 
-    if (!name || !email || !date) {
-      return NextResponse.json({ error: "Missing required fields: name, email, and date are required" }, { status: 400 });
+    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
+      return NextResponse.json({ success: true, message: "Booking created successfully" });
     }
 
-    // Optional: Validate date format and ensure it's not in the past
-    const bookingDate = new Date(date);
+    const validation = validateFields({
+      name: { value: name, required: true, maxLength: LIMITS.name },
+      email: { value: email, required: true, email: true },
+      date: { value: date, required: true, maxLength: 40 },
+      message: { value: message, maxLength: LIMITS.message },
+    });
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    // Validate date is real and not in the past.
+    const bookingDate = new Date(date as string);
     if (isNaN(bookingDate.getTime())) {
       return NextResponse.json({ error: "Invalid date format" }, { status: 400 });
     }
-
     if (bookingDate < new Date()) {
       return NextResponse.json({ error: "Booking date cannot be in the past" }, { status: 400 });
     }
 
-    // Get Microsoft Graph access token
-    const token = await getMicrosoftAccessToken(clientId, clientSecret, tenantId);
-    
-    // Create calendar event and send confirmation email
-    await createCalendarEvent(token, smtpUser, { name, email, date, message });
-    await sendConfirmationEmail(token, smtpUser, { name, email, date });
+    const credentials = getGraphCredentials();
+    if (!credentials) {
+      console.error("Missing required environment variables for booking service");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
 
-    console.log(`Booking created for: ${name} (${email}) on ${new Date(date).toLocaleString()}`);
+    const accessToken = await getAccessToken(credentials);
+    const client = getGraphClient(accessToken);
+    const { smtpUser } = credentials;
+
+    const safeName = name as string;
+    const safeEmail = email as string;
+    const isoDate = bookingDate.toISOString();
+
+    await createCalendarEvent(client, smtpUser, {
+      name: safeName,
+      email: safeEmail,
+      date: isoDate,
+      subject: `New Booking from ${safeName}`,
+      htmlBody: `Booking message: ${escapeHtml(message || "(no message)")}`,
+    });
+
+    await sendMail(client, smtpUser, {
+      to: safeEmail,
+      toName: safeName,
+      subject: "Booking Confirmation - Hilmar van der Veen",
+      body: buildConfirmationEmail(safeName, isoDate, smtpUser),
+      isHtml: true,
+    });
+
+    console.log(`Booking created for: ${safeName} (${safeEmail}) on ${bookingDate.toLocaleString()}`);
 
     return NextResponse.json({ success: true, message: "Booking created successfully" });
   } catch (error: unknown) {
     console.error("Booking error:", error);
-    
-    // Return more specific error messages for debugging (consider removing details in production)
-    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-    
-    return NextResponse.json({ 
-      error: errorMessage,
-      ...(process.env.NODE_ENV === 'development' && { 
-        details: error instanceof Error ? error.stack : String(error) 
-      })
-    }, { status: 500 });
+    return serverErrorResponse(error);
   }
 }

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { X, Download, Mail, MessageSquare, User } from "lucide-react";
+import { useHoneypot } from "@/hooks/useHoneypot";
+import { HoneypotField } from "@/components/HoneypotField";
 
 interface CVDownloadModalProps {
   isOpen: boolean;
@@ -22,6 +24,7 @@ export const CVDownloadModal = ({
   locale,
 }: CVDownloadModalProps) => {
   const t = useTranslations("cvModal");
+  const honeypot = useHoneypot();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     name: "",
@@ -73,6 +76,7 @@ export const CVDownloadModal = ({
           ...formData,
           locale,
           timestamp: new Date().toISOString(),
+          ...honeypot.payload(),
         }),
       });
 
@@ -148,6 +152,7 @@ export const CVDownloadModal = ({
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="px-6 pb-6">
+            <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
             <div className="space-y-4">
               {/* Name field */}
               <div>

@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Send, Loader2 } from "lucide-react";
+import { useHoneypot } from "@/hooks/useHoneypot";
+import { HoneypotField } from "@/components/HoneypotField";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
   const interestTags = t.raw("form.interests") as string[];
+  const honeypot = useHoneypot();
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [formData, setFormData] = useState({
@@ -44,7 +47,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, interests: selectedTags }),
+        body: JSON.stringify({ ...formData, interests: selectedTags, ...honeypot.payload() }),
       });
 
       const data = await res.json();
@@ -84,6 +87,7 @@ export default function ContactForm() {
       {/* Form Container */}
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <form onSubmit={handleSubmit} className="p-8 space-y-8" noValidate>
+          <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
           {/* Interest Tags */}
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-4">
@@ -124,6 +128,7 @@ export default function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 type="text"
+                maxLength={100}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
                 required
                 aria-required="true"
@@ -144,6 +149,7 @@ export default function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 type="email"
+                maxLength={254}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
                 required
                 aria-required="true"
@@ -165,6 +171,7 @@ export default function ContactForm() {
               value={formData.message}
               onChange={handleChange}
               rows={6}
+              maxLength={5000}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200 resize-none"
               required
               aria-required="true"

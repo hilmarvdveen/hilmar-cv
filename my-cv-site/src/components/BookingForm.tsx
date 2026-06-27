@@ -3,6 +3,8 @@
 import { useEffect, useCallback } from "react";
 import { useBookingForm } from "@/contexts/BookingFormContext";
 import { useTranslations } from "next-intl";
+import { useHoneypot } from "@/hooks/useHoneypot";
+import { HoneypotField } from "@/components/HoneypotField";
 import {
   ChevronRight,
   ChevronLeft,
@@ -45,6 +47,7 @@ interface TimeSlot {
 
 export const BookingForm = () => {
   const t = useTranslations("booking.form");
+  const honeypot = useHoneypot();
 
   const {
     formData,
@@ -181,6 +184,7 @@ export const BookingForm = () => {
         budget: formData.budget,
         description: formData.description,
         date: formData.bookingTime,
+        ...honeypot.payload(),
         message: `
 Service: ${selectedService?.title || formData.service}
 Project Type: ${selectedProjectType?.title || formData.projectType}
@@ -356,6 +360,7 @@ ${formData.description}
 
   return (
     <div className="max-w-2xl mx-auto">
+      <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
@@ -630,6 +635,7 @@ ${formData.description}
                 </label>
                 <textarea
                   value={formData.description}
+                  maxLength={2000}
                   onChange={(e) =>
                     updateFormData("description", e.target.value)
                   }

@@ -1,100 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Hilmar van der Veen — CV / Portfolio
 
-A multilingual personal portfolio and CV built with Next.js 15, featuring project highlights, skills, contact forms, and booking functionality.
+A multilingual (NL/EN) personal portfolio and CV built with **Next.js 16**
+(App Router, React 19, TypeScript, Tailwind v4). It features project highlights,
+a services overview, an SEO layer, and contact / consultation-booking / CV-lead
+forms that send mail and create calendar events via **Microsoft Graph**.
 
-## Prerequisites
+## Tech stack
 
-Before installing, make sure you have the following installed:
+- Next.js 16 (App Router) · React 19 · TypeScript (strict)
+- Tailwind CSS v4
+- `next-intl` for i18n (NL/EN), routing under `/[locale]`
+- Microsoft Graph (`@microsoft/microsoft-graph-client`, `@azure/identity`) for
+  transactional email and calendar
+- Vercel Analytics + Speed Insights, optional Google Analytics / Tag Manager
+- d3 for the Netherlands coverage map
+- Vitest + React Testing Library for unit/component tests
 
-- **Node.js** 18.x or higher ([Download](https://nodejs.org/))
-- **npm** (comes with Node.js) or **yarn** / **pnpm** / **bun**
+## Getting started
 
-## Installation
+```bash
+npm install
+cp .env.example .env.local   # then fill in the values
+npm run dev                  # http://localhost:3000
+```
 
-1. **Clone the repository** (if you haven't already):
-   ```bash
-   git clone <repository-url>
-   cd hilmar-cv/my-cv-site
-   ```
+## Scripts
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   # or
-   bun install
-   ```
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | ESLint |
+| `npm test` | Run the Vitest suite |
+| `npm run test:watch` | Vitest in watch mode |
 
-3. **Set up environment variables**:
-   
-   Create a `.env.local` file in the `my-cv-site` directory with the following variables:
+## Environment variables
 
-   ```env
-   # Microsoft Graph API (Required for contact form and booking functionality)
-   MS_CLIENT_ID=your_microsoft_client_id
-   MS_CLIENT_SECRET=your_microsoft_client_secret
-   MS_TENANT_ID=your_microsoft_tenant_id
-   SMTP_USER=your_email@domain.com
+See `.env.example`. The mail/booking API routes require the Microsoft Graph
+application credentials; without them those routes return a generic
+`Server configuration error`.
 
-   # Site Configuration (Optional but recommended)
-   NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-   GOOGLE_SITE_VERIFICATION=your_google_verification_code
+| Variable | Purpose |
+| --- | --- |
+| `MS_CLIENT_ID` | Azure app registration (client credentials) |
+| `MS_CLIENT_SECRET` | Azure app client secret |
+| `MS_TENANT_ID` | Azure tenant id |
+| `SMTP_USER` | Mailbox/user the app sends as and books on (e.g. `hilmar@…`) |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics id (optional, prod only) |
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager id (optional, prod only) |
 
-   # Analytics (Optional - for production)
-   NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-   NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
-   ```
+## Documentation
 
-   **Note**: 
-   - The Microsoft Graph API credentials are required if you want the contact form and booking features to work
-   - Analytics variables are optional and only used in production
-   - If `NEXT_PUBLIC_SITE_URL` is not set, the site will use a default value
+- `CLAUDE.md` — architecture, conventions, and the target folder structure.
+- `docs/MICROSOFT_GRAPH.md` — Graph setup & troubleshooting.
+- `docs/SEO.md` — how the SEO layer works.
 
-4. **Run the development server**:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   # or
-   bun dev
-   ```
+## Security model (summary)
 
-5. **Open your browser**:
-   
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the result.
+- A single **Content-Security-Policy** with a per-request nonce is set in
+  `src/proxy.ts` (Next.js 16 middleware). Static security headers live in
+  `next.config.ts`.
+- The public API routes validate + length-cap input, escape user content in
+  HTML emails, check the request `Origin`, and use a honeypot + timing guard
+  against bots. IP rate limiting is delegated to the Vercel platform.
 
-## Available Scripts
-
-- `npm run dev` - Start the development server
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server (after building)
-- `npm run lint` - Run ESLint to check for code issues
-
-## Project Structure
-
-This project uses the Next.js App Router with:
-- **Internationalization (i18n)** - Supports multiple languages (English/Dutch)
-- **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first CSS framework
-- **Microsoft Graph API** - For email sending and calendar integration
-- **SEO Optimization** - Comprehensive SEO implementation
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+See `CLAUDE.md` for the full conventions.

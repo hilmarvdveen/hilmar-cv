@@ -15,13 +15,19 @@ export default async function proxy(request: NextRequest) {
   // Create a new response if intlMiddleware doesn't return one
   const nextResponse = response || NextResponse.next();
   
-  // Enhanced CSP following 2024 best practices with strict-dynamic and nonce
-  // Note: 'unsafe-inline' is required for React inline styles (style prop) and CSS-in-JS
+  // Single source of truth for the Content-Security-Policy (the duplicate in
+  // next.config.ts has been removed). Nonce + 'strict-dynamic' is the strong
+  // model: Next.js auto-applies this nonce to its framework and next/script
+  // tags, and trusted scripts may then load GA/GTM. The explicit analytics
+  // hosts are a fallback for browsers that ignore 'strict-dynamic'.
+  // 'unsafe-inline'/'unsafe-eval' are intentionally NOT in script-src.
+  // 'unsafe-inline' remains in style-src only (React's style prop / Tailwind
+  // can emit inline styles; style nonces are impractical with the style prop).
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://vitals.vercel-analytics.com;
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://vitals.vercel-analytics.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    img-src 'self' blob: data: https: w3.org;
+    img-src 'self' blob: data: https:;
     font-src 'self' https://fonts.gstatic.com;
     connect-src 'self' https://www.google-analytics.com https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live;
     frame-src 'self';
@@ -32,36 +38,18 @@ export default async function proxy(request: NextRequest) {
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, ' ').trim();
 
-  // Security headers following 2024 best practices
+  // This middleware (Next.js 16 "proxy") owns ONLY the dynamic, per-request
+  // CSP — it is the single source of truth for Content-Security-Policy.
+  // All other (static) security headers are set once in next.config.ts so they
+  // also cover API and static-asset routes that this matcher excludes.
   const headers = new Headers(nextResponse.headers);
-  
-  // Add nonce header for components to access
+
+  // Expose the nonce so server components/route handlers can read it if needed.
   headers.set('x-nonce', nonce);
-  
-  // Content Security Policy with nonce - ENFORCEMENT mode (not report-only)
+
+  // Content Security Policy with nonce - ENFORCEMENT mode (not report-only).
   headers.set('Content-Security-Policy', cspHeader);
-  
-  // HSTS with 2 years max-age (recommended), includeSubDomains, and preload
-  headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-  
-  // Cross-Origin-Opener-Policy for popup isolation (COOP)
-  headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-  
-  // Additional security headers following OWASP guidelines
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('X-Content-Type-Options', 'nosniff');
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  headers.set('X-DNS-Prefetch-Control', 'on');
-  
-  // Permissions Policy to restrict dangerous features
-  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), accelerometer=(), gyroscope=(), magnetometer=(), payment=(), usb=()');
-  
-  // Cross-Origin Embedder Policy for additional isolation
-  headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
-  
-  // Cross-Origin Resource Policy 
-  headers.set('Cross-Origin-Resource-Policy', 'same-origin');
-  
+
   // Return response with updated headers
   return new NextResponse(nextResponse.body, {
     status: nextResponse.status,
@@ -83,3 +71,5 @@ export const config = {
     },
   ]
 };
+
+
