@@ -4,8 +4,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { GoogleTagManager } from "@/components/GoogleTagManager";
+import { GoogleAnalytics, GoogleTagManager } from "@/features/analytics";
 import { getMessages } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import "@/app/globals.css";
@@ -15,7 +14,7 @@ import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import type { Locale } from "@/lib/seo/types/seo-types";
-import { BookingFormProvider } from "@/contexts/BookingFormContext";
+import { BookingFormProvider } from "@/features/booking";
 
 const inter = Inter({
   subsets: ["latin"],

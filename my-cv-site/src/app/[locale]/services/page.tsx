@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-import { ServicesHero } from "@/components/ServicesHero";
+import { ServicesHero } from "@/features/services";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
 import {

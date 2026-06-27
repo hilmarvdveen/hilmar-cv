@@ -1,0 +1,11 @@
+export { HeroSection } from "./components/HeroSection";
+export { AboutSection } from "./components/AboutSection";
+export { UspSection } from "./components/UspSection";
+export { CallToActionSection } from "./components/CallToActionSection";
+export { TechStackSection } from "./components/TechStackSection";
+export { WorkExperienceSection } from "./components/WorkExperienceSection";
+export { CertificationsSection } from "./components/CertificationSection";
+export { TestimonialsSection } from "./components/TestimonialsSection";
+export { ProjectHighlightsSection } from "./components/ProjectHighlightsSection";
+export { ClientLogosCarousel } from "./components/ClientLogosCarousel";
+export { NetherlandsMap } from "./components/NetherlandsMap";

@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { ProjectsHero } from "@/components/ProjectsHero";
-import { ProjectShowcase } from "@/components/ProjectShowcase";
+import { ProjectsHero, ProjectShowcase } from "@/features/projects";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";

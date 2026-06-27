@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale, FAQItem } from "@/lib/seo";
-import { FAQClientContent } from "@/components/FAQ/FAQClientContent";
+import { FAQClientContent } from "@/features/faq";
 
 type Props = {
   params: Promise<{ locale: string }>;

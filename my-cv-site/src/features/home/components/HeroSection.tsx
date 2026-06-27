@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Download, Calendar, Phone } from "lucide-react";
 import { useState } from "react";
-import { CVDownloadModal } from "./CVDownloadModal";
+import { CVDownloadModal } from "@/features/cv-download";
 import { useParams } from "next/navigation";
 
 export const HeroSection = () => {

@@ -2,21 +2,23 @@ import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 
-import { HeroSection } from "@/components/HeroSection";
-import { AboutSection } from "@/components/AboutSection";
-import { ClientLogosCarousel } from "@/components/ClientLogosCarousel";
-import { UspSection } from "@/components/UspSection";
-import { CallToActionSection } from "@/components/CallToActionSection";
-import { WorkExperienceSection } from "@/components/WorkExperienceSection";
-import { ProjectHighlightsSection } from "@/components/ProjectHighlightsSection";
-import { TechStackSection } from "@/components/TechStackSection";
+import {
+  HeroSection,
+  AboutSection,
+  ClientLogosCarousel,
+  UspSection,
+  CallToActionSection,
+  WorkExperienceSection,
+  ProjectHighlightsSection,
+  TechStackSection,
+} from "@/features/home";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 
 // Lazy load heavy components for better performance
 const TestimonialsSection = dynamic(
   () =>
-    import("@/components/TestimonialsSection").then((mod) => ({
+    import("@/features/home/components/TestimonialsSection").then((mod) => ({
       default: mod.TestimonialsSection,
     })),
   {
@@ -35,7 +37,7 @@ const TestimonialsSection = dynamic(
 
 const CertificationsSection = dynamic(
   () =>
-    import("@/components/CertificationSection").then((mod) => ({
+    import("@/features/home/components/CertificationSection").then((mod) => ({
       default: mod.CertificationsSection,
     })),
   {
@@ -54,7 +56,7 @@ const CertificationsSection = dynamic(
 
 const NetherlandsMap = dynamic(
   () =>
-    import("@/components/NetherlandsMap").then((mod) => ({
+    import("@/features/home/components/NetherlandsMap").then((mod) => ({
       default: mod.NetherlandsMap,
     })),
   {

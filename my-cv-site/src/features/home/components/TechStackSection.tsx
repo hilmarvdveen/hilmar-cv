@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitle } from "@/components/SectionTitle";
 import { Tech } from "@/data/workHistory";
 
 export const TechStackSection = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import { useBookingForm } from "@/contexts/BookingFormContext";
+import { useBookingForm } from "../context/BookingFormContext";
 import { useTranslations } from "next-intl";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";

@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { ContactHero } from "@/components/ContactHero";
+import { ContactHero, ContactForm } from "@/features/contact";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import ContactForm from "@/components/ContactForm";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 

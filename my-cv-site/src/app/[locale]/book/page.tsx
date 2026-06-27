@@ -1,4 +1,4 @@
-import { BookingForm } from "@/components/BookingForm";
+import { BookingForm } from "@/features/booking";
 import { Rocket, Star, Headphones, ArrowDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
