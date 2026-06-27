@@ -14,6 +14,8 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    // jsdom + Next setup is heavy on some machines; give interactive tests room.
+    testTimeout: 15000,
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
