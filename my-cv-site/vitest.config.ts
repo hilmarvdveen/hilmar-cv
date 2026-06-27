@@ -19,22 +19,26 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
-      // The gate covers our pure, unit-tested logic (lib + hooks). Components
-      // and pages are exercised by RTL/route tests for regression but are not
-      // in the threshold (heavy JSX/d3/window code skews the numbers).
+      // 100% gate over pure logic (lib + hooks). Components are added to this
+      // list alongside their tests.
       include: ["src/lib/**/*.ts", "src/hooks/**/*.ts"],
       exclude: [
         "src/**/index.ts",
         "src/**/*.test.{ts,tsx}",
-        "src/lib/seo/core/analytics-manager.ts",
-        "src/lib/seo/types/**",
-        "src/lib/seo/constants/**",
+        // Browser-only / non-logic (covered by E2E or unreachable in jsdom):
+        "src/lib/seo/core/analytics-manager.ts", // window/gtag telemetry
+        "src/lib/seo/types/**", // type-only
+        "src/lib/seo/constants/**", // static data
+        "src/features/home/components/NetherlandsMap.tsx", // d3 canvas
       ],
       thresholds: {
-        lines: 70,
-        functions: 70,
-        statements: 70,
-        branches: 60,
+        // 100% on lines/functions/statements; branches at a high bar (the
+        // residual are defensive ternaries, exhaustive switch defaults, and
+        // locale variants — not worth contriving tests / littering ignores).
+        lines: 100,
+        functions: 100,
+        statements: 100,
+        branches: 90,
       },
     },
   },

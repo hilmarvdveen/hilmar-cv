@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getAccessToken, getGraphCredentials } from "./client";
+import { getAccessToken, getGraphCredentials, getGraphClient } from "./client";
 
 const CREDS = { clientId: "id", clientSecret: "secret", tenantId: "tenant" };
 
@@ -30,16 +30,40 @@ describe("getAccessToken", () => {
     );
     await expect(getAccessToken(CREDS)).rejects.toThrow("bad secret");
   });
+
+  it("throws a generic message when the failure has no description", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify({}), { status: 500 }))
+    );
+    await expect(getAccessToken(CREDS)).rejects.toThrow("Failed to get Microsoft Graph token");
+  });
+});
+
+describe("getGraphClient", () => {
+  it("returns an initialized Graph client", () => {
+    const client = getGraphClient("token-123");
+    expect(client).toBeTruthy();
+    expect(typeof client.api).toBe("function");
+  });
 });
 
 describe("getGraphCredentials", () => {
-  it("returns null when any required env var is missing", () => {
-    process.env.MS_CLIENT_ID = "id";
-    process.env.MS_CLIENT_SECRET = "secret";
-    process.env.MS_TENANT_ID = "tenant";
-    // SMTP_USER intentionally unset
-    expect(getGraphCredentials()).toBeNull();
-  });
+  it.each(["MS_CLIENT_ID", "MS_CLIENT_SECRET", "MS_TENANT_ID", "SMTP_USER"])(
+    "returns null when %s is the missing var",
+    (missing) => {
+      const all: Record<string, string> = {
+        MS_CLIENT_ID: "id",
+        MS_CLIENT_SECRET: "secret",
+        MS_TENANT_ID: "tenant",
+        SMTP_USER: "hilmar@example.com",
+      };
+      for (const [k, v] of Object.entries(all)) {
+        if (k !== missing) process.env[k] = v;
+      }
+      expect(getGraphCredentials()).toBeNull();
+    }
+  );
 
   it("returns the credentials when all env vars are present", () => {
     process.env.MS_CLIENT_ID = "id";

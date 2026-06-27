@@ -31,4 +31,14 @@ describe("isAllowedOrigin", () => {
   it("tolerates a missing origin outside production (test env)", () => {
     expect(isAllowedOrigin(req({}))).toBe(true);
   });
+
+  it("treats a malformed Origin as no origin (falls back to referer/env)", () => {
+    // Malformed Origin -> hostFromUrl throws/returns null; with no referer and
+    // a non-production env this resolves to allowed.
+    expect(isAllowedOrigin(req({ origin: "not a url" }))).toBe(true);
+    // Malformed origin but a foreign referer -> rejected.
+    expect(
+      isAllowedOrigin(req({ origin: "::::", referer: "https://evil.example.com/x" }))
+    ).toBe(false);
+  });
 });

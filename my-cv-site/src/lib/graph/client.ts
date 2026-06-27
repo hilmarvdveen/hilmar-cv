@@ -56,6 +56,9 @@ export async function getAccessToken({
 /** Build a Graph client bound to a previously-acquired access token. */
 export function getGraphClient(accessToken: string): Client {
   return Client.init({
+    // The Graph SDK invokes this callback internally at request time, so it is
+    // not reachable from a unit test that only constructs the client.
+    /* v8 ignore next */
     authProvider: (done) => done(null, accessToken),
   });
 }

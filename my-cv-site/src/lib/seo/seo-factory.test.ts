@@ -13,6 +13,11 @@ const PAGES = [
   "contact",
   "booking",
   "privacy",
+  "blog",
+  "frontendService",
+  "fullstackService",
+  "designSystemsService",
+  "consultingService",
 ] as const;
 
 const locales: Locale[] = ["en", "nl"];
@@ -52,13 +57,25 @@ describe("SEOFactory page builders", () => {
     );
   });
 
-  it("builds the FAQ page schema from provided items", () => {
-    const result = SEOFactory.faq("en", [
-      { question: "Q1?", answer: "A1" },
-      { question: "Q2?", answer: "A2" },
-    ]);
-    const hasFaq = result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "FAQPage");
-    expect(hasFaq).toBe(true);
+  it("builds the FAQ page schema from provided items (both locales)", () => {
+    for (const locale of locales) {
+      const result = SEOFactory.faq(locale, [
+        { question: "Q1?", answer: "A1" },
+        { question: "Q2?", answer: "A2" },
+      ]);
+      const hasFaq = result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "FAQPage");
+      expect(hasFaq).toBe(true);
+    }
+  });
+});
+
+describe("SEOFactory analytics passthroughs", () => {
+  it("trackPageView runs without throwing (no-op without window.gtag)", () => {
+    expect(() => SEOFactory.trackPageView("homepage", "en", "Home", "/")).not.toThrow();
+  });
+
+  it("getAnalytics returns undefined in a non-browser environment", () => {
+    expect(SEOFactory.getAnalytics()).toBeUndefined();
   });
 });
 

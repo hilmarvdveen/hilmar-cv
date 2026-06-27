@@ -56,4 +56,16 @@ describe("sendMail", () => {
       { emailAddress: { address: "reply@example.com", name: "Reply Guy" } },
     ]);
   });
+
+  it("defaults replyTo name to the replyTo address when no name is given", async () => {
+    const { client, post } = mockClient();
+    await sendMail(client, "owner@example.com", {
+      to: "jane@example.com",
+      subject: "S",
+      body: "b",
+      replyTo: "reply@example.com",
+    });
+    const message = post.mock.calls[0][0].message;
+    expect(message.replyTo[0].emailAddress.name).toBe("reply@example.com");
+  });
 });

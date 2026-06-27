@@ -36,6 +36,23 @@ describe("SEOUtils.createMetaTags", () => {
     expect(tags.some((t) => "property" in t && t.property === "og:title")).toBe(true);
     expect(tags.some((t) => "name" in t && t.name === "twitter:card")).toBe(true);
   });
+
+  it("handles a string keyword and skips falsy OG/twitter values", () => {
+    const tags = SEOUtils.createMetaTags({
+      keywords: "single",
+      openGraph: { title: "OG", description: undefined },
+      twitter: { card: undefined },
+    } as never);
+    expect(tags).toContainEqual({ name: "keywords", content: "single" });
+    expect(tags.some((t) => "property" in t && t.property === "og:title")).toBe(true);
+    // falsy values are not emitted
+    expect(tags.some((t) => "property" in t && t.property === "og:description")).toBe(false);
+    expect(tags.some((t) => "name" in t && t.name === "twitter:card")).toBe(false);
+  });
+
+  it("returns no tags for empty metadata", () => {
+    expect(SEOUtils.createMetaTags({} as never)).toEqual([]);
+  });
 });
 
 describe("SEOUtils.generateRobotsTxt", () => {

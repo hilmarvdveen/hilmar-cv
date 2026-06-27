@@ -30,4 +30,20 @@ describe("serverErrorResponse", () => {
     const json = await res.json();
     expect(json.error).toBe("Internal Server Error");
   });
+
+  it("stringifies non-Error values for details in development", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    const res = serverErrorResponse("just a string", "Oops");
+    const json = await res.json();
+    expect(json.details).toBe("just a string");
+  });
+
+  it("falls back to the message when an Error has no stack (dev)", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    const err = new Error("no-stack message");
+    err.stack = undefined;
+    const res = serverErrorResponse(err, "Oops");
+    const json = await res.json();
+    expect(json.details).toBe("no-stack message");
+  });
 });

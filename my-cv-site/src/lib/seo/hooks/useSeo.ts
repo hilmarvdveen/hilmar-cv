@@ -25,7 +25,10 @@ export const useSEO = (
     
     if (mappedPageType in SEOFactory) {
       const factoryMethod = SEOFactory[mappedPageType as FactoryPageType];
-      
+
+      // Every SEOFactory entry is a function, so the non-function branch is
+      // defensive and unreachable.
+      /* v8 ignore next */
       if (typeof factoryMethod === 'function') {
         // Handle methods that need additional parameters
         if (mappedPageType === 'faq' && additionalParams?.faqItems) {
@@ -37,9 +40,11 @@ export const useSEO = (
         }
       }
     }
+    /* v8 ignore start -- defensive guard; factory methods don't throw for valid page types */
   } catch (error) {
     console.warn(`Failed to generate SEO config for page type: ${pageType}`, error);
   }
+  /* v8 ignore stop */
 
   return {
     seo: seoConfig,

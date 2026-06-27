@@ -52,7 +52,9 @@ export class SEOEngine {
     this.metadataGenerator = new MetadataGenerator(baseUrl);
     this.schemaGenerator = new SchemaGenerator(baseUrl);
     
-    // Initialize analytics if in browser environment
+    // Initialize analytics if in browser environment. The non-browser branch
+    // is only taken under SSR/Node and cannot be reached from the jsdom tests.
+    /* v8 ignore next 3 */
     if (typeof window !== 'undefined') {
       this.initializeAnalytics();
     }
