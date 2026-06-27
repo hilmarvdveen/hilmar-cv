@@ -61,7 +61,7 @@ const iconMap: Record<IconName, FC<{ className?: string }>> = {
   phone: Phone,
 };
 
-interface IconProps {
+type IconProps = {
   name: IconName;
   className?: string;
 }

@@ -29,18 +29,18 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-interface ProjectBudget {
+type ProjectBudget = {
   id: string;
   label: string;
 }
 
-interface HourlyBudget {
+type HourlyBudget = {
   id: string;
   label: string;
   estimate: string;
 }
 
-interface TimeSlot {
+type TimeSlot = {
   value: string; // ISO string
   label: string; // formatted time like "09:00"
 }

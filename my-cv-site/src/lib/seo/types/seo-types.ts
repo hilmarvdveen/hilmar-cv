@@ -46,7 +46,7 @@ export type SchemaType =
 // METADATA INTERFACES
 // =============================================================================
 
-export interface BaseMetadata {
+export type BaseMetadata = {
   title: string;
   description: string;
   keywords: string[];
@@ -60,7 +60,7 @@ export interface BaseMetadata {
   noImageIndex?: boolean;
 }
 
-export interface OpenGraphMetadata {
+export type OpenGraphMetadata = {
   title: string;
   description: string;
   type: 'website' | 'article' | 'profile';
@@ -72,7 +72,7 @@ export interface OpenGraphMetadata {
   alternateLocales: string[];
 }
 
-export interface TwitterMetadata {
+export type TwitterMetadata = {
   card: 'summary' | 'summary_large_image' | 'app' | 'player';
   site: string;
   creator: string;
@@ -82,7 +82,7 @@ export interface TwitterMetadata {
   imageAlt?: string;
 }
 
-export interface ExtendedMetadata extends BaseMetadata {
+export type ExtendedMetadata = BaseMetadata & {
   openGraph: OpenGraphMetadata;
   twitter: TwitterMetadata;
   alternates: Record<string, string>;
@@ -99,13 +99,13 @@ export interface ExtendedMetadata extends BaseMetadata {
 // SCHEMA.ORG INTERFACES
 // =============================================================================
 
-export interface JsonLdSchema {
+export type JsonLdSchema = {
   '@context': string;
   '@type': SchemaType;
   [key: string]: unknown;
 }
 
-export interface PersonSchema extends JsonLdSchema {
+export type PersonSchema = JsonLdSchema & {
   '@type': 'Person';
   name: string;
   givenName: string;
@@ -125,7 +125,7 @@ export interface PersonSchema extends JsonLdSchema {
   nationality?: string;
 }
 
-export interface OrganizationSchema extends JsonLdSchema {
+export type OrganizationSchema = JsonLdSchema & {
   '@type': 'Organization';
   name: string;
   description: string;
@@ -139,7 +139,7 @@ export interface OrganizationSchema extends JsonLdSchema {
   hasOfferCatalog?: OfferCatalog;
 }
 
-export interface ProfessionalServiceSchema extends JsonLdSchema {
+export type ProfessionalServiceSchema = JsonLdSchema & {
   '@type': 'ProfessionalService';
   name: string;
   description: string;
@@ -151,7 +151,7 @@ export interface ProfessionalServiceSchema extends JsonLdSchema {
   review?: Review[];
 }
 
-export interface WebSiteSchema extends JsonLdSchema {
+export type WebSiteSchema = JsonLdSchema & {
   '@type': 'WebSite';
   name: string;
   description: string;
@@ -162,7 +162,7 @@ export interface WebSiteSchema extends JsonLdSchema {
   potentialAction?: SearchAction;
 }
 
-export interface WebPageSchema extends JsonLdSchema {
+export type WebPageSchema = JsonLdSchema & {
   '@type': 'WebPage';
   name: string;
   description: string;
@@ -177,7 +177,7 @@ export interface WebPageSchema extends JsonLdSchema {
   mainEntity?: Thing;
 }
 
-export interface FAQPageSchema extends JsonLdSchema {
+export type FAQPageSchema = JsonLdSchema & {
   '@type': 'FAQPage';
   name: string;
   description: string;
@@ -185,7 +185,7 @@ export interface FAQPageSchema extends JsonLdSchema {
   mainEntity: Question[];
 }
 
-export interface ServiceSchema extends JsonLdSchema {
+export type ServiceSchema = JsonLdSchema & {
   '@type': 'Service';
   name: string;
   description: string;
@@ -200,7 +200,7 @@ export interface ServiceSchema extends JsonLdSchema {
 // SUPPORTING SCHEMA INTERFACES
 // =============================================================================
 
-export interface PostalAddress {
+export type PostalAddress = {
   '@type': 'PostalAddress';
   streetAddress?: string;
   addressLocality: string;
@@ -209,7 +209,7 @@ export interface PostalAddress {
   addressCountry: string;
 }
 
-export interface ContactPoint {
+export type ContactPoint = {
   '@type': 'ContactPoint';
   telephone?: string;
   email: string;
@@ -218,20 +218,20 @@ export interface ContactPoint {
   availableLanguage: string[];
 }
 
-export interface Place {
+export type Place = {
   '@type': 'Place';
   name: string;
   address: PostalAddress;
   geo?: GeoCoordinates;
 }
 
-export interface GeoCoordinates {
+export type GeoCoordinates = {
   '@type': 'GeoCoordinates';
   latitude: number;
   longitude: number;
 }
 
-export interface Organization {
+export type Organization = {
   '@type': 'Organization';
   name: string;
   url?: string;
@@ -239,20 +239,20 @@ export interface Organization {
   description?: string;
 }
 
-export interface Person {
+export type Person = {
   '@type': 'Person';
   name: string;
   url?: string;
   image?: string;
 }
 
-export interface EducationalOrganization {
+export type EducationalOrganization = {
   '@type': 'EducationalOrganization';
   name: string;
   url?: string;
 }
 
-export interface Offer {
+export type Offer = {
   '@type': 'Offer';
   name: string;
   description: string;
@@ -265,13 +265,13 @@ export interface Offer {
   seller: Organization;
 }
 
-export interface OfferCatalog {
+export type OfferCatalog = {
   '@type': 'OfferCatalog';
   name: string;
   itemListElement: Offer[];
 }
 
-export interface AggregateRating {
+export type AggregateRating = {
   '@type': 'AggregateRating';
   ratingValue: number;
   reviewCount: number;
@@ -279,7 +279,7 @@ export interface AggregateRating {
   worstRating?: number;
 }
 
-export interface Review {
+export type Review = {
   '@type': 'Review';
   author: Person;
   reviewRating: Rating;
@@ -287,43 +287,43 @@ export interface Review {
   datePublished: string;
 }
 
-export interface Rating {
+export type Rating = {
   '@type': 'Rating';
   ratingValue: number;
   bestRating?: number;
   worstRating?: number;
 }
 
-export interface Question {
+export type Question = {
   '@type': 'Question';
   name: string;
   acceptedAnswer: Answer;
 }
 
-export interface Answer {
+export type Answer = {
   '@type': 'Answer';
   text: string;
 }
 
-export interface SearchAction {
+export type SearchAction = {
   '@type': 'SearchAction';
   target: string;
   'query-input': string;
 }
 
-export interface BreadcrumbList {
+export type BreadcrumbList = {
   '@type': 'BreadcrumbList';
   itemListElement: ListItem[];
 }
 
-export interface ListItem {
+export type ListItem = {
   '@type': 'ListItem';
   position: number;
   name: string;
   item: string;
 }
 
-export interface Thing {
+export type Thing = {
   '@type': string;
   name: string;
   description?: string;
@@ -334,7 +334,7 @@ export interface Thing {
 // NAVIGATION & BREADCRUMB INTERFACES
 // =============================================================================
 
-export interface BreadcrumbItem {
+export type BreadcrumbItem = {
   name: string;
   url: string;
   position: number;
@@ -344,7 +344,7 @@ export interface BreadcrumbItem {
 // ANALYTICS INTERFACES
 // =============================================================================
 
-export interface GA4Configuration {
+export type GA4Configuration = {
   measurementId: string;
   gtmId?: string;
   enableEcommerce?: boolean;
@@ -354,14 +354,14 @@ export interface GA4Configuration {
   conversionEvents?: string[];
 }
 
-export interface CustomDimension {
+export type CustomDimension = {
   name: string;
   parameterName: string;
   scope: 'EVENT' | 'USER' | 'ITEM';
   description?: string;
 }
 
-export interface CustomMetric {
+export type CustomMetric = {
   name: string;
   parameterName: string;
   measurementUnit: 'STANDARD' | 'CURRENCY' | 'FEET' | 'METERS' | 'KILOMETERS' | 'MILES' | 'MILLISECONDS' | 'SECONDS' | 'MINUTES' | 'HOURS';
@@ -369,13 +369,13 @@ export interface CustomMetric {
   description?: string;
 }
 
-export interface EventConfig {
+export type EventConfig = {
   eventName: string;
   parameters?: Record<string, string | number | boolean>;
   customParameters?: Record<string, unknown>;
 }
 
-export interface ConversionEvent extends EventConfig {
+export type ConversionEvent = EventConfig & {
   isConversion: true;
   conversionValue?: number;
   conversionCurrency?: string;
@@ -385,7 +385,7 @@ export interface ConversionEvent extends EventConfig {
 // CONTENT OPTIMIZATION INTERFACES
 // =============================================================================
 
-export interface ContentAnalysis {
+export type ContentAnalysis = {
   wordCount: number;
   readabilityScore: number;
   keywordDensity: Record<string, number>;
@@ -397,14 +397,14 @@ export interface ContentAnalysis {
   imageOptimization: ImageAnalysis[];
 }
 
-export interface HeadingAnalysis {
+export type HeadingAnalysis = {
   level: number;
   text: string;
   wordCount: number;
   keywords: string[];
 }
 
-export interface ImageAnalysis {
+export type ImageAnalysis = {
   src: string;
   alt?: string;
   title?: string;
@@ -419,7 +419,7 @@ export interface ImageAnalysis {
 // SEO CONFIGURATION INTERFACES
 // =============================================================================
 
-export interface SEOPageConfig {
+export type SEOPageConfig = {
   pageType: PageType;
   locale: Locale;
   title: string;
@@ -440,12 +440,12 @@ export interface SEOPageConfig {
   changeFrequency?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 }
 
-export interface FAQItem {
+export type FAQItem = {
   question: string;
   answer: string;
 }
 
-export interface SEOAuditResult {
+export type SEOAuditResult = {
   score: number;
   issues: SEOIssue[];
   recommendations: SEORecommendation[];
@@ -454,7 +454,7 @@ export interface SEOAuditResult {
   bestPractices: BestPracticesResult;
 }
 
-export interface SEOIssue {
+export type SEOIssue = {
   type: 'error' | 'warning' | 'info';
   category: 'technical' | 'content' | 'performance' | 'accessibility';
   title: string;
@@ -463,7 +463,7 @@ export interface SEOIssue {
   fix?: string;
 }
 
-export interface SEORecommendation {
+export type SEORecommendation = {
   category: 'content' | 'technical' | 'performance' | 'user-experience';
   title: string;
   description: string;
@@ -472,7 +472,7 @@ export interface SEORecommendation {
   impact: 'high' | 'medium' | 'low';
 }
 
-export interface PerformanceMetrics {
+export type PerformanceMetrics = {
   lcp: number; // Largest Contentful Paint
   fid: number; // First Input Delay
   cls: number; // Cumulative Layout Shift
@@ -481,14 +481,14 @@ export interface PerformanceMetrics {
   score: number;
 }
 
-export interface AccessibilityResult {
+export type AccessibilityResult = {
   score: number;
   violations: AccessibilityViolation[];
   passes: number;
   incomplete: number;
 }
 
-export interface AccessibilityViolation {
+export type AccessibilityViolation = {
   id: string;
   impact: 'minor' | 'moderate' | 'serious' | 'critical';
   description: string;
@@ -497,12 +497,12 @@ export interface AccessibilityViolation {
   nodes: number;
 }
 
-export interface BestPracticesResult {
+export type BestPracticesResult = {
   score: number;
   audits: BestPracticeAudit[];
 }
 
-export interface BestPracticeAudit {
+export type BestPracticeAudit = {
   id: string;
   title: string;
   description: string;
@@ -514,7 +514,7 @@ export interface BestPracticeAudit {
 // SITEMAP INTERFACES
 // =============================================================================
 
-export interface SitemapUrl {
+export type SitemapUrl = {
   loc: string;
   lastmod?: string;
   changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
@@ -523,12 +523,12 @@ export interface SitemapUrl {
   images?: SitemapImage[];
 }
 
-export interface SitemapAlternate {
+export type SitemapAlternate = {
   hreflang: string;
   href: string;
 }
 
-export interface SitemapImage {
+export type SitemapImage = {
   loc: string;
   title?: string;
   caption?: string;
@@ -540,7 +540,7 @@ export interface SitemapImage {
 // ROBOTS.TXT INTERFACES
 // =============================================================================
 
-export interface RobotsConfig {
+export type RobotsConfig = {
   userAgent: string;
   allow?: string[];
   disallow?: string[];

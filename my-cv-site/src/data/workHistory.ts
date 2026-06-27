@@ -122,7 +122,7 @@ export const Tech = {
 export type Tech = (typeof Tech)[keyof typeof Tech];
 
 
-export interface WorkEntry {
+export type WorkEntry = {
   id: string;
   company: string;
   logo: string;

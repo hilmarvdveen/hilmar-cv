@@ -1,6 +1,6 @@
 import { Client } from "@microsoft/microsoft-graph-client";
 
-export interface GraphCredentials {
+export type GraphCredentials = {
   clientId: string;
   clientSecret: string;
   tenantId: string;

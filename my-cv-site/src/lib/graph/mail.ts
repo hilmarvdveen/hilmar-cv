@@ -1,6 +1,6 @@
 import { Client } from "@microsoft/microsoft-graph-client";
 
-export interface SendMailOptions {
+export type SendMailOptions = {
   to: string;
   toName?: string;
   subject: string;
@@ -10,11 +10,11 @@ export interface SendMailOptions {
   replyToName?: string;
 }
 
-interface GraphRecipient {
+type GraphRecipient = {
   emailAddress: { address: string; name: string };
 }
 
-interface GraphMessage {
+type GraphMessage = {
   subject: string;
   body: { contentType: "HTML" | "Text"; content: string };
   toRecipients: GraphRecipient[];

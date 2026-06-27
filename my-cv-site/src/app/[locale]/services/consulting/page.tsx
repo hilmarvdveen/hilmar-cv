@@ -25,38 +25,38 @@ import { setRequestLocale } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 
-interface ConsultingPageProps {
+type ConsultingPageProps = {
   params: Promise<{ locale: string }>;
 }
 
-interface ConsultingItem {
+type ConsultingItem = {
   name: string;
   description: string;
   level: string;
 }
 
-interface ConsultingCategory {
+type ConsultingCategory = {
   name: string;
   items: ConsultingItem[];
 }
 
-interface ProcessStep {
+type ProcessStep = {
   title: string;
   description: string;
   details: string[];
 }
 
-interface Benefit {
+type Benefit = {
   title: string;
   description: string;
 }
 
-interface Deliverable {
+type Deliverable = {
   title: string;
   description: string;
 }
 
-interface Stat {
+type Stat = {
   number: string;
   label: string;
 }

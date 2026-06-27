@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
-interface GoogleAnalyticsProps {
+type GoogleAnalyticsProps = {
   gaId: string;
 }
 
@@ -94,6 +94,8 @@ export function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
 
 // Extend Window interface for TypeScript (matches analytics-manager.ts)
 declare global {
+  // Global augmentation requires `interface` (type aliases can't merge into Window).
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
     gtag: (...args: unknown[]) => void;
     dataLayer: unknown[];

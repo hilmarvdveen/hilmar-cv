@@ -1,6 +1,6 @@
 import { HONEYPOT_FIELD } from "@/lib/security/honeypot";
 
-interface HoneypotFieldProps {
+type HoneypotFieldProps = {
   value: string;
   onChange: (value: string) => void;
 }

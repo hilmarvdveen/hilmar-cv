@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // Type declarations for Google Analytics
 type GtagFunction = (command: string, ...args: unknown[]) => void;
 
-interface ComprehensiveSEOProps {
+type ComprehensiveSEOProps = {
   structuredData: Record<string, unknown>[];
   trackPageView?: boolean;
   onMount?: () => void;

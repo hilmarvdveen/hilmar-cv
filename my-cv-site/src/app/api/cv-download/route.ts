@@ -11,7 +11,7 @@ import {
 
 export const runtime = "nodejs";
 
-interface CVDownloadData {
+type CVDownloadData = {
   name: string;
   email: string;
   purpose: string;

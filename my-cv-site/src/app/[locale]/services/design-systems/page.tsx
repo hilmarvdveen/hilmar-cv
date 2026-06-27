@@ -23,33 +23,33 @@ import { setRequestLocale } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 
-interface DesignSystemsPageProps {
+type DesignSystemsPageProps = {
   params: Promise<{ locale: string }>;
 }
 
-interface TechItem {
+type TechItem = {
   name: string;
   description: string;
   level: string;
 }
 
-interface TechCategory {
+type TechCategory = {
   name: string;
   items: TechItem[];
 }
 
-interface ProcessStep {
+type ProcessStep = {
   title: string;
   description: string;
   details: string[];
 }
 
-interface Benefit {
+type Benefit = {
   title: string;
   description: string;
 }
 
-interface Deliverable {
+type Deliverable = {
   title: string;
   description: string;
 }

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Script from "next/script";
 
-interface GoogleTagManagerProps {
+type GoogleTagManagerProps = {
   gtmId: string;
 }
 

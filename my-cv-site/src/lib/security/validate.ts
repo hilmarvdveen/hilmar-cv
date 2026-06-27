@@ -20,14 +20,14 @@ export function isValidEmail(email: string): boolean {
   return email.length <= LIMITS.email && EMAIL_REGEX.test(email);
 }
 
-export interface FieldSpec {
+export type FieldSpec = {
   value: unknown;
   required?: boolean;
   maxLength?: number;
   email?: boolean;
 }
 
-export interface ValidationResult {
+export type ValidationResult = {
   ok: boolean;
   error?: string;
 }

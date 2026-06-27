@@ -12,7 +12,7 @@ import {
 
 export const runtime = "nodejs";
 
-interface ContactFormRequest {
+type ContactFormRequest = {
   name: string;
   email: string;
   message: string;

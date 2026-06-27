@@ -9,7 +9,7 @@
 import { useEffect } from "react";
 import type { JsonLdSchema } from "@/lib/seo";
 
-interface StructuredDataProps {
+type StructuredDataProps = {
   schemas: JsonLdSchema[];
   className?: string;
 }
@@ -45,7 +45,7 @@ export function StructuredData({ schemas, className }: StructuredDataProps) {
 /**
  * Single schema structured data component
  */
-interface SingleStructuredDataProps {
+type SingleStructuredDataProps = {
   schema: JsonLdSchema;
   className?: string;
 }
@@ -68,7 +68,7 @@ export function SingleStructuredData({
 /**
  * Raw structured data component for pre-generated JSON-LD strings
  */
-interface RawStructuredDataProps {
+type RawStructuredDataProps = {
   jsonLd: string;
   className?: string;
 }

@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-interface FAQClientContentProps {
+type FAQClientContentProps = {
   locale: string;
 }
 

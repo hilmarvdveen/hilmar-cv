@@ -1,6 +1,6 @@
 import { WorkMode } from "@/data/workHistory";
 
-export interface TranslatedWorkEntry {
+export type TranslatedWorkEntry = {
     company: string;
     location: string;
     role: string;

@@ -18,6 +18,8 @@ import {
 // Global gtag function declaration
 
 declare global {
+  // Global augmentation requires `interface` (type aliases can't merge into Window).
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
     gtag: (...args: unknown[]) => void;
     dataLayer: unknown[];

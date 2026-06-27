@@ -1,4 +1,4 @@
-export interface SEOConfig {
+export type SEOConfig = {
   title?: string;
   description?: string;
   keywords?: string[];
@@ -14,17 +14,17 @@ export interface SEOConfig {
   noFollow?: boolean;
 }
 
-export interface BreadcrumbItem {
+export type BreadcrumbItem = {
   name: string;
   url: string;
 }
 
-export interface StructuredDataConfig {
+export type StructuredDataConfig = {
   type: 'WebPage' | 'Article' | 'Person' | 'Organization' | 'Service' | 'Product' | 'WebSite' | 'ProfilePage' | 'ContactPage' | 'CollectionPage' | 'FAQPage' | 'ItemList' | 'Review' | 'AggregateRating' | 'LocalBusiness' | 'JobPosting' | 'Course' | 'Event' | 'BreadcrumbList';
   data: Record<string, unknown>;
 }
 
-export interface SEOPageConfig {
+export type SEOPageConfig = {
   seo: SEOConfig;
   structuredData?: StructuredDataConfig[];
   breadcrumbs?: BreadcrumbItem[];
@@ -33,7 +33,7 @@ export interface SEOPageConfig {
 }
 
 // Enhanced SEO types for better type safety
-export interface PersonSchema {
+export type PersonSchema = {
   '@context': string;
   '@type': 'Person';
   '@id': string;
@@ -48,7 +48,7 @@ export interface PersonSchema {
   hasOccupation: object;
 }
 
-export interface OrganizationSchema {
+export type OrganizationSchema = {
   '@context': string;
   '@type': 'Organization' | string[];
   '@id': string;
@@ -62,7 +62,7 @@ export interface OrganizationSchema {
   sameAs: string[];
 }
 
-export interface ServiceSchema {
+export type ServiceSchema = {
   '@context': string;
   '@type': 'Service' | 'ProfessionalService';
   '@id': string;
@@ -74,7 +74,7 @@ export interface ServiceSchema {
   hasOfferCatalog: object;
 }
 
-export interface WebPageSchema {
+export type WebPageSchema = {
   '@context': string;
   '@type': 'WebPage';
   '@id': string;
@@ -86,7 +86,7 @@ export interface WebPageSchema {
   about: object;
 }
 
-export interface FAQSchema {
+export type FAQSchema = {
   '@context': string;
   '@type': 'FAQPage';
   mainEntity: Array<{

@@ -19,7 +19,7 @@ import {
 
 export const runtime = "nodejs"; // Ensures Node.js runtime, not Edge
 
-interface BookingData {
+type BookingData = {
   name: string;
   email: string;
   date: string; // ISO string

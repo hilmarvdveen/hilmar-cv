@@ -20,7 +20,7 @@ const clients = [
   },
 ];
 
-interface ClientCardProps {
+type ClientCardProps = {
   name: string;
   logo: string;
   color?: string;

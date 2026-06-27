@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 import { useMemo } from "react";
 
-interface BreadcrumbItem {
+type BreadcrumbItem = {
   label: string;
   href: string;
   isLast: boolean;

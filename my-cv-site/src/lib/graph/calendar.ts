@@ -4,7 +4,7 @@ export const BOOKING_TIMEZONE = "Europe/Amsterdam";
 const SLOT_MINUTES = 30;
 const SLOTS_PER_DAY = 16; // 09:00 - 17:00 in 30-minute steps
 
-export interface CalendarEvent {
+export type CalendarEvent = {
   start: { dateTime: string };
   end: { dateTime: string };
 }
@@ -37,7 +37,7 @@ export function isSlotAvailable(slotStart: Date, events: CalendarEvent[]): boole
   });
 }
 
-export interface CreateEventInput {
+export type CreateEventInput = {
   name: string;
   email: string;
   date: string; // ISO start

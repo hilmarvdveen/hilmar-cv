@@ -6,13 +6,13 @@ import { X, Download, Mail, MessageSquare, User } from "lucide-react";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
 
-interface CVDownloadModalProps {
+type CVDownloadModalProps = {
   isOpen: boolean;
   onClose: () => void;
   locale: string;
 }
 
-interface FormData {
+type FormData = {
   email: string;
   name: string;
   purpose: string;

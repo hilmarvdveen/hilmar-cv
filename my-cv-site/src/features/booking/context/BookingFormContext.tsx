@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from "react";
 
-interface BookingFormData {
+type BookingFormData = {
   service: string;
   projectType: string;
   bookingDate: string;
@@ -21,14 +21,14 @@ interface BookingFormData {
   company: string;
 }
 
-interface FormState {
+type FormState = {
   isSubmitting: boolean;
   isSubmitted: boolean;
   error: string | null;
   loadingSlots: boolean;
 }
 
-interface BookingFormContextType {
+type BookingFormContextType = {
   formData: BookingFormData;
   formState: FormState;
   currentStep: number;
@@ -40,7 +40,7 @@ interface BookingFormContextType {
   resetForm: () => void;
 }
 
-interface TimeSlot {
+type TimeSlot = {
   value: string;
   label: string;
 }

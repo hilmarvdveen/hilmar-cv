@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { SEOPageConfig } from "@/types/seo.types";
 
-interface PageSEOProps {
+type PageSEOProps = {
   structuredData: Record<string, unknown>[];
   trackPageView?: boolean;
   onMount?: () => void;
