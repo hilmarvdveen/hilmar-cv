@@ -38,6 +38,11 @@ import {
   CONSULTING_SERVICE_CONTENT
 } from '../constants/page-content';
 
+// Stable per-deployment timestamp for sitemap <lastmod>. Computed once at module
+// load (≈ deploy time) rather than per request, so we don't signal to crawlers
+// that every page changes on every crawl.
+const SITE_LAST_MODIFIED = new Date().toISOString();
+
 /**
  * Main SEO Engine orchestrating metadata, structured data, and analytics
  */
@@ -736,7 +741,7 @@ export class SEOEngine {
 
         sitemapData.push({
           url,
-          lastModified: new Date().toISOString(),
+          lastModified: SITE_LAST_MODIFIED,
           changeFrequency,
           priority,
           alternates

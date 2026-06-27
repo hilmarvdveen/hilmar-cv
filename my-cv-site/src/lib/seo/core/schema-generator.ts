@@ -153,7 +153,7 @@ export class SchemaGenerator {
       sameAs: [
         BUSINESS_PROFILE.SOCIAL.LINKEDIN,
         BUSINESS_PROFILE.SOCIAL.GITHUB,
-        BUSINESS_PROFILE.SOCIAL.TWITTER
+        BUSINESS_PROFILE.SOCIAL.X_URL
       ]
     };
   }
@@ -175,11 +175,11 @@ export class SchemaGenerator {
       url: `${this.baseUrl}/en/about`,
       email: BUSINESS_PROFILE.CONTACT.EMAIL,
       telephone: BUSINESS_PROFILE.CONTACT.PHONE,
-      image: `${this.baseUrl}/images/hilmar-profile.jpg`,
+      image: `${this.baseUrl}/images/profile.jpg`,
       sameAs: [
         BUSINESS_PROFILE.SOCIAL.LINKEDIN,
         BUSINESS_PROFILE.SOCIAL.GITHUB,
-        BUSINESS_PROFILE.SOCIAL.TWITTER
+        BUSINESS_PROFILE.SOCIAL.X_URL
       ],
       address: {
         '@type': 'PostalAddress',

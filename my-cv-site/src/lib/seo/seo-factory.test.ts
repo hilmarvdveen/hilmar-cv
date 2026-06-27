@@ -79,6 +79,33 @@ describe("SEOFactory analytics passthroughs", () => {
   });
 });
 
+describe("SEO structured-data & robots correctness", () => {
+  const home = SEOFactory.homepage("en");
+
+  it("uses valid (URL) sameAs entries on Person/Organization schemas", () => {
+    const withSameAs = home.jsonLd.filter(
+      (s) => Array.isArray((s as { sameAs?: unknown[] }).sameAs)
+    ) as Array<{ sameAs: string[] }>;
+    expect(withSameAs.length).toBeGreaterThan(0);
+    for (const schema of withSameAs) {
+      for (const ref of schema.sameAs) {
+        expect(ref).toMatch(/^https?:\/\//); // no bare @handles
+      }
+    }
+  });
+
+  it("references an existing profile image in the Person schema", () => {
+    const person = home.jsonLd.find(
+      (s) => (s as { "@type"?: string })["@type"] === "Person"
+    ) as { image?: string } | undefined;
+    expect(person?.image).toContain("/images/profile.jpg");
+  });
+
+  it("requests large image previews via robots", () => {
+    expect(String(home.metadata.robots)).toContain("max-image-preview:large");
+  });
+});
+
 describe("SEOFactory.generateSitemapData", () => {
   const entries = SEOFactory.generateSitemapData();
   it("returns entries with url, priority and hreflang alternates", () => {

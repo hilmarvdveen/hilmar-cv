@@ -30,7 +30,10 @@ export const BUSINESS_PROFILE = {
   SOCIAL: {
     LINKEDIN: 'https://linkedin.com/in/hilmarvdv',
     GITHUB: 'https://github.com/hilmarvdv',
-    TWITTER: '@hilmarvdv'
+    // @handle for the twitter:creator meta tag; X_URL is the canonical profile
+    // URL for schema.org `sameAs` (which requires a URL, not a handle).
+    TWITTER: '@hilmarvdv',
+    X_URL: 'https://x.com/hilmarvdv'
   },
   ESTABLISHED: '2016',
   YEARS_EXPERIENCE: '8+',
