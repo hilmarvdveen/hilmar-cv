@@ -61,54 +61,53 @@ length caps with `maxLength` on inputs.
 
 ### i18n
 
-`next-intl`; routes live under `src/app/[locale]/…`. Messages in
-`src/i18n/messages/{en,nl}.json`.
+`next-intl`; routes live under `src/app/[locale]/…`. All i18n lives under
+`src/i18n/` — `config.ts`, `request.ts`, `routing.ts`, `navigation.ts`, and
+`messages/{en,nl}.json`. Import navigation helpers via `@/i18n/navigation`.
 
-## Current folder structure
+## Folder structure (feature-based)
 
 ```
 my-cv-site/
   src/
-    app/
-      [locale]/…           # localized pages & layouts
+    app/                       # routes only
+      [locale]/…               # localized pages & layouts
       api/{contact,cv-download,booking,booking/slots}/route.ts
       sitemap.xml/ robots.txt/
-    components/            # all UI components (flat)
-    contexts/             # React contexts (e.g. BookingFormContext)
-    hooks/                # useHoneypot, …
+    features/                  # one folder per domain, each with a barrel index.ts
+      booking/   { components/, context/ }
+      contact/ cv-download/ home/ about/ services/ projects/ faq/ seo/ analytics/
+    components/                # SHARED ONLY: Icon, SectionTitle, Header, Footer,
+                               #              Breadcrumb, HoneypotField
+    hooks/                     # useHoneypot (shared)
     lib/
-      graph/              # Microsoft Graph: client, mail, calendar
-      security/           # origin, honeypot, validate, escape, http
-      seo/                # SEO engine, schema, constants
+      graph/                   # Microsoft Graph: client, mail, calendar
+      security/                # origin, honeypot, validate, escape, http
+      seo/                     # SEO engine, schema, constants
     i18n/  models/  types/  data/
-  docs/                   # MICROSOFT_GRAPH.md, SEO.md
-  public/                 # single source for static data (CV pdf, geojson)
+  docs/                        # MICROSOFT_GRAPH.md, SEO.md
+  public/                      # single source for static data (CV pdf, geojson)
 ```
 
-## Target folder structure (north star)
-
-The structure above is what exists today. The intended evolution — adopt
-incrementally, do **not** mass-move files in one change — is a feature/domain
-layout that keeps routes thin and colocates UI + logic per domain:
-
-```
-src/
-  app/                    # routes only; handlers delegate to lib/ & features/
-  features/               # booking/ contact/ cv-download/ (components + hooks + types per domain)
-  components/             # truly shared/presentational UI only
-  lib/{graph,security,seo}/
-  i18n/ models/ hooks/ contexts/ types/
-docs/                     # all long-form docs
-public/                   # all static assets/data (no duplicates under src/)
-```
-
-`features/` is aspirational: today domain components still live flat in
-`components/`. When touching a domain heavily, prefer moving its pieces into a
-`features/<domain>/` folder rather than adding more to the flat `components/`.
+### Structure conventions
+- **Pages import features through the barrel**: `import { BookingForm } from "@/features/booking"` — not deep component paths. Each feature's `index.ts` re-exports its public components/context.
+- **Shared vs feature**: cross-feature UI (Icon, SectionTitle, Header, Footer, Breadcrumb, HoneypotField) lives in `src/components/`; anything page/domain-specific lives in its `features/<domain>/`.
+- **Imports use the `@/` alias** (→ `src/`); avoid `../` relative paths that break on moves. Co-located `./` imports within a feature are fine.
+- **Routes stay thin**: route handlers delegate to `lib/` (and never inline Graph calls).
 
 ## Testing
 
-Vitest + React Testing Library + jsdom. Pure logic in `lib/graph/calendar` and
-`lib/security` is unit-tested directly; API routes are tested with mocked
-`lib/graph`; forms have smoke tests with mocked `fetch`. Add/adjust tests when
-changing route validation, Graph calls, or form payloads.
+Vitest + React Testing Library + jsdom (`vitest.config.ts`). Run `npm test`,
+`npm run test:watch`, or `npm run test:coverage`.
+
+- **Pure logic** (`lib/graph`, `lib/security`, `lib/seo`, `hooks`) is unit-tested
+  directly; the SEO suite drives `SEOFactory` to cover the engine + generators.
+- **API routes** are tested with a mocked `@/lib/graph`.
+- **Interactive components** (ContactForm, CVDownloadModal, BookingForm, Header)
+  have RTL tests with mocked `fetch` / `next-intl`.
+- **Coverage gate**: `test:coverage` enforces thresholds (70/70/70 lines/funcs/
+  stmts, 60 branches) on `src/lib` + `src/hooks`. Pages/components are excluded
+  from the gate but still tested for regression.
+
+Add/adjust tests when changing route validation, Graph calls, form payloads, or
+SEO output.
