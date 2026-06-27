@@ -21,7 +21,11 @@ jobs:
           cache-dependency-path: my-cv-site/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        # `npm install` (not `npm ci`) so the Linux runner can resolve
+        # platform-specific optional deps (e.g. @next/swc-linux-*, sharp,
+        # @emnapi/*) whose transitive entries a Windows-generated lockfile
+        # can't fully capture. The lockfile still pins the resolvable graph.
+        run: npm install --no-audit --no-fund
 
       - name: Lint
         run: npm run lint
