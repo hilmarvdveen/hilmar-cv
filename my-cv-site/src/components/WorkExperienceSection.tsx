@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useMessages } from "next-intl";
-import { workHistory } from "../data/workHistory";
+import { workHistory } from "@/data/workHistory";
 import Image from "next/image";
 import { MapPin, Globe, Languages } from "lucide-react";
 

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Briefcase, Globe, MapPin, Home, Calendar, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { workHistory, WorkMode } from "../data/workHistory";
-import { ProvinceFeature, ProvinceGeoJSON } from "../models/Geo.model";
+import { workHistory, WorkMode } from "@/data/workHistory";
+import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
 
 // Constants
 const HOME_CITY_NAME = "Zandvoort";

@@ -9,7 +9,7 @@ import { UspSection } from "@/components/UspSection";
 import { CallToActionSection } from "@/components/CallToActionSection";
 import { WorkExperienceSection } from "@/components/WorkExperienceSection";
 import { ProjectHighlightsSection } from "@/components/ProjectHighlightsSection";
-import { TechStackSection } from "@/components/TechSTackSection";
+import { TechStackSection } from "@/components/TechStackSection";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 

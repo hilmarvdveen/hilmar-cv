@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { routing } from '../i18n/routing';
+import { routing } from '@/i18n/routing';
 
 // Create the base middleware from next-intl
 const intlMiddleware = createMiddleware(routing);

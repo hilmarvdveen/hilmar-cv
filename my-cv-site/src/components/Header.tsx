@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useMemo, useState, useEffect } from "react";
-import { Link, usePathname, useRouter } from "../../i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import {
   Home,
   FolderOpen,

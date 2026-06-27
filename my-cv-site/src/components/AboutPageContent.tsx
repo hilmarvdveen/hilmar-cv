@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Icon } from "@/components/Icon";
-import { Link } from "i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
 export function AboutPageContent() {
   const t = useTranslations("about");

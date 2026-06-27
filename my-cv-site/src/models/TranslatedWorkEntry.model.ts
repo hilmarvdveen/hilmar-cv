@@ -1,4 +1,4 @@
-import { WorkMode } from "../data/workHistory";
+import { WorkMode } from "@/data/workHistory";
 
 export interface TranslatedWorkEntry {
     company: string;

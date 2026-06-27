@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { SectionTitle } from "./SectionTitle";
-import { Tech } from "../data/workHistory";
+import { Tech } from "@/data/workHistory";
 
 export const TechStackSection = () => {
   const tHome = useTranslations("home");
