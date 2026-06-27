@@ -11,7 +11,7 @@ vi.mock("next/link", () => ({
   ),
 }));
 vi.mock("next/image", () => ({
-  // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+  // eslint-disable-next-line @next/next/no-img-element
   default: (p: Record<string, unknown>) => <img alt="" src={String(p.src ?? "")} />,
 }));
 

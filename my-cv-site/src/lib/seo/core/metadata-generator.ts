@@ -73,9 +73,9 @@ export class MetadataGenerator {
       // Extended meta tags for enhanced SEO
       other: this.generateExtendedMetaTags(config),
       
-      // Verification tags
+      // Verification tags (server-side; token need not be public)
       verification: {
-        google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        google: process.env.GOOGLE_SITE_VERIFICATION,
       },
       
       // App metadata

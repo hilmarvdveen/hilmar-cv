@@ -40,9 +40,6 @@ export default defineConfig({
         // Nav shell with duplicated desktop/mobile trees + responsive-only
         // branches; E2E-appropriate. Nav/active/locale unit tests still run.
         "src/components/Header.tsx",
-        // Unused component with heavy browser-only DOM/SEO side effects
-        // (script/link injection + cleanups); E2E-appropriate. Smoke test runs.
-        "src/features/seo/components/ComprehensiveSEO.tsx",
       ],
       thresholds: {
         // 100% on lines/functions/statements; branches at a high bar (the
