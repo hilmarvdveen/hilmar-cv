@@ -245,6 +245,7 @@
         },
         "nav": {
             "home": "Home",
+            "blog": "Blog",
             "projects": "Projects",
             "contact": "Contact",
             "faq": "FAQ",
@@ -2340,6 +2341,31 @@
                 "netherlands": "Netherlands",
                 "euBased": "EU Based"
             }
+        }
+    },
+    "blog": {
+        "eyebrow": "Blog",
+        "index": {
+            "title": "Frontend engineering, in depth",
+            "subtitle": "Practical, example-driven articles on modern React architecture, testing, SEO and routing — the patterns I use on real production work."
+        },
+        "minRead": "min read",
+        "publishedOn": "Published",
+        "updatedOn": "Updated",
+        "writtenBy": "Hilmar van der Veen",
+        "readArticle": "Read article",
+        "backToList": "Back to all articles",
+        "category": {
+            "architecture": "Architecture",
+            "testing": "Testing",
+            "seo": "SEO",
+            "routing": "Routing",
+            "fundamentals": "Fundamentals"
+        },
+        "cta": {
+            "title": "Building something ambitious?",
+            "text": "I help teams ship fast, well-tested, well-architected frontends. Let’s talk about your project.",
+            "button": "Get in touch"
         }
     }
 }

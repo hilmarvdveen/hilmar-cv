@@ -160,6 +160,27 @@ describe("SEO structured-data & robots correctness", () => {
   });
 });
 
+describe("SEOFactory.blogPost", () => {
+  const post = {
+    slug: "react-folder-structure",
+    title: "React Folder Structure That Scales",
+    description: "How to organize a modern React project so it stays navigable.",
+    keywords: ["react", "architecture"],
+    category: "architecture",
+    publishedDate: "2026-06-10",
+    updatedDate: "2026-06-12",
+  };
+
+  it("produces BlogPosting structured data for both locales", () => {
+    for (const locale of locales) {
+      const result = SEOFactory.blogPost(locale, post);
+      expect(result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
+      expect(result.metadata.alternates?.canonical).toBeTruthy();
+      expect(result.structuredData).toContain("BlogPosting");
+    }
+  });
+});
+
 describe("SEOFactory.generateSitemapData", () => {
   const entries = SEOFactory.generateSitemapData();
   it("returns entries with url, priority and hreflang alternates", () => {

@@ -357,6 +357,50 @@ export class SEOEngine {
   }
 
   /**
+   * Create SEO configuration for an individual blog post.
+   * Emits BlogPosting structured data with publish/modified dates and a
+   * Home → Blog → <post> breadcrumb trail.
+   */
+  public createBlogPostSEO(
+    locale: Locale,
+    post: {
+      slug: string;
+      title: string;
+      description: string;
+      keywords: string[];
+      category: string;
+      publishedDate: string;
+      updatedDate?: string;
+    }
+  ): {
+    metadata: Metadata;
+    jsonLd: JsonLdSchema[];
+    structuredData: string;
+  } {
+    const localeBase =
+      locale === LOCALE_CONFIG.DEFAULT ? this.baseUrl : `${this.baseUrl}/${locale}`;
+
+    const config: SEOPageConfig = {
+      pageType: 'blog-post',
+      locale,
+      title: post.title,
+      description: post.description,
+      keywords: post.keywords,
+      path: `blog/${post.slug}`,
+      publishedTime: new Date(post.publishedDate),
+      lastModified: new Date(post.updatedDate ?? post.publishedDate),
+      section: post.category,
+      breadcrumbs: [
+        { name: 'Home', url: localeBase, position: 1 },
+        { name: 'Blog', url: `${localeBase}/blog`, position: 2 },
+        { name: post.title, url: `${localeBase}/blog/${post.slug}`, position: 3 }
+      ]
+    };
+
+    return this.generatePageSEO(config);
+  }
+
+  /**
    * Create SEO configuration for privacy page
    */
   public createPrivacySEO(locale: Locale): {
@@ -690,26 +734,72 @@ export class SEOEngine {
   /**
    * Generate sitemap data for all pages
    */
-  public generateSitemapData(): Array<{
+  public generateSitemapData(
+    dynamicPages: Array<{
+      path: string;
+      lastModified?: string;
+      changeFrequency?: string;
+      priority?: number;
+    }> = []
+  ): Array<{
     url: string;
     lastModified: string;
     changeFrequency: string;
     priority: number;
     alternates: Array<{ hreflang: string; href: string }>;
   }> {
-    const pages = [
-      '', 
-      'about', 
-      'services', 
+    const staticPages = [
+      '',
+      'about',
+      'services',
       'services/frontend',
-      'services/fullstack', 
+      'services/fullstack',
       'services/design-systems',
       'services/consulting',
-      'projects', 
-      'contact', 
-      'faq', 
+      'projects',
+      'blog',
+      'contact',
+      'faq',
       'book'
     ];
+
+    // Normalise static + dynamic pages into one descriptor list so the
+    // locale/alternate loop below is identical for both kinds.
+    const pageDescriptors: Array<{
+      path: string;
+      lastModified: string;
+      changeFrequency: string;
+      priority: number;
+    }> = staticPages.map(page => {
+      let priority = 0.8;
+      let changeFrequency = 'monthly';
+
+      if (page === '') {
+        priority = 1.0;
+        changeFrequency = 'weekly';
+      } else if (page === 'services' || page.startsWith('services/')) {
+        priority = 0.9; // High priority for service pages
+        changeFrequency = 'monthly';
+      } else if (page === 'contact' || page === 'book') {
+        priority = 0.9; // High priority for conversion pages
+        changeFrequency = 'monthly';
+      } else if (page === 'blog') {
+        priority = 0.8;
+        changeFrequency = 'weekly';
+      }
+
+      return { path: page, lastModified: SITE_LAST_MODIFIED, changeFrequency, priority };
+    });
+
+    dynamicPages.forEach(page => {
+      pageDescriptors.push({
+        path: page.path,
+        lastModified: page.lastModified ?? SITE_LAST_MODIFIED,
+        changeFrequency: page.changeFrequency ?? 'monthly',
+        priority: page.priority ?? 0.7
+      });
+    });
+
     const sitemapData: Array<{
       url: string;
       lastModified: string;
@@ -718,39 +808,25 @@ export class SEOEngine {
       alternates: Array<{ hreflang: string; href: string }>;
     }> = [];
 
-    pages.forEach(page => {
+    pageDescriptors.forEach(descriptor => {
+      const pagePath = descriptor.path ? `/${descriptor.path}` : '';
+
       LOCALE_CONFIG.SUPPORTED.forEach(locale => {
         const isDefault = locale === LOCALE_CONFIG.DEFAULT;
         const localePrefix = isDefault ? '' : `/${locale}`;
-        const pagePath = page ? `/${page}` : '';
         const url = `${this.baseUrl}${localePrefix}${pagePath}`;
 
         // Generate alternates for this page
-        const alternates = LOCALE_CONFIG.SUPPORTED.map((locale: string) => ({  
+        const alternates = LOCALE_CONFIG.SUPPORTED.map((locale: string) => ({
           hreflang: LOCALE_CONFIG.HREFLANG[locale as keyof typeof LOCALE_CONFIG.HREFLANG],
           href: `${this.baseUrl}${locale === LOCALE_CONFIG.DEFAULT ? '' : `/${locale}`}${pagePath}`
         }));
 
-        // Determine priority and change frequency based on page type
-        let priority = 0.8;
-        let changeFrequency = 'monthly';
-        
-        if (page === '') {
-          priority = 1.0;
-          changeFrequency = 'weekly';
-        } else if (page === 'services' || page.startsWith('services/')) {
-          priority = 0.9; // High priority for service pages
-          changeFrequency = 'monthly';
-        } else if (page === 'contact' || page === 'book') {
-          priority = 0.9; // High priority for conversion pages
-          changeFrequency = 'monthly';
-        }
-
         sitemapData.push({
           url,
-          lastModified: SITE_LAST_MODIFIED,
-          changeFrequency,
-          priority,
+          lastModified: descriptor.lastModified,
+          changeFrequency: descriptor.changeFrequency,
+          priority: descriptor.priority,
           alternates
         });
       });
