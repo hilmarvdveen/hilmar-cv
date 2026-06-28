@@ -69,8 +69,12 @@ actually shipped and cost points. Work top-to-bottom; each item says **what**,
   - **Gotcha (real bug):** `Person.image` pointed at `/images/hilmar-profile.jpg` which didn't exist. Point at a real file; ideally the same photo shown on the page (avoid "schema drift" — structured data must match visible content).
 - [ ] **`SearchAction` requires a working search endpoint.** Don't declare a
   sitelinks searchbox targeting `/search?q=…` if `/search` 404s — build it (it can be a simple client-side filter over a static index) or drop the action.
+- [ ] **Schema image/logo URLs must resolve to real files.** A URL-shape check passes even when the file 404s. **Gotcha (real):** `Organization.logo`/`publisher.logo` pointed at `/images/logo.png` while only `logo_v1.png` existed → logo rich result fails. Test it: collect every `https://host/...(png|jpg|svg)` in the JSON-LD and assert the file exists under `public/`.
+- [ ] **Field types must match schema.org.** **Gotcha (real):** `hasCredential: ["Scrum Master", …]` (bare strings) is invalid — the range is `EducationalOccupationalCredential`. Use `{ "@type": "EducationalOccupationalCredential", name }`. Same idea: `availability` should be `https://schema.org/InStock` (URL), and `Offer` needs `price` + `priceCurrency`.
+- [ ] **Schema dates must be stable per deploy.** `datePublished`/`dateModified` built with `new Date()` per request change on every crawl (same anti-pattern as sitemap `lastmod`). Use a module-load constant. Test: generate the same page twice, assert `dateModified` is identical.
+- [ ] **Complete `LocalBusiness`/`ProfessionalService` fields** for local rich results: `name`, `address`, `telephone`, `url`, `image`, `priceRange`, `geo`, `areaServed`. Missing `address`/`image`/`priceRange` is the usual gap.
 - [ ] Link the entity graph with `@id` where useful (WebPage → WebSite → Person).
-- [ ] **Verify:** Google Rich Results Test on each template.
+- [ ] **Verify:** Google Rich Results Test on each template — and assert in code (parse every page's JSON-LD; check core types, valid https URLs on the canonical host, `sameAs` URLs, image files exist, `SearchAction` target, FAQ answers).
 
 ---
 
@@ -212,6 +216,10 @@ expect(String(meta.robots)).toContain('max-image-preview:large');
 | Invalid `rel=canonical` | canonical host ≠ served host (www vs non-www) | one host everywhere + 301 redirect the other |
 | Structured data invalid | `sameAs: ['@handle']`; `image` 404 | full URLs; real, existing image |
 | JSON-LD won't parse | `schemas.map(JSON.stringify).join('\n\n')` (multiple objects in one script) | emit a single JSON **array** (or `@graph`) |
+| Logo rich result fails | schema `logo` URL 404s (`/images/logo.png` vs `logo_v1.png`) | point at a real file; test files exist under `public/` |
+| `hasCredential` invalid | array of bare strings | `EducationalOccupationalCredential` objects |
+| Schema dates churn every crawl | `datePublished`/`dateModified` = `new Date()` per request | module-load constant (stable per deploy) |
+| Thin LocalBusiness result | `ProfessionalService` missing address/telephone/image/priceRange/geo | add them |
 | Sitelinks searchbox invalid | `SearchAction` → non-existent `/search` | build `/search` or drop the action |
 | Non-composited animation (CLS) | animating `left`/`top`/`width` | animate `transform`/`opacity` + `will-change` |
 | Low contrast buttons | white on `bg-emerald-600` (3.8:1) | `emerald-700`+ (≥4.5:1); never hover lighter |

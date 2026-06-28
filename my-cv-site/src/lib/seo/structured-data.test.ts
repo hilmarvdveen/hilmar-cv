@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { SEOFactory } from "./factory";
 import type { Locale } from "./types/seo-types";
 
@@ -47,6 +49,24 @@ function walk(node: unknown, visit: (key: string, value: unknown) => void): void
       walk(v, visit);
     }
   }
+}
+
+// Recursively collect every object whose @type matches (handles nesting/arrays).
+function collectByType(
+  node: unknown,
+  type: string,
+  out: Array<Record<string, unknown>> = []
+): Array<Record<string, unknown>> {
+  if (Array.isArray(node)) {
+    node.forEach((n) => collectByType(n, type, out));
+    return out;
+  }
+  if (node && typeof node === "object") {
+    const obj = node as Record<string, unknown>;
+    if (obj["@type"] === type) out.push(obj);
+    for (const v of Object.values(obj)) collectByType(v, type, out);
+  }
+  return out;
 }
 
 function typeSet(schemas: Array<Record<string, unknown>>): Set<string> {
@@ -135,6 +155,69 @@ describe("structured data (JSON-LD) per page", () => {
       });
     }
   }
+
+  it("every self-hosted image/logo URL resolves to a real file in public/", () => {
+    // Catches schema images that 404 (e.g. /images/logo.png when only
+    // logo_v1.png exists) — something URL-shape validation can't see.
+    const imgExt = /\.(png|jpe?g|webp|svg|gif|ico)$/i;
+    const missing = new Set<string>();
+    for (const locale of LOCALES) {
+      for (const raw of Object.values(pagesFor(locale))) {
+        walk(JSON.parse(raw), (_key, value) => {
+          if (
+            typeof value === "string" &&
+            value.startsWith(`https://${CANONICAL_HOST}/`) &&
+            imgExt.test(value)
+          ) {
+            const path = new URL(value).pathname; // e.g. /images/logo_v1.png
+            if (!existsSync(resolve(process.cwd(), "public", `.${path}`))) {
+              missing.add(value);
+            }
+          }
+        });
+      }
+    }
+    expect([...missing]).toEqual([]);
+  });
+
+  it("Person.hasCredential entries are credential objects, not bare strings", () => {
+    const schemas = JSON.parse(
+      SEOFactory.homepage("en").structuredData
+    ) as Array<Record<string, unknown>>;
+    const person = schemas.find((s) => hasType(s, "Person")) as
+      | { hasCredential?: unknown[] }
+      | undefined;
+    if (person?.hasCredential) {
+      for (const c of person.hasCredential) {
+        expect(typeof c).toBe("object");
+        expect((c as Record<string, unknown>)["@type"]).toBe(
+          "EducationalOccupationalCredential"
+        );
+      }
+    }
+  });
+
+  it("every Offer has a numeric price and a currency", () => {
+    const schemas = JSON.parse(SEOFactory.homepage("en").structuredData);
+    const offers = collectByType(schemas, "Offer");
+    expect(offers.length).toBeGreaterThan(0);
+    for (const o of offers) {
+      expect(String(o.price)).toMatch(/^\d+(\.\d+)?$/);
+      expect(o.priceCurrency).toBeTruthy();
+    }
+  });
+
+  it("schema dates are stable across calls (not new Date() per request)", () => {
+    const a = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
+      Record<string, unknown>
+    >;
+    const b = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
+      Record<string, unknown>
+    >;
+    const dm = (s: Array<Record<string, unknown>>) =>
+      s.find((x) => hasType(x, "WebPage"))?.dateModified;
+    expect(dm(a)).toBe(dm(b));
+  });
 
   it("FAQ page exposes a non-empty FAQPage with answered questions", () => {
     const schemas = JSON.parse(
