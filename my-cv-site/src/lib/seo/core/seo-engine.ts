@@ -100,9 +100,9 @@ export class SEOEngine {
     const config: SEOPageConfig = {
       pageType: 'homepage',
       locale,
-      title: locale === 'nl' 
-        ? `${BUSINESS_PROFILE.NAME} - Senior Frontend Developer Amsterdam | React, Angular, Next.js`
-        : `${BUSINESS_PROFILE.NAME} - Senior Frontend Developer Amsterdam | React, Angular, Next.js`,
+      title: locale === 'nl'
+        ? `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`
+        : `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`,
       description: locale === 'nl'
         ? `Senior Frontend Developer in Amsterdam met ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring. Specialist in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur. MSc Physics UvA. Klanten: Belastingdienst, Ziggo, NPL.`
         : `Senior Frontend Developer in Amsterdam with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience. Expert in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour. MSc Physics UvA. Clients: Belastingdienst, Ziggo, NPL.`,

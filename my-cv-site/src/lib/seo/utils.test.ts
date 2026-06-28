@@ -3,7 +3,7 @@ import { SEOUtils } from "./utils";
 
 describe("SEOUtils.validateURL", () => {
   it("accepts valid http(s) URLs", () => {
-    expect(SEOUtils.validateURL("https://hilmarvanderveen.com")).toBe(true);
+    expect(SEOUtils.validateURL("https://www.hilmarvanderveen.com")).toBe(true);
     expect(SEOUtils.validateURL("https://www.example.com/path?q=1")).toBe(true);
   });
   it("rejects non-URLs", () => {

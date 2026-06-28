@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'www.hilmarvanderveen.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'hilmarvanderveen.com',
       },
     ],
@@ -125,7 +129,7 @@ const nextConfig: NextConfig = {
   
   experimental: {
     serverActions: {
-      allowedOrigins: ['hilmarvanderveen.com', 'localhost:3000', 'localhost:3001'],
+      allowedOrigins: ['www.hilmarvanderveen.com', 'hilmarvanderveen.com', 'localhost:3000', 'localhost:3001'],
     },
     optimizePackageImports: ['lucide-react', 'd3'],
   },

@@ -227,7 +227,7 @@ export default async function ServicesPage({ params }: Props) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/book"
-                className="inline-flex items-center justify-center space-x-2 bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center justify-center space-x-2 bg-emerald-700 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <span>{t("finalCta.bookConsultation")}</span>
                 <ArrowRight className="w-5 h-5" />
@@ -235,7 +235,7 @@ export default async function ServicesPage({ params }: Props) {
 
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center space-x-2 border-2 border-emerald-600 text-emerald-400 px-8 py-4 rounded-lg font-bold hover:bg-emerald-600 hover:text-white transition-all duration-300"
+                className="inline-flex items-center justify-center space-x-2 border-2 border-emerald-600 text-emerald-400 px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 hover:text-white transition-all duration-300"
               >
                 <span>{t("finalCta.getInTouch")}</span>
               </Link>

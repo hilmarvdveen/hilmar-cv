@@ -133,7 +133,7 @@ export const ProjectShowcase = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
                     href="/book"
-                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
+                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-700 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
                   >
                     <Calendar className="w-5 h-5" />
                     <span>{t("showcase.actions.discuss")}</span>
@@ -142,7 +142,7 @@ export const ProjectShowcase = () => {
 
                   <Link
                     href="/contact"
-                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200"
+                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200"
                   >
                     <ExternalLink className="w-5 h-5" />
                     <span>{t("showcase.actions.moreInfo")}</span>
@@ -188,14 +188,14 @@ export const ProjectShowcase = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/book"
-              className="inline-flex items-center space-x-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center space-x-2 px-8 py-4 bg-emerald-700 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
             >
               <Calendar className="w-5 h-5" />
               <span>{t("showcase.cta.book")}</span>
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center space-x-2 px-8 py-4 border border-emerald-600 text-emerald-600 font-bold rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200"
+              className="inline-flex items-center space-x-2 px-8 py-4 border border-emerald-600 text-emerald-600 font-bold rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200"
             >
               <span>{t("showcase.cta.contact")}</span>
             </Link>

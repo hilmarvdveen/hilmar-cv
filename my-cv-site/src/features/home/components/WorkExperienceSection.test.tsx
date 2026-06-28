@@ -25,4 +25,10 @@ describe("WorkExperienceSection", () => {
     const { container } = render(<WorkExperienceSection />);
     expect(container.textContent).toContain("Did impactful work");
   });
+
+  it("gives each entry an #experience-<id> anchor for in-page logo links", () => {
+    const { container } = render(<WorkExperienceSection />);
+    expect(container.querySelector("#experience-belastingdienst")).toBeTruthy();
+    expect(container.querySelector("#experience-postcode-loterij")).toBeTruthy();
+  });
 });

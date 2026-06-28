@@ -25,7 +25,7 @@ export function GET() {
     const fallbackRobots = `User-agent: *
 Allow: /
 
-Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://hilmarvanderveen.com'}/sitemap.xml`;
+Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.hilmarvanderveen.com'}/sitemap.xml`;
 
     return new NextResponse(fallbackRobots, {
       status: 200,

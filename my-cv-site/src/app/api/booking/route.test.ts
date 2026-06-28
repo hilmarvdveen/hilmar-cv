@@ -28,10 +28,10 @@ function future(daysAhead = 5) {
 }
 
 function post(body: unknown, headers: Record<string, string> = {}) {
-  return new NextRequest("https://hilmarvanderveen.com/api/booking", {
+  return new NextRequest("https://www.hilmarvanderveen.com/api/booking", {
     method: "POST",
     headers: {
-      origin: "https://hilmarvanderveen.com",
+      origin: "https://www.hilmarvanderveen.com",
       "content-type": "application/json",
       ...headers,
     },

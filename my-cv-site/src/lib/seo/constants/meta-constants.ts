@@ -26,7 +26,7 @@ export const BUSINESS_PROFILE = {
     EMAIL: 'hilmar@hilmarvanderveen.com',
     PHONE: '+31680149947',
     WHATSAPP: 'https://wa.me/31680149947',
-    WEBSITE: 'https://hilmarvanderveen.com'
+    WEBSITE: 'https://www.hilmarvanderveen.com'
   },
   SOCIAL: {
     LINKEDIN: 'https://www.linkedin.com/in/hilmar-van-der-veen/',

@@ -60,4 +60,21 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(meta.title).toBeTruthy();
     expect(meta.description).toBeTruthy();
   });
+
+  it("truncates an over-long title cleanly — no '...' and never '<cut>... | Brand'", () => {
+    const longTitle =
+      "Hilmar van der Veen - Senior Frontend Developer Amsterdam | React, Angular, Next.js, TypeScript Expert";
+    const title = String(gen.generateMetadata(cfg({ title: longTitle })).title);
+    expect(title.length).toBeLessThanOrEqual(60);
+    expect(title).not.toContain("..."); // the regression we fixed
+    expect(title).not.toMatch(/…\s*\|/); // no ellipsis immediately before a brand pipe
+  });
+
+  it("does not inline OG/Twitter images (those come from the image routes)", () => {
+    const meta = gen.generateMetadata(cfg());
+    const og = meta.openGraph as Record<string, unknown>;
+    const tw = meta.twitter as Record<string, unknown>;
+    expect(og.images).toBeUndefined();
+    expect(tw.images).toBeUndefined();
+  });
 });

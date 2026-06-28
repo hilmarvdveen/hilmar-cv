@@ -27,7 +27,7 @@ export type LegalLocale = "en" | "nl";
 
 const CONTROLLER = "Hilmar van der Veen";
 const EMAIL = "hilmar@hilmarvanderveen.com";
-const SITE = "hilmarvanderveen.com";
+const SITE = "www.hilmarvanderveen.com";
 const LOCATION_EN = "Amsterdam, the Netherlands";
 const LOCATION_NL = "Amsterdam, Nederland";
 const UPDATED_EN = "27 June 2026";

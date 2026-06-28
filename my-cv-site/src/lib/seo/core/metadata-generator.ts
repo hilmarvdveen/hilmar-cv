@@ -104,23 +104,19 @@ export class MetadataGenerator {
    * Optimize title with E-E-A-T signals and location targeting
    */
   private optimizeTitle(title: string, pageType: PageType): string {
-    // Ensure title is within optimal length
-    if (title.length > META_LIMITS.TITLE.MAX) {
-      title = title.substring(0, META_LIMITS.TITLE.MAX - 3) + '...';
-    }
-    
-    // Add E-E-A-T signals for professional credibility
-    const professionalSuffix = this.getProfessionalSuffix(pageType);
-    const locationSuffix = ' | Amsterdam, Netherlands';
-    
-    const optimizedTitle = `${title}${professionalSuffix}${locationSuffix}`;
-    
-    // Final length check
-    if (optimizedTitle.length > META_LIMITS.TITLE.MAX) {
-      return `${title} | ${BUSINESS_PROFILE.NAME}`;
-    }
-    
-    return optimizedTitle;
+    const max = META_LIMITS.TITLE.MAX;
+    const suffix = `${this.getProfessionalSuffix(pageType)} | Amsterdam, Netherlands`;
+
+    // Prefer the full title with E-E-A-T suffix when it fits.
+    const withSuffix = `${title}${suffix}`;
+    if (withSuffix.length <= max) return withSuffix;
+
+    // Otherwise use the page title on its own when it fits.
+    if (title.length <= max) return title;
+
+    // Last resort: truncate cleanly at a word boundary with a single ellipsis
+    // (never produce "<truncated>... | Brand", which reads badly in search).
+    return title.slice(0, max - 1).replace(/\s+\S*$/, '').trimEnd() + '…';
   }
 
   /**

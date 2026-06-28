@@ -32,8 +32,8 @@ const CREDS = {
 
 function get(date?: string) {
   const url = date
-    ? `https://hilmarvanderveen.com/api/booking/slots?date=${date}`
-    : "https://hilmarvanderveen.com/api/booking/slots";
+    ? `https://www.hilmarvanderveen.com/api/booking/slots?date=${date}`
+    : "https://www.hilmarvanderveen.com/api/booking/slots";
   return new NextRequest(url, { method: "GET" });
 }
 

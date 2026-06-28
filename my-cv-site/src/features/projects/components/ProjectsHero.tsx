@@ -33,7 +33,7 @@ export const ProjectsHero = () => {
             {/* Primary CTA */}
             <Link
               href="/book"
-              className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-xl hover:scale-105 text-base"
+              className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-700 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-xl hover:scale-105 text-base"
             >
               <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               <span>{t("showcase.cta.book")}</span>

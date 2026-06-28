@@ -349,7 +349,7 @@ ${formData.description}
 
           <button
             onClick={resetForm}
-            className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors duration-200"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-700 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors duration-200"
           >
             <span>{t("success.submitAnother")}</span>
           </button>
@@ -369,7 +369,7 @@ ${formData.description}
               key={step}
               className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${
                 currentStep >= step
-                  ? "bg-emerald-600 border-emerald-600 text-white"
+                  ? "bg-emerald-700 border-emerald-700 text-white"
                   : "border-gray-300 text-gray-400"
               }`}
             >
@@ -418,7 +418,7 @@ ${formData.description}
                       }`}
                     >
                       {service.popular && (
-                        <span className="absolute top-3 right-3 bg-emerald-600 text-white text-xs px-2 py-1 rounded-full">
+                        <span className="absolute top-3 right-3 bg-emerald-700 text-white text-xs px-2 py-1 rounded-full">
                           {t("steps.step1.popular")}
                         </span>
                       )}
@@ -426,7 +426,7 @@ ${formData.description}
                         <div
                           className={`p-2 rounded-lg ${
                             formData.service === service.id
-                              ? "bg-emerald-600 text-white"
+                              ? "bg-emerald-700 text-white"
                               : "bg-gray-100 text-gray-600"
                           }`}
                         >
@@ -890,7 +890,7 @@ ${formData.description}
             disabled={!canProceed() || formState.isSubmitting}
             className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 ${
               canProceed() && !formState.isSubmitting
-                ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg"
+                ? "bg-emerald-700 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
@@ -904,7 +904,7 @@ ${formData.description}
             className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md ${
               formState.isSubmitting
                 ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-emerald-600 text-white hover:bg-emerald-700 hover:shadow-lg"
+                : "bg-emerald-700 text-white hover:bg-emerald-700 hover:shadow-lg"
             }`}
           >
             {formState.isSubmitting ? (

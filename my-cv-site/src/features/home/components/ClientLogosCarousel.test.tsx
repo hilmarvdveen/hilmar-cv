@@ -13,4 +13,13 @@ describe("ClientLogosCarousel", () => {
     const { container } = render(<ClientLogosCarousel />);
     expect(container.firstChild).toBeTruthy();
   });
+
+  it("links every logo to its experience anchor on the same page", () => {
+    const { container } = render(<ClientLogosCarousel />);
+    const links = container.querySelectorAll('a[href^="#experience-"]');
+    expect(links.length).toBe(11);
+    // including the special-cased id mapping
+    expect(container.querySelector('a[href="#experience-postcode-loterij"]')).toBeTruthy();
+    expect(container.querySelector('a[href="#experience-belastingdienst"]')).toBeTruthy();
+  });
 });

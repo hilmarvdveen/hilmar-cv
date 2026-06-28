@@ -65,14 +65,14 @@ export const AboutSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-700 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
             >
               <Mail className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.contact")}</span>
             </Link>
             <Link
               href="/projects"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
             >
               <FolderOpen className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.cta")}</span>
@@ -152,14 +152,14 @@ export const AboutSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-700 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
             >
               <Mail className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.contact")}</span>
             </Link>
             <Link
               href="/projects"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
             >
               <FolderOpen className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.cta")}</span>

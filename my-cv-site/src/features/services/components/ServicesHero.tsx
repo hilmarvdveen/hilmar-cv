@@ -51,7 +51,7 @@ export const ServicesHero = () => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link
               href="/book"
-              className="inline-flex items-center justify-center px-8 py-4 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl group"
+              className="inline-flex items-center justify-center px-8 py-4 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl group"
             >
               <Calendar className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
               {t("cta.book")}
@@ -59,7 +59,7 @@ export const ServicesHero = () => {
 
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-emerald-600 text-emerald-400 rounded-lg font-semibold hover:bg-emerald-600 hover:text-white transition-all duration-300 group"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-emerald-600 text-emerald-400 rounded-lg font-semibold hover:bg-emerald-700 hover:text-white transition-all duration-300 group"
             >
               <Mail className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
               {t("cta.contact")}

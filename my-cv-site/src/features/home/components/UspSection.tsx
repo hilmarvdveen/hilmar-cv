@@ -133,7 +133,7 @@ export const UspSection = () => {
                   <div className="flex flex-col sm:flex-row gap-3 mb-4">
                     <Link
                       href="/book"
-                      className="group inline-flex items-center justify-center space-x-2 px-4 py-2.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:scale-105 text-sm w-full sm:w-auto"
+                      className="group inline-flex items-center justify-center space-x-2 px-4 py-2.5 bg-emerald-700 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:scale-105 text-sm w-full sm:w-auto"
                     >
                       <Calendar className="w-4 h-4" />
                       <span>{t("usp.actions.bookConsultation")}</span>
@@ -141,7 +141,7 @@ export const UspSection = () => {
 
                     <Link
                       href="/projects"
-                      className="group inline-flex items-center justify-center space-x-2 px-4 py-2.5 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:scale-105 text-sm w-full sm:w-auto"
+                      className="group inline-flex items-center justify-center space-x-2 px-4 py-2.5 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:scale-105 text-sm w-full sm:w-auto"
                     >
                       <span>{t("usp.actions.readMore")}</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />

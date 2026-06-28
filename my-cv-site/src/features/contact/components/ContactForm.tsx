@@ -101,7 +101,7 @@ export default function ContactForm() {
                   onClick={() => toggleTag(tag)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 ${
                     selectedTags.includes(tag)
-                      ? "bg-emerald-600 border-emerald-600 text-white shadow-md hover:bg-emerald-700 hover:border-emerald-700"
+                      ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-700 hover:border-emerald-700"
                       : "bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50"
                   }`}
                   aria-pressed={selectedTags.includes(tag)}
@@ -208,7 +208,7 @@ export default function ContactForm() {
             className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
               isSubmitting
                 ? "bg-gray-300 cursor-not-allowed text-gray-600"
-                : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                : "bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             }`}
             aria-describedby={isSubmitting ? "submit-status" : undefined}
           >
