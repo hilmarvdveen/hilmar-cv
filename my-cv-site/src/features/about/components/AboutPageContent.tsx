@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Icon } from "@/components/Icon";
-import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/Button";
 
 export function AboutPageContent() {
   const t = useTranslations("about");
@@ -227,21 +227,20 @@ export function AboutPageContent() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                href="/book"
-                className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-white text-emerald-600 font-bold rounded-lg hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-              >
+              <Button href="/book" variant="white" size="lg">
                 <Icon name="calendar" className="w-5 h-5" />
                 <span>{t("cta.consultation")}</span>
-              </Link>
+              </Button>
 
-              <Link
+              <Button
                 href="/contact"
-                className="group inline-flex items-center justify-center space-x-2 px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-emerald-600 transition-all duration-300"
+                variant="outlineOnDark"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-emerald-700 hover:border-white focus-visible:ring-white"
               >
                 <Icon name="phone" className="w-5 h-5" />
                 <span>{t("cta.contact")}</span>
-              </Link>
+              </Button>
             </div>
 
             <p className="text-emerald-100 mt-6 text-sm">{t("cta.features")}</p>

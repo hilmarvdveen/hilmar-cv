@@ -2,20 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Button, buttonClassName } from "./Button";
 
-vi.mock("next/link", () => ({
-  default: ({
-    children,
-    href,
-    ...rest
-  }: {
-    children: React.ReactNode;
-    href: string;
-  }) => (
-    <a href={href} {...rest}>
-      {children}
-    </a>
-  ),
-}));
+// The locale-aware Link is mocked globally in vitest.setup.ts (rendered as <a>).
 
 describe("Button", () => {
   it("renders a <button> with primary styles by default and passes through props", () => {

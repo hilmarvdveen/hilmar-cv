@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   Zap,
@@ -108,20 +108,19 @@ export default async function FullStackSolutionsPage({ params }: Props) {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/book"
-                  className="inline-flex items-center space-x-2 bg-white text-emerald-700 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                >
+                <Button href="/book" variant="white" size="lg">
                   <Calendar className="w-5 h-5" />
                   <span>{t("hero.cta.book")}</span>
-                </Link>
+                </Button>
 
-                <Link
+                <Button
                   href="/contact"
-                  className="inline-flex items-center space-x-2 border-2 border-emerald-300 text-emerald-300 px-8 py-4 rounded-lg font-bold hover:bg-emerald-300 hover:text-emerald-900 transition-all duration-300"
+                  variant="outlineOnDark"
+                  size="lg"
+                  className="border-emerald-300 text-emerald-300 hover:bg-emerald-300 hover:text-emerald-900 hover:border-emerald-300"
                 >
                   <span>{t("hero.cta.discuss")}</span>
-                </Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -279,21 +278,20 @@ export default async function FullStackSolutionsPage({ params }: Props) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/book"
-                className="inline-flex items-center justify-center space-x-2 bg-white text-emerald-700 px-8 py-4 rounded-lg font-bold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-              >
+              <Button href="/book" variant="white" size="lg">
                 <Calendar className="w-5 h-5" />
                 <span>{t("cta.bookConsultation")}</span>
-              </Link>
+              </Button>
 
-              <Link
+              <Button
                 href="/services"
-                className="inline-flex items-center justify-center space-x-2 border-2 border-emerald-300 text-emerald-300 px-8 py-4 rounded-lg font-bold hover:bg-emerald-300 hover:text-emerald-900 transition-all duration-300"
+                variant="outlineOnDark"
+                size="lg"
+                className="border-emerald-300 text-emerald-300 hover:bg-emerald-300 hover:text-emerald-900 hover:border-emerald-300"
               >
                 <span>{t("cta.viewAllServices")}</span>
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </Button>
             </div>
           </div>
         </section>

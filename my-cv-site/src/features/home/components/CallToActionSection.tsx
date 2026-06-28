@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 import { ArrowRight, Calendar } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -19,20 +19,24 @@ export const CallToActionSection = () => {
           {t("subtitle")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link
+          <Button
             href="/book"
-            className="group inline-flex items-center space-x-2 px-8 py-4 bg-white text-sky-700 font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            variant="white"
+            size="lg"
+            className="text-sky-700 hover:bg-blue-50 rounded-xl"
           >
             <Calendar className="w-5 h-5" />
             <span>{t("button")}</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
-          <Link
+          </Button>
+          <Button
             href="/contact"
-            className="group inline-flex items-center space-x-2 px-6 py-3 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-sky-700 transition-all duration-300"
+            variant="outlineOnDark"
+            size="md"
+            className="border-white text-white hover:bg-white hover:text-sky-700 hover:border-white focus-visible:ring-white rounded-xl"
           >
             <span>{t("buttonAlt")}</span>
-          </Link>
+          </Button>
         </div>
       </div>
     </section>
