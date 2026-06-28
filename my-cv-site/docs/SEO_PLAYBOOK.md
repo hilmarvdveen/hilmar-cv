@@ -61,6 +61,8 @@ actually shipped and cost points. Work top-to-bottom; each item says **what**,
 - [ ] Server-render JSON-LD in the page HTML for each page's primary type(s):
   `WebSite` (+ `SearchAction`), `Organization`/`Person`, `BreadcrumbList`,
   `FAQPage`, `Service`/`Product`, `Article`/`BlogPosting`, etc.
+- [ ] **One `<script type="application/ld+json">` must contain exactly ONE JSON value.**
+  - **Gotcha (real bug):** building the script as `schemas.map(JSON.stringify).join('\n\n')` emits *multiple* objects concatenated — **invalid JSON**, so `JSON.parse` fails and validators/Google stop after the first object. **Fix:** emit a single JSON **array** `JSON.stringify(schemas)` (each keeps its `@context`) or a `@graph`. Test it: `expect(() => JSON.parse(script)).not.toThrow()`.
 - [ ] **`sameAs` entries must be full URLs**, not handles.
   - **Gotcha (real bug):** `sameAs: ['@handle']` is invalid → fails Rich Results. Use `https://x.com/handle`. Only list profiles that **exist**.
 - [ ] **Every URL in schema must resolve** (no 404s).
@@ -209,6 +211,7 @@ expect(String(meta.robots)).toContain('max-image-preview:large');
 | `…Title... | Brand` in Google | truncate-to-N + `'...'` + append brand | clean word-boundary `…`, no brand after truncation |
 | Invalid `rel=canonical` | canonical host ≠ served host (www vs non-www) | one host everywhere + 301 redirect the other |
 | Structured data invalid | `sameAs: ['@handle']`; `image` 404 | full URLs; real, existing image |
+| JSON-LD won't parse | `schemas.map(JSON.stringify).join('\n\n')` (multiple objects in one script) | emit a single JSON **array** (or `@graph`) |
 | Sitelinks searchbox invalid | `SearchAction` → non-existent `/search` | build `/search` or drop the action |
 | Non-composited animation (CLS) | animating `left`/`top`/`width` | animate `transform`/`opacity` + `will-change` |
 | Low contrast buttons | white on `bg-emerald-600` (3.8:1) | `emerald-700`+ (≥4.5:1); never hover lighter |
