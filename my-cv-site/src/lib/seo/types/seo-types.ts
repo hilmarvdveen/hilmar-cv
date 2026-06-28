@@ -117,7 +117,7 @@ export type PersonSchema = JsonLdSchema & {
   worksFor: Organization;
   alumniOf?: EducationalOrganization;
   knowsAbout: string[];
-  hasCredential?: string[];
+  hasCredential?: Array<{ '@type': 'EducationalOccupationalCredential'; name: string }>;
   nationality?: string;
 }
 

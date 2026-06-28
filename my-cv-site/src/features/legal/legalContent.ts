@@ -1,12 +1,16 @@
 /**
- * Legal page content (EN/NL).
+ * Legal page content (EN/NL): Privacy, Cookies, Terms, Disclaimer.
  *
- * TEMPLATE — drafted from GDPR (Art. 12–14), the Dutch Telecommunicatiewet
- * (art. 11.7a) / AVG, and Autoriteit Persoonsgegevens (AP) cookie guidance.
- * It reflects what this site actually does (contact / CV / booking forms via
+ * Aligned with the GDPR (Art. 12–14), the Dutch Telecommunicatiewet (art.
+ * 11.7a) / AVG, and Autoriteit Persoonsgegevens (AP) cookie guidance, and
+ * reflects what this site actually does (contact / CV / booking forms via
  * Microsoft 365, consent-gated Google Analytics, cookieless Vercel Analytics).
- * Have it reviewed by a qualified lawyer before relying on it, and add your
- * KvK number / registered address if you operate a registered business.
+ *
+ * Business identity (trade name, KvK number, place of business) is disclosed in
+ * the "Business details" section prepended to every document; the full street
+ * address is omitted for privacy and is obtainable from the KvK register via
+ * the number shown. Review and bump the "Last updated" date whenever the
+ * processing, providers, or business details change.
  */
 
 export type LegalSection = {
@@ -26,12 +30,20 @@ export type LegalSlug = "privacy" | "cookies" | "terms" | "disclaimer";
 export type LegalLocale = "en" | "nl";
 
 const CONTROLLER = "Hilmar van der Veen";
+const COMPANY_NAME = "Hilmar ICT Services";
+const KVK = "97564303";
+const ESTABLISHMENT = "000062792784";
 const EMAIL = "hilmar@hilmarvanderveen.com";
-const SITE = "hilmarvanderveen.com";
+const PHONE = "+31 6 8014 9947";
+const SITE = "www.hilmarvanderveen.com";
+// City only — the full registered (home) address is available via the KvK
+// register using the number below, and is intentionally not published here.
+const ADDRESS_EN = "Zandvoort, the Netherlands";
+const ADDRESS_NL = "Zandvoort, Nederland";
 const LOCATION_EN = "Amsterdam, the Netherlands";
 const LOCATION_NL = "Amsterdam, Nederland";
-const UPDATED_EN = "27 June 2026";
-const UPDATED_NL = "27 juni 2026";
+const UPDATED_EN = "28 June 2026";
+const UPDATED_NL = "28 juni 2026";
 const AP_EN = "the Dutch Data Protection Authority (Autoriteit Persoonsgegevens, autoriteitpersoonsgegevens.nl)";
 const AP_NL = "de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl)";
 
@@ -426,6 +438,44 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     },
   },
 };
+
+// Statutory business-identity block (Dutch e-commerce identification duty +
+// KvK disclosure), prepended to every legal document so it is always
+// accessible on the site.
+const companyDetailsEN: LegalSection = {
+  heading: "Business details",
+  paragraphs: [
+    `${COMPANY_NAME} is the trade name of the sole proprietorship (eenmanszaak) operated by ${CONTROLLER}.`,
+  ],
+  bullets: [
+    `Trade name: ${COMPANY_NAME}`,
+    `Legal form: sole proprietorship (eenmanszaak)`,
+    `Chamber of Commerce (KvK) number: ${KVK}`,
+    `Establishment number: ${ESTABLISHMENT}`,
+    `Place of business: ${ADDRESS_EN} (full registered address available via the KvK register)`,
+    `Email: ${EMAIL}`,
+    `Phone: ${PHONE}`,
+  ],
+};
+const companyDetailsNL: LegalSection = {
+  heading: "Bedrijfsgegevens",
+  paragraphs: [
+    `${COMPANY_NAME} is de handelsnaam van de eenmanszaak van ${CONTROLLER}.`,
+  ],
+  bullets: [
+    `Handelsnaam: ${COMPANY_NAME}`,
+    `Rechtsvorm: eenmanszaak`,
+    `KvK-nummer: ${KVK}`,
+    `Vestigingsnummer: ${ESTABLISHMENT}`,
+    `Vestigingsplaats: ${ADDRESS_NL} (volledig vestigingsadres opvraagbaar via het KvK-register)`,
+    `E-mail: ${EMAIL}`,
+    `Telefoon: ${PHONE}`,
+  ],
+};
+for (const slug of Object.keys(LEGAL_CONTENT) as LegalSlug[]) {
+  LEGAL_CONTENT[slug].en.sections.unshift(companyDetailsEN);
+  LEGAL_CONTENT[slug].nl.sections.unshift(companyDetailsNL);
+}
 
 export function getLegalDoc(slug: LegalSlug, locale: string): LegalDoc {
   const loc: LegalLocale = locale === "nl" ? "nl" : "en";

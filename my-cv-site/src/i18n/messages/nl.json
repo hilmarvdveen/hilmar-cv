@@ -1766,7 +1766,8 @@
         },
         "images": {
             "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
-            "companyLogoAlt": "{company} bedrijfslogo"
+            "companyLogoAlt": "{company} bedrijfslogo",
+            "viewExperience": "Bekijk mijn ervaring bij {company}"
         }
     },
     "notFound": {

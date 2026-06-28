@@ -22,10 +22,10 @@ const CREDS = {
 };
 
 function post(body: unknown, headers: Record<string, string> = {}) {
-  return new NextRequest("https://hilmarvanderveen.com/api/contact", {
+  return new NextRequest("https://www.hilmarvanderveen.com/api/contact", {
     method: "POST",
     headers: {
-      origin: "https://hilmarvanderveen.com",
+      origin: "https://www.hilmarvanderveen.com",
       "content-type": "application/json",
       ...headers,
     },

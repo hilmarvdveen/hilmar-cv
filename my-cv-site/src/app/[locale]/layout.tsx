@@ -107,17 +107,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        {/* Enhanced DNS prefetch and preconnect for performance */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        {/* DNS prefetch for third-party origins we actually use. Fonts are
+            self-hosted via next/font (Inter), so no fonts.googleapis.com /
+            fonts.gstatic.com preconnect is needed — those were unused. */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link rel="dns-prefetch" href="//vercel.live" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
 
         {/* Professional geo metadata */}
         <meta name="geo.region" content="NL-NH" />

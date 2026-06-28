@@ -7,7 +7,7 @@ import {
   Calendar,
   ExternalLink,
 } from "lucide-react";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 
 export const ProjectsHero = () => {
   const t = useTranslations("projects");
@@ -31,22 +31,16 @@ export const ProjectsHero = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Primary CTA */}
-            <Link
-              href="/book"
-              className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-xl hover:scale-105 text-base"
-            >
+            <Button href="/book" variant="primary" size="lg">
               <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               <span>{t("showcase.cta.book")}</span>
-            </Link>
+            </Button>
 
             {/* Secondary CTA */}
-            <Link
-              href="/contact"
-              className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
-            >
+            <Button href="/contact" variant="outlineOnDark" size="md">
               <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
               <span>{t("showcase.cta.contact")}</span>
-            </Link>
+            </Button>
           </div>
         </div>
 

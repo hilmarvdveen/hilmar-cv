@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Button } from "@/components/Button";
 
 // Route-level error boundary for the localized app. Client component per Next.js.
 export default function Error({
@@ -22,12 +23,14 @@ export default function Error({
       <p className="mt-3 max-w-md text-gray-600">
         Please try again. · Probeer het opnieuw.
       </p>
-      <button
+      <Button
         onClick={reset}
-        className="mt-8 px-6 py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors"
+        variant="primary"
+        size="md"
+        className="mt-8 rounded-xl"
       >
         Try again · Opnieuw proberen
-      </button>
+      </Button>
     </main>
   );
 }

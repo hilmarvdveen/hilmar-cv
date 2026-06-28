@@ -1,8 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import Image from "next/image";
 import { Download, Calendar, Phone } from "lucide-react";
+import { Button } from "@/components/Button";
 import { useState } from "react";
 import { CVDownloadModal } from "@/features/cv-download";
 import { useParams } from "next/navigation";
@@ -41,31 +41,26 @@ export const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Primary CTA - Book Me Now */}
-            <Link
-              href="/book"
-              className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-700 hover:shadow-xl hover:scale-105 text-base"
-            >
+            <Button href="/book" variant="primary" size="lg">
               <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               <span>Book Me Now</span>
-            </Link>
+            </Button>
 
             {/* Secondary Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
-              >
+              <Button href="/contact" variant="outlineOnDark" size="md">
                 <Phone className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                 <span>Schedule a call</span>
-              </Link>
+              </Button>
 
-              <button
+              <Button
+                variant="outlineOnDark"
+                size="md"
                 onClick={() => setIsCVModalOpen(true)}
-                className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border-2 border-emerald-600/50 text-emerald-400 font-medium rounded-lg hover:border-emerald-600 hover:bg-emerald-600/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 hover:shadow-lg"
               >
                 <Download className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                 <span>Download CV</span>
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { isAllowedOrigin } from "./origin";
 
 function req(headers: Record<string, string>) {
-  return new NextRequest("https://hilmarvanderveen.com/api/contact", {
+  return new NextRequest("https://www.hilmarvanderveen.com/api/contact", {
     method: "POST",
     headers,
   });
@@ -11,7 +11,7 @@ function req(headers: Record<string, string>) {
 
 describe("isAllowedOrigin", () => {
   it("allows the production origin", () => {
-    expect(isAllowedOrigin(req({ origin: "https://hilmarvanderveen.com" }))).toBe(true);
+    expect(isAllowedOrigin(req({ origin: "https://www.hilmarvanderveen.com" }))).toBe(true);
     expect(isAllowedOrigin(req({ origin: "https://www.hilmarvanderveen.com" }))).toBe(true);
   });
 
@@ -24,7 +24,7 @@ describe("isAllowedOrigin", () => {
   });
 
   it("falls back to referer when origin is absent", () => {
-    expect(isAllowedOrigin(req({ referer: "https://hilmarvanderveen.com/contact" }))).toBe(true);
+    expect(isAllowedOrigin(req({ referer: "https://www.hilmarvanderveen.com/contact" }))).toBe(true);
     expect(isAllowedOrigin(req({ referer: "https://evil.example.com/x" }))).toBe(false);
   });
 

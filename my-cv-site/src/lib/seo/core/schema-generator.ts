@@ -27,6 +27,11 @@ import {
   LOCALE_CONFIG
 } from '../constants/meta-constants';
 
+// Stable per-deploy timestamp (evaluated once at module load), used as the
+// fallback for date(Published|Modified). Avoids emitting `new Date()` per
+// request, which would make schema dates change on every crawl.
+const BUILD_TIME = new Date().toISOString();
+
 export class SchemaGenerator {
   private readonly baseUrl: string;
   
@@ -127,9 +132,18 @@ export class SchemaGenerator {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.ORGANIZATION,
       name: BUSINESS_PROFILE.COMPANY,
+      legalName: BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME,
+      identifier: {
+        '@type': 'PropertyValue',
+        propertyID: 'KvK',
+        value: BUSINESS_PROFILE.REGISTRATION.KVK
+      },
       description: `${BUSINESS_PROFILE.COMPANY} provides professional frontend development services specializing in React, Angular, and Next.js applications.`,
       url: this.baseUrl,
-      logo: `${this.baseUrl}/images/logo.png`,
+      logo: `${this.baseUrl}/images/logo_v1.png`,
+      image: `${this.baseUrl}/images/logo_v1.png`,
+      telephone: BUSINESS_PROFILE.CONTACT.PHONE,
+      email: BUSINESS_PROFILE.CONTACT.EMAIL,
       foundingDate: BUSINESS_PROFILE.ESTABLISHED,
       founder: {
         '@type': SCHEMA_TYPES.PERSON,
@@ -138,9 +152,9 @@ export class SchemaGenerator {
       },
       address: {
         '@type': 'PostalAddress',
-        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       contactPoint: {
         '@type': 'ContactPoint',
@@ -181,9 +195,9 @@ export class SchemaGenerator {
       ],
       address: {
         '@type': 'PostalAddress',
-        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       worksFor: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
@@ -212,7 +226,10 @@ export class SchemaGenerator {
         'Web Accessibility',
         'Cross-browser Compatibility'
       ],
-             hasCredential: [...QUALIFICATIONS.CERTIFICATIONS],
+      hasCredential: QUALIFICATIONS.CERTIFICATIONS.map(name => ({
+        '@type': 'EducationalOccupationalCredential' as const,
+        name
+      })),
       nationality: 'Dutch'
     };
   }
@@ -242,6 +259,17 @@ export class SchemaGenerator {
         }
       },
       serviceType: 'Frontend Development',
+      url: this.baseUrl,
+      telephone: BUSINESS_PROFILE.CONTACT.PHONE,
+      email: BUSINESS_PROFILE.CONTACT.EMAIL,
+      image: `${this.baseUrl}/images/profile.jpg`,
+      priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
+      },
       offers: [
         {
           '@type': 'Offer',
@@ -250,7 +278,7 @@ export class SchemaGenerator {
           price: `${PRICING.HOURLY_RATE_MIN}`,
           priceCurrency: PRICING.CURRENCY,
           priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'InStock',
+          availability: 'https://schema.org/InStock',
           seller: {
             '@type': SCHEMA_TYPES.ORGANIZATION,
             name: BUSINESS_PROFILE.COMPANY
@@ -263,7 +291,7 @@ export class SchemaGenerator {
           price: `${PRICING.HOURLY_RATE_MIN}`,
           priceCurrency: PRICING.CURRENCY,
           priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'InStock',
+          availability: 'https://schema.org/InStock',
           seller: {
             '@type': SCHEMA_TYPES.ORGANIZATION,
             name: BUSINESS_PROFILE.COMPANY
@@ -276,7 +304,7 @@ export class SchemaGenerator {
           price: `${PRICING.HOURLY_RATE_MIN}`,
           priceCurrency: PRICING.CURRENCY,
           priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'InStock',
+          availability: 'https://schema.org/InStock',
           seller: {
             '@type': SCHEMA_TYPES.ORGANIZATION,
             name: BUSINESS_PROFILE.COMPANY
@@ -288,7 +316,7 @@ export class SchemaGenerator {
           description: 'Technical consultation and architecture review for frontend projects.',
           price: `${PRICING.CONSULTATION_RATE}`,
           priceCurrency: PRICING.CURRENCY,
-          availability: 'InStock',
+          availability: 'https://schema.org/InStock',
           seller: {
             '@type': SCHEMA_TYPES.ORGANIZATION,
             name: BUSINESS_PROFILE.COMPANY
@@ -407,8 +435,8 @@ export class SchemaGenerator {
         name: BUSINESS_PROFILE.COMPANY,
         url: this.baseUrl
       },
-      datePublished: config.publishedTime?.toISOString() || new Date().toISOString(),
-      dateModified: config.lastModified?.toISOString() || new Date().toISOString(),
+      datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
+      dateModified: config.lastModified?.toISOString() || BUILD_TIME,
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale]
     };
   }
@@ -537,14 +565,14 @@ export class SchemaGenerator {
         url: this.baseUrl,
         logo: {
           '@type': 'ImageObject',
-          url: `${this.baseUrl}/images/logo.png`,
+          url: `${this.baseUrl}/images/logo_v1.png`,
           width: 600,
           height: 60
         }
       },
-      datePublished: config.publishedTime?.toISOString() || new Date().toISOString(),
-      dateModified: config.lastModified?.toISOString() || new Date().toISOString(),
-      image: `${this.baseUrl}/images/og/blog-post.jpg`,
+      datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
+      dateModified: config.lastModified?.toISOString() || BUILD_TIME,
+      image: `${this.baseUrl}/images/og-image.jpg`,
       articleSection: config.section || 'Technology',
       keywords: config.keywords?.join(', '),
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale],

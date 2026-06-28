@@ -2,6 +2,14 @@
   "name": "my-cv-site",
   "version": "0.1.0",
   "private": true,
+  "comment:browserslist": "Modern targets so Next/SWC stops shipping legacy polyfills (Array.prototype.at, Object.hasOwn, flat/flatMap, fromEntries, trimStart/trimEnd are all natively supported here).",
+  "browserslist": [
+    "chrome >= 93",
+    "edge >= 93",
+    "firefox >= 92",
+    "safari >= 15.4",
+    "not dead"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +31,8 @@
     "next": "^16.2.9",
     "next-intl": "^4.13.0",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "tailwind-merge": "^3.6.0"
   },
   "overrides": {
     "postcss": "^8.5.10"

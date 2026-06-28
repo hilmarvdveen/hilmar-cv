@@ -38,7 +38,9 @@ export const WorkExperienceSection = () => {
             return (
               <div
                 key={`${company}-${entry.from}`}
-                className="bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
+                id={`experience-${id}`}
+                // scroll-mt offsets the fixed header when jumped to via #anchor.
+                className="scroll-mt-28 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center mb-4">
                   <div
@@ -53,6 +55,9 @@ export const WorkExperienceSection = () => {
                         company: entry.company,
                       })}
                       fill
+                      // The logo box is a fixed 128px (w-32); tell Next so it
+                      // serves a small image instead of assuming 100vw.
+                      sizes="128px"
                       className="object-contain rounded"
                     />
                   </div>

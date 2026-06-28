@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { OG_LOGO_DATA_URI } from "./og-logo";
 
 // Branded social share card (Open Graph / WhatsApp / LinkedIn / X).
 export const alt = "Hilmar van der Veen — Senior Frontend Developer, Amsterdam";
@@ -8,8 +7,10 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OpengraphImage() {
-  const logo = await readFile(join(process.cwd(), "public/images/logo_v1.png"));
-  const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
+  // The logo is embedded as a base64 data URI (see ./og-logo) so this route
+  // needs no filesystem or fetch access — both are unreliable on Vercel's
+  // serverless runtime and can't be exercised in unit tests.
+  const logoSrc = OG_LOGO_DATA_URI;
 
   return new ImageResponse(
     (

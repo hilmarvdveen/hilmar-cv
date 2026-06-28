@@ -42,6 +42,9 @@ import {
 // load (≈ deploy time) rather than per request, so we don't signal to crawlers
 // that every page changes on every crawl.
 const SITE_LAST_MODIFIED = new Date().toISOString();
+// Same instant as a Date, for page-config `lastModified` (feeds schema
+// dateModified). Stable per deploy — never `new Date()` per request.
+const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
 
 /**
  * Main SEO Engine orchestrating metadata, structured data, and analytics
@@ -100,9 +103,9 @@ export class SEOEngine {
     const config: SEOPageConfig = {
       pageType: 'homepage',
       locale,
-      title: locale === 'nl' 
-        ? `${BUSINESS_PROFILE.NAME} - Senior Frontend Developer Amsterdam | React, Angular, Next.js`
-        : `${BUSINESS_PROFILE.NAME} - Senior Frontend Developer Amsterdam | React, Angular, Next.js`,
+      title: locale === 'nl'
+        ? `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`
+        : `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`,
       description: locale === 'nl'
         ? `Senior Frontend Developer in Amsterdam met ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring. Specialist in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur. MSc Physics UvA. Klanten: Belastingdienst, Ziggo, NPL.`
         : `Senior Frontend Developer in Amsterdam with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience. Expert in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour. MSc Physics UvA. Clients: Belastingdienst, Ziggo, NPL.`,
@@ -114,7 +117,7 @@ export class SEOEngine {
         'TypeScript React Amsterdam Expert'
       ],
       path: '',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateHomepageBreadcrumbs(locale)
     };
 
@@ -147,7 +150,7 @@ export class SEOEngine {
         'Enterprise Development Background'
       ],
       path: 'about',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['About'], locale)
     };
 
@@ -180,7 +183,7 @@ export class SEOEngine {
         'Enterprise Frontend Services'
       ],
       path: 'services',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services'], locale)
     };
 
@@ -213,7 +216,7 @@ export class SEOEngine {
         'Telecommunications Frontend Projects'
       ],
       path: 'projects',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Projects'], locale)
     };
 
@@ -246,7 +249,7 @@ export class SEOEngine {
         'Netherlands Remote Development'
       ],
       path: 'contact',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Contact'], locale)
     };
 
@@ -280,7 +283,7 @@ export class SEOEngine {
       ],
       path: 'faq',
       faqItems,
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['FAQ'], locale)
     };
 
@@ -313,7 +316,7 @@ export class SEOEngine {
         'Schedule Frontend Development'
       ],
       path: 'book',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Book'], locale)
     };
 
@@ -346,7 +349,7 @@ export class SEOEngine {
         'React Angular Best Practices'
       ],
       path: 'blog',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Blog'], locale)
     };
 
@@ -423,7 +426,7 @@ export class SEOEngine {
         'Website Privacy Netherlands'
       ],
       path: 'privacy',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Privacy'], locale)
     };
 
@@ -456,7 +459,7 @@ export class SEOEngine {
         'Frontend Performance Expert'
       ],
       path: 'services/frontend',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services', 'Frontend Development'], locale)
     };
 
@@ -489,7 +492,7 @@ export class SEOEngine {
         'Cloud Development Expert Amsterdam'
       ],
       path: 'services/fullstack',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services', 'Full-Stack Development'], locale)
     };
 
@@ -522,7 +525,7 @@ export class SEOEngine {
         'Design Token Systems Expert'
       ],
       path: 'services/design-systems',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services', 'Design Systems'], locale)
     };
 
@@ -555,7 +558,7 @@ export class SEOEngine {
         'Technical Leadership Consulting'
       ],
       path: 'services/consulting',
-      lastModified: new Date(),
+      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services', 'Technical Consulting'], locale)
     };
 
@@ -618,7 +621,11 @@ export class SEOEngine {
    * Generate structured data script
    */
   private generateStructuredDataScript(schemas: JsonLdSchema[]): string {
-    return schemas.map(schema => JSON.stringify(schema, null, 2)).join('\n\n');
+    // A single <script type="application/ld+json"> must contain exactly ONE
+    // JSON value. Emit the schemas as a JSON array (each keeps its own
+    // @context) — NOT multiple objects concatenated with newlines, which is
+    // invalid JSON and stops parsers after the first object.
+    return JSON.stringify(schemas, null, 2);
   }
 
   /**

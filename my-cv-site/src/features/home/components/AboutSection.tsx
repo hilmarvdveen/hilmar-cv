@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 import {
   Mail,
   FolderOpen,
@@ -63,20 +63,14 @@ export const AboutSection = () => {
         </header>
         <div className="text-center mb-12">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
-            >
+            <Button href="/contact" variant="primary" size="md">
               <Mail className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.contact")}</span>
-            </Link>
-            <Link
-              href="/projects"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-            >
+            </Button>
+            <Button href="/projects" variant="outline" size="md">
               <FolderOpen className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.cta")}</span>
-            </Link>
+            </Button>
           </div>
         </div>
 
@@ -150,20 +144,14 @@ export const AboutSection = () => {
         {/* Clean CTA */}
         <footer className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 hover:shadow-lg"
-            >
+            <Button href="/contact" variant="primary" size="md">
               <Mail className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.contact")}</span>
-            </Link>
-            <Link
-              href="/projects"
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-lg hover:bg-emerald-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-            >
+            </Button>
+            <Button href="/projects" variant="outline" size="md">
               <FolderOpen className="w-5 h-5" aria-hidden="true" />
               <span>{t("about.cta")}</span>
-            </Link>
+            </Button>
           </div>
         </footer>
       </div>

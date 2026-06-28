@@ -79,6 +79,60 @@ describe("SEOFactory analytics passthroughs", () => {
   });
 });
 
+describe("metadata quality across all pages (regression: title/desc/robots)", () => {
+  const PAGE_FNS = [
+    "homepage",
+    "about",
+    "services",
+    "projects",
+    "contact",
+    "booking",
+    "privacy",
+    "blog",
+    "frontendService",
+    "fullstackService",
+    "designSystemsService",
+    "consultingService",
+  ] as const;
+
+  for (const locale of locales) {
+    for (const page of PAGE_FNS) {
+      const meta = SEOFactory[page](locale).metadata;
+      const title = String(meta.title);
+
+      it(`${page}/${locale}: title is clean and within length`, () => {
+        expect(title.length).toBeGreaterThan(0);
+        // Google truncates titles around 60 chars.
+        expect(title.length).toBeLessThanOrEqual(60);
+        // The bug we fixed: a literal three-dot ellipsis, and never
+        // "<truncated>… | Brand".
+        expect(title).not.toContain("...");
+        expect(title).not.toMatch(/…\s*\|/);
+        // The brand name must not be duplicated in one title.
+        expect(title.split("Hilmar van der Veen").length - 1).toBeLessThanOrEqual(1);
+      });
+
+      it(`${page}/${locale}: description, robots and canonical are sound`, () => {
+        const description = String(meta.description ?? "");
+        expect(description.length).toBeGreaterThan(50);
+        expect(description.length).toBeLessThanOrEqual(165);
+        // Content pages must be indexable with large image previews.
+        expect(String(meta.robots)).toMatch(/index/);
+        expect(String(meta.robots)).not.toMatch(/noindex/);
+        expect(String(meta.robots)).toContain("max-image-preview:large");
+        expect(meta.alternates?.canonical).toBeTruthy();
+        expect(meta.alternates?.languages).toBeTruthy();
+      });
+    }
+  }
+
+  it("faq: title is clean and within length", () => {
+    const title = String(SEOFactory.faq("en", [{ question: "Q?", answer: "A" }]).metadata.title);
+    expect(title.length).toBeLessThanOrEqual(60);
+    expect(title).not.toContain("...");
+  });
+});
+
 describe("SEO structured-data & robots correctness", () => {
   const home = SEOFactory.homepage("en");
 
