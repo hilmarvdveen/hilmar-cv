@@ -5,9 +5,17 @@
  */
 
 import { SEOFactory } from '@/lib/seo';
+import { BLOG_POSTS } from '@/features/blog';
 
 export async function GET() {
-  const sitemapData = SEOFactory.generateSitemapData();
+  const blogPostPages = BLOG_POSTS.map((post) => ({
+    path: `blog/${post.slug}`,
+    lastModified: new Date(`${post.updatedDate ?? post.publishedDate}T00:00:00`).toISOString(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  const sitemapData = SEOFactory.generateSitemapData(blogPostPages);
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">

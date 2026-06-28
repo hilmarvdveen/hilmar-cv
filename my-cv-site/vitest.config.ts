@@ -9,6 +9,9 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  // Component CSS imports (e.g. ReactFlow's stylesheet) must not pull in the
+  // project's Tailwind v4 PostCSS config under jsdom — neutralise PostCSS here.
+  css: { postcss: { plugins: [] } },
   test: {
     environment: "jsdom",
     globals: true,

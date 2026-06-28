@@ -55,6 +55,22 @@ export const SEOFactory = {
   blog: (locale: Locale) => defaultSEOEngine.createBlogSEO(locale),
 
   /**
+   * Generate SEO for an individual blog post
+   */
+  blogPost: (
+    locale: Locale,
+    post: {
+      slug: string;
+      title: string;
+      description: string;
+      keywords: string[];
+      category: string;
+      publishedDate: string;
+      updatedDate?: string;
+    }
+  ) => defaultSEOEngine.createBlogPostSEO(locale, post),
+
+  /**
    * Generate privacy page SEO
    */
   privacy: (locale: Locale) => defaultSEOEngine.createPrivacySEO(locale),
@@ -71,9 +87,17 @@ export const SEOFactory = {
   getAnalytics: () => defaultSEOEngine.getAnalytics(),
 
   /**
-   * Generate sitemap data
+   * Generate sitemap data. Pass dynamic pages (e.g. blog posts) to append them
+   * to the static page set with their own lastmod/priority.
    */
-  generateSitemapData: () => defaultSEOEngine.generateSitemapData(),
+  generateSitemapData: (
+    dynamicPages?: Array<{
+      path: string;
+      lastModified?: string;
+      changeFrequency?: string;
+      priority?: number;
+    }>
+  ) => defaultSEOEngine.generateSitemapData(dynamicPages),
 
   /**
    * Service subpage SEO generators

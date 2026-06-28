@@ -1758,6 +1758,7 @@
         },
         "nav": {
             "home": "Home",
+            "blog": "Blog",
             "projects": "Projecten",
             "contact": "Contact",
             "faq": "FAQ",
@@ -2340,6 +2341,31 @@
                 "netherlands": "Nederland",
                 "euBased": "EU Gevestigd"
             }
+        }
+    },
+    "blog": {
+        "eyebrow": "Blog",
+        "index": {
+            "title": "Frontend-engineering, tot in de details",
+            "subtitle": "Praktische, voorbeeldgedreven artikelen over moderne React-architectuur, testen, SEO en routing — de patronen die ik in echt productiewerk gebruik."
+        },
+        "minRead": "min lezen",
+        "publishedOn": "Gepubliceerd",
+        "updatedOn": "Bijgewerkt",
+        "writtenBy": "Hilmar van der Veen",
+        "readArticle": "Lees artikel",
+        "backToList": "Terug naar alle artikelen",
+        "category": {
+            "architecture": "Architectuur",
+            "testing": "Testen",
+            "seo": "SEO",
+            "routing": "Routing",
+            "fundamentals": "Fundamenten"
+        },
+        "cta": {
+            "title": "Bouw je iets ambitieus?",
+            "text": "Ik help teams om snelle, goed geteste en goed gearchitecteerde frontends te leveren. Laten we het over je project hebben.",
+            "button": "Neem contact op"
         }
     }
 }

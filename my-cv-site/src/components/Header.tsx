@@ -12,6 +12,7 @@ import {
   X,
   Calendar,
   Briefcase,
+  BookOpen,
 } from "lucide-react";
 import Image from "next/image";
 import { Flag } from "@/components/Flag";
@@ -64,6 +65,12 @@ export const Header = () => {
         description: "My work portfolio",
       },
       {
+        href: "/blog",
+        label: t("nav.blog"),
+        icon: BookOpen,
+        description: "Articles & insights",
+      },
+      {
         href: "/book",
         label: "Book Me",
         icon: Calendar,
@@ -105,13 +112,13 @@ export const Header = () => {
                   height={56}
                 />
               </span>
-              <span className="text-lg font-semibold text-gray-900">
+              <span className="text-lg font-semibold text-gray-900 whitespace-nowrap">
                 {t("home.name")}
               </span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center lg:space-x-2 xl:space-x-6">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -120,13 +127,13 @@ export const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                    className={`relative flex items-center space-x-2 lg:px-2 xl:px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200 ${
                       isActive
                         ? "text-blue-600"
                         : "text-gray-600 hover:text-gray-900"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4 flex-shrink-0" />
                     <span>{item.label}</span>
                     {isActive && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
@@ -139,10 +146,11 @@ export const Header = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200"
+                  className="flex items-center space-x-2 lg:px-2 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200"
+                  aria-label={currentLocaleData?.label}
                 >
-                  <Flag code={currentLocale} className="w-5 h-3.5 rounded-sm" />
-                  <span>{currentLocaleData?.label}</span>
+                  <Flag code={currentLocale} className="w-5 h-3.5 rounded-sm flex-shrink-0" />
+                  <span className="hidden xl:inline">{currentLocaleData?.label}</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-200 ${
                       isLanguageOpen ? "rotate-180" : ""

@@ -41,6 +41,62 @@ describe("SEOEngine analytics initialization", () => {
   });
 });
 
+describe("SEOEngine.createBlogPostSEO", () => {
+  const post = {
+    slug: "react-folder-structure",
+    title: "A clear, descriptive blog post title about React folders",
+    description: "How to structure a modern React project for scale.",
+    keywords: ["react", "folder structure", "architecture"],
+    category: "architecture",
+    publishedDate: "2026-06-01",
+    updatedDate: "2026-06-10",
+  };
+
+  it("emits BlogPosting + breadcrumb schema for the default locale", () => {
+    const engine = new SEOEngine();
+    const { jsonLd, metadata } = engine.createBlogPostSEO("nl", post);
+    expect(jsonLd.some((s) => (s as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
+    const crumbs = jsonLd.find(
+      (s) => (s as { "@type": string })["@type"] === "BreadcrumbList"
+    ) as { itemListElement: unknown[] };
+    expect(crumbs.itemListElement).toHaveLength(3);
+    expect(metadata.alternates?.canonical).toBeTruthy();
+  });
+
+  it("builds a locale-prefixed canonical for the non-default locale and tolerates a missing updatedDate", () => {
+    const engine = new SEOEngine();
+    const { metadata } = engine.createBlogPostSEO("en", {
+      ...post,
+      updatedDate: undefined,
+    });
+    expect(String(metadata.alternates?.canonical)).toContain("/en/blog/react-folder-structure");
+  });
+});
+
+describe("SEOEngine.generateSitemapData with dynamic pages", () => {
+  it("appends dynamic pages using provided lastmod/priority/changefreq", () => {
+    const engine = new SEOEngine();
+    const entries = engine.generateSitemapData([
+      { path: "blog/my-post", lastModified: "2026-01-01T00:00:00.000Z", changeFrequency: "daily", priority: 0.6 },
+    ]);
+    const match = entries.find((e) => e.url.endsWith("/blog/my-post"));
+    expect(match).toBeDefined();
+    expect(match?.priority).toBe(0.6);
+    expect(match?.changeFrequency).toBe("daily");
+    expect(match?.lastModified).toBe("2026-01-01T00:00:00.000Z");
+  });
+
+  it("falls back to defaults when a dynamic page omits optional fields", () => {
+    const engine = new SEOEngine();
+    const entries = engine.generateSitemapData([{ path: "blog/other" }]);
+    const match = entries.find((e) => e.url.endsWith("/blog/other"));
+    expect(match?.priority).toBe(0.7);
+    expect(match?.changeFrequency).toBe("monthly");
+    // the static blog index is also present
+    expect(entries.some((e) => e.url.endsWith("/blog"))).toBe(true);
+  });
+});
+
 describe("SEOEngine.validateSEOConfig", () => {
   it("flags a too-short title/description and too-few keywords as warnings", () => {
     const engine = new SEOEngine();
