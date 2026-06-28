@@ -132,6 +132,12 @@ export class SchemaGenerator {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.ORGANIZATION,
       name: BUSINESS_PROFILE.COMPANY,
+      legalName: BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME,
+      identifier: {
+        '@type': 'PropertyValue',
+        propertyID: 'KvK',
+        value: BUSINESS_PROFILE.REGISTRATION.KVK
+      },
       description: `${BUSINESS_PROFILE.COMPANY} provides professional frontend development services specializing in React, Angular, and Next.js applications.`,
       url: this.baseUrl,
       logo: `${this.baseUrl}/images/logo_v1.png`,
@@ -146,9 +152,9 @@ export class SchemaGenerator {
       },
       address: {
         '@type': 'PostalAddress',
-        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       contactPoint: {
         '@type': 'ContactPoint',
@@ -189,9 +195,9 @@ export class SchemaGenerator {
       ],
       address: {
         '@type': 'PostalAddress',
-        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       worksFor: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
@@ -260,14 +266,9 @@ export class SchemaGenerator {
       priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
       address: {
         '@type': 'PostalAddress',
-        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: BUSINESS_PROFILE.LOCATION.COORDINATES.LAT,
-        longitude: BUSINESS_PROFILE.LOCATION.COORDINATES.LNG
+        addressLocality: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+        addressRegion: BUSINESS_PROFILE.REGISTERED_ADDRESS.REGION,
+        addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       offers: [
         {

@@ -219,6 +219,32 @@ describe("structured data (JSON-LD) per page", () => {
     expect(dm(a)).toBe(dm(b));
   });
 
+  it("Organization carries the legal identity (legalName + KvK number)", () => {
+    const schemas = JSON.parse(
+      SEOFactory.homepage("en").structuredData
+    ) as Array<Record<string, unknown>>;
+    const org = schemas.find((s) => hasType(s, "Organization"));
+    expect(org?.legalName).toBe("Hilmar ICT Services");
+    const id = org?.identifier as
+      | { propertyID?: string; value?: string }
+      | undefined;
+    expect(id?.propertyID).toBe("KvK");
+    expect(id?.value).toBe("97564303");
+  });
+
+  it("no PostalAddress in any page's schema exposes a street address (privacy)", () => {
+    for (const locale of LOCALES) {
+      for (const raw of Object.values(pagesFor(locale))) {
+        for (const addr of collectByType(JSON.parse(raw), "PostalAddress")) {
+          expect(
+            addr.streetAddress,
+            "home street address must never be published in schema"
+          ).toBeUndefined();
+        }
+      }
+    }
+  });
+
   it("FAQ page exposes a non-empty FAQPage with answered questions", () => {
     const schemas = JSON.parse(
       SEOFactory.faq("en", FAQ).structuredData

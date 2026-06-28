@@ -11,7 +11,24 @@
 export const BUSINESS_PROFILE = {
   NAME: 'Hilmar van der Veen',
   TITLE: 'Senior Frontend Developer',
-  COMPANY: 'HVD Consulting',
+  COMPANY: 'Hilmar ICT Services',
+  // Dutch Chamber of Commerce (KvK) registration — the legal identity.
+  REGISTRATION: {
+    LEGAL_NAME: 'Hilmar ICT Services',
+    LEGAL_FORM: 'Eenmanszaak',
+    KVK: '97564303',
+    ESTABLISHMENT_NUMBER: '000062792784',
+  },
+  // Place of business — CITY LEVEL ONLY. The full street address is the owner's
+  // private home and is deliberately NOT stored in this (public) repo or shown
+  // on the site; the KvK number gives full traceability via the public register.
+  REGISTERED_ADDRESS: {
+    CITY: 'Zandvoort',
+    REGION: 'NH',
+    COUNTRY: 'Netherlands',
+    COUNTRY_CODE: 'NL',
+  },
+  // Marketed service area / SEO target.
   LOCATION: {
     CITY: 'Amsterdam',
     COUNTRY: 'Netherlands',
