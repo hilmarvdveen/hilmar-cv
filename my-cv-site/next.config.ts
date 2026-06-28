@@ -132,6 +132,10 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['www.hilmarvanderveen.com', 'hilmarvanderveen.com', 'localhost:3000', 'localhost:3001'],
     },
     optimizePackageImports: ['lucide-react', 'd3'],
+    // Inline the page's CSS into the HTML <head> instead of a render-blocking
+    // <link rel="stylesheet">. Removes the critical-path CSS request (the
+    // global stylesheet is small) and speeds up FCP/LCP.
+    inlineCss: true,
   },
   
   // Enable webpack optimizations
