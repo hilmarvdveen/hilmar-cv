@@ -1,8 +1,9 @@
-# Strict SEO Playbook (Next.js App Router)
+# Strict SEO, Performance & Accessibility Playbook (Next.js App Router)
 
-A portable, copy-into-any-project checklist for shipping technical SEO that
-scores ~100 on Lighthouse/PageSpeed **and** renders correct rich results +
-social previews. Written from real audits — every "Gotcha" below is a bug that
+A portable, copy-into-any-project checklist for shipping technical **SEO,
+performance, and accessibility** that scores ~100 on Lighthouse/PageSpeed
+across all four categories **and** renders correct rich results + social
+previews. Written from real audits — every "Gotcha" below is a bug that
 actually shipped and cost points. Work top-to-bottom; each item says **what**,
 **why**, and **how to verify**.
 
@@ -83,7 +84,18 @@ Targets: **LCP < 2.5 s, INP < 200 ms, CLS < 0.1.**
   - When converting, beware **`transform` conflicts**: if an element's
     `transform` carries an animation, a `:hover { transform: scale() }` clobbers it. Move the hover effect to a child (e.g. the `<img>`).
 - [ ] **Defer/condition third-party scripts** (analytics, tag managers) — they're the usual "unused/legacy JS" + "render-blocking" offenders. Load only on consent (also a privacy/legal requirement in the EU).
-- [ ] **Verify:** PageSpeed (field + lab), `@next/bundle-analyzer` for JS weight.
+- [ ] **Render-blocking CSS → inline it.** A single render-blocking
+  `<link rel="stylesheet">` delays FCP/LCP (~150–200 ms for a small global sheet). In Next App Router, enable **`experimental.inlineCss: true`** (next.config) to inline the page CSS into `<head>`. Confirm the build logs `✓ inlineCss`. (Trade-off: inlined CSS isn't cached across navigations — fine for small global CSS, reconsider for very large stylesheets.)
+- [ ] **Drop unused `preconnect`/`dns-prefetch`.** Only hint origins the page actually requests. **Gotcha (real):** a manual `<link rel="preconnect" href="https://fonts.gstatic.com">` was flagged "Unused preconnect" because **`next/font` self-hosts** the font — the Google Fonts origins are never hit. Remove font preconnects when using `next/font`. Keep ≤4 preconnects, real ones only.
+- [ ] **Stop shipping legacy polyfills → set a modern `browserslist`.** With no `browserslist`, Next/SWC transpiles + polyfills for ancient browsers (Lighthouse "Legacy JavaScript": `Array.prototype.at`, `Object.hasOwn`, `flat`/`flatMap`, `Object.fromEntries`, `trimStart`/`trimEnd` …). Add to `package.json`:
+  ```json
+  "browserslist": ["chrome >= 93", "edge >= 93", "firefox >= 92", "safari >= 15.4", "not dead"]
+  ```
+  These targets support all those methods natively, so SWC injects nothing. Verify with `npx browserslist` (should list modern versions only). Trade-off: pre-2021 browsers lose those polyfills — fine for most sites, loosen if you must support older.
+- [ ] **`next/image` sizing — two warnings to avoid:**
+  - **width/height + CSS resize:** if you set `width`/`height` *and* resize with CSS that effectively changes one axis (e.g. `max-w-full max-h-full object-contain` in a flex box), Next warns "*width or height modified, but not the other*." **Fix:** add `style={{ width: "auto", height: "auto" }}` so both axes are auto and the aspect ratio holds.
+  - **`fill` needs `sizes`:** every `<Image fill>` must declare `sizes`, or Next assumes `100vw` and serves an oversized file. For a fixed-size box (e.g. `w-32` = 128px) use `sizes="128px"`; for responsive use real breakpoints (`"(max-width: 768px) 100vw, 33vw"`).
+- [ ] **Verify:** PageSpeed (field + lab), `@next/bundle-analyzer` for JS weight, and a clean **browser console** (Next surfaces image/perf warnings there in dev).
 
 ---
 
@@ -108,6 +120,8 @@ Targets: **LCP < 2.5 s, INP < 200 ms, CLS < 0.1.**
   **`autocomplete`** (`name`/`email`/`tel`/`organization`) — WCAG 1.3.5 "Identify Input Purpose" + browser autofill.
 - [ ] **Landmarks:** `<header> <nav> <main> <footer>`. `aria-current` on the active nav link. Hidden/offscreen content `aria-hidden`.
 - [ ] Interactive elements keyboard-focusable with visible focus.
+- [ ] **Centralise repeated controls in ONE component.** Dozens of inline
+  button class strings drift apart and re-introduce contrast/hover bugs one at a time. A single `<Button>` (variants `primary`/`outline`/`white`/`neutral`, sizes, renders `<button>`/`Link`/`<a>`) makes contrast, focus ring, and hover **fixable in one place**. Use `tailwind-merge` inside it so a caller's `className` reliably overrides the variant defaults instead of producing conflicting utilities. **Hover rule:** filled buttons darken on hover (`-700 → -800`); never lighten a fill under white text.
 
 ---
 
@@ -126,6 +140,17 @@ Targets: **LCP < 2.5 s, INP < 200 ms, CLS < 0.1.**
 
 - [ ] **Remove unused SEO components/code.** If pages already inject metadata +
   JSON-LD server-side, client-side "SEO components" that re-inject the same data after hydration are redundant **and worse** (client-rendered). Audit for components nothing imports.
+
+---
+
+## 8b. Framework & i18n gotchas (Next.js + next-intl)
+
+- [ ] **Locale-aware links on i18n sites.** With `localePrefix: 'always'`, a
+  plain `next/link href="/book"` produces a **locale-less** URL that hits the middleware and redirects (extra hop, can land on the wrong locale). Use next-intl's `Link` from `createNavigation` (`@/i18n/navigation`) so internal hrefs carry the locale (`/nl/book`). Route external/`mailto:`/`tel:`/`#` hrefs through a plain `<a>`. **Centralise this in your `<Button>`** so every CTA is correct.
+  - **Test note:** mock `@/i18n/navigation` globally (in the vitest setup) to render the locale-aware `Link` as a plain `<a>`, so component tests don't need the routing provider.
+- [ ] **Middleware is `proxy.ts` in Next 16.** Middleware was renamed — `src/proxy.ts` *is* the active middleware (CSP/nonce live there). Don't add a second CSP in `next.config.ts`.
+- [ ] **Config changes need a dev-server restart.** Editing `next.config.ts` or `package.json` while `next dev` is running can throw a **`ChunkLoadError: Failed to load chunk …/[turbopack]…/hmr-client.ts`** in the open tab — it's a **dev-only HMR artifact**, never in production. Fix: stop dev, `rm -rf .next`, restart, hard-refresh (Ctrl-Shift-R).
+- [ ] **Keep the browser console clean in dev.** Next surfaces real image/perf/a11y problems there (the `fill`/`sizes` and aspect-ratio warnings above came from the console, not Lighthouse).
 
 ---
 
@@ -190,3 +215,11 @@ expect(String(meta.robots)).toContain('max-image-preview:large');
 | `lastmod` distrusted | `new Date()` per request in sitemap | stable per-deploy timestamp |
 | Broken footer links | linked to pages that don't exist | build or remove |
 | Dead client SEO components | re-inject server-rendered data | delete |
+| Render-blocking CSS (~170 ms) | external `<link rel=stylesheet>` | `experimental.inlineCss: true` |
+| "Unused preconnect" to fonts.gstatic.com | manual font preconnect + `next/font` self-hosts | remove the preconnect |
+| Legacy JS polyfills (~14 KiB) | no `browserslist` → transpile for old browsers | modern `browserslist` in package.json |
+| Image "width or height modified, not the other" | `width`/`height` + CSS resize one axis | `style={{ width:"auto", height:"auto" }}` |
+| Image `fill` missing `sizes` | `<Image fill>` with no `sizes` → serves 100vw | add `sizes` (e.g. `"128px"`) |
+| CTA links drop the locale | plain `next/link` + `localePrefix:'always'` | next-intl locale-aware `Link` |
+| Button contrast/hover drift | inline class strings copy-pasted everywhere | one `<Button>` + `tailwind-merge` |
+| `ChunkLoadError …/hmr-client.ts` (dev) | edited config while `next dev` running | restart dev, `rm -rf .next`, hard refresh |
