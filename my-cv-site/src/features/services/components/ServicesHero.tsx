@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Code, Zap, Palette, Users, Calendar, Mail } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/Button";
 
 export const ServicesHero = () => {
   const t = useTranslations("services");
@@ -49,21 +50,15 @@ export const ServicesHero = () => {
 
           {/* Primary CTA */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Link
-              href="/book"
-              className="inline-flex items-center justify-center px-8 py-4 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl group"
-            >
-              <Calendar className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
+            <Button href="/book" variant="primary" size="lg">
+              <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
               {t("cta.book")}
-            </Link>
+            </Button>
 
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-emerald-600 text-emerald-400 rounded-lg font-semibold hover:bg-emerald-700 hover:text-white transition-all duration-300 group"
-            >
-              <Mail className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+            <Button href="/contact" variant="outlineOnDark" size="lg">
+              <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
               {t("cta.contact")}
-            </Link>
+            </Button>
           </div>
         </div>
 

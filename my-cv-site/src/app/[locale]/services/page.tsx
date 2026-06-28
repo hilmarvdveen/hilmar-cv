@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { ServicesHero } from "@/features/services";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
+import { Button } from "@/components/Button";
 import {
   ArrowRight,
   CheckCircle,
@@ -225,20 +226,14 @@ export default async function ServicesPage({ params }: Props) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/book"
-                className="inline-flex items-center justify-center space-x-2 bg-emerald-700 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-              >
+              <Button href="/book" variant="primary" size="lg">
                 <span>{t("finalCta.bookConsultation")}</span>
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </Button>
 
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center space-x-2 border-2 border-emerald-600 text-emerald-400 px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 hover:text-white transition-all duration-300"
-              >
+              <Button href="/contact" variant="outlineOnDark" size="lg">
                 <span>{t("finalCta.getInTouch")}</span>
-              </Link>
+              </Button>
             </div>
           </div>
         </section>

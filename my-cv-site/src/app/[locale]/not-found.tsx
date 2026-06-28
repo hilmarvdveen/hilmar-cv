@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/Button";
 
 // Rendered for unmatched routes within a locale. Next returns HTTP 404 here,
 // which search engines treat as non-indexable automatically.
@@ -14,18 +14,17 @@ export default function NotFound() {
         je zoekt bestaat niet of is verplaatst.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-        <Link
-          href="/"
-          className="px-6 py-3 rounded-xl bg-emerald-700 text-white font-medium hover:bg-emerald-700 transition-colors"
-        >
+        <Button href="/" variant="primary" size="md" className="rounded-xl">
           Back to home · Terug naar home
-        </Link>
-        <Link
+        </Button>
+        <Button
           href="/contact"
-          className="px-6 py-3 rounded-xl border-2 border-gray-200 text-gray-700 font-medium hover:border-emerald-300 transition-colors"
+          variant="outline"
+          size="md"
+          className="rounded-xl"
         >
           Contact
-        </Link>
+        </Button>
       </div>
     </main>
   );

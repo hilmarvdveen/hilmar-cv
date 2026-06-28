@@ -141,7 +141,7 @@ export const Footer = () => {
             <div className="mt-8">
               <Link
                 href="/book"
-                className="inline-flex items-center space-x-2 bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
+                className="inline-flex items-center space-x-2 bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-800 transition-all duration-200 hover:scale-105"
               >
                 <Calendar className="w-4 h-4" />
                 <span>{t("services.bookConsultation")}</span>
@@ -228,7 +228,7 @@ export const Footer = () => {
                 <button
                   type="submit"
                   aria-label={t("contact.newsletter.subscribe")}
-                  className="px-4 py-2 bg-emerald-700 text-white rounded-r-lg hover:bg-emerald-700 transition-colors duration-200 flex items-center"
+                  className="px-4 py-2 bg-emerald-700 text-white rounded-r-lg hover:bg-emerald-800 transition-colors duration-200 flex items-center"
                 >
                   <ArrowUpRight className="w-4 h-4" />
                 </button>

@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { Icon, IconName } from "@/components/Icon";
 import { Check, ArrowRight, Calendar, ExternalLink } from "lucide-react";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 
 const iconNames: IconName[] = [
   "idea",
@@ -131,22 +131,16 @@ export const ProjectShowcase = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/book"
-                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 bg-emerald-700 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
-                  >
+                  <Button href="/book" variant="primary" size="md">
                     <Calendar className="w-5 h-5" />
                     <span>{t("showcase.actions.discuss")}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Link>
+                  </Button>
 
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center justify-center space-x-2 px-6 py-3 border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200"
-                  >
+                  <Button href="/contact" variant="outline" size="md">
                     <ExternalLink className="w-5 h-5" />
                     <span>{t("showcase.actions.moreInfo")}</span>
-                  </Link>
+                  </Button>
                 </div>
               </div>
 
@@ -186,19 +180,13 @@ export const ProjectShowcase = () => {
             {t("showcase.cta.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/book"
-              className="inline-flex items-center space-x-2 px-8 py-4 bg-emerald-700 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all duration-200 hover:scale-105"
-            >
+            <Button href="/book" variant="primary" size="lg">
               <Calendar className="w-5 h-5" />
               <span>{t("showcase.cta.book")}</span>
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center space-x-2 px-8 py-4 border border-emerald-600 text-emerald-600 font-bold rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-200"
-            >
+            </Button>
+            <Button href="/contact" variant="outline" size="lg">
               <span>{t("showcase.cta.contact")}</span>
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

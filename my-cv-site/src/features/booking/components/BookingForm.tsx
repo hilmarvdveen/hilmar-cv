@@ -349,7 +349,7 @@ ${formData.description}
 
           <button
             onClick={resetForm}
-            className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-700 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors duration-200"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-700 text-white rounded-lg font-medium hover:bg-emerald-800 transition-colors duration-200"
           >
             <span>{t("success.submitAnother")}</span>
           </button>
@@ -890,7 +890,7 @@ ${formData.description}
             disabled={!canProceed() || formState.isSubmitting}
             className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 ${
               canProceed() && !formState.isSubmitting
-                ? "bg-emerald-700 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg"
+                ? "bg-emerald-700 text-white hover:bg-emerald-800 shadow-md hover:shadow-lg"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
@@ -904,7 +904,7 @@ ${formData.description}
             className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md ${
               formState.isSubmitting
                 ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-emerald-700 text-white hover:bg-emerald-700 hover:shadow-lg"
+                : "bg-emerald-700 text-white hover:bg-emerald-800 hover:shadow-lg"
             }`}
           >
             {formState.isSubmitting ? (

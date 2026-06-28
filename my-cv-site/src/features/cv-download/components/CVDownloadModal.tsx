@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { X, Download, Mail, MessageSquare, User } from "lucide-react";
+import { Button } from "@/components/Button";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
 
@@ -260,17 +261,21 @@ export const CVDownloadModal = ({
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-6">
-              <button
+              <Button
                 type="button"
+                variant="neutral"
+                size="sm"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                className="flex-1"
               >
                 {t("buttons.cancel")}
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
+                variant="primary"
+                size="sm"
                 disabled={isSubmitting}
-                className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                className="flex-1"
               >
                 {isSubmitting ? (
                   <>
@@ -283,7 +288,7 @@ export const CVDownloadModal = ({
                     <span>{t("buttons.download")}</span>
                   </>
                 )}
-              </button>
+              </Button>
             </div>
           </form>
         </div>

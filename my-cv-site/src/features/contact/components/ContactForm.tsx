@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Send, Loader2 } from "lucide-react";
+import { Button } from "@/components/Button";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
 
@@ -101,7 +102,7 @@ export default function ContactForm() {
                   onClick={() => toggleTag(tag)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 ${
                     selectedTags.includes(tag)
-                      ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-700 hover:border-emerald-700"
+                      ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-800 hover:border-emerald-700"
                       : "bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50"
                   }`}
                   aria-pressed={selectedTags.includes(tag)}
@@ -202,14 +203,12 @@ export default function ContactForm() {
           )}
 
           {/* Submit Button */}
-          <button
+          <Button
             type="submit"
+            variant="primary"
+            size="lg"
             disabled={isSubmitting}
-            className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
-              isSubmitting
-                ? "bg-gray-300 cursor-not-allowed text-gray-600"
-                : "bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            }`}
+            className="w-full rounded-xl text-lg"
             aria-describedby={isSubmitting ? "submit-status" : undefined}
           >
             {isSubmitting ? (
@@ -223,7 +222,7 @@ export default function ContactForm() {
                 {t("form.submit")}
               </>
             )}
-          </button>
+          </Button>
         </form>
       </div>
     </div>
