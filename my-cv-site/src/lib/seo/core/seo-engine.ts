@@ -574,7 +574,11 @@ export class SEOEngine {
    * Generate structured data script
    */
   private generateStructuredDataScript(schemas: JsonLdSchema[]): string {
-    return schemas.map(schema => JSON.stringify(schema, null, 2)).join('\n\n');
+    // A single <script type="application/ld+json"> must contain exactly ONE
+    // JSON value. Emit the schemas as a JSON array (each keeps its own
+    // @context) — NOT multiple objects concatenated with newlines, which is
+    // invalid JSON and stops parsers after the first object.
+    return JSON.stringify(schemas, null, 2);
   }
 
   /**
