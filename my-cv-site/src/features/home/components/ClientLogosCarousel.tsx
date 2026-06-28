@@ -67,6 +67,10 @@ const ClientCard = ({
           alt={commonT("images.companyLogoAlt", { company: name })}
           width={120}
           height={60}
+          // width/height are intrinsic hints; the logos are sized by CSS
+          // (max-w/max-h within the card). Letting both axes be auto keeps the
+          // aspect ratio and silences Next's "width or height modified" warning.
+          style={{ width: "auto", height: "auto" }}
           className="max-w-full max-h-full object-contain"
           priority={priority}
         />
