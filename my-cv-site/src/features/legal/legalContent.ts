@@ -1,15 +1,16 @@
 /**
- * Legal page content (EN/NL).
+ * Legal page content (EN/NL): Privacy, Cookies, Terms, Disclaimer.
  *
- * TEMPLATE — drafted from GDPR (Art. 12–14), the Dutch Telecommunicatiewet
- * (art. 11.7a) / AVG, and Autoriteit Persoonsgegevens (AP) cookie guidance.
- * It reflects what this site actually does (contact / CV / booking forms via
+ * Aligned with the GDPR (Art. 12–14), the Dutch Telecommunicatiewet (art.
+ * 11.7a) / AVG, and Autoriteit Persoonsgegevens (AP) cookie guidance, and
+ * reflects what this site actually does (contact / CV / booking forms via
  * Microsoft 365, consent-gated Google Analytics, cookieless Vercel Analytics).
- * Business identity (trade name, KvK number, place of business) is disclosed
- * via the "Business details" section prepended to every document. The full
- * street address is intentionally omitted for privacy (home address) — it is
- * obtainable from the KvK register via the number shown. Have it reviewed by a
- * qualified lawyer before relying on it.
+ *
+ * Business identity (trade name, KvK number, place of business) is disclosed in
+ * the "Business details" section prepended to every document; the full street
+ * address is omitted for privacy and is obtainable from the KvK register via
+ * the number shown. Review and bump the "Last updated" date whenever the
+ * processing, providers, or business details change.
  */
 
 export type LegalSection = {
@@ -41,8 +42,8 @@ const ADDRESS_EN = "Zandvoort, the Netherlands";
 const ADDRESS_NL = "Zandvoort, Nederland";
 const LOCATION_EN = "Amsterdam, the Netherlands";
 const LOCATION_NL = "Amsterdam, Nederland";
-const UPDATED_EN = "27 June 2026";
-const UPDATED_NL = "27 juni 2026";
+const UPDATED_EN = "28 June 2026";
+const UPDATED_NL = "28 juni 2026";
 const AP_EN = "the Dutch Data Protection Authority (Autoriteit Persoonsgegevens, autoriteitpersoonsgegevens.nl)";
 const AP_NL = "de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl)";
 
