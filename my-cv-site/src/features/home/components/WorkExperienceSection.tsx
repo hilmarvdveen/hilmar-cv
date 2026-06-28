@@ -55,6 +55,9 @@ export const WorkExperienceSection = () => {
                         company: entry.company,
                       })}
                       fill
+                      // The logo box is a fixed 128px (w-32); tell Next so it
+                      // serves a small image instead of assuming 100vw.
+                      sizes="128px"
                       className="object-contain rounded"
                     />
                   </div>
