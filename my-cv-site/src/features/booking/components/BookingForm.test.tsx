@@ -186,8 +186,10 @@ describe("BookingForm: confirm", () => {
       name: "Jane Doe",
       email: "jane@example.com",
       date: SLOT_ONE,
+      company: "",
+      topic: "",
+      locale: "en",
     });
-    expect(body.message).toContain("Topic:");
     expect(localStorage.getItem("hilmar-booking-form-state")).toBeNull();
   });
 

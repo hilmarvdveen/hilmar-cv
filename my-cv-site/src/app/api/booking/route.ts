@@ -6,10 +6,8 @@ import {
   getGraphClient,
   sendMail,
   createCalendarEvent,
-  BOOKING_TIMEZONE,
 } from "@/lib/graph";
 import {
-  escapeHtml,
   isAllowedOrigin,
   enforceRateLimit,
   looksAutomated,
@@ -17,55 +15,24 @@ import {
   serverErrorResponse,
   LIMITS,
 } from "@/lib/security";
+import {
+  renderBookingConfirmationEmail,
+  renderBookingNotificationEmail,
+  renderBookingCalendarEvent,
+  type BookingEmailInput,
+} from "@/lib/email";
 
 export const runtime = "nodejs"; // Ensures Node.js runtime, not Edge
 
 type BookingData = {
   name: string;
   email: string;
-  date: string; // ISO string
-  message?: string;
-  company_website?: string; // honeypot
+  date: string;
+  company?: string;
+  topic?: string;
+  locale?: string;
+  company_website?: string;
   formStartedAt?: number;
-}
-
-function buildConfirmationEmail(name: string, date: string, userEmail: string): string {
-  const formattedDate = new Date(date).toLocaleString("nl-NL", {
-    timeZone: BOOKING_TIMEZONE,
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  return `<p>Hi ${escapeHtml(name)},</p>
-
-<p>Thank you for booking a consultation with me! Your booking has been confirmed for:</p>
-
-<div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-<p style="margin: 0; font-size: 18px; font-weight: bold; color: #059669;">
-📅 ${formattedDate}
-</p>
-</div>
-
-<p>I'm looking forward to our conversation! If you have any questions or need to reschedule, please don't hesitate to reach out:</p>
-
-<ul>
-<li>Email: <a href="mailto:${userEmail}">${userEmail}</a></li>
-<li>Phone: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
-<li>LinkedIn: <a href="https://www.linkedin.com/in/hilmar-van-der-veen/">linkedin.com/in/hilmar-van-der-veen</a></li>
-</ul>
-
-<p>I'll send you a calendar invitation shortly with all the details.</p>
-
-<p>Best regards,<br>
-<strong>Hilmar van der Veen</strong><br>
-Senior Frontend Developer</p>
-
-<hr style="margin-top: 30px; border: none; border-top: 1px solid #e5e7eb;">
-<p style="font-size: 12px; color: #6b7280;">This is an automated confirmation email.</p>`;
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -78,7 +45,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (limited) return limited;
 
     const body = (await req.json()) as Partial<BookingData>;
-    const { name, email, date, message } = body;
+    const { name, email, date, company, topic } = body;
+    const locale: BookingEmailInput["locale"] = body.locale === "en" ? "en" : "nl";
 
     if (looksAutomated(body as Record<string, unknown>, Date.now())) {
       return NextResponse.json({ success: true, message: "Booking created successfully" });
@@ -88,7 +56,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       name: { value: name, required: true, maxLength: LIMITS.name },
       email: { value: email, required: true, email: true },
       date: { value: date, required: true, maxLength: 40 },
-      message: { value: message, maxLength: LIMITS.message },
+      company: { value: company, maxLength: LIMITS.name },
+      topic: { value: topic, maxLength: 1000 },
     });
     if (!validation.ok) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
@@ -113,27 +82,45 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const client = getGraphClient(accessToken);
     const { smtpUser } = credentials;
 
-    const safeName = name as string;
-    const safeEmail = email as string;
-    const isoDate = bookingDate.toISOString();
+    const booking: BookingEmailInput = {
+      locale,
+      name: name as string,
+      email: email as string,
+      company: (company ?? "").trim(),
+      topic: (topic ?? "").trim(),
+      isoDate: bookingDate.toISOString(),
+    };
+    const calendarEvent = renderBookingCalendarEvent(booking);
+    const notification = renderBookingNotificationEmail(booking);
+    const confirmation = renderBookingConfirmationEmail(booking);
 
     await createCalendarEvent(client, smtpUser, {
-      name: safeName,
-      email: safeEmail,
-      date: isoDate,
-      subject: `New Booking from ${safeName}`,
-      htmlBody: `Booking message: ${escapeHtml(message || "(no message)")}`,
+      name: booking.name,
+      email: booking.email,
+      date: booking.isoDate,
+      subject: calendarEvent.subject,
+      htmlBody: calendarEvent.html,
     });
 
     await sendMail(client, smtpUser, {
-      to: safeEmail,
-      toName: safeName,
-      subject: "Booking Confirmation - Hilmar van der Veen",
-      body: buildConfirmationEmail(safeName, isoDate, smtpUser),
+      to: smtpUser,
+      toName: "Hilmar van der Veen",
+      subject: notification.subject,
+      body: notification.html,
+      isHtml: true,
+      replyTo: booking.email,
+      replyToName: booking.name,
+    });
+
+    await sendMail(client, smtpUser, {
+      to: booking.email,
+      toName: booking.name,
+      subject: confirmation.subject,
+      body: confirmation.html,
       isHtml: true,
     });
 
-    console.log(`Booking created for: ${safeName} (${safeEmail}) on ${bookingDate.toLocaleString()}`);
+    console.log(`Booking created for: ${booking.name} (${booking.email}) on ${bookingDate.toLocaleString()}`);
 
     return NextResponse.json({ success: true, message: "Booking created successfully" });
   } catch (error: unknown) {

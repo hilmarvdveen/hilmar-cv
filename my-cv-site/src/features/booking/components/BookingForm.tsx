@@ -234,12 +234,6 @@ export const BookingForm = () => {
     setSubmitError(null);
     trackBookingEvent("booking_submitted");
 
-    const message = [
-      `Topic: ${details.topic.trim() || "(not given)"}`,
-      `Company: ${details.company.trim() || "(not given)"}`,
-      `Requested: ${formatLongDate(details.date, "en")} ${formatSlotTime(details.time)} (Europe/Amsterdam)`,
-    ].join("\n");
-
     try {
       const response = await fetch("/api/booking", {
         method: "POST",
@@ -248,7 +242,9 @@ export const BookingForm = () => {
           name: details.name.trim(),
           email: details.email.trim(),
           date: details.time,
-          message,
+          company: details.company.trim(),
+          topic: details.topic.trim(),
+          locale,
           ...honeypot.payload(),
         }),
       });

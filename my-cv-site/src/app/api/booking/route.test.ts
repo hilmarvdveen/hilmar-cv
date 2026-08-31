@@ -50,7 +50,9 @@ const valid = () => ({
   name: "Jane",
   email: "jane@example.com",
   date: future(),
-  message: "Let's talk",
+  company: "Acme",
+  topic: "Legacy checkout",
+  locale: "en",
   formStartedAt: Date.now() - 10000,
 });
 
@@ -77,15 +79,31 @@ describe("POST /api/booking", () => {
     expect(createCalendarEvent).not.toHaveBeenCalled();
   });
 
-  it("creates an event and sends confirmation on the happy path", async () => {
+  it("creates an event, notifies the owner and confirms to the visitor", async () => {
     const res = await POST(post(valid()));
     expect(res.status).toBe(200);
     expect(createCalendarEvent).toHaveBeenCalledTimes(1);
-    expect(sendMail).toHaveBeenCalledTimes(1);
+    expect(sendMail).toHaveBeenCalledTimes(2);
+    const mails = sendMail.mock.calls.map((call) => call[2] as Record<string, string>);
+    const notification = mails.find((mail) => mail.to === CREDS.smtpUser);
+    const confirmation = mails.find((mail) => mail.to === "jane@example.com");
+    expect(notification?.subject).toContain("Nieuwe boeking: Jane");
+    expect(notification?.replyTo).toBe("jane@example.com");
+    expect(notification?.body).toContain("Acme");
+    expect(confirmation?.subject).toContain("Confirmed: our call on");
+    expect(createCalendarEvent.mock.calls[0][2].subject).toContain("Intro call:");
   });
 
-  it("escapes the user message in the calendar event body", async () => {
-    await POST(post({ ...valid(), message: "<b>x</b>" }));
+  it("writes Dutch emails when the visitor booked in Dutch", async () => {
+    await POST(post({ ...valid(), locale: "nl" }));
+    const mails = sendMail.mock.calls.map((call) => call[2] as Record<string, string>);
+    const confirmation = mails.find((mail) => mail.to === "jane@example.com");
+    expect(confirmation?.subject).toContain("Bevestigd: ons gesprek op");
+    expect(createCalendarEvent.mock.calls[0][2].subject).toContain("Kennismaking:");
+  });
+
+  it("escapes the visitor's topic in the calendar event body", async () => {
+    await POST(post({ ...valid(), topic: "<b>x</b>" }));
     const arg = createCalendarEvent.mock.calls[0][2];
     expect(arg.htmlBody).toContain("&lt;b&gt;x&lt;/b&gt;");
     expect(arg.htmlBody).not.toContain("<b>x</b>");
