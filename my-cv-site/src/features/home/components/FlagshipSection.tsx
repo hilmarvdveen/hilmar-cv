@@ -41,8 +41,6 @@ export const FlagshipSection = () => {
             </Card>
           ))}
         </div>
-        {/* Technology names a lead engineer recognises, placed right under the
-            proof so the case reads as engineering before it reads as sales. */}
         <ul
           aria-label={t("stackLabel")}
           className="mt-6 flex flex-wrap gap-2"

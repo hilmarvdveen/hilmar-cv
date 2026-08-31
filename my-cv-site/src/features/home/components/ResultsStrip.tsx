@@ -9,10 +9,6 @@ type ResultItem = {
 
 const RESULTS_TITLE_ID = "results-strip-title";
 
-/**
- * Static stat strip summarising measurable outcomes. No visible heading in
- * the design, so the section title renders sr-only for accessible structure.
- */
 export const ResultsStrip = () => {
   const t = useTranslations("home.results");
   const items = t.raw("items") as ResultItem[];
@@ -33,8 +29,6 @@ export const ResultsStrip = () => {
               key={item.value}
               className="border-l-[3px] border-primary pl-6"
             >
-              {/* One line at every breakpoint, and a fixed slot height so the
-                  four detail lines start on the same level. */}
               <p className="flex min-h-10 items-end text-2xl lg:text-xl xl:text-[26px] font-extrabold leading-none text-brand-navy tracking-tight whitespace-nowrap">
                 {item.value}
               </p>
@@ -44,8 +38,6 @@ export const ResultsStrip = () => {
             </div>
           ))}
         </div>
-        {/* The GMV qualification reads as a plain fact next to the number,
-            in the same voice as the rest of the strip. */}
         <p className="mt-6 max-w-3xl text-sm leading-relaxed text-gray-600">
           {t("caveat")}
         </p>

@@ -1,934 +1,744 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
-import { useBookingForm } from "../context/BookingFormContext";
-import { useTranslations } from "next-intl";
-import { useHoneypot } from "@/hooks/useHoneypot";
-import { HoneypotField } from "@/components/HoneypotField";
 import {
-  ChevronRight,
-  ChevronLeft,
-  Check,
-  Code,
-  Palette,
-  Zap,
-  Users,
-  Calendar,
-  Euro,
-  Mail,
-  Phone,
-  Building,
-  User,
-  MessageSquare,
-  Clock,
-  Briefcase,
-  Star,
-  Rocket,
-  Shield,
-  Headphones,
-  CheckCircle,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useLocale, useTranslations } from "next-intl";
+import {
   AlertTriangle,
+  ArrowLeft,
+  ArrowRight,
+  CalendarCheck,
+  Check,
 } from "lucide-react";
-
-type ProjectBudget = {
-  id: string;
-  label: string;
-}
-
-type HourlyBudget = {
-  id: string;
-  label: string;
-  estimate: string;
-}
+import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/hooks/useHoneypot";
+import {
+  firstInvalidField,
+  formatDayLabel,
+  formatLongDate,
+  formatShortDate,
+  formatSlotTime,
+  getUpcomingWorkingDays,
+  toDateKey,
+  trackBookingEvent,
+  validateDetails,
+  type DetailsErrors,
+  type DetailsField,
+} from "@/lib/booking";
+import {
+  useBookingForm,
+  type BookingDetails,
+  type BookingStep,
+} from "../context/BookingFormContext";
+import { BookingSummary } from "./BookingSummary";
 
 type TimeSlot = {
-  value: string; // ISO string
-  label: string; // formatted time like "09:00"
+  value: string;
+  label: string;
+};
+
+type SlotsStatus = "idle" | "loading" | "ready" | "failed";
+
+const STEP_COUNT = 3;
+const VISIBLE_DAYS = 10;
+const FURTHEST_BOOKING_DAYS = 90;
+export const STEP_HEADING_ID = "booking-step-heading";
+
+const STEP_KEYS: Record<BookingStep, string> = {
+  1: "moment",
+  2: "details",
+  3: "confirm",
+};
+
+const INPUT_CLASS =
+  "w-full rounded-lg border bg-white px-4 py-3 text-base text-textMain placeholder:text-gray-400 " +
+  "transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-600";
+
+const inputClass = (hasError: boolean) =>
+  `${INPUT_CLASS} ${hasError ? "border-red-500" : "border-gray-300 focus:border-emerald-600"}`;
+
+function scrollAndFocus(
+  element: HTMLElement | null,
+  block: ScrollLogicalPosition = "center"
+) {
+  if (!element) return;
+  const reduceMotion =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  element.scrollIntoView?.({ behavior: reduceMotion ? "auto" : "smooth", block });
+  element.focus({ preventScroll: true });
+}
+
+function addDays(date: Date, days: number): Date {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
 }
 
 export const BookingForm = () => {
-  const t = useTranslations("booking.form");
+  const t = useTranslations("booking");
+  const locale = useLocale();
   const honeypot = useHoneypot();
-
   const {
-    formData,
-    formState,
-    currentStep,
-    availableSlots,
-    updateFormData,
-    setFormState,
-    setCurrentStep,
-    setAvailableSlots,
-    resetForm,
+    details,
+    step,
+    status,
+    submitError,
+    updateDetail,
+    goToStep,
+    setStatus,
+    setSubmitError,
+    resetBooking,
   } = useBookingForm();
 
-  const services = [
-    {
-      id: "frontend",
-      title: t("steps.step1.services.frontend.title"),
-      description: t("steps.step1.services.frontend.description"),
-      icon: Code,
-      popular: true,
-    },
-    {
-      id: "fullstack",
-      title: t("steps.step1.services.fullstack.title"),
-      description: t("steps.step1.services.fullstack.description"),
-      icon: Zap,
-      popular: false,
-    },
-    {
-      id: "design-system",
-      title: t("steps.step1.services.designSystem.title"),
-      description: t("steps.step1.services.designSystem.description"),
-      icon: Palette,
-      popular: false,
-    },
-    {
-      id: "consultation",
-      title: t("steps.step1.services.consultation.title"),
-      description: t("steps.step1.services.consultation.description"),
-      icon: Users,
-      popular: false,
-    },
-  ];
+  const [slotsByDate, setSlotsByDate] = useState<Record<string, TimeSlot[]>>({});
+  const [slotsStatus, setSlotsStatus] = useState<SlotsStatus>("idle");
+  const [showDateInput, setShowDateInput] = useState(false);
+  const [timeError, setTimeError] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<DetailsErrors>({});
 
-  const projectTypes = [
-    {
-      id: "project",
-      title: t("steps.step1.projectTypes.project.title"),
-      description: t("steps.step1.projectTypes.project.description"),
-      icon: Briefcase,
-      pricing: t("steps.step1.projectTypes.project.pricing"),
-      benefits: t.raw("steps.step1.projectTypes.project.benefits") as string[],
-    },
-    {
-      id: "hourly",
-      title: t("steps.step1.projectTypes.hourly.title"),
-      description: t("steps.step1.projectTypes.hourly.description"),
-      icon: Clock,
-      pricing: t("steps.step1.projectTypes.hourly.pricing"),
-      benefits: t.raw("steps.step1.projectTypes.hourly.benefits") as string[],
-    },
-    {
-      id: "hourly-urgent",
-      title: t("steps.step1.projectTypes.hourlyUrgent.title"),
-      description: t("steps.step1.projectTypes.hourlyUrgent.description"),
-      icon: Zap,
-      pricing: t("steps.step1.projectTypes.hourlyUrgent.pricing"),
-      benefits: t.raw(
-        "steps.step1.projectTypes.hourlyUrgent.benefits"
-      ) as string[],
-      urgent: true,
-    },
-  ];
+  const requestedDate = useRef("");
+  const previousStep = useRef<BookingStep>(step);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const slotGroupRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
-  const projectBudgets: ProjectBudget[] = t.raw(
-    "steps.step2.budgets.project"
-  ) as ProjectBudget[];
-  const hourlyBudgets: HourlyBudget[] = t.raw(
-    "steps.step2.budgets.hourly"
-  ) as HourlyBudget[];
+  const workingDays = useMemo(() => getUpcomingWorkingDays(new Date(), VISIBLE_DAYS), []);
+  const todayKey = useMemo(() => toDateKey(new Date()), []);
+  const furthestKey = useMemo(
+    () => toDateKey(addDays(new Date(), FURTHEST_BOOKING_DAYS)),
+    []
+  );
+  const slots = useMemo(
+    () => slotsByDate[details.date] ?? [],
+    [slotsByDate, details.date]
+  );
+  const dateInStrip = workingDays.includes(details.date);
+  const dateInputVisible = showDateInput || (details.date !== "" && !dateInStrip);
 
-  const nextStep = () => {
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
-  };
-
-  const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
-  };
-
-  const canProceed = () => {
-    switch (currentStep) {
-      case 1:
-        return formData.service !== "" && formData.projectType !== "";
-      case 2:
-        return (
-          formData.bookingDate !== "" &&
-          formData.bookingTime !== "" &&
-          formData.budget !== ""
-        );
-      case 3:
-        return formData.name !== "" && formData.email !== "";
-      case 4:
-        return true;
-      default:
-        return false;
+  const loadSlots = useCallback(async (date: string) => {
+    requestedDate.current = date;
+    setSlotsStatus("loading");
+    try {
+      const response = await fetch(`/api/booking/slots?date=${date}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Failed to load available slots");
+      if (requestedDate.current !== date) return;
+      const loaded = (data.slots ?? []) as TimeSlot[];
+      setSlotsByDate((prev) => ({ ...prev, [date]: loaded }));
+      setSlotsStatus("ready");
+      if (loaded.length === 0) trackBookingEvent("booking_slots_empty", { date });
+    } catch (error) {
+      console.error("Error loading slots:", error);
+      if (requestedDate.current !== date) return;
+      setSlotsStatus("failed");
+      trackBookingEvent("booking_slots_failed", { date });
     }
+  }, []);
+
+  useEffect(() => {
+    if (!details.date || details.date < todayKey) {
+      updateDetail("date", workingDays[0]);
+      updateDetail("time", "");
+    }
+  }, [details.date, todayKey, workingDays, updateDetail]);
+
+  useEffect(() => {
+    if (!details.date || details.date < todayKey) return;
+    if (slotsByDate[details.date]) {
+      setSlotsStatus("ready");
+      return;
+    }
+    void loadSlots(details.date);
+  }, [details.date, todayKey, slotsByDate, loadSlots]);
+
+  useEffect(() => {
+    if (slotsStatus !== "ready" || !details.time) return;
+    if (!slots.some((slot) => slot.value === details.time)) updateDetail("time", "");
+  }, [slotsStatus, slots, details.time, updateDetail]);
+
+  useEffect(() => {
+    trackBookingEvent("booking_step_view", { step });
+    if (previousStep.current !== step) {
+      previousStep.current = step;
+      scrollAndFocus(headingRef.current, "start");
+    }
+  }, [step]);
+
+  const selectDay = (date: string) => {
+    if (date === details.date) return;
+    updateDetail("date", date);
+    updateDetail("time", "");
+    setTimeError(false);
+    trackBookingEvent("booking_day_selected", { date });
+  };
+
+  const selectSlot = (value: string) => {
+    updateDetail("time", value);
+    setTimeError(false);
+    trackBookingEvent("booking_slot_selected", { date: details.date });
+  };
+
+  const changeField = (field: keyof BookingDetails, value: string) => {
+    updateDetail(field, value);
+    if (field in fieldErrors) {
+      const next = validateDetails({ ...details, [field]: value });
+      setFieldErrors((prev) => ({ ...prev, [field]: next[field as DetailsField] }));
+    }
+  };
+
+  const focusField = (field: DetailsField) => {
+    scrollAndFocus(field === "name" ? nameRef.current : emailRef.current);
+  };
+
+  const handleNext = () => {
+    if (step === 1) {
+      if (!details.time) {
+        setTimeError(true);
+        trackBookingEvent("booking_validation_error", { step, field: "time" });
+        const firstSlot = slotGroupRef.current?.querySelector<HTMLElement>("button");
+        scrollAndFocus(firstSlot ?? slotGroupRef.current);
+        return;
+      }
+      goToStep(2);
+      return;
+    }
+    if (step === 2) {
+      const errors = validateDetails(details);
+      const first = firstInvalidField(errors);
+      if (first) {
+        setFieldErrors(errors);
+        trackBookingEvent("booking_validation_error", { step, field: first });
+        focusField(first);
+        return;
+      }
+      goToStep(3);
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) goToStep((step - 1) as BookingStep);
   };
 
   const handleSubmit = async () => {
-    setFormState({
-      isSubmitting: true,
-      isSubmitted: false,
-      error: null,
-      loadingSlots: false,
-    });
+    setStatus("submitting");
+    setSubmitError(null);
+    trackBookingEvent("booking_submitted");
+
+    const message = [
+      `Topic: ${details.topic.trim() || "(not given)"}`,
+      `Company: ${details.company.trim() || "(not given)"}`,
+      `Requested: ${formatLongDate(details.date, "en")} ${formatSlotTime(details.time)} (Europe/Amsterdam)`,
+    ].join("\n");
 
     try {
-      // Get selected options labels for better readability
-      const selectedService = services.find((s) => s.id === formData.service);
-      const selectedProjectType = projectTypes.find(
-        (t) => t.id === formData.projectType
-      );
-
-      // Prepare the booking data
-      const bookingData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || "",
-        company: formData.company || "",
-        service: selectedService?.title || formData.service,
-        projectType: selectedProjectType?.title || formData.projectType,
-        bookingDate: formData.bookingDate,
-        bookingTime: formData.bookingTime,
-        budget: formData.budget,
-        description: formData.description,
-        date: formData.bookingTime,
-        ...honeypot.payload(),
-        message: `
-Service: ${selectedService?.title || formData.service}
-Project Type: ${selectedProjectType?.title || formData.projectType}
-Date: ${formData.bookingDate}
-Time: ${new Date(formData.bookingTime).toLocaleTimeString("nl-NL", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: "Europe/Amsterdam",
-        })}
-Budget: ${formData.budget}
-Company: ${formData.company || "Not specified"}
-Phone: ${formData.phone || "Not provided"}
-
-Project Description:
-${formData.description}
-        `.trim(),
-      };
-
       const response = await fetch("/api/booking", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: details.name.trim(),
+          email: details.email.trim(),
+          date: details.time,
+          message,
+          ...honeypot.payload(),
+        }),
       });
-
-      const result = await response.json();
-
       if (!response.ok) {
-        // Server error details are for the console, never for the visitor.
+        const result = await response.json().catch(() => ({}));
         console.error("Booking submission failed:", response.status, result.error);
-        setFormState({
-          isSubmitting: false,
-          isSubmitted: false,
-          error:
-            response.status === 429
-              ? t("errors.tooManyRequests")
-              : t("errors.submissionFailedDetail"),
-          loadingSlots: false,
-        });
+        setStatus("idle");
+        setSubmitError(
+          response.status === 429
+            ? t("errors.tooManyRequests")
+            : t("errors.submissionFailedDetail")
+        );
+        trackBookingEvent("booking_failed", { status: response.status });
         return;
       }
-
-      // Success!
-      setFormState({
-        isSubmitting: false,
-        isSubmitted: true,
-        error: null,
-        loadingSlots: false,
-      });
+      setStatus("submitted");
+      trackBookingEvent("booking_completed");
     } catch (error) {
       console.error("Booking submission error:", error);
-      setFormState({
-        isSubmitting: false,
-        isSubmitted: false,
-        error: t("errors.submissionFailedDetail"),
-        loadingSlots: false,
-      });
+      setStatus("idle");
+      setSubmitError(t("errors.submissionFailedDetail"));
+      trackBookingEvent("booking_failed", { status: 0 });
     }
   };
 
-  const isHourlyType =
-    formData.projectType === "hourly" ||
-    formData.projectType === "hourly-urgent";
-  const isUrgentType = formData.projectType === "hourly-urgent";
-  const budgetOptions = isHourlyType ? hourlyBudgets : projectBudgets;
-
-  // Load available slots when date changes
-  const loadAvailableSlots = useCallback(
-    async (date: string, currentBookingTime: string) => {
-      if (!date) {
-        setAvailableSlots([]);
-        return;
-      }
-
-      setFormState((prev) => ({ ...prev, loadingSlots: true }));
-
-      try {
-        const response = await fetch(`/api/booking/slots?date=${date}`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || "Failed to load available slots");
-        }
-
-        setAvailableSlots(data.slots || []);
-
-        if (
-          currentBookingTime &&
-          !data.slots.some(
-            (slot: TimeSlot) => slot.value === currentBookingTime
-          )
-        ) {
-          updateFormData("bookingTime", "");
-        }
-      } catch (error) {
-        // Raw error details stay in the console. The visitor gets a
-        // localized message instead of a server string.
-        console.error("Error loading slots:", error);
-        setAvailableSlots([]);
-        setFormState((prev) => ({
-          ...prev,
-          error: t("errors.loadSlotsFailed"),
-        }));
-      } finally {
-        setFormState((prev) => ({ ...prev, loadingSlots: false }));
-      }
-    },
-    [setAvailableSlots, setFormState, updateFormData, t]
-  );
-
-  const handleDateChange = (date: string) => {
-    updateFormData("bookingDate", date);
-    updateFormData("bookingTime", ""); // Clear selected time
-    loadAvailableSlots(date, formData.bookingTime);
+  const primaryAction = () => {
+    if (status === "submitting") return;
+    if (step === 3) void handleSubmit();
+    else handleNext();
   };
 
-  useEffect(() => {
-    if (formData.bookingDate) {
-      loadAvailableSlots(formData.bookingDate, formData.bookingTime);
-    }
-  }, [formData.bookingDate, formData.bookingTime, loadAvailableSlots]);
-
-  // Show success message if form was submitted successfully
-  if (formState.isSubmitted) {
+  if (status === "submitted") {
     return (
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm text-center">
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-8 h-8 text-emerald-600" />
+      <div className="mx-auto max-w-xl">
+        <Card className="p-8 text-center sm:p-10">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+            <CalendarCheck className="h-7 w-7 text-emerald-700" aria-hidden="true" />
           </div>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-textMain">
             {t("success.title")}
           </h2>
-
-          <p className="text-gray-600 mb-8 leading-relaxed">
-            {t("success.message", { name: formData.name })}
+          <p className="mt-3 leading-relaxed text-gray-600">
+            {t("success.message", { name: details.name.trim() })}
           </p>
-
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 mb-8">
-            <h3 className="font-semibold text-emerald-900 mb-3 flex items-center justify-center">
-              <Calendar className="w-5 h-5 mr-2" />
-              {t("success.nextSteps.title")}
-            </h3>
-            <ul className="text-emerald-700 text-sm space-y-2 text-left max-w-md mx-auto">
-              {(t.raw("success.nextSteps.steps") as string[]).map(
-                (step, index) => (
-                  <li key={index} className="flex items-start">
-                    {index === 0 && (
-                      <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    )}
-                    {index === 1 && (
-                      <Headphones className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    )}
-                    {index === 2 && (
-                      <Rocket className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    )}
-                    {step}
-                  </li>
-                )
-              )}
-            </ul>
+          <div className="mt-6 rounded-lg bg-emerald-50 p-5 text-left">
+            <p className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
+              {t("success.detailsLabel")}
+            </p>
+            <p className="mt-1 text-lg font-bold text-textMain">
+              {formatLongDate(details.date, locale)}, {formatSlotTime(details.time)}
+            </p>
+            <p className="mt-1 text-sm text-gray-600">
+              {t("success.email", { email: details.email.trim() })}
+            </p>
           </div>
-
-          <div className="text-sm text-gray-500 mb-6">
-            {t("success.emailConfirmation", { email: formData.email })}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button href="/" variant="primary">
+              {t("success.home")}
+            </Button>
+            <Button variant="outline" onClick={resetBooking}>
+              {t("success.another")}
+            </Button>
           </div>
-
-          <button
-            onClick={resetForm}
-            className="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-700 text-white rounded-lg font-medium hover:bg-emerald-800 transition-colors duration-200"
-          >
-            <span>{t("success.submitAnother")}</span>
-          </button>
-        </div>
+        </Card>
       </div>
     );
   }
 
-  return (
-    <div className="max-w-2xl mx-auto">
-      <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
-      {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          {[1, 2, 3, 4].map((step) => (
-            <div
-              key={step}
-              className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 ${
-                currentStep >= step
-                  ? "bg-emerald-700 border-emerald-700 text-white"
-                  : "border-gray-300 text-gray-400"
-              }`}
+  const primaryLabel =
+    step === 3
+      ? status === "submitting"
+        ? t("navigation.submitting")
+        : t("navigation.confirm")
+      : t("navigation.next");
+
+  const selectionText =
+    details.date && details.time
+      ? `${formatShortDate(details.date, locale)}, ${formatSlotTime(details.time)}`
+      : t("summary.whenEmpty");
+
+  const slotStatusText =
+    slotsStatus === "loading"
+      ? t("flow.moment.loading")
+      : slotsStatus === "ready"
+        ? t("flow.moment.count", { count: slots.length })
+        : "";
+
+  const renderMoment = () => (
+    <div>
+      <fieldset>
+        <legend className="text-sm font-semibold text-textMain">
+          {t("flow.moment.dayLabel")}
+        </legend>
+        <div className="mt-3 grid grid-cols-5 gap-2">
+          {workingDays.map((day) => {
+            const label = formatDayLabel(day, locale);
+            const selected = day === details.date;
+            return (
+              <button
+                key={day}
+                type="button"
+                aria-pressed={selected}
+                aria-label={formatLongDate(day, locale)}
+                onClick={() => selectDay(day)}
+                className={`flex h-[68px] flex-col items-center justify-center rounded-lg border text-center transition-colors ${
+                  selected
+                    ? "border-emerald-700 bg-emerald-700 text-white"
+                    : "border-gray-200 bg-white text-textMain hover:border-emerald-600"
+                }`}
+              >
+                <span className="text-[11px] font-semibold uppercase leading-none">
+                  {label.weekday}
+                </span>
+                <span className="mt-1 text-lg font-bold leading-none">{label.day}</span>
+                <span className="mt-1 text-[11px] leading-none opacity-80">
+                  {label.month}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="mt-3 min-h-11">
+          {dateInputVisible ? (
+            <div className="flex flex-wrap items-center gap-3">
+              <label htmlFor="booking-other-date" className="text-sm text-gray-600">
+                {t("flow.moment.otherDateLabel")}
+              </label>
+              <input
+                id="booking-other-date"
+                type="date"
+                min={todayKey}
+                max={furthestKey}
+                value={details.date}
+                onChange={(event) => {
+                  if (event.target.value) selectDay(event.target.value);
+                }}
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-textMain focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowDateInput(true)}
+              className="text-sm font-semibold text-primary underline underline-offset-4"
             >
-              {currentStep > step ? (
-                <Check className="w-5 h-5" />
-              ) : (
-                <span className="text-sm font-semibold">{step}</span>
-              )}
-            </div>
-          ))}
+              {t("flow.moment.otherDate")}
+            </button>
+          )}
         </div>
-        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-emerald-600 transition-all duration-500 ease-out"
-            style={{ width: `${(currentStep / 4) * 100}%` }}
-          />
+      </fieldset>
+
+      <div className="mt-7">
+        <div className="flex items-baseline justify-between gap-4">
+          <p id="booking-slot-label" className="text-sm font-semibold text-textMain">
+            {t("flow.moment.timeLabel")}
+          </p>
+          <p className="text-xs text-gray-500" aria-live="polite">
+            {slotStatusText}
+          </p>
         </div>
-      </div>
-
-      {/* Step Content */}
-      <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-        {/* Step 1: Service & Project Type Selection */}
-        {currentStep === 1 && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t("steps.step1.title")}
-            </h2>
-            <p className="text-gray-600 mb-8">{t("steps.step1.description")}</p>
-
-            {/* Service Selection */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                {t("steps.step1.serviceType")}
-              </h3>
-              <div className="space-y-3">
-                {services.map((service) => {
-                  const Icon = service.icon;
-                  return (
-                    <button
-                      key={service.id}
-                      onClick={() => updateFormData("service", service.id)}
-                      className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 relative ${
-                        formData.service === service.id
-                          ? "border-emerald-600 bg-emerald-50"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      {service.popular && (
-                        <span className="absolute top-3 right-3 bg-emerald-700 text-white text-xs px-2 py-1 rounded-full">
-                          {t("steps.step1.popular")}
-                        </span>
-                      )}
-                      <div className="flex items-center space-x-3">
-                        <div
-                          className={`p-2 rounded-lg ${
-                            formData.service === service.id
-                              ? "bg-emerald-700 text-white"
-                              : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-gray-900">
-                            {service.title}
-                          </h4>
-                          <p className="text-gray-600 text-sm">
-                            {service.description}
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Project Type Selection */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                {t("steps.step1.projectType")}
-              </h3>
-              <div className="space-y-4">
-                {projectTypes.map((type) => {
-                  const Icon = type.icon;
-                  return (
-                    <button
-                      key={type.id}
-                      onClick={() => updateFormData("projectType", type.id)}
-                      className={`w-full text-left p-6 rounded-lg border-2 transition-all duration-200 relative ${
-                        formData.projectType === type.id
-                          ? "border-blue-600 bg-blue-50"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      <div className="flex items-start space-x-4">
-                        <div
-                          className={`p-3 rounded-lg ${
-                            formData.projectType === type.id
-                              ? "bg-blue-600 text-white"
-                              : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <h4 className="font-semibold text-gray-900">
-                              {type.title}
-                            </h4>
-                            {type.urgent ? (
-                              <span className="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-full">
-                                {type.pricing}
-                              </span>
-                            ) : (
-                              <span className="text-sm font-medium text-blue-600">
-                                {type.pricing}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-gray-600 text-sm mb-3">
-                            {type.description}
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {type.benefits.map((benefit, index) => (
-                              <span
-                                key={index}
-                                className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
-                              >
-                                {benefit}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Project Details */}
-        {currentStep === 2 && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t("steps.step2.title")}
-            </h2>
-            <p className="text-gray-600 mb-8">{t("steps.step2.description")}</p>
-
-            <div className="space-y-8">
-              {/* Date */}
-              <div>
-                <label
-                  htmlFor="booking-date"
-                  className="block text-sm font-semibold text-gray-900 mb-4"
-                >
-                  <Calendar className="w-4 h-4 inline mr-2" />
-                  {t("steps.step2.when")}
-                </label>
-                <input
-                  id="booking-date"
-                  type="date"
-                  value={formData.bookingDate}
-                  onChange={(e) => handleDateChange(e.target.value)}
-                  min={new Date().toISOString().split("T")[0]}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                />
-              </div>
-
-              {/* Time */}
-              <div>
-                <label
-                  htmlFor="booking-time"
-                  className="block text-sm font-semibold text-gray-900 mb-4"
-                >
-                  <Clock className="w-4 h-4 inline mr-2" />
-                  {t("steps.step2.whatTimeWorksBest")}
-                </label>
-
-                {formState.loadingSlots ? (
-                  <div className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
-                    <div className="w-5 h-5 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mr-2" />
-                    <span className="text-gray-600">
-                      {t("steps.step2.loadingSlots")}
-                    </span>
-                  </div>
-                ) : !formData.bookingDate ? (
-                  <div className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 text-center">
-                    {t("steps.step2.pleaseSelectDate")}
-                  </div>
-                ) : availableSlots.length === 0 ? (
-                  <div className="w-full p-4 border border-gray-300 rounded-lg bg-orange-50 text-orange-700 text-center">
-                    {t("steps.step2.noAvailableTimeSlots")}
-                  </div>
-                ) : (
-                  <select
-                    id="booking-time"
-                    value={formData.bookingTime}
-                    onChange={(e) =>
-                      updateFormData("bookingTime", e.target.value)
-                    }
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                  >
-                    <option value="">
-                      -- {t("steps.step2.selectTimeSlot")} --
-                    </option>
-                    {availableSlots.map((slot) => (
-                      <option key={slot.value} value={slot.value}>
-                        {slot.label}
-                      </option>
-                    ))}
-                  </select>
-                )}
-
-                {availableSlots.length > 0 && (
-                  <p className="mt-2 text-sm text-gray-600">
-                    {availableSlots.length}{" "}
-                    {t("steps.step2.availableTimeSlots")}
-                  </p>
-                )}
-              </div>
-
-              {/* Budget */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-4">
-                  <Euro className="w-4 h-4 inline mr-2" />
-                  {t("steps.step2.budget")}
-                </label>
-                <div className="grid grid-cols-1 gap-3">
-                  {budgetOptions.map((budget) => (
-                    <button
-                      key={budget.id}
-                      onClick={() => updateFormData("budget", budget.id)}
-                      className={`p-4 text-left rounded-lg border-2 transition-all duration-200 ${
-                        formData.budget === budget.id
-                          ? "border-blue-600 bg-blue-50 text-blue-700"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
-                    >
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{budget.label}</span>
-                        {isHourlyType && "estimate" in budget && (
-                          <span className="text-sm text-gray-500">
-                            {(budget as HourlyBudget).estimate}
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                {isHourlyType && (
-                  <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-blue-700">
-                      <Clock className="w-4 h-4 inline mr-1" />
-                      <strong>{t("steps.step2.hourlyRates")}:</strong>{" "}
-                      {isUrgentType
-                        ? t("steps.step2.rateInfo.urgent")
-                        : t("steps.step2.rateInfo.standard")}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Description */}
-              <div>
-                <label
-                  htmlFor="booking-description"
-                  className="block text-sm font-semibold text-gray-900 mb-4"
-                >
-                  <MessageSquare className="w-4 h-4 inline mr-2" />
-                  {t("steps.step2.tellAboutProject")}
-                </label>
-                <textarea
-                  id="booking-description"
-                  value={formData.description}
-                  maxLength={2000}
-                  onChange={(e) =>
-                    updateFormData("description", e.target.value)
-                  }
-                  placeholder={`${t("steps.step2.descriptionPlaceholder.base")}${
-                    isHourlyType
-                      ? t("steps.step2.descriptionPlaceholder.hourly")
-                      : t("steps.step2.descriptionPlaceholder.project")
-                  }`}
-                  className="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Contact Information */}
-        {currentStep === 3 && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t("steps.step3.title")}
-            </h2>
-            <p className="text-gray-600 mb-8">{t("steps.step3.description")}</p>
-
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    htmlFor="booking-name"
-                    className="block text-sm font-semibold text-gray-900 mb-3"
-                  >
-                    <User className="w-4 h-4 inline mr-2" />
-                    {t("steps.step3.fullName")} *
-                  </label>
-                  <input
-                    id="booking-name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    value={formData.name}
-                    onChange={(e) => updateFormData("name", e.target.value)}
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                    placeholder={t("steps.step3.fullNamePlaceholder")}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="booking-company"
-                    className="block text-sm font-semibold text-gray-900 mb-3"
-                  >
-                    <Building className="w-4 h-4 inline mr-2" />
-                    {t("steps.step3.company")}
-                  </label>
-                  <input
-                    id="booking-company"
-                    name="organization"
-                    type="text"
-                    autoComplete="organization"
-                    value={formData.company}
-                    onChange={(e) => updateFormData("company", e.target.value)}
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                    placeholder={t("steps.step3.companyPlaceholder")}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="booking-email"
-                  className="block text-sm font-semibold text-gray-900 mb-3"
-                >
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  {t("steps.step3.email")} *
-                </label>
-                <input
-                  id="booking-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={(e) => updateFormData("email", e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                  placeholder={t("steps.step3.emailPlaceholder")}
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="booking-phone"
-                  className="block text-sm font-semibold text-gray-900 mb-3"
-                >
-                  <Phone className="w-4 h-4 inline mr-2" />
-                  {t("steps.step3.phone")}
-                </label>
-                <input
-                  id="booking-phone"
-                  name="tel"
-                  type="tel"
-                  autoComplete="tel"
-                  value={formData.phone}
-                  onChange={(e) => updateFormData("phone", e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 transition-colors duration-200"
-                  placeholder={t("steps.step3.phonePlaceholder")}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 4: Confirmation */}
-        {currentStep === 4 && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t("steps.step4.title")}
-            </h2>
-            <p className="text-gray-600 mb-8">{t("steps.step4.description")}</p>
-
-            <div className="space-y-6">
-              {/* Summary */}
-              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {t("steps.step4.serviceType")}
-                  </h3>
-                  <p className="text-gray-600">
-                    {services.find((s) => s.id === formData.service)?.title} •{" "}
-                    {
-                      projectTypes.find((t) => t.id === formData.projectType)
-                        ?.title
-                    }
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {t("steps.step4.dateTime")}
-                  </h3>
-                  <p className="text-gray-600">
-                    {formData.bookingDate && formData.bookingTime ? (
-                      <>
-                        {new Date(formData.bookingDate).toLocaleDateString(
-                          "nl-NL"
-                        )}{" "}
-                        at{" "}
-                        {new Date(formData.bookingTime).toLocaleTimeString(
-                          "nl-NL",
-                          {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            timeZone: "Europe/Amsterdam",
-                          }
-                        )}
-                      </>
-                    ) : (
-                      t("steps.step4.notSelected")
-                    )}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {t("steps.step4.budget")}
-                  </h3>
-                  <p className="text-gray-600">
-                    {budgetOptions.find((b) => b.id === formData.budget)
-                      ?.label || t("steps.step4.notSelected")}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {t("steps.step4.contact")}
-                  </h3>
-                  <p className="text-gray-600">
-                    {formData.name} • {formData.email}
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
-                <h3 className="font-semibold text-emerald-900 mb-2 flex items-center">
-                  <Rocket className="w-5 h-5 mr-2" />
-                  {t("steps.step4.whatHappensNext")}
-                </h3>
-                <ul className="text-emerald-700 text-sm space-y-2">
-                  <li className="flex items-start">
-                    <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    {t("steps.step4.reviewRequest")}
-                  </li>
-                  <li className="flex items-start">
-                    <Headphones className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    {t("steps.step4.scheduleCall")}
-                  </li>
-                  <li className="flex items-start">
-                    <Star className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    {t("steps.step4.provideProposal")}
-                  </li>
-                  <li className="flex items-start">
-                    <Shield className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
-                    {t("steps.step4.startBuilding")}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Error Message */}
-      {formState.error && (
-        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div className="flex items-start space-x-3">
-            <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="text-red-800">
-              <p className="font-medium">{t("errors.submissionFailed")}</p>
-              <p className="text-sm mt-1">{formState.error}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Navigation */}
-      <div className="flex justify-between mt-8">
-        <button
-          onClick={prevStep}
-          disabled={currentStep === 1 || formState.isSubmitting}
-          className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-            currentStep === 1 || formState.isSubmitting
-              ? "text-gray-400 cursor-not-allowed"
-              : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-          }`}
+        <div
+          ref={slotGroupRef}
+          role="group"
+          aria-labelledby="booking-slot-label"
+          aria-describedby={timeError ? "booking-slot-error" : undefined}
+          tabIndex={-1}
+          className="mt-3 min-h-[200px] scroll-mt-28 outline-none"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span>{t("navigation.back")}</span>
-        </button>
-
-        {currentStep < 4 ? (
-          <button
-            onClick={nextStep}
-            disabled={!canProceed() || formState.isSubmitting}
-            className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 ${
-              canProceed() && !formState.isSubmitting
-                ? "bg-emerald-700 text-white hover:bg-emerald-800 shadow-md hover:shadow-lg"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
+          {slotsStatus === "loading" && (
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4" aria-hidden="true">
+              {Array.from({ length: 8 }, (_, index) => (
+                <div key={index} className="h-11 animate-pulse rounded-lg bg-gray-100" />
+              ))}
+            </div>
+          )}
+          {slotsStatus === "failed" && (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+              <p className="text-sm text-red-800">{t("errors.loadSlotsFailed")}</p>
+              <button
+                type="button"
+                onClick={() => void loadSlots(details.date)}
+                className="mt-3 text-sm font-semibold text-red-800 underline underline-offset-4"
+              >
+                {t("flow.moment.retry")}
+              </button>
+            </div>
+          )}
+          {slotsStatus === "ready" && slots.length === 0 && (
+            <p className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600">
+              {t("flow.moment.none")}
+            </p>
+          )}
+          {slotsStatus === "ready" && slots.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+              {slots.map((slot) => {
+                const selected = slot.value === details.time;
+                return (
+                  <button
+                    key={slot.value}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => selectSlot(slot.value)}
+                    className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold transition-colors ${
+                      selected
+                        ? "border-emerald-700 bg-emerald-700 text-white"
+                        : "border-gray-200 bg-white text-textMain hover:border-emerald-600 hover:text-emerald-800"
+                    }`}
+                  >
+                    {selected && <Check className="h-4 w-4" aria-hidden="true" />}
+                    {slot.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+        <div className="mt-2 flex items-start justify-between gap-4">
+          <p className="text-xs text-gray-500">{t("flow.moment.timezone")}</p>
+          <p
+            id="booking-slot-error"
+            aria-live="polite"
+            className="min-h-5 text-right text-sm font-medium text-red-600"
           >
-            <span>{t("navigation.continue")}</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        ) : (
-          <button
-            onClick={handleSubmit}
-            disabled={formState.isSubmitting}
-            className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md ${
-              formState.isSubmitting
-                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-emerald-700 text-white hover:bg-emerald-800 hover:shadow-lg"
-            }`}
-          >
-            {formState.isSubmitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>{t("navigation.submitting")}</span>
-              </>
-            ) : (
-              <>
-                <span>{t("navigation.sendRequest")}</span>
-                <Check className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        )}
+            {timeError ? t("flow.moment.pickTime") : ""}
+          </p>
+        </div>
       </div>
     </div>
   );
+
+  const renderDetails = () => (
+    <div className="space-y-5">
+      <Field
+        id="booking-name"
+        label={t("flow.details.name")}
+        error={fieldErrors.name ? t(`flow.details.errors.${fieldErrors.name}`) : ""}
+      >
+        <input
+          ref={nameRef}
+          id="booking-name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          maxLength={100}
+          value={details.name}
+          onChange={(event) => changeField("name", event.target.value)}
+          aria-invalid={fieldErrors.name ? true : undefined}
+          aria-describedby="booking-name-error"
+          placeholder={t("flow.details.namePlaceholder")}
+          className={inputClass(Boolean(fieldErrors.name))}
+        />
+      </Field>
+      <Field
+        id="booking-email"
+        label={t("flow.details.email")}
+        error={fieldErrors.email ? t(`flow.details.errors.${fieldErrors.email}`) : ""}
+      >
+        <input
+          ref={emailRef}
+          id="booking-email"
+          name="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          maxLength={254}
+          value={details.email}
+          onChange={(event) => changeField("email", event.target.value)}
+          aria-invalid={fieldErrors.email ? true : undefined}
+          aria-describedby="booking-email-error"
+          placeholder={t("flow.details.emailPlaceholder")}
+          className={inputClass(Boolean(fieldErrors.email))}
+        />
+      </Field>
+      <Field id="booking-company" label={t("flow.details.company")} optional>
+        <input
+          id="booking-company"
+          name="organization"
+          type="text"
+          autoComplete="organization"
+          maxLength={100}
+          value={details.company}
+          onChange={(event) => changeField("company", event.target.value)}
+          placeholder={t("flow.details.companyPlaceholder")}
+          className={inputClass(false)}
+        />
+      </Field>
+      <Field id="booking-topic" label={t("flow.details.topic")} optional>
+        <textarea
+          id="booking-topic"
+          name="topic"
+          rows={3}
+          maxLength={1000}
+          value={details.topic}
+          onChange={(event) => changeField("topic", event.target.value)}
+          placeholder={t("flow.details.topicPlaceholder")}
+          className={`${inputClass(false)} resize-none`}
+        />
+      </Field>
+    </div>
+  );
+
+  const renderConfirm = () => (
+    <div>
+      <dl className="divide-y divide-gray-200">
+        <ConfirmRow
+          label={t("flow.confirm.when")}
+          editLabel={t("flow.confirm.edit")}
+          onEdit={() => goToStep(1)}
+        >
+          {formatLongDate(details.date, locale)}, {formatSlotTime(details.time)}
+        </ConfirmRow>
+        <ConfirmRow
+          label={t("flow.confirm.who")}
+          editLabel={t("flow.confirm.edit")}
+          onEdit={() => goToStep(2)}
+        >
+          {details.name.trim()}
+          {details.company.trim() && `, ${details.company.trim()}`}
+          <span className="block font-normal text-gray-600">{details.email.trim()}</span>
+        </ConfirmRow>
+        <ConfirmRow
+          label={t("flow.confirm.topic")}
+          editLabel={t("flow.confirm.edit")}
+          onEdit={() => goToStep(2)}
+        >
+          {details.topic.trim() || (
+            <span className="font-normal text-gray-500">{t("flow.confirm.topicEmpty")}</span>
+          )}
+        </ConfirmRow>
+      </dl>
+      <p className="mt-5 text-sm leading-relaxed text-gray-600">
+        {t("flow.confirm.afterConfirm", { email: details.email.trim() })}
+      </p>
+      {submitError && (
+        <div
+          role="alert"
+          className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4"
+        >
+          <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600" aria-hidden="true" />
+          <div>
+            <p className="font-semibold text-red-800">{t("errors.submissionFailed")}</p>
+            <p className="mt-1 text-sm text-red-800">{submitError}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <form
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        primaryAction();
+      }}
+      className="pb-24 lg:pb-0"
+    >
+      <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+        <div>
+          <div className="scroll-mt-28">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">
+              {t("flow.stepLabel", { current: step, total: STEP_COUNT })}
+            </p>
+            <h2
+              ref={headingRef}
+              id={STEP_HEADING_ID}
+              tabIndex={-1}
+              className="mt-1 scroll-mt-28 text-2xl font-extrabold tracking-tight text-textMain outline-none sm:text-3xl"
+            >
+              {t(`flow.steps.${STEP_KEYS[step]}`)}
+            </h2>
+            <div className="mt-4 grid grid-cols-3 gap-1.5" aria-hidden="true">
+              {Array.from({ length: STEP_COUNT }, (_, index) => (
+                <div
+                  key={index}
+                  className={`h-1.5 rounded-full ${
+                    index < step ? "bg-emerald-600" : "bg-gray-200"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <Card className="mt-6 p-5 sm:p-8">
+            {step === 1 && renderMoment()}
+            {step === 2 && renderDetails()}
+            {step === 3 && renderConfirm()}
+          </Card>
+
+          <div className="mt-6 flex items-center justify-between">
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={handleBack}
+                disabled={status === "submitting"}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 hover:text-textMain disabled:opacity-50"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                {t("navigation.back")}
+              </button>
+            ) : (
+              <span />
+            )}
+            <div className="hidden lg:block">
+              <Button type="submit" variant="primary" disabled={status === "submitting"}>
+                {primaryLabel}
+                {step < 3 && <ArrowRight className="h-4 w-4" aria-hidden="true" />}
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-8 lg:hidden">
+            <BookingSummary details={details} compact />
+          </div>
+        </div>
+
+        <aside className="hidden lg:block lg:sticky lg:top-28">
+          <BookingSummary details={details} />
+        </aside>
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+        <div className="mx-auto flex max-w-4xl items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+              {t("summary.when")}
+            </p>
+            <p className="truncate text-sm font-semibold text-textMain">{selectionText}</p>
+          </div>
+          <Button type="submit" variant="primary" size="sm" disabled={status === "submitting"}>
+            {primaryLabel}
+            {step < 3 && <ArrowRight className="h-4 w-4" aria-hidden="true" />}
+          </Button>
+        </div>
+      </div>
+    </form>
+  );
 };
+
+type FieldProps = {
+  id: string;
+  label: string;
+  optional?: boolean;
+  error?: string;
+  children: ReactNode;
+};
+
+const Field = ({ id, label, optional = false, error = "", children }: FieldProps) => {
+  const t = useTranslations("booking.flow.details");
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-semibold text-textMain">
+        {label}
+        {optional && (
+          <span className="ml-1.5 font-normal text-gray-500">({t("optional")})</span>
+        )}
+      </label>
+      <div className="mt-1.5">{children}</div>
+      <p
+        id={`${id}-error`}
+        aria-live="polite"
+        className="mt-1 min-h-5 text-sm font-medium text-red-600"
+      >
+        {error}
+      </p>
+    </div>
+  );
+};
+
+type ConfirmRowProps = {
+  label: string;
+  editLabel: string;
+  onEdit: () => void;
+  children: ReactNode;
+};
+
+const ConfirmRow = ({ label, editLabel, onEdit, children }: ConfirmRowProps) => (
+  <div className="flex items-start justify-between gap-4 py-4 first:pt-0 last:pb-0">
+    <div className="min-w-0">
+      <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">{label}</dt>
+      <dd className="mt-1 text-base font-semibold text-textMain">{children}</dd>
+    </div>
+    <button
+      type="button"
+      onClick={onEdit}
+      className="flex-shrink-0 text-sm font-semibold text-primary underline underline-offset-4"
+      aria-label={`${editLabel}: ${label}`}
+    >
+      {editLabel}
+    </button>
+  </div>
+);

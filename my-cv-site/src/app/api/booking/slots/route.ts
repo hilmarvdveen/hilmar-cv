@@ -11,13 +11,15 @@ import { serverErrorResponse, enforceRateLimit } from "@/lib/security";
 
 export const runtime = "nodejs";
 
+const MINIMUM_NOTICE_MILLISECONDS = 60 * 60 * 1000;
+
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const limited = enforceRateLimit(req, "read");
     if (limited) return limited;
 
     const { searchParams } = new URL(req.url);
-    const date = searchParams.get("date"); // YYYY-MM-DD
+    const date = searchParams.get("date");
 
     if (!date) {
       return NextResponse.json({ error: "Missing date parameter" }, { status: 400 });
@@ -60,8 +62,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const events = result.value || [];
 
-    const slots = generateTimeSlots(date);
-    const availableSlots = slots.filter((iso) => isSlotAvailable(new Date(iso), events));
+    const isWeekend = selectedDate.getUTCDay() === 0 || selectedDate.getUTCDay() === 6;
+    const earliestStart = Date.now() + MINIMUM_NOTICE_MILLISECONDS;
+    const slots = isWeekend ? [] : generateTimeSlots(date);
+    const availableSlots = slots.filter(
+      (iso) =>
+        new Date(iso).getTime() >= earliestStart &&
+        isSlotAvailable(new Date(iso), events)
+    );
 
     const formattedSlots = availableSlots.map((slot) => ({
       value: slot,

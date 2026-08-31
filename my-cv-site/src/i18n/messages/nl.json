@@ -200,8 +200,8 @@
                 },
                 {
                     "label": "Tarief",
-                    "value": "Op aanvraag",
-                    "detail": "Scope en tarief stemmen we af in het gesprek. Reactie binnen één werkdag.",
+                    "value": "€95 per uur",
+                    "detail": "Scope stemmen we af in het gesprek. Reactie binnen één werkdag.",
                     "highlight": false
                 }
             ],
@@ -2101,7 +2101,7 @@
                 "questions": [
                     {
                         "question": "Hoe structureer je je prijzen?",
-                        "answer": "Ik bied flexibele prijsmodellen voor verschillende behoeften:\n• Uurtarief: €85-125/uur afhankelijk van project complexiteit\n• Dagtarief: €650-950/dag voor langere samenwerkingen\n• Vaste project prijzen: Voor goed gedefinieerde scopes\n• Retainer overeenkomsten: Voor lopende support en development\n\nIk verstrek gedetailleerde schattingen na het begrijpen van je vereisten."
+                        "answer": "Ik bied flexibele prijsmodellen voor verschillende behoeften:\n• Uurtarief: €95-125/uur afhankelijk van project complexiteit\n• Dagtarief: €650-950/dag voor langere samenwerkingen\n• Vaste project prijzen: Voor goed gedefinieerde scopes\n• Retainer overeenkomsten: Voor lopende support en development\n\nIk verstrek gedetailleerde schattingen na het begrijpen van je vereisten."
                     },
                     {
                         "question": "Bied je gratis consultaties aan?",
@@ -2198,238 +2198,94 @@
     },
     "booking": {
         "meta": {
-            "title": "Boek Consultatie – Hilmar van der Veen | Expert Ontwikkelaar",
-            "description": "Boek een gratis consultatie met Hilmar van der Veen. 10+ jaar ervaring in React, Next.js en full-stack development. Start vandaag nog met je project."
+            "title": "Plan een gesprek van 30 minuten – Hilmar van der Veen",
+            "description": "Kies een moment, laat je naam en e-mailadres achter en de uitnodiging staat in je agenda. Een gesprek van 30 minuten met een senior frontend engineer, beschikbaar vanaf 1 oktober 2026."
         },
         "hero": {
-            "badge": "10+ Jaar Ervaring",
-            "title": {
-                "line1": "Laten we",
-                "line2": "Iets Geweldigs",
-                "line3": "Samen Bouwen"
-            },
-            "description": "Klaar om je visie tot leven te brengen? Van snelle consultaties tot complete projecten, ik ben er om je te helpen slagen met professionele ontwikkeloplossingen.",
-            "benefits": {
-                "fastDelivery": {
-                    "title": "Snelle Oplevering",
-                    "description": "2-8 weken typisch"
-                },
-                "fullSupport": {
-                    "title": "Volledige Ondersteuning",
-                    "description": "Doorlopend onderhoud"
-                }
-            },
-            "cta": {
-                "button": "Start Je Project",
-                "freeConsultation": "Gratis consultatie inbegrepen",
-                "pricing": "€85-150/uur • Projecten vanaf €5k"
-            }
+            "badge": "Beschikbaar vanaf 1 oktober 2026 · eerder in overleg",
+            "title": "Plan een gesprek van 30 minuten",
+            "description": "Kies een moment, laat je naam en e-mailadres achter, klaar. De uitnodiging staat direct in je agenda, met een bevestiging per e-mail.",
+            "facts": ["30 minuten", "Direct in je agenda", "Nederlands of Engels"]
         },
-        "pricing": {
-            "hourly": {
-                "title": "Uurconsultancy",
-                "badge": "Flexibel",
-                "price": "€85-150/uur",
-                "description": "Perfect voor doorlopend werk en snelle oplossingen",
-                "features": [
-                    "Betaal per gebruik",
-                    "Maximale flexibiliteit",
-                    "€150/uur voor urgente projecten"
-                ]
-            },
-            "project": {
-                "title": "Vaste Projecten",
-                "badge": "Populair",
-                "price": "€5k - €50k+",
-                "description": "Complete oplossingen met gedefinieerde scope",
-                "features": [
-                    "Vaste timeline & scope",
-                    "Betere waarde voor grote projecten",
-                    "Uitgebreide deliverables"
-                ]
-            }
-        },
-        "form": {
-            "title": "Klaar om te Beginnen?",
-            "description": "Vertel me over je project en ik neem binnen 24 uur contact op met een gedetailleerd voorstel.",
+        "flow": {
+            "stepLabel": "Stap {current} van {total}",
             "steps": {
-                "step1": {
-                    "title": "Waarmee kan ik je helpen?",
-                    "description": "Kies de service en samenwerkingsvorm die het beste bij je behoeften past.",
-                    "serviceType": "Service Type",
-                    "services": {
-                        "frontend": {
-                            "title": "Frontend Development",
-                            "description": "React, Next.js, Vue.js applicaties"
-                        },
-                        "fullstack": {
-                            "title": "Full-Stack Development",
-                            "description": "Complete webapplicaties met backend"
-                        },
-                        "designSystem": {
-                            "title": "Design System",
-                            "description": "Component libraries en style guides"
-                        },
-                        "consultation": {
-                            "title": "Technische Consultatie",
-                            "description": "Architectuurreview en team mentoring"
-                        }
-                    },
-                    "projectType": "Project Type",
-                    "projectTypes": {
-                        "project": {
-                            "title": "Vast-Prijs Project",
-                            "description": "Compleet project met gedefinieerde scope en deliverables",
-                            "pricing": "€5k - €50k+",
-                            "benefits": [
-                                "Vaste timeline",
-                                "Gedefinieerde scope",
-                                "Betere waarde voor grotere projecten"
-                            ]
-                        },
-                        "hourly": {
-                            "title": "Uurconsultancy",
-                            "description": "Flexibele consultancy en ontwikkelingswerk",
-                            "pricing": "€85/uur standaard",
-                            "benefits": [
-                                "Maximale flexibiliteit",
-                                "Betaal per gebruik",
-                                "Perfect voor doorlopend werk"
-                            ]
-                        },
-                        "hourlyUrgent": {
-                            "title": "Urgente Consultancy",
-                            "description": "Spoed projecten met 1-2 weken oplevering",
-                            "pricing": "€150/uur voor urgent",
-                            "benefits": [
-                                "Directe start",
-                                "Prioriteit ondersteuning",
-                                "Snelle doorlooptijd"
-                            ]
-                        }
-                    },
-                    "popular": "Populair"
-                },
-                "step2": {
-                    "title": "Project Details",
-                    "description": "Help me je timeline en budget verwachtingen te begrijpen.",
-                    "when": "Wanneer heb je dit afgerond nodig?",
-                    "whatTimeWorksBest": "Welke tijd komt je het beste uit?",
-                    "loadingSlots": "Beschikbare tijdslots laden...",
-                    "pleaseSelectDate": "Selecteer eerst een datum om beschikbare tijdslots te zien",
-                    "noAvailableTimeSlots": "Geen beschikbare tijdslots voor deze datum. Kies een andere datum.",
-                    "selectTimeSlot": "Selecteer een tijdslot",
-                    "availableTimeSlots": "beschikbare tijdslots",
-                    "budget": "Wat is je budgetbereik?",
-                    "hourlyRates": "Uurtarieven",
-                    "tellAboutProject": "Vertel me over je project",
-                    "describeProject": "Beschrijf je projectdoelen, huidige uitdagingen en hoe succes eruit ziet...",
-                    "budgets": {
-                        "project": [
-                            {
-                                "id": "5k-10k",
-                                "label": "€5k - €10k"
-                            },
-                            {
-                                "id": "10k-25k",
-                                "label": "€10k - €25k"
-                            },
-                            {
-                                "id": "25k-50k",
-                                "label": "€25k - €50k"
-                            },
-                            {
-                                "id": "50k+",
-                                "label": "€50k+"
-                            }
-                        ],
-                        "hourly": [
-                            {
-                                "id": "10-25h",
-                                "label": "10-25 uur",
-                                "estimate": "€850 - €3.750"
-                            },
-                            {
-                                "id": "25-50h",
-                                "label": "25-50 uur",
-                                "estimate": "€2.125 - €7.500"
-                            },
-                            {
-                                "id": "50-100h",
-                                "label": "50-100 uur",
-                                "estimate": "€4.250 - €15.000"
-                            },
-                            {
-                                "id": "100h+",
-                                "label": "100+ uur",
-                                "estimate": "€8.500+"
-                            }
-                        ]
-                    },
-                    "rateInfo": {
-                        "standard": "€85/uur standaard tarief",
-                        "urgent": "€150/uur voor urgente projecten"
-                    },
-                    "descriptionPlaceholder": {
-                        "base": "Beschrijf je projectdoelen, huidige uitdagingen en hoe succes eruit ziet...",
-                        "hourly": "\n\nVoor uurwerk: Bij welke specifieke taken of gebieden heb je hulp nodig?",
-                        "project": "\n\nVoor projectwerk: Wat zijn je hoofdvereisten en verwachte deliverables?"
-                    }
-                },
-                "step3": {
-                    "title": "Contactinformatie",
-                    "description": "Hoe kan ik je bereiken om je project te bespreken?",
-                    "fullName": "Volledige Naam",
-                    "company": "Bedrijf",
-                    "email": "E-mailadres",
-                    "phone": "Telefoonnummer",
-                    "fullNamePlaceholder": "Je volledige naam",
-                    "companyPlaceholder": "Bedrijfsnaam",
-                    "emailPlaceholder": "jouw@email.com",
-                    "phonePlaceholder": "+31 6 80149947"
-                },
-                "step4": {
-                    "title": "Klaar om te Versturen",
-                    "description": "Controleer je informatie voordat je verzendt.",
-                    "serviceType": "Service & Type",
-                    "dateTime": "Datum & Tijd",
-                    "budget": "Budget",
-                    "contact": "Contact",
-                    "notSelected": "Niet geselecteerd",
-                    "whatHappensNext": "Wat gebeurt er hierna?",
-                    "reviewRequest": "Ik bekijk je verzoek binnen 24 uur",
-                    "scheduleCall": "We plannen een gratis 30-minuten discovery call",
-                    "provideProposal": "Ik verstrek een gedetailleerd voorstel en timeline",
-                    "startBuilding": "We beginnen met het bouwen van iets geweldigs samen"
+                "moment": "Kies een moment",
+                "details": "Jouw gegevens",
+                "confirm": "Controleer en bevestig"
+            },
+            "moment": {
+                "dayLabel": "Dag",
+                "otherDate": "Andere datum kiezen",
+                "otherDateLabel": "Andere datum",
+                "timeLabel": "Tijd",
+                "timezone": "Tijden in Nederlandse tijd.",
+                "loading": "Tijden laden",
+                "count": "{count, plural, =0 {Geen tijden} one {# tijd} other {# tijden}} beschikbaar",
+                "none": "Geen tijden op deze dag. Kies een andere dag.",
+                "retry": "Opnieuw proberen",
+                "pickTime": "Kies een tijd om verder te gaan."
+            },
+            "details": {
+                "name": "Naam",
+                "namePlaceholder": "Je naam",
+                "email": "E-mailadres",
+                "emailPlaceholder": "jij@bedrijf.nl",
+                "company": "Bedrijf",
+                "companyPlaceholder": "Bedrijfsnaam",
+                "topic": "Waar wil je het over hebben?",
+                "topicPlaceholder": "Het systeem dat moet veranderen en waar het nu op draait",
+                "optional": "optioneel",
+                "errors": {
+                    "nameRequired": "Vul je naam in.",
+                    "emailRequired": "Vul je e-mailadres in.",
+                    "emailInvalid": "Controleer het e-mailadres, het lijkt onvolledig."
                 }
             },
-            "success": {
-                "title": "Verzoek Succesvol Verzonden!",
-                "message": "Dank je wel, {name}! Ik heb je boekingsverzoek ontvangen en neem binnen 24 uur contact op met een gedetailleerd voorstel.",
-                "nextSteps": {
-                    "title": "Wat is de Volgende Stap?",
-                    "steps": [
-                        "Ik bekijk je verzoek en bereid een op maat gemaakt voorstel voor",
-                        "We plannen een gratis 30-minuten discovery call",
-                        "Beginnen met het bouwen van iets geweldigs samen!"
-                    ]
-                },
-                "emailConfirmation": "Je ontvangt binnenkort een bevestigingsmail op {email}.",
-                "submitAnother": "Verstuur Nog een Verzoek"
-            },
-            "errors": {
-                "submissionFailed": "Verzending mislukt",
-                "generic": "Er ging iets mis. Probeer het opnieuw.",
-                "loadSlotsFailed": "De beschikbare tijden konden nu niet geladen worden. Probeer het zo opnieuw, of mail naar hilmar@hilmarvanderveen.com, dan plan ik het gesprek voor je in.",
-                "submissionFailedDetail": "Je boeking is niet verzonden. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook, dan plan ik het gesprek voor je in.",
-                "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
-            },
-            "navigation": {
-                "back": "Terug",
-                "continue": "Verder",
-                "sendRequest": "Verstuur Verzoek",
-                "submitting": "Versturen..."
+            "confirm": {
+                "when": "Wanneer",
+                "who": "Wie",
+                "topic": "Onderwerp",
+                "topicEmpty": "Bepalen we in het gesprek",
+                "edit": "Wijzig",
+                "afterConfirm": "Na het bevestigen staat de uitnodiging in je agenda en gaat er een bevestiging naar {email}."
             }
+        },
+        "summary": {
+            "title": "Jouw gesprek",
+            "when": "Wanneer",
+            "whenEmpty": "Kies een dag en tijd",
+            "who": "Wie",
+            "whoEmpty": "Je naam en e-mail volgen in stap 2",
+            "topic": "Onderwerp",
+            "topicEmpty": "Optioneel",
+            "expectTitle": "Wat je kunt verwachten",
+            "expectations": ["Dertig minuten, technisch en concreet. Neem mee wat moet veranderen en waar het nu op draait.", "Aan het einde weet je of ik de juiste persoon ben en wat de eerste stap is.", "De uitnodiging staat direct in je agenda, met een bevestiging per e-mail."],
+            "practicalTitle": "Praktisch",
+            "practical": ["Beschikbaar vanaf 1 oktober 2026, eerder in overleg", "Utrecht, hybride of remote, 1 à 2 dagen op locatie werkt goed", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "Uurtarief €95"],
+            "alternativeLead": "Liever niet boeken? Mail naar",
+            "alternativeOr": "of bel",
+            "privacy": "Je gegevens gaan alleen in de agenda-uitnodiging en de bevestiging per e-mail."
+        },
+        "navigation": {
+            "back": "Terug",
+            "next": "Volgende",
+            "confirm": "Bevestig gesprek",
+            "submitting": "Een moment"
+        },
+        "success": {
+            "title": "Het staat in de agenda",
+            "message": "Dank je, {name}. Het gesprek is ingepland en de uitnodiging is onderweg.",
+            "detailsLabel": "Jouw gesprek",
+            "email": "Bevestiging en uitnodiging verstuurd naar {email}.",
+            "home": "Terug naar de homepage",
+            "another": "Nog een gesprek plannen"
+        },
+        "errors": {
+            "submissionFailed": "De boeking is niet gelukt",
+            "loadSlotsFailed": "De beschikbare tijden konden nu niet geladen worden. Probeer het zo opnieuw, of mail naar hilmar@hilmarvanderveen.com, dan plan ik het gesprek voor je in.",
+            "submissionFailedDetail": "Je boeking is niet verzonden. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook, dan plan ik het gesprek voor je in.",
+            "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
         }
     },
     "about": {
@@ -2440,7 +2296,7 @@
             "intro": "Je bent hier omdat je een senior developer nodig hebt die daadwerkelijk kan leveren. Niet alleen iemand die over technologie praat, maar iemand die echte oplossingen bouwt die echte bedrijfsproblemen oplossen.",
             "mission": "Mijn doel is simpel: groeiende bedrijven helpen betere software sneller te bouwen. Of je nu je frontend wilt schalen, een nieuw platform wilt architecturen, of je ontwikkelteam wilt mentoren - ik ben er geweest, heb het gedaan, en heb resultaten geleverd.",
             "features": [
-                "€85-125/uur transparante prijsstelling",
+                "€95-125/uur transparante prijsstelling",
                 "Beschikbaar voor projecten 2-40 uur/week",
                 "Remote-first met Amsterdam gebied on-site opties"
             ],
@@ -2540,7 +2396,7 @@
             "subtitle": "Of je nu je frontend wilt schalen, een nieuw platform wilt bouwen, of je ontwikkelteam wilt mentoren, ik ben er om te helpen. Laten we bespreken hoe ik impact kan maken op je project.",
             "consultation": "Boek een Consultatie",
             "contact": "Neem Contact Op",
-            "features": "Gratis 30-minuten consultatie • €85-125/uur transparante prijsstelling • Direct beschikbaar"
+            "features": "Gratis 30-minuten consultatie • €95-125/uur transparante prijsstelling • Direct beschikbaar"
         }
     },
     "footer": {

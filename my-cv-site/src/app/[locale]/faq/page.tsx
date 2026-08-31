@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     {
       question: "What are your hourly rates for frontend development?",
       answer:
-        "My rates range from €85-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
+        "My rates range from €95-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
     },
     {
       question: "Do you work remotely or on-site in Amsterdam?",
@@ -58,7 +58,7 @@ export default async function FAQPage({ params }: Props) {
     {
       question: "What are your hourly rates for frontend development?",
       answer:
-        "My rates range from €85-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
+        "My rates range from €95-125 per hour depending on the project complexity and scope. I also offer project-based pricing for larger engagements.",
     },
     {
       question: "Do you work remotely or on-site in Amsterdam?",

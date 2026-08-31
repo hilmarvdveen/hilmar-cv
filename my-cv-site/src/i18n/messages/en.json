@@ -200,8 +200,8 @@
                 },
                 {
                     "label": "Rate",
-                    "value": "On request",
-                    "detail": "Scope and rate are set in the call. Reply within one business day.",
+                    "value": "€95 per hour",
+                    "detail": "Scope is set in the call. Reply within one business day.",
                     "highlight": false
                 }
             ],
@@ -2000,7 +2000,7 @@
             "intro": "You're here because you need a senior developer who can actually deliver. Not just someone who talks about technology, but someone who builds real solutions that solve real business problems.",
             "mission": "My purpose is simple: help growing companies build better software, faster. Whether you need to scale your frontend, architect a new platform, or mentor your development team - I've been there, done that, and delivered results.",
             "features": [
-                "€85-125/hour transparent pricing",
+                "€95-125/hour transparent pricing",
                 "Available for projects 2-40 hours/week",
                 "Remote-first with Amsterdam area on-site options"
             ],
@@ -2100,7 +2100,7 @@
             "subtitle": "Whether you need to scale your frontend, build a new platform, or mentor your development team, I'm here to help. Let's discuss how I can make an impact on your project.",
             "consultation": "Book a Consultation",
             "contact": "Get in Touch",
-            "features": "Free 30-minute consultation • €85-125/hour transparent pricing • Available immediately"
+            "features": "Free 30-minute consultation • €95-125/hour transparent pricing • Available immediately"
         }
     },
     "cvModal": {
@@ -2211,7 +2211,7 @@
                 "questions": [
                     {
                         "question": "How do you structure your pricing?",
-                        "answer": "I offer flexible pricing models to suit different needs:\n• Hourly rate: €85-125/hour depending on project complexity\n• Daily rate: €650-950/day for longer engagements\n• Fixed project pricing: For well-defined scopes\n• Retainer agreements: For ongoing support and development\n\nI provide detailed estimates after understanding your requirements."
+                        "answer": "I offer flexible pricing models to suit different needs:\n• Hourly rate: €95-125/hour depending on project complexity\n• Daily rate: €650-950/day for longer engagements\n• Fixed project pricing: For well-defined scopes\n• Retainer agreements: For ongoing support and development\n\nI provide detailed estimates after understanding your requirements."
                     },
                     {
                         "question": "Do you offer free consultations?",
@@ -2308,238 +2308,94 @@
     },
     "booking": {
         "meta": {
-            "title": "Book Consultation – Hilmar van der Veen | Expert Developer",
-            "description": "Book a free consultation with Hilmar van der Veen. 10+ years experience in React, Next.js, and full-stack development. Get your project started today."
+            "title": "Book a 30-minute call – Hilmar van der Veen",
+            "description": "Pick a time, leave your name and email, and the invitation lands in your calendar. A 30-minute call with a senior frontend engineer, available from 1 October 2026."
         },
         "hero": {
-            "badge": "10+ Years Experience",
-            "title": {
-                "line1": "Let's Build",
-                "line2": "Something Amazing",
-                "line3": "Together"
-            },
-            "description": "Ready to bring your vision to life? From quick consultations to complete projects, I'm here to help you succeed with professional development solutions.",
-            "benefits": {
-                "fastDelivery": {
-                    "title": "Fast Delivery",
-                    "description": "2-8 weeks typical"
-                },
-                "fullSupport": {
-                    "title": "Full Support",
-                    "description": "Ongoing maintenance"
-                }
-            },
-            "cta": {
-                "button": "Start Your Project",
-                "freeConsultation": "Free consultation included",
-                "pricing": "€85-150/hour • Projects from €5k"
-            }
+            "badge": "Available from 1 October 2026 · earlier by arrangement",
+            "title": "Book a 30-minute call",
+            "description": "Pick a moment, leave your name and email address, done. The invitation lands in your calendar right away, with a confirmation by email.",
+            "facts": ["30 minutes", "Straight into your calendar", "Dutch or English"]
         },
-        "pricing": {
-            "hourly": {
-                "title": "Hourly Consulting",
-                "badge": "Flexible",
-                "price": "€85-150/hour",
-                "description": "Perfect for ongoing work and quick fixes",
-                "features": [
-                    "Pay as you go",
-                    "Maximum flexibility",
-                    "€150/hour for urgent projects"
-                ]
-            },
-            "project": {
-                "title": "Fixed Projects",
-                "badge": "Popular",
-                "price": "€5k - €50k+",
-                "description": "Complete solutions with defined scope",
-                "features": [
-                    "Fixed timeline & scope",
-                    "Better value for large projects",
-                    "Comprehensive deliverables"
-                ]
-            }
-        },
-        "form": {
-            "title": "Ready to Get Started?",
-            "description": "Tell me about your project and I'll get back to you within 24 hours with a detailed proposal.",
+        "flow": {
+            "stepLabel": "Step {current} of {total}",
             "steps": {
-                "step1": {
-                    "title": "What can I help you with?",
-                    "description": "Choose the service and engagement type that best fits your needs.",
-                    "serviceType": "Service Type",
-                    "services": {
-                        "frontend": {
-                            "title": "Frontend Development",
-                            "description": "React, Next.js, Vue.js applications"
-                        },
-                        "fullstack": {
-                            "title": "Full-Stack Development",
-                            "description": "Complete web applications with backend"
-                        },
-                        "designSystem": {
-                            "title": "Design System",
-                            "description": "Component libraries and style guides"
-                        },
-                        "consultation": {
-                            "title": "Technical Consultation",
-                            "description": "Architecture review and team mentoring"
-                        }
-                    },
-                    "projectType": "Project Type",
-                    "projectTypes": {
-                        "project": {
-                            "title": "Fixed-Price Project",
-                            "description": "Complete project with defined scope and deliverables",
-                            "pricing": "€5k - €50k+",
-                            "benefits": [
-                                "Fixed timeline",
-                                "Defined scope",
-                                "Better value for larger projects"
-                            ]
-                        },
-                        "hourly": {
-                            "title": "Hourly Consulting",
-                            "description": "Flexible consulting and development work",
-                            "pricing": "€85/hour standard",
-                            "benefits": [
-                                "Maximum flexibility",
-                                "Pay as you go",
-                                "Perfect for ongoing work"
-                            ]
-                        },
-                        "hourlyUrgent": {
-                            "title": "Urgent Consulting",
-                            "description": "Rush projects with 1-2 week delivery",
-                            "pricing": "€150/hour for urgent",
-                            "benefits": [
-                                "Immediate start",
-                                "Priority support",
-                                "Fast turnaround"
-                            ]
-                        }
-                    },
-                    "popular": "Popular"
-                },
-                "step2": {
-                    "title": "Project Details",
-                    "description": "Help me understand your timeline and budget expectations.",
-                    "when": "When do you need this completed?",
-                    "whatTimeWorksBest": "What time works best for you?",
-                    "loadingSlots": "Loading available time slots...",
-                    "pleaseSelectDate": "Please select a date first to see available time slots",
-                    "noAvailableTimeSlots": "No available time slots for this date. Please choose another date.",
-                    "selectTimeSlot": "Select a time slot",
-                    "availableTimeSlots": "available time slots",
-                    "budget": "What's your budget range?",
-                    "hourlyRates": "Hourly rates",
-                    "tellAboutProject": "Tell me about your project",
-                    "describeProject": "Describe your project goals, current challenges, and what success looks like to you...",
-                    "budgets": {
-                        "project": [
-                            {
-                                "id": "5k-10k",
-                                "label": "€5k - €10k"
-                            },
-                            {
-                                "id": "10k-25k",
-                                "label": "€10k - €25k"
-                            },
-                            {
-                                "id": "25k-50k",
-                                "label": "€25k - €50k"
-                            },
-                            {
-                                "id": "50k+",
-                                "label": "€50k+"
-                            }
-                        ],
-                        "hourly": [
-                            {
-                                "id": "10-25h",
-                                "label": "10-25 hours",
-                                "estimate": "€850 - €3,750"
-                            },
-                            {
-                                "id": "25-50h",
-                                "label": "25-50 hours",
-                                "estimate": "€2,125 - €7,500"
-                            },
-                            {
-                                "id": "50-100h",
-                                "label": "50-100 hours",
-                                "estimate": "€4,250 - €15,000"
-                            },
-                            {
-                                "id": "100h+",
-                                "label": "100+ hours",
-                                "estimate": "€8,500+"
-                            }
-                        ]
-                    },
-                    "rateInfo": {
-                        "standard": "€85/hour standard rate",
-                        "urgent": "€150/hour for urgent projects"
-                    },
-                    "descriptionPlaceholder": {
-                        "base": "Describe your project goals, current challenges, and what success looks like to you...",
-                        "hourly": "\n\nFor hourly work: What specific tasks or areas do you need help with?",
-                        "project": "\n\nFor project work: What are your main requirements and expected deliverables?"
-                    }
-                },
-                "step3": {
-                    "title": "Contact Information",
-                    "description": "How can I reach you to discuss your project?",
-                    "fullName": "Full Name",
-                    "company": "Company",
-                    "email": "Email Address",
-                    "phone": "Phone Number",
-                    "fullNamePlaceholder": "Your full name",
-                    "companyPlaceholder": "Company name",
-                    "emailPlaceholder": "your@email.com",
-                    "phonePlaceholder": "+31 6 80149947"
-                },
-                "step4": {
-                    "title": "Ready to Submit",
-                    "description": "Please review your information before submitting.",
-                    "serviceType": "Service & Type",
-                    "dateTime": "Date & Time",
-                    "budget": "Budget",
-                    "contact": "Contact",
-                    "notSelected": "Not selected",
-                    "whatHappensNext": "What happens next?",
-                    "reviewRequest": "I'll review your request within 24 hours",
-                    "scheduleCall": "Schedule a free 30-minute discovery call",
-                    "provideProposal": "Provide a detailed proposal and timeline",
-                    "startBuilding": "Start building something amazing together"
+                "moment": "Pick a moment",
+                "details": "Your details",
+                "confirm": "Check and confirm"
+            },
+            "moment": {
+                "dayLabel": "Day",
+                "otherDate": "Pick another date",
+                "otherDateLabel": "Another date",
+                "timeLabel": "Time",
+                "timezone": "Times are Amsterdam time.",
+                "loading": "Loading times",
+                "count": "{count, plural, =0 {No times} one {# time} other {# times}} available",
+                "none": "No times on this day. Pick another day.",
+                "retry": "Try again",
+                "pickTime": "Pick a time to continue."
+            },
+            "details": {
+                "name": "Name",
+                "namePlaceholder": "Your name",
+                "email": "Email address",
+                "emailPlaceholder": "you@company.com",
+                "company": "Company",
+                "companyPlaceholder": "Company name",
+                "topic": "What would you like to discuss?",
+                "topicPlaceholder": "The surface that has to change and what it runs on today",
+                "optional": "optional",
+                "errors": {
+                    "nameRequired": "Enter your name.",
+                    "emailRequired": "Enter your email address.",
+                    "emailInvalid": "Check the email address, it looks incomplete."
                 }
             },
-            "success": {
-                "title": "Request Submitted Successfully!",
-                "message": "Thank you, {name}! I've received your booking request and will get back to you within 24 hours with a detailed proposal.",
-                "nextSteps": {
-                    "title": "What's Next?",
-                    "steps": [
-                        "I'll review your request and prepare a tailored proposal",
-                        "We'll schedule a free 30-minute discovery call",
-                        "Start building something amazing together!"
-                    ]
-                },
-                "emailConfirmation": "You should receive a confirmation email at {email} shortly.",
-                "submitAnother": "Submit Another Request"
-            },
-            "errors": {
-                "submissionFailed": "Submission failed",
-                "generic": "Something went wrong. Please try again.",
-                "loadSlotsFailed": "The available time slots could not be loaded right now. Please try again in a moment, or email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
-                "submissionFailedDetail": "Your booking did not go through. Please try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947 and I will schedule the call for you.",
-                "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
-            },
-            "navigation": {
-                "back": "Back",
-                "continue": "Continue",
-                "sendRequest": "Send Request",
-                "submitting": "Submitting..."
+            "confirm": {
+                "when": "When",
+                "who": "Who",
+                "topic": "Topic",
+                "topicEmpty": "We settle that in the call",
+                "edit": "Change",
+                "afterConfirm": "After confirming, the invitation lands in your calendar and a confirmation goes to {email}."
             }
+        },
+        "summary": {
+            "title": "Your call",
+            "when": "When",
+            "whenEmpty": "Pick a day and time",
+            "who": "Who",
+            "whoEmpty": "Your name and email follow in step 2",
+            "topic": "Topic",
+            "topicEmpty": "Optional",
+            "expectTitle": "What to expect",
+            "expectations": ["Thirty minutes, technical and concrete. Bring what has to change and what it runs on today.", "At the end you know whether I am the right person for it and what the first step is.", "The invitation lands in your calendar right away, with a confirmation by email."],
+            "practicalTitle": "Practical",
+            "practical": ["Available from 1 October 2026, earlier by arrangement", "Utrecht, hybrid or remote, 1 to 2 days on site works well", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "Hourly rate €95"],
+            "alternativeLead": "Rather not book? Email",
+            "alternativeOr": "or call",
+            "privacy": "Your details go only into the calendar invitation and the confirmation email."
+        },
+        "navigation": {
+            "back": "Back",
+            "next": "Next",
+            "confirm": "Confirm call",
+            "submitting": "One moment"
+        },
+        "success": {
+            "title": "It is in the calendar",
+            "message": "Thank you, {name}. The call is booked and the invitation is on its way.",
+            "detailsLabel": "Your call",
+            "email": "Confirmation and invitation sent to {email}.",
+            "home": "Back to the homepage",
+            "another": "Book another call"
+        },
+        "errors": {
+            "submissionFailed": "The booking did not go through",
+            "loadSlotsFailed": "The available times could not be loaded right now. Try again in a moment, or email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
+            "submissionFailedDetail": "Your booking did not go through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947 and I will schedule the call for you.",
+            "tooManyRequests": "Too many attempts in a short time. Wait a minute and try again."
         }
     },
     "footer": {

@@ -56,10 +56,10 @@ export const BUSINESS_PROFILE = {
 } as const;
 
 export const PRICING = {
-  HOURLY_RATE_MIN: 85,
+  HOURLY_RATE_MIN: 95,
   HOURLY_RATE_MAX: 125,
   CURRENCY: 'EUR',
-  CONSULTATION_RATE: 85,
+  CONSULTATION_RATE: 95,
   PROJECT_MIN: 2500
 } as const;
 

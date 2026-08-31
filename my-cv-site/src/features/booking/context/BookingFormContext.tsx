@@ -2,168 +2,159 @@
 
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
-  useCallback,
 } from "react";
 
-type BookingFormData = {
-  service: string;
-  projectType: string;
-  bookingDate: string;
-  bookingTime: string;
-  budget: string;
-  description: string;
+export type BookingDetails = {
+  date: string;
+  time: string;
   name: string;
   email: string;
-  phone: string;
   company: string;
-}
+  topic: string;
+};
 
-type FormState = {
-  isSubmitting: boolean;
-  isSubmitted: boolean;
-  error: string | null;
-  loadingSlots: boolean;
-}
+export type BookingStep = 1 | 2 | 3;
 
-type BookingFormContextType = {
-  formData: BookingFormData;
-  formState: FormState;
-  currentStep: number;
-  availableSlots: TimeSlot[];
-  updateFormData: (field: keyof BookingFormData, value: string) => void;
-  setFormState: React.Dispatch<React.SetStateAction<FormState>>;
-  setCurrentStep: (step: number) => void;
-  setAvailableSlots: React.Dispatch<React.SetStateAction<TimeSlot[]>>;
-  resetForm: () => void;
-}
+export type BookingStatus = "idle" | "submitting" | "submitted";
 
-type TimeSlot = {
-  value: string;
-  label: string;
-}
+type BookingFormContextValue = {
+  details: BookingDetails;
+  step: BookingStep;
+  status: BookingStatus;
+  submitError: string | null;
+  updateDetail: (field: keyof BookingDetails, value: string) => void;
+  goToStep: (step: BookingStep) => void;
+  setStatus: (status: BookingStatus) => void;
+  setSubmitError: (message: string | null) => void;
+  resetBooking: () => void;
+};
 
-const initialFormData: BookingFormData = {
-  service: "",
-  projectType: "",
-  bookingDate: "",
-  bookingTime: "",
-  budget: "",
-  description: "",
+export const INITIAL_BOOKING_DETAILS: BookingDetails = {
+  date: "",
+  time: "",
   name: "",
   email: "",
-  phone: "",
   company: "",
+  topic: "",
 };
 
-const initialFormState: FormState = {
-  isSubmitting: false,
-  isSubmitted: false,
-  error: null,
-  loadingSlots: false,
+const STORAGE_KEY = "hilmar-booking-form-state";
+const STORAGE_TTL_MILLISECONDS = 24 * 60 * 60 * 1000;
+
+type StoredState = {
+  details?: Partial<BookingDetails>;
+  step?: number;
+  timestamp?: number;
 };
 
-const BookingFormContext = createContext<BookingFormContextType | undefined>(
+const BookingFormContext = createContext<BookingFormContextValue | undefined>(
   undefined
 );
 
-const STORAGE_KEY = "hilmar-booking-form-state";
+export function restoreBookingState(
+  raw: string | null,
+  now: number
+): { details: BookingDetails; step: BookingStep } | null {
+  if (!raw) return null;
+  try {
+    const stored = JSON.parse(raw) as StoredState;
+    if (!stored.timestamp || now - stored.timestamp > STORAGE_TTL_MILLISECONDS) {
+      return null;
+    }
+    const details: BookingDetails = { ...INITIAL_BOOKING_DETAILS };
+    for (const key of Object.keys(INITIAL_BOOKING_DETAILS) as (keyof BookingDetails)[]) {
+      const value = stored.details?.[key];
+      if (typeof value === "string") details[key] = value;
+    }
+    let step: BookingStep = 1;
+    if (stored.step === 3 && details.time && details.name && details.email) step = 3;
+    else if ((stored.step === 2 || stored.step === 3) && details.time) step = 2;
+    return { details, step };
+  } catch {
+    return null;
+  }
+}
 
-export function BookingFormProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [formData, setFormData] = useState<BookingFormData>(initialFormData);
-  const [formState, setFormState] = useState<FormState>(initialFormState);
-  const [currentStep, setCurrentStep] = useState(1);
-  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
+export function BookingFormProvider({ children }: { children: React.ReactNode }) {
+  const [details, setDetails] = useState<BookingDetails>(INITIAL_BOOKING_DETAILS);
+  const [step, setStep] = useState<BookingStep>(1);
+  const [status, setStatus] = useState<BookingStatus>("idle");
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Load state from localStorage on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsedState = JSON.parse(saved);
-        if (parsedState.formData) {
-          setFormData(parsedState.formData);
-        }
-        if (parsedState.currentStep) {
-          setCurrentStep(parsedState.currentStep);
-        }
-        // Don't restore availableSlots - they should be fetched fresh
+      const restored = restoreBookingState(
+        localStorage.getItem(STORAGE_KEY),
+        Date.now()
+      );
+      if (restored) {
+        setDetails(restored.details);
+        setStep(restored.step);
       }
     } catch (error) {
-      console.warn(
-        "Failed to load booking form state from localStorage:",
-        error
-      );
+      console.warn("Failed to load booking form state from localStorage:", error);
     } finally {
       setIsInitialized(true);
     }
   }, []);
 
-  // Save state to localStorage whenever it changes
   useEffect(() => {
     if (!isInitialized) return;
-
     try {
-      const stateToSave = {
-        formData,
-        currentStep,
-        timestamp: Date.now(),
-      };
+      if (status === "submitted") {
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      const stateToSave: StoredState = { details, step, timestamp: Date.now() };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
     } catch (error) {
       console.warn("Failed to save booking form state to localStorage:", error);
     }
-  }, [formData, currentStep, isInitialized]);
+  }, [details, step, isInitialized, status]);
 
-  const updateFormData = useCallback(
-    (field: keyof BookingFormData, value: string) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-    },
-    []
-  );
+  const updateDetail = useCallback((field: keyof BookingDetails, value: string) => {
+    setDetails((prev) => ({ ...prev, [field]: value }));
+  }, []);
 
-  const resetForm = useCallback(() => {
-    setFormData(initialFormData);
-    setFormState(initialFormState);
-    setCurrentStep(1);
-    setAvailableSlots([]);
+  const goToStep = useCallback((nextStep: BookingStep) => {
+    setStep(nextStep);
+  }, []);
+
+  const resetBooking = useCallback(() => {
+    setDetails(INITIAL_BOOKING_DETAILS);
+    setStep(1);
+    setStatus("idle");
+    setSubmitError(null);
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error) {
-      console.warn(
-        "Failed to clear booking form state from localStorage:",
-        error
-      );
+      console.warn("Failed to clear booking form state from localStorage:", error);
     }
   }, []);
 
-  const contextValue: BookingFormContextType = {
-    formData,
-    formState,
-    currentStep,
-    availableSlots,
-    updateFormData,
-    setFormState,
-    setCurrentStep,
-    setAvailableSlots,
-    resetForm,
+  const value: BookingFormContextValue = {
+    details,
+    step,
+    status,
+    submitError,
+    updateDetail,
+    goToStep,
+    setStatus,
+    setSubmitError,
+    resetBooking,
   };
 
   return (
-    <BookingFormContext.Provider value={contextValue}>
-      {children}
-    </BookingFormContext.Provider>
+    <BookingFormContext.Provider value={value}>{children}</BookingFormContext.Provider>
   );
 }
 
-export function useBookingForm() {
+export function useBookingForm(): BookingFormContextValue {
   const context = useContext(BookingFormContext);
   if (context === undefined) {
     throw new Error("useBookingForm must be used within a BookingFormProvider");

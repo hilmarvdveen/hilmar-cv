@@ -2,13 +2,12 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
-// Graph client.calendarview chain is mocked so the happy path is exercisable.
 const getEvents = vi.fn();
 const getGraphCredentials = vi.fn();
 vi.mock("@/lib/graph", async (importOriginal) => {
   const actual = (await importOriginal()) as Record<string, unknown>;
   return {
-    ...actual, // keep real generateTimeSlots / isSlotAvailable / BOOKING_TIMEZONE
+    ...actual,
     getGraphCredentials: () => getGraphCredentials(),
     getAccessToken: vi.fn(async () => "token"),
     getGraphClient: vi.fn(() => ({
@@ -38,7 +37,17 @@ function get(date?: string) {
 }
 
 function futureDate(daysAhead = 5) {
-  return new Date(Date.now() + daysAhead * 86400000).toISOString().slice(0, 10);
+  const date = new Date(Date.now() + daysAhead * 86400000);
+  while (date.getUTCDay() === 0 || date.getUTCDay() === 6) {
+    date.setUTCDate(date.getUTCDate() + 1);
+  }
+  return date.toISOString().slice(0, 10);
+}
+
+function futureWeekendDate() {
+  const date = new Date(Date.now() + 5 * 86400000);
+  while (date.getUTCDay() !== 6) date.setUTCDate(date.getUTCDate() + 1);
+  return date.toISOString().slice(0, 10);
 }
 
 beforeEach(() => {
@@ -80,6 +89,27 @@ describe("GET /api/booking/slots", () => {
     const res = await GET(get(day));
     const json = await res.json();
     expect(json.totalAvailable).toBeLessThan(16);
+  });
+
+  it("offers no slots on a weekend", async () => {
+    const res = await GET(get(futureWeekendDate()));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.slots).toEqual([]);
+    expect(json.totalAvailable).toBe(0);
+  });
+
+  it("hides times that start within the next hour on the current day", async () => {
+    vi.useFakeTimers();
+    try {
+      vi.setSystemTime(new Date("2026-07-01T07:45:00.000Z"));
+      const res = await GET(get("2026-07-01"));
+      const json = await res.json();
+      expect(json.totalAvailable).toBe(12);
+      expect(json.slots[0].label).toBe("11:00");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("returns 500 config error when credentials are missing", async () => {

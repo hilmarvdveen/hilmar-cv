@@ -26,7 +26,6 @@ export const Header = () => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.classList.add("mobile-menu-open");
@@ -34,7 +33,6 @@ export const Header = () => {
       document.body.classList.remove("mobile-menu-open");
     }
 
-    // Cleanup on unmount
     return () => {
       document.body.classList.remove("mobile-menu-open");
     };
@@ -103,8 +101,6 @@ export const Header = () => {
     (locale) => locale.code === currentLocale
   );
 
-  // Home is the logo and booking is the primary button, so neither repeats
-  // as a plain desktop link. The mobile drawer still lists everything.
   const desktopNavItems = navItems.filter(
     (item) => item.href !== "/" && item.href !== "/book"
   );
@@ -114,7 +110,6 @@ export const Header = () => {
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <nav className="max-w-7xl mx-auto px-6 py-2">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 group">
               <span className="w-14 h-14  rounded-lg flex items-center justify-center text-white">
                 <Image
@@ -130,9 +125,6 @@ export const Header = () => {
               </span>
             </Link>
 
-            {/* Desktop Navigation. The logo already links home and the
-                booking action renders as the one primary button, so both
-                leave the link row, which keeps clear air around the logo. */}
             <div className="hidden lg:flex items-center gap-1 xl:gap-3 ml-12">
               {desktopNavItems.map((item) => {
                 const isActive = pathname === item.href;
@@ -160,7 +152,6 @@ export const Header = () => {
                 <span>{t("nav.book")}</span>
               </Button>
 
-              {/* Desktop Language Switcher */}
               <div className="relative ml-2">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
@@ -197,7 +188,6 @@ export const Header = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation"
@@ -213,9 +203,7 @@ export const Header = () => {
         </nav>
       </header>
 
-      {/* Mobile Navigation Drawer */}
       <>
-        {/* Backdrop */}
         <div
           className={`fixed inset-0 bg-black/50 z-[60] lg:hidden transition-opacity duration-300 ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -224,7 +212,6 @@ export const Header = () => {
           onTouchEnd={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* Mobile Drawer */}
         <div
           className={`
           fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white z-[70] lg:hidden
@@ -232,7 +219,6 @@ export const Header = () => {
           ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}
         `}
         >
-          {/* Drawer Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center space-x-3">
               <Image
@@ -255,7 +241,6 @@ export const Header = () => {
             </button>
           </div>
 
-          {/* Navigation Links */}
           <div className="px-6 py-4 space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
@@ -279,7 +264,6 @@ export const Header = () => {
             })}
           </div>
 
-          {/* Language Switcher */}
           <div className="px-6 py-4 border-t border-gray-200 mt-4">
             <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
               Language
@@ -304,7 +288,6 @@ export const Header = () => {
         </div>
       </>
 
-      {/* Desktop Language Dropdown Backdrop */}
       {isLanguageOpen && (
         <div
           className="fixed inset-0 z-[45] hidden lg:block"

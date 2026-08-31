@@ -337,7 +337,7 @@ export class AnalyticsManager {
         form_step: bookingData.formStep || 'initial',
         [TRACKING_PARAMETERS.PAGE_SECTION]: 'booking'
       },
-      value: 85 // Consultation rate
+      value: 95
     });
   }
 
