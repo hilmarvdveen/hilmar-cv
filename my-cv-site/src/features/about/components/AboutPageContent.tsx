@@ -26,7 +26,7 @@ export function AboutPageContent() {
     <div className="bg-gray-50">
       {/* Hero Section - Using homepage color scheme */}
       <section className="bg-brand-navy text-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-6 text-white">
               {t("title")}
@@ -50,7 +50,7 @@ export function AboutPageContent() {
 
       {/* Main Content */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Purpose & Introduction */}
           <div className="bg-white rounded-2xl p-8 mb-12 shadow-sm border border-gray-100">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">

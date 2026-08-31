@@ -12,7 +12,7 @@ export const WorkExperienceSection = () => {
 
   return (
     <section className="bg-gray-50">
-      <div className="container max-w-7xl mx-auto py-16 px-6">
+      <div className="container max-w-7xl mx-auto py-16 px-4 sm:px-6">
         <h2 className="text-3xl font-bold mb-10 text-gray-900">
           {t("sectionTitle", { defaultValue: "Werkervaring" })}
         </h2>

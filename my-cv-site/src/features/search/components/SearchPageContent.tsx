@@ -30,7 +30,7 @@ export function SearchPageContent({ locale, initialQuery = "" }: SearchPageConte
         };
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-16">
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-6">{labels.heading}</h1>
 
       <div className="relative mb-8">

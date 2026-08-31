@@ -68,7 +68,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
       <div className="bg-gray-50">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
               <div className="flex items-center space-x-3 mb-6">
                 <Code className="w-8 h-8 text-blue-300" />
@@ -124,7 +124,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
 
         {/* What I Deliver */}
         <section className="py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("benefits.title")}
@@ -158,7 +158,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
 
         {/* Technologies */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("technologies.title")}
@@ -200,7 +200,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
 
         {/* Process */}
         <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("process.title")}
@@ -253,7 +253,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
 
         {/* CTA Section */}
         <section className="bg-blue-900 py-20">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               {t("cta.title")}
             </h2>

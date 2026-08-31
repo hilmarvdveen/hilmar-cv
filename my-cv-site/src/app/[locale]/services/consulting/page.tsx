@@ -96,7 +96,7 @@ export default async function TechnicalConsultingPage({
       <div className="bg-gray-50">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-orange-900 via-orange-800 to-orange-700 text-white py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
               <div className="flex items-center space-x-3 mb-6">
                 <Users className="w-8 h-8 text-orange-300" />
@@ -153,7 +153,7 @@ export default async function TechnicalConsultingPage({
         {/* Services Overview */}
         {/* What You Get */}
         <section className="py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("deliverables.title")}
@@ -216,7 +216,7 @@ export default async function TechnicalConsultingPage({
 
         {/* Consulting Areas */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("expertise.title")}
@@ -268,7 +268,7 @@ export default async function TechnicalConsultingPage({
 
         {/* Process */}
         <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("process.title")}
@@ -322,7 +322,7 @@ export default async function TechnicalConsultingPage({
 
         {/* Testimonial/Experience Section */}
         <section className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <div className="bg-orange-50 rounded-2xl p-12">
               <div className="flex items-center justify-center mb-6">
                 <Clock className="w-8 h-8 text-orange-600 mr-3" />
@@ -356,7 +356,7 @@ export default async function TechnicalConsultingPage({
 
         {/* CTA Section */}
         <section className="bg-orange-900 py-20">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               {t("cta.title")}
             </h2>

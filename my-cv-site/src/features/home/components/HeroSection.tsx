@@ -19,7 +19,7 @@ export const HeroSection = () => {
       aria-labelledby="hero-heading"
       className="bg-brand-navy py-12 sm:py-24"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
           <div className="md:col-span-2">
             <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 mb-4 sm:px-4 sm:py-2 sm:text-sm sm:mb-6">

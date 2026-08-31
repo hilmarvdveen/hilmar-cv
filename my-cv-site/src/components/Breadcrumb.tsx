@@ -136,7 +136,7 @@ export const Breadcrumb = () => {
         className="bg-gray-50 py-4 border-b border-gray-200"
         aria-label="Breadcrumb"
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <ol className="flex items-center space-x-2 text-sm">
             {breadcrumbItems.map((item, index) => (
               <li key={item.href} className="flex items-center">

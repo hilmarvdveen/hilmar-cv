@@ -21,7 +21,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
   return (
     <article className="bg-white">
       <header className="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto max-w-3xl px-6 pb-8 pt-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 pb-8 pt-8">
           <nav className="mb-6" aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center text-sm text-gray-500">
               <li className="flex items-center">
@@ -83,12 +83,12 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
         </div>
       </header>
 
-      <div className="mx-auto max-w-3xl px-6 py-10">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10">
         <Body locale={locale} />
       </div>
 
       <div className="border-t border-gray-100 bg-gray-50">
-        <div className="mx-auto max-w-3xl px-6 py-12">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
           <div className="rounded-2xl bg-gradient-to-br from-blue-900 to-blue-700 p-8 text-white shadow-lg">
             <h2 className="text-2xl font-bold">{labels.ctaTitle}</h2>
             <p className="mt-2 max-w-xl text-blue-100">{labels.ctaText}</p>

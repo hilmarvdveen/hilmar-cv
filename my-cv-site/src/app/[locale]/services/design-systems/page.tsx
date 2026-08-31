@@ -91,7 +91,7 @@ export default async function DesignSystemsPage({
       <div className="bg-gray-50">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-purple-900 via-purple-800 to-purple-700 text-white py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
               <div className="flex items-center space-x-3 mb-6">
                 <Palette className="w-8 h-8 text-purple-300" />
@@ -147,7 +147,7 @@ export default async function DesignSystemsPage({
 
         {/* What You Get */}
         <section className="py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("deliverables.title")}
@@ -210,7 +210,7 @@ export default async function DesignSystemsPage({
 
         {/* Technologies */}
         <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("technologies.title")}
@@ -262,7 +262,7 @@ export default async function DesignSystemsPage({
 
         {/* Process */}
         <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("process.title")}
@@ -316,7 +316,7 @@ export default async function DesignSystemsPage({
 
         {/* CTA Section */}
         <section className="bg-purple-900 py-20">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               {t("cta.title")}
             </h2>

@@ -126,7 +126,7 @@ export default async function ServicesPage({ params }: Props) {
         <Breadcrumb />
         {/* Services Grid */}
         <section className="py-20">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <header className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 {t("main.title")}
@@ -217,7 +217,7 @@ export default async function ServicesPage({ params }: Props) {
 
         {/* CTA Section */}
         <section className="bg-gray-900 py-20">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               {t("finalCta.title")}
             </h2>

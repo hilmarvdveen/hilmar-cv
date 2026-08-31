@@ -85,7 +85,7 @@ export function FAQClientContent({}: FAQClientContentProps) {
     <div className="bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-4xl">
             <div className="flex items-center space-x-3 mb-6">
               <HelpCircle className="w-8 h-8 text-blue-300" />
@@ -130,7 +130,7 @@ export function FAQClientContent({}: FAQClientContentProps) {
 
       {/* FAQ Content */}
       <section className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Quick Navigation */}
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
@@ -209,7 +209,7 @@ export function FAQClientContent({}: FAQClientContentProps) {
 
       {/* Contact CTA */}
       <section className="bg-blue-900 py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
             {t("cta.title")}
           </h2>

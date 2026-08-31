@@ -15,7 +15,7 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
   return (
     <div className="bg-gray-50">
       <header className="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto max-w-5xl px-6 pb-10 text-center pt-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 pb-10 text-center pt-8">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
             {labels.eyebrow}
           </p>
@@ -26,7 +26,7 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
         </div>
       </header>
 
-      <div className="mx-auto max-w-5xl px-6 py-12">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
         <div className="grid gap-6 sm:grid-cols-2">
           {posts.map((post) => (
             <Link

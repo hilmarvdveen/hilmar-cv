@@ -12,7 +12,7 @@ export const ContactHero = () => {
       className="bg-brand-navy text-white py-16 sm:py-20"
       aria-labelledby="contact-hero-title"
     >
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16 items-center">
         {/* Content */}
         <header>
           <p className="text-md text-gray-100 mb-2 tracking-widest uppercase">

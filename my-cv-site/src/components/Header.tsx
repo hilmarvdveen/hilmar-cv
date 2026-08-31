@@ -108,7 +108,7 @@ export const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-        <nav className="max-w-7xl mx-auto px-6 py-2">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-2">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-3 group">
               <span className="w-14 h-14  rounded-lg flex items-center justify-center text-white">

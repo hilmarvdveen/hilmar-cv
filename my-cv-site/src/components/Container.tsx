@@ -24,7 +24,7 @@ export const Container = ({
   className,
   children,
 }: ContainerProps) => (
-  <div className={twMerge(WIDTHS[width], "mx-auto px-6", className)}>
+  <div className={twMerge(WIDTHS[width], "mx-auto px-4 sm:px-6", className)}>
     {children}
   </div>
 );

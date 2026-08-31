@@ -9,7 +9,7 @@ type LegalDocumentProps = {
 export function LegalDocument({ doc, lastUpdatedLabel }: LegalDocumentProps) {
   return (
     <div className="bg-gray-50 py-12">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">{doc.title}</h1>
         <p className="text-sm text-gray-500 mb-8">
           {lastUpdatedLabel}: {doc.lastUpdated}

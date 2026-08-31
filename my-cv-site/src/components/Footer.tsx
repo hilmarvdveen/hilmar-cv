@@ -84,7 +84,7 @@ export const Footer = () => {
   return (
     <footer className="bg-[#12314e] text-gray-300">
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           {/* About Section */}
           <div className="lg:col-span-1">
@@ -265,7 +265,7 @@ export const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-700">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-500 text-sm">
               © {new Date().getFullYear()} {t("about.name")}.{" "}
