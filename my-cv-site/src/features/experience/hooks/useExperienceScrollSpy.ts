@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { centeredScrollLeft, pickActiveSectionId } from "@/lib/scrollSpy";
 
-const LINE_OFFSET = 8;
-const FALLBACK_LINE = 132;
+const LINE_OFFSET = 16;
+const FALLBACK_LINE = 140;
 const ARRIVAL_TOLERANCE = 12;
 const LOCK_DURATION = 1500;
 
