@@ -28,7 +28,7 @@ export function AboutPageContent() {
       <section className="bg-brand-navy text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6 text-gray-300">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-6 text-white">
               {t("title")}
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">

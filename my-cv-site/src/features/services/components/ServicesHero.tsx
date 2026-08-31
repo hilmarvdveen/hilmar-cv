@@ -40,7 +40,7 @@ export const ServicesHero = () => {
             {t("hero.badge")}
           </p>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-gray-300 mb-4 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 tracking-tight">
             {t("hero.title")}
           </h1>
 

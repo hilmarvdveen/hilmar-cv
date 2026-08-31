@@ -21,7 +21,7 @@ export const ContactHero = () => {
 
           <h1
             id="contact-hero-title"
-            className="text-4xl sm:text-5xl font-extrabold leading-tight text-gray-300 mb-4 tracking-tight"
+            className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 tracking-tight"
           >
             {t("hero.title")}
           </h1>
