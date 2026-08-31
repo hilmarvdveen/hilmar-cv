@@ -25,7 +25,6 @@ describe("ClientLogosCarousel", () => {
     const { container } = render(<ClientLogosCarousel />);
     const links = container.querySelectorAll('a[href^="/experience#experience-"]');
     expect(links.length).toBe(12);
-    // including the special-cased id mapping and the new flagship entry
     expect(
       container.querySelector('a[href="/experience#experience-postcode-loterij"]')
     ).toBeTruthy();
@@ -35,8 +34,8 @@ describe("ClientLogosCarousel", () => {
     expect(container.querySelector('a[href="/experience#experience-bol"]')).toBeTruthy();
   });
 
-  it("renders bol.com as a text wordmark until a logo asset exists", () => {
-    const { getByText } = render(<ClientLogosCarousel />);
-    expect(getByText("bol.com")).toBeInTheDocument();
+  it("renders the bol.com logo asset", () => {
+    const { container } = render(<ClientLogosCarousel />);
+    expect(container.querySelector('img[src="/logos/bol.svg"]')).toBeTruthy();
   });
 });

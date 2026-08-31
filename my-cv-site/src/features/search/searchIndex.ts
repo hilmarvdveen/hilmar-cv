@@ -38,7 +38,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
       en: "Every engagement since 2016, including bol.com, with role, stack and results.",
       nl: "Elke opdracht sinds 2016, inclusief bol.com, met rol, stack en wat er is opgeleverd.",
     },
-    keywords: ["experience", "ervaring", "work", "werk", "bol", "cv", "resume"],
+    keywords: ["experience", "ervaring", "work", "werk", "bol", "kobo", "select", "cv", "resume"],
   },
   {
     href: "/services",

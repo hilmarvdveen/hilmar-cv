@@ -4,20 +4,15 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 
-// `id` matches the work-history entry id (src/data/workHistory.ts) so each logo
-// links to its engagement description on the experience page
-// (/experience#experience-<id>). bol.com renders as a text wordmark until a
-// real logo asset is sourced.
 type CarouselClient = {
   name: string;
   id: string;
-  logo?: string;
+  logo: string;
   color?: string;
-  wordmark?: boolean;
 }
 
 const clients: CarouselClient[] = [
-  { name: "bol.com", id: "bol", wordmark: true },
+  { name: "bol.com", logo: "/logos/bol.svg", id: "bol" },
   { name: "Belastingdienst", logo: "/logos/belastingdienst.svg", id: "belastingdienst" },
   { name: "Randstad", logo: "/logos/randstad.svg", id: "randstad" },
   { name: "Athlon", logo: "/logos/athlon.svg", id: "athlon" },
@@ -38,9 +33,8 @@ const clients: CarouselClient[] = [
 type ClientCardProps = {
   name: string;
   id: string;
-  logo?: string;
+  logo: string;
   color?: string;
-  wordmark?: boolean;
   priority: boolean;
   position: number;
 }
@@ -50,7 +44,6 @@ const ClientCard = ({
   id,
   logo,
   color,
-  wordmark,
   priority,
   position,
 }: ClientCardProps) => {
@@ -76,24 +69,15 @@ const ClientCard = ({
         aria-label={commonT("images.viewExperience", { company: name })}
         className="flex h-full w-full items-center justify-center"
       >
-        {wordmark || !logo ? (
-          <span className="text-2xl font-extrabold text-brand-navy tracking-tight">
-            {name}
-          </span>
-        ) : (
-          <Image
-            src={logo}
-            alt={commonT("images.companyLogoAlt", { company: name })}
-            width={120}
-            height={60}
-            // width/height are intrinsic hints; the logos are sized by CSS
-            // (max-w/max-h within the card). Letting both axes be auto keeps the
-            // aspect ratio and silences Next's "width or height modified" warning.
-            style={{ width: "auto", height: "auto" }}
-            className="max-w-full max-h-full object-contain"
-            priority={priority}
-          />
-        )}
+        <Image
+          src={logo}
+          alt={commonT("images.companyLogoAlt", { company: name })}
+          width={120}
+          height={60}
+          style={{ width: "auto", height: "auto" }}
+          className="max-w-full max-h-full object-contain"
+          priority={priority}
+        />
       </Link>
     </div>
   );
@@ -137,7 +121,6 @@ export const ClientLogosCarousel = () => {
                 id={client.id}
                 logo={client.logo}
                 color={client.color}
-                wordmark={client.wordmark}
                 priority={index < 3}
                 position={index + 1}
               />

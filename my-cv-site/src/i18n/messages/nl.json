@@ -591,16 +591,31 @@
             "heading": "De pagina's die klanten zien verhuisd van een legacy Java-webshop naar een server-side-rendered React-platform",
             "body": [
                 {
-                    "paragraph": "Sinds juli 2025 actief als de frontendspecialist in teams met vooral backend-ontwikkelaars, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd."
+                    "paragraph": "Sinds juli 2025 actief als de frontendspecialist in teams met vooral backend-ontwikkelaars, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd en draait op het platform dat de legacy Java-webshop vervangt door server-side-rendered React."
+                },
+                {
+                    "paragraph": "De legacy-pagina's hadden geen geschreven specificatie. Hun gedrag leefde in server-side Java en 226 Handlebars-templates. Die code gelezen en per pagina een gedragscontract opgesteld, met de exacte URL's, teksten, classificatieregels en analytics-events, en die lezing bevestigd met de backend-engineers die de services beheren. Dat draaiboek maakte een migratie met laag risico mogelijk, pagina voor pagina."
                 },
                 {
                     "paragraph": "De Select-puntenpagina van specificatie tot productie gebouwd: een beloningstabel met orderpunten en actiepunten, NL- en FR-vertalingen, randgevallen zoals geannuleerde orders en externe verkopers, tests en een Storybook-story per scenario."
                 },
                 {
-                    "paragraph": "De Digital-app voor software en games van lege map tot productie gebouwd binnen de Nx-monorepo, met SSR, routing, CI/CD, Google Cloud en Kubernetes, en de gefaseerde cut-over van de legacy-stack uitgevoerd: eerst medewerkers, daarna per percentage opgeschaald, in één stap omkeerbaar."
+                    "paragraph": "De gedeelde abonnementenpagina gebouwd waar een klant zowel Kobo Plus als Select beheert. De server haalt beide abonnementen parallel op en één pure functie vertaalt de data naar een van vijf elkaar uitsluitende abonnementsstatussen, zodat de status in de data leeft en niet verspreid door de UI. Paste het schema niet bij een datagedreven frontend, dan ging de wijziging het GraphQL-contract in met het backendteam, zoals een kaal mandaatkenmerk dat een gestructureerd mandaatobject werd. Vertaald voor de Nederlandse en Belgische markt."
                 },
                 {
-                    "paragraph": "Negen A/B-experimenten opgeleverd met design en business op de acquisitiepagina, productpagina en het winkelmandje. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden."
+                    "paragraph": "De Kobo Plus-acquisitiepagina herbouwd als server-rendered pagina waarvan marketeers de content beheren in het headless CMS. Eén paginaregister wisselt seizoens-, experiment- en vriendenactievarianten met één regel code, bezoekers via een uitnodiging krijgen een gepersonaliseerde hero en elk CMS-bloktype rendert. Contentwijzigingen gaan live zonder deploy van engineering."
+                },
+                {
+                    "paragraph": "De Digital-app voor software en games van lege map tot productie gebouwd binnen de Nx-monorepo, met SSR, routing, CI/CD, Google Cloud en Kubernetes, het securityprofiel en de allow-list voor authenticatie. De gefaseerde cut-over van live accountpagina's uitgevoerd via de routinglaag van het platform, geschreven in Go en beheerd door het platformteam: eerst medewerkers, daarna per percentage opgeschaald, gehasht per bezoeker, in één stap omkeerbaar. Tijdens de live opschaling een routevolgorde-bug gevonden en opgelost."
+                },
+                {
+                    "paragraph": "Negen A/B-experimenten opgeleverd met design en business op vijf plekken in de shop, van de acquisitiepagina tot de productpagina en het winkelmandje, gebouwd in code en geconfigureerd in de experimenteertool. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden. Winnende varianten werden de nieuwe standaard en de experimentcode ging eruit."
+                },
+                {
+                    "paragraph": "De funneldata betrouwbaar gemaakt en foutbewaking opgezet. Placeholder-ID's vervangen door echte product-ID's zodat de funnels van productpagina en winkelmandje kloppen, een alles-of-niets GraphQL-afhandeling herschreven zodat gedeeltelijke responses blijven renderen en elke fout in Sentry belandt, en Sentry end-to-end aangezet met leesbare stack traces op staging en productie."
+                },
+                {
+                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Twee teams doorlopend en tot zes tegelijk gecoördineerd in de gedeelde Nx-monorepo, junior ontwikkelaars begeleid en het werk van mede-seniors gereviewd. GraphQL fungeerde als het contract tussen frontend en backend, met backendbijdragen in Kotlin waar de pagina's dat nodig hadden."
                 }
             ]
         },
