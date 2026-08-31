@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { CallToActionSection } from "./CallToActionSection";
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
@@ -10,8 +10,15 @@ vi.mock("next/link", () => ({
 }));
 
 describe("CallToActionSection", () => {
-  it("renders", () => {
+  it("renders the band copy with a single booking action", () => {
+    render(<CallToActionSection />);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("title");
+    expect(screen.getByText("subtitle")).toBeInTheDocument();
+    expect(screen.getByText("button").closest("a")).toHaveAttribute("href", "/book");
+  });
+
+  it("offers no competing secondary button", () => {
     const { container } = render(<CallToActionSection />);
-    expect(container.firstChild).toBeTruthy();
+    expect(container.querySelectorAll("a")).toHaveLength(1);
   });
 });

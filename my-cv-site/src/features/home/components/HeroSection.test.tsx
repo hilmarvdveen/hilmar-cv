@@ -3,7 +3,21 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HeroSection } from "./HeroSection";
 
-vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
+vi.mock("next-intl", () => {
+  const makeT = () => {
+    const t = ((key: string) => key) as ((key: string) => string) & {
+      raw: (key: string) => unknown;
+    };
+    t.raw = (key: string) =>
+      key === "chips" ? ["10+ years senior since 2016", "bol.com, extended three times"] : [];
+    return t;
+  };
+  return {
+    useTranslations: () => makeT(),
+    useLocale: () => "en",
+    useMessages: () => ({}),
+  };
+});
 vi.mock("next/navigation", () => ({ useParams: () => ({ locale: "en" }) }));
 vi.mock("next/link", () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
@@ -16,16 +30,26 @@ vi.mock("next/image", () => ({
 }));
 
 describe("HeroSection", () => {
-  it("renders and opens then closes the CV download modal", async () => {
+  it("renders the availability badge, heading, credentials and fact chips", () => {
+    render(<HeroSection />);
+    expect(screen.getByText("badge")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("heading");
+    expect(screen.getByText("credentials")).toBeInTheDocument();
+    expect(screen.getByText("10+ years senior since 2016")).toBeInTheDocument();
+    expect(screen.getByText("bol.com, extended three times")).toBeInTheDocument();
+  });
+
+  it("points the primary action at the booking page", () => {
+    render(<HeroSection />);
+    const bookLink = screen.getByText("bookCall").closest("a");
+    expect(bookLink).toHaveAttribute("href", "/book");
+  });
+
+  it("opens and closes the CV download modal from the quiet download action", async () => {
     const user = userEvent.setup();
-    const { container } = render(<HeroSection />);
-    expect(container.firstChild).toBeTruthy();
+    render(<HeroSection />);
+    await user.click(screen.getByText("downloadCv"));
 
-    // The CV button opens the modal (covers setIsCVModalOpen(true)).
-    const buttons = Array.from(container.querySelectorAll("button"));
-    for (const b of buttons) await user.click(b);
-
-    // If the modal opened, close it via cancel (covers onClose).
     const cancel = screen.queryByRole("button", { name: /buttons\.cancel/ });
     if (cancel) await user.click(cancel);
   });
