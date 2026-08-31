@@ -110,22 +110,23 @@ export const Header = () => {
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-2">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <span className="w-14 h-14  rounded-lg flex items-center justify-center text-white">
-                <Image
-                  className="w-14 h-14"
-                  src="/images/logo_v1.svg"
-                  alt={t("images.logoAlt")}
-                  width={56}
-                  height={56}
-                />
-              </span>
-              <span className="text-lg font-semibold text-gray-900 whitespace-nowrap">
+            <Link
+              href="/"
+              className="group flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              <Image
+                className="h-10 w-10 lg:h-12 lg:w-12"
+                src="/images/logo_v1.svg"
+                alt={t("images.logoAlt")}
+                width={56}
+                height={56}
+              />
+              <span className="hidden text-lg font-semibold text-gray-900 whitespace-nowrap sm:inline">
                 {t("home.name")}
               </span>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-1 xl:gap-3 ml-12">
+            <div className="hidden lg:flex items-center gap-1 xl:gap-3 ml-8">
               {desktopNavItems.map((item) => {
                 const isActive = pathname === item.href;
 
@@ -133,7 +134,7 @@ export const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200 ${
+                    className={`relative rounded-md px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       isActive
                         ? "text-textMain"
                         : "text-gray-600 hover:text-textMain"
@@ -152,10 +153,10 @@ export const Header = () => {
                 <span>{t("nav.book")}</span>
               </Button>
 
-              <div className="relative ml-2">
+              <div className="relative ml-4">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="flex items-center space-x-2 lg:px-2 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200"
+                  className="flex items-center space-x-2 lg:px-2.5 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                   aria-label={currentLocaleData?.label}
                 >
                   <Flag code={currentLocale} className="w-5 h-3.5 rounded-sm flex-shrink-0" />
@@ -188,17 +189,23 @@ export const Header = () => {
               </div>
             </div>
 
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation"
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            <div className="flex items-center gap-1 lg:hidden">
+              <Button href="/book" variant="primary" size="sm" className="px-3 whitespace-nowrap">
+                <Calendar className="hidden h-4 w-4 min-[400px]:block" />
+                <span>{t("nav.book")}</span>
+              </Button>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="rounded-md p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>

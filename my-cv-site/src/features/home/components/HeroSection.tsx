@@ -55,7 +55,7 @@ export const HeroSection = () => {
               <button
                 type="button"
                 onClick={() => setIsCVModalOpen(true)}
-                className="inline-flex items-center justify-center gap-2 text-slate-400 hover:text-white font-medium underline underline-offset-4 transition-colors sm:justify-start"
+                className="inline-flex items-center justify-center gap-2 rounded text-slate-400 hover:text-white font-medium underline underline-offset-4 transition-colors sm:justify-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
               >
                 <Download className="w-4 h-4" />
                 <span>{t("downloadCv")}</span>

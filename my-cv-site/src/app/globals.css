@@ -28,7 +28,7 @@
     "Courier New", monospace;
 
   /* Header height for consistent spacing */
-  --header-height: 73px;
+  --header-height: 65px;
 
   --color-red-500: oklch(63.7% 0.237 25.331);
   --color-red-600: oklch(57.7% 0.245 27.325);

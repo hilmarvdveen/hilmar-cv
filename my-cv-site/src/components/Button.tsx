@@ -41,7 +41,7 @@ const SIZES: Record<ButtonSize, string> = {
 // on hover; outline variants fill on hover. No state lightens under white text.
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-emerald-700 text-white hover:bg-emerald-800 focus-visible:ring-emerald-500 shadow-sm hover:shadow-lg hover:scale-105",
+    "bg-emerald-700 text-white hover:bg-emerald-800 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm hover:shadow-lg hover:scale-105",
   outline:
     "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-700 hover:text-white focus-visible:ring-emerald-500",
   outlineOnDark:
