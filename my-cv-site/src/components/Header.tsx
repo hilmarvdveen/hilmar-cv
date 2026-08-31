@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Flag } from "@/components/Flag";
+import { Button } from "@/components/Button";
 
 export const Header = () => {
   const t = useTranslations("common");
@@ -102,6 +103,12 @@ export const Header = () => {
     (locale) => locale.code === currentLocale
   );
 
+  // Home is the logo and booking is the primary button, so neither repeats
+  // as a plain desktop link. The mobile drawer still lists everything.
+  const desktopNavItems = navItems.filter(
+    (item) => item.href !== "/" && item.href !== "/book"
+  );
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
@@ -123,33 +130,38 @@ export const Header = () => {
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center lg:space-x-2 xl:space-x-6">
-              {navItems.map((item) => {
+            {/* Desktop Navigation. The logo already links home and the
+                booking action renders as the one primary button, so both
+                leave the link row, which keeps clear air around the logo. */}
+            <div className="hidden lg:flex items-center gap-1 xl:gap-3 ml-12">
+              {desktopNavItems.map((item) => {
                 const isActive = pathname === item.href;
-                const Icon = item.icon;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative flex items-center space-x-2 lg:px-2 xl:px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200 ${
+                    className={`relative px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200 ${
                       isActive
-                        ? "text-blue-600"
-                        : "text-gray-600 hover:text-gray-900"
+                        ? "text-textMain"
+                        : "text-gray-600 hover:text-textMain"
                     }`}
                   >
-                    <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span>{item.label}</span>
+                    {item.label}
                     {isActive && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
+                      <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary" />
                     )}
                   </Link>
                 );
               })}
 
+              <Button href="/book" variant="primary" size="sm" className="ml-4">
+                <Calendar className="w-4 h-4" />
+                <span>{t("nav.book")}</span>
+              </Button>
+
               {/* Desktop Language Switcher */}
-              <div className="relative">
+              <div className="relative ml-2">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
                   className="flex items-center space-x-2 lg:px-2 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200"
@@ -172,7 +184,7 @@ export const Header = () => {
                         onClick={() => changeLanguage(locale.code)}
                         className={`w-full flex items-center space-x-2 px-3 py-2 text-sm text-left hover:bg-gray-50 transition-colors duration-150 ${
                           currentLocale === locale.code
-                            ? "text-blue-600 bg-blue-50"
+                            ? "text-primary bg-emerald-50"
                             : "text-gray-700"
                         }`}
                       >
@@ -256,7 +268,7 @@ export const Header = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center space-x-3 px-4 py-4 text-base font-medium rounded-lg transition-colors duration-200 touch-manipulation ${
                     isActive
-                      ? "text-blue-600 bg-blue-50"
+                      ? "text-primary bg-emerald-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
                   }`}
                 >
@@ -279,7 +291,7 @@ export const Header = () => {
                   onClick={() => changeLanguage(locale.code)}
                   className={`w-full flex items-center space-x-3 px-4 py-4 text-base text-left rounded-lg transition-colors duration-200 touch-manipulation ${
                     currentLocale === locale.code
-                      ? "text-blue-600 bg-blue-50"
+                      ? "text-primary bg-emerald-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
                   }`}
                 >

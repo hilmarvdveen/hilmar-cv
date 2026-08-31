@@ -42,7 +42,7 @@ describe("Header", () => {
   it("highlights the active route", () => {
     render(<Header />);
     const servicesLink = screen.getAllByText("nav.services")[0].closest("a");
-    expect(servicesLink?.className).toContain("text-blue-600");
+    expect(servicesLink?.className).toContain("text-textMain");
   });
 
   it("switches locale via the language switcher", async () => {
