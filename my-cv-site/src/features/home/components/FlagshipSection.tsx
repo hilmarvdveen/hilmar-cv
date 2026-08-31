@@ -14,6 +14,7 @@ type FlagshipCard = {
 export const FlagshipSection = () => {
   const t = useTranslations("home.flagship");
   const cards = t.raw("cards") as FlagshipCard[];
+  const stack = t.raw("stack") as string[];
 
   return (
     <Section background="white" padding="default" aria-labelledby="flagship-heading">
@@ -40,6 +41,21 @@ export const FlagshipSection = () => {
             </Card>
           ))}
         </div>
+        {/* Technology names a lead engineer recognises, placed right under the
+            proof so the case reads as engineering before it reads as sales. */}
+        <ul
+          aria-label={t("stackLabel")}
+          className="mt-6 flex flex-wrap gap-2"
+        >
+          {stack.map((item) => (
+            <li
+              key={item}
+              className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-brand-navy"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
         <div className="mt-8">
           <Link
             href="/experience"

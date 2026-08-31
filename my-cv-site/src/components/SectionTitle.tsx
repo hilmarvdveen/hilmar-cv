@@ -31,7 +31,7 @@ export const SectionTitle = ({
     <h2
       id={id}
       className={twMerge(
-        "text-3xl md:text-4xl font-extrabold tracking-tight",
+        "text-3xl md:text-4xl font-extrabold tracking-tight text-balance",
         onDark ? "text-white" : "text-textMain"
       )}
     >

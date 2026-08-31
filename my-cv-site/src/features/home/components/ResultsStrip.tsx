@@ -27,22 +27,26 @@ export const ResultsStrip = () => {
         <h2 id={RESULTS_TITLE_ID} className="sr-only">
           {t("title")}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {items.map((item) => (
             <div
               key={item.value}
-              className="border-l-[3px] border-primary pl-5"
+              className="border-l-[3px] border-primary pl-6"
             >
-              <p className="text-3xl font-extrabold text-brand-navy tracking-tight">
+              {/* One line at every breakpoint, and a fixed slot height so the
+                  four detail lines start on the same level. */}
+              <p className="flex min-h-10 items-end text-2xl lg:text-xl xl:text-[26px] font-extrabold leading-none text-brand-navy tracking-tight whitespace-nowrap">
                 {item.value}
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="mt-2.5 text-sm text-gray-600 leading-relaxed">
                 {item.detail}
               </p>
             </div>
           ))}
         </div>
-        <p className="text-[13px] italic text-gray-500 mt-5">
+        {/* The GMV qualification reads as a plain fact next to the number,
+            in the same voice as the rest of the strip. */}
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-gray-600">
           {t("caveat")}
         </p>
       </Container>

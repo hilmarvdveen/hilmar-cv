@@ -31,7 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /**
  * The homepage is a sales page, ordered as a funnel: outcome and proof first,
- * method and standards next, practical hiring facts and one closing ask last.
+ * method and standards next, then the external validation, and only then the
+ * mid-page ask, so the button lands where conviction peaks. Practical hiring
+ * facts and one closing ask come last.
  * The full work history lives on /experience, reachable from the logo
  * carousel and the flagship section.
  */
@@ -57,8 +59,8 @@ export default async function HomePage({ params }: Props) {
       <TrackRecordSection />
       <DeliveryMethodSection />
       <StandardsSection />
-      <CallToActionSection />
       <ValidationSection />
+      <CallToActionSection />
       <StackSection />
       <HiringSection />
       <CloseSection />

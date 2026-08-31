@@ -2,17 +2,12 @@
     "home": {
         "hero": {
             "badge": "Beschikbaar vanaf 1 oktober 2026 · Utrecht, hybride of remote",
-            "heading": "Senior frontend, volledig in eigen hand. Van legacy-specificatie tot live cut-over.",
-            "description": "Ruim tien jaar senior in React en Angular. Nu bij bol.com, waar de opdracht drie keer is verlengd. Ik neem klantgerichte pagina's volledig in eigen hand, vorm het GraphQL-contract samen met het backendteam en rol gefaseerd en omkeerbaar uit op live verkeer.",
+            "heading": "Senior frontend engineer voor de hele keten. Van legacy-specificatie tot live cut-over.",
+            "description": "Ruim tien jaar senior in React en Angular, nu bij bol.com. Ik bouw de pagina's die klanten zien, van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en zet ze in omkeerbare stappen live op echt verkeer.",
             "bookCall": "Plan een gesprek van 30 minuten",
             "downloadCv": "CV downloaden (PDF)",
             "credentials": "Hilmar ICT Services · KVK 97564303 · Zandvoort NL · Nederlands moedertaal, Engels vloeiend",
-            "chips": [
-                "Ruim 10 jaar senior sinds 2016",
-                "bol.com, drie keer verlengd",
-                "WCAG 2.2 AA als standaard",
-                "Volledig Certified Secure curriculum"
-            ],
+            "chips": ["Senior sinds 2016, ruim 10 jaar", "bol.com, drie keer verlengd", "WCAG 2.2 AA meegeleverd", "Certified Secure-curriculum afgerond"],
             "imageAlt": "Portret van Hilmar van der Veen, Senior Frontend Engineer",
             "name": "Hilmar van der Veen",
             "role": "Senior Frontend Engineer"
@@ -25,47 +20,49 @@
                     "detail": "op winnende A/B-varianten bij bol.com, grofweg 5% tot 24% over de winnaars"
                 },
                 {
+                    "value": "onafgebroken live",
+                    "detail": "gefaseerde, omkeerbare cut-over van live accountpagina's bij bol.com"
+                },
+                {
                     "value": "maanden naar dagen",
                     "detail": "voor een nieuw aangifteformulier bij de Belastingdienst"
                 },
                 {
                     "value": "weken naar dagen",
                     "detail": "voor een nieuwe pagina met de gedeelde design systems, gebouwd voor twee organisaties"
-                },
-                {
-                    "value": "zonder downtime",
-                    "detail": "gefaseerde, omkeerbare cut-over van live accountpagina's bij bol.com"
                 }
             ],
-            "caveat": "Niet elk experiment won, dus het totale effect was positief maar bescheiden. Die kanttekening blijft op de pagina staan, want een cijfer is maar zoveel waard als de eigenaar kan onderbouwen."
+            "caveat": "Niet elk experiment won, dus het totale effect was positief maar bescheiden."
         },
         "flagship": {
             "eyebrow": "Huidige opdracht",
             "title": "bol.com verlengde de opdracht drie keer",
-            "intro": "bol.com is een van de grootste webwinkels van Nederland en België. Contractors blijven er op geleverde waarde, niet op anciënniteit. Mijn opdracht begon in juli 2025, eerst in het Loyalty-team en daarna in Digital, en is drie keer verlengd.",
+            "intro": "bol.com is een van de grootste webwinkels van Nederland en België en houdt contractors aan boord op geleverde waarde. Mijn opdracht begon in juli 2025 in het Loyalty-team en ging door in Digital.",
             "cards": [
                 {
-                    "title": "Loyalty, volledig zelf gebouwd",
-                    "body": "De Select-puntenpagina van specificatie tot productie. Een beloningstabel met orderpunten en actiepunten, NL- en FR-vertalingen, randgevallen zoals geannuleerde orders en externe verkopers, tests en een Storybook-story per scenario."
+                    "title": "Loyalty, van specificatie tot productie",
+                    "body": "De Select-puntenpagina: een beloningstabel met orderpunten en actiepunten, NL- en FR-vertalingen, randgevallen zoals geannuleerde orders en externe verkopers, tests en een Storybook-story per scenario."
                 },
                 {
                     "title": "Een nieuwe app, van lege map tot productie",
                     "body": "De Digital-app voor software en games gebouwd binnen de Nx-monorepo, met SSR, routing, CI/CD, GCP en Kubernetes. Daarna de gefaseerde cut-over van de legacy-stack uitgevoerd, eerst medewerkers, daarna per percentage opgeschaald, in één stap omkeerbaar."
                 },
                 {
-                    "title": "Negen experimenten, eerlijke cijfers",
+                    "title": "Negen experimenten, gemeten in GMV",
                     "body": "Negen A/B-experimenten met design en business op de acquisitiepagina, productpagina en het winkelmandje. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden."
                 },
                 {
-                    "title": "Data die je kunt vertrouwen",
-                    "body": "Sentry volledig opgezet. Een alles-of-niets GraphQL-afhandeling opgelost zodat gedeeltelijke responses blijven renderen terwijl fouten in Sentry belanden. Placeholder-analytics-ID's opgespoord die funnels stilletjes vervuilden."
+                    "title": "Foutmeldingen en funneldata op orde",
+                    "body": "Sentry over de hele app opgezet. Een alles-of-niets GraphQL-afhandeling herschreven zodat gedeeltelijke responses blijven renderen en elke fout in Sentry belandt. Placeholder-ID's voor analytics vervangen die de funnels vervuilden."
                 }
             ],
+            "stackLabel": "Stack in deze opdracht",
+            "stack": ["React 19", "React Router SSR", "TypeScript", "GraphQL · gql.tada · urql", "Nx + pnpm", "Vitest + Playwright", "GCP + Kubernetes", "Sentry + RudderStack"],
             "linkLabel": "Bekijk de volledige werkhistorie"
         },
         "trackRecord": {
             "title": "Hetzelfde patroon, tien jaar diep",
-            "subtitle": "Elk van deze systemen was live en moest blijven werken terwijl het vervangen werd.",
+            "subtitle": "Elk van deze systemen bleef draaien terwijl het vervangen werd.",
             "cards": [
                 {
                     "meta": "Belastingdienst · 2023 tot 2024",
@@ -75,8 +72,8 @@
                 },
                 {
                     "meta": "Nationale Postcode Loterij · 2022 tot 2023",
-                    "headline": "Time-to-market van campagnes, van weken naar dagen",
-                    "body": "Een JSON-gedreven internationaal design system in een Nx-monorepo met Storyblok en Next.js SSR, uitgerold over Europese loterijlabels, zodat campagnepagina's in dagen live gaan in plaats van weken.",
+                    "headline": "Campagnepagina's, van weken naar dagen",
+                    "body": "Een internationaal design system op JSON-configuratie, in een Nx-monorepo met Storyblok en Next.js SSR, uitgerold over Europese loterijlabels. Campagnepagina's gaan sindsdien in dagen live.",
                     "tags": ["Next.js SSR", "Nx", "Storyblok"]
                 },
                 {
@@ -88,19 +85,19 @@
             ]
         },
         "method": {
-            "title": "Zo blijft opleveren saai",
-            "subtitle": "De meeste senior frontenders dragen over bij de API-grens. Dit is het deel dat niet overgedragen wordt.",
+            "title": "Zo blijft een livegang voorspelbaar",
+            "subtitle": "De keten van legacy-specificatie tot live verkeer blijft in één paar handen. Dit zijn de vijf stappen.",
             "steps": [
                 {
                     "title": "Eerst het legacy-systeem lezen",
-                    "body": "De oude applicatie reverse-engineeren, ongedocumenteerde Java meegerekend, zodat de herbouw trouw is in plaats van een benadering."
+                    "body": "De oude applicatie reverse-engineeren, ongedocumenteerde Java meegerekend, zodat de herbouw klopt met wat er vandaag draait."
                 },
                 {
                     "title": "Het contract vormgeven",
-                    "body": "GraphQL is een echt contract. Ik ga terug naar backend om een veld te hervormen als de UI dat nodig heeft, in plaats van eromheen te werken."
+                    "body": "GraphQL is een echt contract. Als de UI een andere vorm nodig heeft, leg ik dat bij het backendteam neer en passen we het veld aan."
                 },
                 {
-                    "title": "Achter een poort live",
+                    "title": "Eerst intern live",
                     "body": "Eerst medewerkers en intern verkeer, zodat echte mensen de nieuwe pagina gebruiken voordat klanten hem zien."
                 },
                 {
@@ -108,47 +105,47 @@
                     "body": "1, 10, 50 en dan 100 procent van het verkeer, gehasht per bezoeker, met rollback in één stap gedurende het hele traject."
                 },
                 {
-                    "title": "Problemen komen bovendrijven",
-                    "body": "Sentry vanaf dag één, gedeeltelijke responses die blijven renderen, en geverifieerde analytics zodat de funneldata te vertrouwen is."
+                    "title": "Meten vanaf dag één",
+                    "body": "Sentry vanaf dag één, gedeeltelijke responses die blijven renderen, en geverifieerde analytics zodat de funneldata klopt."
                 }
             ]
         },
         "standards": {
-            "title": "Security, toegankelijkheid en tests zijn de basis, geen meerwerk",
+            "title": "Security, toegankelijkheid en tests horen bij opgeleverd werk",
             "columns": [
                 {
                     "title": "Security",
-                    "body": "Het volledige Certified Secure-curriculum, van Essential Security tot Web en Server Security Specialist, plus Secure Development, Full-Stack Security en Kubernetes-netwerkbeveiliging. In de praktijk toegepast via een CSP-profiel, een allow-list voor de auth-keyserver en veilige verwerking van referral-codes."
+                    "body": "Het Certified Secure-curriculum, van Essential Security tot Web en Server Security Specialist, Secure Development, Full-Stack Security en Kubernetes-netwerkbeveiliging. In de praktijk toegepast via een CSP-profiel, een allow-list op de auth-keyserver en veilige verwerking van referral-codes."
                 },
                 {
                     "title": "Toegankelijkheid en privacy",
-                    "body": "WCAG 2.1 AA op de opdrachten van 2020 tot 2024 en 2.2 AA bij bol.com, geleverd als onderdeel van het werk in plaats van achteraf. Toetsenbordfocus in echte flows. GDPR-training in het beschermen van persoonsgegevens, plus kennis van de EU AI Act."
+                    "body": "WCAG 2.1 AA op de opdrachten van 2020 tot 2024 en 2.2 AA bij bol.com, ingebouwd tijdens het werk. Toetsenbordfocus in echte flows. GDPR-training over persoonsgegevens, plus kennis van de EU AI Act."
                 },
                 {
                     "title": "Verificatie en overdracht",
-                    "body": "Tests naast de code met Vitest en Testing Library over GraphQL-mocks, Playwright, en een Storybook-story per scenario. Geschreven overdrachtsdocumentatie, zodat een backend-zwaar team het werk kan onderhouden na afloop van het contract."
+                    "body": "Tests naast de code met Vitest en Testing Library over GraphQL-mocks, Playwright, en een Storybook-story per scenario. Geschreven overdrachtsdocumentatie, zodat een team met vooral backend-ontwikkelaars het werk daarna zelfstandig onderhoudt."
                 }
             ]
         },
         "validation": {
-            "title": "Het bewijs dat ik niet zelf kan schrijven",
+            "title": "Wat opdrachtgevers besloten",
             "panels": [
                 {
                     "title": "Drie verlengingen",
-                    "body": "bol.com houdt contractors niet standaard aan boord. Er wordt scherp gekeken naar geleverde waarde, en niet iedereen wordt verlengd. In die omgeving is mijn opdracht drie keer verlengd."
+                    "body": "bol.com verlengt contractors op geleverde waarde. Mijn opdracht is drie keer verlengd, in twee teams."
                 },
                 {
-                    "title": "Een interne aanbeveling",
-                    "body": "Tweede geworden in een zeer krappe procedure voor een andere seniorrol bij bol.com. De feedback van de engineering manager was positief en hij beval me aan bij zijn collega's, en zo begon de huidige opdracht."
+                    "title": "Een aanbeveling van een engineering manager",
+                    "body": "Een engineering manager bij bol.com beval me aan bij zijn collega's na een zeer krappe procedure voor een andere seniorrol, waarin ik als tweede eindigde. Uit die aanbeveling kwam de huidige opdracht voort."
                 },
                 {
-                    "title": "Geen gaten sinds 2016",
-                    "body": "Opdrachten van één à twee jaar bij de Belastingdienst, Athlon, Omniplan en anderen, aaneengesloten. Retentie is het signaal dat het werk aankwam."
+                    "title": "Aaneengesloten sinds 2016",
+                    "body": "Opdrachten van één à twee jaar bij de Belastingdienst, Athlon, Omniplan en anderen, steeds direct gevolgd door de volgende. Retentie is het signaal dat het werk aankwam."
                 }
             ]
         },
         "stack": {
-            "title": "Waar ik diep in ga, wat ik kan dragen, en waar ik het op draai",
+            "title": "Diepgang, bereik en het platform waar het op draait",
             "tiers": [
                 {
                     "label": "Diepgang",
@@ -158,7 +155,7 @@
                 {
                     "label": "Bereik",
                     "emphasis": false,
-                    "items": ["Kotlin / JVM", "C# / .NET Core", "Node", "REST + gRPC", "Go-routingconfiguratie"]
+                    "items": ["Kotlin / JVM", "C# / .NET Core", "Node", "REST + gRPC", "Routingconfiguratie in Go"]
                 },
                 {
                     "label": "Platform",
@@ -166,7 +163,7 @@
                     "items": ["GCP + Kubernetes", "Azure", "Docker", "GitLab CI + Azure DevOps", "Sentry + RudderStack", "Headless CMS"]
                 }
             ],
-            "footnote": "De volledige lijst staat op de dienstenpagina's en in het downloadbare CV, waar keyword-scanners hem zoeken."
+            "footnote": "De volledige lijst staat op de dienstenpagina's en in het downloadbare CV."
         },
         "hiring": {
             "title": "Alles wat je nodig hebt om me in te huren, op één scherm",
@@ -180,7 +177,7 @@
                 {
                     "label": "Locatie",
                     "value": "Utrecht, hybride of remote",
-                    "detail": "1 à 2 dagen op locatie is prima",
+                    "detail": "1 à 2 dagen op locatie werkt goed",
                     "highlight": false
                 },
                 {
@@ -190,7 +187,7 @@
                     "highlight": false
                 },
                 {
-                    "label": "Opdracht",
+                    "label": "Contractvorm",
                     "value": "Freelance ZZP",
                     "detail": "Circa 40 uur per week",
                     "highlight": false
@@ -204,7 +201,7 @@
                 {
                     "label": "Tarief",
                     "value": "Op aanvraag",
-                    "detail": "",
+                    "detail": "Scope en tarief stemmen we af in het gesprek. Reactie binnen één werkdag.",
                     "highlight": false
                 }
             ],
@@ -216,20 +213,24 @@
                         "answer": "Bij bol.com stond binnen enkele weken een productiepagina live en reviewde ik merge requests van andere teams."
                     },
                     {
-                        "question": "Wat gebeurt er met de code als het contract afloopt?",
-                        "answer": "Tests, Storybook, toegankelijkheid en documentatie horen bij het werk. Ik draag over aan interne collega's, nooit een black box."
+                        "question": "Wat gebeurt er met de code als de opdracht afloopt?",
+                        "answer": "Tests, Storybook, toegankelijkheid en documentatie horen bij het werk. Ik draag over aan interne collega's, met de documentatie om ermee door te gaan."
                     },
                     {
                         "question": "Werk je samen met ons backendteam?",
-                        "answer": "Daar word ik precies voor ingehuurd. Ik heb tot zes teams gecoördineerd in één gedeelde monorepo en onderhandel het GraphQL-contract met backend in plaats van eromheen."
+                        "answer": "Daar word ik precies voor ingehuurd. Ik heb tot zes teams gecoördineerd in één gedeelde monorepo en stem het GraphQL-contract af met het backendteam."
+                    },
+                    {
+                        "question": "Hoe bepalen we de scope?",
+                        "answer": "Het gesprek van dertig minuten eindigt met een scope: welk systeem, welke stack en wat de eerste weken opleveren."
                     }
                 ],
                 "linkLabel": "Bekijk alle vragen"
             }
         },
         "close": {
-            "title": "Dertig minuten, vrijblijvend, hoe dan ook een duidelijk antwoord",
-            "body": "Vertel wat je bouwt en waar het vastloopt. Binnen dertig minuten hoor je of ik de juiste persoon ben. Ben ik dat niet, dan zeg ik dat ook.",
+            "title": "Dertig minuten, en hoe dan ook een duidelijk antwoord",
+            "body": "Vertel wat je bouwt en waar het vastloopt. Binnen dertig minuten weet je of ik de juiste persoon ben en wat de eerste stap is.",
             "button": "Plan een gesprek van 30 minuten",
             "alternative": "Liever schrijven? Gebruik het contactformulier."
         },
@@ -407,8 +408,8 @@
             }
         },
         "cta": {
-            "title": "Benieuwd of dit bij jouw team past?",
-            "subtitle": "Dertig minuten, technisch, geen slides. Neem het systeem mee dat moet veranderen en waar het nu op draait.",
+            "title": "Dertig minuten over het systeem dat bij jullie moet veranderen",
+            "subtitle": "Technisch en concreet, geen slides. Neem mee wat moet veranderen en waar het nu op draait.",
             "button": "Plan een gesprek van 30 minuten",
             "buttonAlt": "Of stuur een bericht"
         },
@@ -449,11 +450,11 @@
             }
         },
         "clientLogos": {
-            "title": "Gewerkt voor",
-            "subtitle": "Overheid, enterprise en e-commerce uit de top, meestal op systemen die al live waren",
+            "title": "Opgeleverd voor",
+            "subtitle": "Overheid, enterprise en e-commerce uit de top, sinds 2016",
             "indicator1": "Enterprise en overheid sinds 2016",
-            "indicator2": "Legacy-migraties zonder downtime",
-            "indicator3": "WCAG 2.1 en 2.2 AA geleverd, niet achteraf"
+            "indicator2": "Legacy-migraties, onafgebroken live",
+            "indicator3": "WCAG 2.1 en 2.2 AA meegeleverd"
         }
     },
     "experiencePage": {
@@ -587,13 +588,13 @@
             "company": "bol.com",
             "location": "Utrecht",
             "role": "Senior Frontend Engineer (Loyalty- en Digital-teams)",
-            "heading": "Klantgerichte pagina's verhuisd van een legacy Java-webshop naar een server-side-rendered React-platform",
+            "heading": "De pagina's die klanten zien verhuisd van een legacy Java-webshop naar een server-side-rendered React-platform",
             "body": [
                 {
-                    "paragraph": "Sinds juli 2025 actief als de frontendspecialist in backend-zware teams, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd."
+                    "paragraph": "Sinds juli 2025 actief als de frontendspecialist in teams met vooral backend-ontwikkelaars, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd."
                 },
                 {
-                    "paragraph": "De Select-puntenpagina volledig zelf gebouwd: een beloningstabel met orderpunten en actiepunten, NL- en FR-vertalingen, randgevallen zoals geannuleerde orders en externe verkopers, tests en een Storybook-story per scenario."
+                    "paragraph": "De Select-puntenpagina van specificatie tot productie gebouwd: een beloningstabel met orderpunten en actiepunten, NL- en FR-vertalingen, randgevallen zoals geannuleerde orders en externe verkopers, tests en een Storybook-story per scenario."
                 },
                 {
                     "paragraph": "De Digital-app voor software en games van lege map tot productie gebouwd binnen de Nx-monorepo, met SSR, routing, CI/CD, Google Cloud en Kubernetes, en de gefaseerde cut-over van de legacy-stack uitgevoerd: eerst medewerkers, daarna per percentage opgeschaald, in één stap omkeerbaar."

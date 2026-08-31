@@ -3,16 +3,11 @@
         "hero": {
             "badge": "Available from 1 October 2026 · Utrecht, hybrid or remote",
             "heading": "Senior frontend, owned end to end. From legacy spec to live cut-over.",
-            "description": "10+ years senior in React and Angular. Currently at bol.com, where the engagement has been extended three times. I own customer-facing surfaces end to end, shape the GraphQL contract with the backend team, and run phased, reversible rollouts on live traffic.",
+            "description": "Ten-plus years senior in React and Angular, currently at bol.com. I build the pages customers see, from specification to production, shape the GraphQL contract with the backend team, and ramp them onto live traffic in reversible steps.",
             "bookCall": "Book a 30-minute call",
             "downloadCv": "Download CV (PDF)",
             "credentials": "Hilmar ICT Services · KVK 97564303 · Zandvoort NL · Dutch native, English fluent",
-            "chips": [
-                "10+ years senior since 2016",
-                "bol.com, extended three times",
-                "WCAG 2.2 AA as the default",
-                "Full Certified Secure curriculum"
-            ],
+            "chips": ["Senior since 2016, ten-plus years", "bol.com, extended three times", "WCAG 2.2 AA built in", "Certified Secure curriculum completed"],
             "imageAlt": "Portrait of Hilmar van der Veen, Senior Frontend Engineer",
             "name": "Hilmar van der Veen",
             "role": "Senior Frontend Engineer"
@@ -25,47 +20,49 @@
                     "detail": "on winning A/B variants at bol.com, roughly 5% to 24% across the winners"
                 },
                 {
+                    "value": "zero downtime",
+                    "detail": "phased, reversible cut-over of live account pages at bol.com"
+                },
+                {
                     "value": "months to days",
                     "detail": "to build a new income tax form at the Belastingdienst"
                 },
                 {
                     "value": "weeks to days",
                     "detail": "for a new page with the shared design systems built for two organisations"
-                },
-                {
-                    "value": "zero downtime",
-                    "detail": "phased, reversible cut-over of live account pages at bol.com"
                 }
             ],
-            "caveat": "Not every experiment won, so the aggregate effect was positive but modest. That caveat stays on the page because a number is only worth what its owner will defend."
+            "caveat": "Not every experiment won, so the aggregate effect was positive but modest."
         },
         "flagship": {
             "eyebrow": "Current engagement",
             "title": "bol.com has extended the engagement three times",
-            "intro": "bol.com is one of the largest e-commerce retailers in the Netherlands and Belgium. It keeps contractors on delivered value, not tenure. My engagement started in July 2025, first in the Loyalty team and then in Digital, and has been extended three times.",
+            "intro": "bol.com is one of the largest e-commerce retailers in the Netherlands and Belgium, and it keeps contractors on delivered value. My engagement started in July 2025 in the Loyalty team and continued in Digital.",
             "cards": [
                 {
-                    "title": "Loyalty, built end to end",
-                    "body": "The Select points-overview page from spec to production. A rewards table with order points and action points, NL and FR translations, edge cases like cancelled orders and external merchants, tests and a Storybook story per scenario."
+                    "title": "Loyalty, from spec to production",
+                    "body": "The Select points-overview page: a rewards table with order points and action points, NL and FR translations, edge cases like cancelled orders and external merchants, tests and a Storybook story per scenario."
                 },
                 {
                     "title": "A new app, empty folder to production",
                     "body": "Built the Digital app for software and games inside the Nx monorepo with SSR, routing, CI/CD, GCP and Kubernetes. Then ran the phased cut-over off the legacy stack, employees first, ramped by percentage, reversible in one step."
                 },
                 {
-                    "title": "Nine experiments, honest numbers",
+                    "title": "Nine experiments, measured in GMV",
                     "body": "Nine A/B experiments with design and business across the acquisition page, product page and basket. Winning variants delivered GMV uplifts of up to 24%, roughly 5% to 24% across the winners. Not every experiment won, so the aggregate effect was positive but modest."
                 },
                 {
-                    "title": "Data you can trust",
-                    "body": "Stood up Sentry end to end. Fixed an all-or-nothing GraphQL bail-out so partial responses still render while errors reach Sentry. Fixed placeholder analytics IDs that were quietly corrupting funnels."
+                    "title": "Error reporting and funnel data in order",
+                    "body": "Set up Sentry across the app. Rewrote an all-or-nothing GraphQL handler so partial responses still render while every error reaches Sentry. Replaced placeholder analytics IDs that had been corrupting the funnels."
                 }
             ],
+            "stackLabel": "Stack on this engagement",
+            "stack": ["React 19", "React Router SSR", "TypeScript", "GraphQL · gql.tada · urql", "Nx + pnpm", "Vitest + Playwright", "GCP + Kubernetes", "Sentry + RudderStack"],
             "linkLabel": "See the full work history"
         },
         "trackRecord": {
             "title": "The same pattern, ten years deep",
-            "subtitle": "Every one of these was a live system that had to keep working while it was replaced.",
+            "subtitle": "Each of these was a live system that kept running while it was replaced.",
             "cards": [
                 {
                     "meta": "Belastingdienst · 2023 to 2024",
@@ -75,8 +72,8 @@
                 },
                 {
                     "meta": "Nationale Postcode Loterij · 2022 to 2023",
-                    "headline": "Campaign time to market, from weeks to days",
-                    "body": "A JSON-driven international design system in an Nx monorepo with Storyblok and Next.js SSR, rolled out across European lottery labels so campaign pages ship in days instead of weeks.",
+                    "headline": "Campaign pages, from weeks to days",
+                    "body": "An international design system driven by JSON configuration, in an Nx monorepo with Storyblok and Next.js SSR, rolled out across European lottery labels. Campaign pages have shipped in days since.",
                     "tags": ["Next.js SSR", "Nx", "Storyblok"]
                 },
                 {
@@ -89,66 +86,66 @@
         },
         "method": {
             "title": "How delivery stays boring",
-            "subtitle": "Most senior frontend engineers hand off at the API boundary. This is the part that does not get handed off.",
+            "subtitle": "The chain from legacy specification to live traffic stays in one pair of hands. These are the five steps.",
             "steps": [
                 {
                     "title": "Read the legacy first",
-                    "body": "Reverse-engineer the old system, undocumented Java included, so the rebuild is faithful rather than approximate."
+                    "body": "Reverse-engineer the old system, undocumented Java included, so the rebuild matches what runs today."
                 },
                 {
                     "title": "Shape the contract",
-                    "body": "GraphQL is a real contract. I go back to backend to reshape a field when the UI needs it, instead of working around it."
+                    "body": "GraphQL is a real contract. When the UI needs a different shape, I take that to the backend team and we change the field."
                 },
                 {
-                    "title": "Ship behind a gate",
-                    "body": "Employees and internal traffic first, so real people use the new page before customers ever see it."
+                    "title": "Ship internally first",
+                    "body": "Employees and internal traffic first, so real people use the new page before customers see it."
                 },
                 {
                     "title": "Ramp by percentage",
                     "body": "1, 10, 50, then 100 percent of traffic, hashed per visitor, with one-step rollback available the whole way."
                 },
                 {
-                    "title": "Problems surface",
-                    "body": "Sentry from day one, partial responses that still render, and analytics verified so the funnel data is trustworthy."
+                    "title": "Measured from day one",
+                    "body": "Sentry from day one, partial responses that still render, and analytics verified so the funnel data holds up."
                 }
             ]
         },
         "standards": {
-            "title": "Security, accessibility and tests are the floor, not the upsell",
+            "title": "Security, accessibility and tests are in the definition of done",
             "columns": [
                 {
                     "title": "Security",
-                    "body": "The complete Certified Secure curriculum, from Essential Security through Web and Server Security Specialist, plus Secure Development, Full-Stack Security and Kubernetes network security. Applied in practice through a CSP profile, an auth keyserver allow-list and secure referral-code threading."
+                    "body": "The Certified Secure curriculum, from Essential Security through Web and Server Security Specialist, Secure Development, Full-Stack Security and Kubernetes network security. Applied in practice through a CSP profile, an allow-list on the auth keyserver and secure referral-code handling."
                 },
                 {
                     "title": "Accessibility and privacy",
-                    "body": "WCAG 2.1 AA on the 2020 to 2024 engagements and 2.2 AA at bol.com, delivered as part of the work rather than retrofitted. Keyboard focus management in real flows. GDPR training on protecting personal data, plus EU AI Act literacy."
+                    "body": "WCAG 2.1 AA on the 2020 to 2024 engagements and 2.2 AA at bol.com, built in during the work. Keyboard focus management in real flows. GDPR training on personal data, plus EU AI Act literacy."
                 },
                 {
                     "title": "Verification and handover",
-                    "body": "Co-located tests with Vitest and Testing Library over GraphQL mocks, Playwright, and a Storybook story per scenario. Written handover documentation, so a backend-heavy team can maintain the work after the contract ends."
+                    "body": "Co-located tests with Vitest and Testing Library over GraphQL mocks, Playwright, and a Storybook story per scenario. Written handover documentation, so a team with most of its weight in backend maintains the work on its own after the engagement."
                 }
             ]
         },
         "validation": {
-            "title": "The proof that isn't mine to write",
+            "title": "What clients decided",
             "panels": [
                 {
                     "title": "Three extensions",
-                    "body": "bol.com does not keep contractors on by default. It looks hard at value delivered, and not everyone is extended. In that environment my engagement was extended three times."
+                    "body": "bol.com extends contractors on delivered value. Mine has been extended three times, across two teams."
                 },
                 {
-                    "title": "An internal recommendation",
-                    "body": "Runner-up in a very close process for another senior role at bol.com. The engineering manager's feedback was positive and he recommended me to his peers, which is how the current engagement started."
+                    "title": "A recommendation from an engineering manager",
+                    "body": "An engineering manager at bol.com recommended me to his peers after a very close process for another senior role, where I finished as runner-up. That recommendation is how the current engagement started."
                 },
                 {
-                    "title": "No gaps since 2016",
-                    "body": "Engagements of one to two years at the Belastingdienst, Athlon, Omniplan and others, back to back. Retention is the signal that the work landed."
+                    "title": "Back to back since 2016",
+                    "body": "Engagements of one to two years at the Belastingdienst, Athlon, Omniplan and others, each one followed by the next. Retention is the signal that the work landed."
                 }
             ]
         },
         "stack": {
-            "title": "What I go deep on, what I can carry, and what I run it on",
+            "title": "Depth, range, and the platform it runs on",
             "tiers": [
                 {
                     "label": "Depth",
@@ -158,7 +155,7 @@
                 {
                     "label": "Range",
                     "emphasis": false,
-                    "items": ["Kotlin / JVM", "C# / .NET Core", "Node", "REST + gRPC", "Go routing config"]
+                    "items": ["Kotlin / JVM", "C# / .NET Core", "Node", "REST + gRPC", "Routing configuration in Go"]
                 },
                 {
                     "label": "Platform",
@@ -166,7 +163,7 @@
                     "items": ["GCP + Kubernetes", "Azure", "Docker", "GitLab CI + Azure DevOps", "Sentry + RudderStack", "Headless CMS"]
                 }
             ],
-            "footnote": "The exhaustive list lives on the services pages and in the downloadable CV, where keyword scanners look for it."
+            "footnote": "The full list is on the services pages and in the downloadable CV."
         },
         "hiring": {
             "title": "Everything you need to contract me, on one screen",
@@ -180,7 +177,7 @@
                 {
                     "label": "Location",
                     "value": "Utrecht, hybrid or remote",
-                    "detail": "1 to 2 days on site is fine",
+                    "detail": "1 to 2 days on site works well",
                     "highlight": false
                 },
                 {
@@ -190,7 +187,7 @@
                     "highlight": false
                 },
                 {
-                    "label": "Engagement",
+                    "label": "Contract type",
                     "value": "Freelance ZZP",
                     "detail": "Roughly 40 hours a week",
                     "highlight": false
@@ -204,7 +201,7 @@
                 {
                     "label": "Rate",
                     "value": "On request",
-                    "detail": "",
+                    "detail": "Scope and rate are set in the call. Reply within one business day.",
                     "highlight": false
                 }
             ],
@@ -216,20 +213,24 @@
                         "answer": "At bol.com I shipped a production page and was reviewing other teams' merge requests within weeks of starting."
                     },
                     {
-                        "question": "What happens to the code when the contract ends?",
-                        "answer": "Tests, Storybook, accessibility and documentation are part of the work. I hand over to internal colleagues, never a black box."
+                        "question": "What happens to the code when the engagement ends?",
+                        "answer": "Tests, Storybook, accessibility and documentation are part of the work. I hand over to internal colleagues, with the documentation to carry it on."
                     },
                     {
                         "question": "Can you work with our backend team?",
-                        "answer": "That is exactly what I get hired for. I have coordinated up to six teams in one shared monorepo and negotiate the GraphQL contract with backend rather than around it."
+                        "answer": "That is exactly what I get hired for. I have coordinated up to six teams in one shared monorepo and agree the GraphQL contract with the backend team."
+                    },
+                    {
+                        "question": "How do we scope the engagement?",
+                        "answer": "The thirty-minute call ends with a scope: which surface, which stack, and what the first weeks deliver."
                     }
                 ],
                 "linkLabel": "Read all questions"
             }
         },
         "close": {
-            "title": "Thirty minutes, no obligation, a clear answer either way",
-            "body": "Tell me what you are building and where it is stuck. In thirty minutes I will tell you whether I am the right person for it. If I am not, I will say so.",
+            "title": "Thirty minutes, and a clear answer either way",
+            "body": "Tell me what you are building and where it is stuck. In thirty minutes you know whether I am the right person for it and what the first step is.",
             "button": "Book a 30-minute call",
             "alternative": "Prefer writing? Use the contact form."
         },
@@ -407,17 +408,17 @@
             }
         },
         "cta": {
-            "title": "Curious whether this fits your team?",
-            "subtitle": "Thirty minutes, technical, no deck. Bring the surface that has to change and what it runs on today.",
+            "title": "Thirty minutes about the surface that has to change",
+            "subtitle": "Technical and concrete, no slides. Bring what has to change and what it runs on today.",
             "button": "Book a 30-minute call",
             "buttonAlt": "Or send a message"
         },
         "clientLogos": {
             "title": "Delivered for",
-            "subtitle": "Government, enterprise and top-tier e-commerce, mostly on systems that were already live",
+            "subtitle": "Government, enterprise and top-tier e-commerce since 2016",
             "indicator1": "Enterprise and government since 2016",
-            "indicator2": "Legacy migrations without downtime",
-            "indicator3": "WCAG 2.1 and 2.2 AA delivered, not retrofitted"
+            "indicator2": "Legacy migrations, live throughout",
+            "indicator3": "WCAG 2.1 and 2.2 AA built in"
         },
         "map": {
             "companiesWorked": "Work Experience Across the Netherlands",
@@ -613,10 +614,10 @@
             "heading": "Customer-facing pages moved from a legacy Java webshop onto a server-side-rendered React platform",
             "body": [
                 {
-                    "paragraph": "Engaged from July 2025 as the frontend specialist in backend-heavy teams, first in Loyalty and then in Digital. The engagement was extended three times."
+                    "paragraph": "Engaged from July 2025 as the frontend specialist in teams with most of their weight in backend, first in Loyalty and then in Digital. The engagement has been extended three times."
                 },
                 {
-                    "paragraph": "Built the Select points-overview page end to end: a rewards table with order points and action points, NL and FR translations, edge cases such as cancelled orders and external merchants, tests and a Storybook story per scenario."
+                    "paragraph": "Built the Select points-overview page from specification to production: a rewards table with order points and action points, NL and FR translations, edge cases such as cancelled orders and external merchants, tests and a Storybook story per scenario."
                 },
                 {
                     "paragraph": "Built the Digital app for software and games from an empty folder to production inside the Nx monorepo, with SSR, routing, CI/CD, Google Cloud and Kubernetes, and ran the phased cut-over off the legacy stack: employees first, ramped by percentage, reversible in one step."

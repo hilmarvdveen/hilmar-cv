@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { FlagshipSection } from "./FlagshipSection";
 
 const flagshipMessages = {
@@ -25,6 +25,8 @@ const flagshipMessages = {
       body: "Stood up Sentry end to end. Fixed an all-or-nothing GraphQL bail-out so partial responses still render while errors reach Sentry. Fixed placeholder analytics IDs that were quietly corrupting funnels.",
     },
   ],
+  stackLabel: "Stack on this engagement",
+  stack: ["React 19", "React Router SSR", "TypeScript", "Nx + pnpm"],
   linkLabel: "See the full work history",
 };
 
@@ -77,6 +79,17 @@ describe("FlagshipSection", () => {
     render(<FlagshipSection />);
     const headings = screen.getAllByRole("heading", { level: 3 });
     expect(headings).toHaveLength(flagshipMessages.cards.length);
+  });
+
+  it("renders the engagement stack as a labelled list of pills", () => {
+    render(<FlagshipSection />);
+    const list = screen.getByRole("list", {
+      name: flagshipMessages.stackLabel,
+    });
+    const pills = within(list).getAllByRole("listitem");
+    expect(pills.map((pill) => pill.textContent)).toEqual(
+      flagshipMessages.stack
+    );
   });
 
   it("renders the link with the correct href and label", () => {
