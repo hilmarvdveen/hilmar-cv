@@ -8,7 +8,7 @@ describe("Container", () => {
     const element = screen.getByText("Inside");
     expect(element).toHaveClass("max-w-7xl");
     expect(element).toHaveClass("mx-auto");
-    expect(element).toHaveClass("px-6");
+    expect(element).toHaveClass("px-4", "sm:px-6");
   });
 
   it("applies the narrow width variant", () => {
