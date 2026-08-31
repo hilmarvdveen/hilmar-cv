@@ -14,24 +14,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Reads the pnpm version from the "packageManager" field in package.json.
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: my-cv-site/package.json
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: my-cv-site/package-lock.json
+          cache: pnpm
+          cache-dependency-path: my-cv-site/pnpm-lock.yaml
 
       - name: Install dependencies
-        # `npm install` (not `npm ci`) so the Linux runner can resolve
-        # platform-specific optional deps (e.g. @next/swc-linux-*, sharp,
-        # @emnapi/*) whose transitive entries a Windows-generated lockfile
-        # can't fully capture. The lockfile still pins the resolvable graph.
-        run: npm install --no-audit --no-fund
+        # The pnpm lockfile records optional platform binaries for every
+        # platform, so a Windows-generated lockfile installs cleanly on the
+        # Linux runner with a strict frozen install.
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Test (with coverage gate)
-        run: npm run test:coverage
+        run: pnpm run test:coverage
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
