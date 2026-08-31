@@ -124,6 +124,29 @@ console.log('MS_TENANT_ID:', process.env.MS_TENANT_ID ? 'Set' : 'Missing');
 
 ## Testing Microsoft Graph Connection
 
+### Built-in health endpoint (preferred)
+
+The site ships a gated diagnostic route that tests the whole pipeline stage by
+stage (environment variables, token acquisition, mailbox reachability, calendar
+read) and names the most likely cause on failure, including the AADSTS code for
+an expired client secret:
+
+```bash
+# 1. Set DIAGNOSTICS_TOKEN to a long random string in the hosting environment
+#    (Vercel project settings) and redeploy.
+# 2. Call the endpoint with the same token:
+curl -H "x-diagnostics-token: <token>" https://www.hilmarvanderveen.com/api/booking/health
+```
+
+Without a configured `DIAGNOSTICS_TOKEN` (or with a wrong header) the route
+returns a plain 404, so it is invisible to the public.
+
+Timezone note: slot generation, availability checks, and event creation all go
+through `src/lib/graph/calendar.ts`, which converts explicitly between UTC
+instants and Europe/Amsterdam wall-clock time. Never use `new Date()` math on
+Graph's offset-less dateTime strings, and never send `toISOString()` output
+(with its trailing Z) in a `dateTimeTimeZone` body.
+
 ### Quick Test Script
 
 ```typescript

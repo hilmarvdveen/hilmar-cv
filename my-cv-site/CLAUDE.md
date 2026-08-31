@@ -10,21 +10,32 @@ calendar booking go through **Microsoft Graph**. Hosted on **Vercel**.
 
 ## Commands
 
+This project uses **pnpm** (version pinned in `package.json` `packageManager`).
+Do not use npm or yarn, and never commit a `package-lock.json`.
+
 ```bash
-npm run dev          # dev server (http://localhost:3000)
-npm run build        # production build
-npm run start        # serve production build
-npm run lint         # ESLint
-npm test             # Vitest (unit + component)
-npm run test:watch   # Vitest watch mode
+pnpm dev             # dev server (http://localhost:3000)
+pnpm build           # production build
+pnpm start           # serve production build
+pnpm lint            # ESLint
+pnpm test            # Vitest (unit + component)
+pnpm test:watch      # Vitest watch mode
+pnpm test:coverage   # Vitest with the coverage gate
 ```
+
+Native build scripts are allowlisted in `package.json` under
+`pnpm.onlyBuiltDependencies`. When adding a dependency that needs a postinstall
+build, add it there rather than approving interactively.
 
 ## Required environment variables
 
 `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, `MS_TENANT_ID`, `SMTP_USER` (Microsoft Graph)
 and optional `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_GTM_ID`. See
 `.env.example`. Missing Graph vars make the mail/booking routes return a generic
-`Server configuration error` (they never reveal which var is absent).
+`Server configuration error` (they never reveal which var is absent). To find out
+which stage of the Graph pipeline fails in a deployed environment, set
+`DIAGNOSTICS_TOKEN` and call `GET /api/booking/health` with the
+`x-diagnostics-token` header (see `docs/MICROSOFT_GRAPH.md`).
 
 ## Architecture & conventions
 
