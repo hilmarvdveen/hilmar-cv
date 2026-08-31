@@ -59,6 +59,12 @@ export const Header = () => {
         description: "Services overview",
       },
       {
+        href: "/experience",
+        label: t("nav.experience"),
+        icon: FolderOpen,
+        description: "Full work history",
+      },
+      {
         href: "/projects",
         label: t("nav.projects"),
         icon: FolderOpen,
@@ -72,9 +78,9 @@ export const Header = () => {
       },
       {
         href: "/book",
-        label: "Book Me",
+        label: t("nav.book"),
         icon: Calendar,
-        description: "Start a project",
+        description: "Book an intro call",
       },
       {
         href: "/contact",

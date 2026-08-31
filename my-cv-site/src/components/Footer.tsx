@@ -45,6 +45,7 @@ export const Footer = () => {
 
   const quickLinks = [
     { name: t("quickLinks.items.about"), href: "/about" },
+    { name: t("quickLinks.items.experience"), href: "/experience" },
     { name: t("quickLinks.items.projects"), href: "/projects" },
     { name: t("quickLinks.items.blog"), href: "/blog" },
     { name: t("quickLinks.items.faq"), href: "/faq" },

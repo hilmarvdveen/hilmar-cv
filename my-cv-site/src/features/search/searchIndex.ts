@@ -32,6 +32,15 @@ export const SEARCH_INDEX: SearchEntry[] = [
     keywords: ["about", "over", "experience", "ervaring", "cv", "resume"],
   },
   {
+    href: "/experience",
+    title: { en: "Work history", nl: "Werkervaring" },
+    description: {
+      en: "Every engagement since 2016, including bol.com, with role, stack and results.",
+      nl: "Elke opdracht sinds 2016, inclusief bol.com, met rol, stack en wat er is opgeleverd.",
+    },
+    keywords: ["experience", "ervaring", "work", "werk", "bol", "cv", "resume"],
+  },
+  {
     href: "/services",
     title: { en: "Services", nl: "Diensten" },
     description: {

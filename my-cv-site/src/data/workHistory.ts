@@ -117,6 +117,14 @@ export const Tech = {
   Vercel: "tech.Vercel",
   Netlify: "tech.Netlify",
   Firebase: "tech.Firebase",
+  Kotlin: "tech.Kotlin",
+  GCP: "tech.GCP",
+  Sentry: "tech.Sentry",
+  RudderStack: "tech.RudderStack",
+  Pnpm: "tech.Pnpm",
+  MSW: "tech.MSW",
+  Urql: "tech.Urql",
+  GqlTada: "tech.GqlTada",
 } as const;
 
 export type Tech = (typeof Tech)[keyof typeof Tech];
@@ -136,6 +144,36 @@ export type WorkEntry = {
 }
 
 export const workHistory: WorkEntry[] = [
+  {
+    id: "bol",
+    company: "bol.com",
+    logo: "bol.svg",
+    from: "2025-07",
+    to: "2026-10",
+    location: "Utrecht",
+    mode: WorkMode.Hybrid,
+    language: Language.Dutch,
+    tech: [
+      Tech.React,
+      Tech.TypeScript,
+      Tech.ReactRouter,
+      Tech.GraphQL,
+      Tech.Urql,
+      Tech.GqlTada,
+      Tech.TailwindCSS,
+      Tech.MonoreposNx,
+      Tech.Pnpm,
+      Tech.Storybook,
+      Tech.Vitest,
+      Tech.Playwright,
+      Tech.MSW,
+      Tech.Sentry,
+      Tech.RudderStack,
+      Tech.Kotlin,
+      Tech.GCP,
+      Tech.Kubernetes,
+    ],
+  },
   {
     id: "belastingdienst",
     company: "Belastingdienst",
