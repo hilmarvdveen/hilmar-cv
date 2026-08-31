@@ -31,6 +31,23 @@ describe("bookingWallClockToUtc", () => {
       "2026-01-15T08:00:00.000Z"
     );
   });
+
+  it("treats an unparseable zone offset as UTC (defensive fallback)", () => {
+    const dateTimeFormatSpy = vi
+      .spyOn(Intl, "DateTimeFormat")
+      .mockImplementation(function () {
+        return {
+          formatToParts: () => [],
+        } as unknown as Intl.DateTimeFormat;
+      });
+    try {
+      expect(bookingWallClockToUtc("2026-07-01", 9, 0).toISOString()).toBe(
+        "2026-07-01T09:00:00.000Z"
+      );
+    } finally {
+      dateTimeFormatSpy.mockRestore();
+    }
+  });
 });
 
 describe("parseGraphDateTime", () => {
@@ -44,6 +61,10 @@ describe("parseGraphDateTime", () => {
     expect(parseGraphDateTime("2026-07-01T10:00:00Z").toISOString()).toBe(
       "2026-07-01T10:00:00.000Z"
     );
+  });
+
+  it("falls back to native parsing for unrecognised formats", () => {
+    expect(Number.isNaN(parseGraphDateTime("not a datetime").getTime())).toBe(true);
   });
 });
 

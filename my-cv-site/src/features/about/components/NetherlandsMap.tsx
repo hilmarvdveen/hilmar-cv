@@ -464,34 +464,10 @@ export const NetherlandsMap = () => {
         </div>
       </div>
 
-      {/* SEO-friendly structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            name: "Hilmar van der Voort",
-            jobTitle: "Software Developer",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: HOME_CITY_NAME,
-              addressCountry: "Netherlands",
-            },
-            workLocation: workCities
-              .filter((c) => !c.isHome)
-              .map((city) => ({
-                "@type": "Place",
-                name: city.name,
-                address: {
-                  "@type": "PostalAddress",
-                  addressLocality: city.name,
-                  addressCountry: "Netherlands",
-                },
-              })),
-          }),
-        }}
-      />
+      {/* Structured data intentionally lives in the page-level SEOFactory
+          output only. A second Person schema here once carried a wrong
+          surname and competed with the real one, so this component renders
+          no JSON-LD at all. */}
     </section>
   );
 };

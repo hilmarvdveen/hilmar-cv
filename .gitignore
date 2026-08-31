@@ -7,3 +7,6 @@
 
 # Development conventions for Claude sessions, kept local by owner decision
 /my-cv-site/CLAUDE.md
+
+.vercel
+.env*

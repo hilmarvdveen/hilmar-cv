@@ -36,7 +36,7 @@ export default defineConfig({
         "src/lib/seo/core/analytics-manager.ts", // window/gtag telemetry
         "src/lib/seo/types/**", // type-only
         "src/lib/seo/constants/**", // static data
-        "src/features/home/components/NetherlandsMap.tsx", // d3 canvas
+        "src/features/about/components/NetherlandsMap.tsx", // d3 canvas
         // 4-step booking wizard: better covered by E2E than line-by-line unit
         // tests. A step-gating unit test still runs for regression.
         "src/features/booking/components/BookingForm.tsx",

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
-import { AboutPageContent } from "@/features/about";
+import { AboutPageContent, NetherlandsMap } from "@/features/about";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -29,6 +29,7 @@ export default async function AboutPage({ params }: Props) {
       />
 
       <AboutPageContent />
+      <NetherlandsMap />
     </>
   );
 }
