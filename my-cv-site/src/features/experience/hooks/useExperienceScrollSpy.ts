@@ -62,18 +62,27 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
     const update = () => {
       const positions = readPositions();
       const activationLine = readActivationLine();
+      const atDocumentBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
       const lock = lockRef.current;
       if (lock) {
         const target = positions.find((position) => position.id === lock.id);
         const arrived =
           target !== undefined &&
           Math.abs(target.top - activationLine) <= ARRIVAL_TOLERANCE;
-        if (!arrived && Date.now() < lock.expiresAt) return;
+        const stranded =
+          target !== undefined &&
+          atDocumentBottom &&
+          target.top < window.innerHeight;
+        if (arrived || stranded) {
+          lockRef.current = null;
+          setActiveId(lock.id);
+          return;
+        }
+        if (Date.now() < lock.expiresAt) return;
         lockRef.current = null;
       }
-      const atDocumentBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 2;
       setActiveId(pickActiveSectionId(positions, activationLine, atDocumentBottom));
     };
 
@@ -88,12 +97,16 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("scrollend", releaseLock);
+    window.addEventListener("scrollend", handleScroll);
+    window.addEventListener("wheel", releaseLock, { passive: true });
+    window.addEventListener("touchmove", releaseLock, { passive: true });
     handleScroll();
     return () => {
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scrollend", releaseLock);
+      window.removeEventListener("scrollend", handleScroll);
+      window.removeEventListener("wheel", releaseLock);
+      window.removeEventListener("touchmove", releaseLock);
     };
   }, [sectionIds]);
 
