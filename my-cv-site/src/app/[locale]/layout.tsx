@@ -149,7 +149,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <BookingFormProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 pt-[var(--header-height)]">{children}</main>
               <Footer />
             </div>
           </BookingFormProvider>

@@ -20,7 +20,7 @@ export const HeroSection = () => {
       className="bg-brand-navy py-20 sm:py-24"
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-12 items-start">
+        <div className="grid md:grid-cols-3 gap-12 items-center">
           <div className="md:col-span-2">
             <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 mb-6">
               <span
@@ -60,19 +60,19 @@ export const HeroSection = () => {
             <p className="text-[13px] text-slate-400">{t("credentials")}</p>
           </div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="order-first flex flex-col items-center gap-4 md:order-none">
             <figure className="rounded-full overflow-hidden ring-4 ring-white/15">
               <Image
                 src="/images/profile.jpg"
                 alt={t("imageAlt")}
                 width={200}
                 height={200}
-                className="object-cover"
+                className="object-cover h-28 w-28 md:h-50 md:w-50"
                 priority
               />
               <figcaption className="sr-only">{t("name")}</figcaption>
             </figure>
-            <div className="text-center">
+            <div className="hidden text-center md:block">
               <p className="text-[15px] font-bold text-white">{t("name")}</p>
               <p className="text-[13px] text-slate-400">{t("role")}</p>
             </div>

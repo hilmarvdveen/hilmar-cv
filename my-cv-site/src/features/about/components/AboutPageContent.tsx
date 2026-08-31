@@ -25,7 +25,7 @@ export function AboutPageContent() {
   return (
     <div className="bg-gray-50">
       {/* Hero Section - Using homepage color scheme */}
-      <section className="bg-[#12314e] text-white py-24 sm:py-28">
+      <section className="bg-brand-navy text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6 text-gray-300">

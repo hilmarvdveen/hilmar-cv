@@ -21,7 +21,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
   return (
     <article className="bg-white">
       <header className="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto max-w-3xl px-6 pb-8 pt-[calc(var(--header-height)_+_2rem)]">
+        <div className="mx-auto max-w-3xl px-6 pb-8 pt-8">
           <nav className="mb-6" aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center text-sm text-gray-500">
               <li className="flex items-center">

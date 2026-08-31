@@ -13,7 +13,7 @@ export const ProjectsHero = () => {
   const t = useTranslations("projects");
 
   return (
-    <section className="bg-[#12314e] text-gray-800 py-24 sm:py-28">
+    <section className="bg-brand-navy text-white py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
         {/* Content */}
         <div>

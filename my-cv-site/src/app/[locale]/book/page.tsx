@@ -32,7 +32,7 @@ export default async function BookPage({ params }: Props) {
         }}
       />
 
-      <Section background="navy" padding="compact" aria-labelledby="book-heading">
+      <Section background="navy" padding="default" aria-labelledby="book-heading">
         <Container>
           <p className="text-[13px] font-bold uppercase tracking-widest text-emerald-300">
             {t("hero.badge")}
