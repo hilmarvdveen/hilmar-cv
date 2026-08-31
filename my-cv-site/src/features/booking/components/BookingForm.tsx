@@ -27,6 +27,7 @@ import {
   Shield,
   Headphones,
   CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
 
 type ProjectBudget = {
@@ -214,7 +215,18 @@ ${formData.description}
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to submit booking request");
+        // Server error details are for the console, never for the visitor.
+        console.error("Booking submission failed:", response.status, result.error);
+        setFormState({
+          isSubmitting: false,
+          isSubmitted: false,
+          error:
+            response.status === 429
+              ? t("errors.tooManyRequests")
+              : t("errors.submissionFailedDetail"),
+          loadingSlots: false,
+        });
+        return;
       }
 
       // Success!
@@ -229,10 +241,7 @@ ${formData.description}
       setFormState({
         isSubmitting: false,
         isSubmitted: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong. Please try again.",
+        error: t("errors.submissionFailedDetail"),
         loadingSlots: false,
       });
     }
@@ -273,20 +282,19 @@ ${formData.description}
           updateFormData("bookingTime", "");
         }
       } catch (error) {
+        // Raw error details stay in the console. The visitor gets a
+        // localized message instead of a server string.
         console.error("Error loading slots:", error);
         setAvailableSlots([]);
         setFormState((prev) => ({
           ...prev,
-          error:
-            error instanceof Error
-              ? error.message
-              : "Failed to load available time slots",
+          error: t("errors.loadSlotsFailed"),
         }));
       } finally {
         setFormState((prev) => ({ ...prev, loadingSlots: false }));
       }
     },
-    [setAvailableSlots, setFormState, updateFormData]
+    [setAvailableSlots, setFormState, updateFormData, t]
   );
 
   const handleDateChange = (date: string) => {
@@ -859,11 +867,11 @@ ${formData.description}
       {/* Error Message */}
       {formState.error && (
         <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div className="flex items-center space-x-2">
-            <div className="w-5 h-5 text-red-600">⚠️</div>
+          <div className="flex items-start space-x-3">
+            <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
             <div className="text-red-800">
               <p className="font-medium">{t("errors.submissionFailed")}</p>
-              <p className="text-sm">{formState.error}</p>
+              <p className="text-sm mt-1">{formState.error}</p>
             </div>
           </div>
         </div>

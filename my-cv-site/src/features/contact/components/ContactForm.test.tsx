@@ -91,7 +91,7 @@ describe("ContactForm", () => {
     );
   });
 
-  it("surfaces the API error message when the request fails", async () => {
+  it("shows the localized rate-limit message on a 429, never the raw API text", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => new Response(JSON.stringify({ error: "Too many requests" }), { status: 429 }))
@@ -105,7 +105,27 @@ describe("ContactForm", () => {
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
 
     await waitFor(() =>
-      expect(screen.getByText("Too many requests")).toBeInTheDocument()
+      expect(screen.getByText("form.tooManyRequests")).toBeInTheDocument()
     );
+    expect(screen.queryByText("Too many requests")).not.toBeInTheDocument();
+  });
+
+  it("shows the localized server-error message on a 500, never the raw API text", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify({ error: "Internal Server Error" }), { status: 500 }))
+    );
+    const user = userEvent.setup();
+    render(<ContactForm />);
+
+    await user.type(screen.getByLabelText("form.name"), "Jane");
+    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
+    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.click(screen.getByRole("button", { name: /form\.submit/ }));
+
+    await waitFor(() =>
+      expect(screen.getByText("form.serverError")).toBeInTheDocument()
+    );
+    expect(screen.queryByText("Internal Server Error")).not.toBeInTheDocument();
   });
 });

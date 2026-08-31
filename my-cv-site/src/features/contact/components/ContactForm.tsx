@@ -54,7 +54,14 @@ export default function ContactForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || t("form.serverError"));
+        // Server error details are for the console, never for the visitor.
+        console.error("Contact submission failed:", res.status, data.error);
+        setErrorMessage(
+          res.status === 429
+            ? t("form.tooManyRequests")
+            : t("form.serverError")
+        );
+        return;
       }
 
       console.log("Submitted:", { ...formData, interests: selectedTags });
@@ -62,12 +69,8 @@ export default function ContactForm() {
       setFormData({ name: "", email: "", message: "" });
       setSelectedTags([]);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      } else {
-        setErrorMessage(t("form.serverError"));
-      }
       console.error(error);
+      setErrorMessage(t("form.serverError"));
     } finally {
       setIsSubmitting(false);
     }

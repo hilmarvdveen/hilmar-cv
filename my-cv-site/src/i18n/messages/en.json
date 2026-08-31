@@ -855,7 +855,8 @@
             "submit": "Send message",
             "sending": "Sending...",
             "successMessage": "Thank you! I'll get back to you within 24 hours.",
-            "serverError": "Something went wrong. Please try again or email me directly."
+            "serverError": "Something went wrong and your message was not sent. Please try again in a moment, or email me directly at hilmar@hilmarvanderveen.com.",
+            "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
         },
         "info": {
             "title": "Contact information",
@@ -2274,7 +2275,9 @@
             "errors": {
                 "submissionFailed": "Submission failed",
                 "generic": "Something went wrong. Please try again.",
-                "loadSlotsFailed": "Failed to load available time slots"
+                "loadSlotsFailed": "The available time slots could not be loaded right now. Please try again in a moment, or email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
+                "submissionFailedDetail": "Your booking did not go through. Please try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947 and I will schedule the call for you.",
+                "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
             },
             "navigation": {
                 "back": "Back",

@@ -834,7 +834,8 @@
             "submit": "Verstuur bericht",
             "sending": "Versturen...",
             "successMessage": "Bedankt! Ik neem binnen 24 uur contact met u op.",
-            "serverError": "Er ging iets mis. Probeer het opnieuw of mail me direct."
+            "serverError": "Er ging iets mis en je bericht is niet verzonden. Probeer het zo opnieuw, of mail me direct op hilmar@hilmarvanderveen.com.",
+            "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
         },
         "info": {
             "title": "Contact informatie",
@@ -2164,7 +2165,9 @@
             "errors": {
                 "submissionFailed": "Verzending mislukt",
                 "generic": "Er ging iets mis. Probeer het opnieuw.",
-                "loadSlotsFailed": "Kon beschikbare tijdslots niet laden"
+                "loadSlotsFailed": "De beschikbare tijden konden nu niet geladen worden. Probeer het zo opnieuw, of mail naar hilmar@hilmarvanderveen.com, dan plan ik het gesprek voor je in.",
+                "submissionFailedDetail": "Je boeking is niet verzonden. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook, dan plan ik het gesprek voor je in.",
+                "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
             },
             "navigation": {
                 "back": "Terug",
