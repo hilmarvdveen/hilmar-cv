@@ -1,17 +1,67 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { useTranslations, useMessages } from "next-intl";
 import { workHistory } from "@/data/workHistory";
 import Image from "next/image";
 import { MapPin, Globe, Languages } from "lucide-react";
 
+const hasBrandColor = (color?: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color || "");
+
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
   const commonT = useTranslations("common");
   const messages = useMessages();
+  const [activeId, setActiveId] = useState("");
+
+  useEffect(() => {
+    setActiveId(window.location.hash.replace("#experience-", ""));
+  }, []);
 
   return (
     <section className="bg-gray-50">
+      <nav
+        aria-label={t("sectionTitle", { defaultValue: "Werkervaring" })}
+        className="sticky top-[var(--header-height)] z-40 border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <ul className="flex snap-x gap-2 overflow-x-auto overscroll-x-contain py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {workHistory.map((entry) => {
+              const active = activeId === entry.id;
+              return (
+                <li key={entry.id} className="snap-start">
+                  <a
+                    href={`#experience-${entry.id}`}
+                    onClick={() => setActiveId(entry.id)}
+                    className={`group inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                      active
+                        ? "border-emerald-600 bg-emerald-50 text-emerald-800"
+                        : "border-gray-300 bg-white text-gray-700 hover:border-emerald-600 hover:text-emerald-800"
+                    }`}
+                  >
+                    <span
+                      className={`relative h-5 w-8 shrink-0 overflow-hidden rounded-sm transition ${
+                        active ? "" : "grayscale group-hover:grayscale-0"
+                      }`}
+                      style={hasBrandColor(entry.color) ? { backgroundColor: entry.color } : undefined}
+                    >
+                      <Image
+                        src={`/logos/${entry.logo}`}
+                        alt=""
+                        fill
+                        sizes="32px"
+                        className="object-contain"
+                      />
+                    </span>
+                    {entry.company}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
       <div className="container max-w-7xl mx-auto py-16 px-4 sm:px-6">
         <h2 className="text-3xl font-bold mb-10 text-gray-900">
           {t("sectionTitle", { defaultValue: "Werkervaring" })}
@@ -27,7 +77,7 @@ export const WorkExperienceSection = () => {
             const role = t(`${id}.role`);
             const heading = t(`${id}.heading`, { defaultValue: "" });
 
-            const isHexColor = /^#([0-9A-F]{3}){1,2}$/i.test(entry.color || "");
+            const isHexColor = hasBrandColor(entry.color);
 
             // ✅ Get body array from raw messages safely
             const bodyItems =
@@ -40,7 +90,7 @@ export const WorkExperienceSection = () => {
                 key={`${company}-${entry.from}`}
                 id={`experience-${id}`}
                 // scroll-mt offsets the fixed header when jumped to via #anchor.
-                className="scroll-mt-28 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
+                className="scroll-mt-32 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center mb-4">
                   <div

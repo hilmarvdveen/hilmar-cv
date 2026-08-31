@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { WorkExperienceSection } from "./WorkExperienceSection";
+import { workHistory } from "@/data/workHistory";
 
 vi.mock("next-intl", () => {
   const t = ((k: string, opts?: { defaultValue?: string }) => opts?.defaultValue ?? k) as (
@@ -30,5 +31,21 @@ describe("WorkExperienceSection", () => {
     const { container } = render(<WorkExperienceSection />);
     expect(container.querySelector("#experience-belastingdienst")).toBeTruthy();
     expect(container.querySelector("#experience-postcode-loterij")).toBeTruthy();
+  });
+
+  it("renders the sticky quick-nav with a chip per engagement", () => {
+    const { container } = render(<WorkExperienceSection />);
+    const chips = container.querySelectorAll('nav a[href^="#experience-"]');
+    expect(chips.length).toBe(workHistory.length);
+  });
+
+  it("highlights the clicked chip and leaves the rest gray", () => {
+    const { container } = render(<WorkExperienceSection />);
+    const chip = container.querySelector('nav a[href="#experience-athlon"]') as HTMLElement;
+    fireEvent.click(chip);
+    expect(chip.className).toContain("border-emerald-600");
+    expect(chip.querySelector("span")?.className).not.toContain("grayscale");
+    const other = container.querySelector('nav a[href="#experience-bol"]');
+    expect(other?.querySelector("span")?.className).toContain("grayscale");
   });
 });
