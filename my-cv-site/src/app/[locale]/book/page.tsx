@@ -33,7 +33,7 @@ export default async function BookPage({ params }: Props) {
       />
 
       <Section background="navy" padding="compact" aria-labelledby="book-heading">
-        <Container width="narrow">
+        <Container>
           <p className="text-[13px] font-bold uppercase tracking-widest text-emerald-300">
             {t("hero.badge")}
           </p>
@@ -65,7 +65,7 @@ export default async function BookPage({ params }: Props) {
         id="booking-form"
         aria-labelledby="booking-step-heading"
       >
-        <Container width="narrow">
+        <Container>
           <BookingForm />
         </Container>
       </Section>

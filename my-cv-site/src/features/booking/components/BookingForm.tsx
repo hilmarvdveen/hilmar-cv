@@ -607,7 +607,7 @@ export const BookingForm = () => {
       className="pb-24 lg:pb-0"
     >
       <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10 lg:items-start">
         <div>
           <div className="scroll-mt-28">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -672,7 +672,7 @@ export const BookingForm = () => {
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-4xl items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
               {t("summary.when")}
