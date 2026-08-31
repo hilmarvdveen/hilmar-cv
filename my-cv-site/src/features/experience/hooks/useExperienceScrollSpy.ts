@@ -3,7 +3,6 @@ import { centeredScrollLeft, pickActiveSectionId } from "@/lib/scrollSpy";
 
 const LINE_OFFSET = 16;
 const FALLBACK_LINE = 140;
-const ARRIVAL_TOLERANCE = 12;
 const LOCK_DURATION = 1500;
 
 type ScrollLock = {
@@ -65,17 +64,15 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
       const atDocumentBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;
+      const picked = pickActiveSectionId(positions, activationLine, atDocumentBottom);
       const lock = lockRef.current;
       if (lock) {
         const target = positions.find((position) => position.id === lock.id);
-        const arrived =
-          target !== undefined &&
-          Math.abs(target.top - activationLine) <= ARRIVAL_TOLERANCE;
         const stranded =
           target !== undefined &&
           atDocumentBottom &&
           target.top < window.innerHeight;
-        if (arrived || stranded) {
+        if (picked === lock.id || stranded) {
           lockRef.current = null;
           setActiveId(lock.id);
           return;
@@ -83,7 +80,7 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
         if (Date.now() < lock.expiresAt) return;
         lockRef.current = null;
       }
-      setActiveId(pickActiveSectionId(positions, activationLine, atDocumentBottom));
+      setActiveId(picked);
     };
 
     const handleScroll = () => {
