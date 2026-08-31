@@ -4,3 +4,6 @@
 # Local strategy and findings document (summarizes the private dossier,
 # so it stays out of the public repository like /Hilmar/ does)
 /CLAUDE.md
+
+# Development conventions for Claude sessions, kept local by owner decision
+/my-cv-site/CLAUDE.md
