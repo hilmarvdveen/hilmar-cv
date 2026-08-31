@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/**
+ * Design tokens. Single source of truth for brand colors, referenced as
+ * Tailwind utilities (bg-brand-navy, text-primary, bg-bgLight, ...).
+ * bgLight, textMain and primary were used across components before they were
+ * defined anywhere; defining them here makes those utilities real.
+ */
+@theme {
+  /* Brand navy: hero, method section, close band, footer. */
+  --color-brand-navy: #12314e;
+  /* Darker navy for the footer bottom bar. */
+  --color-brand-navy-deep: #0d2540;
+  /* Primary action color, equal to emerald-700 used by the Button component. */
+  --color-primary: #047857;
+  /* Light section background, equal to gray-50. */
+  --color-bgLight: #f9fafb;
+  /* Default body text color, equal to gray-900. */
+  --color-textMain: #111827;
+}
+
 :root {
   --font-sans:
     "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
