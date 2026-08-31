@@ -1,23 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 
 import { useTranslations, useMessages } from "next-intl";
 import { workHistory } from "@/data/workHistory";
+import { useExperienceScrollSpy } from "../hooks/useExperienceScrollSpy";
 import Image from "next/image";
 import { MapPin, Globe, Languages } from "lucide-react";
 
 const hasBrandColor = (color?: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color || "");
 
+const SECTION_IDS = workHistory.map((entry) => entry.id);
+
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
   const commonT = useTranslations("common");
   const messages = useMessages();
-  const [activeId, setActiveId] = useState("");
-
-  useEffect(() => {
-    setActiveId(window.location.hash.replace("#experience-", ""));
-  }, []);
+  const { activeId, listRef, registerChip, activateFromClick } =
+    useExperienceScrollSpy(SECTION_IDS);
 
   return (
     <section className="bg-gray-50">
@@ -26,14 +25,15 @@ export const WorkExperienceSection = () => {
         className="sticky top-[var(--header-height)] z-40 border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <ul className="flex snap-x gap-2 overflow-x-auto overscroll-x-contain py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <ul ref={listRef} className="flex gap-2 overflow-x-auto overscroll-x-contain py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {workHistory.map((entry) => {
               const active = activeId === entry.id;
               return (
-                <li key={entry.id} className="snap-start">
+                <li key={entry.id} ref={registerChip(entry.id)}>
                   <a
                     href={`#experience-${entry.id}`}
-                    onClick={() => setActiveId(entry.id)}
+                    onClick={() => activateFromClick(entry.id)}
+                    aria-current={active ? "location" : undefined}
                     className={`group inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       active
                         ? "border-emerald-600 bg-emerald-50 text-emerald-800"
