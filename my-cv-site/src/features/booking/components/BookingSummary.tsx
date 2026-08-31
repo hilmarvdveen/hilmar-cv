@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { Check } from "lucide-react";
 import { Card } from "@/components/Card";
 import { formatLongDate, formatSlotTime } from "@/lib/booking";
 import type { BookingDetails } from "../context/BookingFormContext";
@@ -50,9 +51,9 @@ export const BookingSummary = ({ details, compact = false }: BookingSummaryProps
         <ul className="mt-3 space-y-2.5">
           {expectations.map((item) => (
             <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-gray-600">
-              <span
+              <Check
                 aria-hidden="true"
-                className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary"
+                className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-600"
               />
               {item}
             </li>
@@ -61,9 +62,13 @@ export const BookingSummary = ({ details, compact = false }: BookingSummaryProps
         <h4 className="mt-6 text-xs font-bold uppercase tracking-wider text-gray-500">
           {t("practicalTitle")}
         </h4>
-        <ul className="mt-2 space-y-1.5">
+        <ul className="mt-2.5 space-y-2">
           {practical.map((item) => (
-            <li key={item} className="text-sm text-gray-600">
+            <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-gray-600">
+              <Check
+                aria-hidden="true"
+                className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-600"
+              />
               {item}
             </li>
           ))}
