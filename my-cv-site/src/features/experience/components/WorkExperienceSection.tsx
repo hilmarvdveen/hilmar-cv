@@ -90,7 +90,7 @@ export const WorkExperienceSection = () => {
                 key={`${company}-${entry.from}`}
                 id={`experience-${id}`}
                 // scroll-mt offsets the fixed header when jumped to via #anchor.
-                className="scroll-mt-32 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
+                className="scroll-mt-16 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center mb-4">
                   <div

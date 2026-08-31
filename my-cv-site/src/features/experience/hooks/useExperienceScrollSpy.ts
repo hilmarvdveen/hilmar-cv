@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { centeredScrollLeft, pickActiveSectionId } from "@/lib/scrollSpy";
 
-const ACTIVATION_LINE = 132;
-const ARRIVAL_TOP = 128;
-const ARRIVAL_TOLERANCE = 6;
+const LINE_OFFSET = 8;
+const FALLBACK_LINE = 132;
+const ARRIVAL_TOLERANCE = 12;
 const LOCK_DURATION = 1500;
 
 type ScrollLock = {
@@ -52,21 +52,29 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
         return element ? [{ id, top: element.getBoundingClientRect().top }] : [];
       });
 
+    const readActivationLine = () => {
+      const navigation = listRef.current?.closest("nav");
+      return navigation
+        ? navigation.getBoundingClientRect().bottom + LINE_OFFSET
+        : FALLBACK_LINE;
+    };
+
     const update = () => {
       const positions = readPositions();
+      const activationLine = readActivationLine();
       const lock = lockRef.current;
       if (lock) {
         const target = positions.find((position) => position.id === lock.id);
         const arrived =
           target !== undefined &&
-          Math.abs(target.top - ARRIVAL_TOP) <= ARRIVAL_TOLERANCE;
+          Math.abs(target.top - activationLine) <= ARRIVAL_TOLERANCE;
         if (!arrived && Date.now() < lock.expiresAt) return;
         lockRef.current = null;
       }
       const atDocumentBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;
-      setActiveId(pickActiveSectionId(positions, ACTIVATION_LINE, atDocumentBottom));
+      setActiveId(pickActiveSectionId(positions, activationLine, atDocumentBottom));
     };
 
     const handleScroll = () => {
