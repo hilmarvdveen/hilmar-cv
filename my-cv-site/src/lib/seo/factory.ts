@@ -76,17 +76,6 @@ export const SEOFactory = {
   privacy: (locale: Locale) => defaultSEOEngine.createPrivacySEO(locale),
 
   /**
-   * Track page view
-   */
-  trackPageView: (pageType: any, locale: Locale, title: string, path: string) => // eslint-disable-line @typescript-eslint/no-explicit-any
-    defaultSEOEngine.trackPageView(pageType, locale, title, path),
-
-  /**
-   * Get analytics manager
-   */
-  getAnalytics: () => defaultSEOEngine.getAnalytics(),
-
-  /**
    * Generate sitemap data. Pass dynamic pages (e.g. blog posts) to append them
    * to the static page set with their own lastmod/priority.
    */

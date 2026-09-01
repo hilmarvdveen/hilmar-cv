@@ -69,15 +69,6 @@ describe("SEOFactory page builders", () => {
   });
 });
 
-describe("SEOFactory analytics passthroughs", () => {
-  it("trackPageView runs without throwing (no-op without window.gtag)", () => {
-    expect(() => SEOFactory.trackPageView("homepage", "en", "Home", "/")).not.toThrow();
-  });
-
-  it("getAnalytics returns undefined in a non-browser environment", () => {
-    expect(SEOFactory.getAnalytics()).toBeUndefined();
-  });
-});
 
 describe("metadata quality across all pages (regression: title/desc/robots)", () => {
   const PAGE_FNS = [

@@ -1,20 +1,13 @@
-/**
- * Enterprise SEO Engine
- * Comprehensive SEO solution with Google 2024 best practices
- * Implements E-E-A-T framework for professional services
- */
 
 import { MetadataGenerator } from './metadata-generator';
 import { SchemaGenerator } from './schema-generator';
-import { AnalyticsManager } from './analytics-manager';
-import type { 
-  SEOPageConfig, 
-  JsonLdSchema, 
-  Locale, 
-  PageType, 
+import type {
+  SEOPageConfig,
+  JsonLdSchema,
+  Locale,
+  PageType,
   BreadcrumbItem,
-  FAQItem,
-  GA4Configuration 
+  FAQItem
 } from '../types/seo-types';
 import type { Metadata } from 'next';
 import {
@@ -38,51 +31,29 @@ import {
   CONSULTING_SERVICE_CONTENT
 } from '../constants/page-content';
 
-// Stable per-deployment timestamp for sitemap <lastmod>. Computed once at module
-// load (≈ deploy time) rather than per request, so we don't signal to crawlers
-// that every page changes on every crawl.
 const SITE_LAST_MODIFIED = new Date().toISOString();
-// Same instant as a Date, for page-config `lastModified` (feeds schema
-// dateModified). Stable per deploy — never `new Date()` per request.
 const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
 
-/**
- * Main SEO Engine orchestrating metadata, structured data, and analytics
- */
 export class SEOEngine {
   private metadataGenerator: MetadataGenerator;
   private schemaGenerator: SchemaGenerator;
-  private analyticsManager?: AnalyticsManager;
   private readonly baseUrl: string;
 
   constructor(baseUrl: string = BUSINESS_PROFILE.CONTACT.WEBSITE) {
     this.baseUrl = baseUrl;
     this.metadataGenerator = new MetadataGenerator(baseUrl);
     this.schemaGenerator = new SchemaGenerator(baseUrl);
-    
-    // Initialize analytics if in browser environment. The non-browser branch
-    // is only taken under SSR/Node and cannot be reached from the jsdom tests.
-    /* v8 ignore next 3 */
-    if (typeof window !== 'undefined') {
-      this.initializeAnalytics();
-    }
   }
 
-  /**
-   * Generate comprehensive SEO configuration for any page type
-   */
   public generatePageSEO(config: SEOPageConfig): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
     structuredData: string;
   } {
-    // Generate metadata
     const metadata = this.metadataGenerator.generateMetadata(config);
     
-    // Generate structured data schemas
     const jsonLd = this.schemaGenerator.generatePageSchema(config);
     
-    // Create JSON-LD script content
     const structuredData = this.generateStructuredDataScript(jsonLd);
 
     return {
@@ -92,9 +63,6 @@ export class SEOEngine {
     };
   }
 
-  /**
-   * Create SEO configuration for homepage
-   */
   public createHomepageSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -121,9 +89,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for about page
-   */
   public createAboutSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -152,9 +117,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for services page
-   */
   public createServicesSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -183,9 +145,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for projects page
-   */
   public createProjectsSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -214,9 +173,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for contact page
-   */
   public createContactSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -245,9 +201,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for FAQ page
-   */
   public createFAQSEO(locale: Locale, faqItems: FAQItem[]): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -277,9 +230,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for booking page
-   */
   public createBookingSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -308,9 +258,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for blog page
-   */
   public createBlogSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -339,11 +286,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for an individual blog post.
-   * Emits BlogPosting structured data with publish/modified dates and a
-   * Home → Blog → <post> breadcrumb trail.
-   */
   public createBlogPostSEO(
     locale: Locale,
     post: {
@@ -383,9 +325,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for privacy page
-   */
   public createPrivacySEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -412,9 +351,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for frontend service subpage
-   */
   public createFrontendServiceSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -443,9 +379,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for fullstack service subpage
-   */
   public createFullstackServiceSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -474,9 +407,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for design systems service subpage
-   */
   public createDesignSystemsServiceSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -505,9 +435,6 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Create SEO configuration for consulting service subpage
-   */
   public createConsultingServiceSEO(locale: Locale): {
     metadata: Metadata;
     jsonLd: JsonLdSchema[];
@@ -536,84 +463,20 @@ export class SEOEngine {
     return this.generatePageSEO(config);
   }
 
-  /**
-   * Initialize Google Analytics 4
-   */
-  private initializeAnalytics(): void {
-    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-    const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-
-    if (measurementId) {
-      const config: GA4Configuration = {
-        measurementId,
-        gtmId,
-        enableEcommerce: true,
-        enableEnhancedMeasurement: true,
-        customDimensions: [
-          { name: 'Page Type', parameterName: 'page_type', scope: 'EVENT' },
-          { name: 'User Language', parameterName: 'user_language', scope: 'USER' },
-          { name: 'Service Interest', parameterName: 'service_interest', scope: 'EVENT' }
-        ],
-        conversionEvents: [
-          'contact_form_submit',
-          'service_inquiry',
-          'consultation_request',
-          'cv_download'
-        ]
-      };
-
-      this.analyticsManager = new AnalyticsManager(config);
-    }
-  }
-
-  /**
-   * Track page view with enhanced data
-   */
-  public trackPageView(pageType: PageType, locale: Locale, title: string, path: string): void {
-    if (this.analyticsManager) {
-      this.analyticsManager.trackPageView({
-        pageTitle: title,
-        pagePath: path,
-        pageType,
-        locale,
-        contentGroup: this.getContentGroup(pageType)
-      });
-    }
-  }
-
-  /**
-   * Get analytics manager for external use
-   */
-  public getAnalytics(): AnalyticsManager | undefined {
-    return this.analyticsManager;
-  }
-
-  /**
-   * Generate structured data script
-   */
   private generateStructuredDataScript(schemas: JsonLdSchema[]): string {
-    // A single <script type="application/ld+json"> must contain exactly ONE
-    // JSON value. Emit the schemas as a JSON array (each keeps its own
-    // @context) — NOT multiple objects concatenated with newlines, which is
-    // invalid JSON and stops parsers after the first object.
     return JSON.stringify(schemas, null, 2);
   }
 
-  /**
-   * Generate breadcrumbs for pages
-   */
   private generateBreadcrumbs(pathSegments: string[], locale: Locale): BreadcrumbItem[] {
     const breadcrumbs: BreadcrumbItem[] = [];
     const baseUrl = `${this.baseUrl}/${locale}`;
     
-    // Add home
     breadcrumbs.push({
       name: locale === 'nl' ? 'Home' : 'Home',
       url: baseUrl,
       position: 1
     });
 
-    // Add path segments
     let currentPath = baseUrl;
     pathSegments.forEach((segment, index) => {
       currentPath += `/${segment.toLowerCase().replace(/\s+/g, '-')}`;
@@ -627,9 +490,6 @@ export class SEOEngine {
     return breadcrumbs;
   }
 
-  /**
-   * Generate homepage breadcrumbs
-   */
   private generateHomepageBreadcrumbs(locale: Locale): BreadcrumbItem[] {
     const baseUrl = `${this.baseUrl}/${locale}`;
     
@@ -640,29 +500,6 @@ export class SEOEngine {
     }];
   }
 
-  /**
-   * Get content group for analytics
-   */
-  private getContentGroup(pageType: PageType): string {
-    const groups: Record<PageType, string> = {
-      homepage: 'Main Pages',
-      about: 'About',
-      services: 'Services',
-      projects: 'Portfolio',
-      contact: 'Contact',
-      faq: 'Support',
-      blog: 'Content',
-      'blog-post': 'Content',
-      privacy: 'Legal',
-      booking: 'Conversion'
-    };
-
-    return groups[pageType] || 'Other';
-  }
-
-  /**
-   * Validate SEO configuration
-   */
   public validateSEOConfig(config: SEOPageConfig): {
     isValid: boolean;
     warnings: string[];
@@ -671,7 +508,6 @@ export class SEOEngine {
     const warnings: string[] = [];
     const errors: string[] = [];
 
-    // Title validation
     if (config.title.length < 30) {
       warnings.push('Title is shorter than 30 characters - consider adding more descriptive text');
     }
@@ -679,7 +515,6 @@ export class SEOEngine {
       errors.push('Title exceeds 60 characters and may be truncated in search results');
     }
 
-    // Description validation
     if (config.description.length < 120) {
       warnings.push('Description is shorter than 120 characters - consider adding more detail');
     }
@@ -687,7 +522,6 @@ export class SEOEngine {
       errors.push('Description exceeds 160 characters and may be truncated in search results');
     }
 
-    // Keywords validation
     if (config.keywords.length < 5) {
       warnings.push('Consider adding more keywords for better semantic targeting');
     }
@@ -702,9 +536,6 @@ export class SEOEngine {
     };
   }
 
-  /**
-   * Generate sitemap data for all pages
-   */
   public generateSitemapData(
     dynamicPages: Array<{
       path: string;
@@ -734,8 +565,6 @@ export class SEOEngine {
       'book'
     ];
 
-    // Normalise static + dynamic pages into one descriptor list so the
-    // locale/alternate loop below is identical for both kinds.
     const pageDescriptors: Array<{
       path: string;
       lastModified: string;
@@ -749,10 +578,10 @@ export class SEOEngine {
         priority = 1.0;
         changeFrequency = 'weekly';
       } else if (page === 'services' || page.startsWith('services/')) {
-        priority = 0.9; // High priority for service pages
+        priority = 0.9;
         changeFrequency = 'monthly';
       } else if (page === 'contact' || page === 'book') {
-        priority = 0.9; // High priority for conversion pages
+        priority = 0.9;
         changeFrequency = 'monthly';
       } else if (page === 'blog') {
         priority = 0.8;

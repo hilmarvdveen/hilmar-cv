@@ -1,26 +1,16 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
-import { ANALYTICS_CONSENT_EVENT, readStoredConsent } from "./GoogleAnalytics";
+import { useAnalyticsConsent } from "../consentStore";
 
 type GoogleTagManagerProps = {
   gtmId: string;
 };
 
 export function GoogleTagManager({ gtmId }: GoogleTagManagerProps) {
-  const [enabled, setEnabled] = useState(false);
+  const consent = useAnalyticsConsent();
 
-  useEffect(() => {
-    if (readStoredConsent()) setEnabled(true);
-    const handleConsent = (event: Event) => {
-      if ((event as CustomEvent<boolean>).detail) setEnabled(true);
-    };
-    window.addEventListener(ANALYTICS_CONSENT_EVENT, handleConsent);
-    return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, handleConsent);
-  }, []);
-
-  if (!enabled) return null;
+  if (!consent) return null;
 
   return (
     <Script

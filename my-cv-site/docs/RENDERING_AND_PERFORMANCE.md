@@ -63,10 +63,9 @@ every page: `NextIntlClientProvider` receives `getMessages()` unfiltered, so
 largest avoidable byte cost. next-intl supports passing only the namespaces
 client components need. The fewer client components, the fewer namespaces.
 
-Google Tag Manager, when the production env vars are set, adds 100KB of
-unused JavaScript per Lighthouse and is the top "reduce unused JavaScript"
-item. The GA4 component loads `gtag/js` separately as well, so analytics
-loads twice when both IDs are present.
+Google Tag Manager, when it loads, adds 100KB of JavaScript that Lighthouse
+counts as unused. It now loads only after consent, and it is the only tag
+loader on the site.
 
 ## Lighthouse (mobile simulation, local production build)
 
@@ -93,7 +92,7 @@ insight scripts returning 404 on a local server only.
 | Seven presentational components became server components, the experience cards render on the server behind a client chip bar, the hero is a server component with a client CV button that loads the modal on demand | fewer hydrated components, `home.hero` and `work` no longer travel to the client |
 | `NextIntlClientProvider` receives only the namespaces client components read (`pickMessages`) | homepage flight payload 256KB to 197KB, HTML 89KB to 66KB gzip, booking page 78KB to 52KB gzip |
 | Booking context moved from the layout to `/book` | its code and localStorage handling left every other page |
-| GTM loads only after the same consent as GA4 | 100KB of third-party JavaScript no longer loads on a first visit |
+| GTM loads only after consent, and the direct GA4 script is gone | 100KB of third-party JavaScript no longer loads on a first visit, and nothing loads twice |
 | Dead colour palette and comments removed from `globals.css`, carousel logos no longer preloaded | 4KB less CSS in every document, three fewer requests competing before the first paint |
 | Nested `<main>` on four pages, heading skips on services and search, definition lists on contact, duplicate diagram ids, day-button names, diagram control tap targets, nine contrast failures | accessibility 100 on every page measured (home, experience, book, services, contact, about, faq, blog post) |
 
@@ -140,12 +139,11 @@ reports the field numbers once the site is deployed.
 ## Options, in order of effect on first paint
 
 1. **Trim the client payload.** Done on 1 September 2026 (see above).
-2. **GTM and GA4 both stay** (owner's decision, 1 September 2026: they work
-   as a team). Both wait for consent, so a first visit loads neither and the
-   consenting visitor loads GTM first and gtag lazily. One check in the GTM
-   container: if it fires the GA4 configuration tag as well, every page view
-   is counted twice. Let GTM own the events, or let gtag own the config, not
-   both.
+2. **GTM is the only tag loader** (owner's decision, 1 September 2026: keep
+   GTM, remove the direct GA4 script). It loads after consent, so a first
+   visit loads no third-party JavaScript at all. GA4 lives inside the
+   container, and the booking funnel events arrive as `dataLayer` pushes.
+   `NEXT_PUBLIC_GA_MEASUREMENT_ID` is no longer read anywhere.
 3. **Static HTML at the edge.** The only way to remove the per-request
    function and the `no-store` cache header is to drop the per-request
    nonce. Without a nonce, an App Router site needs `'unsafe-inline'` in

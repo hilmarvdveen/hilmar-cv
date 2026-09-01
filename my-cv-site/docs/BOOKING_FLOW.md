@@ -106,8 +106,13 @@ button and no picker.)
 
 ## Funnel events
 
-`src/lib/booking/analytics.ts` sends these to Google Analytics when the
-visitor has given consent. The hypotheses below are measured with them.
+`src/lib/booking/analytics.ts` pushes these onto `window.dataLayer` as
+`{ event, event_category: "booking", ...parameters }`. Google Tag Manager
+picks them up once the visitor has consented (a push made before GTM loads
+is queued in the array and read when it does). GTM owns the tags: there is
+no direct GA4 script on the site (owner's decision, 1 September 2026), so a
+GA4 event tag in the container with a Custom Event trigger per name below
+is what turns them into reports. The hypotheses are measured with them.
 
 | Event | When | Parameters |
 |---|---|---|

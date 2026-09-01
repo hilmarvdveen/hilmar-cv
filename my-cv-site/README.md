@@ -47,7 +47,6 @@ application credentials; without them those routes return a generic
 | `MS_CLIENT_SECRET` | Azure app client secret |
 | `MS_TENANT_ID` | Azure tenant id |
 | `SMTP_USER` | Mailbox/user the app sends as and books on (e.g. `hilmar@…`) |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics id (optional, prod only) |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager id (optional, prod only) |
 
 ## Documentation

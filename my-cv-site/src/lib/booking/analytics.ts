@@ -11,8 +11,8 @@ export type BookingEventName =
 
 export type BookingEventParameters = Record<string, string | number | boolean>;
 
-type GtagGlobal = {
-  gtag?: (command: "event", name: string, parameters?: BookingEventParameters) => void;
+type DataLayerGlobal = {
+  dataLayer?: unknown[];
 };
 
 export function trackBookingEvent(
@@ -20,10 +20,9 @@ export function trackBookingEvent(
   parameters: BookingEventParameters = {}
 ): void {
   try {
-    const { gtag } = globalThis as unknown as GtagGlobal;
-    if (typeof gtag === "function") {
-      gtag("event", name, { event_category: "booking", ...parameters });
-    }
+    const globalScope = globalThis as unknown as DataLayerGlobal;
+    globalScope.dataLayer = globalScope.dataLayer ?? [];
+    globalScope.dataLayer.push({ event: name, event_category: "booking", ...parameters });
   } catch {
     return;
   }

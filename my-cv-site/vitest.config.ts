@@ -33,7 +33,6 @@ export default defineConfig({
         "src/**/index.ts",
         "src/**/*.test.{ts,tsx}",
         // Browser-only / non-logic (covered by E2E or unreachable in jsdom):
-        "src/lib/seo/core/analytics-manager.ts", // window/gtag telemetry
         "src/lib/seo/types/**", // type-only
         "src/lib/seo/constants/**", // static data
         "src/features/about/components/NetherlandsMap.tsx", // d3 canvas

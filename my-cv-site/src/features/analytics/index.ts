@@ -1,2 +1,2 @@
-export { GoogleAnalytics } from "./components/GoogleAnalytics";
+export { AnalyticsConsent } from "./components/AnalyticsConsent";
 export { GoogleTagManager } from "./components/GoogleTagManager";

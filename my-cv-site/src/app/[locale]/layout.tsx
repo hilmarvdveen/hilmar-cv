@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { GoogleAnalytics, GoogleTagManager } from "@/features/analytics";
+import { AnalyticsConsent, GoogleTagManager } from "@/features/analytics";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
 import "@/app/globals.css";
@@ -98,9 +98,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     decline: common("consent.decline"),
     accept: common("consent.accept"),
   };
-  const analyticsEnabled = process.env.NODE_ENV === "production";
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gtmId = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_GTM_ID : undefined;
 
   return (
     <html
@@ -113,7 +111,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link rel="dns-prefetch" href="//vercel.live" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
-        {analyticsEnabled && gtmId && <GoogleTagManager gtmId={gtmId} />}
+        {gtmId && <GoogleTagManager gtmId={gtmId} />}
       </head>
 
       <body
@@ -128,7 +126,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           </div>
         </NextIntlClientProvider>
 
-        {analyticsEnabled && gaId && <GoogleAnalytics gaId={gaId} labels={consentLabels} />}
+        {gtmId && <AnalyticsConsent labels={consentLabels} />}
 
         <SpeedInsights />
         <Analytics />

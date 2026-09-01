@@ -28,19 +28,6 @@ describe("SEOEngine.generatePageSEO", () => {
   });
 });
 
-describe("SEOEngine analytics initialization", () => {
-  it("initializes the analytics manager when a GA id is present, and tracks", () => {
-    vi.stubEnv("NEXT_PUBLIC_GA_MEASUREMENT_ID", "G-TEST123");
-    const engine = new SEOEngine();
-    expect(engine.getAnalytics()).toBeDefined();
-    expect(() => engine.trackPageView("homepage", "en", "Home", "/")).not.toThrow();
-    // Unknown page type exercises the getContentGroup `|| 'Other'` fallback.
-    expect(() =>
-      engine.trackPageView("not-a-real-type" as never, "en", "X", "/x")
-    ).not.toThrow();
-  });
-});
-
 describe("SEOEngine.createBlogPostSEO", () => {
   const post = {
     slug: "react-folder-structure",
