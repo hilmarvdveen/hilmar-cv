@@ -1814,6 +1814,11 @@
         "subtitle": "Hilmar van der Veen",
         "description": "Bedankt voor je interesse! Om je de beste service te bieden en bij te houden wie mijn CV downloadt, vul je deze korte vorm in.",
         "close": "Modal sluiten",
+        "language": {
+            "label": "Taal van het CV",
+            "nl": "Nederlands",
+            "en": "Engels"
+        },
         "fields": {
             "name": "Volledige Naam",
             "email": "E-mailadres",

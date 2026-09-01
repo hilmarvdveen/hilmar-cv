@@ -17,8 +17,9 @@ type CVDownloadData = {
   email: string;
   purpose: string;
   locale: string;
+  cvLanguage?: string;
   timestamp: string;
-  company_website?: string; // honeypot
+  company_website?: string;
   formStartedAt?: number;
 }
 
@@ -68,16 +69,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const name = data.name as string;
     const email = data.email as string;
     const locale = data.locale === "nl" ? "nl" : "en";
+    const cvLanguage = data.cvLanguage === "nl" ? "nl" : "en";
     const purposeText = purposeMap[data.purpose as string]?.[locale] || (data.purpose as string);
     const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
 
-    // Notification to owner (plain text).
     const notificationBody = `New CV Download Lead:
 
 Name: ${name}
 Email: ${email}
 Purpose: ${purposeText}
-Language: ${locale.toUpperCase()}
+Page language: ${locale.toUpperCase()}
+CV downloaded: ${cvLanguage.toUpperCase()}
 Timestamp: ${timestamp.toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" })}
 
 ---

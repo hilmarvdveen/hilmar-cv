@@ -1959,6 +1959,11 @@
         "subtitle": "Hilmar van der Veen",
         "description": "Thank you for your interest! To provide you with the best service and keep track of who downloads my CV, please fill out this quick form.",
         "close": "Close modal",
+        "language": {
+            "label": "CV language",
+            "nl": "Nederlands",
+            "en": "English"
+        },
         "fields": {
             "name": "Full Name",
             "email": "Email Address",

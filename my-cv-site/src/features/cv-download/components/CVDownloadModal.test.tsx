@@ -1,13 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { CVDownloadModal } from "./CVDownloadModal";
+import { CVDownloadModal, cvDocumentPath } from "./CVDownloadModal";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-const CV_PATH = "/data/cv/hilmar_van_der_veen_cv.pdf";
+const ENGLISH_CV = "/data/cv/hilmar_van_der_veen_cv_en.pdf";
+const DUTCH_CV = "/data/cv/hilmar_van_der_veen_cv_nl.pdf";
 
 async function fillValid(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByPlaceholderText("placeholders.name"), "Jane");
@@ -30,11 +31,22 @@ describe("CVDownloadModal", () => {
   });
   afterEach(() => vi.unstubAllGlobals());
 
+  it("maps a language to its document", () => {
+    expect(cvDocumentPath("nl")).toBe(DUTCH_CV);
+    expect(cvDocumentPath("en")).toBe(ENGLISH_CV);
+  });
+
   it("renders nothing when closed", () => {
     const { container } = render(
       <CVDownloadModal isOpen={false} onClose={onClose} locale="en" />
     );
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it("preselects the CV language from the page language", () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="nl" />);
+    expect(screen.getByRole("radio", { name: "language.nl" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "language.en" })).not.toBeChecked();
   });
 
   it("shows validation errors and does not submit when empty", async () => {
@@ -55,20 +67,18 @@ describe("CVDownloadModal", () => {
     fireEvent.change(screen.getByPlaceholderText("placeholders.name"), {
       target: { value: "Jane" },
     });
-    fireEvent.change(email, { target: { value: "not-an-email" } }); // non-empty, invalid
+    fireEvent.change(email, { target: { value: "not-an-email" } });
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "recruitment" } });
     fireEvent.submit(form);
 
-    // Invalid-email path executed (line 44); nothing submitted.
     expect(fetch).not.toHaveBeenCalled();
 
-    // Correcting the email clears the field error (error-clear path) and submits.
     fireEvent.change(email, { target: { value: "jane@example.com" } });
     fireEvent.submit(form);
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
   });
 
-  it("posts lead with honeypot fields, opens the CV and closes on success", async () => {
+  it("posts the lead with the chosen language, opens that CV and closes on success", async () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
@@ -81,12 +91,25 @@ describe("CVDownloadModal", () => {
       email: "jane@example.com",
       purpose: "recruitment",
       locale: "en",
+      cvLanguage: "en",
       company_website: "",
     });
     expect(typeof body.formStartedAt).toBe("number");
 
-    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(CV_PATH, "_blank"));
+    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it("lets an English page visitor pick the Dutch CV", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await user.click(screen.getByRole("radio", { name: "language.nl" }));
+    await fillValid(user);
+    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+
+    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(DUTCH_CV, "_blank"));
+    const body = JSON.parse((fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1].body);
+    expect(body.cvLanguage).toBe("nl");
   });
 
   it("still downloads even when the tracking API fails", async () => {
@@ -99,7 +122,7 @@ describe("CVDownloadModal", () => {
     await fillValid(user);
     await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
 
-    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(CV_PATH, "_blank"));
+    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
     expect(onClose).toHaveBeenCalled();
   });
 
@@ -115,6 +138,6 @@ describe("CVDownloadModal", () => {
     await fillValid(user);
     await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
 
-    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(CV_PATH, "_blank"));
+    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
   });
 });
