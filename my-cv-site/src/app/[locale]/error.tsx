@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { Button } from "@/components/Button";
 
-// Route-level error boundary for the localized app. Client component per Next.js.
 export default function Error({
   error,
   reset,
@@ -16,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="min-h-[70vh] flex flex-col items-center justify-center px-6 text-center">
+    <section className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900">
         Something went wrong · Er ging iets mis
       </h1>
@@ -31,6 +30,6 @@ export default function Error({
       >
         Try again · Opnieuw proberen
       </Button>
-    </main>
+    </section>
   );
 }

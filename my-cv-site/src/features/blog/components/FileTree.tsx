@@ -33,7 +33,7 @@ function TreeRows({ nodes, depth }: { nodes: FileNode[]; depth: number }) {
                 {node.name}
               </span>
               {node.comment && (
-                <span className="text-gray-500"># {node.comment}</span>
+                <span className="text-gray-400"># {node.comment}</span>
               )}
             </div>
             {node.children && node.children.length > 0 && (

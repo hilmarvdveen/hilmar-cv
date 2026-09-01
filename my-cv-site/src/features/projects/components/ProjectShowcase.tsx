@@ -1,4 +1,3 @@
-"use client";
 import { useTranslations } from "next-intl";
 import { Icon, IconName } from "@/components/Icon";
 import { Check, ArrowRight, Calendar, ExternalLink } from "lucide-react";

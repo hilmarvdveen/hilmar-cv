@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { HeroSection } from "./HeroSection";
 
 vi.mock("next-intl", () => {
@@ -18,7 +17,7 @@ vi.mock("next-intl", () => {
     useMessages: () => ({}),
   };
 });
-vi.mock("next/navigation", () => ({ useParams: () => ({ locale: "en" }) }));
+vi.mock("next/dynamic", () => ({ default: () => () => null }));
 vi.mock("next/link", () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
@@ -45,12 +44,8 @@ describe("HeroSection", () => {
     expect(bookLink).toHaveAttribute("href", "/book");
   });
 
-  it("opens and closes the CV download modal from the quiet download action", async () => {
-    const user = userEvent.setup();
+  it("offers the CV download as a quiet secondary action", () => {
     render(<HeroSection />);
-    await user.click(screen.getByText("downloadCv"));
-
-    const cancel = screen.queryByRole("button", { name: /buttons\.cancel/ });
-    if (cancel) await user.click(cancel);
+    expect(screen.getByRole("button", { name: "downloadCv" })).toBeInTheDocument();
   });
 });

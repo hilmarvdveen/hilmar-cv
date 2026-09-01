@@ -28,17 +28,15 @@ export default async function ContactPage({ params }: Props) {
           __html: seoData.structuredData,
         }}
       />
-      <main role="main">
-        <ContactHero />
+      <ContactHero />
 
-        <Breadcrumb />
+      <Breadcrumb />
 
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <ContactForm />
-          </div>
-        </section>
-      </main>
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <ContactForm />
+        </div>
+      </section>
     </>
   );
 }

@@ -1,6 +1,4 @@
-"use client";
-
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import {
   Mail,
@@ -53,13 +51,6 @@ export const Footer = () => {
     { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 
-  const legalLinks = [
-    { name: t("legal.items.privacy"), href: "/privacy" },
-    { name: t("legal.items.cookies"), href: "/cookies" },
-    { name: t("legal.items.terms"), href: "/terms" },
-    { name: t("legal.items.disclaimer"), href: "/disclaimer" },
-  ];
-
   const socialLinks = [
     {
       name: "LinkedIn",
@@ -83,19 +74,17 @@ export const Footer = () => {
 
   return (
     <footer className="bg-[#12314e] text-gray-300">
-      {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
-          {/* About Section */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
                 <Code className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-lg">
+                <h2 className="font-bold text-white text-lg">
                   {t("about.name")}
-                </h3>
+                </h2>
                 <p className="text-emerald-400 text-sm">{t("about.title")}</p>
               </div>
             </div>
@@ -116,11 +105,10 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Services */}
           <div>
-            <h4 className="font-semibold text-white mb-6">
+            <h2 className="font-semibold text-white mb-6">
               {t("services.title")}
-            </h4>
+            </h2>
             <ul className="space-y-4">
               {services.map((service) => {
                 const Icon = service.icon;
@@ -150,11 +138,10 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-white mb-6">
+            <h2 className="font-semibold text-white mb-6">
               {t("quickLinks.title")}
-            </h4>
+            </h2>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -168,30 +155,12 @@ export const Footer = () => {
               ))}
             </ul>
 
-           {/* <div className="mt-8">
-              <h5 className="font-medium text-white mb-4">
-                {t("legal.title")}
-              </h5>
-              <ul className="space-y-3">
-                {legalLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
           </div>
 
-          {/* Contact & Newsletter */}
           <div>
-            <h4 className="font-semibold text-white mb-6">
+            <h2 className="font-semibold text-white mb-6">
               {t("contact.title")}
-            </h4>
+            </h2>
 
             <div className="space-y-4 mb-8">
               <a
@@ -211,36 +180,10 @@ export const Footer = () => {
               </a>
             </div>
 
-            {/* Newsletter Signup */}
-            {/*<div className="bg-emerald-900/20 rounded-lg p-6 mb-8">
-              <h5 className="font-medium text-white mb-2">
-                {t("contact.newsletter.title")}
-              </h5>
-              <p className="text-gray-400 text-sm mb-4">
-                {t("contact.newsletter.description")}
-              </p>
-              <form className="flex" suppressHydrationWarning={true}>
-                <input
-                  type="email"
-                  name="newsletter-email"
-                  placeholder={t("contact.newsletter.placeholder")}
-                  className="flex-1 px-4 py-2 bg-white/10 border border-emerald-600/30 rounded-l-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
-                />
-                <button
-                  type="submit"
-                  aria-label={t("contact.newsletter.subscribe")}
-                  className="px-4 py-2 bg-emerald-700 text-white rounded-r-lg hover:bg-emerald-800 transition-colors duration-200 flex items-center"
-                >
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
-              </form>
-            </div>  */}
-
-            {/* Social Links */}
             <div>
-              <h5 className="font-medium text-white mb-4">
+              <h3 className="font-medium text-white mb-4">
                 {t("contact.social.title")}
-              </h5>
+              </h3>
               <div className="flex space-x-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
@@ -263,7 +206,6 @@ export const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">

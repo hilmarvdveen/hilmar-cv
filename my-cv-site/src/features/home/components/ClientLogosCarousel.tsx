@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
@@ -76,7 +74,7 @@ const ClientCard = ({
           height={60}
           style={{ width: "auto", height: "auto" }}
           className="max-w-full max-h-full object-contain"
-          priority={priority}
+          loading={priority ? "eager" : "lazy"}
         />
       </Link>
     </div>

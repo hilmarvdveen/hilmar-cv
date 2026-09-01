@@ -18,7 +18,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "check:locales": "node scripts/crawl-locales.mjs"
+    "check:locales": "node scripts/crawl-locales.mjs",
+    "check:structure": "node scripts/audit-structure.mjs"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",

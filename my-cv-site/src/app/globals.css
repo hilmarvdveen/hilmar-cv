@@ -1,21 +1,10 @@
 @import "tailwindcss";
 
-/**
- * Design tokens. Single source of truth for brand colors, referenced as
- * Tailwind utilities (bg-brand-navy, text-primary, bg-bgLight, ...).
- * bgLight, textMain and primary were used across components before they were
- * defined anywhere; defining them here makes those utilities real.
- */
 @theme {
-  /* Brand navy: hero, method section, close band, footer. */
   --color-brand-navy: #12314e;
-  /* Darker navy for the footer bottom bar. */
   --color-brand-navy-deep: #0d2540;
-  /* Primary action color, equal to emerald-700 used by the Button component. */
   --color-primary: #047857;
-  /* Light section background, equal to gray-50. */
   --color-bgLight: #f9fafb;
-  /* Default body text color, equal to gray-900. */
   --color-textMain: #111827;
 }
 
@@ -27,87 +16,20 @@
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 
-  /* Header height for consistent spacing */
   --header-height: 65px;
-
-  --color-red-500: oklch(63.7% 0.237 25.331);
-  --color-red-600: oklch(57.7% 0.245 27.325);
-  --color-orange-500: oklch(70.5% 0.213 47.604);
-  --color-amber-100: oklch(96.2% 0.059 95.617);
-  --color-amber-400: oklch(82.8% 0.189 84.429);
-  --color-amber-600: oklch(66.6% 0.179 58.318);
-  --color-amber-800: oklch(47.3% 0.137 46.201);
-  --color-lime-500: oklch(76.8% 0.233 130.85);
-  --color-green-500: oklch(72.3% 0.219 149.579);
-  --color-green-700: oklch(52.7% 0.154 150.069);
-  --color-emerald-500: oklch(69.6% 0.17 162.48);
-  --color-emerald-600: oklch(59.6% 0.145 163.225);
-  --color-emerald-800: oklch(43.2% 0.095 166.913);
-  --color-teal-500: oklch(70.4% 0.14 182.503);
-  --color-teal-600: oklch(60% 0.118 184.704);
-  --color-sky-500: oklch(68.5% 0.169 237.323);
-  --color-sky-700: oklch(50% 0.134 242.749);
-  --color-blue-100: oklch(93.2% 0.032 255.585);
-  --color-blue-500: oklch(62.3% 0.214 259.815);
-  --color-blue-600: oklch(54.6% 0.245 262.881);
-  --color-blue-700: oklch(48.8% 0.243 264.376);
-  --color-purple-500: oklch(62.7% 0.265 303.9);
-  --color-fuchsia-500: oklch(66.7% 0.295 322.15);
-  --color-pink-300: oklch(82.3% 0.12 346.018);
-  --color-gray-500: oklch(55.1% 0.027 264.364);
-  --color-gray-800: oklch(27.8% 0.033 256.848);
-  --color-neutral-200: oklch(92.2% 0 0);
-  --color-neutral-300: oklch(87% 0 0);
-  --color-black: #000;
-  --color-white: #fff;
-
-  --tw-blur: *;
-  --tw-border-style: *;
-  --tw-brightness: *;
-  --tw-contrast: *;
-  --tw-drop-shadow: *;
-  --tw-drop-shadow-alpha: 100%;
-  --tw-drop-shadow-color: *;
-  --tw-drop-shadow-size: *;
-  --tw-font-weight: *;
-  --tw-grayscale: *;
-  --tw-hue-rotate: *;
-  --tw-inset-ring-color: *;
-  --tw-inset-ring-shadow: 0 0 #0000;
-  --tw-inset-shadow: 0 0 #0000;
-  --tw-inset-shadow-alpha: 100%;
-  --tw-inset-shadow-color: *;
-  --tw-invert: *;
-  --tw-leading: *;
-  --tw-opacity: *;
-  --tw-outline-style: solid;
-  --tw-ring-color: *;
-  --tw-ring-inset: *;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-saturate: *;
-  --tw-sepia: *;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-alpha: 100%;
-  --tw-shadow-color: *;
-  --tw-tracking: *;
 }
 
-/* Fix webkit text size adjust for mobile browsers */
 html {
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Smooth in-page scrolling for anchor links (e.g. logo -> experience). */
+
   scroll-behavior: smooth;
 }
 
-/* Infinite Carousel Animation */
 .slider {
   position: relative;
-  width: 100%; /* Full width */
+  width: 100%;
   height: var(--height);
   mask-image: linear-gradient(
     to right,
@@ -154,9 +76,7 @@ html {
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  /* No transform here: `transform` carries the carousel's translateX animation,
-     so scaling the item would clobber its position. The logo image scales on
-     hover instead (see `.item:hover img`). */
+
 }
 
 .slider .list .item img {
@@ -172,7 +92,6 @@ html {
   transform: scale(1.1);
 }
 
-/* Special handling for branded logos */
 .slider .list .item.branded {
   background: #f3f4f6;
   color: var(--brand-color);
@@ -191,14 +110,12 @@ html {
   filter: grayscale(0);
 }
 
-/* SVG color inheritance - target all SVG elements */
 .slider .list .item svg,
 .slider .list .item svg * {
   color: inherit !important;
   fill: currentColor !important;
 }
 
-/* Force SVG paths and text to inherit color */
 .slider .list .item.branded svg path,
 .slider .list .item.branded svg text,
 .slider .list .item.branded svg .st0 {
@@ -214,10 +131,6 @@ html {
 }
 
 @keyframes autoRun {
-  /* Animate transform (GPU-composited) instead of the left property (which
-     triggers layout/paint each frame -> janky, hurts CLS). The item stays
-     anchored via its static start offset; translating by -width*(quantity+1)
-     reproduces the exact same motion the previous left-based animation had. */
   from {
     transform: translateX(0);
   }
@@ -230,22 +143,20 @@ html {
   animation-play-state: paused !important;
 }
 
-/* 📱 Mobile Fix: Adjust Sizes to Fit Small Screens */
 @media (max-width: 768px) {
   .slider {
-    --width: 140px; /* Adjust item width */
-    --height: 70px; /* Adjust item height */
+    --width: 140px;
+    --height: 70px;
   }
 }
 
 @media (max-width: 480px) {
   .slider {
-    --width: 120px; /* Smaller for very small screens */
+    --width: 120px;
     --height: 60px;
   }
 }
 
-/* Mobile Drawer Animation */
 .mobile-drawer-enter {
   transform: translateX(100%);
 }
@@ -264,12 +175,10 @@ html {
   transition: transform 300ms ease-in-out;
 }
 
-/* Prevent body scroll when mobile menu is open */
 body.mobile-menu-open {
   overflow: hidden;
 }
 
-/* Fix webkit appearance for better cross-browser consistency */
 button,
 input,
 select,
@@ -279,12 +188,10 @@ textarea {
   appearance: none;
 }
 
-/* Fix for custom element styles to avoid :host() warnings */
 .custom-element {
   display: block;
 }
 
-/* Prevent text inflation on mobile */
 body {
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
@@ -293,4 +200,9 @@ body {
 
 html {
   scroll-padding-top: var(--header-height);
+}
+
+.react-flow__attribution a {
+  display: inline-block;
+  padding: 0.5rem 0.625rem;
 }

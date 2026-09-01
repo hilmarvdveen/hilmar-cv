@@ -1862,6 +1862,11 @@
             "closeMenu": "Menu sluiten",
             "language": "Taal"
         },
+        "consent": {
+            "text": "Deze site gebruikt cookies voor anonieme bezoekstatistieken. Je keuze wordt onthouden.",
+            "decline": "Weigeren",
+            "accept": "Accepteren"
+        },
         "images": {
             "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
             "companyLogoAlt": "{company} bedrijfslogo",

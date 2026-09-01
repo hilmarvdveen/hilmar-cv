@@ -28,11 +28,9 @@ export default async function ProjectsPage({ params }: Props) {
           __html: seoData.structuredData,
         }}
       />
-      <main>
-        <ProjectsHero />
-        <Breadcrumb />
-        <ProjectShowcase />
-      </main>
+      <ProjectsHero />
+      <Breadcrumb />
+      <ProjectShowcase />
     </>
   );
 }

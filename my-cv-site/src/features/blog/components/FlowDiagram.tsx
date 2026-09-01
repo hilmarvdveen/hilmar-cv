@@ -6,20 +6,16 @@ import "@xyflow/react/dist/style.css";
 type FlowDiagramProps = {
   nodes: Node[];
   edges: Edge[];
-  /** Pixel height of the canvas. */
   height?: number;
   caption?: string;
-  /** Accessible label describing what the diagram shows. */
   ariaLabel: string;
 };
 
-/**
- * Read-only ReactFlow canvas for explaining architecture in posts. Interactions
- * are limited (no node dragging/connecting, scroll stays with the page) so the
- * diagram reads like a figure rather than a playground. Node/edge objects are
- * built with the `flowNode`/`flowEdge` helpers in `../flow`.
- */
+const diagramIdFrom = (label: string) =>
+  label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 export function FlowDiagram({ nodes, edges, height = 340, caption, ariaLabel }: FlowDiagramProps) {
+  const diagramId = diagramIdFrom(ariaLabel);
   return (
     <figure className="my-8">
       <div
@@ -29,6 +25,7 @@ export function FlowDiagram({ nodes, edges, height = 340, caption, ariaLabel }: 
         aria-label={ariaLabel}
       >
         <ReactFlow
+          id={diagramId}
           nodes={nodes}
           edges={edges}
           fitView
@@ -40,7 +37,7 @@ export function FlowDiagram({ nodes, edges, height = 340, caption, ariaLabel }: 
           panOnDrag
           minZoom={0.2}
         >
-          <Background gap={20} color="#e2e8f0" />
+          <Background id={diagramId} gap={20} color="#e2e8f0" />
           <Controls showInteractive={false} position="bottom-right" />
         </ReactFlow>
       </div>

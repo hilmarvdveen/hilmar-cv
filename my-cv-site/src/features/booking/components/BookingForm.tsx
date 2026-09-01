@@ -375,7 +375,6 @@ export const BookingForm = () => {
                 key={day}
                 type="button"
                 aria-pressed={selected}
-                aria-label={formatLongDate(day, locale)}
                 onClick={() => selectDay(day)}
                 className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:h-[68px] ${
                   selected
@@ -383,11 +382,17 @@ export const BookingForm = () => {
                     : "border-gray-200 bg-white text-textMain hover:border-emerald-600"
                 }`}
               >
-                <span className="text-[11px] font-semibold uppercase leading-none">
+                <span className="sr-only">{formatLongDate(day, locale)}</span>
+                <span aria-hidden="true" className="text-[11px] font-semibold uppercase leading-none">
                   {label.weekday}
                 </span>
-                <span className="mt-1 text-lg font-bold leading-none">{label.day}</span>
-                <span className="mt-1 text-[11px] leading-none opacity-80">
+                <span aria-hidden="true" className="mt-1 text-lg font-bold leading-none">
+                  {label.day}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={`mt-1 text-[11px] leading-none ${selected ? "text-emerald-100" : "text-gray-600"}`}
+                >
                   {label.month}
                 </span>
               </button>

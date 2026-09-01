@@ -301,6 +301,11 @@
             "closeMenu": "Close menu",
             "language": "Language"
         },
+        "consent": {
+            "text": "This site uses cookies for anonymous visit statistics. Your choice is remembered.",
+            "decline": "Decline",
+            "accept": "Accept"
+        },
         "images": {
             "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
             "companyLogoAlt": "{company} company logo",

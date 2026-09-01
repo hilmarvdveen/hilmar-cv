@@ -1,17 +1,12 @@
-"use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { Download, Calendar, Check } from "lucide-react";
+import { Calendar, Check } from "lucide-react";
 import { Button } from "@/components/Button";
-import { useState } from "react";
-import { CVDownloadModal } from "@/features/cv-download";
-import { useParams } from "next/navigation";
+import { CvDownloadTrigger } from "./CvDownloadTrigger";
 
 export const HeroSection = () => {
   const t = useTranslations("home.hero");
-  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
-  const params = useParams();
-  const locale = params.locale as string;
+  const locale = useLocale();
   const chips = t.raw("chips") as string[];
 
   return (
@@ -48,18 +43,11 @@ export const HeroSection = () => {
                 size="lg"
                 className="w-full px-4 text-[15px] sm:w-auto sm:px-8 sm:text-base"
               >
-                <Calendar className="hidden w-5 h-5 sm:block group-hover:scale-110 transition-transform duration-200" />
+                <Calendar className="hidden w-5 h-5 sm:block group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
                 <span>{t("bookCall")}</span>
               </Button>
 
-              <button
-                type="button"
-                onClick={() => setIsCVModalOpen(true)}
-                className="inline-flex items-center justify-center gap-2 rounded text-slate-400 hover:text-white font-medium underline underline-offset-4 transition-colors sm:justify-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
-              >
-                <Download className="w-4 h-4" />
-                <span>{t("downloadCv")}</span>
-              </button>
+              <CvDownloadTrigger label={t("downloadCv")} locale={locale} />
             </div>
 
             <p className="text-[13px] text-slate-400">{t("credentials")}</p>
@@ -96,12 +84,6 @@ export const HeroSection = () => {
           ))}
         </ul>
       </div>
-
-      <CVDownloadModal
-        isOpen={isCVModalOpen}
-        onClose={() => setIsCVModalOpen(false)}
-        locale={locale}
-      />
     </section>
   );
 };

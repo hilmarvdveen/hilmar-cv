@@ -5,8 +5,8 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics, GoogleTagManager } from "@/features/analytics";
-import { getMessages } from "next-intl/server";
-import { setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
 import "@/app/globals.css";
 import { Metadata, Viewport } from "next";
 import { SEOEngine } from "@/lib/seo";
@@ -14,7 +14,6 @@ import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import type { Locale } from "@/lib/seo/types/seo-types";
-import { BookingFormProvider } from "@/features/booking";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +24,6 @@ const inter = Inter({
 
 const FAVICON_VERSION = "v2024-01-15";
 
-// Initialize SEO Engine
 const seoEngine = new SEOEngine();
 
 export type Props = {
@@ -36,18 +34,14 @@ export type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
-  // Validate locale
   if (!["en", "nl"].includes(locale)) {
     notFound();
   }
 
-  // Generate SEO metadata using our comprehensive SEO system
   const { metadata } = seoEngine.createHomepageSEO(locale as Locale);
 
-  // Add additional layout-specific metadata
   return {
     ...metadata,
-    // Enhance with favicon and PWA metadata
     icons: {
       icon: [
         { url: `/favicon.ico?${FAVICON_VERSION}`, sizes: "any" },
@@ -90,15 +84,23 @@ export const viewport: Viewport = {
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const [{ locale }, messages] = await Promise.all([
-    params,
-    params.then(({ locale }) => {
-      if (![`en`, `nl`].includes(locale)) notFound();
-      return getMessages({ locale });
-    }),
-  ]);
-
+  const { locale } = await params;
+  if (![`en`, `nl`].includes(locale)) notFound();
   setRequestLocale(locale);
+
+  const [messages, common] = await Promise.all([
+    getMessages({ locale }),
+    getTranslations({ locale, namespace: "common" }),
+  ]);
+  const clientMessages = pickMessages(messages, CLIENT_MESSAGE_KEYS) as typeof messages;
+  const consentLabels = {
+    text: common("consent.text"),
+    decline: common("consent.decline"),
+    accept: common("consent.accept"),
+  };
+  const analyticsEnabled = process.env.NODE_ENV === "production";
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
     <html
@@ -107,61 +109,27 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <head>
-        {/* DNS prefetch for third-party origins we actually use. Fonts are
-            self-hosted via next/font (Inter), so no fonts.googleapis.com /
-            fonts.gstatic.com preconnect is needed — those were unused. */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link rel="dns-prefetch" href="//vercel.live" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
-
-        {/* Professional geo metadata */}
-        <meta name="geo.region" content="NL-NH" />
-        <meta name="geo.placename" content="Amsterdam" />
-        <meta name="geo.position" content="52.3676;4.9041" />
-        <meta name="ICBM" content="52.3676, 4.9041" />
-
-        {/* Google Tag Manager - Load as high as possible */}
-        {process.env.NODE_ENV === "production" &&
-          process.env.NEXT_PUBLIC_GTM_ID && (
-            <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-          )}
+        {analyticsEnabled && gtmId && <GoogleTagManager gtmId={gtmId} />}
       </head>
 
       <body
         className="min-h-screen bg-white text-gray-900 font-sans antialiased"
         suppressHydrationWarning
       >
-        {/* GTM NoScript fallback - immediately after body tag */}
-        {process.env.NODE_ENV === "production" &&
-          process.env.NEXT_PUBLIC_GTM_ID && (
-            <noscript>
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              />
-            </noscript>
-          )}
-
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <BookingFormProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1 pt-[var(--header-height)]">{children}</main>
-              <Footer />
-            </div>
-          </BookingFormProvider>
+        <NextIntlClientProvider locale={locale} messages={clientMessages}>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 pt-[var(--header-height)]">{children}</main>
+            <Footer />
+          </div>
         </NextIntlClientProvider>
 
-        {/* Analytics - GA4 with GTM integration */}
-        {process.env.NODE_ENV === "production" &&
-          process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-          )}
+        {analyticsEnabled && gaId && <GoogleAnalytics gaId={gaId} labels={consentLabels} />}
 
-        {/* Performance monitoring and analytics */}
         <SpeedInsights />
         <Analytics />
       </body>

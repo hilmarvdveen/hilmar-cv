@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { BookingForm } from "@/features/booking";
+import { BookingForm, BookingFormProvider } from "@/features/booking";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SEOFactory } from "@/lib/seo";
@@ -72,7 +72,9 @@ export default async function BookPage({ params }: Props) {
         aria-labelledby="booking-step-heading"
       >
         <Container>
-          <BookingForm />
+          <BookingFormProvider>
+            <BookingForm />
+          </BookingFormProvider>
         </Container>
       </Section>
     </>

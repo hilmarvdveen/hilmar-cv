@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import { Mail, MessageSquare, Phone, MapPin, Clock, Timer } from "lucide-react";
 import { Button } from "@/components/Button";
@@ -69,51 +67,51 @@ export const ContactHero = () => {
               {t("info.title")}
             </h2>
 
-            <dl className="space-y-4 text-gray-300">
-              <div className="flex items-center">
+            <ul className="space-y-4 text-gray-300">
+              <li className="flex items-center">
                 <Mail
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">{t("info.email")}</dt>
-                  <dd className="font-medium">
+                  <span className="block text-sm text-gray-300">{t("info.email")}</span>
+                  <span className="block font-medium">
                     <a
                       href="mailto:hilmar@hilmarvanderveen.com"
                       className="hover:text-emerald-400 transition-colors"
                     >
                       hilmar@hilmarvanderveen.com
                     </a>
-                  </dd>
+                  </span>
                 </div>
-              </div>
+              </li>
 
-              <div className="flex items-center">
+              <li className="flex items-center">
                 <Phone
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">{t("info.phone")}</dt>
-                  <dd className="font-medium">
+                  <span className="block text-sm text-gray-300">{t("info.phone")}</span>
+                  <span className="block font-medium">
                     <a
                       href="tel:+31680149947"
                       className="hover:text-emerald-400 transition-colors"
                     >
                       +31 6 8014 9947
                     </a>
-                  </dd>
+                  </span>
                 </div>
-              </div>
+              </li>
 
-              <div className="flex items-center">
+              <li className="flex items-center">
                 <MessageSquare
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">WhatsApp</dt>
-                  <dd className="font-medium">
+                  <span className="block text-sm text-gray-300">WhatsApp</span>
+                  <span className="block font-medium">
                     <a
                       href="https://wa.me/31680149947"
                       target="_blank"
@@ -122,23 +120,23 @@ export const ContactHero = () => {
                     >
                       +31 6 8014 9947
                     </a>
-                  </dd>
+                  </span>
                 </div>
-              </div>
+              </li>
 
-              <div className="flex items-center">
+              <li className="flex items-center">
                 <MapPin
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">
+                  <span className="block text-sm text-gray-300">
                     {t("info.location")}
-                  </dt>
-                  <dd className="font-medium">Netherlands</dd>
+                  </span>
+                  <span className="block font-medium">Netherlands</span>
                 </div>
-              </div>
-            </dl>
+              </li>
+            </ul>
           </article>
 
           <article className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
@@ -150,33 +148,33 @@ export const ContactHero = () => {
               {t("info.availability")}
             </h2>
 
-            <dl className="space-y-3 text-gray-300">
-              <div className="flex items-center">
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center">
                 <Clock
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">
+                  <span className="block text-sm text-gray-300">
                     {t("info.availability")}
-                  </dt>
-                  <dd className="font-medium">{t("info.availabilityText")}</dd>
+                  </span>
+                  <span className="block font-medium">{t("info.availabilityText")}</span>
                 </div>
-              </div>
+              </li>
 
-              <div className="flex items-center">
+              <li className="flex items-center">
                 <Timer
                   className="w-4 h-4 mr-3 text-emerald-400"
                   aria-hidden="true"
                 />
                 <div>
-                  <dt className="text-sm text-gray-400">
+                  <span className="block text-sm text-gray-300">
                     {t("info.response")}
-                  </dt>
-                  <dd className="font-medium">{t("info.responseText")}</dd>
+                  </span>
+                  <span className="block font-medium">{t("info.responseText")}</span>
                 </div>
-              </div>
-            </dl>
+              </li>
+            </ul>
           </article>
         </aside>
       </div>

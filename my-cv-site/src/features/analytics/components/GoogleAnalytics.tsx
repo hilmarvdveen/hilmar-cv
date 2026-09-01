@@ -2,44 +2,52 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/Button";
+
+export const ANALYTICS_CONSENT_KEY = "ga-consent";
+export const ANALYTICS_CONSENT_EVENT = "analytics-consent";
+
+export type ConsentLabels = {
+  text: string;
+  decline: string;
+  accept: string;
+};
 
 type GoogleAnalyticsProps = {
   gaId: string;
-}
+  labels: ConsentLabels;
+};
 
-export function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
+export const readStoredConsent = (): boolean | null => {
+  try {
+    const stored = localStorage.getItem(ANALYTICS_CONSENT_KEY);
+    if (stored === "granted") return true;
+    if (stored === "denied") return false;
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+export function GoogleAnalytics({ gaId, labels }: GoogleAnalyticsProps) {
   const [consentGiven, setConsentGiven] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Check if user has already given consent
-    const consent = localStorage.getItem("ga-consent");
-    if (consent === "granted") {
-      setConsentGiven(true);
-    } else if (consent === "denied") {
-      setConsentGiven(false);
-    }
+    const stored = readStoredConsent();
+    if (stored !== null) setConsentGiven(stored);
   }, []);
 
-  const grantConsent = () => {
-    localStorage.setItem("ga-consent", "granted");
-    setConsentGiven(true);
-
-    // Initialize GA after consent
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("consent", "update", {
-        analytics_storage: "granted",
-      });
+  const decide = (granted: boolean) => {
+    localStorage.setItem(ANALYTICS_CONSENT_KEY, granted ? "granted" : "denied");
+    setConsentGiven(granted);
+    window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: granted }));
+    if (granted && typeof window.gtag === "function") {
+      window.gtag("consent", "update", { analytics_storage: "granted" });
     }
-  };
-
-  const denyConsent = () => {
-    localStorage.setItem("ga-consent", "denied");
-    setConsentGiven(false);
   };
 
   return (
     <>
-      {/* Google Analytics Scripts - Lazy loaded for better performance */}
       {consentGiven && (
         <>
           <Script
@@ -60,41 +68,29 @@ export function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
         </>
       )}
 
-      {/* Consent Banner */}
       {consentGiven === null && (
-        <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 shadow-lg">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex-1">
-              <p className="text-sm">
-                We use cookies to analyze website traffic and optimize your
-                website experience. By accepting our use of cookies, your data
-                will be aggregated with all other user data.
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={denyConsent}
-                className="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-800 transition-colors text-sm"
-              >
-                Decline
-              </button>
-              <button
-                onClick={grantConsent}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
-              >
-                Accept
-              </button>
+        <section
+          aria-label={labels.accept}
+          className="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur sm:px-6"
+        >
+          <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-gray-700">{labels.text}</p>
+            <div className="flex gap-2">
+              <Button type="button" variant="neutral" size="sm" onClick={() => decide(false)}>
+                {labels.decline}
+              </Button>
+              <Button type="button" variant="primary" size="sm" onClick={() => decide(true)}>
+                {labels.accept}
+              </Button>
             </div>
           </div>
-        </div>
+        </section>
       )}
     </>
   );
 }
 
-// Extend Window interface for TypeScript (matches analytics-manager.ts)
 declare global {
-  // Global augmentation requires `interface` (type aliases can't merge into Window).
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
     gtag: (...args: unknown[]) => void;

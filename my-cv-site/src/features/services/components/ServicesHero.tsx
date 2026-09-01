@@ -1,8 +1,6 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import { Code, Zap, Palette, Users, Calendar, Mail } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/Button";
 
 export const ServicesHero = () => {
@@ -76,9 +74,9 @@ export const ServicesHero = () => {
                   <div className="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-gray-200 font-semibold group-hover:text-white transition-colors duration-300">
+                  <p className="text-gray-200 font-semibold group-hover:text-white transition-colors duration-300">
                     {service.title}
-                  </h3>
+                  </p>
                 </div>
               </Link>
             );
