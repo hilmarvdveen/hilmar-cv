@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { BLOG_POSTS, getPostBySlug, getAllSlugs } from "./registry";
+import { BLOG_POSTS, getPostBySlug } from "./registry";
+
+const slugs = BLOG_POSTS.map((post) => post.slug);
 
 describe("blog registry", () => {
   it("exposes posts with unique slugs, sorted newest-first", () => {
     expect(BLOG_POSTS.length).toBeGreaterThan(0);
-
-    const slugs = getAllSlugs();
     expect(new Set(slugs).size).toBe(slugs.length);
 
     for (let i = 1; i < BLOG_POSTS.length; i++) {
@@ -16,7 +16,7 @@ describe("blog registry", () => {
   });
 
   it("looks posts up by slug", () => {
-    const first = getAllSlugs()[0];
+    const first = slugs[0];
     expect(getPostBySlug(first)?.slug).toBe(first);
     expect(getPostBySlug("does-not-exist")).toBeUndefined();
   });

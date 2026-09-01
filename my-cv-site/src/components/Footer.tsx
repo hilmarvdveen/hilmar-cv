@@ -177,7 +177,7 @@ export const Footer = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-gray-500 hover:text-gray-400 transition-colors duration-200 text-sm"
+                      className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
                     >
                       {link.name}
                     </Link>
@@ -267,23 +267,23 @@ export const Footer = () => {
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-500 text-sm">
+            <div className="text-gray-400 text-sm">
               © {new Date().getFullYear()} {t("about.name")}.{" "}
               {t("bottom.copyright")}
             </div>
 
             <div className="flex items-center space-x-6 text-sm">
-              <span className="text-gray-500">{t("bottom.builtWith")}</span>
+              <span className="text-gray-400">{t("bottom.builtWith")}</span>
               <div className="flex items-center space-x-2">
                 <span className="text-emerald-400">Next.js</span>
-                <span className="text-gray-500">•</span>
+                <span className="text-gray-400">•</span>
                 <span className="text-emerald-400">TypeScript</span>
-                <span className="text-gray-500">•</span>
+                <span className="text-gray-400">•</span>
                 <span className="text-emerald-400">Tailwind CSS</span>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 text-sm text-gray-500">
+            <div className="flex items-center space-x-4 text-sm text-gray-400">
               <span>{t("bottom.location.netherlands")}</span>
               <span>•</span>
               <span>{t("bottom.location.euBased")}</span>

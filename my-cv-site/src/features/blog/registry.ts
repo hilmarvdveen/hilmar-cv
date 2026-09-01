@@ -22,12 +22,6 @@ export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((a, b) =>
   b.publishedDate.localeCompare(a.publishedDate)
 );
 
-/** Look up a single post by its URL slug. */
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((post) => post.slug === slug);
-}
-
-/** All slugs, for `generateStaticParams` and the sitemap. */
-export function getAllSlugs(): string[] {
-  return BLOG_POSTS.map((post) => post.slug);
 }

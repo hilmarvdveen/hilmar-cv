@@ -32,21 +32,26 @@ export default async function BookPage({ params }: Props) {
         }}
       />
 
-      <Section background="navy" padding="default" aria-labelledby="book-heading">
+      <Section
+        background="navy"
+        padding="default"
+        className="py-8 sm:py-16 lg:py-20"
+        aria-labelledby="book-heading"
+      >
         <Container>
-          <p className="text-[13px] font-bold uppercase tracking-widest text-emerald-300">
+          <p className="text-xs font-bold uppercase tracking-widest text-emerald-300 sm:text-[13px]">
             {t("hero.badge")}
           </p>
           <h1
             id="book-heading"
-            className="mt-3 text-3xl font-extrabold tracking-tight text-white text-balance sm:text-4xl lg:text-5xl"
+            className="mt-2 text-2xl font-extrabold tracking-tight text-white text-balance sm:mt-3 sm:text-4xl lg:text-5xl"
           >
             {t("hero.title")}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-300 sm:mt-4 sm:text-lg">
             {t("hero.description")}
           </p>
-          <ul className="mt-6 flex flex-wrap gap-2">
+          <ul className="mt-6 hidden flex-wrap gap-2 sm:flex">
             {facts.map((fact) => (
               <li
                 key={fact}
