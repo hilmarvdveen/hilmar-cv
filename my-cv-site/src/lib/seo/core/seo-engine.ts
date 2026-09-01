@@ -17,10 +17,10 @@ import type {
   GA4Configuration 
 } from '../types/seo-types';
 import type { Metadata } from 'next';
-import { 
-  BUSINESS_PROFILE, 
-  PRICING, 
-  LOCALE_CONFIG 
+import {
+  BUSINESS_PROFILE,
+  RATE_TEXT,
+  LOCALE_CONFIG
 } from '../constants/meta-constants';
 import {
   HOMEPAGE_CONTENT,
@@ -103,18 +103,15 @@ export class SEOEngine {
     const config: SEOPageConfig = {
       pageType: 'homepage',
       locale,
-      title: locale === 'nl'
-        ? `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`
-        : `${BUSINESS_PROFILE.NAME} — Senior Frontend Developer Amsterdam`,
+      title: `${BUSINESS_PROFILE.NAME} | Freelance ${BUSINESS_PROFILE.SEARCH_TITLE}`,
       description: locale === 'nl'
-        ? `Senior Frontend Developer in Amsterdam met ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring. Specialist in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur. MSc Physics UvA. Klanten: Belastingdienst, Ziggo, NPL.`
-        : `Senior Frontend Developer in Amsterdam with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience. Expert in React, Angular, Next.js. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour. MSc Physics UvA. Clients: Belastingdienst, Ziggo, NPL.`,
+        ? `Freelance senior frontend developer, 10+ jaar React, Next.js en Angular. Nu bij bol.com, drie keer verlengd. Vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH} in de Randstad en remote.`
+        : `Freelance senior frontend developer, 10+ years of React, Next.js and Angular. At bol.com now, extended three times. From ${BUSINESS_PROFILE.AVAILABLE_FROM}, Randstad and remote.`,
       keywords: [
         ...HOMEPAGE_CONTENT.SEO_FOCUS.SECONDARY,
         ...HOMEPAGE_CONTENT.SEO_FOCUS.LONG_TAIL,
-        'MSc Physics Frontend Developer Amsterdam',
-        'Belastingdienst Ziggo NPL Developer',
-        'TypeScript React Amsterdam Expert'
+        'bol.com Belastingdienst Postcode Loterij Athlon',
+        'TypeScript GraphQL frontend developer'
       ],
       path: '',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -136,18 +133,16 @@ export class SEOEngine {
       pageType: 'about',
       locale,
       title: locale === 'nl'
-        ? `Over ${BUSINESS_PROFILE.NAME} - Senior Frontend Developer | MSc Physics UvA`
-        : `About ${BUSINESS_PROFILE.NAME} - Senior Frontend Developer | MSc Physics UvA`,
+        ? `Over ${BUSINESS_PROFILE.NAME}, senior frontend developer`
+        : `About ${BUSINESS_PROFILE.NAME}, senior frontend developer`,
       description: locale === 'nl'
-        ? `Leer meer over ${BUSINESS_PROFILE.NAME}, Senior Frontend Developer met ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring. MSc Physics UvA afgestudeerd. Ervaring bij Belastingdienst, Ziggo, NPL. Specialist in React, Angular, Next.js ontwikkeling.`
-        : `Learn about ${BUSINESS_PROFILE.NAME}, Senior Frontend Developer with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience. MSc Physics UvA graduate. Experience at Belastingdienst, Ziggo, NPL. Expert in React, Angular, Next.js development.`,
+        ? `Senior frontend developer sinds 2016 bij bol.com, de Belastingdienst, Postcode Loterij en Athlon. React, Next.js en Angular, van specificatie tot cut-over.`
+        : `Senior frontend developer since 2016 at bol.com, the Belastingdienst, Postcode Loterij and Athlon. React, Next.js and Angular, from specification to cut-over.`,
       keywords: [
         ...ABOUT_CONTENT.SEO_FOCUS.SECONDARY,
         ...ABOUT_CONTENT.SEO_FOCUS.EXPERTISE,
-        `${BUSINESS_PROFILE.NAME} biography`,
-        'Physics MSc Frontend Developer',
-        'Amsterdam Developer Experience',
-        'Enterprise Development Background'
+        `${BUSINESS_PROFILE.NAME} profile`,
+        'Frontend engineer Randstad'
       ],
       path: 'about',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -169,18 +164,16 @@ export class SEOEngine {
       pageType: 'services',
       locale,
       title: locale === 'nl'
-        ? `Frontend Development Services Amsterdam | React, Angular, Next.js | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur`
-        : `Frontend Development Services Amsterdam | React, Angular, Next.js | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour`,
+        ? 'Diensten | Freelance frontend developer, Randstad'
+        : 'Services | Freelance frontend developer, Randstad',
       description: locale === 'nl'
-        ? `Professionele frontend development services in Amsterdam. Specialist in React, Angular, Next.js en TypeScript. Full-stack ontwikkeling, design systems, technical consulting. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur. Ervaring bij grote Nederlandse bedrijven.`
-        : `Professional frontend development services in Amsterdam. Expert in React, Angular, Next.js, and TypeScript. Full-stack development, design systems, technical consulting. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour. Experience at major Dutch companies.`,
+        ? `Frontend developer inhuren voor React, Next.js of Angular: legacy naar modern zonder downtime en design systems. ${RATE_TEXT.nl}.`
+        : `Hire a frontend developer for React, Next.js or Angular: legacy to modern without downtime and design systems. ${RATE_TEXT.en}.`,
       keywords: [
         ...SERVICES_CONTENT.SEO_FOCUS.SECONDARY,
         ...SERVICES_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
-        'Full-stack Development Amsterdam',
-        'Design Systems Development',
-        'Technical Consulting Netherlands',
-        'Enterprise Frontend Services'
+        'Full-stack React with .NET or Kotlin',
+        'Frontend architecture consulting Netherlands'
       ],
       path: 'services',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -202,18 +195,16 @@ export class SEOEngine {
       pageType: 'projects',
       locale,
       title: locale === 'nl'
-        ? `Portfolio & Projecten - Frontend Development Case Studies | Belastingdienst, Ziggo, NPL`
-        : `Portfolio & Projects - Frontend Development Case Studies | Belastingdienst, Ziggo, NPL`,
+        ? 'Cases | bol.com, Belastingdienst, Postcode Loterij, Athlon'
+        : 'Case studies | bol.com, Belastingdienst, Athlon and more',
       description: locale === 'nl'
-        ? `Bekijk mijn frontend development portfolio met React, Angular en Next.js projecten. Case studies van projecten bij Belastingdienst, Ziggo, NPL. Enterprise web applicaties, e-commerce oplossingen en data visualisatie dashboards.`
-        : `View my frontend development portfolio with React, Angular, and Next.js projects. Case studies from projects at Belastingdienst, Ziggo, NPL. Enterprise web applications, e-commerce solutions, and data visualization dashboards.`,
+        ? `Opgeleverd: legacy Java naar SSR React bij bol.com, een low-code formulierenplatform bij de Belastingdienst, design systems bij Postcode Loterij en Athlon.`
+        : `Delivered: legacy Java to SSR React at bol.com, a low-code forms platform at the Belastingdienst, design systems at Postcode Loterij and Athlon.`,
       keywords: [
         ...PROJECTS_CONTENT.SEO_FOCUS.SECONDARY,
         ...PROJECTS_CONTENT.SEO_FOCUS.CLIENT_FOCUS,
         ...PROJECTS_CONTENT.SEO_FOCUS.TECH_FOCUS,
-        'Enterprise Web Applications Portfolio',
-        'Dutch Government Portal Development',
-        'Telecommunications Frontend Projects'
+        'E-commerce and government frontend'
       ],
       path: 'projects',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -235,18 +226,16 @@ export class SEOEngine {
       pageType: 'contact',
       locale,
       title: locale === 'nl'
-        ? `Contact - Frontend Developer Amsterdam Inhuren | React, Angular, Next.js`
-        : `Contact - Hire Frontend Developer Amsterdam | React, Angular, Next.js`,
+        ? 'Contact | Freelance frontend developer inhuren, Randstad'
+        : 'Contact | Hire a freelance frontend developer, Randstad',
       description: locale === 'nl'
-        ? `Neem contact op voor frontend development projecten in Amsterdam. Gespecialiseerd in React, Angular en Next.js. Beschikbaar voor Nederlandse en internationale projecten. Email: ${BUSINESS_PROFILE.CONTACT.EMAIL}`
-        : `Get in touch for frontend development projects in Amsterdam. Specialized in React, Angular, and Next.js. Available for Dutch and international projects. Email: ${BUSINESS_PROFILE.CONTACT.EMAIL}`,
+        ? `Frontend developer inhuren voor React, Next.js of Angular in Amsterdam, Utrecht, Rotterdam of Den Haag, hybride of remote. Of plan een gesprek van 30 minuten.`
+        : `Hire a frontend developer for React, Next.js or Angular in Amsterdam, Utrecht, Rotterdam or The Hague, hybrid or remote. Or book a 30-minute call directly.`,
       keywords: [
         ...CONTACT_CONTENT.SEO_FOCUS.SECONDARY,
         ...CONTACT_CONTENT.SEO_FOCUS.ACTION_FOCUSED,
         ...CONTACT_CONTENT.SEO_FOCUS.LOCAL_SEO,
-        'Frontend Development Consultation Amsterdam',
-        'React Angular Next.js Developer Hire',
-        'Netherlands Remote Development'
+        'Hybrid or remote frontend engineer'
       ],
       path: 'contact',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -268,18 +257,16 @@ export class SEOEngine {
       pageType: 'faq',
       locale,
       title: locale === 'nl'
-        ? `Veelgestelde Vragen - Frontend Development Services | React, Angular, Next.js`
-        : `Frequently Asked Questions - Frontend Development Services | React, Angular, Next.js`,
+        ? 'Veelgestelde vragen | Freelance frontend developer'
+        : 'Frequently asked questions | Freelance frontend developer',
       description: locale === 'nl'
-        ? `Veelgestelde vragen over frontend development services in Amsterdam. Informatie over React, Angular, Next.js projecten, prijzen, tijdlijnen en samenwerking. Expert antwoorden van ervaren developer.`
-        : `Frequently asked questions about frontend development services in Amsterdam. Information about React, Angular, Next.js projects, pricing, timelines, and collaboration. Expert answers from experienced developer.`,
+        ? `Antwoorden over inzet, tarief (${RATE_TEXT.nl}), beschikbaarheid vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH}, hybride werken in de Randstad en hoe een opdracht start.`
+        : `Answers on engagements, the rate (${RATE_TEXT.en}), availability from ${BUSINESS_PROFILE.AVAILABLE_FROM}, hybrid work across the Randstad and how a contract starts.`,
       keywords: [
         ...FAQ_CONTENT.SEO_FOCUS.SECONDARY,
         ...FAQ_CONTENT.SEO_FOCUS.SERVICE_FOCUSED,
-        'Frontend Development Pricing FAQ',
-        'React Angular Project Questions',
-        'Amsterdam Developer Information',
-        'JavaScript Development Process'
+        'Frontend engineer rate excluding VAT',
+        'Freelance frontend Randstad questions'
       ],
       path: 'faq',
       faqItems,
@@ -302,18 +289,16 @@ export class SEOEngine {
       pageType: 'booking',
       locale,
       title: locale === 'nl'
-        ? `Book Frontend Developer Amsterdam | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur | Gratis Consultatie`
-        : `Book Frontend Developer Amsterdam | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour | Free Consultation`,
+        ? `Plan een gesprek van 30 minuten | ${BUSINESS_PROFILE.NAME}`
+        : `Book a 30-minute call | ${BUSINESS_PROFILE.NAME}`,
       description: locale === 'nl'
-        ? `Boek een frontend developer in Amsterdam. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur voor React, Angular, Next.js projecten. Gratis initiële consultatie. Snelle levering, volledige ondersteuning. Projecten vanaf €${PRICING.PROJECT_MIN}.`
-        : `Book a frontend developer in Amsterdam. €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour for React, Angular, Next.js projects. Free initial consultation. Fast delivery, full support. Projects from €${PRICING.PROJECT_MIN}.`,
+        ? `Kies een moment, laat je naam en e-mailadres achter, klaar. Een vrijblijvend gesprek van 30 minuten over je frontend, met de uitnodiging direct in je agenda.`
+        : `Pick a moment, leave your name and email, done. A no-obligation 30-minute call about your frontend, with the invitation straight in your calendar.`,
       keywords: [
         ...BOOKING_CONTENT.SEO_FOCUS.SECONDARY,
         ...BOOKING_CONTENT.SEO_FOCUS.PRICING_FOCUSED,
         ...BOOKING_CONTENT.SEO_FOCUS.ACTION_FOCUSED,
-        'Free Frontend Consultation Amsterdam',
-        'Book React Developer Netherlands',
-        'Schedule Frontend Development'
+        'Book a senior frontend engineer Randstad'
       ],
       path: 'book',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -335,18 +320,16 @@ export class SEOEngine {
       pageType: 'blog',
       locale,
       title: locale === 'nl'
-        ? `Frontend Development Blog Amsterdam | React, Angular, Next.js Tutorials`
-        : `Frontend Development Blog Amsterdam | React, Angular, Next.js Tutorials`,
+        ? 'Blog | React, Next.js en frontend-architectuur'
+        : 'Blog | React, Next.js and frontend architecture',
       description: locale === 'nl'
-        ? `Frontend development blog met React, Angular en Next.js tutorials. Best practices, performance tips, TypeScript guides en Amsterdam tech scene insights van ervaren developer.`
-        : `Frontend development blog with React, Angular, and Next.js tutorials. Best practices, performance tips, TypeScript guides, and Amsterdam tech scene insights from experienced developer.`,
+        ? `Artikelen over React-architectuur, mappenstructuur, unit testing, routing en SEO, geschreven vanuit tien jaar productiewerk.`
+        : `Articles on React architecture, folder structure, unit testing, routing and SEO, written from ten years of production work.`,
       keywords: [
         ...BLOG_CONTENT.SEO_FOCUS.SECONDARY,
         ...BLOG_CONTENT.SEO_FOCUS.TECHNICAL,
         ...BLOG_CONTENT.SEO_FOCUS.LOCAL,
-        'Frontend Performance Optimization',
-        'Modern JavaScript Frameworks Blog',
-        'React Angular Best Practices'
+        'Frontend best practices from production'
       ],
       path: 'blog',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -412,18 +395,14 @@ export class SEOEngine {
       pageType: 'privacy',
       locale,
       title: locale === 'nl'
-        ? `Privacy Policy - ${BUSINESS_PROFILE.NAME} | GDPR Compliant | Amsterdam`
-        : `Privacy Policy - ${BUSINESS_PROFILE.NAME} | GDPR Compliant | Amsterdam`,
+        ? 'Privacyverklaring'
+        : 'Privacy policy',
       description: locale === 'nl'
-        ? `Privacy policy van ${BUSINESS_PROFILE.NAME}, frontend developer in Amsterdam. GDPR-compliant databeleid, cookie-gebruik en gebruikersrechten. Transparante omgang met privacygegevens.`
-        : `Privacy policy of ${BUSINESS_PROFILE.NAME}, frontend developer in Amsterdam. GDPR-compliant data policy, cookie usage, and user rights. Transparent privacy data handling.`,
+        ? `Hoe ${BUSINESS_PROFILE.COMPANY} persoonsgegevens verwerkt op hilmarvanderveen.com: welke gegevens, waarom, hoe lang en welke rechten je hebt onder de AVG.`
+        : `How ${BUSINESS_PROFILE.COMPANY} processes personal data on hilmarvanderveen.com: which data, why, for how long and your rights under the GDPR.`,
       keywords: [
         ...PRIVACY_CONTENT.SEO_FOCUS.SECONDARY,
-        ...PRIVACY_CONTENT.SEO_FOCUS.PROFESSIONAL,
-        'GDPR Frontend Developer',
-        'Amsterdam Business Privacy',
-        'Developer Data Protection',
-        'Website Privacy Netherlands'
+        ...PRIVACY_CONTENT.SEO_FOCUS.PROFESSIONAL
       ],
       path: 'privacy',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -445,18 +424,16 @@ export class SEOEngine {
       pageType: 'services',
       locale,
       title: locale === 'nl'
-        ? `Frontend Development Amsterdam | React, Next.js, Vue.js Expert | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/uur`
-        : `Frontend Development Amsterdam | React, Next.js, Vue.js Expert | €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour`,
+        ? 'React, Next.js en Angular developer | Freelance, Randstad'
+        : 'React, Next.js and Angular developer | Freelance, Randstad',
       description: locale === 'nl'
-        ? `Expert frontend development services in Amsterdam. Specialist in React, Next.js, Vue.js en TypeScript. Mobile-first responsive design, performance optimization, SEO-friendly development. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring.`
-        : `Expert frontend development services in Amsterdam. Specialized in React, Next.js, Vue.js, and TypeScript. Mobile-first responsive design, performance optimization, SEO-friendly development. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience.`,
+        ? `Freelance frontend developer voor de pagina's die klanten zien, van specificatie tot productie in React, Next.js of Angular. Tests, Storybook en WCAG 2.2 AA.`
+        : `Freelance frontend developer for the pages customers see, from specification to production in React, Next.js or Angular. Tests, Storybook and WCAG 2.2 AA.`,
       keywords: [
         ...FRONTEND_SERVICE_CONTENT.SEO_FOCUS.SECONDARY,
         ...FRONTEND_SERVICE_CONTENT.SEO_FOCUS.TECHNICAL,
         ...FRONTEND_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
-        'Expert React Developer Amsterdam',
-        'Vue.js Development Netherlands',
-        'Frontend Performance Expert'
+        'React developer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/frontend',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -478,18 +455,16 @@ export class SEOEngine {
       pageType: 'services',
       locale,
       title: locale === 'nl'
-        ? `Full-Stack Development Amsterdam | React + Node.js Expert | End-to-End Solutions`
-        : `Full-Stack Development Amsterdam | React + Node.js Expert | End-to-End Solutions`,
+        ? 'Full-stack developer | React met .NET of Kotlin | Randstad'
+        : 'Full-stack developer | React with .NET or Kotlin | Randstad',
       description: locale === 'nl'
-        ? `Complete full-stack development services in Amsterdam. Expert in React, Node.js, PostgreSQL, AWS. End-to-end web application development, API design, cloud deployment. Enterprise-grade solutions met ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring.`
-        : `Complete full-stack development services in Amsterdam. Expert in React, Node.js, PostgreSQL, AWS. End-to-end web application development, API design, cloud deployment. Enterprise-grade solutions with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience.`,
+        ? `Frontend in React of Angular met bereik in de backend: .NET (C#) en Kotlin, GraphQL als contract. Eén engineer voor de hele keten, van API tot pagina.`
+        : `Frontend in React or Angular with range in the backend: .NET (C#) and Kotlin, GraphQL as the contract. One engineer for the whole chain, from API to page.`,
       keywords: [
         ...FULLSTACK_SERVICE_CONTENT.SEO_FOCUS.SECONDARY,
         ...FULLSTACK_SERVICE_CONTENT.SEO_FOCUS.TECHNICAL,
         ...FULLSTACK_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
-        'Node.js React Developer Amsterdam',
-        'PostgreSQL Development Netherlands',
-        'Cloud Development Expert Amsterdam'
+        'Full-stack engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/fullstack',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -511,18 +486,16 @@ export class SEOEngine {
       pageType: 'services',
       locale,
       title: locale === 'nl'
-        ? `Design Systems Development Amsterdam | React Component Libraries | Storybook Expert`
-        : `Design Systems Development Amsterdam | React Component Libraries | Storybook Expert`,
+        ? 'Design system developer | Storybook, tokens | Randstad'
+        : 'Design system developer | Storybook, tokens | Randstad',
       description: locale === 'nl'
-        ? `Professional design systems development in Amsterdam. Expert in React component libraries, Storybook, design tokens. Scalable component architecture, team collaboration, consistent user experiences. Enterprise design system solutions.`
-        : `Professional design systems development in Amsterdam. Expert in React component libraries, Storybook, design tokens. Scalable component architecture, team collaboration, consistent user experiences. Enterprise design system solutions.`,
+        ? `Design systems die teams zelf onderhouden: React- of Angular-componenten, design tokens, Storybook, documentatie. Bij de Belastingdienst en Postcode Loterij.`
+        : `Design systems teams maintain themselves: React or Angular components, design tokens, Storybook and docs. Built at the Belastingdienst and Postcode Loterij.`,
       keywords: [
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.SECONDARY,
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.TECHNICAL,
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
-        'Storybook Development Amsterdam',
-        'React Component Library Netherlands',
-        'Design Token Systems Expert'
+        'Design system engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/design-systems',
       lastModified: SITE_LAST_MODIFIED_DATE,
@@ -544,18 +517,16 @@ export class SEOEngine {
       pageType: 'services',
       locale,
       title: locale === 'nl'
-        ? `Technical Consulting Amsterdam | Frontend Architecture Expert | Performance Optimization`
-        : `Technical Consulting Amsterdam | Frontend Architecture Expert | Performance Optimization`,
+        ? 'Frontend consultant | Architectuur en migratie | Randstad'
+        : 'Frontend consultant | Architecture and migration | Randstad',
       description: locale === 'nl'
-        ? `Expert technical consulting services in Amsterdam. Frontend architecture review, performance optimization, code quality assessment, team training. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} jaar ervaring bij enterprise clients zoals Belastingdienst en Ziggo.`
-        : `Expert technical consulting services in Amsterdam. Frontend architecture review, performance optimization, code quality assessment, team training. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience with enterprise clients like Belastingdienst and Ziggo.`,
+        ? `Architectuurreview, migratieplan van legacy naar modern en begeleiding van het team. Tien jaar senior ervaring bij bol.com, de Belastingdienst en Athlon.`
+        : `Architecture review, a migration plan from legacy to modern and guidance for the team. Ten years senior at bol.com, the Belastingdienst and Athlon.`,
       keywords: [
         ...CONSULTING_SERVICE_CONTENT.SEO_FOCUS.SECONDARY,
         ...CONSULTING_SERVICE_CONTENT.SEO_FOCUS.TECHNICAL,
         ...CONSULTING_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
-        'Frontend Architecture Consulting Amsterdam',
-        'Performance Audit Netherlands',
-        'Technical Leadership Consulting'
+        'Frontend consulting Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/consulting',
       lastModified: SITE_LAST_MODIFIED_DATE,

@@ -1,8 +1,3 @@
-/**
- * Enterprise Schema.org Generator
- * Implements comprehensive structured data for Google 2024 best practices
- * Focus on E-E-A-T signals and professional service optimization
- */
 
 import type {
   JsonLdSchema,
@@ -27,9 +22,6 @@ import {
   LOCALE_CONFIG
 } from '../constants/meta-constants';
 
-// Stable per-deploy timestamp (evaluated once at module load), used as the
-// fallback for date(Published|Modified). Avoids emitting `new Date()` per
-// request, which would make schema dates change on every crawl.
 const BUILD_TIME = new Date().toISOString();
 
 export class SchemaGenerator {
@@ -39,31 +31,20 @@ export class SchemaGenerator {
     this.baseUrl = baseUrl.replace(/\/$/, '');
   }
 
-  /**
-   * Generate comprehensive schema for a page
-   */
   public generatePageSchema(config: SEOPageConfig): JsonLdSchema[] {
     const schemas: JsonLdSchema[] = [];
     
-    // Always include website schema
-    schemas.push(this.generateWebSiteSchema());
-    
-    // Always include organization schema
-    schemas.push(this.generateOrganizationSchema());
-    
-    // Always include person schema (for E-E-A-T)
-    schemas.push(this.generatePersonSchema());
-    
-    // Page-specific schema
+    schemas.push(this.generateWebSiteSchema(config.locale));
+    schemas.push(this.generateOrganizationSchema(config.locale));
+    schemas.push(this.generatePersonSchema(config.locale));
     schemas.push(this.generateWebPageSchema(config));
-    
-    // Add page type specific schemas
+
     switch (config.pageType) {
       case 'homepage':
-        schemas.push(this.generateProfessionalServiceSchema());
+        schemas.push(this.generateProfessionalServiceSchema(config.locale));
         break;
       case 'services':
-        schemas.push(...this.generateServiceSchemas());
+        schemas.push(...this.generateServiceSchemas(config.locale));
         break;
       case 'faq':
         if (config.faqItems) {
@@ -71,7 +52,6 @@ export class SchemaGenerator {
         }
         break;
       case 'about':
-        // Enhanced person schema is already included
         break;
       case 'contact':
         schemas.push(this.generateContactPageSchema(config));
@@ -87,7 +67,6 @@ export class SchemaGenerator {
         break;
     }
     
-    // Add breadcrumbs if available
     if (config.breadcrumbs && config.breadcrumbs.length > 0) {
       schemas.push(this.generateBreadcrumbSchema(config.breadcrumbs));
     }
@@ -95,39 +74,37 @@ export class SchemaGenerator {
     return schemas;
   }
 
-  /**
-   * Generate website schema with search action
-   */
-  private generateWebSiteSchema(): WebSiteSchema {
+  private siteDescription(): string {
+    return `${BUSINESS_PROFILE.NAME}, freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} for React, Next.js, Angular and TypeScript. Legacy to modern without downtime, design systems and GraphQL contracts, across the Randstad and remote.`;
+  }
+
+  private generateWebSiteSchema(locale: Locale): WebSiteSchema {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.WEBSITE,
-      name: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
-      description: `Professional frontend development services by ${BUSINESS_PROFILE.NAME}. Expert in React, Angular, Next.js, and TypeScript development in Amsterdam, Netherlands.`,
-      url: this.baseUrl,
+      name: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+      description: this.siteDescription(),
+      url: `${this.baseUrl}/${locale}`,
       author: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${locale}/about`
       },
       publisher: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${locale}`
       },
-      inLanguage: LOCALE_CONFIG.SUPPORTED.map(locale => LOCALE_CONFIG.HREFLANG[locale]),
+      inLanguage: LOCALE_CONFIG.SUPPORTED.map(supported => LOCALE_CONFIG.HREFLANG[supported]),
       potentialAction: {
         '@type': 'SearchAction',
-        target: `${this.baseUrl}/search?q={search_term_string}`,
+        target: `${this.baseUrl}/${locale}/search?q={search_term_string}`,
         'query-input': 'required name=search_term_string'
       }
     };
   }
 
-  /**
-   * Generate organization schema for business
-   */
-  private generateOrganizationSchema(): OrganizationSchema {
+  private generateOrganizationSchema(locale: Locale): OrganizationSchema {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.ORGANIZATION,
@@ -138,8 +115,8 @@ export class SchemaGenerator {
         propertyID: 'KvK',
         value: BUSINESS_PROFILE.REGISTRATION.KVK
       },
-      description: `${BUSINESS_PROFILE.COMPANY} provides professional frontend development services specializing in React, Angular, and Next.js applications.`,
-      url: this.baseUrl,
+      description: `${BUSINESS_PROFILE.COMPANY} is the freelance practice of ${BUSINESS_PROFILE.NAME}: senior frontend engineering in React, Next.js, Angular and TypeScript for organisations in the Randstad and beyond.`,
+      url: `${this.baseUrl}/${locale}`,
       logo: `${this.baseUrl}/images/logo_v1.png`,
       image: `${this.baseUrl}/images/logo_v1.png`,
       telephone: BUSINESS_PROFILE.CONTACT.PHONE,
@@ -148,7 +125,7 @@ export class SchemaGenerator {
       founder: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${locale}/about`
       },
       address: {
         '@type': 'PostalAddress',
@@ -171,12 +148,9 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate comprehensive person schema with E-E-A-T signals
-   */
-  private generatePersonSchema(): PersonSchema {
+  private generatePersonSchema(locale: Locale): PersonSchema {
     const nameParts = BUSINESS_PROFILE.NAME.split(' ');
-    
+
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.PERSON,
@@ -184,8 +158,8 @@ export class SchemaGenerator {
       givenName: nameParts[0],
       familyName: nameParts.slice(1).join(' '),
       jobTitle: BUSINESS_PROFILE.TITLE,
-      description: `${BUSINESS_PROFILE.TITLE} with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years of experience specializing in ${BUSINESS_PROFILE.SPECIALIZATION}. ${QUALIFICATIONS.EDUCATION} graduate with proven track record at major Dutch companies.`,
-      url: `${this.baseUrl}/en/about`,
+      description: `Freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} since 2016, ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years senior in ${BUSINESS_PROFILE.SPECIALIZATION}. Engagements at bol.com, the Dutch Tax Administration, Nationale Postcode Loterij and Athlon. ${QUALIFICATIONS.EDUCATION}.`,
+      url: `${this.baseUrl}/${locale}/about`,
       email: BUSINESS_PROFILE.CONTACT.EMAIL,
       telephone: BUSINESS_PROFILE.CONTACT.PHONE,
       image: `${this.baseUrl}/images/profile.jpg`,
@@ -202,7 +176,7 @@ export class SchemaGenerator {
       worksFor: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${locale}`
       },
       alumniOf: {
         '@type': 'EducationalOrganization',
@@ -210,21 +184,21 @@ export class SchemaGenerator {
         url: 'https://www.uva.nl'
       },
       knowsAbout: [
-        'React Development',
-        'Angular Development',
-        'Next.js Development',
-        'TypeScript Programming',
-        'JavaScript Programming',
-        'Frontend Architecture',
-        'Web Performance Optimization',
-        'Progressive Web Apps',
-        'Component Libraries',
-        'State Management',
-        'GraphQL Implementation',
-        'Micro-frontends',
-        'User Interface Design',
-        'Web Accessibility',
-        'Cross-browser Compatibility'
+        'React',
+        'Next.js',
+        'React Router server-side rendering',
+        'Angular',
+        'TypeScript',
+        'JavaScript',
+        'GraphQL',
+        'Design systems and Storybook',
+        'Frontend architecture',
+        'Legacy migration and phased cut-over',
+        'A/B experimentation',
+        'Web accessibility (WCAG 2.2 AA)',
+        'Web security',
+        'Nx monorepos',
+        'Kotlin and .NET backends'
       ],
       hasCredential: QUALIFICATIONS.CERTIFICATIONS.map(name => ({
         '@type': 'EducationalOccupationalCredential' as const,
@@ -234,32 +208,49 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate professional service schema
-   */
-  private generateProfessionalServiceSchema(): ProfessionalServiceSchema {
+  private serviceArea() {
+    return {
+      '@type': 'Place' as const,
+      name: `${BUSINESS_PROFILE.SERVICE_AREA.NAME} (${BUSINESS_PROFILE.SERVICE_AREA.CITIES.join(', ')}), ${BUSINESS_PROFILE.LOCATION.COUNTRY}`,
+      address: {
+        '@type': 'PostalAddress' as const,
+        addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
+        addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
+        addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
+      }
+    };
+  }
+
+  private hourlyOffer(name: string, description: string) {
+    return {
+      '@type': 'Offer' as const,
+      name,
+      description,
+      price: `${PRICING.HOURLY_RATE_MIN}`,
+      priceCurrency: PRICING.CURRENCY,
+      priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': SCHEMA_TYPES.ORGANIZATION,
+        name: BUSINESS_PROFILE.COMPANY
+      }
+    };
+  }
+
+  private generateProfessionalServiceSchema(locale: Locale): ProfessionalServiceSchema {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.PROFESSIONAL_SERVICE,
-      name: `${BUSINESS_PROFILE.NAME} - Frontend Development Services`,
-      description: `Professional frontend development services specializing in React, Angular, and Next.js. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years of experience delivering high-quality web applications.`,
+      name: `${BUSINESS_PROFILE.NAME} | Freelance frontend engineering`,
+      description: this.siteDescription(),
       provider: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${locale}`
       },
-      areaServed: {
-        '@type': 'Place',
-        name: BUSINESS_PROFILE.LOCATION.COUNTRY,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-          addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-          addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
-        }
-      },
+      areaServed: this.serviceArea(),
       serviceType: 'Frontend Development',
-      url: this.baseUrl,
+      url: `${this.baseUrl}/${locale}/services`,
       telephone: BUSINESS_PROFILE.CONTACT.PHONE,
       email: BUSINESS_PROFILE.CONTACT.EMAIL,
       image: `${this.baseUrl}/images/profile.jpg`,
@@ -271,50 +262,23 @@ export class SchemaGenerator {
         addressCountry: BUSINESS_PROFILE.REGISTERED_ADDRESS.COUNTRY_CODE
       },
       offers: [
+        this.hourlyOffer(
+          'Frontend development in React, Next.js or Angular',
+          'The pages customers see, from specification to production, with tests, Storybook and WCAG 2.2 AA. Hourly rate excluding VAT.'
+        ),
+        this.hourlyOffer(
+          'Legacy to modern migration',
+          'A behavioural contract drawn from the legacy code, a rebuild page by page, and a phased, reversible cut-over of live traffic. Hourly rate excluding VAT.'
+        ),
+        this.hourlyOffer(
+          'Design systems',
+          'Component libraries, design tokens, Storybook and documentation that the team maintains after handover. Hourly rate excluding VAT.'
+        ),
         {
           '@type': 'Offer',
-          name: 'React Development Services',
-          description: 'Professional React application development with modern hooks, state management, and performance optimization.',
-          price: `${PRICING.HOURLY_RATE_MIN}`,
-          priceCurrency: PRICING.CURRENCY,
-          priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'https://schema.org/InStock',
-          seller: {
-            '@type': SCHEMA_TYPES.ORGANIZATION,
-            name: BUSINESS_PROFILE.COMPANY
-          }
-        },
-        {
-          '@type': 'Offer',
-          name: 'Angular Development Services',
-          description: 'Expert Angular development with TypeScript, dependency injection, and enterprise-grade architecture.',
-          price: `${PRICING.HOURLY_RATE_MIN}`,
-          priceCurrency: PRICING.CURRENCY,
-          priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'https://schema.org/InStock',
-          seller: {
-            '@type': SCHEMA_TYPES.ORGANIZATION,
-            name: BUSINESS_PROFILE.COMPANY
-          }
-        },
-        {
-          '@type': 'Offer',
-          name: 'Next.js Development Services',
-          description: 'Modern Next.js development with server-side rendering, static generation, and optimal performance.',
-          price: `${PRICING.HOURLY_RATE_MIN}`,
-          priceCurrency: PRICING.CURRENCY,
-          priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-          availability: 'https://schema.org/InStock',
-          seller: {
-            '@type': SCHEMA_TYPES.ORGANIZATION,
-            name: BUSINESS_PROFILE.COMPANY
-          }
-        },
-        {
-          '@type': 'Offer',
-          name: 'Frontend Consultation',
-          description: 'Technical consultation and architecture review for frontend projects.',
-          price: `${PRICING.CONSULTATION_RATE}`,
+          name: '30-minute intro call',
+          description: 'A no-obligation call about the surface that has to change and what it runs on.',
+          price: '0',
           priceCurrency: PRICING.CURRENCY,
           availability: 'https://schema.org/InStock',
           seller: {
@@ -326,35 +290,27 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate service schemas for individual services
-   */
-  private generateServiceSchemas(): ServiceSchema[] {
+  private generateServiceSchemas(locale: Locale): ServiceSchema[] {
     const services = [
       {
-        name: 'React Development',
-        description: 'Professional React application development with modern practices, hooks, and state management solutions.',
+        name: 'Frontend development in React, Next.js and Angular',
+        description: 'Customer-facing pages from specification to production, with TypeScript, tests, Storybook and WCAG 2.2 AA accessibility.',
         serviceType: 'Web Development'
       },
       {
-        name: 'Angular Development',
-        description: 'Enterprise Angular development with TypeScript, dependency injection, and scalable architecture.',
+        name: 'Full-stack development with .NET or Kotlin',
+        description: 'Frontend in React or Angular with backend range in .NET (C#) and Kotlin, GraphQL as the contract between the two.',
         serviceType: 'Web Development'
       },
       {
-        name: 'Next.js Development',
-        description: 'Modern Next.js development with SSR, SSG, and optimal performance optimization.',
-        serviceType: 'Web Development'
+        name: 'Design systems',
+        description: 'Component libraries, design tokens, Storybook and documentation that the team maintains after handover.',
+        serviceType: 'Design System'
       },
       {
-        name: 'Frontend Consulting',
-        description: 'Technical consultation, code reviews, and architecture guidance for frontend projects.',
+        name: 'Frontend architecture and migration consulting',
+        description: 'Architecture review, a migration plan from legacy to modern, a reversible cut-over and guidance for the team.',
         serviceType: 'Consulting'
-      },
-      {
-        name: 'Performance Optimization',
-        description: 'Web performance optimization, Core Web Vitals improvement, and loading speed enhancement.',
-        serviceType: 'Optimization'
       }
     ];
 
@@ -366,27 +322,18 @@ export class SchemaGenerator {
       provider: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${locale}`
       },
       serviceType: service.serviceType,
-      areaServed: {
-        '@type': 'Place',
-        name: BUSINESS_PROFILE.LOCATION.COUNTRY,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: BUSINESS_PROFILE.LOCATION.CITY,
-          addressRegion: BUSINESS_PROFILE.LOCATION.REGION,
-          addressCountry: BUSINESS_PROFILE.LOCATION.COUNTRY_CODE
-        }
-      },
+      areaServed: this.serviceArea(),
       offers: {
         '@type': 'Offer',
         name: service.name,
-        description: service.description,
+        description: `${service.description} Hourly rate excluding VAT.`,
         price: `${PRICING.HOURLY_RATE_MIN}`,
         priceCurrency: PRICING.CURRENCY,
         priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
-        availability: 'InStock',
+        availability: 'https://schema.org/InStock',
         seller: {
           '@type': SCHEMA_TYPES.ORGANIZATION,
           name: BUSINESS_PROFILE.COMPANY
@@ -395,9 +342,6 @@ export class SchemaGenerator {
     }));
   }
 
-  /**
-   * Generate webpage schema for any page
-   */
   private generateWebPageSchema(config: SEOPageConfig): WebPageSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -410,30 +354,30 @@ export class SchemaGenerator {
       isPartOf: {
         '@context': 'https://schema.org',
         '@type': SCHEMA_TYPES.WEBSITE,
-        name: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
-        description: `Professional frontend development services by ${BUSINESS_PROFILE.NAME}, specializing in React, Angular, and Next.js development in Amsterdam.`,
-        url: this.baseUrl,
+        name: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+        description: this.siteDescription(),
+        url: `${this.baseUrl}/${config.locale}`,
         author: {
           '@type': SCHEMA_TYPES.PERSON,
           name: BUSINESS_PROFILE.NAME,
-          url: `${this.baseUrl}/en/about`
+          url: `${this.baseUrl}/${config.locale}/about`
         },
         publisher: {
           '@type': SCHEMA_TYPES.ORGANIZATION,
           name: BUSINESS_PROFILE.COMPANY,
-          url: this.baseUrl
+          url: `${this.baseUrl}/${config.locale}`
         },
         inLanguage: [LOCALE_CONFIG.HREFLANG['en'], LOCALE_CONFIG.HREFLANG['nl']]
       },
       author: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${config.locale}/about`
       },
       publisher: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${config.locale}`
       },
       datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
       dateModified: config.lastModified?.toISOString() || BUILD_TIME,
@@ -441,9 +385,6 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate FAQ page schema
-   */
   private generateFAQPageSchema(faqItems: FAQItem[], config: SEOPageConfig): FAQPageSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -464,9 +405,6 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate contact page schema
-   */
   private generateContactPageSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -491,9 +429,6 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate portfolio schema
-   */
   private generatePortfolioSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -506,19 +441,16 @@ export class SchemaGenerator {
       author: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${config.locale}/about`
       },
       about: {
         '@type': 'CreativeWork',
-        name: 'Frontend Development Portfolio',
-        description: `Portfolio of frontend development projects by ${BUSINESS_PROFILE.NAME}`
+        name: 'Frontend case studies',
+        description: `Delivered frontend work by ${BUSINESS_PROFILE.NAME} at bol.com, the Dutch Tax Administration, Nationale Postcode Loterij and Athlon`
       }
     };
   }
 
-  /**
-   * Generate blog schema
-   */
   private generateBlogSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -531,20 +463,17 @@ export class SchemaGenerator {
       author: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${config.locale}/about`
       },
       publisher: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl
+        url: `${this.baseUrl}/${config.locale}`
       },
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale]
     };
   }
 
-  /**
-   * Generate blog post schema
-   */
   private generateBlogPostSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     
@@ -557,12 +486,12 @@ export class SchemaGenerator {
       author: {
         '@type': SCHEMA_TYPES.PERSON,
         name: BUSINESS_PROFILE.NAME,
-        url: `${this.baseUrl}/en/about`
+        url: `${this.baseUrl}/${config.locale}/about`
       },
       publisher: {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
-        url: this.baseUrl,
+        url: `${this.baseUrl}/${config.locale}`,
         logo: {
           '@type': 'ImageObject',
           url: `${this.baseUrl}/images/logo_v1.png`,
@@ -572,7 +501,7 @@ export class SchemaGenerator {
       },
       datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
       dateModified: config.lastModified?.toISOString() || BUILD_TIME,
-      image: `${this.baseUrl}/images/og-image.jpg`,
+      image: `${this.baseUrl}/${config.locale}/opengraph-image`,
       articleSection: config.section || 'Technology',
       keywords: config.keywords?.join(', '),
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale],
@@ -583,9 +512,6 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Generate breadcrumb schema
-   */
   private generateBreadcrumbSchema(breadcrumbs: BreadcrumbItem[]): JsonLdSchema {
     return {
       '@context': 'https://schema.org',
@@ -599,12 +525,8 @@ export class SchemaGenerator {
     };
   }
 
-  /**
-   * Build canonical URL helper
-   */
   private buildCanonicalUrl(path: string, locale: Locale): string {
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-    const localePrefix = locale === LOCALE_CONFIG.DEFAULT ? '' : `/${locale}`;
-    return `${this.baseUrl}${localePrefix}/${cleanPath}`.replace(/\/+$/, '') || `${this.baseUrl}${localePrefix}`;
+    return `${this.baseUrl}/${locale}/${cleanPath}`.replace(/\/+$/, '');
   }
 } 

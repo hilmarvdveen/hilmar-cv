@@ -7,10 +7,9 @@ import type {
   OpenGraphMetadata,
   TwitterMetadata 
 } from '../types/seo-types';
-import { 
-  BUSINESS_PROFILE, 
-  PRICING,
-  PRIMARY_KEYWORDS, 
+import {
+  BUSINESS_PROFILE,
+  PRIMARY_KEYWORDS,
   SEMANTIC_KEYWORDS,
   META_LIMITS,
   ROBOTS_DIRECTIVES,
@@ -32,7 +31,7 @@ export class MetadataGenerator {
     return {
       metadataBase: new URL(this.baseUrl),
       title: this.optimizeTitle(config.title, config.pageType),
-      description: this.optimizeDescription(config.description, config.pageType),
+      description: this.optimizeDescription(config.description),
       keywords: this.buildKeywords(config.keywords, config.pageType, config.locale),
       
       authors: [{ 
@@ -63,7 +62,7 @@ export class MetadataGenerator {
       },
       
       manifest: '/site.webmanifest',
-      applicationName: `${BUSINESS_PROFILE.NAME} - Portfolio`,
+      applicationName: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
       generator: 'Next.js',
       referrer: 'origin-when-cross-origin',
       
@@ -84,7 +83,7 @@ export class MetadataGenerator {
 
   private optimizeTitle(title: string, pageType: PageType): string {
     const max = META_LIMITS.TITLE.MAX;
-    const suffix = `${this.getProfessionalSuffix(pageType)} | Amsterdam, Netherlands`;
+    const suffix = this.getProfessionalSuffix(pageType);
 
     const withSuffix = `${title}${suffix}`;
     if (withSuffix.length <= max) return withSuffix;
@@ -94,19 +93,9 @@ export class MetadataGenerator {
     return title.slice(0, max - 1).replace(/\s+\S*$/, '').trimEnd() + '…';
   }
 
-  private optimizeDescription(description: string, pageType: PageType): string {
-    if (description.length > META_LIMITS.DESCRIPTION.MAX) {
-      description = description.substring(0, META_LIMITS.DESCRIPTION.MAX - 3) + '...';
-    }
-    
-    const valueProposition = this.getValueProposition(pageType);
-    const enhancedDescription = `${description} ${valueProposition}`;
-    
-    if (enhancedDescription.length <= META_LIMITS.DESCRIPTION.MAX) {
-      return enhancedDescription;
-    }
-    
-    return description;
+  private optimizeDescription(description: string): string {
+    if (description.length <= META_LIMITS.DESCRIPTION.MAX) return description;
+    return description.slice(0, META_LIMITS.DESCRIPTION.MAX - 1).replace(/\s+\S*$/, '').trimEnd() + '…';
   }
 
   private buildKeywords(baseKeywords: string[], pageType: PageType, locale: Locale): string[] {
@@ -142,10 +131,10 @@ export class MetadataGenerator {
       description: config.description,
       type: config.pageType === 'blog-post' ? 'article' : 'website',
       url: canonicalUrl,
-      siteName: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
-      locale: LOCALE_CONFIG.HREFLANG[config.locale],
-      alternateLocale: Object.values(LOCALE_CONFIG.HREFLANG).filter(
-        locale => locale !== LOCALE_CONFIG.HREFLANG[config.locale]
+      siteName: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+      locale: LOCALE_CONFIG.OPEN_GRAPH_LOCALE[config.locale],
+      alternateLocale: Object.values(LOCALE_CONFIG.OPEN_GRAPH_LOCALE).filter(
+        locale => locale !== LOCALE_CONFIG.OPEN_GRAPH_LOCALE[config.locale]
       ),
       images: [
         {
@@ -195,10 +184,8 @@ export class MetadataGenerator {
       'referrer': 'origin-when-cross-origin',
       
       'apple-mobile-web-app-title': BUSINESS_PROFILE.NAME,
-      'application-name': `${BUSINESS_PROFILE.NAME} - Portfolio`,
-      'msapplication-TileColor': '#2563eb',
-      'theme-color': '#2563eb',
-      
+      'application-name': `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+
       'DC.title': config.title,
       'DC.creator': BUSINESS_PROFILE.NAME,
       'DC.subject': this.getCategoryForPageType(config.pageType),
@@ -230,52 +217,35 @@ export class MetadataGenerator {
 
   private getProfessionalSuffix(pageType: PageType): string {
     const suffixes = {
-      homepage: ` | ${BUSINESS_PROFILE.TITLE}`,
-      about: ` | ${BUSINESS_PROFILE.YEARS_EXPERIENCE} Years Experience`,
-      services: ' | Professional Frontend Services',
-      projects: ' | Portfolio & Case Studies',
-      contact: ' | Get In Touch',
-      faq: ' | Frequently Asked Questions',
-      blog: ' | Technical Blog',
+      homepage: '',
+      about: ` | ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years senior`,
+      services: ` | ${BUSINESS_PROFILE.NAME}`,
+      projects: ` | ${BUSINESS_PROFILE.NAME}`,
+      contact: ` | ${BUSINESS_PROFILE.NAME}`,
+      faq: ` | ${BUSINESS_PROFILE.NAME}`,
+      blog: ` | ${BUSINESS_PROFILE.NAME}`,
       'blog-post': ` | ${BUSINESS_PROFILE.NAME}`,
-      privacy: ' | Privacy Policy',
-      booking: ' | Book Consultation'
+      privacy: ` | ${BUSINESS_PROFILE.COMPANY}`,
+      booking: ''
     };
-    
-    return suffixes[pageType] || ` | ${BUSINESS_PROFILE.NAME}`;
-  }
 
-  private getValueProposition(pageType: PageType): string {
-    const propositions = {
-      homepage: `Expert React & Angular development in Amsterdam. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience.`,
-      about: `MSc Physics graduate with ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years frontend development experience.`,
-      services: `Professional frontend development services €${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}/hour.`,
-      projects: 'View real-world projects and case studies from major Dutch companies.',
-      contact: 'Contact for professional frontend development consultation.',
-      faq: 'Get answers to common questions about frontend development services.',
-      blog: 'Technical insights and tutorials from a senior frontend developer.',
-      'blog-post': `Expert insights from ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years of frontend development.`,
-      privacy: 'Transparent privacy policy and GDPR compliance information.',
-      booking: 'Book a consultation with a senior frontend developer in Amsterdam.'
-    };
-    
-    return propositions[pageType] || `Professional frontend development by ${BUSINESS_PROFILE.NAME}.`;
+    return suffixes[pageType] ?? ` | ${BUSINESS_PROFILE.NAME}`;
   }
 
   private getPageTypeKeywords(pageType: PageType): string[] {
     const keywordMap = {
       homepage: [...PRIMARY_KEYWORDS.TIER_1],
-      about: ['Frontend Developer Biography', 'Amsterdam Developer Experience', 'React Angular Expert'],
-      services: ['Frontend Development Services', 'React Development Amsterdam', 'Angular Consulting'],
-      projects: ['Frontend Portfolio', 'React Projects Amsterdam', 'Web Development Case Studies'],
-      contact: ['Contact Frontend Developer', 'Amsterdam Developer Hire', 'Frontend Consultation'],
-      faq: ['Frontend Development FAQ', 'React Angular Questions', 'Developer Services Info'],
-      blog: ['Frontend Development Blog', 'React Angular Tutorials', 'JavaScript Insights'],
-      'blog-post': ['Technical Blog Post', 'Frontend Development Article', 'Programming Tutorial'],
-      privacy: ['Privacy Policy', 'GDPR Compliance', 'Data Protection'],
-      booking: ['Book Frontend Developer', 'Consultation Booking', 'Developer Meeting']
+      about: ['Senior frontend engineer profile', 'React Angular TypeScript since 2016', 'Certified Secure'],
+      services: ['Frontend engineering services', 'React Next.js Angular development Randstad', 'Design systems and migration'],
+      projects: ['Frontend case studies', 'bol.com Belastingdienst Postcode Loterij Athlon', 'Legacy to React migration'],
+      contact: ['Hire senior frontend engineer', 'Freelance frontend Randstad', 'Book a 30-minute call'],
+      faq: ['Freelance frontend engineer FAQ', 'Rate availability hybrid', 'How an engagement starts'],
+      blog: ['Frontend engineering blog', 'React architecture and testing', 'Next.js SEO'],
+      'blog-post': ['Frontend engineering article', 'React tutorial', 'Production lessons'],
+      privacy: ['Privacy policy', 'GDPR', 'Data protection'],
+      booking: ['Book a call with a frontend engineer', 'Intro call', 'Availability from 1 October 2026']
     };
-    
+
     return keywordMap[pageType] || [];
   }
 
@@ -290,20 +260,20 @@ export class MetadataGenerator {
   }
 
   private getLocationKeywords(locale: Locale): string[] {
-    const baseLocation = ['Amsterdam', 'Netherlands'];
-    if (locale === 'nl') {
-      return [...baseLocation, 'Nederland', 'Nederlandse ontwikkelaar'];
-    }
-    return [...baseLocation, 'Dutch developer', 'Netherlands programmer'];
+    const cities = locale === 'nl'
+      ? BUSINESS_PROFILE.SERVICE_AREA.CITIES
+      : BUSINESS_PROFILE.SERVICE_AREA.CITIES_ENGLISH;
+    const country = locale === 'nl' ? 'Nederland' : 'Netherlands';
+    return [BUSINESS_PROFILE.SERVICE_AREA.NAME, ...cities, country];
   }
 
   private getProfessionalKeywords(): string[] {
     return [
-      `${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience`,
-      'MSc Physics',
-      'University of Amsterdam',
-      'Senior Developer',
-      'Professional Frontend'
+      `${BUSINESS_PROFILE.YEARS_EXPERIENCE} years senior frontend`,
+      'Freelance',
+      'ZZP',
+      BUSINESS_PROFILE.TITLE,
+      `Available from ${BUSINESS_PROFILE.AVAILABLE_FROM}`
     ];
   }
 

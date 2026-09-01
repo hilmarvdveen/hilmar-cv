@@ -1,43 +1,33 @@
-/**
- * Enterprise SEO Constants for Hilmar van der Veen Professional Portfolio
- * Implements Google 2024 best practices with E-E-A-T focus
- * Modular, DRY principles with comprehensive professional targeting
- */
-
-// =============================================================================
-// CORE BUSINESS CONSTANTS
-// =============================================================================
-
 export const BUSINESS_PROFILE = {
   NAME: 'Hilmar van der Veen',
-  TITLE: 'Senior Frontend Developer',
+  TITLE: 'Senior Frontend Engineer',
   COMPANY: 'Hilmar ICT Services',
-  // Dutch Chamber of Commerce (KvK) registration — the legal identity.
   REGISTRATION: {
     LEGAL_NAME: 'Hilmar ICT Services',
     LEGAL_FORM: 'Eenmanszaak',
     KVK: '97564303',
     ESTABLISHMENT_NUMBER: '000062792784',
   },
-  // Place of business — CITY LEVEL ONLY. The full street address is the owner's
-  // private home and is deliberately NOT stored in this (public) repo or shown
-  // on the site; the KvK number gives full traceability via the public register.
   REGISTERED_ADDRESS: {
     CITY: 'Zandvoort',
     REGION: 'NH',
     COUNTRY: 'Netherlands',
     COUNTRY_CODE: 'NL',
   },
-  // Marketed service area / SEO target.
   LOCATION: {
-    CITY: 'Amsterdam',
+    CITY: 'Utrecht',
     COUNTRY: 'Netherlands',
     COUNTRY_CODE: 'NL',
-    REGION: 'NH',
+    REGION: 'UT',
     COORDINATES: {
-      LAT: 52.3676,
-      LNG: 4.9041
+      LAT: 52.0907,
+      LNG: 5.1214
     }
+  },
+  SERVICE_AREA: {
+    NAME: 'Randstad',
+    CITIES: ['Amsterdam', 'Utrecht', 'Rotterdam', 'Den Haag'],
+    CITIES_ENGLISH: ['Amsterdam', 'Utrecht', 'Rotterdam', 'The Hague'],
   },
   CONTACT: {
     EMAIL: 'hilmar@hilmarvanderveen.com',
@@ -50,169 +40,121 @@ export const BUSINESS_PROFILE = {
     GITHUB: 'https://github.com/hilmarvdveen',
     WHATSAPP: 'https://wa.me/31680149947'
   },
+  SEARCH_TITLE: 'Senior Frontend Developer',
+  SEARCH_TITLE_DUTCH: 'Senior Frontend Developer',
   ESTABLISHED: '2016',
-  YEARS_EXPERIENCE: '8+',
-  SPECIALIZATION: 'React, Angular, Next.js, TypeScript'
+  YEARS_EXPERIENCE: '10+',
+  AVAILABLE_FROM: '1 October 2026',
+  AVAILABLE_FROM_DUTCH: '1 oktober 2026',
+  SPECIALIZATION: 'React, Next.js, Angular, TypeScript and GraphQL'
 } as const;
 
 export const PRICING = {
   HOURLY_RATE_MIN: 95,
   HOURLY_RATE_MAX: 125,
   CURRENCY: 'EUR',
-  CONSULTATION_RATE: 95,
-  PROJECT_MIN: 2500
+  VAT_INCLUDED: false
+} as const;
+
+export const RATE_TEXT = {
+  nl: `€${PRICING.HOURLY_RATE_MIN} tot €${PRICING.HOURLY_RATE_MAX} per uur, excl. btw`,
+  en: `€${PRICING.HOURLY_RATE_MIN} to €${PRICING.HOURLY_RATE_MAX} per hour, excluding VAT`
 } as const;
 
 export const QUALIFICATIONS = {
-  EDUCATION: 'Master of Science in Physics, University of Amsterdam',
+  EDUCATION: 'BSc Physics and Astronomy, University of Amsterdam',
   CERTIFICATIONS: [
-    'Scrum Master',
-    'C# Developer',
-    'React Developer',
-    'Angular Developer',
-    'Next.js Developer',
-    'TypeScript Developer',
-    'JavaScript Developer',
-    'HTML Developer',
-    'CSS Developer',
-    'Node.js Developer',
-    'Python Developer',
-    'Java Developer',
-    'SQL Developer',
-    'DevOps Engineer',
+    'Certified Secure Essential Security',
+    'Certified Secure Essential Specialties',
+    'Certified Secure Security Specialist',
+    'Certified Secure Web Security Specialist',
+    'Certified Secure Server Security Specialist',
   ],
-  LANGUAGES: ['Dutch (Native)', 'English (Fluent)', 'German (Conversational)', 'Spanish (Conversational)', 'French (Conversational)'	],
+  LANGUAGES: ['Dutch (native)', 'English (fluent)'],
   PREVIOUS_CLIENTS: [
-    'Belastingdienst (Dutch Tax Authority)',
-    'Ziggo (Telecommunications)',
-    'NPL (National Postcode Lottery)',
+    'bol.com',
+    'Belastingdienst (Dutch Tax Administration)',
+    'Nationale Postcode Loterij',
+    'Athlon',
     'Ortec',
-    'Omniplan'
+    'Omniplan',
+    'Randstad',
+    'Transdev'
   ]
 } as const;
 
-// =============================================================================
-// SEO TARGETING CONSTANTS
-// =============================================================================
-
 export const PRIMARY_KEYWORDS = {
   TIER_1: [
-    'Senior Frontend Developer Amsterdam',
-    'React Developer Netherlands',
-    'Next.js Expert Amsterdam'
+    'Freelance frontend developer',
+    'Senior frontend developer Randstad',
+    'React developer Netherlands',
+    'Freelance React developer Amsterdam',
+    'Frontend developer inhuren'
   ],
   TIER_2: [
-    'Angular Developer Amsterdam',
-    'TypeScript Specialist Netherlands',
-    'Frontend Consultant Amsterdam',
-    'JavaScript Expert Netherlands'
+    'Next.js developer Netherlands',
+    'Angular developer Netherlands',
+    'TypeScript developer Randstad',
+    'ZZP frontend developer',
+    'Interim frontend developer',
+    'Frontend ontwikkelaar freelance'
   ],
   TIER_3: [
-    'React Native Developer Amsterdam',
-    'Vue.js Developer Netherlands',
-    'Frontend Architecture Consultant',
-    'Web Performance Specialist Amsterdam'
+    'Senior frontend engineer',
+    'Frontend architect Netherlands',
+    'Frontend consultant Randstad',
+    'Design system developer Storybook',
+    'GraphQL frontend developer',
+    'React developer Utrecht',
+    'React developer Rotterdam',
+    'React developer Den Haag'
   ],
   LONG_TAIL: [
-    'Freelance React Developer Amsterdam with 8 years experience',
-    'Senior Angular TypeScript Developer Netherlands',
-    'Next.js Performance Optimization Consultant Amsterdam',
-    'Frontend Team Lead Developer Netherlands',
-    'React Redux Specialist Amsterdam Netherlands'
+    'Freelance senior React Next.js developer with ten years of experience',
+    'Frontend developer for legacy to React migration without downtime',
+    'ZZP frontend developer Amsterdam Utrecht Rotterdam Den Haag',
+    'Frontend developer for e-commerce and government platforms Netherlands',
+    'Senior front-end developer beschikbaar vanaf oktober 2026',
+    'Freelance frontend developer hybride of remote'
   ]
 } as const;
 
 export const SEMANTIC_KEYWORDS = {
   TECHNICAL_SKILLS: [
-    'React Hooks optimization',
-    'Angular dependency injection',
-    'Next.js server-side rendering',
-    'TypeScript type safety',
-    'Redux state management',
-    'GraphQL implementation',
-    'Micro-frontends architecture',
-    'Web performance optimization',
-    'Progressive Web Apps',
-    'Component library development'
+    'React 19 and React Router server-side rendering',
+    'Next.js App Router',
+    'Angular and TypeScript',
+    'JavaScript ES2024',
+    'GraphQL contracts between frontend and backend',
+    'Design systems with Storybook and design tokens',
+    'Tailwind CSS and CSS architecture',
+    'WCAG 2.2 AA accessibility',
+    'A/B experimentation in production',
+    'Headless CMS integration',
+    'Nx monorepo',
+    'Kotlin and .NET backend range',
+    'Component libraries',
+    'Vitest, Jest and Testing Library'
   ],
   BUSINESS_TERMS: [
-    'frontend consulting services',
-    'web application development',
-    'user interface optimization',
-    'technical leadership',
-    'code review services',
-    'frontend architecture design',
-    'development team mentoring',
-    'agile development processes'
+    'legacy to modern migration',
+    'zero-downtime cut-over',
+    'frontend architecture',
+    'design system delivery',
+    'senior engineer for backend-heavy teams',
+    'mentoring and code review',
+    'handover documentation',
+    'hybrid and remote engagements'
   ],
   INDUSTRY_TERMS: [
-    'fintech frontend development',
-    'e-commerce user interfaces',
+    'e-commerce frontend',
+    'government forms platform',
     'enterprise web applications',
-    'scalable frontend solutions',
-    'responsive web design',
-    'cross-browser compatibility',
-    'accessibility compliance',
-    'SEO-friendly development'
+    'revenue-critical customer pages',
+    'accessible public services',
+    'scalable frontend platforms'
   ]
 } as const;
-
-// =============================================================================
-// CONTENT QUALITY CONSTANTS
-// =============================================================================
-
-export const CONTENT_GUIDELINES = {
-  E_E_A_T: {
-    EXPERIENCE: {
-      INDICATORS: [
-        'First-hand development project examples',
-        'Real client testimonials and case studies',
-        'Live project demonstrations',
-        'GitHub portfolio with commit history',
-        'Technical blog posts with practical solutions'
-      ]
-    },
-    EXPERTISE: {
-      CREDENTIALS: [
-        'Master of Science in Physics from University of Amsterdam',
-        '8+ years professional frontend development',
-        'Senior positions at major Dutch companies',
-        'Technical certifications from major cloud providers',
-        'Published technical articles and tutorials'
-      ]
-    },
-    AUTHORITATIVENESS: {
-      SIGNALS: [
-        'Recognition in Dutch tech community',
-        'Speaking at technical conferences',
-        'Contributions to open-source projects',
-        'Mentoring junior developers',
-        'Technical advisory roles'
-      ]
-    },
-    TRUSTWORTHINESS: {
-      FACTORS: [
-        'Verified contact information and business registration',
-        'Transparent pricing and service descriptions',
-        'Client references and testimonials',
-        'Clear privacy policy and terms of service',
-        'Secure website with HTTPS',
-        'Regular content updates and maintenance'
-      ]
-    }
-  },
-  QUALITY_METRICS: {
-    MIN_WORD_COUNT: 300,
-    OPTIMAL_WORD_COUNT: 800,
-    MAX_WORD_COUNT: 2500,
-    READABILITY_LEVEL: 'Professional/Technical',
-    UPDATE_FREQUENCY: 'Monthly'
-  }
-} as const;
-
-// =============================================================================
-// TECHNICAL SEO CONSTANTS
-// =============================================================================
 
 export const META_LIMITS = {
   TITLE: {
@@ -255,19 +197,13 @@ export const SCHEMA_TYPES = {
   AGGREGATE_RATING: 'AggregateRating'
 } as const;
 
-// Meta robots directives supported by Google (2024)
 export const ROBOTS_DIRECTIVES = {
-  // Basic indexing directives
   INDEX: 'index',
   NOINDEX: 'noindex',
   FOLLOW: 'follow',
   NOFOLLOW: 'nofollow',
-  
-  // Combined directives
   ALL: 'all',
   NONE: 'none',
-  
-  // Snippet control directives
   NOSNIPPET: 'nosnippet',
   MAX_SNIPPET: {
     NONE: 'max-snippet:0',
@@ -276,8 +212,6 @@ export const ROBOTS_DIRECTIVES = {
     LARGE: 'max-snippet:320',
     UNLIMITED: 'max-snippet:-1',
   },
-  
-  // Image and video control directives
   NOIMAGEINDEX: 'noimageindex',
   MAX_IMAGE_PREVIEW: {
     NONE: 'max-image-preview:none',
@@ -288,15 +222,9 @@ export const ROBOTS_DIRECTIVES = {
     NONE: 'max-video-preview:0',
     UNLIMITED: 'max-video-preview:-1',
   },
-  
-  // Other directives
   NOTRANSLATE: 'notranslate',
   UNAVAILABLE_AFTER: (date: string) => `unavailable_after:${date}`,
 } as const;
-
-// =============================================================================
-// ANALYTICS & TRACKING CONSTANTS
-// =============================================================================
 
 export const GA4_EVENTS = {
   CORE: {
@@ -340,16 +268,16 @@ export const TRACKING_PARAMETERS = {
   CONTACT_METHOD: 'contact_method'
 } as const;
 
-// =============================================================================
-// INTERNATIONALIZATION CONSTANTS
-// =============================================================================
-
 export const LOCALE_CONFIG = {
   DEFAULT: 'nl',
   SUPPORTED: ['nl', 'en'],
   HREFLANG: {
     'nl': 'nl-NL',
     'en': 'en-US'
+  },
+  OPEN_GRAPH_LOCALE: {
+    'nl': 'nl_NL',
+    'en': 'en_US'
   },
   COUNTRY_TARGETING: {
     'nl': 'NL',
@@ -361,36 +289,6 @@ export const LOCALE_CONFIG = {
   }
 } as const;
 
-// =============================================================================
-// PERFORMANCE & CORE WEB VITALS
-// =============================================================================
-
-export const PERFORMANCE_TARGETS = {
-  LCP: 2500, // Largest Contentful Paint (ms)
-  FID: 100,  // First Input Delay (ms)
-  CLS: 0.1,  // Cumulative Layout Shift
-  FCP: 1800, // First Contentful Paint (ms)
-  TTFB: 600  // Time to First Byte (ms)
-} as const;
-
-export const IMAGE_OPTIMIZATION = {
-  FORMATS: ['webp', 'avif', 'jpg', 'png'],
-  SIZES: [320, 640, 768, 1024, 1280, 1920],
-  QUALITY: 85,
-  LAZY_LOADING: true
-} as const;
-
-// =============================================================================
-// SECURITY & PRIVACY
-// =============================================================================
-
-export const SECURITY_HEADERS = {
-  CSP: "default-src 'self'; script-src 'self' 'unsafe-inline' *.googletagmanager.com *.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: *.googletagmanager.com *.google-analytics.com",
-  REFERRER_POLICY: 'strict-origin-when-cross-origin',
-  X_FRAME_OPTIONS: 'DENY',
-  X_CONTENT_TYPE_OPTIONS: 'nosniff'
-} as const;
-
 export const PRIVACY_COMPLIANCE = {
   GDPR: true,
   CCPA: false,
@@ -399,10 +297,6 @@ export const PRIVACY_COMPLIANCE = {
   ANONYMIZE_IP: true
 } as const;
 
-// =============================================================================
-// SOCIAL MEDIA OPTIMIZATION
-// =============================================================================
-
 export const SOCIAL_OPTIMIZATION = {
   OPEN_GRAPH: {
     TYPE: 'website',
@@ -410,32 +304,26 @@ export const SOCIAL_OPTIMIZATION = {
       WIDTH: 1200,
       HEIGHT: 630
     },
-    IMAGE_TYPE: 'image/jpeg'
+    IMAGE_TYPE: 'image/png'
   },
   TWITTER: {
     CARD: 'summary_large_image'
-  },
-  LINKEDIN: {
-    COMPANY: 'hvd-consulting'
   }
 } as const;
 
 export default {
   BUSINESS_PROFILE,
   PRICING,
+  RATE_TEXT,
   QUALIFICATIONS,
   PRIMARY_KEYWORDS,
   SEMANTIC_KEYWORDS,
-  CONTENT_GUIDELINES,
   META_LIMITS,
   SCHEMA_TYPES,
   ROBOTS_DIRECTIVES,
   GA4_EVENTS,
   TRACKING_PARAMETERS,
   LOCALE_CONFIG,
-  PERFORMANCE_TARGETS,
-  IMAGE_OPTIMIZATION,
-  SECURITY_HEADERS,
   PRIVACY_COMPLIANCE,
   SOCIAL_OPTIMIZATION
-} as const; 
+} as const;

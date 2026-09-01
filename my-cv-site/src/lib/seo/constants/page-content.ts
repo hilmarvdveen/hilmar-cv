@@ -1,118 +1,118 @@
-import { BUSINESS_PROFILE, PRICING } from './meta-constants';
+import { BUSINESS_PROFILE, RATE_TEXT } from './meta-constants';
 
 export const HOMEPAGE_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Senior Frontend Developer Amsterdam',
-    SECONDARY: ['React Developer Netherlands', 'Angular Expert Amsterdam', 'Next.js Specialist'],
+    PRIMARY: 'Freelance senior frontend engineer Randstad',
+    SECONDARY: ['React developer Netherlands', 'Next.js engineer Amsterdam Utrecht', 'Angular developer Rotterdam Den Haag'],
     LONG_TAIL: [
-      'Freelance Senior Frontend Developer Amsterdam 8 years experience',
-      'React Angular Next.js TypeScript Developer Netherlands',
-      'MSc Physics Frontend Developer Amsterdam hire'
+      'Senior frontend engineer ten years React Next.js Angular',
+      'Legacy to server-side rendered React without downtime',
+      'Frontend engineer available from 1 October 2026 Randstad'
     ]
   }
 } as const;
 
 export const ABOUT_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: `About ${BUSINESS_PROFILE.NAME} - Senior Frontend Developer`,
-    SECONDARY: ['Frontend Developer Biography', 'Amsterdam Developer Profile', 'React Angular Expert Background'],
-    EXPERTISE: ['University of Amsterdam Graduate', 'Physics MSc Frontend Developer', 'Enterprise Development Experience']
+    PRIMARY: `About ${BUSINESS_PROFILE.NAME}, ${BUSINESS_PROFILE.TITLE}`,
+    SECONDARY: ['Senior frontend engineer since 2016', 'bol.com Belastingdienst Postcode Loterij Athlon', 'React Angular TypeScript background'],
+    EXPERTISE: ['Certified Secure web security', 'WCAG 2.2 AA accessibility', 'BSc Physics and Astronomy University of Amsterdam']
   }
 } as const;
 
 export const SERVICES_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Frontend Development Services Amsterdam',
-    SECONDARY: ['React Development Netherlands', 'Angular Consulting Amsterdam', 'Next.js Development Services'],
-    PRICING: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX} per hour`,
-    SPECIALIZATIONS: ['TypeScript Programming', 'Modern JavaScript Frameworks', 'Enterprise Web Applications']
+    PRIMARY: 'Frontend engineering services Randstad',
+    SECONDARY: ['React development Netherlands', 'Next.js development Amsterdam Utrecht', 'Angular development Rotterdam Den Haag'],
+    PRICING: RATE_TEXT.en,
+    SPECIALIZATIONS: ['Legacy migration to React', 'Design systems with Storybook', 'GraphQL frontend contracts']
   }
 } as const;
 
 export const FRONTEND_SERVICE_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Frontend Development Services Amsterdam',
-    SECONDARY: ['React Development Amsterdam', 'Next.js Developer Netherlands', 'Vue.js Expert Amsterdam'],
-    TECHNICAL: ['TypeScript Frontend Development', 'Modern JavaScript Amsterdam', 'Responsive Web Design Netherlands'],
-    SPECIALIZATIONS: ['React.js Expert Amsterdam', 'Frontend Performance Optimization', 'Mobile-First Development']
+    PRIMARY: 'Frontend development React Next.js Angular',
+    SECONDARY: ['React developer Randstad', 'Next.js App Router engineer', 'Angular TypeScript developer Netherlands'],
+    TECHNICAL: ['Server-side rendered React', 'TypeScript frontend', 'WCAG 2.2 AA accessible frontend'],
+    SPECIALIZATIONS: ['Customer-facing pages from specification to production', 'Phased cut-over from legacy', 'Tests and Storybook per component']
   }
 } as const;
 
 export const FULLSTACK_SERVICE_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Full-Stack Development Services Amsterdam',
-    SECONDARY: ['React Node.js Developer Netherlands', 'Full-Stack JavaScript Amsterdam', 'End-to-End Web Development'],
-    TECHNICAL: ['MERN Stack Developer Amsterdam', 'PostgreSQL Node.js Netherlands', 'AWS Cloud Development'],
-    SPECIALIZATIONS: ['Full-Stack TypeScript Development', 'Enterprise Web Applications', 'Cloud-Native Development']
+    PRIMARY: 'Full-stack React with .NET or Kotlin',
+    SECONDARY: ['React .NET developer Netherlands', 'React Kotlin engineer Randstad', 'GraphQL full-stack contract'],
+    TECHNICAL: ['C# .NET Core API', 'Kotlin backend contributions', 'GraphQL schema design'],
+    SPECIALIZATIONS: ['One engineer from API to page', 'Frontend specialist in backend-heavy teams', 'Enterprise web applications']
   }
 } as const;
 
 export const DESIGN_SYSTEMS_SERVICE_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Design Systems Development Amsterdam',
-    SECONDARY: ['React Component Libraries Netherlands', 'Storybook Development Amsterdam', 'Design Token Systems'],
-    TECHNICAL: ['Frontend Design Systems', 'Component Library Development', 'Figma to Code Amsterdam'],
-    SPECIALIZATIONS: ['Enterprise Design Systems', 'React Component Architecture', 'Design-Development Workflow']
+    PRIMARY: 'Design system engineer Randstad',
+    SECONDARY: ['React component library Netherlands', 'Storybook design system', 'Design tokens engineer'],
+    TECHNICAL: ['Angular and React component libraries', 'Design tokens and theming', 'Storybook documentation'],
+    SPECIALIZATIONS: ['Design systems teams maintain themselves', 'Belastingdienst forms platform', 'Nationale Postcode Loterij design system']
   }
 } as const;
 
 export const CONSULTING_SERVICE_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Technical Consulting Services Amsterdam',
-    SECONDARY: ['Frontend Architecture Consulting', 'React Angular Consulting Netherlands', 'Performance Optimization Amsterdam'],
-    TECHNICAL: ['Code Review Services Amsterdam', 'Team Training Frontend Development', 'Technology Strategy Consulting'],
-    SPECIALIZATIONS: ['Enterprise Frontend Consulting', 'Technical Leadership Amsterdam', 'Development Process Optimization']
+    PRIMARY: 'Frontend architecture consulting Randstad',
+    SECONDARY: ['Legacy migration plan React', 'Frontend architecture review Netherlands', 'Senior frontend guidance'],
+    TECHNICAL: ['Behavioural contract from legacy code', 'Reversible traffic cut-over', 'Error monitoring and funnel data'],
+    SPECIALIZATIONS: ['Migration without downtime', 'Mentoring and code review', 'Handover that lasts']
   }
 } as const;
 
 export const PROJECTS_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Frontend Portfolio Amsterdam',
-    SECONDARY: ['React Projects Netherlands', 'Angular Case Studies', 'Next.js Portfolio'],
-    CLIENT_FOCUS: ['Belastingdienst Projects', 'Ziggo Development', 'NPL Frontend Work'],
-    TECH_FOCUS: ['JavaScript Projects Amsterdam', 'TypeScript Portfolio', 'Modern Frontend Examples']
+    PRIMARY: 'Frontend case studies Netherlands',
+    SECONDARY: ['bol.com React migration', 'Belastingdienst forms platform', 'Postcode Loterij design system'],
+    CLIENT_FOCUS: ['bol.com', 'Belastingdienst', 'Nationale Postcode Loterij', 'Athlon'],
+    TECH_FOCUS: ['Legacy Java to SSR React', 'Low-code forms platform', 'Design systems in production']
   }
 } as const;
 
 export const CONTACT_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Contact Frontend Developer Amsterdam',
-    SECONDARY: ['Hire React Developer Netherlands', 'Frontend Development Consultation'],
-    ACTION_FOCUSED: ['Amsterdam JavaScript Developer Contact', 'React Angular Next.js Freelancer Hire'],
-    LOCAL_SEO: ['Amsterdam Frontend Developer', 'Netherlands React Developer']
+    PRIMARY: 'Hire a senior frontend engineer Randstad',
+    SECONDARY: ['Contact React developer Netherlands', 'Freelance frontend engineer enquiry'],
+    ACTION_FOCUSED: ['Book a 30-minute call', 'Frontend engagement Amsterdam Utrecht Rotterdam Den Haag'],
+    LOCAL_SEO: ['Freelance frontend engineer Randstad', 'ZZP frontend developer Netherlands']
   }
 } as const;
 
 export const BOOKING_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Book Frontend Developer Amsterdam',
-    SECONDARY: ['Hire React Developer', 'Schedule Frontend Consultation', 'Amsterdam Developer Booking'],
-    PRICING_FOCUSED: [`€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX} Frontend Developer`, 'Competitive Amsterdam Developer Rates'],
-    ACTION_FOCUSED: ['Frontend Developer Consultation Booking', 'React Angular Next.js Developer Hire']
+    PRIMARY: 'Book a 30-minute call with a senior frontend engineer',
+    SECONDARY: ['Plan een gesprek frontend engineer', 'Intro call React developer', 'Frontend engineer availability 2026'],
+    PRICING_FOCUSED: [RATE_TEXT.en, 'Freelance frontend rate Netherlands'],
+    ACTION_FOCUSED: ['Schedule a call', 'Calendar invitation frontend engineer']
   }
 } as const;
 
 export const BLOG_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Frontend Development Blog Amsterdam',
-    SECONDARY: ['React Angular Tutorials', 'Next.js Development Guide', 'JavaScript Best Practices'],
-    TECHNICAL: ['TypeScript Tips', 'Frontend Performance Blog', 'Modern Web Development'],
-    LOCAL: ['Amsterdam Developer Blog', 'Netherlands Frontend Community']
+    PRIMARY: 'Frontend engineering blog',
+    SECONDARY: ['React architecture', 'React folder structure', 'Unit testing React'],
+    TECHNICAL: ['React Router loaders and actions', 'SEO for Next.js', 'Vitest and Storybook'],
+    LOCAL: ['Dutch frontend engineer blog', 'Randstad frontend community']
   }
 } as const;
 
 export const FAQ_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Frontend Development FAQ Amsterdam',
-    SECONDARY: ['React Angular Questions', 'Next.js Development Info', 'Amsterdam Developer FAQ'],
-    SERVICE_FOCUSED: ['JavaScript Development Questions', 'Frontend Consulting FAQ', 'Developer Pricing Questions']
+    PRIMARY: 'Freelance frontend engineer questions',
+    SECONDARY: ['Frontend engineer rate Netherlands', 'Hybrid frontend engagement Randstad', 'Availability from 1 October 2026'],
+    SERVICE_FOCUSED: ['How a frontend engagement starts', 'Working with a backend team', 'Handover and documentation']
   }
 } as const;
 
 export const PRIVACY_CONTENT = {
   SEO_FOCUS: {
-    PRIMARY: 'Privacy Policy - Frontend Developer Amsterdam',
-    SECONDARY: ['Data Privacy Netherlands', 'GDPR Compliance Developer', 'Website Privacy Policy'],
-    PROFESSIONAL: ['Professional Developer Privacy', 'Amsterdam Business Privacy Policy']
+    PRIMARY: 'Privacy policy Hilmar ICT Services',
+    SECONDARY: ['GDPR personal data hilmarvanderveen.com', 'Cookie use and consent', 'Data retention'],
+    PROFESSIONAL: ['Freelance engineer privacy policy', 'AVG privacyverklaring']
   }
 } as const;

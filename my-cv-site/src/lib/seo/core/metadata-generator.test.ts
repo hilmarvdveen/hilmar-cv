@@ -61,7 +61,8 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(og.image).toBeUndefined();
     expect(og.imageAlt).toBeUndefined();
     expect(Array.isArray(og.alternateLocale)).toBe(true);
-    expect(og.alternateLocale).toContain("nl-NL");
+    expect(og.alternateLocale).toContain("nl_NL");
+    expect(og.locale).toBe("en_US");
   });
 
   it("keeps a short title/description un-truncated", () => {
