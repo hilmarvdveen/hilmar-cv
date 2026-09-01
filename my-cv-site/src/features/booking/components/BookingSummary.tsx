@@ -108,7 +108,7 @@ const SummaryRow = ({ label, value, placeholder }: SummaryRowProps) => (
     </dt>
     <dd
       className={`mt-0.5 text-sm ${
-        value ? "font-semibold text-textMain" : "text-gray-400"
+        value ? "font-semibold text-textMain" : "text-gray-500"
       }`}
     >
       {value ?? placeholder}

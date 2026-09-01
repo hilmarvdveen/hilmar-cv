@@ -42,8 +42,10 @@ Every page hero uses the same tokens and rhythm:
 | Heading | `text-3xl sm:text-5xl`, white (about: `text-3xl sm:text-4xl lg:text-5xl`) |
 | Container | `Container` (16px gutters on phones, 24px from `sm`) |
 
-Applies to `ServicesHero`, `ProjectsHero`, `ContactHero`, `AboutPageContent`
-and the booking page hero (`Section background="navy" padding="default"`).
+Applies to `ServicesHero`, `ProjectsHero`, `ContactHero` and
+`AboutPageContent`. The booking page is the exception: it is a task page,
+so its hero shrinks to a title band on phones and to `py-14` on desktop so
+the day picker sits in the first screen. `BOOKING_FLOW.md` has the budget.
 
 The homepage hero is the exception because it carries the portrait:
 

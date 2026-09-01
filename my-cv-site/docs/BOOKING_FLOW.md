@@ -53,16 +53,48 @@ decisions together. The new flow asks for two.
 - Times for a day are cached, so going back to a day already seen renders
   instantly.
 
+### The first screen shows the task
+
+The page exists to pick a moment, so the day strip and the first rows of
+times must be visible without scrolling on every viewport. This is a
+deliberate exception to the shared hero scale in `LAYOUT.md`: on phones the
+navy hero collapses to a title band (H1 at `text-lg`, `py-5`, badge and
+description hidden below `sm`) because both facts repeat in the aside under
+the form. On desktop the hero keeps `py-14` at `lg`, the ten working days sit
+on one row (`lg:grid-cols-10`) and the time grid runs six across
+(`lg:grid-cols-6`) so two rows of times fit under the days on a 900px
+window. The "another date" control shares the row with the day label instead
+of taking a row of its own.
+
+Pixel budget on a 375 × 667 phone, measured from the top: header 65, title
+band 68, section padding 24, step header 74, card 16, day label row 44, days
+120 (`h-14`), then the time label and the first two rows of times before the
+sticky bar starts at 602. A visitor who arrives from the header button sees
+days and times at once. (Found on 1 September 2026, when the hero pushed the
+step header under the sticky bar and the visitor saw an intro plus a Next
+button and no picker.)
+
 ### Mobile
 
 - A sticky bottom bar carries the current selection and the primary button,
   so the next action is always on screen and the visitor never scrolls to
   find it. Back is a text link above the bar.
+- On step 1 the bar's button is the neutral variant until a time is picked,
+  then it turns primary. The flip is the feedback. It stays enabled (see
+  "Direct feedback"), so a tap still explains what is missing, but it no
+  longer reads as "nothing to do here, continue" while the picker is on
+  screen.
 - The two-column layout collapses to one. The "what to expect" panel moves
   below the form. The live selection panel disappears because the sticky bar
   shows the selection.
-- Inputs use 16px text so iOS does not zoom on focus. Day and time buttons are
-  44px tall for a comfortable tap target.
+- Inputs use 16px text so iOS does not zoom on focus, the native date input
+  included (`h-11 text-base`). Time buttons are 44px tall and day buttons
+  56px on phones, 68px from `sm`.
+- Scroll targets inside the form (step header, heading, time group) use
+  `scroll-mt-4`. The root already carries `scroll-padding-top` for the
+  header, and the two add up (see `LAYOUT.md`). With `scroll-mt-28` a step
+  change landed the heading 177px down and left a phone 425px for four
+  fields.
 
 ### Server rules that support the flow
 

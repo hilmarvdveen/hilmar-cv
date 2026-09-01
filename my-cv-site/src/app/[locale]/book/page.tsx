@@ -35,20 +35,20 @@ export default async function BookPage({ params }: Props) {
       <Section
         background="navy"
         padding="default"
-        className="py-8 sm:py-16 lg:py-20"
+        className="py-5 sm:py-12 lg:py-14"
         aria-labelledby="book-heading"
       >
         <Container>
-          <p className="text-xs font-bold uppercase tracking-widest text-emerald-300 sm:text-[13px]">
+          <p className="hidden text-[13px] font-bold uppercase tracking-widest text-emerald-300 sm:block">
             {t("hero.badge")}
           </p>
           <h1
             id="book-heading"
-            className="mt-2 text-2xl font-extrabold tracking-tight text-white text-balance sm:mt-3 sm:text-4xl lg:text-5xl"
+            className="text-lg font-extrabold tracking-tight text-white text-balance sm:mt-3 sm:text-4xl lg:text-5xl"
           >
             {t("hero.title")}
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-300 sm:mt-4 sm:text-lg">
+          <p className="mt-4 hidden max-w-2xl text-lg leading-relaxed text-slate-300 sm:block">
             {t("hero.description")}
           </p>
           <ul className="mt-6 hidden flex-wrap gap-2 sm:flex">
@@ -67,6 +67,7 @@ export default async function BookPage({ params }: Props) {
       <Section
         background="light"
         padding="compact"
+        className="pt-6 sm:pt-10"
         id="booking-form"
         aria-labelledby="booking-step-heading"
       >

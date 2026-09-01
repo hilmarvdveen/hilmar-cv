@@ -334,11 +334,39 @@ export const BookingForm = () => {
 
   const renderMoment = () => (
     <div>
-      <fieldset>
-        <legend className="text-sm font-semibold text-textMain">
-          {t("flow.moment.dayLabel")}
-        </legend>
-        <div className="mt-3 grid grid-cols-5 gap-2">
+      <div role="group" aria-labelledby="booking-day-label">
+        <div className="flex min-h-11 items-center justify-between gap-3">
+          <p id="booking-day-label" className="text-sm font-semibold text-textMain">
+            {t("flow.moment.dayLabel")}
+          </p>
+          {dateInputVisible ? (
+            <div className="flex flex-wrap items-center justify-end gap-3">
+              <label htmlFor="booking-other-date" className="text-sm text-gray-600">
+                {t("flow.moment.otherDateLabel")}
+              </label>
+              <input
+                id="booking-other-date"
+                type="date"
+                min={todayKey}
+                max={furthestKey}
+                value={details.date}
+                onChange={(event) => {
+                  if (event.target.value) selectDay(event.target.value);
+                }}
+                className="h-11 rounded-lg border border-gray-500 px-3 text-base text-textMain focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowDateInput(true)}
+              className="-my-2 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {t("flow.moment.otherDate")}
+            </button>
+          )}
+        </div>
+        <div className="mt-2 grid grid-cols-5 gap-2 lg:grid-cols-10">
           {workingDays.map((day) => {
             const label = formatDayLabel(day, locale);
             const selected = day === details.date;
@@ -349,7 +377,7 @@ export const BookingForm = () => {
                 aria-pressed={selected}
                 aria-label={formatLongDate(day, locale)}
                 onClick={() => selectDay(day)}
-                className={`flex h-[68px] flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:h-[68px] ${
                   selected
                     ? "border-emerald-700 bg-emerald-700 text-white"
                     : "border-gray-200 bg-white text-textMain hover:border-emerald-600"
@@ -366,37 +394,9 @@ export const BookingForm = () => {
             );
           })}
         </div>
-        <div className="mt-3 min-h-11">
-          {dateInputVisible ? (
-            <div className="flex flex-wrap items-center gap-3">
-              <label htmlFor="booking-other-date" className="text-sm text-gray-600">
-                {t("flow.moment.otherDateLabel")}
-              </label>
-              <input
-                id="booking-other-date"
-                type="date"
-                min={todayKey}
-                max={furthestKey}
-                value={details.date}
-                onChange={(event) => {
-                  if (event.target.value) selectDay(event.target.value);
-                }}
-                className="rounded-lg border border-gray-500 px-3 py-2 text-sm text-textMain focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-              />
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setShowDateInput(true)}
-              className="-my-2 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-            >
-              {t("flow.moment.otherDate")}
-            </button>
-          )}
-        </div>
-      </fieldset>
+      </div>
 
-      <div className="mt-7">
+      <div className="mt-5 sm:mt-7">
         <div className="flex items-baseline justify-between gap-4">
           <p id="booking-slot-label" className="text-sm font-semibold text-textMain">
             {t("flow.moment.timeLabel")}
@@ -411,10 +411,10 @@ export const BookingForm = () => {
           aria-labelledby="booking-slot-label"
           aria-describedby={timeError ? "booking-slot-error" : undefined}
           tabIndex={-1}
-          className="mt-3 min-h-[200px] scroll-mt-28 outline-none"
+          className="mt-3 min-h-[200px] scroll-mt-4 outline-none"
         >
           {slotsStatus === "loading" && (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4" aria-hidden="true">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6" aria-hidden="true">
               {Array.from({ length: 8 }, (_, index) => (
                 <div key={index} className="h-11 animate-pulse rounded-lg bg-gray-100" />
               ))}
@@ -438,7 +438,7 @@ export const BookingForm = () => {
             </p>
           )}
           {slotsStatus === "ready" && slots.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
               {slots.map((slot) => {
                 const selected = slot.value === details.time;
                 return (
@@ -605,7 +605,7 @@ export const BookingForm = () => {
       <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10 lg:items-start">
         <div>
-          <div className="scroll-mt-28">
+          <div className="scroll-mt-4">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">
               {t("flow.stepLabel", { current: step, total: STEP_COUNT })}
             </p>
@@ -613,7 +613,7 @@ export const BookingForm = () => {
               ref={headingRef}
               id={STEP_HEADING_ID}
               tabIndex={-1}
-              className="mt-1 scroll-mt-28 text-2xl font-extrabold tracking-tight text-textMain outline-none sm:text-3xl"
+              className="mt-1 scroll-mt-4 text-2xl font-extrabold tracking-tight text-textMain outline-none sm:text-3xl"
             >
               {t(`flow.steps.${STEP_KEYS[step]}`)}
             </h2>
@@ -629,7 +629,7 @@ export const BookingForm = () => {
             </div>
           </div>
 
-          <Card className="mt-6 p-5 sm:p-8">
+          <Card className="mt-4 p-4 sm:mt-6 sm:p-8">
             {step === 1 && renderMoment()}
             {step === 2 && renderDetails()}
             {step === 3 && renderConfirm()}
@@ -641,7 +641,7 @@ export const BookingForm = () => {
                 type="button"
                 onClick={handleBack}
                 disabled={status === "submitting"}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 hover:text-textMain disabled:opacity-50"
+                className="-my-2 inline-flex items-center gap-1.5 rounded py-2 text-sm font-semibold text-gray-600 hover:text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-50"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 {t("navigation.back")}
@@ -662,7 +662,7 @@ export const BookingForm = () => {
           </div>
         </div>
 
-        <aside className="hidden lg:block lg:sticky lg:top-28">
+        <aside className="hidden lg:block lg:sticky lg:top-[calc(var(--header-height)+1.5rem)]">
           <BookingSummary details={details} />
         </aside>
       </div>
@@ -675,7 +675,12 @@ export const BookingForm = () => {
             </p>
             <p className="truncate text-sm font-semibold text-textMain">{selectionText}</p>
           </div>
-          <Button type="submit" variant="primary" size="sm" disabled={status === "submitting"}>
+          <Button
+            type="submit"
+            variant={step === 1 && !details.time ? "neutral" : "primary"}
+            size="sm"
+            disabled={status === "submitting"}
+          >
             {primaryLabel}
             {step < 3 && <ArrowRight className="h-4 w-4" aria-hidden="true" />}
           </Button>
