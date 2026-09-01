@@ -52,7 +52,7 @@ export default async function ServicesPage({ params }: Props) {
       benefits: t.raw("main.services.frontend.benefits.items") as string[],
       href: "/services/frontend",
       color: "bg-blue-500",
-      accent: "text-blue-600",
+      accent: "text-blue-700",
     },
     {
       id: "fullstack",
@@ -71,7 +71,7 @@ export default async function ServicesPage({ params }: Props) {
       benefits: t.raw("main.services.fullstack.benefits.items") as string[],
       href: "/services/fullstack",
       color: "bg-emerald-500",
-      accent: "text-emerald-600",
+      accent: "text-emerald-700",
     },
     {
       id: "design-systems",
@@ -90,7 +90,7 @@ export default async function ServicesPage({ params }: Props) {
       benefits: t.raw("main.services.designSystems.benefits.items") as string[],
       href: "/services/design-systems",
       color: "bg-purple-500",
-      accent: "text-purple-600",
+      accent: "text-purple-700",
     },
     {
       id: "consulting",
@@ -108,7 +108,7 @@ export default async function ServicesPage({ params }: Props) {
       benefits: t.raw("main.services.consulting.benefits.items") as string[],
       href: "/services/consulting",
       color: "bg-orange-500",
-      accent: "text-orange-600",
+      accent: "text-orange-700",
     },
   ];
 

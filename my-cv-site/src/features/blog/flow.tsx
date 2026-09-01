@@ -41,7 +41,7 @@ export function flowNode(
   const labelNode: ReactNode = (
     <div className="text-center leading-tight">
       <div className="font-semibold">{label}</div>
-      {sub && <div className="mt-0.5 text-[0.7rem] font-normal opacity-70">{sub}</div>}
+      {sub && <div className="mt-0.5 text-[0.7rem] font-normal">{sub}</div>}
     </div>
   );
   return {

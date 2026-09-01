@@ -86,16 +86,66 @@ same day, see `SEO.md`). The accessibility failure was `text-gray-500` on
 the navy footer (2.75:1), now `gray-400`. The console errors are the Vercel
 insight scripts returning 404 on a local server only.
 
+## What changed on 1 September 2026, and what it moved
+
+| Change | Effect |
+|---|---|
+| Seven presentational components became server components, the experience cards render on the server behind a client chip bar, the hero is a server component with a client CV button that loads the modal on demand | fewer hydrated components, `home.hero` and `work` no longer travel to the client |
+| `NextIntlClientProvider` receives only the namespaces client components read (`pickMessages`) | homepage flight payload 256KB to 197KB, HTML 89KB to 66KB gzip, booking page 78KB to 52KB gzip |
+| Booking context moved from the layout to `/book` | its code and localStorage handling left every other page |
+| GTM loads only after the same consent as GA4 | 100KB of third-party JavaScript no longer loads on a first visit |
+| Dead colour palette and comments removed from `globals.css`, carousel logos no longer preloaded | 4KB less CSS in every document, three fewer requests competing before the first paint |
+| Nested `<main>` on four pages, heading skips on services and search, definition lists on contact, duplicate diagram ids, day-button names, seven contrast failures | accessibility 100 on home, experience, book, contact, about, faq, and 96 on services and the blog |
+
+Lighthouse mobile after the pass (local production build, same machine,
+scores vary by 3 to 5 points between runs on this machine):
+
+| Page | Performance | SEO | A11y | Best practices | FCP | LCP | TBT |
+|---|---|---|---|---|---|---|---|
+| `/nl` | 81 to 88 | 92 | 100 | 96 | 1.1s | 3.5s | 180 to 330ms |
+| `/nl/experience` | 89 | 92 | 100 | 96 | 1.3s | 3.4s | 160ms |
+| `/nl/book` | 84 | 92 | 100 | 96 | 1.0s | 3.7s | 280ms |
+| `/nl/contact` | 84 | 92 | 100 | 96 | 1.0s | 3.4s | 320ms |
+| `/nl/about` | 88 | 92 | 100 | 96 | 1.0s | 3.5s | 210ms |
+| `/nl/privacy` | 92 | | | | 1.2s | 3.3s | 90ms |
+
+SEO 92 and best practices 96 are local artifacts: the canonical points at
+`www.hilmarvanderveen.com` while the page is served from `localhost`, and
+Vercel's insight scripts return 404 without Vercel. Both audits pass on the
+deployed site.
+
+### Why performance stops at about 90 in this lab
+
+Three experiments on the homepage, all without a rebuild:
+
+| Experiment | Performance | LCP |
+|---|---|---|
+| baseline | 88 | 3.5s |
+| web font blocked | 90 | 3.6s |
+| all JavaScript chunks blocked | 97 | 2.4s |
+| header runtime, next-intl client bundle and Vercel scripts blocked | 88 | 3.7s |
+
+The font is not the cause. JavaScript is, and specifically the framework:
+React DOM (71KB gzip), the Next runtime and router (61KB) and the Turbopack
+runtime cost 136KB of the 189KB a modern browser fetches, and Lighthouse's
+simulated throttling schedules the H1 paint behind their evaluation on a
+four-times slower CPU. Removing the whole app-level share (53KB) does not
+move the LCP. The lightest page on the site, `/privacy`, scores 92 with a
+TBT of 90ms. That is the floor for a React 19 App Router page in this lab
+setup. Reaching 95 or more means fewer framework bytes, which this stack
+does not offer, or a different measurement (the field, where the paint
+does not wait for script evaluation on most devices). `SpeedInsights`
+reports the field numbers once the site is deployed.
+
 ## Options, in order of effect on first paint
 
-1. **Trim the client payload.** Pass only the namespaces client components
-   use to `NextIntlClientProvider` and convert the eight presentational
-   client components to server components. Expected: HTML from 89KB to
-   roughly 50KB gzip on the homepage, less hydration work, no visible change.
-   No trade-off. Do this first.
-2. **Serve GTM or GA4, not both**, and only after consent. Removes about
-   100KB of third-party JavaScript and the largest blocking-time item.
-   Decision for the owner: which one carries the funnel events.
+1. **Trim the client payload.** Done on 1 September 2026 (see above).
+2. **GTM and GA4 both stay** (owner's decision, 1 September 2026: they work
+   as a team). Both wait for consent, so a first visit loads neither and the
+   consenting visitor loads GTM first and gtag lazily. One check in the GTM
+   container: if it fires the GA4 configuration tag as well, every page view
+   is counted twice. Let GTM own the events, or let gtag own the config, not
+   both.
 3. **Static HTML at the edge.** The only way to remove the per-request
    function and the `no-store` cache header is to drop the per-request
    nonce. Without a nonce, an App Router site needs `'unsafe-inline'` in
