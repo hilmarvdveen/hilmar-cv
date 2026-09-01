@@ -45,12 +45,21 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(en.alternates?.canonical).not.toEqual(nl.alternates?.canonical);
   });
 
-  it("uses Next-compatible Open Graph keys (alternateLocale, no inline image)", () => {
+  it("prefixes every locale, the Dutch default included, because routing always prefixes", () => {
+    const nl = gen.generateMetadata(cfg({ locale: "nl", path: "/about" }));
+    const home = gen.generateMetadata(cfg({ locale: "nl", path: "/" }));
+    expect(String(nl.alternates?.canonical)).toBe("https://www.hilmarvanderveen.com/nl/about");
+    expect(String(home.alternates?.canonical)).toBe("https://www.hilmarvanderveen.com/nl");
+    const languages = nl.alternates?.languages as Record<string, string>;
+    expect(languages["nl-NL"]).toBe("https://www.hilmarvanderveen.com/nl/about");
+    expect(languages["en-US"]).toBe("https://www.hilmarvanderveen.com/en/about");
+    expect(languages["x-default"]).toBe("https://www.hilmarvanderveen.com/nl/about");
+  });
+
+  it("uses Next-compatible Open Graph keys (alternateLocale)", () => {
     const og = gen.generateMetadata(cfg({ locale: "en" })).openGraph as Record<string, unknown>;
-    // og:image is provided by the file-based opengraph-image route, not inline.
     expect(og.image).toBeUndefined();
     expect(og.imageAlt).toBeUndefined();
-    // Correct Next key (previously the ignored `alternateLocales`).
     expect(Array.isArray(og.alternateLocale)).toBe(true);
     expect(og.alternateLocale).toContain("nl-NL");
   });
@@ -70,11 +79,13 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(title).not.toMatch(/…\s*\|/); // no ellipsis immediately before a brand pipe
   });
 
-  it("does not inline OG/Twitter images (those come from the image routes)", () => {
-    const meta = gen.generateMetadata(cfg());
-    const og = meta.openGraph as Record<string, unknown>;
-    const tw = meta.twitter as Record<string, unknown>;
-    expect(og.images).toBeUndefined();
-    expect(tw.images).toBeUndefined();
+  it("points OG and Twitter images at the generated card routes of the same locale", () => {
+    const meta = gen.generateMetadata(cfg({ locale: "nl" }));
+    const og = meta.openGraph as { images: { url: string; width: number; height: number }[] };
+    const tw = meta.twitter as { images: string[] };
+    expect(og.images[0].url).toBe("https://www.hilmarvanderveen.com/nl/opengraph-image");
+    expect(og.images[0].width).toBe(1200);
+    expect(og.images[0].height).toBe(630);
+    expect(tw.images[0]).toBe("https://www.hilmarvanderveen.com/nl/twitter-image");
   });
 });

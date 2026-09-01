@@ -13,6 +13,7 @@ export { AnalyticsManager } from './core/analytics-manager';
 // Factory and utilities
 export { SEOFactory } from './factory';
 export { SEOUtils } from './utils';
+export { localizedAlternates } from './alternates';
 
 // React hooks
 export { useSEO } from './hooks/useSeo';

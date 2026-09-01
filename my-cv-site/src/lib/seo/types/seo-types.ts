@@ -60,6 +60,13 @@ export type BaseMetadata = {
   noImageIndex?: boolean;
 }
 
+export type OpenGraphImage = {
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
 export type OpenGraphMetadata = {
   title: string;
   description: string;
@@ -68,6 +75,7 @@ export type OpenGraphMetadata = {
   siteName: string;
   locale: string;
   alternateLocale: string[];
+  images: OpenGraphImage[];
 }
 
 export type TwitterMetadata = {
@@ -76,6 +84,7 @@ export type TwitterMetadata = {
   description: string;
   site?: string;
   creator?: string;
+  images: string[];
 }
 
 export type ExtendedMetadata = BaseMetadata & {

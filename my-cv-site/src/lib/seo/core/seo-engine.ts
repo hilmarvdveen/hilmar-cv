@@ -378,7 +378,7 @@ export class SEOEngine {
     structuredData: string;
   } {
     const localeBase =
-      locale === LOCALE_CONFIG.DEFAULT ? this.baseUrl : `${this.baseUrl}/${locale}`;
+      `${this.baseUrl}/${locale}`;
 
     const config: SEOPageConfig = {
       pageType: 'blog-post',
@@ -633,7 +633,7 @@ export class SEOEngine {
    */
   private generateBreadcrumbs(pathSegments: string[], locale: Locale): BreadcrumbItem[] {
     const breadcrumbs: BreadcrumbItem[] = [];
-    const baseUrl = locale === LOCALE_CONFIG.DEFAULT ? this.baseUrl : `${this.baseUrl}/${locale}`;
+    const baseUrl = `${this.baseUrl}/${locale}`;
     
     // Add home
     breadcrumbs.push({
@@ -660,7 +660,7 @@ export class SEOEngine {
    * Generate homepage breadcrumbs
    */
   private generateHomepageBreadcrumbs(locale: Locale): BreadcrumbItem[] {
-    const baseUrl = locale === LOCALE_CONFIG.DEFAULT ? this.baseUrl : `${this.baseUrl}/${locale}`;
+    const baseUrl = `${this.baseUrl}/${locale}`;
     
     return [{
       name: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
@@ -812,15 +812,18 @@ export class SEOEngine {
       const pagePath = descriptor.path ? `/${descriptor.path}` : '';
 
       LOCALE_CONFIG.SUPPORTED.forEach(locale => {
-        const isDefault = locale === LOCALE_CONFIG.DEFAULT;
-        const localePrefix = isDefault ? '' : `/${locale}`;
-        const url = `${this.baseUrl}${localePrefix}${pagePath}`;
+        const url = `${this.baseUrl}/${locale}${pagePath}`;
 
-        // Generate alternates for this page
-        const alternates = LOCALE_CONFIG.SUPPORTED.map((locale: string) => ({
-          hreflang: LOCALE_CONFIG.HREFLANG[locale as keyof typeof LOCALE_CONFIG.HREFLANG],
-          href: `${this.baseUrl}${locale === LOCALE_CONFIG.DEFAULT ? '' : `/${locale}`}${pagePath}`
-        }));
+        const alternates: Array<{ hreflang: string; href: string }> = LOCALE_CONFIG.SUPPORTED.map(
+          (alternateLocale) => ({
+            hreflang: LOCALE_CONFIG.HREFLANG[alternateLocale],
+            href: `${this.baseUrl}/${alternateLocale}${pagePath}`
+          })
+        );
+        alternates.push({
+          hreflang: 'x-default',
+          href: `${this.baseUrl}/${LOCALE_CONFIG.DEFAULT}${pagePath}`
+        });
 
         sitemapData.push({
           url,

@@ -1,8 +1,3 @@
-/**
- * Enterprise Metadata Generator
- * Implements Google 2024 SEO best practices with E-E-A-T focus
- * Comprehensive metadata generation for all page types
- */
 
 import { Metadata } from 'next';
 import type { 
@@ -27,12 +22,9 @@ export class MetadataGenerator {
   private readonly baseUrl: string;
   
   constructor(baseUrl: string = BUSINESS_PROFILE.CONTACT.WEBSITE) {
-    this.baseUrl = baseUrl.replace(/\/$/, ''); // Remove trailing slash
+    this.baseUrl = baseUrl.replace(/\/$/, '');
   }
 
-  /**
-   * Generate comprehensive metadata for a page
-   */
   public generateMetadata(config: SEOPageConfig): Metadata {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
     const alternateUrls = this.generateAlternateUrls(config.path);
@@ -43,7 +35,6 @@ export class MetadataGenerator {
       description: this.optimizeDescription(config.description, config.pageType),
       keywords: this.buildKeywords(config.keywords, config.pageType, config.locale),
       
-      // Author and creator information (E-E-A-T signals)
       authors: [{ 
         name: BUSINESS_PROFILE.NAME, 
         url: `${this.baseUrl}/${config.locale}/about`
@@ -51,40 +42,31 @@ export class MetadataGenerator {
       creator: BUSINESS_PROFILE.NAME,
       publisher: BUSINESS_PROFILE.COMPANY,
       
-      // Advanced robots directives
       robots: this.generateRobotsDirectives(config),
       
-      // Canonical and language alternates (critical for duplicate content prevention)
       alternates: {
         canonical: canonicalUrl,
         languages: alternateUrls,
       },
       
-      // Enhanced Open Graph
       openGraph: this.generateOpenGraphMetadata(config, canonicalUrl),
       
-      // Enhanced Twitter metadata
       twitter: this.generateTwitterMetadata(config),
       
-      // Additional metadata for better search understanding
       category: this.getCategoryForPageType(config.pageType),
       classification: 'Professional Services',
       
-      // Extended meta tags for enhanced SEO
       other: this.generateExtendedMetaTags(config),
       
-      // Verification tags (server-side; token need not be public)
       verification: {
         google: process.env.GOOGLE_SITE_VERIFICATION,
       },
       
-      // App metadata
       manifest: '/site.webmanifest',
       applicationName: `${BUSINESS_PROFILE.NAME} - Portfolio`,
       generator: 'Next.js',
       referrer: 'origin-when-cross-origin',
       
-      // Content timing
       ...(config.publishedTime && {
         other: {
           ...this.generateExtendedMetaTags(config),
@@ -100,35 +82,23 @@ export class MetadataGenerator {
     };
   }
 
-  /**
-   * Optimize title with E-E-A-T signals and location targeting
-   */
   private optimizeTitle(title: string, pageType: PageType): string {
     const max = META_LIMITS.TITLE.MAX;
     const suffix = `${this.getProfessionalSuffix(pageType)} | Amsterdam, Netherlands`;
 
-    // Prefer the full title with E-E-A-T suffix when it fits.
     const withSuffix = `${title}${suffix}`;
     if (withSuffix.length <= max) return withSuffix;
 
-    // Otherwise use the page title on its own when it fits.
     if (title.length <= max) return title;
 
-    // Last resort: truncate cleanly at a word boundary with a single ellipsis
-    // (never produce "<truncated>... | Brand", which reads badly in search).
     return title.slice(0, max - 1).replace(/\s+\S*$/, '').trimEnd() + '…';
   }
 
-  /**
-   * Optimize description with semantic keywords and value proposition
-   */
   private optimizeDescription(description: string, pageType: PageType): string {
-    // Ensure description is within optimal length
     if (description.length > META_LIMITS.DESCRIPTION.MAX) {
       description = description.substring(0, META_LIMITS.DESCRIPTION.MAX - 3) + '...';
     }
     
-    // Add value proposition if space allows
     const valueProposition = this.getValueProposition(pageType);
     const enhancedDescription = `${description} ${valueProposition}`;
     
@@ -139,54 +109,34 @@ export class MetadataGenerator {
     return description;
   }
 
-  /**
-   * Build comprehensive keyword list with semantic targeting
-   */
   private buildKeywords(baseKeywords: string[], pageType: PageType, locale: Locale): string[] {
     const keywords = [...baseKeywords];
     
-    // Add page-specific primary keywords
     keywords.push(...this.getPageTypeKeywords(pageType));
     
-    // Add semantic keywords based on content
     keywords.push(...this.getSemanticKeywords(pageType));
     
-    // Add location-based keywords for local SEO
     keywords.push(...this.getLocationKeywords(locale));
     
-    // Add professional qualifications (E-E-A-T)
     keywords.push(...this.getProfessionalKeywords());
     
-    // Remove duplicates and limit to optimal count
     const uniqueKeywords = [...new Set(keywords)];
     return uniqueKeywords.slice(0, META_LIMITS.KEYWORDS.OPTIMAL);
   }
 
-  /**
-   * Generate comprehensive robots directives
-   */
   private generateRobotsDirectives(config: SEOPageConfig): string {
     const directives = [
       config.noIndex ? ROBOTS_DIRECTIVES.NOINDEX : ROBOTS_DIRECTIVES.INDEX,
       config.noFollow ? ROBOTS_DIRECTIVES.NOFOLLOW : ROBOTS_DIRECTIVES.FOLLOW,
       ROBOTS_DIRECTIVES.MAX_SNIPPET.MEDIUM,
-      // 'large' enables rich image previews in Google Search results.
       ROBOTS_DIRECTIVES.MAX_IMAGE_PREVIEW.LARGE,
       ROBOTS_DIRECTIVES.MAX_VIDEO_PREVIEW.UNLIMITED
     ];
-    
-    // Note: noarchive directive is deprecated and no longer used by Google
-    // All pages now use consistent max-snippet controls for better UX
-    
+
     return directives.join(', ');
   }
 
-  /**
-   * Generate Open Graph metadata with proper image optimization
-   */
   private generateOpenGraphMetadata(config: SEOPageConfig, canonicalUrl: string): OpenGraphMetadata {
-    // Note: og:image is provided by the file-based `opengraph-image` route
-    // (a generated 1200x630 branded card), so it is intentionally not set here.
     return {
       title: config.title,
       description: config.description,
@@ -194,72 +144,61 @@ export class MetadataGenerator {
       url: canonicalUrl,
       siteName: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
       locale: LOCALE_CONFIG.HREFLANG[config.locale],
-      // Next.js metadata key is `alternateLocale` (was previously the invalid
-      // `alternateLocales`, which Next silently ignored).
       alternateLocale: Object.values(LOCALE_CONFIG.HREFLANG).filter(
         locale => locale !== LOCALE_CONFIG.HREFLANG[config.locale]
       ),
+      images: [
+        {
+          url: `${this.baseUrl}/${config.locale}/opengraph-image`,
+          width: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.WIDTH,
+          height: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.HEIGHT,
+          alt: config.title,
+        },
+      ],
     };
   }
 
-  /**
-   * Generate Twitter Card metadata. twitter:image is provided by the file-based
-   * `twitter-image` route.
-   */
   private generateTwitterMetadata(config: SEOPageConfig): TwitterMetadata {
-    // No X/Twitter account, so we omit twitter:site / twitter:creator. The card
-    // (+ twitter-image route) still produces a rich preview when others share
-    // the link on X.
     return {
       card: SOCIAL_OPTIMIZATION.TWITTER.CARD,
       title: config.title,
       description: config.description,
+      images: [`${this.baseUrl}/${config.locale}/twitter-image`],
     };
   }
 
-  /**
-   * Generate extended meta tags for enhanced SEO
-   */
   private generateExtendedMetaTags(config: SEOPageConfig): Record<string, string> {
     const languageCode = LOCALE_CONFIG.HREFLANG[config.locale];
     
     return {
-      // Geographic targeting for local SEO
       'geo.region': LOCALE_CONFIG.COUNTRY_TARGETING[config.locale],
       'geo.placename': `${BUSINESS_PROFILE.LOCATION.CITY}, ${BUSINESS_PROFILE.LOCATION.COUNTRY}`,
       'geo.position': `${BUSINESS_PROFILE.LOCATION.COORDINATES.LAT};${BUSINESS_PROFILE.LOCATION.COORDINATES.LNG}`,
       'ICBM': `${BUSINESS_PROFILE.LOCATION.COORDINATES.LAT}, ${BUSINESS_PROFILE.LOCATION.COORDINATES.LNG}`,
       
-      // Language and localization
       'content-language': languageCode,
       'language': config.locale === 'nl' ? 'Dutch' : 'English',
       
-      // Professional metadata (E-E-A-T signals)
       'profile:first_name': BUSINESS_PROFILE.NAME.split(' ')[0],
       'profile:last_name': BUSINESS_PROFILE.NAME.split(' ').slice(1).join(' '),
       'profile:username': 'hilmarvdveen',
       
-      // Business information
       'business:contact_data:locality': BUSINESS_PROFILE.LOCATION.CITY,
       'business:contact_data:region': BUSINESS_PROFILE.LOCATION.REGION,
       'business:contact_data:country_name': BUSINESS_PROFILE.LOCATION.COUNTRY,
       
-      // Content metadata
       'article:author': BUSINESS_PROFILE.NAME,
       'article:publisher': BUSINESS_PROFILE.COMPANY,
       'article:section': this.getCategoryForPageType(config.pageType),
       
-      // Technical optimization
       'generator': 'Next.js',
       'referrer': 'origin-when-cross-origin',
       
-      // App-specific
       'apple-mobile-web-app-title': BUSINESS_PROFILE.NAME,
       'application-name': `${BUSINESS_PROFILE.NAME} - Portfolio`,
       'msapplication-TileColor': '#2563eb',
       'theme-color': '#2563eb',
       
-      // Dublin Core metadata for academic/professional credibility
       'DC.title': config.title,
       'DC.creator': BUSINESS_PROFILE.NAME,
       'DC.subject': this.getCategoryForPageType(config.pageType),
@@ -270,18 +209,12 @@ export class MetadataGenerator {
     };
   }
 
-  /**
-   * Build canonical URL with proper locale handling
-   */
   private buildCanonicalUrl(path: string, locale: Locale): string {
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-    const localePrefix = locale === LOCALE_CONFIG.DEFAULT ? '' : `/${locale}`;
-    return `${this.baseUrl}${localePrefix}/${cleanPath}`.replace(/\/+$/, '') || `${this.baseUrl}${localePrefix}`;
+    const localePrefix = `/${locale}`;
+    return `${this.baseUrl}${localePrefix}/${cleanPath}`.replace(/\/+$/, '');
   }
 
-  /**
-   * Generate alternate URLs for hreflang implementation
-   */
   private generateAlternateUrls(path: string): Record<string, string> {
     const alternates: Record<string, string> = {};
     
@@ -290,15 +223,11 @@ export class MetadataGenerator {
       alternates[LOCALE_CONFIG.HREFLANG[locale]] = url;
     });
     
-    // Add x-default for international targeting
     alternates['x-default'] = this.buildCanonicalUrl(path, LOCALE_CONFIG.DEFAULT);
     
     return alternates;
   }
 
-  /**
-   * Get professional suffix for titles (E-E-A-T)
-   */
   private getProfessionalSuffix(pageType: PageType): string {
     const suffixes = {
       homepage: ` | ${BUSINESS_PROFILE.TITLE}`,
@@ -316,9 +245,6 @@ export class MetadataGenerator {
     return suffixes[pageType] || ` | ${BUSINESS_PROFILE.NAME}`;
   }
 
-  /**
-   * Get value proposition for descriptions
-   */
   private getValueProposition(pageType: PageType): string {
     const propositions = {
       homepage: `Expert React & Angular development in Amsterdam. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience.`,
@@ -336,9 +262,6 @@ export class MetadataGenerator {
     return propositions[pageType] || `Professional frontend development by ${BUSINESS_PROFILE.NAME}.`;
   }
 
-  /**
-   * Get page type specific keywords
-   */
   private getPageTypeKeywords(pageType: PageType): string[] {
     const keywordMap = {
       homepage: [...PRIMARY_KEYWORDS.TIER_1],
@@ -356,9 +279,6 @@ export class MetadataGenerator {
     return keywordMap[pageType] || [];
   }
 
-  /**
-   * Get semantic keywords for content
-   */
   private getSemanticKeywords(pageType: PageType): string[] {
     if (pageType === 'services') {
       return SEMANTIC_KEYWORDS.BUSINESS_TERMS.slice(0, 5);
@@ -369,9 +289,6 @@ export class MetadataGenerator {
     return SEMANTIC_KEYWORDS.INDUSTRY_TERMS.slice(0, 3);
   }
 
-  /**
-   * Get location-based keywords for local SEO
-   */
   private getLocationKeywords(locale: Locale): string[] {
     const baseLocation = ['Amsterdam', 'Netherlands'];
     if (locale === 'nl') {
@@ -380,9 +297,6 @@ export class MetadataGenerator {
     return [...baseLocation, 'Dutch developer', 'Netherlands programmer'];
   }
 
-  /**
-   * Get professional qualification keywords (E-E-A-T)
-   */
   private getProfessionalKeywords(): string[] {
     return [
       `${BUSINESS_PROFILE.YEARS_EXPERIENCE} years experience`,
@@ -393,9 +307,6 @@ export class MetadataGenerator {
     ];
   }
 
-  /**
-   * Get category for page type
-   */
   private getCategoryForPageType(pageType: PageType): string {
     const categories = {
       homepage: 'Professional Portfolio',

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
+import { localizedAlternates } from "@/lib/seo";
 
 const SLUG = "cookies" as const;
 
@@ -12,14 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: doc.title,
     description: doc.intro,
-    alternates: {
-      canonical: `/${locale}/${SLUG}`,
-      languages: {
-        en: `/en/${SLUG}`,
-        nl: `/nl/${SLUG}`,
-        "x-default": `/en/${SLUG}`,
-      },
-    },
+    alternates: localizedAlternates(SLUG, locale),
   };
 }
 

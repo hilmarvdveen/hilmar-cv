@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { SearchPageContent, type SearchLocale } from "@/features/search";
+import { localizedAlternates } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: isNl
       ? "Zoek op hilmarvanderveen.com."
       : "Search hilmarvanderveen.com.",
-    // Search results pages should not be indexed.
+    alternates: localizedAlternates("search", locale),
     robots: { index: false, follow: true },
   };
 }
