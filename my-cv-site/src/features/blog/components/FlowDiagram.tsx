@@ -38,7 +38,7 @@ export function FlowDiagram({ nodes, edges, height = 340, caption, ariaLabel }: 
           minZoom={0.2}
         >
           <Background id={diagramId} gap={20} color="#e2e8f0" />
-          <Controls showInteractive={false} position="bottom-right" />
+          <Controls showInteractive={false} position="bottom-left" />
         </ReactFlow>
       </div>
       {caption && (

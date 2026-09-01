@@ -207,7 +207,9 @@ html {
   padding: 0.5rem 0.625rem;
 }
 
-.react-flow__controls-button {
+.react-flow__controls .react-flow__controls-button {
   width: 2rem;
   height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
 }

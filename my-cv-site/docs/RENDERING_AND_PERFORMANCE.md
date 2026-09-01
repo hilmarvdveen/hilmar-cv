@@ -95,7 +95,7 @@ insight scripts returning 404 on a local server only.
 | Booking context moved from the layout to `/book` | its code and localStorage handling left every other page |
 | GTM loads only after the same consent as GA4 | 100KB of third-party JavaScript no longer loads on a first visit |
 | Dead colour palette and comments removed from `globals.css`, carousel logos no longer preloaded | 4KB less CSS in every document, three fewer requests competing before the first paint |
-| Nested `<main>` on four pages, heading skips on services and search, definition lists on contact, duplicate diagram ids, day-button names, seven contrast failures | accessibility 100 on home, experience, book, contact, about, faq, and 96 on services and the blog |
+| Nested `<main>` on four pages, heading skips on services and search, definition lists on contact, duplicate diagram ids, day-button names, diagram control tap targets, nine contrast failures | accessibility 100 on every page measured (home, experience, book, services, contact, about, faq, blog post) |
 
 Lighthouse mobile after the pass (local production build, same machine,
 scores vary by 3 to 5 points between runs on this machine):
