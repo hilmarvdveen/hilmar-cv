@@ -31,9 +31,7 @@ export default async function ContactPage({ params }: Props) {
       <main role="main">
         <ContactHero />
 
-        <nav aria-label="Breadcrumb">
-          <Breadcrumb />
-        </nav>
+        <Breadcrumb />
 
         <section className="py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">

@@ -134,7 +134,7 @@ export const Breadcrumb = () => {
       {/* Breadcrumb Navigation */}
       <nav
         className="bg-gray-50 py-4 border-b border-gray-200"
-        aria-label="Breadcrumb"
+        aria-label={t("label")}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <ol className="flex items-center space-x-2 text-sm">

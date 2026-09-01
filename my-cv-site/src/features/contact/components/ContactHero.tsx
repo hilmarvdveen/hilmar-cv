@@ -58,7 +58,7 @@ export const ContactHero = () => {
         <aside
           className="space-y-6"
           role="region"
-          aria-label="Contact information"
+          aria-label={t("info.title")}
         >
           <article className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
             <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center">

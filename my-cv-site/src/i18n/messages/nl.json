@@ -2033,7 +2033,10 @@
             "faq": "FAQ",
             "services": "Diensten",
             "experience": "Ervaring",
-            "book": "Plan een gesprek"
+            "book": "Plan een gesprek",
+            "openMenu": "Menu openen",
+            "closeMenu": "Menu sluiten",
+            "language": "Taal"
         },
         "images": {
             "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
@@ -2042,7 +2045,10 @@
         }
     },
     "notFound": {
-        "title": "Pagina niet gevonden"
+        "title": "Pagina niet gevonden",
+        "description": "De pagina die je zoekt bestaat niet of is verplaatst.",
+        "backHome": "Terug naar home",
+        "contact": "Contact"
     },
     "faq": {
         "breadcrumb": "FAQ",
@@ -2196,6 +2202,7 @@
         }
     },
     "breadcrumb": {
+        "label": "Kruimelpad",
         "home": "Home",
         "services": "Diensten",
         "frontend": "Frontend Development",
@@ -2417,7 +2424,7 @@
     "footer": {
         "about": {
             "name": "Hilmar van der Veen",
-            "title": "Senior Full-Stack Engineer",
+            "title": "Senior Frontend Engineer",
             "description": "10+ jaar ervaring met het bouwen van schaalbare webapplicaties, slimme integraties en technische oplossingen voor bedrijven en ondernemers door heel Europa.",
             "location": "Nederland • Beschikbaar voor remote werk",
             "availability": "Momenteel nieuwe projecten aannemend"

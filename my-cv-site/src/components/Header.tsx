@@ -216,7 +216,7 @@ export const Header = () => {
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="rounded-md p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-label={isMobileMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6" />
@@ -240,7 +240,7 @@ export const Header = () => {
 
         <div
           className={`
-          fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white z-[70] lg:hidden
+          fixed top-0 right-0 h-dvh w-80 max-w-[85vw] overflow-y-auto overscroll-contain bg-white z-[70] lg:hidden
           transform transition-transform duration-300 ease-in-out shadow-2xl
           ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -260,8 +260,8 @@ export const Header = () => {
             </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation"
-              aria-label="Close menu"
+              className="rounded-md p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              aria-label={t("nav.closeMenu")}
             >
               <X className="w-6 h-6" />
             </button>
@@ -277,7 +277,7 @@ export const Header = () => {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center space-x-3 px-4 py-4 text-base font-medium rounded-lg transition-colors duration-200 touch-manipulation ${
+                  className={`flex items-center space-x-3 px-4 py-4 text-base font-medium rounded-lg transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-inset ${
                     isActive
                       ? "text-primary bg-emerald-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"
@@ -292,14 +292,14 @@ export const Header = () => {
 
           <div className="px-6 py-4 border-t border-gray-200 mt-4">
             <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Language
+              {t("nav.language")}
             </div>
             <div className="space-y-1">
               {locales.map((locale) => (
                 <button
                   key={locale.code}
                   onClick={() => changeLanguage(locale.code)}
-                  className={`w-full flex items-center space-x-3 px-4 py-4 text-base text-left rounded-lg transition-colors duration-200 touch-manipulation ${
+                  className={`w-full flex items-center space-x-3 px-4 py-4 text-base text-left rounded-lg transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-inset ${
                     currentLocale === locale.code
                       ? "text-primary bg-emerald-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100"

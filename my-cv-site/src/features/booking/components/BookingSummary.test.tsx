@@ -51,8 +51,8 @@ describe("BookingSummary", () => {
 
   it("drops the selection card in compact mode", () => {
     render(<BookingSummary details={INITIAL_BOOKING_DETAILS} compact />);
-    expect(screen.queryByTestId("booking-selection")).not.toBeInTheDocument();
-    expect(screen.getByText("expectTitle")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "title" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "expectTitle" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "hilmar@hilmarvanderveen.com" })).toHaveAttribute(
       "href",
       "mailto:hilmar@hilmarvanderveen.com"

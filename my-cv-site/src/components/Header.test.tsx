@@ -57,7 +57,7 @@ describe("Header", () => {
   it("opens the mobile menu and navigates via a drawer link", async () => {
     const user = userEvent.setup();
     render(<Header />);
-    await user.click(screen.getByLabelText("Open menu")); // open drawer
+    await user.click(screen.getByLabelText("nav.openMenu"));
     // Drawer nav links close the menu on click (covers that handler).
     const drawerLink = screen.getAllByText("nav.contact")[0].closest("a")!;
     await user.click(drawerLink);

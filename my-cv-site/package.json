@@ -17,7 +17,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "check:locales": "node scripts/crawl-locales.mjs"
   },
   "dependencies": {
     "@azure/identity": "^4.13.1",

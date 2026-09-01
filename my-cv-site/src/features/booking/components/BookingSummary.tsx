@@ -28,7 +28,7 @@ export const BookingSummary = ({ details, compact = false }: BookingSummaryProps
   return (
     <div className="space-y-4">
       {!compact && (
-        <Card className="p-6" data-testid="booking-selection">
+        <Card className="p-6">
           <h3 className="text-base font-bold text-textMain">{t("title")}</h3>
           <dl className="mt-4 space-y-4">
             <SummaryRow
