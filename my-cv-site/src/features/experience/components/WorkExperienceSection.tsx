@@ -32,7 +32,7 @@ export const WorkExperienceSection = () => {
                 <li key={entry.id} ref={registerChip(entry.id)}>
                   <a
                     href={`#experience-${entry.id}`}
-                    onClick={() => activateFromClick(entry.id)}
+                    onClick={(event) => activateFromClick(entry.id, event)}
                     aria-current={active ? "location" : undefined}
                     className={`group inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       active

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { centeredScrollLeft, pickActiveSectionId } from "@/lib/scrollSpy";
 
 const LINE_OFFSET = 16;
@@ -11,6 +11,17 @@ type ScrollLock = {
 };
 
 type ChipRefCallback = (element: HTMLLIElement | null) => void;
+
+const prefersReducedMotion = () =>
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const isPlainLeftClick = (event: MouseEvent) =>
+  event.button === 0 &&
+  !event.metaKey &&
+  !event.ctrlKey &&
+  !event.shiftKey &&
+  !event.altKey;
 
 export function useExperienceScrollSpy(sectionIds: readonly string[]) {
   const [activeId, setActiveId] = useState("");
@@ -31,9 +42,15 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
     return callback;
   }, []);
 
-  const activateFromClick = useCallback((id: string) => {
+  const activateFromClick = useCallback((id: string, event: MouseEvent) => {
+    if (!isPlainLeftClick(event)) return;
+    event.preventDefault();
     lockRef.current = { id, expiresAt: Date.now() + LOCK_DURATION };
     setActiveId(id);
+    document.getElementById(`experience-${id}`)?.scrollIntoView?.({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
   }, []);
 
   useEffect(() => {
@@ -123,10 +140,7 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
       list.clientWidth,
       list.scrollWidth - list.clientWidth
     );
-    const reduceMotion =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    list.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
+    list.scrollTo({ left, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   }, [activeId]);
 
   return { activeId, listRef, registerChip, activateFromClick };
