@@ -117,3 +117,49 @@ Candidates for a later round, once the baseline is known:
 - A second day strip row for the following week, to see whether visitors
   book further out when it is one tap away.
 - Prefilling the email domain from the company field.
+
+## Layout
+
+The form spans the full site container, as in the Book artboard of the sales
+page design: `lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10`, the form on the
+left and a 380px aside on the right. The aside (`BookingSummary`) holds the
+live selection card, the "what to expect" list and the practical facts, both
+lists with small emerald check marks (`Check`, 16px, `emerald-600`). Below
+`lg` the aside drops under the form and the sticky bar carries the selection.
+
+The page hero follows the shared hero scale in `LAYOUT.md`: navy background,
+default section padding, a badge, the heading, a description and three fact
+chips. No pricing cards.
+
+## Emails
+
+`src/lib/email/templates.ts` renders three pieces for every booking:
+
+| Piece | Recipient | Language | Subject |
+|---|---|---|---|
+| `renderBookingConfirmationEmail` | the visitor | the visitor's locale | "Bevestigd: ons gesprek op {moment}" / "Confirmed: our call on {moment}" |
+| `renderBookingNotificationEmail` | the site owner | Dutch, reply-to set to the visitor | "Nieuwe boeking: {name}, {moment}" |
+| `renderBookingCalendarEvent` | the calendar invitation body | the visitor's locale | "Kennismaking: Hilmar van der Veen en {name}" / "Intro call: Hilmar van der Veen and {name}" |
+
+Rules the templates follow:
+
+- One shared table-based layout of 560px with inline styles only: navy
+  header, emerald accents, KVK footer. No external stylesheet, no web font,
+  no image that needs a request. Email clients strip or block all three.
+- `formatBookingMoment` prints the Amsterdam wall-clock time in the visitor's
+  locale (`nl-NL` or `en-GB`), so the visitor and the owner read the same
+  moment.
+- Every visitor field passes through `escapeHtml` before it enters a
+  template. The owner notification prints "Niet opgegeven" for an empty
+  company or topic.
+- The form posts `company`, `topic` and `locale` as structured fields. The
+  route validates their lengths (company up to the name limit, topic up to
+  1000 characters) and coerces the locale to `en` or otherwise `nl`.
+- The owner notification has `replyTo` set to the visitor's address so a
+  reply from the inbox goes to the right person.
+
+To preview the templates outside the test runner, render them with
+`node --experimental-strip-types` on a copy that concatenates
+`src/lib/security/escape.ts` and `templates.ts` (esbuild is not exposed by
+pnpm in this project), or read the rendered HTML in `templates.test.ts`.
+
