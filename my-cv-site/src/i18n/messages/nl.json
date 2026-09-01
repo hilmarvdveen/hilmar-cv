@@ -200,8 +200,8 @@
                 },
                 {
                     "label": "Tarief",
-                    "value": "€95 per uur",
-                    "detail": "Scope stemmen we af in het gesprek. Reactie binnen één werkdag.",
+                    "value": "€95 tot €125 per uur",
+                    "detail": "Afhankelijk van projecttype en werk, scope stemmen we af in het gesprek. Reactie binnen één werkdag.",
                     "highlight": false
                 }
             ],
@@ -1951,7 +1951,7 @@
                 "questions": [
                     {
                         "question": "Hoe structureer je je prijzen?",
-                        "answer": "Ik bied flexibele prijsmodellen voor verschillende behoeften:\n• Uurtarief: €95-125/uur afhankelijk van project complexiteit\n• Dagtarief: €650-950/dag voor langere samenwerkingen\n• Vaste project prijzen: Voor goed gedefinieerde scopes\n• Retainer overeenkomsten: Voor lopende support en development\n\nIk verstrek gedetailleerde schattingen na het begrijpen van je vereisten."
+                        "answer": "Ik bied flexibele prijsmodellen voor verschillende behoeften:\n• Uurtarief: €95 tot €125 per uur, afhankelijk van projecttype en werk\n• Dagtarief: €650-950/dag voor langere samenwerkingen\n• Vaste project prijzen: Voor goed gedefinieerde scopes\n• Retainer overeenkomsten: Voor lopende support en development\n\nIk verstrek gedetailleerde schattingen na het begrijpen van je vereisten."
                     },
                     {
                         "question": "Bied je gratis consultaties aan?",
@@ -2113,7 +2113,7 @@
             "expectTitle": "Wat je kunt verwachten",
             "expectations": ["Dertig minuten, technisch en concreet. Neem mee wat moet veranderen en waar het nu op draait.", "Aan het einde weet je of ik de juiste persoon ben en wat de eerste stap is.", "De uitnodiging staat direct in je agenda, met een bevestiging per e-mail."],
             "practicalTitle": "Praktisch",
-            "practical": ["Beschikbaar vanaf 1 oktober 2026, eerder in overleg", "Utrecht, hybride of remote, 1 à 2 dagen op locatie werkt goed", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "Uurtarief €95"],
+            "practical": ["Beschikbaar vanaf 1 oktober 2026, eerder in overleg", "Utrecht, hybride of remote, 1 à 2 dagen op locatie werkt goed", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "€95 tot €125 per uur, afhankelijk van projecttype en werk"],
             "alternativeLead": "Liever niet boeken? Mail naar",
             "alternativeOr": "of bel",
             "privacy": "Je gegevens gaan alleen in de agenda-uitnodiging en de bevestiging per e-mail."

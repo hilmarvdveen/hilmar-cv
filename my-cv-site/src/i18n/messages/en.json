@@ -200,8 +200,8 @@
                 },
                 {
                     "label": "Rate",
-                    "value": "€95 per hour",
-                    "detail": "Scope is set in the call. Reply within one business day.",
+                    "value": "€95 to €125 per hour",
+                    "detail": "Depending on project type and work, scope is set in the call. Reply within one business day.",
                     "highlight": false
                 }
             ],
@@ -2062,7 +2062,7 @@
                 "questions": [
                     {
                         "question": "How do you structure your pricing?",
-                        "answer": "I offer flexible pricing models to suit different needs:\n• Hourly rate: €95-125/hour depending on project complexity\n• Daily rate: €650-950/day for longer engagements\n• Fixed project pricing: For well-defined scopes\n• Retainer agreements: For ongoing support and development\n\nI provide detailed estimates after understanding your requirements."
+                        "answer": "I offer flexible pricing models to suit different needs:\n• Hourly rate: €95 to €125 per hour, depending on project type and work\n• Daily rate: €650-950/day for longer engagements\n• Fixed project pricing: For well-defined scopes\n• Retainer agreements: For ongoing support and development\n\nI provide detailed estimates after understanding your requirements."
                     },
                     {
                         "question": "Do you offer free consultations?",
@@ -2224,7 +2224,7 @@
             "expectTitle": "What to expect",
             "expectations": ["Thirty minutes, technical and concrete. Bring what has to change and what it runs on today.", "At the end you know whether I am the right person for it and what the first step is.", "The invitation lands in your calendar right away, with a confirmation by email."],
             "practicalTitle": "Practical",
-            "practical": ["Available from 1 October 2026, earlier by arrangement", "Utrecht, hybrid or remote, 1 to 2 days on site works well", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "Hourly rate €95"],
+            "practical": ["Available from 1 October 2026, earlier by arrangement", "Utrecht, hybrid or remote, 1 to 2 days on site works well", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "€95 to €125 per hour, depending on project type and work"],
             "alternativeLead": "Rather not book? Email",
             "alternativeOr": "or call",
             "privacy": "Your details go only into the calendar invitation and the confirmation email."
