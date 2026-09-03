@@ -1,8 +1,8 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/Button";
 
-export default function NotFound() {
-  const t = useTranslations("notFound");
+export default async function NotFound() {
+  const t = await getTranslations("notFound");
 
   return (
     <section className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center sm:px-6">

@@ -31,13 +31,13 @@ const routes = [
 ];
 
 const namespaces =
-  "home|common|experiencePage|work|projects|contact|services|notFound|about|cvModal|faq|breadcrumb|booking|footer|blog";
+  "home|common|experiencePage|work|projects|contact|services|notFound|about|cvModal|faq|breadcrumb|booking|footer|blog|search|legal";
 const leakedKeyPattern = new RegExp(
   `(?<![\\w/.-])(?:${namespaces})\\.[a-zA-Z]+(?:\\.[a-zA-Z0-9\\[\\]]+)*(?![\\w/-])`,
   "g"
 );
 const dutchWords =
-  /\b(een|het|van|voor|niet|met|wordt|jaar|opdracht|gesprek|bij|naar|zonder|ik|mijn|werk|klanten|uur|dagen|maanden|nieuwe|zijn|dat|dit|ook|als|wat|hoe|wij|onze|jouw|je|en|of|door|over)\b/gi;
+  /\b(een|het|van|voor|niet|met|wordt|jaar|opdracht|gesprek|bij|naar|zonder|ik|mijn|werk|klanten|uur|dagen|maanden|nieuwe|zijn|dat|dit|ook|als|wat|hoe|wij|onze|jouw|je|en|of|door|over|tot)\b/gi;
 const englishWords =
   /\b(the|and|with|for|your|you|our|that|this|from|into|are|not|what|how|when|which|will|can|about|have|has)\b/gi;
 

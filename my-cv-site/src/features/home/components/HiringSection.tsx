@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -23,15 +24,60 @@ type HiringFaq = {
   linkLabel: string;
 };
 
+type EngagementShape = {
+  title: string;
+  description: string;
+  terms: string;
+  href: string;
+  linkLabel: string;
+};
+
 export const HiringSection = () => {
   const t = useTranslations("home.hiring");
   const facts = t.raw("facts") as HiringFact[];
   const faq = t.raw("faq") as HiringFaq;
+  const shapes = t.raw("shapes.items") as EngagementShape[];
 
   return (
     <Section background="light" padding="default" aria-labelledby="hiring-heading">
       <Container>
         <SectionTitle title={t("title")} id="hiring-heading" />
+
+        <div className="mb-10">
+          <p className="text-lg font-bold text-textMain mb-2">{t("shapes.title")}</p>
+          <p className="text-sm text-gray-600 mb-6 max-w-2xl">{t("shapes.subtitle")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {shapes.map((shape) => (
+              <Card key={shape.title}>
+                <h3 className="text-base font-bold text-textMain mb-2">
+                  {shape.title}
+                </h3>
+                <p className="text-[14.5px] leading-relaxed text-gray-600 mb-3">
+                  {shape.description}
+                </p>
+                <p className="text-xs text-gray-500 mb-4">{shape.terms}</p>
+                <Link
+                  href={shape.href}
+                  className="inline-flex items-center gap-1.5 text-primary font-semibold text-sm"
+                >
+                  {shape.linkLabel}
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        <Card className="mb-10">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+            {t("pitch.label")}
+          </p>
+          <blockquote className="text-lg font-medium text-textMain mb-3">
+            {t("pitch.sentence")}
+          </blockquote>
+          <p className="text-sm text-gray-600">{t("pitch.examples")}</p>
+        </Card>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <Card>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">

@@ -5,8 +5,10 @@ import type { BlogPost, BlogLabels } from "../types";
 import type { Locale } from "@/lib/seo";
 
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
   ),
 }));
 
@@ -30,6 +32,8 @@ const labels: BlogLabels = {
   ctaTitle: "Work together?",
   ctaText: "Let’s talk.",
   ctaButton: "Get in touch",
+  breadcrumbLabel: "Breadcrumb",
+  homeLabel: "Home",
 };
 
 const post: BlogPost = {
@@ -49,7 +53,9 @@ describe("BlogArticle", () => {
     render(<BlogArticle post={post} locale="en" labels={labels} />);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Title EN");
 
-    // Breadcrumb links back to the blog overview and marks the current article.
+    expect(screen.getByRole("navigation", { name: "Breadcrumb" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+
     const toOverview = screen
       .getAllByRole("link")
       .filter((a) => a.getAttribute("href") === "/blog");

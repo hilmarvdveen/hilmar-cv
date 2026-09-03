@@ -67,6 +67,11 @@ Google Tag Manager, when it loads, adds 100KB of JavaScript that Lighthouse
 counts as unused. It now loads only after consent, and it is the only tag
 loader on the site.
 
+The `/faq` page's `FAQPage` JSON-LD schema is now generated from every
+question in the `faq` namespace instead of a hardcoded five-item array, so
+the schema and the visible accordion can never drift apart. That adds
+roughly 8KB of structured-data HTML to `/faq`.
+
 ## Lighthouse (mobile simulation, local production build)
 
 | Page | Performance | SEO | A11y | Best practices | FCP | LCP | TBT | CLS |

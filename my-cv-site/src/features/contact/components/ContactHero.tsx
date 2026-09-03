@@ -1,183 +1,103 @@
 import { useTranslations } from "next-intl";
-import { Mail, MessageSquare, Phone, MapPin, Clock, Timer } from "lucide-react";
+import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+
+type ContactFact = {
+  label: string;
+  value: string;
+};
 
 export const ContactHero = () => {
   const t = useTranslations("contact");
+  const tCommon = useTranslations("common.nav");
+  const facts = t.raw("facts.items") as ContactFact[];
 
   return (
-    <section
-      className="bg-brand-navy text-white py-16 sm:py-20"
-      aria-labelledby="contact-hero-title"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16 items-center">
-        {/* Content */}
-        <header>
-          <p className="text-md text-gray-100 mb-2 tracking-widest uppercase">
-            {t("hero.badge")}
-          </p>
-
-          <h1
-            id="contact-hero-title"
-            className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 tracking-tight"
-          >
-            {t("hero.title")}
-          </h1>
-
-          <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-            {t("hero.description")}
-          </p>
-
-          {/* Primary CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button href="/book" variant="primary" size="lg">
-              <MessageSquare
-                className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
-                aria-hidden="true"
-              />
-              {t("cta.button")}
-            </Button>
-
-            <Button
-              href="mailto:hilmar@hilmarvanderveen.com"
-              variant="outlineOnDark"
-              size="lg"
-            >
-              <Mail
-                className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
-                aria-hidden="true"
-              />
-              hilmar@hilmarvanderveen.com
-            </Button>
-          </div>
-        </header>
-
-        {/* Contact Info Cards */}
-        <aside
-          className="space-y-6"
-          role="region"
-          aria-label={t("info.title")}
-        >
-          <article className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-            <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center">
-              <Mail
-                className="w-5 h-5 mr-2 text-emerald-400"
-                aria-hidden="true"
-              />
-              {t("info.title")}
-            </h2>
-
-            <ul className="space-y-4 text-gray-300">
-              <li className="flex items-center">
-                <Mail
-                  className="w-4 h-4 mr-3 text-emerald-400"
-                  aria-hidden="true"
-                />
-                <div>
-                  <span className="block text-sm text-gray-300">{t("info.email")}</span>
-                  <span className="block font-medium">
-                    <a
-                      href="mailto:hilmar@hilmarvanderveen.com"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      hilmar@hilmarvanderveen.com
-                    </a>
-                  </span>
-                </div>
-              </li>
-
-              <li className="flex items-center">
-                <Phone
-                  className="w-4 h-4 mr-3 text-emerald-400"
-                  aria-hidden="true"
-                />
-                <div>
-                  <span className="block text-sm text-gray-300">{t("info.phone")}</span>
-                  <span className="block font-medium">
-                    <a
-                      href="tel:+31680149947"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      +31 6 8014 9947
-                    </a>
-                  </span>
-                </div>
-              </li>
-
-              <li className="flex items-center">
+    <PageHero
+      breadcrumb={<Breadcrumb />}
+      badge={t("hero.badge")}
+      title={t("hero.title")}
+      description={t("hero.description")}
+      actions={
+        <>
+          <Button href="/book" variant="primary" size="lg">
+            {tCommon("book")}
+          </Button>
+          <Button href="#contact-form" variant="outlineOnDark" size="lg">
+            {t("cta.write")}
+          </Button>
+        </>
+      }
+      aside={
+        <div className="rounded-xl border border-white/10 bg-white/5 p-6">
+          <h2 className="mb-4 text-lg font-bold text-white">{t("facts.title")}</h2>
+          <dl className="space-y-4 text-sm">
+            {facts.map((fact) => (
+              <div key={fact.label} className="flex items-start justify-between gap-4">
+                <dt className="text-slate-400">{fact.label}</dt>
+                <dd className="text-right font-medium text-white">{fact.value}</dd>
+              </div>
+            ))}
+            <div className="flex items-start justify-between gap-4">
+              <dt className="flex items-center gap-2 text-slate-400">
+                <Mail className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                {t("info.email")}
+              </dt>
+              <dd className="text-right font-medium text-white">
+                <a
+                  href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
+                  className="hover:text-emerald-300"
+                >
+                  {BUSINESS_PROFILE.CONTACT.EMAIL}
+                </a>
+              </dd>
+            </div>
+            <div className="flex items-start justify-between gap-4">
+              <dt className="flex items-center gap-2 text-slate-400">
+                <Phone className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                {t("info.phone")}
+              </dt>
+              <dd className="text-right font-medium text-white">
+                <a
+                  href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
+                  className="hover:text-emerald-300"
+                >
+                  {BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY}
+                </a>
+              </dd>
+            </div>
+            <div className="flex items-start justify-between gap-4">
+              <dt className="flex items-center gap-2 text-slate-400">
                 <MessageSquare
-                  className="w-4 h-4 mr-3 text-emerald-400"
+                  className="h-4 w-4 shrink-0 text-emerald-300"
                   aria-hidden="true"
                 />
-                <div>
-                  <span className="block text-sm text-gray-300">WhatsApp</span>
-                  <span className="block font-medium">
-                    <a
-                      href="https://wa.me/31680149947"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-emerald-400 transition-colors"
-                    >
-                      +31 6 8014 9947
-                    </a>
-                  </span>
-                </div>
-              </li>
-
-              <li className="flex items-center">
-                <MapPin
-                  className="w-4 h-4 mr-3 text-emerald-400"
-                  aria-hidden="true"
-                />
-                <div>
-                  <span className="block text-sm text-gray-300">
-                    {t("info.location")}
-                  </span>
-                  <span className="block font-medium">Netherlands</span>
-                </div>
-              </li>
-            </ul>
-          </article>
-
-          <article className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-            <h2 className="text-xl font-bold text-gray-200 mb-4 flex items-center">
-              <Clock
-                className="w-5 h-5 mr-2 text-emerald-400"
-                aria-hidden="true"
-              />
-              {t("info.availability")}
-            </h2>
-
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-center">
-                <Clock
-                  className="w-4 h-4 mr-3 text-emerald-400"
-                  aria-hidden="true"
-                />
-                <div>
-                  <span className="block text-sm text-gray-300">
-                    {t("info.availability")}
-                  </span>
-                  <span className="block font-medium">{t("info.availabilityText")}</span>
-                </div>
-              </li>
-
-              <li className="flex items-center">
-                <Timer
-                  className="w-4 h-4 mr-3 text-emerald-400"
-                  aria-hidden="true"
-                />
-                <div>
-                  <span className="block text-sm text-gray-300">
-                    {t("info.response")}
-                  </span>
-                  <span className="block font-medium">{t("info.responseText")}</span>
-                </div>
-              </li>
-            </ul>
-          </article>
-        </aside>
-      </div>
-    </section>
+                WhatsApp
+              </dt>
+              <dd className="text-right font-medium text-white">
+                <a
+                  href={BUSINESS_PROFILE.CONTACT.WHATSAPP}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-300"
+                >
+                  {BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY}
+                </a>
+              </dd>
+            </div>
+            <div className="flex items-start justify-between gap-4">
+              <dt className="flex items-center gap-2 text-slate-400">
+                <MapPin className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                {t("info.location")}
+              </dt>
+              <dd className="text-right font-medium text-white">{t("info.locationValue")}</dd>
+            </div>
+          </dl>
+        </div>
+      }
+    />
   );
 };

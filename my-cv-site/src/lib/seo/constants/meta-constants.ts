@@ -32,6 +32,7 @@ export const BUSINESS_PROFILE = {
   CONTACT: {
     EMAIL: 'hilmar@hilmarvanderveen.com',
     PHONE: '+31680149947',
+    PHONE_DISPLAY: '+31 6 8014 9947',
     WHATSAPP: 'https://wa.me/31680149947',
     WEBSITE: 'https://www.hilmarvanderveen.com'
   },
@@ -226,48 +227,6 @@ export const ROBOTS_DIRECTIVES = {
   UNAVAILABLE_AFTER: (date: string) => `unavailable_after:${date}`,
 } as const;
 
-export const GA4_EVENTS = {
-  CORE: {
-    PAGE_VIEW: 'page_view',
-    SCROLL: 'scroll',
-    CLICK: 'click',
-    FORM_START: 'form_start',
-    FORM_SUBMIT: 'form_submit',
-    FILE_DOWNLOAD: 'file_download',
-    VIDEO_START: 'video_start',
-    VIDEO_COMPLETE: 'video_complete'
-  },
-  BUSINESS: {
-    CONTACT_FORM_SUBMIT: 'contact_form_submit',
-    SERVICE_INQUIRY: 'service_inquiry',
-    PORTFOLIO_VIEW: 'portfolio_view',
-    CV_DOWNLOAD: 'cv_download',
-    CONSULTATION_REQUEST: 'consultation_request',
-    PRICING_VIEW: 'pricing_view',
-    TESTIMONIAL_VIEW: 'testimonial_view'
-  },
-  ENGAGEMENT: {
-    MENU_CLICK: 'menu_click',
-    CTA_CLICK: 'cta_click',
-    SOCIAL_CLICK: 'social_click',
-    EXTERNAL_LINK_CLICK: 'external_link_click',
-    EMAIL_CLICK: 'email_click',
-    PHONE_CLICK: 'phone_click'
-  }
-} as const;
-
-export const TRACKING_PARAMETERS = {
-  BUTTON_ID: 'button_id',
-  BUTTON_TEXT: 'button_text',
-  LINK_URL: 'link_url',
-  LINK_TEXT: 'link_text',
-  PAGE_SECTION: 'page_section',
-  SERVICE_TYPE: 'service_type',
-  FORM_NAME: 'form_name',
-  FILE_NAME: 'file_name',
-  CONTACT_METHOD: 'contact_method'
-} as const;
-
 export const LOCALE_CONFIG = {
   DEFAULT: 'nl',
   SUPPORTED: ['nl', 'en'],
@@ -289,14 +248,6 @@ export const LOCALE_CONFIG = {
   }
 } as const;
 
-export const PRIVACY_COMPLIANCE = {
-  GDPR: true,
-  CCPA: false,
-  COOKIE_CONSENT: true,
-  DATA_RETENTION: '26 months',
-  ANONYMIZE_IP: true
-} as const;
-
 export const SOCIAL_OPTIMIZATION = {
   OPEN_GRAPH: {
     TYPE: 'website',
@@ -309,21 +260,4 @@ export const SOCIAL_OPTIMIZATION = {
   TWITTER: {
     CARD: 'summary_large_image'
   }
-} as const;
-
-export default {
-  BUSINESS_PROFILE,
-  PRICING,
-  RATE_TEXT,
-  QUALIFICATIONS,
-  PRIMARY_KEYWORDS,
-  SEMANTIC_KEYWORDS,
-  META_LIMITS,
-  SCHEMA_TYPES,
-  ROBOTS_DIRECTIVES,
-  GA4_EVENTS,
-  TRACKING_PARAMETERS,
-  LOCALE_CONFIG,
-  PRIVACY_COMPLIANCE,
-  SOCIAL_OPTIMIZATION
 } as const;

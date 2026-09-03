@@ -1,6 +1,9 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { SectionTitle } from "@/components/SectionTitle";
 
 type CarouselClient = {
   name: string;
@@ -82,21 +85,19 @@ const ClientCard = ({
 };
 
 export const ClientLogosCarousel = () => {
-  const t = useTranslations("home");
+  const t = useTranslations("home.clientLogos");
 
   return (
-    <section className="py-16 bg-gray-50 overflow-hidden">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-            {t("clientLogos.title")}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {t("clientLogos.subtitle")}
-          </p>
-        </div>
+    <Section background="light" className="overflow-hidden">
+      <Container>
+        <SectionTitle
+          title={t("title")}
+          subtitle={t("subtitle")}
+          align="center"
+          className="mb-6"
+        />
+        <p className="mb-12 text-center text-sm text-gray-600">{t("invite")}</p>
 
-        {/* Infinite Scroll Container */}
         <div
           className="slider"
           style={
@@ -126,16 +127,15 @@ export const ClientLogosCarousel = () => {
           </div>
         </div>
 
-        {/* Trust Indicators */}
         <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
           {["indicator1", "indicator2", "indicator3"].map((key) => (
             <div key={key} className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-              <span>{t(`clientLogos.${key}`)}</span>
+              <span>{t(key)}</span>
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 };

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { ContactHero, ContactForm } from "@/features/contact";
-import { Breadcrumb } from "@/components/Breadcrumb";
+import { Section } from "@/components/Section";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 
@@ -30,13 +30,13 @@ export default async function ContactPage({ params }: Props) {
       />
       <ContactHero />
 
-      <Breadcrumb />
-
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <ContactForm />
-        </div>
-      </section>
+      <Section
+        id="contact-form"
+        aria-labelledby="contact-form-heading"
+        background="light"
+      >
+        <ContactForm />
+      </Section>
     </>
   );
 }

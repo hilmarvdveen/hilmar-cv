@@ -35,11 +35,11 @@ vi.mock("next-intl", () => {
 });
 
 describe("ResultsStrip", () => {
-  it("renders the sr-only title", () => {
+  it("renders the visible title", () => {
     render(<ResultsStrip />);
-    const heading = screen.getByRole("heading", { level: 2, hidden: true });
-    expect(heading).toHaveTextContent("title");
-    expect(heading).toHaveClass("sr-only");
+    const heading = screen.getByRole("heading", { level: 2, name: "title" });
+    expect(heading).toBeInTheDocument();
+    expect(heading).not.toHaveClass("sr-only");
   });
 
   it("renders every result item with its value and detail", () => {
@@ -61,10 +61,10 @@ describe("ResultsStrip", () => {
     expect(screen.getByText("caveat")).toBeInTheDocument();
   });
 
-  it("wires the section's aria-labelledby to the sr-only heading id", () => {
+  it("wires the section's aria-labelledby to the heading id", () => {
     const { container } = render(<ResultsStrip />);
     const section = container.querySelector("section");
-    const heading = screen.getByRole("heading", { level: 2, hidden: true });
+    const heading = screen.getByRole("heading", { level: 2, name: "title" });
     expect(section).toHaveAttribute("aria-labelledby", heading.id);
   });
 });

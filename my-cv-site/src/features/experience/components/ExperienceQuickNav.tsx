@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import Image from "next/image";
+import { Container } from "@/components/Container";
 import { useExperienceScrollSpy } from "../hooks/useExperienceScrollSpy";
 import { hasBrandColor } from "../brandColor";
 
@@ -27,7 +28,7 @@ export const ExperienceQuickNav = ({ chips, label }: ExperienceQuickNavProps) =>
       aria-label={label}
       className="sticky top-[var(--header-height)] z-40 border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <Container>
         <ul
           ref={listRef}
           className="flex gap-2 overflow-x-auto overscroll-x-contain py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -66,7 +67,7 @@ export const ExperienceQuickNav = ({ chips, label }: ExperienceQuickNavProps) =>
             );
           })}
         </ul>
-      </div>
+      </Container>
     </nav>
   );
 };

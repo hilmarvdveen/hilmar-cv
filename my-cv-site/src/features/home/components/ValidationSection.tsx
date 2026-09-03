@@ -7,6 +7,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 type ValidationPanel = {
   title: string;
   body: string;
+  attribution: string;
 };
 
 export const ValidationSection = () => {
@@ -25,6 +26,9 @@ export const ValidationSection = () => {
               </h3>
               <p className="text-[14.5px] leading-relaxed text-gray-600">
                 {panel.body}
+              </p>
+              <p className="mt-2 text-xs uppercase tracking-wide text-gray-500">
+                {panel.attribution}
               </p>
             </Card>
           ))}

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { ClientLogosCarousel } from "./ClientLogosCarousel";
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
@@ -37,5 +37,11 @@ describe("ClientLogosCarousel", () => {
   it("renders the bol.com logo asset", () => {
     const { container } = render(<ClientLogosCarousel />);
     expect(container.querySelector('img[src="/logos/bol.svg"]')).toBeTruthy();
+  });
+
+  it("renders the section heading and the invite line", () => {
+    render(<ClientLogosCarousel />);
+    expect(screen.getByRole("heading", { level: 2, name: "title" })).toBeInTheDocument();
+    expect(screen.getByText("invite")).toBeInTheDocument();
   });
 });

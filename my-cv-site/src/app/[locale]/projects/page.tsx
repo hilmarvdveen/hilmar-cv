@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { ProjectsHero, ProjectShowcase } from "@/features/projects";
-import { Breadcrumb } from "@/components/Breadcrumb";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 
@@ -29,7 +28,6 @@ export default async function ProjectsPage({ params }: Props) {
         }}
       />
       <ProjectsHero />
-      <Breadcrumb />
       <ProjectShowcase />
     </>
   );

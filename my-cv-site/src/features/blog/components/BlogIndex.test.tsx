@@ -29,6 +29,8 @@ const labels: BlogLabels = {
   ctaTitle: "x",
   ctaText: "y",
   ctaButton: "z",
+  breadcrumbLabel: "Breadcrumb",
+  homeLabel: "Home",
 };
 
 const makePost = (slug: string, titleEn: string): BlogPost => ({

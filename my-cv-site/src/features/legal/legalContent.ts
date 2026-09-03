@@ -1,17 +1,4 @@
-/**
- * Legal page content (EN/NL): Privacy, Cookies, Terms, Disclaimer.
- *
- * Aligned with the GDPR (Art. 12–14), the Dutch Telecommunicatiewet (art.
- * 11.7a) / AVG, and Autoriteit Persoonsgegevens (AP) cookie guidance, and
- * reflects what this site actually does (contact / CV / booking forms via
- * Microsoft 365, consent-gated Google Analytics, cookieless Vercel Analytics).
- *
- * Business identity (trade name, KvK number, place of business) is disclosed in
- * the "Business details" section prepended to every document; the full street
- * address is omitted for privacy and is obtainable from the KvK register via
- * the number shown. Review and bump the "Last updated" date whenever the
- * processing, providers, or business details change.
- */
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 export type LegalSection = {
   heading: string;
@@ -30,16 +17,14 @@ export type LegalSlug = "privacy" | "cookies" | "terms" | "disclaimer";
 export type LegalLocale = "en" | "nl";
 
 const CONTROLLER = "Hilmar van der Veen";
-const COMPANY_NAME = "Hilmar ICT Services";
-const KVK = "97564303";
+const COMPANY_NAME = BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME;
+const KVK = BUSINESS_PROFILE.REGISTRATION.KVK;
 const ESTABLISHMENT = "000062792784";
-const EMAIL = "hilmar@hilmarvanderveen.com";
-const PHONE = "+31 6 8014 9947";
+const EMAIL = BUSINESS_PROFILE.CONTACT.EMAIL;
+const PHONE = BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY;
 const SITE = "www.hilmarvanderveen.com";
-// City only — the full registered (home) address is available via the KvK
-// register using the number below, and is intentionally not published here.
-const ADDRESS_EN = "Zandvoort, the Netherlands";
-const ADDRESS_NL = "Zandvoort, Nederland";
+const ADDRESS_EN = `${BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY}, the Netherlands`;
+const ADDRESS_NL = `${BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY}, Nederland`;
 const LOCATION_EN = "Amsterdam, the Netherlands";
 const LOCATION_NL = "Amsterdam, Nederland";
 const UPDATED_EN = "28 June 2026";
@@ -439,9 +424,6 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
   },
 };
 
-// Statutory business-identity block (Dutch e-commerce identification duty +
-// KvK disclosure), prepended to every legal document so it is always
-// accessible on the site.
 const companyDetailsEN: LegalSection = {
   heading: "Business details",
   paragraphs: [

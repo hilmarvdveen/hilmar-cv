@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Breadcrumb } from "./Breadcrumb";
 
 const state = vi.hoisted(() => ({ path: "/" }));
@@ -19,10 +19,14 @@ describe("Breadcrumb", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  // Exercise each translated switch case plus the default capitalization branch.
+  it("labels the navigation landmark with the translated aria-label", () => {
+    state.path = "/en/services/frontend";
+    render(<Breadcrumb />);
+    expect(screen.getByRole("navigation", { name: "label" })).toBeInTheDocument();
+  });
+
   it.each([
     "/en/services/frontend",
-    "/en/services/backend",
     "/en/services/fullstack",
     "/en/services/design-systems",
     "/en/services/consulting",
@@ -33,10 +37,21 @@ describe("Breadcrumb", () => {
     "/en/faq/general",
     "/en/privacy/policy",
     "/en/blog/post",
+    "/en/terms/policy",
+    "/en/cookies/policy",
+    "/en/disclaimer/policy",
+    "/en/search/results",
+    "/en/experience/bol-com",
   ])("renders breadcrumb items for %s", (path) => {
     state.path = path;
     const { container } = render(<Breadcrumb />);
-    expect(container.querySelector("nav")).toBeTruthy();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
     expect(container.querySelector('script[type="application/ld+json"]')).toBeTruthy();
+  });
+
+  it("capitalises and dehyphenates an unmapped segment as the fallback label", () => {
+    state.path = "/en/services/some-unknown-segment";
+    render(<Breadcrumb />);
+    expect(screen.getByText("Some unknown segment")).toBeInTheDocument();
   });
 });

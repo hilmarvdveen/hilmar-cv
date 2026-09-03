@@ -33,21 +33,35 @@ bar's own height as its margin (`scroll-mt-16`), never header plus bar. With
 
 ## Hero scale
 
-Every page hero uses the same tokens and rhythm:
+Every page hero renders through the shared `PageHero` primitive
+(`src/components/PageHero.tsx`), which owns the navy band and the type
+scale so a new page never hand rolls its own hero markup:
 
-| Property | Value |
+| Slot | Rule |
 |---|---|
 | Background and text | `bg-brand-navy text-white` |
 | Vertical padding | `py-16 sm:py-20` |
-| Heading | `text-3xl sm:text-5xl`, white (about: `text-3xl sm:text-4xl lg:text-5xl`) |
+| Badge | optional uppercase eyebrow in `text-emerald-300`, with an optional icon |
+| Heading | `text-3xl sm:text-5xl`, white, with an optional accent line |
+| Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background |
+| Breadcrumb | optional, rendered at the top of the band through the `breadcrumb` slot |
+| Aside | optional second column for a summary or preview |
 | Container | `Container` (16px gutters on phones, 24px from `sm`) |
 
-Applies to `ServicesHero`, `ProjectsHero`, `ContactHero` and
-`AboutPageContent`. The booking page is the exception: it is a task page,
-so its hero shrinks to a title band on phones and to `py-14` on desktop so
-the day picker sits in the first screen. `BOOKING_FLOW.md` has the budget.
+`ServicesHero`, `ProjectsHero`, `ContactHero` and `AboutPageContent` all
+compose `PageHero`. The booking page is the one documented exception. It is
+a task page, so its hero shrinks to a title band on phones to keep the day
+picker in the first screen. Four overrides apply there and nowhere else:
 
-The homepage hero is the exception because it carries the portrait:
+- Vertical padding steps down to `py-5 sm:py-12 lg:py-14`.
+- The heading drops to `text-lg` below `sm` instead of the shared `text-3xl`.
+- The badge is hidden below `sm`.
+- The description is hidden below `sm`.
+
+`BOOKING_FLOW.md` has the full layout budget for the booking page.
+
+The homepage hero is a separate component, not a use of `PageHero`, because
+it carries the portrait and the chip row:
 
 - `py-12 sm:py-24`, three columns from `md` with `items-center`, so the face
   sits level with the claim instead of floating above it.
@@ -57,9 +71,9 @@ The homepage hero is the exception because it carries the portrait:
   height, and the primary button goes full width without its icon so the
   Dutch label fits on one line.
 
-Deferred until the `ServiceDetailPage` consolidation: the four service-detail
-gradient heroes and the FAQ gradient still differ from the navy system, and
-the contact breadcrumb sits in the descent from hero to form.
+The breadcrumb now lives inside the hero band on every page that has one,
+passed through `PageHero`'s `breadcrumb` slot instead of rendering as its
+own band above the hero.
 
 ## Gutters
 

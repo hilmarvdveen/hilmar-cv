@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
 import { localizedAlternates } from "@/lib/seo";
 
@@ -21,6 +21,6 @@ export default async function DisclaimerPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const doc = getLegalDoc(SLUG, locale);
-  const lastUpdatedLabel = locale === "nl" ? "Bijgewerkt op" : "Last updated";
-  return <LegalDocument doc={doc} lastUpdatedLabel={lastUpdatedLabel} />;
+  const t = await getTranslations({ locale, namespace: "legal" });
+  return <LegalDocument doc={doc} lastUpdatedLabel={t("lastUpdated")} />;
 }

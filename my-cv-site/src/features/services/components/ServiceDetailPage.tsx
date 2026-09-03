@@ -1,0 +1,343 @@
+import type { ComponentType } from "react";
+import { CheckCircle } from "lucide-react";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
+import { Section, type SectionBackground } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
+import { Button } from "@/components/Button";
+
+export type ServiceIcon = ComponentType<{ className?: string }>;
+
+export type ServiceTitledItem = {
+  title: string;
+  description: string;
+  Icon: ServiceIcon;
+};
+
+export type ServiceLevelledItem = {
+  name: string;
+  description: string;
+  level: string;
+};
+
+export type ServiceTechnologyGroup = {
+  name?: string;
+  items: ServiceLevelledItem[];
+};
+
+export type ServiceProcessStep = {
+  label: string;
+  title: string;
+  description: string;
+  details: string[];
+  Icon: ServiceIcon;
+};
+
+export type ServiceEngagementDeliverable = {
+  title: string;
+  description: string;
+};
+
+export type ServiceDetailPageProps = {
+  structuredData: string;
+  hero: {
+    badge: string;
+    Icon: ServiceIcon;
+    title: string;
+    titleAccent: string;
+    description: string;
+    features: string[];
+    bookLabel: string;
+    actionLabel: string;
+  };
+  engagement: {
+    title: string;
+    description: string;
+    deliverables: ServiceEngagementDeliverable[];
+    terms: string[];
+  };
+  deliverables?: {
+    title: string;
+    description: string;
+    items: ServiceTitledItem[];
+  };
+  benefits: {
+    title: string;
+    description: string;
+    items: ServiceTitledItem[];
+  };
+  technologies: {
+    title: string;
+    description: string;
+    groups: ServiceTechnologyGroup[];
+  };
+  process: {
+    title: string;
+    description: string;
+    steps: ServiceProcessStep[];
+  };
+  callToAction: {
+    title: string;
+    description: string;
+    bookLabel: string;
+    viewAllLabel: string;
+  };
+};
+
+const EXPERT_LEVELS = ["Expert"];
+const ADVANCED_LEVELS = ["Advanced", "Gevorderd"];
+
+const levelPillClassName = (level: string): string => {
+  if (EXPERT_LEVELS.includes(level)) {
+    return "bg-emerald-50 text-emerald-800";
+  }
+  if (ADVANCED_LEVELS.includes(level)) {
+    return "bg-brand-navy/10 text-brand-navy";
+  }
+  return "bg-gray-100 text-gray-700";
+};
+
+const flipBackground = (background: SectionBackground): SectionBackground =>
+  background === "white" ? "light" : "white";
+
+const TitledItemCard = ({ title, description, Icon }: ServiceTitledItem) => (
+  <Card>
+    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+      <Icon className="h-6 w-6" aria-hidden="true" />
+    </div>
+    <h3 className="mt-4 text-lg font-bold text-textMain">{title}</h3>
+    <p className="mt-2 text-gray-600">{description}</p>
+  </Card>
+);
+
+export const ServiceDetailPage = ({
+  structuredData,
+  hero,
+  engagement,
+  deliverables,
+  benefits,
+  technologies,
+  process,
+  callToAction,
+}: ServiceDetailPageProps) => {
+  const engagementBackground: SectionBackground = "white";
+  const deliverablesBackground = flipBackground(engagementBackground);
+  const benefitsBackground = deliverables
+    ? flipBackground(deliverablesBackground)
+    : flipBackground(engagementBackground);
+  const technologiesBackground = flipBackground(benefitsBackground);
+  const processBackground = flipBackground(technologiesBackground);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: structuredData }}
+      />
+
+      <PageHero
+        breadcrumb={<Breadcrumb />}
+        badge={hero.badge}
+        badgeIcon={hero.Icon}
+        title={hero.title}
+        titleAccent={hero.titleAccent}
+        description={hero.description}
+        actions={
+          <>
+            <Button href="/book" variant="primary" size="lg">
+              {hero.bookLabel}
+            </Button>
+            <Button href="/contact" variant="outlineOnDark" size="lg">
+              {hero.actionLabel}
+            </Button>
+          </>
+        }
+      >
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {hero.features.map((feature) => (
+            <li key={feature} className="flex items-center gap-3 text-slate-200">
+              <CheckCircle
+                className="h-4 w-4 shrink-0 text-emerald-400"
+                aria-hidden="true"
+              />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </PageHero>
+
+      <Section background={engagementBackground} aria-labelledby="service-engagement-heading">
+        <Container>
+          <SectionTitle
+            id="service-engagement-heading"
+            title={engagement.title}
+            subtitle={engagement.description}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {engagement.deliverables.map((deliverable, index) => (
+              <Card key={deliverable.title}>
+                <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-3 text-lg font-bold text-textMain">
+                  {deliverable.title}
+                </h3>
+                <p className="mt-2 text-gray-600">{deliverable.description}</p>
+              </Card>
+            ))}
+          </div>
+          <ul className="mt-8 flex flex-wrap gap-2">
+            {engagement.terms.map((term) => (
+              <li
+                key={term}
+                className="rounded-md bg-bgLight px-3 py-1 text-sm text-gray-700 ring-1 ring-gray-200"
+              >
+                {term}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {deliverables && (
+        <Section
+          background={deliverablesBackground}
+          aria-labelledby="service-deliverables-heading"
+        >
+          <Container>
+            <SectionTitle
+              id="service-deliverables-heading"
+              title={deliverables.title}
+              subtitle={deliverables.description}
+            />
+            <div className="grid gap-6 sm:grid-cols-2">
+              {deliverables.items.map((item) => (
+                <TitledItemCard key={item.title} {...item} />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      <Section background={benefitsBackground} aria-labelledby="service-benefits-heading">
+        <Container>
+          <SectionTitle
+            id="service-benefits-heading"
+            title={benefits.title}
+            subtitle={benefits.description}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {benefits.items.map((item) => (
+              <TitledItemCard key={item.title} {...item} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section
+        background={technologiesBackground}
+        aria-labelledby="service-technologies-heading"
+      >
+        <Container>
+          <SectionTitle
+            id="service-technologies-heading"
+            title={technologies.title}
+            subtitle={technologies.description}
+          />
+          <div className="space-y-12">
+            {technologies.groups.map((group, groupIndex) => {
+              const ItemHeading = group.name ? "h4" : "h3";
+              return (
+                <div key={group.name ?? `technology-group-${groupIndex}`}>
+                  {group.name && (
+                    <h3 className="mb-6 text-2xl font-bold text-textMain">
+                      {group.name}
+                    </h3>
+                  )}
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {group.items.map((item) => (
+                      <Card key={item.name}>
+                        <div className="flex items-start justify-between gap-3">
+                          <ItemHeading className="text-lg font-bold text-textMain">
+                            {item.name}
+                          </ItemHeading>
+                          <span
+                            className={`shrink-0 rounded-full px-2 py-1 text-xs font-medium ${levelPillClassName(item.level)}`}
+                          >
+                            {item.level}
+                          </span>
+                        </div>
+                        <p className="mt-3 text-gray-600">{item.description}</p>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      <Section background={processBackground} aria-labelledby="service-process-heading">
+        <Container>
+          <SectionTitle
+            id="service-process-heading"
+            title={process.title}
+            subtitle={process.description}
+          />
+          <div className="grid gap-8 lg:grid-cols-2">
+            {process.steps.map((step) => (
+              <Card key={step.title}>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+                    <step.Icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <p className="mb-1 text-sm font-medium text-emerald-700">
+                      {step.label}
+                    </p>
+                    <h3 className="text-xl font-bold text-textMain">{step.title}</h3>
+                    <p className="mt-2 text-gray-600">{step.description}</p>
+                  </div>
+                </div>
+                <ul className="mt-6 space-y-2">
+                  {step.details.map((detail) => (
+                    <li key={detail} className="flex items-center gap-2 text-gray-700">
+                      <CheckCircle
+                        className="h-4 w-4 shrink-0 text-emerald-700"
+                        aria-hidden="true"
+                      />
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section background="navy" aria-labelledby="service-cta-heading">
+        <Container width="narrow">
+          <SectionTitle
+            id="service-cta-heading"
+            title={callToAction.title}
+            subtitle={callToAction.description}
+            align="center"
+            onDark
+          />
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Button href="/book" variant="white" size="lg">
+              {callToAction.bookLabel}
+            </Button>
+            <Button href="/services" variant="outlineOnDark" size="lg">
+              {callToAction.viewAllLabel}
+            </Button>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+};

@@ -11,5 +11,7 @@ describe("buildBlogLabels", () => {
     expect(labels.category.fundamentals).toBe("t:category.fundamentals");
     expect(labels.ctaButton).toBe("t:cta.button");
     expect(labels.writtenBy).toBe("t:writtenBy");
+    expect(labels.breadcrumbLabel).toBe("t:breadcrumbLabel");
+    expect(labels.homeLabel).toBe("t:homeLabel");
   });
 });

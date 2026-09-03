@@ -48,4 +48,14 @@ describe("HeroSection", () => {
     render(<HeroSection />);
     expect(screen.getByRole("button", { name: "downloadCv" })).toBeInTheDocument();
   });
+
+  it("renders the reader line above the headline", () => {
+    render(<HeroSection />);
+    expect(screen.getByText("readerLine")).toBeInTheDocument();
+  });
+
+  it("renders the CTA note under the button row", () => {
+    render(<HeroSection />);
+    expect(screen.getByText("ctaNote")).toBeInTheDocument();
+  });
 });

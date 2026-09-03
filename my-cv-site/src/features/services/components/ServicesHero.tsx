@@ -1,88 +1,61 @@
+import type { ComponentType } from "react";
 import { useTranslations } from "next-intl";
-import { Code, Zap, Palette, Users, Calendar, Mail } from "lucide-react";
+import { Code, Zap, Palette, Users } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/Button";
+
+type ServiceCardId = "frontend" | "fullstack" | "designSystems" | "consulting";
+
+type ServiceCard = {
+  id: ServiceCardId;
+  Icon: ComponentType<{ className?: string }>;
+  href: string;
+};
+
+const SERVICE_CARDS: ServiceCard[] = [
+  { id: "frontend", Icon: Code, href: "/services/frontend" },
+  { id: "fullstack", Icon: Zap, href: "/services/fullstack" },
+  { id: "designSystems", Icon: Palette, href: "/services/design-systems" },
+  { id: "consulting", Icon: Users, href: "/services/consulting" },
+];
 
 export const ServicesHero = () => {
   const t = useTranslations("services");
 
-  const services = [
-    {
-      icon: Code,
-      title: "Frontend Development",
-      href: "/services/frontend",
-    },
-    {
-      icon: Zap,
-      title: "Full-Stack Development",
-      href: "/services/fullstack",
-    },
-    {
-      icon: Palette,
-      title: "Design Systems",
-      href: "/services/design-systems",
-    },
-    {
-      icon: Users,
-      title: "Technical Consulting",
-      href: "/services/consulting",
-    },
-  ];
-
   return (
-    <section className="bg-brand-navy text-white py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16 items-center">
-        {/* Content */}
-        <div>
-          <p className="text-md text-gray-100 mb-2 tracking-widest uppercase">
-            {t("hero.badge")}
-          </p>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 tracking-tight">
-            {t("hero.title")}
-          </h1>
-
-          <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-            {t("hero.description")}
-          </p>
-
-          {/* Primary CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button href="/book" variant="primary" size="lg">
-              <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-              {t("cta.book")}
-            </Button>
-
-            <Button href="/contact" variant="outlineOnDark" size="lg">
-              <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              {t("cta.contact")}
-            </Button>
-          </div>
+    <PageHero
+      breadcrumb={<Breadcrumb />}
+      badge={t("hero.badge")}
+      title={t("hero.title")}
+      description={t("hero.description")}
+      actions={
+        <>
+          <Button href="/book" variant="primary" size="lg">
+            {t("cta.book")}
+          </Button>
+          <Button href="/contact" variant="outlineOnDark" size="lg">
+            {t("cta.contact")}
+          </Button>
+        </>
+      }
+      aside={
+        <div className="grid grid-cols-2 gap-4">
+          {SERVICE_CARDS.map(({ id, Icon, href }) => (
+            <Link
+              key={id}
+              href={href}
+              className="rounded-xl border border-white/10 bg-white/5 p-5 transition-colors duration-300 hover:bg-white/10"
+            >
+              <Icon className="h-6 w-6 text-emerald-300" aria-hidden="true" />
+              <span className="mt-3 block font-semibold text-gray-100">
+                {t(`main.services.${id}.title`)}
+              </span>
+            </Link>
+          ))}
         </div>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-2 gap-6">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <Link
-                key={index}
-                href={service.href}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group"
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <p className="text-gray-200 font-semibold group-hover:text-white transition-colors duration-300">
-                    {service.title}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+      }
+    />
   );
 };

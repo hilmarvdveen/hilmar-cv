@@ -38,6 +38,30 @@ const faq = {
   linkLabel: "Read all questions",
 };
 
+const shapes = [
+  {
+    title: "A short discovery",
+    description: "A scoped week to map the legacy surface before committing to a plan.",
+    terms: "Fixed price, one week",
+    href: "/services/consulting",
+    linkLabel: "Read about discovery",
+  },
+  {
+    title: "An embedded engagement",
+    description: "Full time on your team for the length of the rebuild.",
+    terms: "Freelance, hourly rate",
+    href: "/services/frontend",
+    linkLabel: "Read about embedded work",
+  },
+  {
+    title: "A design system build",
+    description: "A shared component library your teams keep after I leave.",
+    terms: "Fixed scope, milestone billing",
+    href: "/services/design-systems",
+    linkLabel: "Read about design systems",
+  },
+];
+
 vi.mock("next-intl", () => ({
   useTranslations: () => {
     const t = ((key: string) => key) as ((key: string) => string) & {
@@ -46,6 +70,7 @@ vi.mock("next-intl", () => ({
     t.raw = (key: string) => {
       if (key === "facts") return facts;
       if (key === "faq") return faq;
+      if (key === "shapes.items") return shapes;
       return [];
     };
     return t;
@@ -86,8 +111,6 @@ describe("HiringSection", () => {
         expect(screen.getByText(fact.detail)).toBeInTheDocument();
       }
     }
-    // Languages has an empty detail: nothing extra rendered for it beyond
-    // the value/label already asserted above.
   });
 
   it("shows the highlight status dot only for highlighted facts", () => {
@@ -109,5 +132,31 @@ describe("HiringSection", () => {
     render(<HiringSection />);
     const link = screen.getByRole("link", { name: faq.linkLabel });
     expect(link).toHaveAttribute("href", "/faq");
+  });
+
+  it("renders the engagement shapes intro", () => {
+    render(<HiringSection />);
+    expect(screen.getByText("shapes.title")).toBeInTheDocument();
+    expect(screen.getByText("shapes.subtitle")).toBeInTheDocument();
+  });
+
+  it("renders every engagement shape as a card with a linked call to action", () => {
+    render(<HiringSection />);
+    for (const shape of shapes) {
+      expect(
+        screen.getByRole("heading", { level: 3, name: shape.title })
+      ).toBeInTheDocument();
+      expect(screen.getByText(shape.description)).toBeInTheDocument();
+      expect(screen.getByText(shape.terms)).toBeInTheDocument();
+      const link = screen.getByRole("link", { name: shape.linkLabel });
+      expect(link).toHaveAttribute("href", shape.href);
+    }
+  });
+
+  it("renders the pitch row as a labelled blockquote with examples", () => {
+    render(<HiringSection />);
+    expect(screen.getByText("pitch.label")).toBeInTheDocument();
+    expect(screen.getByText("pitch.sentence").tagName).toBe("BLOCKQUOTE");
+    expect(screen.getByText("pitch.examples")).toBeInTheDocument();
   });
 });

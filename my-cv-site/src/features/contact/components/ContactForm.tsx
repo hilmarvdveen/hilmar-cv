@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/Button";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
 
@@ -25,46 +28,50 @@ export default function ContactForm() {
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag)
+        ? prev.filter((selectedTag) => selectedTag !== tag)
+        : [...prev, tag]
     );
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setIsSubmitting(true);
     setSuccessMessage("");
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, interests: selectedTags, ...honeypot.payload() }),
+        body: JSON.stringify({
+          ...formData,
+          interests: selectedTags,
+          ...honeypot.payload(),
+        }),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) {
-        // Server error details are for the console, never for the visitor.
-        console.error("Contact submission failed:", res.status, data.error);
+      if (!response.ok) {
+        console.error("Contact submission failed:", response.status, data.error);
         setErrorMessage(
-          res.status === 429
+          response.status === 429
             ? t("form.tooManyRequests")
             : t("form.serverError")
         );
         return;
       }
 
-      console.log("Submitted:", { ...formData, interests: selectedTags });
       setSuccessMessage(t("form.successMessage"));
       setFormData({ name: "", email: "", message: "" });
       setSelectedTags([]);
@@ -77,22 +84,18 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      {/* Header */}
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">
-          {t("form.title")}
-        </h2>
-        <p className="text-lg text-gray-600 max-w-lg mx-auto">
-          {t("form.description")}
-        </p>
-      </div>
+    <Container width="narrow">
+      <SectionTitle
+        id="contact-form-heading"
+        align="center"
+        title={t("form.title")}
+        subtitle={t("form.description")}
+      />
 
-      {/* Form Container */}
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-        <form onSubmit={handleSubmit} className="p-8 space-y-8" noValidate>
+      <Card>
+        <form onSubmit={handleSubmit} className="space-y-8" noValidate>
           <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
-          {/* Interest Tags */}
+
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-4">
               {t("form.interestsLabel")}
@@ -116,9 +119,7 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Form Fields */}
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Name Field */}
             <div>
               <label
                 htmlFor="contact-name"
@@ -140,7 +141,6 @@ export default function ContactForm() {
               />
             </div>
 
-            {/* Email Field */}
             <div>
               <label
                 htmlFor="contact-email"
@@ -163,7 +163,6 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Message Field */}
           <div>
             <label
               htmlFor="contact-message"
@@ -184,7 +183,6 @@ export default function ContactForm() {
             />
           </div>
 
-          {/* Status Messages */}
           {successMessage && (
             <div
               className="bg-emerald-50 border-2 border-emerald-200 text-emerald-800 px-6 py-4 rounded-xl text-center font-medium"
@@ -205,7 +203,6 @@ export default function ContactForm() {
             </div>
           )}
 
-          {/* Submit Button */}
           <Button
             type="submit"
             variant="primary"
@@ -227,7 +224,7 @@ export default function ContactForm() {
             )}
           </Button>
         </form>
-      </div>
-    </div>
+      </Card>
+    </Container>
   );
 }

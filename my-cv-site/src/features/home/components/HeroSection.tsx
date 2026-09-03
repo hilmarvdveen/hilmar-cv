@@ -2,6 +2,8 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { Calendar, Check } from "lucide-react";
 import { Button } from "@/components/Button";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
 import { CvDownloadTrigger } from "./CvDownloadTrigger";
 
 export const HeroSection = () => {
@@ -10,11 +12,12 @@ export const HeroSection = () => {
   const chips = t.raw("chips") as string[];
 
   return (
-    <section
+    <Section
+      background="navy"
+      className="py-12 sm:py-24"
       aria-labelledby="hero-heading"
-      className="bg-brand-navy py-12 sm:py-24"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <Container>
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
           <div className="md:col-span-2">
             <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 mb-4 sm:px-4 sm:py-2 sm:text-sm sm:mb-6">
@@ -23,6 +26,10 @@ export const HeroSection = () => {
                 aria-hidden="true"
               />
               {t("badge")}
+            </p>
+
+            <p className="mb-3 text-base sm:text-lg font-medium text-emerald-200">
+              {t("readerLine")}
             </p>
 
             <h1
@@ -49,6 +56,8 @@ export const HeroSection = () => {
 
               <CvDownloadTrigger label={t("downloadCv")} locale={locale} />
             </div>
+
+            <p className="mt-3 text-sm text-slate-300">{t("ctaNote")}</p>
 
             <p className="text-[13px] text-slate-400">{t("credentials")}</p>
           </div>
@@ -83,7 +92,7 @@ export const HeroSection = () => {
             </li>
           ))}
         </ul>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 };

@@ -1,170 +1,103 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Breadcrumb } from "@/components/Breadcrumb";
-import Link from "next/link";
 import {
   HelpCircle,
   Clock,
   Euro,
   Code,
   Users,
-  Globe,
-  Shield,
-  Calendar,
-  Phone,
-  Mail,
   ChevronDown,
   ChevronUp,
+  Mail,
+  Calendar,
+  Phone,
 } from "lucide-react";
-import { useState } from "react";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
+import { Button } from "@/components/Button";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import { FAQ_CATEGORY_IDS, type FaqCategoryId } from "../categories";
 
-type FAQClientContentProps = {
-  locale: string;
-}
+type FaqQuestion = {
+  question: string;
+  answer: string;
+};
 
-export function FAQClientContent({}: FAQClientContentProps) {
+const CATEGORY_ICONS: Record<FaqCategoryId, typeof HelpCircle> = {
+  general: HelpCircle,
+  services: Code,
+  pricing: Euro,
+  process: Clock,
+  collaboration: Users,
+};
+
+export function FAQClientContent() {
   const t = useTranslations("faq");
   const [openItems, setOpenItems] = useState<number[]>([]);
 
   const toggleItem = (index: number) => {
     setOpenItems((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+      prev.includes(index)
+        ? prev.filter((openIndex) => openIndex !== index)
+        : [...prev, index]
     );
   };
 
-  const faqCategories = [
-    {
-      id: "general",
-      title: t("categories.general.title"),
-      icon: HelpCircle,
-      questions: t.raw("categories.general.questions") as Array<{
-        question: string;
-        answer: string;
-      }>,
-    },
-    {
-      id: "services",
-      title: t("categories.services.title"),
-      icon: Code,
-      questions: t.raw("categories.services.questions") as Array<{
-        question: string;
-        answer: string;
-      }>,
-    },
-    {
-      id: "pricing",
-      title: t("categories.pricing.title"),
-      icon: Euro,
-      questions: t.raw("categories.pricing.questions") as Array<{
-        question: string;
-        answer: string;
-      }>,
-    },
-    {
-      id: "process",
-      title: t("categories.process.title"),
-      icon: Clock,
-      questions: t.raw("categories.process.questions") as Array<{
-        question: string;
-        answer: string;
-      }>,
-    },
-    {
-      id: "collaboration",
-      title: t("categories.collaboration.title"),
-      icon: Users,
-      questions: t.raw("categories.collaboration.questions") as Array<{
-        question: string;
-        answer: string;
-      }>,
-    },
-  ];
+  const faqCategories = FAQ_CATEGORY_IDS.map((id) => ({
+    id,
+    title: t(`categories.${id}.title`),
+    icon: CATEGORY_ICONS[id],
+    questions: t.raw(`categories.${id}.questions`) as FaqQuestion[],
+  }));
 
   return (
-    <div className="bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl">
-            <div className="flex items-center space-x-3 mb-6">
-              <HelpCircle className="w-8 h-8 text-blue-300" />
-              <span className="text-blue-300 font-medium">{t("badge")}</span>
-            </div>
+    <>
+      <Section
+        background="light"
+        padding="spacious"
+        aria-labelledby="faq-categories-heading"
+      >
+        <Container width="narrow">
+          <SectionTitle
+            id="faq-categories-heading"
+            title={t("quickNav.title")}
+            align="center"
+          />
 
-            <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              {t("hero.title")}
-              <br />
-              <span className="text-blue-300">{t("hero.subtitle")}</span>
-            </h1>
-
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl leading-relaxed">
-              {t("hero.description")}
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="flex items-center space-x-3">
-                <Clock className="w-5 h-5 text-blue-300" />
-                <span className="text-blue-100">
-                  {t("hero.features.quick")}
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Shield className="w-5 h-5 text-blue-300" />
-                <span className="text-blue-100">
-                  {t("hero.features.expert")}
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Globe className="w-5 h-5 text-blue-300" />
-                <span className="text-blue-100">
-                  {t("hero.features.remote")}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Breadcrumb />
-
-      {/* FAQ Content */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          {/* Quick Navigation */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              {t("quickNav.title")}
-            </h2>
-            <div className="grid md:grid-cols-5 gap-4">
-              {faqCategories.map((category) => {
-                const Icon = category.icon;
-                return (
-                  <a
-                    key={category.id}
-                    href={`#${category.id}`}
-                    className="group flex flex-col items-center p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300"
-                  >
-                    <Icon className="w-8 h-8 text-blue-600 mb-3 group-hover:scale-110 transition-transform duration-300" />
-                    <span className="text-sm font-medium text-gray-700 text-center group-hover:text-blue-600 transition-colors duration-300">
-                      {category.title}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
+          <div className="mb-16 grid gap-4 md:grid-cols-5">
+            {faqCategories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <a
+                  key={category.id}
+                  href={`#${category.id}`}
+                  className="group flex flex-col items-center rounded-lg border border-gray-200 bg-white p-6 text-center transition-all duration-300 hover:border-emerald-300 hover:shadow-md"
+                >
+                  <Icon
+                    className="mb-3 h-8 w-8 text-emerald-700 transition-transform duration-300 group-hover:scale-110"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-medium text-gray-700 transition-colors duration-300 group-hover:text-emerald-700">
+                    {category.title}
+                  </span>
+                </a>
+              );
+            })}
           </div>
 
-          {/* FAQ Categories */}
           {faqCategories.map((category, categoryIndex) => (
             <div key={category.id} id={category.id} className="mb-16">
-              <div className="flex items-center space-x-3 mb-8">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <category.icon className="w-6 h-6 text-white" />
+              <div className="mb-8 flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-navy">
+                  <category.icon className="h-6 w-6 text-white" aria-hidden="true" />
                 </div>
-                <h2 className="text-3xl font-bold text-gray-900">
+                <h3 className="text-2xl font-bold text-textMain">
                   {category.title}
-                </h2>
+                </h3>
               </div>
 
               <div className="space-y-4">
@@ -173,77 +106,78 @@ export function FAQClientContent({}: FAQClientContentProps) {
                   const isOpen = openItems.includes(globalIndex);
 
                   return (
-                    <div
-                      key={questionIndex}
-                      className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-                    >
+                    <Card key={faq.question} className="overflow-hidden p-0">
                       <button
+                        type="button"
                         onClick={() => toggleItem(globalIndex)}
-                        className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                        aria-expanded={isOpen}
+                        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-bgLight"
                       >
-                        <span className="text-lg font-medium text-gray-900 pr-4">
+                        <span className="pr-4 text-lg font-medium text-textMain">
                           {faq.question}
                         </span>
                         {isOpen ? (
-                          <ChevronUp className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                          <ChevronUp
+                            className="h-5 w-5 flex-shrink-0 text-emerald-700"
+                            aria-hidden="true"
+                          />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                          <ChevronDown
+                            className="h-5 w-5 flex-shrink-0 text-gray-400"
+                            aria-hidden="true"
+                          />
                         )}
                       </button>
 
                       {isOpen && (
                         <div className="px-6 pb-5">
-                          <div className="text-gray-600 leading-relaxed whitespace-pre-line">
+                          <p className="whitespace-pre-line leading-relaxed text-gray-600">
                             {faq.answer}
-                          </div>
+                          </p>
                         </div>
                       )}
-                    </div>
+                    </Card>
                   );
                 })}
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* Contact CTA */}
-      <section className="bg-blue-900 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            {t("cta.title")}
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            {t("cta.description")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center space-x-2 bg-white text-blue-900 px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+      <Section
+        background="navy"
+        padding="default"
+        aria-labelledby="faq-cta-heading"
+      >
+        <Container width="narrow" className="text-center">
+          <SectionTitle
+            id="faq-cta-heading"
+            title={t("cta.title")}
+            subtitle={t("cta.description")}
+            align="center"
+            onDark
+          />
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Button href="/contact" variant="white" size="lg">
+              <Mail className="h-5 w-5" aria-hidden="true" />
+              {t("cta.contact")}
+            </Button>
+            <Button href="/book" variant="outlineOnDark" size="lg">
+              <Calendar className="h-5 w-5" aria-hidden="true" />
+              {t("cta.book")}
+            </Button>
+            <Button
+              href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
+              variant="outlineOnDark"
+              size="lg"
             >
-              <Mail className="w-5 h-5" />
-              <span>{t("cta.contact")}</span>
-            </Link>
-
-            <Link
-              href="/book"
-              className="inline-flex items-center justify-center space-x-2 border-2 border-blue-300 text-blue-300 px-8 py-4 rounded-lg font-bold hover:bg-blue-300 hover:text-blue-900 transition-all duration-300"
-            >
-              <Calendar className="w-5 h-5" />
-              <span>{t("cta.book")}</span>
-            </Link>
-
-            <a
-              href="tel:+31680149947"
-              className="inline-flex items-center justify-center space-x-2 border-2 border-blue-300 text-blue-300 px-8 py-4 rounded-lg font-bold hover:bg-blue-300 hover:text-blue-900 transition-all duration-300"
-            >
-              <Phone className="w-5 h-5" />
-              <span>{t("cta.call")}</span>
-            </a>
+              <Phone className="h-5 w-5" aria-hidden="true" />
+              {t("cta.call")}
+            </Button>
           </div>
-        </div>
-      </section>
-    </div>
+        </Container>
+      </Section>
+    </>
   );
 }

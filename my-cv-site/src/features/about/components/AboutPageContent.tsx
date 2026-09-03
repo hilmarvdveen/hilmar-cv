@@ -1,250 +1,143 @@
-import { useTranslations } from "next-intl";
-
-import { Icon } from "@/components/Icon";
+import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import { Briefcase, Check, GraduationCap, MapPin } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
+import { CvDownloadTrigger } from "@/features/home";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import { NetherlandsMap } from "./NetherlandsMap";
+
+type ValueBlock = {
+  title: string;
+  body: string;
+  evidence: string;
+};
 
 export function AboutPageContent() {
   const t = useTranslations("about");
-
-  const majorClients = [
-    {
-      name: "Belastingdienst",
-      role: "Dutch Tax Authority",
-      period: "2023-2024",
-    },
-    { name: "Postcode Loterij", role: "National Lottery", period: "2022-2023" },
-    { name: "Ziggo", role: "Telecommunications", period: "2021-2022" },
-    { name: "Omniplan", role: "Enterprise Software", period: "2020-2021" },
-    { name: "Ortec", role: "Analytics Solutions", period: "2019-2020" },
-  ];
-
-  const strengthIcons = ["shipping", "mentorship", "award"] as const;
+  const tCommon = useTranslations("common.nav");
+  const locale = useLocale();
+  const blocks = t.raw("value.blocks") as ValueBlock[];
 
   return (
-    <div className="bg-gray-50">
-      {/* Hero Section - Using homepage color scheme */}
-      <section className="bg-brand-navy text-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-6 text-white">
-              {t("title")}
-            </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              {t("subtitle")}
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-gray-300">
-              <div className="flex items-center space-x-2">
-                <Icon name="location" className="w-5 h-5" />
-                <span>Zandvoort, Netherlands</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Icon name="education" className="w-5 h-5" />
-                <span>BSc Physics, University of Amsterdam</span>
-              </div>
-            </div>
+    <>
+      <PageHero
+        badge={t("hero.badge")}
+        title={t("hero.title")}
+        description={t("hero.description")}
+        aside={
+          <div>
+            <Image
+              src="/images/profile.jpg"
+              alt={BUSINESS_PROFILE.NAME}
+              width={400}
+              height={400}
+              className="mx-auto w-full max-w-xs rounded-2xl object-cover md:mx-0"
+              priority
+            />
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+              <li className="flex items-center gap-3">
+                <MapPin className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                <span>
+                  {t("hero.location", {
+                    city: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
+                  })}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <GraduationCap className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                <span>{t("hero.education")}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Briefcase className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                <span>
+                  {BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME}, KVK{" "}
+                  {BUSINESS_PROFILE.REGISTRATION.KVK}
+                </span>
+              </li>
+            </ul>
           </div>
-        </div>
-      </section>
+        }
+        actions={
+          <>
+            <Button
+              href={BUSINESS_PROFILE.SOCIAL.LINKEDIN}
+              variant="outlineOnDark"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t("hero.linkedin")}
+            </Button>
+            <CvDownloadTrigger label={t("hero.cv")} locale={locale} />
+          </>
+        }
+      />
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {/* Purpose & Introduction */}
-          <div className="bg-white rounded-2xl p-8 mb-12 shadow-sm border border-gray-100">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              {t("purpose.title")}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                  {t("purpose.intro")}
+      <Section background="light" aria-labelledby="about-value-heading">
+        <Container>
+          <SectionTitle
+            id="about-value-heading"
+            title={t("value.title")}
+            subtitle={t("value.subtitle")}
+          />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {blocks.map((block) => (
+              <Card key={block.title}>
+                <h3 className="mb-2 text-lg font-bold text-textMain">{block.title}</h3>
+                <p className="mb-4 text-[14.5px] leading-relaxed text-gray-600">
+                  {block.body}
                 </p>
-                <p className="text-gray-700 leading-relaxed mb-6">
-                  <strong>{t("purpose.mission")}</strong>
+                <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700">
+                  <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  {block.evidence}
                 </p>
-
-                <div className="space-y-3">
-                  {t
-                    .raw("purpose.features")
-                    .map((feature: string, index: number) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <Icon
-                          name="award"
-                          className="w-5 h-5 text-emerald-600"
-                        />
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                </div>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {t("purpose.foundation.title")}
-                </h3>
-                <p className="text-gray-700 mb-4">
-                  {t("purpose.foundation.description")}
-                </p>
-                <p className="text-gray-700">
-                  <strong>{t("purpose.foundation.education")}</strong>
-                </p>
-              </div>
-            </div>
+              </Card>
+            ))}
           </div>
+        </Container>
+      </Section>
 
-          {/* What Makes Me Different */}
-          <div className="bg-white rounded-2xl p-8 mb-12 shadow-sm border border-gray-100">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              {t("strengths.title")}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {t.raw("strengths.items").map((item: any, index: number) => (
-                <div key={index}>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                    <Icon
-                      name={strengthIcons[index]}
-                      className="w-5 h-5 mr-2 text-emerald-600"
-                    />
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-700">{item.description}</p>
-                </div>
-              ))}
-            </div>
+      <Section background="white" aria-labelledby="about-standards-heading">
+        <Container width="prose">
+          <SectionTitle id="about-standards-heading" title={t("standards.title")} />
+          <p className="text-[15px] leading-relaxed text-gray-700">{t("standards.body")}</p>
+        </Container>
+      </Section>
+
+      <Section background="light">
+        <NetherlandsMap />
+        <Container>
+          <p className="mt-6 text-center text-[15px] leading-relaxed text-gray-700">
+            {t("map.contactLine")}
+          </p>
+          <div className="mt-4 flex justify-center">
+            <Button href="/book" variant="primary">
+              {tCommon("book")}
+            </Button>
           </div>
+        </Container>
+      </Section>
 
-          {/* Experience with Major Clients */}
-          <div className="bg-white rounded-2xl p-8 mb-12 shadow-sm border border-gray-100">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              {t("experience.title")}
-            </h2>
-            <p className="text-lg text-gray-700 mb-8">
-              {t("experience.intro")}
-            </p>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {majorClients.map((client, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 rounded-lg p-4"
-                >
-                  <h3 className="font-semibold text-gray-900">{client.name}</h3>
-                  <p className="text-sm text-gray-600">{client.role}</p>
-                  <p className="text-xs text-gray-500 mt-1">{client.period}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                {t("experience.impact.title")}
-              </h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">
-                    {t("experience.impact.belastingdienst.title")}
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    {t
-                      .raw("experience.impact.belastingdienst.items")
-                      .map((item: string, index: number) => (
-                        <li key={index}>• {item}</li>
-                      ))}
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">
-                    {t("experience.impact.postcodeloterij.title")}
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    {t
-                      .raw("experience.impact.postcodeloterij.items")
-                      .map((item: string, index: number) => (
-                        <li key={index}>• {item}</li>
-                      ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Expertise */}
-          <div className="bg-white rounded-2xl p-8 mb-12 shadow-sm border border-gray-100">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              {t("technical.title")}
-            </h2>
-            <p className="text-lg text-gray-700 mb-6">{t("technical.intro")}</p>
-
-            <div className="grid md:grid-cols-4 gap-6">
-              {t
-                .raw("technical.categories")
-                .map((category: any, index: number) => {
-                  const iconNames = [
-                    "code",
-                    "database",
-                    "cloud",
-                    "architecture",
-                  ] as const;
-                  const colorClasses = [
-                    "text-blue-800 bg-blue-50",
-                    "text-emerald-800 bg-emerald-50",
-                    "text-purple-800 bg-purple-50",
-                    "text-orange-800 bg-orange-50",
-                  ];
-
-                  return (
-                    <div key={index}>
-                      <h3 className="font-semibold text-gray-900 mb-3 flex items-center">
-                        <Icon
-                          name={iconNames[index]}
-                          className={`w-5 h-5 mr-2 ${colorClasses[index].split(" ")[0]}`}
-                        />
-                        {category.name}
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {category.technologies.map((tech: string) => (
-                          <span
-                            key={tech}
-                            className={`text-xs px-2 py-1 rounded ${colorClasses[index]}`}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-
-          {/* Call to Action - Using emerald gradient like homepage */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-8 text-white text-center">
-            <h2 className="text-3xl font-bold mb-4">{t("cta.title")}</h2>
-            <p className="text-xl text-emerald-100 mb-8 max-w-3xl mx-auto">
-              {t("cta.subtitle")}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button href="/book" variant="white" size="lg">
-                <Icon name="calendar" className="w-5 h-5" />
-                <span>{t("cta.consultation")}</span>
-              </Button>
-
-              <Button
-                href="/contact"
-                variant="outlineOnDark"
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-emerald-700 hover:border-white focus-visible:ring-white"
-              >
-                <Icon name="phone" className="w-5 h-5" />
-                <span>{t("cta.contact")}</span>
-              </Button>
-            </div>
-
-            <p className="text-emerald-100 mt-6 text-sm">{t("cta.features")}</p>
-          </div>
-        </div>
-      </section>
-    </div>
+      <Section background="navy" aria-labelledby="about-cta-heading">
+        <Container width="narrow" className="text-center">
+          <h2
+            id="about-cta-heading"
+            className="mb-4 text-3xl font-extrabold tracking-tight text-balance text-white md:text-4xl"
+          >
+            {t("cta.title")}
+          </h2>
+          <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
+            {t("cta.description")}
+          </p>
+          <Button href="/book" variant="white" size="lg">
+            {t("cta.button")}
+          </Button>
+        </Container>
+      </Section>
+    </>
   );
 }

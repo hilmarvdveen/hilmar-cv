@@ -1,51 +1,71 @@
 import { describe, it, expect, vi } from "vitest";
-import { fireEvent, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { WorkExperienceSection } from "./WorkExperienceSection";
 import { workHistory } from "@/data/workHistory";
 
+type TranslateFunction = ((
+  key: string,
+  values?: Record<string, string>
+) => string) & { raw: (key: string) => unknown };
+
 vi.mock("next-intl", () => {
-  const t = ((k: string, opts?: { defaultValue?: string }) => opts?.defaultValue ?? k) as (
-    k: string,
-    opts?: { defaultValue?: string }
-  ) => string;
+  const t = ((key: string, values?: Record<string, string>) => {
+    if (key === "period" && values) return `${values.from} to ${values.to}`;
+    if (key === "bol.company") return "bol.com";
+    return key;
+  }) as TranslateFunction;
+  t.raw = (key: string) =>
+    key.endsWith(".body") ? [{ paragraph: "Did impactful work" }] : [];
   return {
     useTranslations: () => t,
-    // Provide a body array for every work-history entry id.
-    useMessages: () => ({
-      work: new Proxy({}, { get: () => ({ body: [{ paragraph: "Did impactful work" }] }) }),
-    }),
+    useLocale: () => "en",
   };
 });
+
 vi.mock("next/image", () => ({
-  // eslint-disable-next-line @next/next/no-img-element
-  default: (p: Record<string, unknown>) => <img alt="" src={String(p.src ?? "")} />,
+  default: (props: Record<string, unknown>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt="" src={String(props.src ?? "")} />
+  ),
 }));
 
 describe("WorkExperienceSection", () => {
-  it("renders entries with their body paragraphs", () => {
-    const { container } = render(<WorkExperienceSection />);
-    expect(container.textContent).toContain("Did impactful work");
+  it("renders one article per work-history entry with the experience anchor id", () => {
+    render(<WorkExperienceSection />);
+    const articles = screen.getAllByRole("article");
+    expect(articles).toHaveLength(workHistory.length);
+    expect(articles.map((article) => article.id)).toEqual(
+      workHistory.map((entry) => `experience-${entry.id}`)
+    );
   });
 
-  it("gives each entry an #experience-<id> anchor for in-page logo links", () => {
-    const { container } = render(<WorkExperienceSection />);
-    expect(container.querySelector("#experience-belastingdienst")).toBeTruthy();
-    expect(container.querySelector("#experience-postcode-loterij")).toBeTruthy();
+  it("renders one heading per entry, including the bol.com company name", () => {
+    render(<WorkExperienceSection />);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(
+      workHistory.length
+    );
+    expect(
+      screen.getByRole("heading", { level: 3, name: "bol.com" })
+    ).toBeInTheDocument();
   });
 
-  it("renders the sticky quick-nav with a chip per engagement", () => {
-    const { container } = render(<WorkExperienceSection />);
-    const chips = container.querySelectorAll('nav a[href^="#experience-"]');
-    expect(chips.length).toBe(workHistory.length);
+  it("formats the period from the raw year-month values through the locale formatter", () => {
+    render(<WorkExperienceSection />);
+    expect(screen.getByText("July 2025 to October 2026")).toBeInTheDocument();
   });
 
-  it("highlights the clicked chip and leaves the rest gray", () => {
-    const { container } = render(<WorkExperienceSection />);
-    const chip = container.querySelector('nav a[href="#experience-athlon"]') as HTMLElement;
-    fireEvent.click(chip);
-    expect(chip.className).toContain("border-emerald-600");
-    expect(chip.querySelector("span")?.className).not.toContain("grayscale");
-    const other = container.querySelector('nav a[href="#experience-bol"]');
-    expect(other?.querySelector("span")?.className).toContain("grayscale");
+  it("renders the summary lead and the body paragraphs for every entry", () => {
+    render(<WorkExperienceSection />);
+    expect(screen.getByText("bol.summary")).toBeInTheDocument();
+    expect(screen.getAllByText("Did impactful work")).toHaveLength(
+      workHistory.length
+    );
+  });
+
+  it("renders the technologies as a named list on every entry", () => {
+    render(<WorkExperienceSection />);
+    expect(
+      screen.getAllByRole("list", { name: "technologies" })
+    ).toHaveLength(workHistory.length);
   });
 });

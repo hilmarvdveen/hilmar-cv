@@ -1,117 +1,136 @@
-import { useTranslations, useMessages } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { MapPin, Globe, Languages } from "lucide-react";
 import { workHistory } from "@/data/workHistory";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
+import { formatMonthYear } from "@/lib/workPeriod";
 import { hasBrandColor } from "../brandColor";
 import { ExperienceQuickNav, type ExperienceChip } from "./ExperienceQuickNav";
 
-type BodyItem = { paragraph: string };
+type BodyParagraph = { paragraph: string };
+
+const SECTION_HEADING_ID = "work-experience-heading";
 
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
   const commonT = useTranslations("common");
-  const messages = useMessages();
-  const sectionTitle = t("sectionTitle", { defaultValue: "Werkervaring" });
+  const locale = useLocale();
+  const sectionTitle = t("sectionTitle");
 
   const chips: ExperienceChip[] = workHistory.map((entry) => ({
     id: entry.id,
-    company: t(`${entry.id}.company`, { defaultValue: entry.company }),
+    company: t(`${entry.id}.company`),
     logo: entry.logo,
     color: entry.color,
   }));
 
   return (
-    <section className="bg-gray-50">
+    <>
       <ExperienceQuickNav chips={chips} label={sectionTitle} />
-      <div className="container max-w-7xl mx-auto py-16 px-4 sm:px-6">
-        <h2 className="text-3xl font-bold mb-10 text-gray-900">{sectionTitle}</h2>
+      <Section background="light" aria-labelledby={SECTION_HEADING_ID}>
+        <Container>
+          <SectionTitle id={SECTION_HEADING_ID} title={sectionTitle} />
 
-        <div className="grid grid-cols-1 gap-8">
-          {workHistory.map((entry) => {
-            const id = entry.id;
-            const company = t(`${id}.company`, { defaultValue: entry.company });
-            const location = t(`${id}.location`, { defaultValue: entry.location });
-            const role = t(`${id}.role`);
-            const heading = t(`${id}.heading`, { defaultValue: "" });
-            const bodyItems =
-              ((messages?.work as Record<string, { body?: BodyItem[] }> | undefined)?.[id]?.body) ?? [];
+          <div className="grid grid-cols-1 gap-8">
+            {workHistory.map((entry) => {
+              const id = entry.id;
+              const company = t(`${id}.company`);
+              const location = t(`${id}.location`);
+              const role = t(`${id}.role`);
+              const summary = t(`${id}.summary`);
+              const bodyParagraphs =
+                (t.raw(`${id}.body`) as BodyParagraph[] | undefined) ?? [];
 
-            return (
-              <article
-                key={`${company}-${entry.from}`}
-                id={`experience-${id}`}
-                className="scroll-mt-16 bg-white shadow-sm border border-gray-100 p-6 rounded-2xl hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center mb-4">
-                  <div
-                    className="relative w-32 h-10 mr-4 rounded"
-                    style={hasBrandColor(entry.color) ? { backgroundColor: entry.color } : undefined}
-                  >
-                    <Image
-                      src={`/logos/${entry.logo}`}
-                      alt={commonT("images.companyLogoAlt", { company: entry.company })}
-                      fill
-                      sizes="128px"
-                      className="object-contain rounded"
-                    />
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">{company}</h3>
-                    <p className="text-sm text-gray-500">
-                      {entry.from} tot {entry.to}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600 mb-4">
-                  <span className="inline-flex items-center gap-1">
-                    <MapPin className="w-4 h-4" aria-hidden="true" />
-                    {location}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Globe className="w-4 h-4" aria-hidden="true" />
-                    {t(entry.mode, { defaultValue: entry.mode })}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Languages className="w-4 h-4" aria-hidden="true" />
-                    {t(entry.language, { defaultValue: entry.language })}
-                  </span>
-                </div>
-
-                <p className="text-sm text-gray-700 mb-2">
-                  <span className="font-semibold">{t("role", { defaultValue: "Rol" })}:</span>{" "}
-                  {role}
-                </p>
-
-                {entry.tech.length > 0 && (
-                  <div className="flex flex-wrap gap-2 text-sm mb-4">
-                    <span className="font-semibold w-full">
-                      {t("technologies", { defaultValue: "Technieken" })}:
-                    </span>
-                    {entry.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-md text-xs font-medium"
+              return (
+                <article key={id} id={`experience-${id}`} className="scroll-mt-16">
+                  <Card className="transition-shadow hover:shadow-md">
+                    <div className="mb-4 flex items-center">
+                      <div
+                        className="relative mr-4 h-10 w-32 rounded"
+                        style={
+                          hasBrandColor(entry.color)
+                            ? { backgroundColor: entry.color }
+                            : undefined
+                        }
                       >
-                        {t(tech, { defaultValue: tech })}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                        <Image
+                          src={`/logos/${entry.logo}`}
+                          alt={commonT("images.companyLogoAlt", {
+                            company: entry.company,
+                          })}
+                          fill
+                          sizes="128px"
+                          className="rounded object-contain"
+                        />
+                      </div>
 
-                {heading && <p className="text-md font-semibold text-gray-900 mb-2">{heading}</p>}
+                      <div>
+                        <h3 className="text-xl font-semibold text-textMain">
+                          {company}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {t("period", {
+                            from: formatMonthYear(entry.from, locale),
+                            to: formatMonthYear(entry.to, locale),
+                          })}
+                        </p>
+                      </div>
+                    </div>
 
-                <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
-                  {bodyItems.map((item, index) =>
-                    item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+                    <ul className="mb-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+                      <li className="inline-flex items-center gap-1">
+                        <MapPin className="h-4 w-4" aria-hidden="true" />
+                        {location}
+                      </li>
+                      <li className="inline-flex items-center gap-1">
+                        <Globe className="h-4 w-4" aria-hidden="true" />
+                        {t(entry.mode)}
+                      </li>
+                      <li className="inline-flex items-center gap-1">
+                        <Languages className="h-4 w-4" aria-hidden="true" />
+                        {t(entry.language)}
+                      </li>
+                    </ul>
+
+                    <p className="mb-2 text-sm text-gray-700">
+                      <span className="font-semibold">{t("role")}:</span> {role}
+                    </p>
+
+                    <p className="mt-2 text-[15px] font-medium leading-relaxed text-textMain">
+                      {summary}
+                    </p>
+
+                    <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700">
+                      {bodyParagraphs.map((item, index) =>
+                        item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
+                      )}
+                    </div>
+
+                    {entry.tech.length > 0 && (
+                      <ul
+                        aria-label={t("technologies")}
+                        className="mt-4 flex flex-wrap gap-2"
+                      >
+                        {entry.tech.map((tech) => (
+                          <li
+                            key={tech}
+                            className="rounded-md bg-bgLight px-2 py-0.5 text-[11px] font-medium text-gray-600 ring-1 ring-gray-200"
+                          >
+                            {t(tech)}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </Card>
+                </article>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 };

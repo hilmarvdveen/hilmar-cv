@@ -1,4 +1,5 @@
 export { HeroSection } from "./components/HeroSection";
+export { CvDownloadTrigger } from "./components/CvDownloadTrigger";
 export { ResultsStrip } from "./components/ResultsStrip";
 export { ClientLogosCarousel } from "./components/ClientLogosCarousel";
 export { FlagshipSection } from "./components/FlagshipSection";

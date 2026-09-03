@@ -5,24 +5,36 @@ import { FAQClientContent } from "./FAQClientContent";
 
 vi.mock("next-intl", async () => {
   const base = (await import("@/test/intl")).intlMock();
-  const t = ((k: string) => k) as ((k: string) => string) & { raw: (k: string) => unknown };
+  const t = ((key: string) => key) as ((key: string) => string) & {
+    raw: (key: string) => unknown;
+  };
   t.raw = (key: string) =>
     key.endsWith("questions") ? [{ question: "What?", answer: "Because." }] : [];
   return { ...base, useTranslations: () => t };
 });
-vi.mock("next/navigation", () => ({ usePathname: () => "/en/faq" }));
-vi.mock("next/link", () => ({
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
-  ),
-}));
 
 describe("FAQClientContent", () => {
   it("renders questions and toggles them open/closed", async () => {
     const user = userEvent.setup();
     render(<FAQClientContent />);
     const toggles = screen.getAllByRole("button", { name: /What\?/ });
-    await user.click(toggles[0]); // open
-    await user.click(toggles[0]); // close (covers both filter branches)
+    await user.click(toggles[0]);
+    await user.click(toggles[0]);
+  });
+
+  it("renders the closing CTA as links to contact, book and a phone call", () => {
+    render(<FAQClientContent />);
+    expect(screen.getByRole("link", { name: "cta.contact" })).toHaveAttribute(
+      "href",
+      "/contact"
+    );
+    expect(screen.getByRole("link", { name: "cta.book" })).toHaveAttribute(
+      "href",
+      "/book"
+    );
+    expect(screen.getByRole("link", { name: "cta.call" })).toHaveAttribute(
+      "href",
+      "tel:+31680149947"
+    );
   });
 });

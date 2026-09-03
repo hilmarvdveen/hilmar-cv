@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import {
   Home,
   FolderOpen,
@@ -17,6 +18,11 @@ import {
 import Image from "next/image";
 import { Flag } from "@/components/Flag";
 import { Button } from "@/components/Button";
+
+const LOCALE_LABELS: Record<string, string> = {
+  en: "English",
+  nl: "Nederlands",
+};
 
 export const Header = () => {
   const t = useTranslations("common");
@@ -54,10 +60,10 @@ export const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const locales = [
-    { code: "en", label: "English" },
-    { code: "nl", label: "Nederlands" },
-  ];
+  const locales = routing.locales.map((code) => ({
+    code,
+    label: LOCALE_LABELS[code],
+  }));
 
   const navItems = useMemo(
     () => [
@@ -65,43 +71,36 @@ export const Header = () => {
         href: "/",
         label: t("nav.home"),
         icon: Home,
-        description: "Back to homepage",
       },
       {
         href: "/services",
         label: t("nav.services"),
         icon: Briefcase,
-        description: "Services overview",
       },
       {
         href: "/experience",
         label: t("nav.experience"),
         icon: FolderOpen,
-        description: "Full work history",
       },
       {
         href: "/projects",
         label: t("nav.projects"),
         icon: FolderOpen,
-        description: "My work portfolio",
       },
       {
         href: "/blog",
         label: t("nav.blog"),
         icon: BookOpen,
-        description: "Articles & insights",
       },
       {
         href: "/book",
         label: t("nav.book"),
         icon: Calendar,
-        description: "Book an intro call",
       },
       {
         href: "/contact",
         label: t("nav.contact"),
         icon: Mail,
-        description: "Get in touch",
       },
     ],
     [t]
@@ -167,10 +166,16 @@ export const Header = () => {
                 );
               })}
 
-              <Button href="/book" variant="primary" size="sm" className="ml-4">
-                <Calendar className="w-4 h-4" />
-                <span>{t("nav.book")}</span>
-              </Button>
+              <div className="ml-4 flex items-center gap-3">
+                <span className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+                  <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                  {t("nav.availability")}
+                </span>
+                <Button href="/book" variant="primary" size="sm">
+                  <Calendar className="w-4 h-4" />
+                  <span>{t("nav.book")}</span>
+                </Button>
+              </div>
 
               <div className="relative ml-4">
                 <button

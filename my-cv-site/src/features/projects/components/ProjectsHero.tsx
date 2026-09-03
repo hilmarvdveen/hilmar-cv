@@ -1,89 +1,25 @@
 import { useTranslations } from "next-intl";
-import {
-  FolderOpen,
-  Target,
-  TrendingUp,
-  Calendar,
-  ExternalLink,
-} from "lucide-react";
+import { Calendar } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
 
 export const ProjectsHero = () => {
   const t = useTranslations("projects");
+  const tCommon = useTranslations("common.nav");
 
   return (
-    <section className="bg-brand-navy text-white py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16 items-center">
-        {/* Content */}
-        <div>
-          <p className="text-md text-gray-100 mb-2 tracking-widest uppercase">
-            {t("hero.badge")}
-          </p>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 tracking-tight">
-            {t("hero.title")}
-          </h1>
-
-          <p className="text-lg text-gray-300 mb-10 max-w-xl leading-relaxed">
-            {t("hero.description")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            {/* Primary CTA */}
-            <Button href="/book" variant="primary" size="lg">
-              <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-              <span>{t("showcase.cta.book")}</span>
-            </Button>
-
-            {/* Secondary CTA */}
-            <Button href="/contact" variant="outlineOnDark" size="md">
-              <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-              <span>{t("showcase.cta.contact")}</span>
-            </Button>
-          </div>
-        </div>
-
-        {/* Visual Element - Stats Cards */}
-        <div className="flex justify-center">
-          <div className="grid grid-cols-1 gap-6 w-full max-w-sm">
-            <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-emerald-600/20">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-500 rounded-full mb-4">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div className="text-2xl font-bold mb-2 text-gray-100">
-                {t("hero.stats.projects")}
-              </div>
-              <div className="text-emerald-400 text-sm font-medium">
-                {t("hero.stats.projectsLabel")}
-              </div>
-            </div>
-
-            <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-emerald-600/20">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-500 rounded-full mb-4">
-                <TrendingUp className="w-6 h-6 text-white" />
-              </div>
-              <div className="text-2xl font-bold mb-2 text-gray-100">
-                {t("hero.stats.impact")}
-              </div>
-              <div className="text-emerald-400 text-sm font-medium">
-                {t("hero.stats.impactLabel")}
-              </div>
-            </div>
-
-            <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-emerald-600/20">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-500 rounded-full mb-4">
-                <FolderOpen className="w-6 h-6 text-white" />
-              </div>
-              <div className="text-2xl font-bold mb-2 text-gray-100">
-                {t("hero.stats.industries")}
-              </div>
-              <div className="text-emerald-400 text-sm font-medium">
-                {t("hero.stats.industriesLabel")}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      breadcrumb={<Breadcrumb />}
+      badge={t("hero.badge")}
+      title={t("hero.title")}
+      description={t("hero.description")}
+      actions={
+        <Button href="/book" variant="primary" size="lg">
+          <Calendar className="h-5 w-5" aria-hidden="true" />
+          <span>{tCommon("book")}</span>
+        </Button>
+      }
+    />
   );
 };

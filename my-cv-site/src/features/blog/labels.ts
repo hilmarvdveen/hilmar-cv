@@ -1,10 +1,5 @@
 import type { BlogLabels } from "./types";
 
-/**
- * Build the presentational {@link BlogLabels} from a translation function.
- * Kept as a pure function (takes `t`, returns strings) so the route stays thin
- * and this mapping is unit-testable without mocking the i18n runtime.
- */
 export function buildBlogLabels(t: (key: string) => string): BlogLabels {
   return {
     eyebrow: t("eyebrow"),
@@ -26,5 +21,7 @@ export function buildBlogLabels(t: (key: string) => string): BlogLabels {
     ctaTitle: t("cta.title"),
     ctaText: t("cta.text"),
     ctaButton: t("cta.button"),
+    breadcrumbLabel: t("breadcrumbLabel"),
+    homeLabel: t("homeLabel"),
   };
 }

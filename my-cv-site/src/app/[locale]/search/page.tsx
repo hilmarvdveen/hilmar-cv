@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { SearchPageContent, type SearchLocale } from "@/features/search";
 import { localizedAlternates } from "@/lib/seo";
 
@@ -10,12 +10,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isNl = locale === "nl";
+  const t = await getTranslations({ locale, namespace: "search" });
   return {
-    title: isNl ? "Zoeken" : "Search",
-    description: isNl
-      ? "Zoek op hilmarvanderveen.com."
-      : "Search hilmarvanderveen.com.",
+    title: t("title"),
+    description: t("description"),
     alternates: localizedAlternates("search", locale),
     robots: { index: false, follow: true },
   };

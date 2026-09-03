@@ -1,13 +1,14 @@
 import { useTranslations } from "next-intl";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
+import { SectionTitle } from "@/components/SectionTitle";
 
 type ResultItem = {
   value: string;
   detail: string;
 };
 
-const RESULTS_TITLE_ID = "results-strip-title";
+const RESULTS_HEADING_ID = "results-heading";
 
 export const ResultsStrip = () => {
   const t = useTranslations("home.results");
@@ -15,21 +16,19 @@ export const ResultsStrip = () => {
 
   return (
     <Section
-      padding="compact"
+      padding="default"
       className="border-b border-gray-200"
-      aria-labelledby={RESULTS_TITLE_ID}
+      aria-labelledby={RESULTS_HEADING_ID}
     >
       <Container>
-        <h2 id={RESULTS_TITLE_ID} className="sr-only">
-          {t("title")}
-        </h2>
+        <SectionTitle id={RESULTS_HEADING_ID} title={t("title")} align="center" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {items.map((item) => (
             <div
               key={item.value}
               className="border-l-[3px] border-primary pl-6"
             >
-              <p className="flex min-h-10 items-end text-2xl lg:text-xl xl:text-[26px] font-extrabold leading-none text-brand-navy tracking-tight whitespace-nowrap">
+              <p className="flex min-h-10 items-end text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none text-brand-navy tracking-tight whitespace-nowrap">
                 {item.value}
               </p>
               <p className="mt-2.5 text-sm text-gray-600 leading-relaxed">

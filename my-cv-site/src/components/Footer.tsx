@@ -1,5 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import { Container } from "@/components/Container";
 import {
   Mail,
   Phone,
@@ -51,30 +53,37 @@ export const Footer = () => {
     { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 
+  const legalLinks = [
+    { name: t("legal.items.privacy"), href: "/privacy" },
+    { name: t("legal.items.terms"), href: "/terms" },
+    { name: t("legal.items.cookies"), href: "/cookies" },
+    { name: t("legal.items.disclaimer"), href: "/disclaimer" },
+  ];
+
   const socialLinks = [
     {
       name: "LinkedIn",
       icon: Linkedin,
-      href: "https://www.linkedin.com/in/hilmar-van-der-veen/",
+      href: BUSINESS_PROFILE.SOCIAL.LINKEDIN,
       color: "hover:text-blue-600",
     },
     {
       name: "GitHub",
       icon: Github,
-      href: "https://github.com/hilmarvdveen",
+      href: BUSINESS_PROFILE.SOCIAL.GITHUB,
       color: "hover:text-gray-900",
     },
     {
       name: "WhatsApp",
       icon: MessageCircle,
-      href: "https://wa.me/31680149947",
+      href: BUSINESS_PROFILE.CONTACT.WHATSAPP,
       color: "hover:text-emerald-500",
     },
   ];
 
   return (
-    <footer className="bg-[#12314e] text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <footer className="bg-brand-navy text-gray-300">
+      <Container className="py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
@@ -164,19 +173,19 @@ export const Footer = () => {
 
             <div className="space-y-4 mb-8">
               <a
-                href="mailto:hilmar@hilmarvanderveen.com"
+                href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                 className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4" />
-                <span>hilmar@hilmarvanderveen.com</span>
+                <span>{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
               </a>
 
               <a
-                href="tel:+31680149947"
+                href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
                 className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Phone className="w-4 h-4" />
-                <span>+31 6 8014 9947</span>
+                <span>{BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY}</span>
               </a>
             </div>
 
@@ -204,14 +213,31 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       <div className="border-t border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <Container className="py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} {t("about.name")}.{" "}
-              {t("bottom.copyright")}
+            <div className="flex flex-col items-center gap-2 text-sm text-gray-400 md:flex-row md:gap-4">
+              <div>
+                © {new Date().getFullYear()} {t("about.name")}.{" "}
+                {t("bottom.copyright")}
+              </div>
+
+              <nav aria-label={t("legal.title")}>
+                <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                  {legalLinks.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="hover:text-white transition-colors duration-200"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
 
             <div className="flex items-center space-x-6 text-sm">
@@ -231,7 +257,7 @@ export const Footer = () => {
               <span>{t("bottom.location.euBased")}</span>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     </footer>
   );
