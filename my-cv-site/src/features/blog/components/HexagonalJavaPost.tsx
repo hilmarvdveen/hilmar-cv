@@ -141,9 +141,8 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.test1[locale]}</P>
       <CodeBlock lang="java" filename="PublishFormVersionTest.java" code={USE_CASE_TEST_CODE} />
       <P>{copy.test2[locale]}</P>
-      <P>{copy.test3[locale]}</P>
       <CodeBlock lang="java" filename="JpaFormDefinitionRepositoryTest.java" code={ADAPTER_TEST_CODE} />
-      <P>{copy.test4[locale]}</P>
+      <P>{copy.test3[locale]}</P>
 
       <H2>{copy.archTitle[locale]}</H2>
       <P>{copy.arch1[locale]}</P>
@@ -157,11 +156,8 @@ export function Body({ locale }: { locale: Locale }) {
         <LI><Strong>{copy.lazyLabel[locale]}</Strong> {copy.lazyBody[locale]}</LI>
         <LI><Strong>{copy.transactionLabel[locale]}</Strong> {copy.transactionBody[locale]}</LI>
         <LI><Strong>{copy.mappingLabel[locale]}</Strong> {copy.mappingBody[locale]}</LI>
+        <LI><Strong>{copy.interfacesLabel[locale]}</Strong> {copy.interfacesBody[locale]}</LI>
       </UL>
-
-      <H2>{copy.noiseTitle[locale]}</H2>
-      <P>{copy.noise1[locale]}</P>
-      <P>{copy.noise2[locale]}</P>
 
       <H2>{copy.migrationTitle[locale]}</H2>
       <P>{copy.migration1[locale]}</P>
@@ -722,8 +718,8 @@ const COPY = {
     nl: "Overheidssoftware heeft een lang geheugen. Een formulier waarmee iemand aangifte doet, gaat langer mee dan het framework dat het tekent en meestal ook dan het team dat het schreef. Struts werd Spring MVC en Spring MVC werd Spring Boot. De regel dat een versie zonder velden niet naar buiten mag, veranderde nooit.",
   },
   intro2: {
-    en: "At the Belastingdienst, the Dutch tax administration, I built a low-code visual forms editor. When it had to ship I extended the Java backend endpoints myself, so the work of the editors was stored and the state of every form could be rebuilt from the backend. The stack was Java 8 with Maven and MySQL.",
-    nl: "Bij de Belastingdienst bouwde ik een low-code formulierenbouwer met een visuele editor. Toen die live moest, breidde ik zelf de endpoints van de Java-backend uit, zodat het werk van de redacteuren werd opgeslagen en de staat van elk formulier vanuit de backend te herbouwen was. De stack was Java 8 met Maven en MySQL.",
+    en: "At the Belastingdienst, the Dutch tax administration, I built a low-code visual forms editor. When it had to ship I extended the Java backend endpoints myself, so the work of the editors was stored and the state of every form could be rebuilt from the backend. The stack was Java 8, Maven and MySQL.",
+    nl: "Bij de Belastingdienst bouwde ik een low-code formulierenbouwer met een visuele editor. Toen die live moest, breidde ik zelf de endpoints van de Java-backend uit, zodat het werk van de redacteuren werd opgeslagen en de staat van elk formulier vanuit de backend te herbouwen was. De stack was Java 8, Maven en MySQL.",
   },
   quote: {
     en: "The moment a domain class imports jakarta.persistence, the table layout has taken a decision that belonged to the rules.",
@@ -734,36 +730,36 @@ const COPY = {
     nl: "Regels over formulieren gaan langer mee dan het framework dat ze toont",
   },
   why1: {
-    en: "Java is unusually good at running a system for fifteen years. It is also unusually good at hiding the rules inside a framework. One service class carries a @Transactional annotation, a repository call, a mapper and the line that decides whether a citizen may proceed. Only that line is the business.",
-    nl: "Java is uitzonderlijk goed in systemen die vijftien jaar draaien. Java is ook uitzonderlijk goed in het verstoppen van de regels binnen een framework. Eén serviceklasse draagt een @Transactional-annotatie, een repository-aanroep, een mapper en de regel die bepaalt of een burger verder mag. Alleen die regel is de business.",
+    en: "Java is unusually good at running a system for fifteen years, and just as good at hiding the rules inside a framework. One service class carries a @Transactional annotation, a repository call, a mapper and the line that decides whether a citizen may proceed.",
+    nl: "Java is uitzonderlijk goed in systemen die vijftien jaar draaien, en net zo goed in het verstoppen van de regels binnen een framework. Eén serviceklasse draagt een @Transactional-annotatie, een repository-aanroep, een mapper en de regel die bepaalt of een burger verder mag.",
   },
   why2: {
-    en: "Ports and adapters gives that line a module of its own, with no Spring and no JPA on the classpath. Everything the rules need from outside is an interface they write themselves. In a Maven build the boundary is a module, so the compiler is the first reviewer.",
-    nl: "Ports en adapters geeft die regel een eigen module, zonder Spring en zonder JPA op het classpath. Alles wat de regels van buiten nodig hebben, is een interface die ze zelf opschrijven. In een Maven-build is die grens een module, dus de compiler is de eerste reviewer.",
+    en: "Ports and adapters gives that line a module of its own, with no Spring and no JPA on the classpath. Everything the rules need from outside is an interface they write themselves. In Maven the boundary is a module, so the compiler reviews it first.",
+    nl: "Ports en adapters geeft die regel een eigen module, zonder Spring en zonder JPA op het classpath. Alles wat de regels van buiten nodig hebben, is een interface die ze zelf opschrijven. In Maven is die grens een module, dus de compiler beoordeelt hem als eerste.",
   },
   overkillTitle: {
     en: "Skip the hexagon when the screen is a table with a save button",
     nl: "Sla de hexagon over als het scherm een tabel met een opslaanknop is",
   },
   overkill1: {
-    en: "Not every service earns this. When the requirements are list the rows, edit a row and delete a row, the rules are the database schema. A port then costs two files and one extra hop per screen. A small internal tool is happier with Spring Data in the controller.",
-    nl: "Niet elke service verdient dit. Zijn de eisen toon de rijen, wijzig een rij en verwijder een rij, dan zijn de regels het databaseschema. Een port kost dan twee bestanden en per scherm een extra tussenstap. Een klein intern gereedschap is beter af met Spring Data in de controller.",
+    en: "Not every service earns this. When the requirements are list the rows, edit a row and delete a row, the rules are the database schema. A small internal tool is happier with Spring Data in the controller.",
+    nl: "Niet elke service verdient dit. Zijn de eisen toon de rijen, wijzig een rij en verwijder een rij, dan zijn de regels het databaseschema. Een klein intern gereedschap is beter af met Spring Data in de controller.",
   },
   overkill2: {
-    en: "The hexagon pays for itself when the rules hold real decisions, when a second channel or a second database is plausible within the life of the code, and when the team wants to run those decisions without starting anything. Two of the three is enough to begin.",
-    nl: "De hexagon verdient zichzelf terug als de regels echte beslissingen bevatten, als een tweede kanaal of een tweede database aannemelijk is binnen de levensduur van de code, en als het team die beslissingen wil draaien zonder iets op te starten. Twee van de drie is genoeg om te beginnen.",
+    en: "The hexagon pays for itself when the rules hold real decisions, when a second channel or a second database is plausible, and when the team wants to run those decisions without starting anything. Two of the three is enough to begin.",
+    nl: "De hexagon verdient zichzelf terug als de regels echte beslissingen bevatten, als een tweede kanaal of een tweede database aannemelijk is, en als het team die beslissingen wil draaien zonder iets op te starten. Twee van de drie is genoeg om te beginnen.",
   },
   shapeTitle: {
     en: "The domain sits in the middle and every arrow points inward",
     nl: "Het domein staat in het midden en elke pijl wijst naar binnen",
   },
   shape1: {
-    en: "The earlier posts in this series drew this picture in C# and in Kotlin, so here is the short version. There is no layer above another layer. There is an inside and an outside, and the inside knows nothing about the outside.",
-    nl: "De eerdere delen van deze serie tekenden deze plaat in C# en in Kotlin, dus hier de korte versie. Er ligt geen laag boven een andere laag. Er is een binnenkant en een buitenkant, en de binnenkant weet niets van de buitenkant.",
+    en: "The earlier posts in this series drew this picture in C# and in Kotlin, so here is the short version. There is an inside and an outside, no layer above another, and the inside knows nothing about the outside.",
+    nl: "De eerdere delen van deze serie tekenden deze plaat in C# en in Kotlin, dus hier de korte versie. Er is een binnenkant en een buitenkant, geen laag boven een andere, en de binnenkant weet niets van de buitenkant.",
   },
   hexagonAria: {
-    en: "Diagram: a REST controller, a scheduled job and a message listener call the PublishFormVersion use case, which applies the domain rules and calls driven ports implemented by a JPA repository, a JDBC read model and the system clock",
-    nl: "Diagram: een REST-controller, een geplande taak en een message listener roepen de use case PublishFormVersion aan, die de domeinregels toepast en driven ports aanroept die worden geïmplementeerd door een JPA-repository, een JDBC-leesmodel en de systeemklok",
+    en: "Diagram: a REST controller, a scheduled job and a message listener call the PublishFormVersion use case, which applies the domain rules and calls ports implemented by JPA, JDBC and the clock",
+    nl: "Diagram: een REST-controller, een geplande taak en een message listener roepen de use case PublishFormVersion aan, die de domeinregels toepast en ports aanroept die worden geïmplementeerd door JPA, JDBC en de klok",
   },
   hexagonCaption: {
     en: "The adapters know the use case and the domain. Neither of them knows a single adapter.",
@@ -785,8 +781,8 @@ const COPY = {
     nl: "De interfaces zelf. In Java is een port niets exotischer dan een interface met twee of drie methodes.",
   },
   shape2: {
-    en: "The direction of the dependency is the whole trick. The adapter module depends on the domain module, and the domain module depends on nothing. Maven enforces that between modules. ArchUnit does the same between packages inside one module.",
-    nl: "De richting van de afhankelijkheid is de hele truc. De adaptermodule hangt af van de domeinmodule, en de domeinmodule hangt nergens van af. Maven dwingt dat af tussen modules. ArchUnit doet hetzelfde tussen packages binnen één module.",
+    en: "The direction of the dependency is the whole trick. The adapter module depends on the domain module, and the domain module depends on nothing. Maven enforces that between modules, and ArchUnit does the same between packages.",
+    nl: "De richting van de afhankelijkheid is de hele truc. De adaptermodule hangt af van de domeinmodule, en de domeinmodule hangt nergens van af. Maven dwingt dat af tussen modules, en ArchUnit doet hetzelfde tussen packages.",
   },
   domainTitle: {
     en: "Records and sealed types give the domain its vocabulary",
@@ -797,68 +793,68 @@ const COPY = {
     nl: "Begin bij de moduledescriptor, want dat is de afspraak die je in elke code review verdedigt. Geen Spring-starter, geen Hibernate, helemaal geen dependencies.",
   },
   domain2: {
-    en: "A form version is a number, a list of fields and the moment it went out. A record gives you the constructor, the accessors, equality and a readable toString for free. Copy the list in the compact constructor, because a record is only as immutable as its values.",
-    nl: "Een formulierversie is een nummer, een lijst velden en het moment waarop hij naar buiten ging. Een record geeft je de constructor, de accessors, gelijkheid en een leesbare toString cadeau. Kopieer de lijst in de compacte constructor, want een record is niet onveranderlijker dan zijn waarden.",
+    en: "A form version is a number, a list of fields and the moment it went out. A record gives you the constructor, accessors, equality and a readable toString for free. Copy the list in the compact constructor, because a record is only as immutable as its values.",
+    nl: "Een formulierversie is een nummer, een lijst velden en het moment waarop hij naar buiten ging. Een record geeft je de constructor, accessors, gelijkheid en een leesbare toString cadeau. Kopieer de lijst in de compacte constructor, want een record is niet onveranderlijker dan zijn waarden.",
   },
   domain3: {
-    en: "The aggregate above it holds the rules. It answers which reasons block a version from going out, and what the definition looks like once that version is published. Publishing returns a new definition, so nobody can apply a rule halfway.",
-    nl: "Het aggregate erboven bevat de regels. Het beantwoordt welke redenen een versie tegenhouden, en hoe de definitie eruitziet zodra die versie is gepubliceerd. Publiceren geeft een nieuwe definitie terug, dus niemand kan een regel half toepassen.",
+    en: "The aggregate above it holds the rules. It answers which reasons block a version from going out, and what the definition looks like once that version is published.",
+    nl: "Het aggregate erboven bevat de regels. Het beantwoordt welke redenen een versie tegenhouden, en hoe de definitie eruitziet zodra die versie is gepubliceerd.",
   },
   domain4: {
-    en: "Notice that reasonsNotToPublish collects reasons instead of throwing on the first problem. An editor who forgot two things deserves to hear both. A record around the identifier is one line well spent, because a name can no longer arrive where an id belongs.",
-    nl: "Merk op dat reasonsNotToPublish redenen verzamelt in plaats van bij het eerste probleem een exceptie te gooien. Een redacteur die twee dingen vergat, mag ze allebei horen. Een record om de identifier heen is één goed besteedde regel, want zo komt een naam nooit meer terecht waar een id hoort.",
+    en: "Publishing returns a new definition, so nobody applies a rule halfway. The reasons are collected instead of thrown one at a time, because an editor who forgot two things deserves to hear both.",
+    nl: "Publiceren geeft een nieuwe definitie terug, dus niemand past een regel half toe. De redenen worden verzameld in plaats van één voor één gegooid, want een redacteur die twee dingen vergat, mag ze allebei horen.",
   },
   portsTitle: {
     en: "A port is an interface the inside writes for itself",
     nl: "Een port is een interface die de binnenkant voor zichzelf schrijft",
   },
   ports1: {
-    en: "The application module holds use cases and the ports they need. Names come from the domain, never from the technology behind them. FormDefinitionRepository is a good name. MySqlFormDefinitionDao has leaked the storage into the middle of the application.",
-    nl: "De applicatiemodule bevat use cases en de ports die zij nodig hebben. De namen komen uit het domein, nooit uit de techniek erachter. FormDefinitionRepository is een goede naam. MySqlFormDefinitionDao heeft de opslag al midden in de applicatie gelekt.",
+    en: "The application module holds use cases and the ports they need. Names come from the domain, never from the technology. FormDefinitionRepository is a good name. MySqlFormDefinitionDao has leaked the storage into the middle of the application.",
+    nl: "De applicatiemodule bevat use cases en de ports die zij nodig hebben. De namen komen uit het domein, nooit uit de techniek. FormDefinitionRepository is een goede naam. MySqlFormDefinitionDao heeft de opslag al midden in de applicatie gelekt.",
   },
   ports2: {
-    en: "Give the port the two methods this use case needs, not the fourteen a generic repository would offer. The second port needs no code at all, because java.time.Clock is already an interface with Clock.fixed as its test implementation.",
-    nl: "Geef de port de twee methodes die deze use case nodig heeft, niet de veertien die een generieke repository zou aanbieden. De tweede port kost geen code, want java.time.Clock is al een interface met Clock.fixed als testimplementatie.",
+    en: "Give the port the two methods this use case needs, not the fourteen a generic repository offers. The second port needs no code, because java.time.Clock is already an interface with Clock.fixed as its test implementation.",
+    nl: "Geef de port de twee methodes die deze use case nodig heeft, niet de veertien die een generieke repository aanbiedt. De tweede port kost geen code, want java.time.Clock is al een interface met Clock.fixed als testimplementatie.",
   },
   resultTitle: {
     en: "A sealed result forces the caller to answer every outcome",
     nl: "Een sealed resultaat dwingt de aanroeper elke uitkomst te beantwoorden",
   },
   result1: {
-    en: "A publication ends in three ways the business already knows. It succeeds, it is refused for named reasons, or the version is not there. None of those is exceptional, so none should be an exception. A sealed interface lists its own outcomes and the compiler knows that list is complete.",
-    nl: "Een publicatie eindigt op drie manieren die de business al kent. Hij slaagt, hij wordt geweigerd om benoemde redenen, of de versie bestaat niet. Geen daarvan is uitzonderlijk, dus geen daarvan hoort een exceptie te zijn. Een sealed interface somt zijn eigen uitkomsten op en de compiler weet dat die lijst compleet is.",
+    en: "A publication ends in three ways the business already knows. It succeeds, it is refused for named reasons, or the version is not there. None of those is exceptional, so none should be an exception. A sealed interface lists its own outcomes.",
+    nl: "Een publicatie eindigt op drie manieren die de business al kent. Hij slaagt, hij wordt geweigerd om benoemde redenen, of de versie bestaat niet. Geen daarvan is uitzonderlijk, dus geen daarvan hoort een exceptie te zijn. Een sealed interface somt zijn eigen uitkomsten op.",
   },
   result2: {
-    en: "The use case then reads as the story of the transaction. It loads, it lets the domain decide, it takes the moment from the clock and it saves. It holds no rule of its own beyond the order of the steps.",
-    nl: "De use case leest daarna als het verhaal van de transactie. Hij laadt, hij laat het domein beslissen, hij neemt het moment uit de klok en hij slaat op. Zelf draagt hij geen regel behalve de volgorde van de stappen.",
+    en: "The use case then reads as the story of the transaction. It loads, it lets the domain decide, it takes the moment from the clock and it saves. Beyond the order of the steps it holds no rule of its own.",
+    nl: "De use case leest daarna als het verhaal van de transactie. Hij laadt, hij laat het domein beslissen, hij neemt het moment uit de klok en hij slaat op. Behalve de volgorde van de stappen draagt hij geen eigen regel.",
   },
   result3: {
-    en: "The pay-off arrives when someone adds a fourth outcome. Add a record to the sealed interface and every exhaustive switch stops compiling until a person decides what the caller should do. A checked exception pushes that answer into a catch block far from the happy path.",
-    nl: "Het rendement komt als iemand een vierde uitkomst toevoegt. Zet een record bij de sealed interface en elke uitputtende switch stopt met compileren tot een mens bepaalt wat de aanroeper moet doen. Een checked exception duwt dat antwoord in een catch-blok ver van het gelukkige pad.",
+    en: "The pay-off arrives when someone adds a fourth outcome. Add a record to the sealed interface and every exhaustive switch stops compiling until a person decides what the caller should do.",
+    nl: "Het rendement komt als iemand een vierde uitkomst toevoegt. Zet een record bij de sealed interface en elke uitputtende switch stopt met compileren tot een mens bepaalt wat de aanroeper moet doen.",
   },
   adaptersTitle: {
     en: "Spring Boot and Hibernate stay on the outside",
     nl: "Spring Boot en Hibernate blijven aan de buitenkant",
   },
   adapters1: {
-    en: "The controller is the driving adapter. It reads the path, calls the use case and turns the sealed result into a status code with a pattern matching switch. There is no default branch, and that is the point. Its request and response records belong to the channel.",
-    nl: "De controller is de driving adapter. Hij leest het pad, roept de use case aan en zet het sealed resultaat om in een statuscode met een switch die aan pattern matching doet. Er is geen default-tak, en dat is de bedoeling. De request- en responserecords horen bij het kanaal.",
+    en: "The controller is the driving adapter. It reads the path, calls the use case and turns the sealed result into a status code with a pattern matching switch. There is no default branch, and that is the point.",
+    nl: "De controller is de driving adapter. Hij leest het pad, roept de use case aan en zet het sealed resultaat om in een statuscode met een switch die aan pattern matching doet. Er is geen default-tak, en dat is de bedoeling.",
   },
   adapters2: {
-    en: "On the other side the JPA entities live in the persistence package, and they are not the domain records. An entity answers to Hibernate with a no-arg constructor, mutable fields and an identity from the database. One class doing both jobs is how a Java hexagon collapses.",
-    nl: "Aan de andere kant wonen de JPA-entiteiten in de persistence-package, en dat zijn niet de domeinrecords. Een entiteit legt verantwoording af aan Hibernate met een constructor zonder argumenten, muteerbare velden en een identiteit uit de database. Eén klasse die beide taken doet, is hoe een Java-hexagon instort.",
+    en: "On the other side the JPA entities live in the persistence package, and they are not the domain records. An entity answers to Hibernate with a no-arg constructor and mutable fields. One class doing both jobs is how a Java hexagon collapses.",
+    nl: "Aan de andere kant wonen de JPA-entiteiten in de persistence-package, en dat zijn niet de domeinrecords. Een entiteit legt verantwoording af aan Hibernate met een constructor zonder argumenten en muteerbare velden. Eén klasse die beide taken doet, is hoe een Java-hexagon instort.",
   },
   adapters3: {
-    en: "Two details there are deliberate. The classes are package-private, so nothing outside this package can even name an entity, and the fields need no getters because the mapper is their neighbour. The version row carries an identifier built from the definition and the number, so a merge updates instead of inserting a copy.",
-    nl: "Twee details daarin zijn bewust. De klassen zijn package-private, dus buiten deze package kan niemand een entiteit zelfs maar noemen, en de velden hebben geen getters nodig omdat de mapper hun buurman is. De versierij draagt een identifier uit de definitie en het nummer, zodat een merge bijwerkt en geen kopie toevoegt.",
+    en: "Two details there are deliberate. The classes are package-private, so nothing outside this package can even name an entity. The version row carries a deterministic identifier, so a merge updates the row instead of inserting a copy of it.",
+    nl: "Twee details daarin zijn bewust. De klassen zijn package-private, dus buiten deze package kan niemand een entiteit zelfs maar noemen. De versierij draagt een voorspelbare identifier, zodat een merge de rij bijwerkt en er geen kopie naast zet.",
   },
   adapters4: {
-    en: "The adapter translates in both directions, by hand, in one file. It is the only class in the build that is allowed to know both vocabularies.",
+    en: "The adapter translates in both directions, by hand, in one file. It is the only class in the build allowed to know both vocabularies.",
     nl: "De adapter vertaalt in beide richtingen, met de hand, in één bestand. Het is de enige klasse in de build die beide vocabulaires mag kennen.",
   },
   adapters5: {
-    en: "Not every question needs the aggregate. An overview screen wants a flat list, and loading a full object graph to draw a table is work nobody asked for. A second port with a JDBC adapter answers that in one query, in the language of the screen.",
-    nl: "Niet elke vraag heeft het aggregate nodig. Een overzichtsscherm wil een platte lijst, en een hele objectgraaf laden om een tabel te tekenen is werk waar niemand om vroeg. Een tweede port met een JDBC-adapter beantwoordt dat in één query, in de taal van het scherm.",
+    en: "Not every question needs the aggregate. An overview screen wants a flat list, and a second port with a JDBC adapter answers that in one query, in the language of the screen.",
+    nl: "Niet elke vraag heeft het aggregate nodig. Een overzichtsscherm wil een platte lijst, en een tweede port met een JDBC-adapter beantwoordt dat in één query, in de taal van het scherm.",
   },
   compositionTitle: {
     en: "One configuration class knows every implementation",
@@ -869,16 +865,16 @@ const COPY = {
     nl: "Ergens ontmoeten de interfaces hun klassen. In Spring Boot is dat een configuratieklasse in de module die de applicatie opstart. Die mag MySQL kennen, de klok en het adres van elke service, want niets is er op zijn beurt van afhankelijk.",
   },
   composition2: {
-    en: "The use case is a plain final class built with new. No @Service annotation, no field injection, no framework import. That is what lets a test run it in a millisecond, and what lets a future team move it to another framework untouched.",
-    nl: "De use case is een gewone final class die met new wordt gemaakt. Geen @Service-annotatie, geen veldinjectie, geen frameworkimport. Daardoor draait een test hem in een milliseconde, en daardoor verhuist een toekomstig team hem ongewijzigd naar een ander framework.",
+    en: "The use case is a plain final class built with new. No @Service annotation, no field injection, no framework import. That is what lets a test run it in a millisecond.",
+    nl: "De use case is een gewone final class die met new wordt gemaakt. Geen @Service-annotatie, geen veldinjectie, geen frameworkimport. Daardoor draait een test hem in een milliseconde.",
   },
   ruleTitle: {
     en: "A rule of thumb before you add a port",
     nl: "Een vuistregel voordat je een port toevoegt",
   },
   ruleBody: {
-    en: "Add a port when what sits behind it can change without the business changing. A database, a queue, a payment provider and the clock all qualify. A helper that formats a postal code does not. One implementation, no external system and no test that needs a stand-in means you are looking at a class.",
-    nl: "Voeg een port toe als wat erachter zit kan veranderen zonder dat de business verandert. Een database, een queue, een betaalprovider en de klok voldoen daaraan. Een hulpje dat een postcode opmaakt niet. Eén implementatie, geen extern systeem en geen test die een vervanger nodig heeft betekent dat je naar een klasse kijkt.",
+    en: "Add a port when what sits behind it can change without the business changing. A database, a queue, a payment provider and the clock all qualify. A helper that formats a postal code does not.",
+    nl: "Voeg een port toe als wat erachter zit kan veranderen zonder dat de business verandert. Een database, een queue, een betaalprovider en de klok voldoen daaraan. Een hulpje dat een postcode opmaakt niet.",
   },
   testTitle: {
     en: "Fakes prove the rules, an embedded database proves the mapping",
@@ -889,14 +885,10 @@ const COPY = {
     nl: "Een use case met twee ports en zonder framework is het goedkoopste in de build om te testen. Je hebt geen Mockito nodig en geen Spring-context. Een map achter de repository en Clock.fixed achter de klok geven je een voorspelbaar systeem.",
   },
   test2: {
-    en: "Two details make these tests pleasant. assertInstanceOf hands back the typed result, so the assertion reads as one sentence about the outcome. And because the reasons live in a record, the whole list compares with a single equals.",
-    nl: "Twee details maken deze tests prettig. assertInstanceOf geeft het getypeerde resultaat terug, zodat de assertie als één zin over de uitkomst leest. En omdat de redenen in een record zitten, vergelijk je de hele lijst met één equals.",
+    en: "These tests prove nothing about the mapping. A missing column or a collection that comes back empty passes every fake and fails in production. So the adapter gets a test of its own against a real engine, an embedded H2 inside a Spring @DataJpaTest.",
+    nl: "Deze tests bewijzen niets over de mapping. Een ontbrekende kolom of een collectie die leeg terugkomt, komt langs elke fake en sneuvelt in productie. Daarom krijgt de adapter een eigen test tegen een echte engine, een embedded H2 in een Spring @DataJpaTest.",
   },
   test3: {
-    en: "These tests prove nothing about the mapping. A missing column, a lost enum or a collection that comes back empty passes every fake and fails in production. So the adapter gets a test of its own against a real engine, an embedded H2 inside a Spring @DataJpaTest.",
-    nl: "Deze tests bewijzen niets over de mapping. Een ontbrekende kolom, een verdwenen enum of een collectie die leeg terugkomt, komt langs elke fake en sneuvelt in productie. Daarom krijgt de adapter een eigen test tegen een echte engine, een embedded H2 in een Spring @DataJpaTest.",
-  },
-  test4: {
     en: "The flush and the clear are the lines people forget. Without them Hibernate answers from its first level cache and the test proves nothing about reading. H2 is not MySQL either, so a query that leans on the dialect belongs in a Testcontainers container.",
     nl: "De flush en de clear zijn de regels die mensen vergeten. Zonder die twee antwoordt Hibernate uit zijn eerstelijnscache en bewijst de test niets over lezen. H2 is bovendien geen MySQL, dus een query die op het dialect leunt hoort in een Testcontainers-container.",
   },
@@ -905,60 +897,53 @@ const COPY = {
     nl: "ArchUnit maakt van de afhankelijkheidsregel een falende build",
   },
   arch1: {
-    en: "An architecture rule nobody enforces is a suggestion with a diagram attached. Someone under deadline pressure adds one import, the review has forty files in it, and a year later the domain needs a Spring context to start. ArchUnit reads the byte code and says no.",
-    nl: "Een architectuurregel die niemand afdwingt, is een suggestie met een plaatje erbij. Iemand met een deadline zet er één import bij, de review telt veertig bestanden, en een jaar later heeft het domein een Spring-context nodig om te starten. ArchUnit leest de byte code en zegt nee.",
+    en: "An architecture rule nobody enforces is a suggestion with a diagram attached. Someone under deadline pressure adds one import, the review has forty files in it, and a year later the domain needs a Spring context to start.",
+    nl: "Een architectuurregel die niemand afdwingt, is een suggestie met een plaatje erbij. Iemand met een deadline zet er één import bij, de review telt veertig bestanden, en een jaar later heeft het domein een Spring-context nodig om te starten.",
   },
   arch2: {
-    en: "The rule then arrives as a red build instead of a comment in a review. Separate Maven modules give a stronger version of the same guarantee, because the import will not resolve at all. ArchUnit is what you use inside a single module.",
-    nl: "De regel komt dan binnen als een rode build in plaats van als een opmerking in een review. Aparte Maven-modules geven een sterkere variant van dezelfde garantie, want dan lost de import helemaal niet op. ArchUnit gebruik je binnen één module.",
+    en: "The rule then arrives as a red build instead of a comment in a review. Separate Maven modules give a stronger version of the same guarantee, because the import will not resolve at all.",
+    nl: "De regel komt dan binnen als een rode build in plaats van als een opmerking in een review. Aparte Maven-modules geven een sterkere variant van dezelfde garantie, want dan lost de import helemaal niet op.",
   },
   boundariesTitle: {
-    en: "Four boundaries decide whether this holds up",
-    nl: "Vier grenzen bepalen of dit standhoudt",
+    en: "Five boundaries decide whether this holds up",
+    nl: "Vijf grenzen bepalen of dit standhoudt",
   },
   boundaries1: {
-    en: "The picture is easy to draw and easy to get wrong in four familiar places.",
-    nl: "De plaat is makkelijk te tekenen en op vier bekende plekken makkelijk verkeerd te doen.",
+    en: "The picture is easy to draw and easy to get wrong in five familiar places.",
+    nl: "De plaat is makkelijk te tekenen en op vijf bekende plekken makkelijk verkeerd te doen.",
   },
   entitiesLabel: { en: "Entities against domain objects.", nl: "Entiteiten tegenover domeinobjecten." },
   entitiesBody: {
-    en: "Keep them apart. An entity answers to a table, a record answers to the business. The day a column is renamed for a report, the rules should not notice.",
+    en: "Keep them apart. An entity answers to a table, a record answers to the business. When a column is renamed for a report, the rules should not notice.",
     nl: "Houd ze gescheiden. Een entiteit legt verantwoording af aan een tabel, een record aan de business. Wordt een kolom hernoemd voor een rapportage, dan horen de regels dat niet te merken.",
   },
   lazyLabel: { en: "Lazy loading.", nl: "Lazy loading." },
   lazyBody: {
-    en: "A lazy collection that leaves the adapter is a time bomb. The session closes and the caller meets a LazyInitializationException at the worst moment. Load inside the adapter, map there, and let a plain list cross the boundary.",
-    nl: "Een lazy collectie die de adapter verlaat, is een tijdbom. De sessie sluit en de aanroeper krijgt op het slechtste moment een LazyInitializationException. Laad binnen de adapter, map daar, en laat een gewone lijst de grens over gaan.",
+    en: "A lazy collection that leaves the adapter is a time bomb. The session closes and the caller meets a LazyInitializationException. Load inside the adapter, map there, and let a plain list cross the boundary.",
+    nl: "Een lazy collectie die de adapter verlaat, is een tijdbom. De sessie sluit en de aanroeper krijgt een LazyInitializationException. Laad binnen de adapter, map daar, en laat een gewone lijst de grens over gaan.",
   },
   transactionLabel: { en: "Transactions.", nl: "Transacties." },
   transactionBody: {
-    en: "The decision to commit belongs to the use case, so the annotation does not belong in the domain. Put @Transactional on the adapter methods, or define a small runner port that the boot module implements with a Spring transaction template.",
-    nl: "De beslissing om te committen hoort bij de use case, dus de annotatie hoort niet in het domein. Zet @Transactional op de adaptermethodes, of maak een kleine runner-port die de boot-module implementeert met een Spring-transactietemplate.",
+    en: "The decision to commit belongs to the use case, so the annotation does not belong in the domain. Put @Transactional on the adapter methods, or give the boot module a small runner port built on a Spring transaction template.",
+    nl: "De beslissing om te committen hoort bij de use case, dus de annotatie hoort niet in het domein. Zet @Transactional op de adaptermethodes, of geef de boot-module een kleine runner-port op basis van een Spring-transactietemplate.",
   },
   mappingLabel: { en: "The cost of mapping.", nl: "De prijs van mappen." },
   mappingBody: {
-    en: "Yes, you type the fields twice. That is the price of the boundary, and the mapper is the cheapest documentation of a contract you will write. Past a few aggregates, MapStruct generates the same code while compiling.",
-    nl: "Ja, je typt de velden twee keer. Dat is de prijs van de grens, en de mapper is de goedkoopste documentatie van een contract die je schrijft. Voorbij een paar aggregates genereert MapStruct dezelfde code tijdens het compileren.",
+    en: "Yes, you type the fields twice. That is the price of the boundary, and the mapper is the cheapest documentation of a contract you will write. Past a few aggregates, MapStruct generates it while compiling.",
+    nl: "Ja, je typt de velden twee keer. Dat is de prijs van de grens, en de mapper is de goedkoopste documentatie van een contract die je schrijft. Voorbij een paar aggregates genereert MapStruct het tijdens het compileren.",
   },
-  noiseTitle: {
-    en: "One implementation is not automatically noise",
-    nl: "Eén implementatie is niet automatisch ruis",
-  },
-  noise1: {
-    en: "Java teams argue about this more than about any other point. An interface with one implementation is fine when a test needs a stand-in for it, or when a system you do not control sits behind it. FormDefinitionRepository qualifies on both counts.",
-    nl: "Java-teams discussiëren hierover meer dan over welk ander punt ook. Een interface met één implementatie is prima als een test er een vervanger voor nodig heeft, of als erachter een systeem zit dat je niet in de hand hebt. FormDefinitionRepository voldoet aan allebei.",
-  },
-  noise2: {
-    en: "It becomes noise when the interface exists only to have one. Name the second implementation you can imagine shipping, or name the test that needs a stand-in. When neither exists, delete the interface, inject the class and give every stack trace one frame less.",
-    nl: "Het wordt ruis als de interface alleen bestaat om er een te hebben. Noem de tweede implementatie die je je kunt voorstellen, of noem de test die een vervanger nodig heeft. Bestaat geen van beide, verwijder de interface, injecteer de klasse en gun elke stack trace een frame minder.",
+  interfacesLabel: { en: "Interfaces with one implementation.", nl: "Interfaces met één implementatie." },
+  interfacesBody: {
+    en: "Fine when a test needs a stand-in, or when a system you do not control sits behind it. When neither is true, delete the interface, inject the class and give every stack trace one frame less.",
+    nl: "Prima als een test er een vervanger voor nodig heeft, of als erachter een systeem zit dat je niet in de hand hebt. Geldt geen van beide, verwijder de interface, injecteer de klasse en gun elke stack trace een frame minder.",
   },
   migrationTitle: {
     en: "Move a Java 8 monolith one use case at a time",
     nl: "Verhuis een Java 8-monoliet, use case voor use case",
   },
   migration1: {
-    en: "Nobody gets a budget for a rewrite, and asking for one is the fastest way to hear no. The strangler pattern works on a Java backend the way a reversible cut-over works on a frontend. Pick the use case that hurts most.",
-    nl: "Niemand krijgt budget voor een herbouw, en erom vragen is de snelste manier om nee te horen. Het strangler-patroon werkt op een Java-backend zoals een omkeerbare cut-over op een frontend werkt. Kies de use case die het meest pijn doet.",
+    en: "Nobody gets a budget for a rewrite, and asking for one is the fastest way to hear no. The strangler pattern works on a Java backend the way a reversible cut-over works on a frontend.",
+    nl: "Niemand krijgt budget voor een herbouw, en erom vragen is de snelste manier om nee te horen. Het strangler-patroon werkt op een Java-backend zoals een omkeerbare cut-over op een frontend werkt.",
   },
   step1: {
     en: "Bring the runtime to Java 17 or 21 first. That upgrade is usually smaller than people fear, and until it lands the same shape works with final classes.",
@@ -977,15 +962,15 @@ const COPY = {
     nl: "Haal de regels uit de oude service en zet ze in het aggregate, met de use-casetests als vangnet. Deze stap draagt echt gedragsrisico, dus zet hem achter een schakelaar.",
   },
   step5: {
-    en: "Point the controller at the use case, add the ArchUnit rule for the package you cleaned, and delete the old path once the toggle has been fully on for a while.",
-    nl: "Wijs de controller naar de use case, voeg de ArchUnit-regel toe voor de package die je opruimde, en verwijder het oude pad zodra de schakelaar een tijd volledig aan staat.",
+    en: "Point the controller at the use case, add the ArchUnit rule for the package you cleaned, and delete the old path once the toggle has been fully on.",
+    nl: "Wijs de controller naar de use case, voeg de ArchUnit-regel toe voor de package die je opruimde, en verwijder het oude pad zodra de schakelaar volledig aan staat.",
   },
   migration2: {
-    en: "Every step compiles, ships and reverts on its own. That is the discipline I use when a legacy page moves to a new frontend stack. Ship behind a gate, keep the old path alive until the new one has proven itself.",
+    en: "Every step compiles, ships and reverts on its own. That is the discipline I use when a legacy page moves to a new frontend stack. Ship behind a gate and keep the old path alive until the new one has proven itself.",
     nl: "Elke stap compileert, gaat live en is los terug te draaien. Dat is de discipline die ik gebruik als een legacy pagina naar een nieuwe frontendstack verhuist. Zet het achter een schakelaar en houd het oude pad in leven tot het nieuwe zich heeft bewezen.",
   },
   closingTitle: {
-    en: "The same boundary keeps a React screen honest",
+    en: "The same boundary keeps a React screen simple",
     nl: "Dezelfde grens houdt een React-scherm eenvoudig",
   },
   closing1: {

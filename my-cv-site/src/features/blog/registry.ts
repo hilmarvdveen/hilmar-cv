@@ -6,12 +6,8 @@ import { meta as seoMeta, Body as SeoBody } from "./components/SeoPost";
 import { meta as routingMeta, Body as RoutingBody } from "./components/RoutingPost";
 import { meta as hexagonalCSharpMeta, Body as HexagonalCSharpBody } from "./components/HexagonalCSharpPost";
 import { meta as hexagonalKotlinMeta, Body as HexagonalKotlinBody } from "./components/HexagonalKotlinPost";
+import { meta as hexagonalJavaMeta, Body as HexagonalJavaBody } from "./components/HexagonalJavaPost";
 
-/**
- * Central registry of all blog posts. Each post file co-locates its `meta` with
- * its `Body`; here we assemble them into the renderable `BlogPost` shape and
- * sort newest-first. Add a post by importing it and appending to `POSTS`.
- */
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, Body: FolderStructureBody },
   { ...architectureMeta, Body: ArchitectureBody },
@@ -20,6 +16,7 @@ const POSTS: BlogPost[] = [
   { ...routingMeta, Body: RoutingBody },
   { ...hexagonalCSharpMeta, Body: HexagonalCSharpBody },
   { ...hexagonalKotlinMeta, Body: HexagonalKotlinBody },
+  { ...hexagonalJavaMeta, Body: HexagonalJavaBody },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((a, b) =>
