@@ -23,7 +23,7 @@ export const ContactChannels = () => {
               className={CHANNEL_LINK_CLASS_NAME}
             >
               <Mail className="h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
-              <span className="truncate">{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
+              <span className="break-all">{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
             </a>
           </li>
           <li>
