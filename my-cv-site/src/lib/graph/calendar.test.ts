@@ -140,18 +140,22 @@ describe("isSlotAvailable", () => {
 });
 
 describe("createCalendarEvent", () => {
-  it("posts a 30-minute Amsterdam event with the requester as required attendee", async () => {
-    const post = vi.fn().mockResolvedValue(undefined);
+  const input = {
+    name: "Jane Doe",
+    email: "jane@example.com",
+    date: "2026-07-01T10:00:00.000Z",
+    htmlBody: "<p>Meeting</p>",
+    subject: "Consultation",
+  };
+
+  it("posts a 30-minute Amsterdam Teams event with the requester as required attendee", async () => {
+    const post = vi.fn().mockResolvedValue({
+      onlineMeeting: { joinUrl: "https://teams.microsoft.com/l/meetup-join/abc" },
+    });
     const api = vi.fn(() => ({ post }));
     const client = { api } as unknown as Client;
 
-    await createCalendarEvent(client, "owner@example.com", {
-      name: "Jane Doe",
-      email: "jane@example.com",
-      date: "2026-07-01T10:00:00.000Z",
-      htmlBody: "<p>Meeting</p>",
-      subject: "Consultation",
-    });
+    const result = await createCalendarEvent(client, "owner@example.com", input);
 
     expect(api).toHaveBeenCalledWith("/users/owner@example.com/events");
     const event = post.mock.calls[0][0];
@@ -170,5 +174,39 @@ describe("createCalendarEvent", () => {
     expect(event.attendees).toEqual([
       { emailAddress: { address: "jane@example.com", name: "Jane Doe" }, type: "required" },
     ]);
+    expect(event.isOnlineMeeting).toBe(true);
+    expect(event.onlineMeetingProvider).toBe("teamsForBusiness");
+    expect(result).toEqual({ joinUrl: "https://teams.microsoft.com/l/meetup-join/abc" });
+  });
+
+  it("returns an undefined joinUrl when the response carries no online meeting", async () => {
+    const post = vi.fn().mockResolvedValue(undefined);
+    const api = vi.fn(() => ({ post }));
+    const client = { api } as unknown as Client;
+
+    const result = await createCalendarEvent(client, "owner@example.com", input);
+
+    expect(result).toEqual({ joinUrl: undefined });
+  });
+
+  it("retries without the Teams meeting fields when the first post is rejected, and returns an undefined joinUrl", async () => {
+    const post = vi
+      .fn()
+      .mockRejectedValueOnce(new Error("mailbox has no Teams licence"))
+      .mockResolvedValueOnce(undefined);
+    const api = vi.fn(() => ({ post }));
+    const client = { api } as unknown as Client;
+
+    const result = await createCalendarEvent(client, "owner@example.com", input);
+
+    expect(post).toHaveBeenCalledTimes(2);
+    const firstAttempt = post.mock.calls[0][0];
+    const secondAttempt = post.mock.calls[1][0];
+    expect(firstAttempt.isOnlineMeeting).toBe(true);
+    expect(firstAttempt.onlineMeetingProvider).toBe("teamsForBusiness");
+    expect(secondAttempt).not.toHaveProperty("isOnlineMeeting");
+    expect(secondAttempt).not.toHaveProperty("onlineMeetingProvider");
+    expect(secondAttempt.subject).toBe("Consultation");
+    expect(result).toEqual({ joinUrl: undefined });
   });
 });

@@ -141,6 +141,14 @@ curl -H "x-diagnostics-token: <token>" https://www.hilmarvanderveen.com/api/book
 Without a configured `DIAGNOSTICS_TOKEN` (or with a wrong header) the route
 returns a plain 404, so it is invisible to the public.
 
+The mailbox stage reads `/users/{SMTP_USER}/calendar`, not a bare user
+lookup. It needs only the `Calendars.ReadWrite` application permission the
+booking and slots routes already use, so a working booking flow now also
+means a healthy mailbox stage. A 403 there means `Calendars.ReadWrite` is
+missing as an application permission or was not granted admin consent. A
+404 means `SMTP_USER` is not a mailbox that exists and has a licence in
+this tenant.
+
 Timezone note: slot generation, availability checks, and event creation all go
 through `src/lib/graph/calendar.ts`, which converts explicitly between UTC
 instants and Europe/Amsterdam wall-clock time. Never use `new Date()` math on
@@ -173,6 +181,28 @@ async function testGraphConnection() {
   }
 }
 ```
+
+## Teams meetings
+
+Every booking event is created with `isOnlineMeeting: true` and
+`onlineMeetingProvider: "teamsForBusiness"` in
+`src/lib/graph/calendar.ts`, so Microsoft Graph creates a Microsoft Teams
+meeting alongside the calendar event and returns its join link in the same
+response (`response.onlineMeeting.joinUrl`). `Calendars.ReadWrite` is the
+only permission this needs, already granted for booking. The mailbox
+itself needs a Microsoft Teams licence for Graph to create the meeting.
+
+When the mailbox has no Teams licence, or Graph otherwise rejects the two
+online-meeting fields, `createCalendarEvent` retries once with a plain
+event (no `isOnlineMeeting`, no `onlineMeetingProvider`) so the booking
+still succeeds. The confirmation email, the owner notification and the
+calendar body then carry no join link, only the moment and the details.
+
+To verify after a deploy, make a real test booking through `/book` and
+check that the confirmation email carries a Teams join button and that
+the calendar invitation opens a Teams meeting. A missing Teams licence on
+the mailbox is the most common cause of a booking that succeeds with no
+join link.
 
 ## Best Practices
 

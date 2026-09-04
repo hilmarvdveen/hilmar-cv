@@ -14,6 +14,7 @@ export type BookingEmailInput = {
   company: string;
   topic: string;
   isoDate: string;
+  joinUrl?: string;
 };
 
 const BOOKING_TIMEZONE = "Europe/Amsterdam";
@@ -74,6 +75,16 @@ function renderDetailRow(label: string, valueHtml: string): string {
 </tr>`;
 }
 
+function renderJoinBlock(buttonLabel: string, linkLabel: string, joinUrl: string): string {
+  const url = escapeHtml(joinUrl);
+  return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:18px 0;">
+<tr><td style="border-radius:8px;background-color:${BRAND_EMERALD};">
+<a href="${url}" style="display:inline-block;padding:12px 24px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">${buttonLabel}</a>
+</td></tr>
+</table>
+<p style="margin:0 0 18px;font-size:13px;color:#6b7280;word-break:break-all;">${linkLabel} <a href="${url}" style="color:${BRAND_EMERALD};">${url}</a></p>`;
+}
+
 const CONFIRMATION_COPY = {
   nl: {
     subject: (moment: string) => `Bevestigd: ons gesprek op ${moment}`,
@@ -89,6 +100,8 @@ const CONFIRMATION_COPY = {
     next: "De agenda-uitnodiging komt in een aparte e-mail. Verzetten of een vraag? Beantwoord deze mail, dan regelen we het.",
     signoff: "Tot dan,",
     footer: "Dit is een automatische bevestiging van je boeking.",
+    joinButtonLabel: "Deelnemen aan het Teams-gesprek",
+    joinLinkLabel: "Werkt de knop niet? Kopieer deze link:",
   },
   en: {
     subject: (moment: string) => `Confirmed: our call on ${moment}`,
@@ -104,6 +117,8 @@ const CONFIRMATION_COPY = {
     next: "The calendar invitation arrives in a separate email. Need to reschedule or have a question? Reply to this email and we will sort it out.",
     signoff: "See you then,",
     footer: "This is an automated confirmation of your booking.",
+    joinButtonLabel: "Join the Teams call",
+    joinLinkLabel: "If the button does not work, copy this link:",
   },
 } as const;
 
@@ -117,10 +132,13 @@ export function renderBookingConfirmationEmail(input: BookingEmailInput): Render
         `<li style="margin:0 0 6px;font-size:15px;line-height:1.6;color:#1f2937;">${item}</li>`
     )
     .join("");
+  const joinBlock = input.joinUrl
+    ? renderJoinBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
+    : "";
   const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
 <p style="margin:0;">${copy.intro}</p>
 ${renderMomentBlock(escapeHtml(moment), copy.momentCaption)}
-<p style="margin:0 0 8px;font-weight:700;color:${BRAND_NAVY};">${copy.expectTitle}</p>
+${joinBlock}<p style="margin:0 0 8px;font-weight:700;color:${BRAND_NAVY};">${copy.expectTitle}</p>
 <ul style="margin:0 0 18px;padding-left:20px;">${bullets}</ul>
 <p style="margin:0 0 18px;">${copy.next}</p>
 <p style="margin:0;">${copy.signoff}<br><strong>Hilmar van der Veen</strong></p>`;
@@ -139,6 +157,7 @@ export function renderBookingNotificationEmail(input: BookingEmailInput): Render
   const email = escapeHtml(input.email);
   const company = input.company ? escapeHtml(input.company) : NOT_PROVIDED.nl;
   const topic = input.topic ? escapeHtml(input.topic) : NOT_PROVIDED.nl;
+  const joinUrl = input.joinUrl ? escapeHtml(input.joinUrl) : undefined;
   const rows = [
     renderDetailRow("Wanneer", `<strong>${escapeHtml(moment)}</strong>`),
     renderDetailRow("Wie", name),
@@ -149,6 +168,12 @@ export function renderBookingNotificationEmail(input: BookingEmailInput): Render
     renderDetailRow("Bedrijf", company),
     renderDetailRow("Onderwerp", topic),
     renderDetailRow("Taal", LANGUAGE_NAME[input.locale]),
+    joinUrl
+      ? renderDetailRow(
+          "Teams",
+          `<a href="${joinUrl}" style="color:${BRAND_EMERALD};word-break:break-all;">${joinUrl}</a>`
+        )
+      : "",
   ].join("");
   const bodyHtml = `<p style="margin:0 0 14px;">Nieuwe boeking via de site. De uitnodiging staat in de agenda en ${name} heeft een bevestiging ontvangen.</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">${rows}</table>
@@ -167,13 +192,17 @@ export function renderBookingCalendarEvent(input: BookingEmailInput): RenderedEm
   const email = escapeHtml(input.email);
   const labels =
     input.locale === "nl"
-      ? { intro: "30 minuten, ingepland via hilmarvanderveen.com.", topic: "Onderwerp", company: "Bedrijf", contact: "Contact" }
-      : { intro: "30 minutes, scheduled via hilmarvanderveen.com.", topic: "Topic", company: "Company", contact: "Contact" };
+      ? { intro: "30 minuten, ingepland via hilmarvanderveen.com.", topic: "Onderwerp", company: "Bedrijf", contact: "Contact", join: "Deelnemen" }
+      : { intro: "30 minutes, scheduled via hilmarvanderveen.com.", topic: "Topic", company: "Company", contact: "Contact", join: "Join" };
   const subject =
     input.locale === "nl"
       ? `Kennismaking: Hilmar van der Veen en ${input.name}`
       : `Intro call: Hilmar van der Veen and ${input.name}`;
-  const html = `<p>${labels.intro}</p>
+  const joinUrl = input.joinUrl ? escapeHtml(input.joinUrl) : undefined;
+  const joinLine = joinUrl
+    ? `<p><strong>${labels.join}:</strong> <a href="${joinUrl}">${joinUrl}</a></p>\n`
+    : "";
+  const html = `${joinLine}<p>${labels.intro}</p>
 <p><strong>${labels.topic}:</strong> ${topic}<br>
 <strong>${labels.company}:</strong> ${company}<br>
 <strong>${labels.contact}:</strong> ${name}, <a href="mailto:${email}">${email}</a></p>`;

@@ -42,7 +42,7 @@ function post(body: unknown, headers: Record<string, string> = {}) {
 beforeEach(() => {
   __resetRateLimitStore();
   sendMail.mockReset().mockResolvedValue(undefined);
-  createCalendarEvent.mockReset().mockResolvedValue(undefined);
+  createCalendarEvent.mockReset().mockResolvedValue({ joinUrl: undefined });
   getGraphCredentials.mockReset().mockReturnValue(CREDS);
 });
 
@@ -107,5 +107,24 @@ describe("POST /api/booking", () => {
     const arg = createCalendarEvent.mock.calls[0][2];
     expect(arg.htmlBody).toContain("&lt;b&gt;x&lt;/b&gt;");
     expect(arg.htmlBody).not.toContain("<b>x</b>");
+  });
+
+  it("includes the Teams join link from createCalendarEvent in both email bodies", async () => {
+    createCalendarEvent.mockResolvedValue({
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    await POST(post(valid()));
+    const mails = sendMail.mock.calls.map((call) => call[2] as Record<string, string>);
+    expect(
+      mails.every((mail) =>
+        mail.body.includes("https://teams.microsoft.com/l/meetup-join/abc")
+      )
+    ).toBe(true);
+  });
+
+  it("omits any Teams mention from both email bodies when no join link comes back", async () => {
+    await POST(post(valid()));
+    const mails = sendMail.mock.calls.map((call) => call[2] as Record<string, string>);
+    expect(mails.every((mail) => !mail.body.includes("Teams"))).toBe(true);
   });
 });

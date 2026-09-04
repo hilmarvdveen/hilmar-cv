@@ -1,4 +1,3 @@
-// app/api/booking/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import {
   getGraphCredentials,
@@ -22,7 +21,7 @@ import {
   type BookingEmailInput,
 } from "@/lib/email";
 
-export const runtime = "nodejs"; // Ensures Node.js runtime, not Edge
+export const runtime = "nodejs";
 
 type BookingData = {
   name: string;
@@ -63,7 +62,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: validation.error }, { status: 400 });
     }
 
-    // Validate date is real and not in the past.
     const bookingDate = new Date(date as string);
     if (isNaN(bookingDate.getTime())) {
       return NextResponse.json({ error: "Invalid date format" }, { status: 400 });
@@ -82,7 +80,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const client = getGraphClient(accessToken);
     const { smtpUser } = credentials;
 
-    const booking: BookingEmailInput = {
+    const bookingInput: BookingEmailInput = {
       locale,
       name: name as string,
       email: email as string,
@@ -90,17 +88,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       topic: (topic ?? "").trim(),
       isoDate: bookingDate.toISOString(),
     };
-    const calendarEvent = renderBookingCalendarEvent(booking);
-    const notification = renderBookingNotificationEmail(booking);
-    const confirmation = renderBookingConfirmationEmail(booking);
+    const calendarEvent = renderBookingCalendarEvent(bookingInput);
 
-    await createCalendarEvent(client, smtpUser, {
-      name: booking.name,
-      email: booking.email,
-      date: booking.isoDate,
+    const { joinUrl } = await createCalendarEvent(client, smtpUser, {
+      name: bookingInput.name,
+      email: bookingInput.email,
+      date: bookingInput.isoDate,
       subject: calendarEvent.subject,
       htmlBody: calendarEvent.html,
     });
+
+    const booking: BookingEmailInput = { ...bookingInput, joinUrl };
+    const notification = renderBookingNotificationEmail(booking);
+    const confirmation = renderBookingConfirmationEmail(booking);
 
     await sendMail(client, smtpUser, {
       to: smtpUser,

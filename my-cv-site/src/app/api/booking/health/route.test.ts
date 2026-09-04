@@ -155,4 +155,39 @@ describe("GET /api/booking/health", () => {
       body.steps.every((step: { ok: boolean }) => step.ok)
     ).toBe(true);
   });
+
+  it("reads the mailbox calendar instead of the bare user endpoint", async () => {
+    vi.mocked(getGraphCredentials).mockReturnValue(credentials);
+    vi.mocked(getAccessToken).mockResolvedValue("token");
+    const client = mockGraphClient();
+    vi.mocked(getGraphClient).mockReturnValue(
+      client as unknown as ReturnType<typeof getGraphClient>
+    );
+
+    await GET(makeRequest(DIAGNOSTICS_TOKEN));
+
+    expect(client.api).toHaveBeenCalledWith(`/users/${credentials.smtpUser}/calendar`);
+    expect(client.api).not.toHaveBeenCalledWith(`/users/${credentials.smtpUser}`);
+  });
+
+  it("reports a missing or unlicensed mailbox on a 404", async () => {
+    vi.mocked(getGraphCredentials).mockReturnValue(credentials);
+    vi.mocked(getAccessToken).mockResolvedValue("token");
+    const client = mockGraphClient({
+      mailboxError: { statusCode: 404, code: "ErrorItemNotFound" },
+    });
+    vi.mocked(getGraphClient).mockReturnValue(
+      client as unknown as ReturnType<typeof getGraphClient>
+    );
+
+    const response = await GET(makeRequest(DIAGNOSTICS_TOKEN));
+    const body = await response.json();
+
+    const mailboxStep = body.steps.find(
+      (step: { step: string }) => step.step === "mailbox"
+    );
+    expect(mailboxStep.ok).toBe(false);
+    expect(mailboxStep.detail).toContain("status 404");
+    expect(mailboxStep.detail).toContain("unlicensed");
+  });
 });

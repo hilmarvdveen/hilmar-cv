@@ -57,6 +57,42 @@ describe("renderBookingConfirmationEmail", () => {
   });
 });
 
+describe("renderBookingConfirmationEmail with a Teams join link", () => {
+  it("renders the Dutch join button and a plain-text link", () => {
+    const { html } = renderBookingConfirmationEmail({
+      ...booking,
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html).toContain("Deelnemen aan het Teams-gesprek");
+    expect(html).toContain("Werkt de knop niet? Kopieer deze link:");
+    expect(html.match(/https:\/\/teams\.microsoft\.com\/l\/meetup-join\/abc/g)).toHaveLength(3);
+  });
+
+  it("writes the English join button copy for the en locale", () => {
+    const { html } = renderBookingConfirmationEmail({
+      ...booking,
+      locale: "en",
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html).toContain("Join the Teams call");
+    expect(html).toContain("If the button does not work, copy this link:");
+  });
+
+  it("escapes a join URL that carries a quote and an ampersand", () => {
+    const { html } = renderBookingConfirmationEmail({
+      ...booking,
+      joinUrl: 'https://teams.microsoft.com/l/meetup-join/abc?token="x"&y=1',
+    });
+    expect(html).not.toContain('"x"&y=1');
+    expect(html).toContain("&quot;x&quot;&amp;y=1");
+  });
+
+  it("omits the join block entirely when no joinUrl is given", () => {
+    const { html } = renderBookingConfirmationEmail(booking);
+    expect(html).not.toContain("Teams");
+  });
+});
+
 describe("renderBookingNotificationEmail", () => {
   it("lists every booking detail for the owner in Dutch", () => {
     const { subject, html } = renderBookingNotificationEmail(booking);
@@ -89,6 +125,31 @@ describe("renderBookingNotificationEmail", () => {
   });
 });
 
+describe("renderBookingNotificationEmail with a Teams join link", () => {
+  it("adds a Teams row with the link when present", () => {
+    const { html } = renderBookingNotificationEmail({
+      ...booking,
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html).toContain("Teams");
+    expect(html).toContain('href="https://teams.microsoft.com/l/meetup-join/abc"');
+  });
+
+  it("escapes a join URL that carries a quote and an ampersand", () => {
+    const { html } = renderBookingNotificationEmail({
+      ...booking,
+      joinUrl: 'https://teams.microsoft.com/l/meetup-join/abc?token="x"&y=1',
+    });
+    expect(html).toContain("&quot;x&quot;&amp;y=1");
+    expect(html).not.toContain('"x"&y=1');
+  });
+
+  it("has no Teams row when no joinUrl is given", () => {
+    const { html } = renderBookingNotificationEmail(booking);
+    expect(html).not.toContain("Teams");
+  });
+});
+
 describe("renderBookingCalendarEvent", () => {
   it("writes a Dutch event for Dutch visitors", () => {
     const { subject, html } = renderBookingCalendarEvent(booking);
@@ -113,5 +174,39 @@ describe("renderBookingCalendarEvent", () => {
     const { html } = renderBookingCalendarEvent({ ...booking, topic: "<b>x</b>" });
     expect(html).toContain("&lt;b&gt;x&lt;/b&gt;");
     expect(html).not.toContain("<b>x</b>");
+  });
+});
+
+describe("renderBookingCalendarEvent with a Teams join link", () => {
+  it("writes a Deelnemen line at the top for Dutch visitors", () => {
+    const { html } = renderBookingCalendarEvent({
+      ...booking,
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html.startsWith("<p><strong>Deelnemen:</strong>")).toBe(true);
+    expect(html).toContain('href="https://teams.microsoft.com/l/meetup-join/abc"');
+  });
+
+  it("writes a Join line at the top for English visitors", () => {
+    const { html } = renderBookingCalendarEvent({
+      ...booking,
+      locale: "en",
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html.startsWith("<p><strong>Join:</strong>")).toBe(true);
+  });
+
+  it("escapes a join URL that carries a quote and an ampersand", () => {
+    const { html } = renderBookingCalendarEvent({
+      ...booking,
+      joinUrl: 'https://teams.microsoft.com/l/meetup-join/abc?token="x"&y=1',
+    });
+    expect(html).toContain("&quot;x&quot;&amp;y=1");
+    expect(html).not.toContain('"x"&y=1');
+  });
+
+  it("has no join line when no joinUrl is given", () => {
+    const { html } = renderBookingCalendarEvent(booking);
+    expect(html.startsWith("<p>30 minuten")).toBe(true);
   });
 });

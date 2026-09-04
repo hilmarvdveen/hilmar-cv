@@ -15,4 +15,5 @@ export {
   BOOKING_TIMEZONE,
   type CalendarEvent,
   type CreateEventInput,
+  type CreateEventResult,
 } from "./calendar";

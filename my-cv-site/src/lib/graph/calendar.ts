@@ -148,21 +148,37 @@ export function isSlotAvailable(
 export type CreateEventInput = {
   name: string;
   email: string;
-  date: string; // ISO start (a real UTC instant)
-  htmlBody: string; // caller is responsible for escaping user content
+  date: string;
+  htmlBody: string;
   subject: string;
 }
 
-/** Create a 30-minute calendar event with the requester as a required attendee. */
-export async function createCalendarEvent(
-  client: Client,
-  userEmail: string,
-  { name, email, date, htmlBody, subject }: CreateEventInput
-): Promise<void> {
+export type CreateEventResult = {
+  joinUrl: string | undefined;
+}
+
+type CalendarEventBody = {
+  subject: string;
+  body: { contentType: "HTML"; content: string };
+  start: { dateTime: string; timeZone: string };
+  end: { dateTime: string; timeZone: string };
+  attendees: { emailAddress: { address: string; name: string }; type: "required" }[];
+  isOnlineMeeting?: boolean;
+  onlineMeetingProvider?: "teamsForBusiness";
+}
+
+type CreatedCalendarEvent = {
+  onlineMeeting?: { joinUrl?: string };
+}
+
+function buildCalendarEventBody(
+  { name, email, date, htmlBody, subject }: CreateEventInput,
+  withTeamsMeeting: boolean
+): CalendarEventBody {
   const startDate = new Date(date);
   const endDate = new Date(startDate.getTime() + SLOT_MINUTES * 60000);
 
-  await client.api(`/users/${userEmail}/events`).post({
+  return {
     subject,
     body: { contentType: "HTML", content: htmlBody },
     start: {
@@ -179,5 +195,26 @@ export async function createCalendarEvent(
         type: "required",
       },
     ],
-  });
+    ...(withTeamsMeeting
+      ? { isOnlineMeeting: true, onlineMeetingProvider: "teamsForBusiness" as const }
+      : {}),
+  };
+}
+
+export async function createCalendarEvent(
+  client: Client,
+  userEmail: string,
+  input: CreateEventInput
+): Promise<CreateEventResult> {
+  try {
+    const response = (await client
+      .api(`/users/${userEmail}/events`)
+      .post(buildCalendarEventBody(input, true))) as CreatedCalendarEvent | undefined;
+    return { joinUrl: response?.onlineMeeting?.joinUrl };
+  } catch {
+    await client
+      .api(`/users/${userEmail}/events`)
+      .post(buildCalendarEventBody(input, false));
+    return { joinUrl: undefined };
+  }
 }

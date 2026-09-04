@@ -14,10 +14,6 @@ type HealthStep = {
   detail: string;
 }
 
-/**
- * Turn a Graph or fetch error into a short diagnostic line plus a hint about
- * the most likely cause. Never includes secrets.
- */
 function describeGraphError(error: unknown, hint: string): string {
   const parts: string[] = [];
   if (error && typeof error === "object") {
@@ -34,17 +30,6 @@ function describeGraphError(error: unknown, hint: string): string {
   return `${parts.join(", ")}. ${hint}`;
 }
 
-/**
- * Gated diagnostic endpoint for the Microsoft Graph connection behind the
- * booking, contact and cv-download routes. It reports WHICH stage fails
- * (environment, token, mailbox, calendar) so "the booking is broken" becomes
- * a named cause. The public routes keep their generic error responses.
- *
- * Disabled (plain 404) unless the DIAGNOSTICS_TOKEN environment variable is
- * set and the request sends the same value in the x-diagnostics-token header:
- *
- *   curl -H "x-diagnostics-token: <token>" https://<site>/api/booking/health
- */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const expectedToken = process.env.DIAGNOSTICS_TOKEN;
   const providedToken = request.headers.get("x-diagnostics-token");
@@ -98,7 +83,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   const client = getGraphClient(accessToken);
   try {
-    await client.api(`/users/${credentials.smtpUser}`).select("id").get();
+    await client.api(`/users/${credentials.smtpUser}/calendar`).select("id").get();
     steps.push({
       step: "mailbox",
       ok: true,
@@ -110,7 +95,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       ok: false,
       detail: describeGraphError(
         error,
-        "Mailbox lookup failed. Status 403 means the app registration lacks admin-consented APPLICATION permissions (User.Read.All is not needed, but Calendars.ReadWrite and Mail.Send are, granted as Application type with admin consent). Status 404 means SMTP_USER is not a licensed mailbox in this tenant."
+        "Mailbox lookup failed. Status 403 means the application permission Calendars.ReadWrite is missing or lacks admin consent. Status 404 means SMTP_USER does not exist or the mailbox is unlicensed in this tenant."
       ),
     });
     return respond(false);

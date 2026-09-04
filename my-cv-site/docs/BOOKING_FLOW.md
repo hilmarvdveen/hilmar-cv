@@ -194,6 +194,14 @@ Rules the templates follow:
   1000 characters) and coerces the locale to `en` or otherwise `nl`.
 - The owner notification has `replyTo` set to the visitor's address so a
   reply from the inbox goes to the right person.
+- Every calendar event is created as a Microsoft Teams meeting (see
+  `docs/MICROSOFT_GRAPH.md`). When Graph returns a join link,
+  `BookingEmailInput.joinUrl` carries it and the confirmation email gets a
+  Teams join button plus a plain-text copy of the link, the owner
+  notification gets a Teams detail row, and the calendar body gets a join
+  line at the top. When the mailbox has no Teams licence, Graph could not
+  create the meeting, `joinUrl` is undefined, and all three templates
+  render exactly as they did before Teams support existed.
 
 To preview the templates outside the test runner, render them with
 `node --experimental-strip-types` on a copy that concatenates
