@@ -19,7 +19,6 @@ type ValueBlock = {
 
 export function AboutPageContent() {
   const t = useTranslations("about");
-  const tCommon = useTranslations("common.nav");
   const locale = useLocale();
   const blocks = t.raw("value.blocks") as ValueBlock[];
 
@@ -84,7 +83,7 @@ export function AboutPageContent() {
             title={t("value.title")}
             subtitle={t("value.subtitle")}
           />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {blocks.map((block) => (
               <Card key={block.title}>
                 <h3 className="mb-2 text-lg font-bold text-textMain">{block.title}</h3>
@@ -116,7 +115,7 @@ export function AboutPageContent() {
           </p>
           <div className="mt-4 flex justify-center">
             <Button href="/book" variant="primary">
-              {tCommon("book")}
+              {t("cta.button")}
             </Button>
           </div>
         </Container>

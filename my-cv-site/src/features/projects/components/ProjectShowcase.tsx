@@ -41,7 +41,7 @@ export const ProjectShowcase = () => {
                 <h3 className="mb-2 text-xl font-bold text-textMain">
                   {projectCase.title}
                 </h3>
-                <p className="mb-4 text-[15px] leading-relaxed text-gray-600">
+                <p className="mb-4 max-w-3xl text-[15px] leading-relaxed text-gray-600">
                   {projectCase.body}
                 </p>
                 <Link

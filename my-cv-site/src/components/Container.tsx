@@ -15,10 +15,6 @@ type ContainerProps = {
   children: ReactNode;
 };
 
-/**
- * Shared content container. Owns the max width and horizontal padding of
- * page content so every section aligns to the same grid.
- */
 export const Container = ({
   width = "default",
   className,

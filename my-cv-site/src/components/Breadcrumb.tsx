@@ -97,7 +97,7 @@ export const Breadcrumb = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <nav aria-label={t("label")}>
+      <nav aria-label={t("label")} className="mb-8">
         <ol className="flex items-center gap-2 text-sm">
           {breadcrumbItems.map((item, index) => (
             <li key={item.href} className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export const Breadcrumb = () => {
               ) : (
                 <Link
                   href={item.href}
-                  className="rounded-sm text-slate-300 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  className="rounded-sm text-slate-300 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
                 >
                   {item.label}
                 </Link>

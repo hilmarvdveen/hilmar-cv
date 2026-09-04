@@ -27,7 +27,6 @@ type HiringFaq = {
 type EngagementShape = {
   title: string;
   description: string;
-  terms: string;
   href: string;
   linkLabel: string;
 };
@@ -48,17 +47,16 @@ export const HiringSection = () => {
           <p className="text-sm text-gray-600 mb-6 max-w-2xl">{t("shapes.subtitle")}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {shapes.map((shape) => (
-              <Card key={shape.title}>
+              <Card key={shape.title} className="flex h-full flex-col">
                 <h3 className="text-base font-bold text-textMain mb-2">
                   {shape.title}
                 </h3>
                 <p className="text-[14.5px] leading-relaxed text-gray-600 mb-3">
                   {shape.description}
                 </p>
-                <p className="text-xs text-gray-500 mb-4">{shape.terms}</p>
                 <Link
                   href={shape.href}
-                  className="inline-flex items-center gap-1.5 text-primary font-semibold text-sm"
+                  className="mt-auto inline-flex items-center gap-1.5 text-primary font-semibold text-sm"
                 >
                   {shape.linkLabel}
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -79,7 +77,7 @@ export const HiringSection = () => {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <Card>
+          <Card className="lg:sticky lg:top-[calc(var(--header-height)+2rem)] lg:self-start">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
               {facts.map((fact) => (
                 <div key={fact.label}>

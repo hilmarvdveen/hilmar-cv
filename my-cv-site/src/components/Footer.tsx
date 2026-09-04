@@ -49,7 +49,6 @@ export const Footer = () => {
     { name: t("quickLinks.items.projects"), href: "/projects" },
     { name: t("quickLinks.items.blog"), href: "/blog" },
     { name: t("quickLinks.items.faq"), href: "/faq" },
-    { name: t("quickLinks.items.book"), href: "/book" },
     { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 
@@ -65,7 +64,7 @@ export const Footer = () => {
       name: "LinkedIn",
       icon: Linkedin,
       href: BUSINESS_PROFILE.SOCIAL.LINKEDIN,
-      color: "hover:text-blue-600",
+      color: "hover:text-emerald-400",
     },
     {
       name: "GitHub",
@@ -156,7 +155,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-200 hover:underline"
+                    className="inline-block py-1 text-gray-400 hover:text-emerald-400 transition-colors duration-200 hover:underline"
                   >
                     {link.name}
                   </Link>
@@ -217,45 +216,26 @@ export const Footer = () => {
 
       <div className="border-t border-gray-700">
         <Container className="py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex flex-col items-center gap-2 text-sm text-gray-400 md:flex-row md:gap-4">
-              <div>
-                © {new Date().getFullYear()} {t("about.name")}.{" "}
-                {t("bottom.copyright")}
-              </div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+            <p className="text-sm text-gray-400">
+              © {new Date().getFullYear()} {t("about.name")}.{" "}
+              {t("bottom.copyright")}
+            </p>
 
-              <nav aria-label={t("legal.title")}>
-                <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-                  {legalLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="hover:text-white transition-colors duration-200"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-
-            <div className="flex items-center space-x-6 text-sm">
-              <span className="text-gray-400">{t("bottom.builtWith")}</span>
-              <div className="flex items-center space-x-2">
-                <span className="text-emerald-400">Next.js</span>
-                <span className="text-gray-400">•</span>
-                <span className="text-emerald-400">TypeScript</span>
-                <span className="text-gray-400">•</span>
-                <span className="text-emerald-400">Tailwind CSS</span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4 text-sm text-gray-400">
-              <span>{t("bottom.location.netherlands")}</span>
-              <span>•</span>
-              <span>{t("bottom.location.euBased")}</span>
-            </div>
+            <nav aria-label={t("legal.title")}>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                {legalLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="inline-block rounded-sm py-1 text-gray-400 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </Container>
       </div>

@@ -82,6 +82,39 @@ phones and 24px from `sm` up. Sections that still hand-roll a
 `max-w-* mx-auto` wrapper use the same pair. New sections use `Container`
 and never set their own gutters.
 
+## Header
+
+The desktop row is a fixed 64px band: `flex h-16 items-center justify-between`
+on the row inside `nav`, instead of the row sizing itself from the tallest
+child and a vertical padding value. `globals.css` sets the `--header-height`
+fallback to `64px` to match. The wordmark next to the logo shows from `xl`
+instead of `sm`, because at `lg` it collided with the first nav link. The
+booking button sits after a `gap-1 xl:gap-2` link group, separated from the
+nav links by a `mx-2 h-6 w-px bg-gray-200` divider and its own `ml-6`, and the
+language switcher carries `ml-6` too.
+
+The availability badge that used to sit next to the desktop booking button
+was removed on 3 September 2026. It duplicated a claim that already lives in
+several other places: the homepage hero chip row, the footer's about column,
+the contact page's facts, the FAQ's availability chip, and the service pages'
+terms. The mobile drawer keeps its own availability line (`Calendar` icon
+plus `nav.availability`) in a bordered block between the drawer header and
+the nav list, since the drawer has no other surface carrying that fact.
+
+## Footer bottom bar
+
+The bottom bar is one row (`flex flex-col gap-4 sm:flex-row sm:items-center
+sm:justify-between sm:gap-6`): the copyright line as a paragraph, and the
+legal links as a `nav` with a `ul` of Links, each with `py-1` for a 24px hit
+area and the on-navy focus ring (`ring-emerald-300` with
+`ring-offset-brand-navy`, `emerald-600` disappears against navy the same way
+it does in the hero). The "Built with Next.js / TypeScript / Tailwind CSS"
+block and the "Netherlands • EU Based" block were removed, they told the
+visitor nothing that helps a hiring decision. The quick-links column above it
+dropped its booking entry (the header and the closing CTA already carry that
+action) and every remaining quick link gets `inline-block py-1` for the same
+24px target.
+
 ## Mobile header
 
 The header is an app bar below `lg`:

@@ -48,6 +48,22 @@ describe("PageHero", () => {
     expect(heading).toHaveTextContent("Senior frontend, fully in hand.");
   });
 
+  it("keeps a space between the title and the accent in the accessible name", () => {
+    render(
+      <PageHero
+        title="Answers before"
+        titleAccent="the first call"
+        description="Description text."
+      />
+    );
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Answers before the first call",
+      })
+    ).toBeInTheDocument();
+  });
+
   it("omits the accent span when no accent is given", () => {
     render(<PageHero title="Plain title" description="Description text." />);
     const heading = screen.getByRole("heading", { level: 1 });
@@ -94,7 +110,18 @@ describe("PageHero", () => {
     expect(screen.getByText("Home / Services")).toBeInTheDocument();
   });
 
-  it("omits the breadcrumb wrapper when none is given", () => {
+  it("renders the breadcrumb without an extra wrapping element", () => {
+    const { container } = render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        breadcrumb={<span>Home / Services</span>}
+      />
+    );
+    expect(container.querySelector(".mb-8")).toBeNull();
+  });
+
+  it("omits the breadcrumb when none is given", () => {
     render(<PageHero title="Title" description="Description text." />);
     expect(screen.queryByText("Home / Services")).toBeNull();
   });

@@ -29,7 +29,7 @@ export const TrackRecordSection = () => {
         />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {cards.map((card) => (
-            <Card key={card.headline}>
+            <Card key={card.headline} className="flex h-full flex-col">
               <p className="text-[13px] font-semibold text-gray-500 mb-2">
                 {card.meta}
               </p>
@@ -39,7 +39,7 @@ export const TrackRecordSection = () => {
               <p className="text-[15px] leading-relaxed text-gray-600 mb-4">
                 {card.body}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="mt-auto flex flex-wrap gap-2">
                 {card.tags.map((tag) => (
                   <span
                     key={tag}

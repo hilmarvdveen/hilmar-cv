@@ -1,20 +1,18 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { Section } from "@/components/Section";
 import { Calendar } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-/**
- * Mid-page call-to-action band. The closing ask lives in CloseSection, so
- * this band appears once, with its own copy, instead of the former three
- * identical mounts.
- */
 export const CallToActionSection = () => {
   const t = useTranslations("home.cta");
 
   return (
-    <section
+    <Section
+      background="light"
+      padding="compact"
+      className="border-y border-gray-200"
       aria-labelledby="cta-heading"
-      className="bg-emerald-50 border-y border-emerald-100 py-14"
     >
       <Container className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
         <div className="max-w-2xl">
@@ -33,6 +31,6 @@ export const CallToActionSection = () => {
           <span>{t("button")}</span>
         </Button>
       </Container>
-    </section>
+    </Section>
   );
 };

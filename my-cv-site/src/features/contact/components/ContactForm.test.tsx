@@ -3,7 +3,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from "./ContactForm";
 
-// Minimal next-intl mock: translation keys echo back, interests come from raw().
 vi.mock("next-intl", () => ({
   useTranslations: () => {
     const t = ((key: string) => key) as ((key: string) => string) & {
@@ -29,9 +28,9 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText("form.name"), "Jane Doe");
-    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
-    await user.type(screen.getByLabelText("form.message"), "Hello!");
+    await user.type(screen.getByLabelText(/^form\.name/), "Jane Doe");
+    await user.type(screen.getByLabelText(/^form\.email/), "jane@example.com");
+    await user.type(screen.getByLabelText(/^form\.message/), "Hello!");
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
@@ -43,7 +42,7 @@ describe("ContactForm", () => {
       name: "Jane Doe",
       email: "jane@example.com",
       message: "Hello!",
-      company_website: "", // honeypot present and empty for a real user
+      company_website: "",
     });
     expect(typeof body.formStartedAt).toBe("number");
     expect(Array.isArray(body.interests)).toBe(true);
@@ -53,9 +52,9 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
     const tag = screen.getByRole("button", { name: "React" });
-    await user.click(tag); // select
+    await user.click(tag);
     expect(tag).toHaveAttribute("aria-pressed", "true");
-    await user.click(tag); // deselect (covers both filter branches)
+    await user.click(tag);
     expect(tag).toHaveAttribute("aria-pressed", "false");
   });
 
@@ -63,14 +62,14 @@ describe("ContactForm", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => {
-        throw "boom"; // non-Error rejection
+        throw "boom";
       })
     );
     const user = userEvent.setup();
     render(<ContactForm />);
-    await user.type(screen.getByLabelText("form.name"), "Jane");
-    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
-    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.type(screen.getByLabelText(/^form\.name/), "Jane");
+    await user.type(screen.getByLabelText(/^form\.email/), "jane@example.com");
+    await user.type(screen.getByLabelText(/^form\.message/), "Hi");
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
     await waitFor(() =>
       expect(screen.getByText("form.serverError")).toBeInTheDocument()
@@ -81,9 +80,9 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText("form.name"), "Jane");
-    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
-    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.type(screen.getByLabelText(/^form\.name/), "Jane");
+    await user.type(screen.getByLabelText(/^form\.email/), "jane@example.com");
+    await user.type(screen.getByLabelText(/^form\.message/), "Hi");
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
 
     await waitFor(() =>
@@ -99,9 +98,9 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText("form.name"), "Jane");
-    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
-    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.type(screen.getByLabelText(/^form\.name/), "Jane");
+    await user.type(screen.getByLabelText(/^form\.email/), "jane@example.com");
+    await user.type(screen.getByLabelText(/^form\.message/), "Hi");
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
 
     await waitFor(() =>
@@ -118,9 +117,9 @@ describe("ContactForm", () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
-    await user.type(screen.getByLabelText("form.name"), "Jane");
-    await user.type(screen.getByLabelText("form.email"), "jane@example.com");
-    await user.type(screen.getByLabelText("form.message"), "Hi");
+    await user.type(screen.getByLabelText(/^form\.name/), "Jane");
+    await user.type(screen.getByLabelText(/^form\.email/), "jane@example.com");
+    await user.type(screen.getByLabelText(/^form\.message/), "Hi");
     await user.click(screen.getByRole("button", { name: /form\.submit/ }));
 
     await waitFor(() =>

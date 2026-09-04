@@ -6,11 +6,6 @@ type CardProps = {
   children: ReactNode;
 };
 
-/**
- * Shared card surface: white, rounded, hairline border, soft shadow. The
- * pattern previously hand-rolled across features as
- * "bg-white rounded-xl border border-gray-200 shadow-sm p-*".
- */
 export const Card = ({ className, children }: CardProps) => (
   <div
     className={twMerge(

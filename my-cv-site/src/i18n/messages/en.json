@@ -59,8 +59,8 @@
                     "body": "Built the Digital app for software and games inside the Nx monorepo with SSR, routing, CI/CD, GCP and Kubernetes. Then ran the phased cut-over off the legacy stack, employees first, ramped by percentage, reversible in one step."
                 },
                 {
-                    "title": "Nine experiments, measured in GMV",
-                    "body": "Nine A/B experiments with design and business across the acquisition page, product page and basket. Winning variants delivered GMV uplifts of up to 24%, roughly 5% to 24% across the winners. Not every experiment won, so the aggregate effect was positive but modest."
+                    "title": "Nine experiments, winners made the default",
+                    "body": "Nine A/B experiments shaped with the designer and the business team across the acquisition page, product page and basket, built in code and configured in the experimentation tool. Each winner became the new default and its experiment scaffolding came out."
                 },
                 {
                     "title": "Error reporting and funnel data in order",
@@ -175,7 +175,7 @@
                 },
                 {
                     "title": "Back to back since 2016",
-                    "body": "Engagements at the Belastingdienst, Athlon, the Nationale Postcode Loterij, Omniplan and others since 2016, each one followed by the next. Retention is the signal that the work landed.",
+                    "body": "Engagements at the Belastingdienst (extended four times), Athlon, the Nationale Postcode Loterij, Omniplan and others since 2016, each one followed by the next. Retention is the signal that the work landed.",
                     "attribution": "Belastingdienst, Athlon, Nationale Postcode Loterij, Omniplan and others, 2016 to 2026"
                 }
             ]
@@ -283,7 +283,7 @@
                     },
                     {
                         "question": "How does the contract work?",
-                        "answer": "Every engagement runs through Hilmar ICT Services, KVK 97564303, as a freelance ZZP contract. That is the one arrangement I work under, and invoicing is monthly."
+                        "answer": "Every engagement runs through Hilmar ICT Services as a freelance ZZP contract. That is the one arrangement I work under, and invoicing is monthly."
                     },
                     {
                         "question": "What if we are not a fit?",
@@ -299,21 +299,18 @@
                     {
                         "title": "Own a customer-facing surface end to end",
                         "description": "You have a page or a flow that customers use and that earns money. I take it from specification to production, shape the GraphQL contract with the backend team, and hand it over with tests, Storybook and documentation.",
-                        "terms": "From 1 October 2026 · roughly 40 hours a week · €95 to €125 per hour, depending on project type and work",
                         "href": "/services/frontend",
                         "linkLabel": "How I build a page end to end"
                     },
                     {
                         "title": "Lead a migration from legacy to modern",
                         "description": "An old system still earns money and has to be replaced while it keeps running. I read the legacy first, ship behind a gate, ramp by percentage and keep the rollback one step away the whole time.",
-                        "terms": "From 1 October 2026 · Utrecht, 1 to 2 days on site or remote · €95 to €125 per hour, depending on project type and work",
                         "href": "/services/design-systems",
                         "linkLabel": "How a migration runs"
                     },
                     {
                         "title": "Join an existing frontend team as the senior",
                         "description": "Your team is shipping and needs a senior alongside it. At Athlon I coached the frontend team through an Angular migration and did their code reviews. At the Belastingdienst I taught a senior developer Angular, RxJS and services.",
-                        "terms": "From 1 October 2026 · freelance via Hilmar ICT Services · €95 to €125 per hour, depending on project type and work",
                         "href": "/services/consulting",
                         "linkLabel": "How I work inside a team"
                     }
@@ -421,7 +418,7 @@
         "description": "Every engagement since 2016, including the current one at bol.com, with the role, the stack and what shipped."
     },
     "work": {
-        "sectionTitle": "Work experience",
+        "sectionTitle": "Twelve engagements since 2016",
         "role": "Role",
         "technologies": "Technologies",
         "workMode": {
@@ -584,7 +581,7 @@
             "role": "Senior Frontend Developer",
             "body": [
                 {
-                    "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency."
+                    "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency. The engagement was extended four times."
                 },
                 {
                     "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the Bold design system."
@@ -860,7 +857,8 @@
         },
         "form": {
             "title": "Send a message",
-            "description": "Tell me about your project and I'll get back to you within one business day.",
+            "description": "Tell me about the page, the application or the team, and what it runs on today.",
+            "requiredNote": "Fields marked with * are required.",
             "interestsLabel": "I'm interested in",
             "interests": [
                 "Frontend Development",
@@ -877,25 +875,18 @@
             "message": "Tell me about your project",
             "submit": "Send message",
             "sending": "Sending...",
-            "successMessage": "Thank you! I'll get back to you within one business day.",
+            "successMessage": "Thank you. You will hear from me within one business day.",
             "serverError": "Something went wrong and your message was not sent. Please try again in a moment, or email me directly at hilmar@hilmarvanderveen.com.",
             "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
-        },
-        "info": {
-            "title": "Contact information",
-            "email": "Email",
-            "phone": "Phone",
-            "location": "Location",
-            "availability": "Availability",
-            "availabilityText": "Monday - Saturday, 8:00 - 20:00 CET",
-            "response": "Response time",
-            "responseText": "Within one business day",
-            "locationValue": "Netherlands"
         },
         "cta": {
             "description": "Thirty minutes, technical and concrete. Bring what has to change and what it runs on today.",
             "button": "Book a 30-minute call",
-            "write": "Send a message"
+            "write": "Send a message",
+            "writeAction": "Write me a message"
+        },
+        "direct": {
+            "title": "Direct contact"
         },
         "facts": {
             "title": "The practical details",
@@ -924,10 +915,6 @@
         }
     },
     "services": {
-        "meta": {
-            "title": "Services – Hilmar van der Veen | Software Developer",
-            "description": "Professional software development services: Frontend, Full-Stack, Design Systems and Technical Consulting. 10+ years experience with React, Next.js and modern technologies."
-        },
         "hero": {
             "badge": "Freelance senior frontend engineer",
             "title": "The pages where the money comes in, rebuilt without downtime",
@@ -1832,7 +1819,7 @@
                 ]
             }
         },
-        "processStep": "Step {number}"
+        "termsLabel": "Terms"
     },
     "notFound": {
         "title": "Page not found",
@@ -1876,7 +1863,7 @@
                 },
                 {
                     "title": "If it has to be finished, I take it on",
-                    "body": "Ownership shows in what someone picks up when the work does not fit the job title. At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the legacy Java to extract the specification, rebuilt the pages in React, shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight. bol.com extended the engagement three times.",
+                    "body": "Ownership shows in what someone picks up when the work does not fit the job title. At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the legacy Java to extract the specification, rebuilt the pages in React, shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight. The Belastingdienst extended the engagement four times, bol.com three times.",
                     "evidence": "Belastingdienst 2023 to 2024, bol.com 2025 to 2026"
                 }
             ]
@@ -2249,7 +2236,7 @@
             "title": "Services",
             "items": {
                 "frontend": "Frontend Development",
-                "fullstack": "Full-Stack Solutions",
+                "fullstack": "Full-Stack Development",
                 "designSystems": "Design Systems",
                 "consulting": "Technical Consulting"
             },
@@ -2263,7 +2250,6 @@
                 "projects": "Projects",
                 "blog": "Blog",
                 "faq": "FAQ",
-                "book": "Book a call",
                 "contact": "Contact"
             }
         },
@@ -2283,12 +2269,7 @@
             }
         },
         "bottom": {
-            "copyright": "All rights reserved.",
-            "builtWith": "Built with",
-            "location": {
-                "netherlands": "Netherlands",
-                "euBased": "EU Based"
-            }
+            "copyright": "All rights reserved."
         }
     },
     "blog": {

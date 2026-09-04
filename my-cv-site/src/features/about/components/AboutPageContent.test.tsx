@@ -67,7 +67,7 @@ describe("AboutPageContent", () => {
   it("renders the Netherlands map alongside the booking call to action", () => {
     render(<AboutPageContent />);
     expect(screen.getByText("Netherlands map")).toBeInTheDocument();
-    const bookLinks = screen.getAllByRole("link", { name: "book" });
+    const bookLinks = screen.getAllByRole("link", { name: "cta.button" });
     expect(bookLinks.length).toBeGreaterThan(0);
     for (const link of bookLinks) {
       expect(link).toHaveAttribute("href", "/book");

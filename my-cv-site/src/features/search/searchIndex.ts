@@ -1,24 +1,19 @@
 export type SearchLocale = "en" | "nl";
 
 export type SearchEntry = {
-  /** Locale-less href; the i18n Link prefixes the active locale. */
   href: string;
   title: Record<SearchLocale, string>;
   description: Record<SearchLocale, string>;
   keywords: string[];
 };
 
-/**
- * Curated, static index of the site's main pages. Powers the on-site search
- * referenced by the WebSite `SearchAction` (sitelinks searchbox).
- */
 export const SEARCH_INDEX: SearchEntry[] = [
   {
     href: "/",
     title: { en: "Home", nl: "Home" },
     description: {
-      en: "Senior frontend & fullstack developer in Amsterdam.",
-      nl: "Senior frontend- & fullstack-ontwikkelaar in Amsterdam.",
+      en: "Senior frontend engineer, React and Angular, freelance via Hilmar ICT Services for the Randstad and remote.",
+      nl: "Senior frontend engineer, React en Angular, freelance via Hilmar ICT Services voor de Randstad en remote.",
     },
     keywords: ["home", "hilmar", "developer", "frontend", "fullstack"],
   },
@@ -123,7 +118,6 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
 ];
 
-/** Case-insensitive match across title, description and keywords for a locale. */
 export function searchEntries(query: string, locale: SearchLocale): SearchEntry[] {
   const q = query.trim().toLowerCase();
   if (!q) return SEARCH_INDEX;

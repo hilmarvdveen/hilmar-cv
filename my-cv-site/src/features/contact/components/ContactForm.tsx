@@ -87,14 +87,16 @@ export default function ContactForm() {
     <Container width="narrow">
       <SectionTitle
         id="contact-form-heading"
-        align="center"
+        align="left"
         title={t("form.title")}
         subtitle={t("form.description")}
       />
 
       <Card>
-        <form onSubmit={handleSubmit} className="space-y-8" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
+
+          <p className="text-sm text-gray-600">{t("form.requiredNote")}</p>
 
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-4">
@@ -106,7 +108,7 @@ export default function ContactForm() {
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                     selectedTags.includes(tag)
                       ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-800 hover:border-emerald-700"
                       : "bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50"
@@ -126,6 +128,7 @@ export default function ContactForm() {
                 className="block text-sm font-semibold text-gray-900 mb-3"
               >
                 {t("form.name")}
+                <span aria-hidden="true" className="text-emerald-700"> *</span>
               </label>
               <input
                 id="contact-name"
@@ -135,7 +138,7 @@ export default function ContactForm() {
                 type="text"
                 autoComplete="name"
                 maxLength={100}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
                 required
                 aria-required="true"
               />
@@ -147,6 +150,7 @@ export default function ContactForm() {
                 className="block text-sm font-semibold text-gray-900 mb-3"
               >
                 {t("form.email")}
+                <span aria-hidden="true" className="text-emerald-700"> *</span>
               </label>
               <input
                 id="contact-email"
@@ -156,7 +160,7 @@ export default function ContactForm() {
                 type="email"
                 autoComplete="email"
                 maxLength={254}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
                 required
                 aria-required="true"
               />
@@ -169,6 +173,7 @@ export default function ContactForm() {
               className="block text-sm font-semibold text-gray-900 mb-3"
             >
               {t("form.message")}
+              <span aria-hidden="true" className="text-emerald-700"> *</span>
             </label>
             <textarea
               id="contact-message"
@@ -177,7 +182,7 @@ export default function ContactForm() {
               onChange={handleChange}
               rows={6}
               maxLength={5000}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:border-emerald-500 focus:ring-0 transition-colors duration-200 resize-none"
+              className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200 resize-none"
               required
               aria-required="true"
             />
@@ -208,7 +213,7 @@ export default function ContactForm() {
             variant="primary"
             size="lg"
             disabled={isSubmitting}
-            className="w-full rounded-xl text-lg"
+            className="w-full sm:w-auto"
             aria-describedby={isSubmitting ? "submit-status" : undefined}
           >
             {isSubmitting ? (

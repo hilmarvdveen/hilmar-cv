@@ -71,6 +71,7 @@ export default async function TechnicalConsultingPage({ params }: Props) {
         description: t("engagement.description"),
         deliverables: engagementDeliverables,
         terms: t.raw("engagement.terms") as string[],
+        termsLabel: tServices("termsLabel"),
       }}
       deliverables={{
         title: t("deliverables.title"),
@@ -98,7 +99,6 @@ export default async function TechnicalConsultingPage({ params }: Props) {
         description: t("process.description"),
         steps: processSteps.map<ServiceProcessStep>((step, index) => ({
           ...step,
-          label: tServices("processStep", { number: index + 1 }),
           Icon: PROCESS_ICONS[index] ?? PROCESS_ICONS[0],
         })),
       }}

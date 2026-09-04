@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import type { ReactNode } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { ServiceDetailPage } from "./ServiceDetailPage";
 import type { ServiceDetailPageProps, ServiceTitledItem } from "./ServiceDetailPage";
 
@@ -38,6 +38,7 @@ const baseProps: ServiceDetailPageProps = {
       { title: "Handover", description: "Tests and documentation." },
     ],
     terms: ["Fixed scope", "Weekly demo", "No lock-in"],
+    termsLabel: "Engagement terms",
   },
   benefits: {
     title: "What you get",
@@ -84,14 +85,12 @@ const baseProps: ServiceDetailPageProps = {
     description: "A proven methodology from discovery to handover.",
     steps: [
       {
-        label: "Step 1",
         title: "Discovery and planning",
         description: "Understanding goals and constraints.",
         details: ["User research", "Architecture planning"],
         Icon: DummyIcon,
       },
       {
-        label: "Step 2",
         title: "Build and review",
         description: "Shipping behind a gate.",
         details: ["Component build", "Accessibility review"],
@@ -147,14 +146,20 @@ describe("ServiceDetailPage", () => {
 
   it("numbers the engagement deliverables and renders every term", () => {
     render(<ServiceDetailPage {...baseProps} />);
-    expect(screen.getByText("01")).toBeInTheDocument();
-    expect(screen.getByText("04")).toBeInTheDocument();
+    const engagementRegion = screen.getByRole("region", {
+      name: baseProps.engagement.title,
+    });
+    expect(within(engagementRegion).getByText("01")).toBeInTheDocument();
+    expect(within(engagementRegion).getByText("04")).toBeInTheDocument();
     for (const deliverable of baseProps.engagement.deliverables) {
       expect(screen.getByText(deliverable.title)).toBeInTheDocument();
       expect(screen.getByText(deliverable.description)).toBeInTheDocument();
     }
+    const termsList = screen.getByRole("list", {
+      name: baseProps.engagement.termsLabel,
+    });
     for (const term of baseProps.engagement.terms) {
-      expect(screen.getByText(term)).toBeInTheDocument();
+      expect(within(termsList).getByText(term)).toBeInTheDocument();
     }
   });
 
@@ -226,15 +231,19 @@ describe("ServiceDetailPage", () => {
     expect(screen.getByText("Familiar").className).toContain("bg-gray-100");
   });
 
-  it("renders every process step with its label, title and details", () => {
+  it("renders every process step numbered, with its title and details", () => {
     render(<ServiceDetailPage {...baseProps} />);
+    const processRegion = screen.getByRole("region", {
+      name: baseProps.process.title,
+    });
+    expect(within(processRegion).getByText("01")).toBeInTheDocument();
+    expect(within(processRegion).getByText("02")).toBeInTheDocument();
     for (const step of baseProps.process.steps) {
-      expect(screen.getByText(step.label)).toBeInTheDocument();
       expect(
-        screen.getByRole("heading", { level: 3, name: step.title })
+        within(processRegion).getByRole("heading", { level: 3, name: step.title })
       ).toBeInTheDocument();
       for (const detail of step.details) {
-        expect(screen.getByText(detail)).toBeInTheDocument();
+        expect(within(processRegion).getByText(detail)).toBeInTheDocument();
       }
     }
   });

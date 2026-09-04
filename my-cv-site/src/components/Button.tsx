@@ -6,18 +6,6 @@ import type {
   ReactNode,
 } from "react";
 
-/**
- * Single source of truth for CTA buttons across the site. Centralising the
- * colour/shading here means accessibility (AA contrast) and hover feedback are
- * fixed in one place. Renders as a <button>, a Next <Link> (internal href), or
- * an <a> (external/mailto/tel href) depending on the props passed.
- *
- * Variants:
- *  - primary       filled emerald (white text) for the main action
- *  - outline       emerald border + text on light backgrounds
- *  - outlineOnDark emerald outline that reads on dark/navy sections
- *  - white         white fill (emerald text) for use on dark/coloured CTAs
- */
 export type ButtonVariant =
   | "primary"
   | "outline"
@@ -37,8 +25,6 @@ const SIZES: Record<ButtonSize, string> = {
   lg: "px-8 py-4 text-base",
 };
 
-// Every filled state stays at emerald-700+ (>= 4.5:1 on white text) and darkens
-// on hover; outline variants fill on hover. No state lightens under white text.
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
     "bg-emerald-700 text-white hover:bg-emerald-800 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm hover:shadow-lg hover:scale-105",
@@ -61,8 +47,6 @@ export function buttonClassName({
   size?: ButtonSize;
   className?: string;
 }): string {
-  // twMerge so caller `className` (e.g. w-full, rounded-xl) reliably overrides
-  // the variant/size defaults instead of producing conflicting utilities.
   return twMerge(BASE, SIZES[size], VARIANTS[variant], className);
 }
 

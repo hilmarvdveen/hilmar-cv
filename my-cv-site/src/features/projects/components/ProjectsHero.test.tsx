@@ -25,7 +25,7 @@ describe("ProjectsHero", () => {
 
   it("links the primary action to the booking page", () => {
     render(<ProjectsHero />);
-    const link = screen.getByRole("link", { name: "book" });
+    const link = screen.getByRole("link", { name: "cta.button" });
     expect(link).toHaveAttribute("href", "/book");
   });
 });

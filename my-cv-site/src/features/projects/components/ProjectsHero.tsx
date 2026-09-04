@@ -6,7 +6,6 @@ import { Button } from "@/components/Button";
 
 export const ProjectsHero = () => {
   const t = useTranslations("projects");
-  const tCommon = useTranslations("common.nav");
 
   return (
     <PageHero
@@ -17,7 +16,7 @@ export const ProjectsHero = () => {
       actions={
         <Button href="/book" variant="primary" size="lg">
           <Calendar className="h-5 w-5" aria-hidden="true" />
-          <span>{tCommon("book")}</span>
+          <span>{t("cta.button")}</span>
         </Button>
       }
     />

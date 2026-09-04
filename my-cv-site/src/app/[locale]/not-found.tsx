@@ -1,22 +1,55 @@
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/Button";
+import { PageHero } from "@/components/PageHero";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { Link } from "@/i18n/navigation";
+
+const MAIN_PAGE_NAV_KEYS = [
+  "services",
+  "experience",
+  "projects",
+  "blog",
+  "contact",
+] as const;
 
 export default async function NotFound() {
   const t = await getTranslations("notFound");
+  const searchTranslations = await getTranslations("search");
+  const commonTranslations = await getTranslations("common");
 
   return (
-    <section className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center sm:px-6">
-      <p className="text-6xl font-bold text-emerald-600">404</p>
-      <h1 className="mt-4 text-2xl font-bold text-gray-900">{t("title")}</h1>
-      <p className="mt-3 max-w-md text-gray-600">{t("description")}</p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-        <Button href="/" variant="primary" size="md" className="rounded-xl">
-          {t("backHome")}
-        </Button>
-        <Button href="/contact" variant="outline" size="md" className="rounded-xl">
-          {t("contact")}
-        </Button>
-      </div>
-    </section>
+    <>
+      <PageHero
+        title={t("title")}
+        description={t("description")}
+        actions={
+          <>
+            <Button href="/" variant="primary" size="md">
+              {t("backHome")}
+            </Button>
+            <Button href="/search" variant="outlineOnDark" size="md">
+              {searchTranslations("title")}
+            </Button>
+          </>
+        }
+      />
+      <Section>
+        <Container width="narrow">
+          <ul className="flex flex-wrap gap-x-8 gap-y-3">
+            {MAIN_PAGE_NAV_KEYS.map((key) => (
+              <li key={key}>
+                <Link
+                  href={`/${key}`}
+                  className="text-primary font-semibold underline underline-offset-4"
+                >
+                  {commonTranslations(`nav.${key}`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    </>
   );
 }

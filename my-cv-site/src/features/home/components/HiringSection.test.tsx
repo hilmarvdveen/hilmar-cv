@@ -42,21 +42,18 @@ const shapes = [
   {
     title: "A short discovery",
     description: "A scoped week to map the legacy surface before committing to a plan.",
-    terms: "Fixed price, one week",
     href: "/services/consulting",
     linkLabel: "Read about discovery",
   },
   {
     title: "An embedded engagement",
     description: "Full time on your team for the length of the rebuild.",
-    terms: "Freelance, hourly rate",
     href: "/services/frontend",
     linkLabel: "Read about embedded work",
   },
   {
     title: "A design system build",
     description: "A shared component library your teams keep after I leave.",
-    terms: "Fixed scope, milestone billing",
     href: "/services/design-systems",
     linkLabel: "Read about design systems",
   },
@@ -147,7 +144,6 @@ describe("HiringSection", () => {
         screen.getByRole("heading", { level: 3, name: shape.title })
       ).toBeInTheDocument();
       expect(screen.getByText(shape.description)).toBeInTheDocument();
-      expect(screen.getByText(shape.terms)).toBeInTheDocument();
       const link = screen.getByRole("link", { name: shape.linkLabel });
       expect(link).toHaveAttribute("href", shape.href);
     }

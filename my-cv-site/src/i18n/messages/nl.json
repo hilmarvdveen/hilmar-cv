@@ -59,8 +59,8 @@
                     "body": "De Digital-app voor software en games gebouwd binnen de Nx-monorepo, met SSR, routing, CI/CD, GCP en Kubernetes. Daarna de gefaseerde cut-over van de legacy-stack uitgevoerd, eerst medewerkers, daarna per percentage opgeschaald, in één stap omkeerbaar."
                 },
                 {
-                    "title": "Negen experimenten, gemeten in GMV",
-                    "body": "Negen A/B-experimenten met design en business op de acquisitiepagina, productpagina en het winkelmandje. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden."
+                    "title": "Negen experimenten, winnaars werden de standaard",
+                    "body": "Negen A/B-experimenten, samen met de ontwerper en het businessteam bedacht, op de acquisitiepagina, de productpagina en het winkelmandje, gebouwd in code en ingericht in de experimenteertool. Elke winnaar werd de nieuwe standaard en de experimentcode ging eruit."
                 },
                 {
                     "title": "Foutmeldingen en funneldata op orde",
@@ -175,7 +175,7 @@
                 },
                 {
                     "title": "Aaneengesloten sinds 2016",
-                    "body": "Opdrachten bij de Belastingdienst, Athlon, de Nationale Postcode Loterij, Omniplan en anderen sinds 2016, steeds direct gevolgd door de volgende. Retentie is het signaal dat het werk aankwam.",
+                    "body": "Opdrachten bij de Belastingdienst (vier keer verlengd), Athlon, de Nationale Postcode Loterij, Omniplan en anderen sinds 2016, steeds direct gevolgd door de volgende. Retentie is het signaal dat het werk aankwam.",
                     "attribution": "Belastingdienst, Athlon, Nationale Postcode Loterij, Omniplan en anderen, 2016 tot 2026"
                 }
             ]
@@ -283,7 +283,7 @@
                     },
                     {
                         "question": "Hoe zit de contractvorm in elkaar?",
-                        "answer": "Elke opdracht loopt via Hilmar ICT Services, KVK 97564303, als freelance ZZP-opdracht. Dat is de enige vorm waarin ik werk, en de facturatie gaat per maand."
+                        "answer": "Elke opdracht loopt via Hilmar ICT Services als freelance ZZP-opdracht. Dat is de enige vorm waarin ik werk, en de facturatie gaat per maand."
                     },
                     {
                         "question": "En als we geen match blijken?",
@@ -299,21 +299,18 @@
                     {
                         "title": "Een pagina voor klanten, van specificatie tot live",
                         "description": "Jullie hebben een pagina of een flow die klanten gebruiken en die geld oplevert. Ik neem die van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en draag hem over met tests, Storybook en documentatie.",
-                        "terms": "Vanaf 1 oktober 2026 · circa 40 uur per week · €95 tot €125 per uur, afhankelijk van projecttype en werk",
                         "href": "/services/frontend",
                         "linkLabel": "Hoe ik een pagina van begin tot eind bouw"
                     },
                     {
                         "title": "Een migratie van legacy naar modern leiden",
                         "description": "Een oud systeem verdient nog geld en moet vervangen worden terwijl het blijft draaien. Ik lees eerst de legacy, zet het achter een schakelaar live, schaal per percentage op en houd de rollback het hele traject op één stap afstand.",
-                        "terms": "Vanaf 1 oktober 2026 · Utrecht, 1 à 2 dagen op locatie of remote · €95 tot €125 per uur, afhankelijk van projecttype en werk",
                         "href": "/services/design-systems",
                         "linkLabel": "Hoe een migratie verloopt"
                     },
                     {
                         "title": "Als senior aansluiten bij een bestaand frontendteam",
                         "description": "Jullie team levert en heeft er een senior naast nodig. Bij Athlon coachte ik het frontendteam door een Angular-migratie heen en deed ik hun code reviews. Bij de Belastingdienst leerde ik een senior developer Angular, RxJS en services.",
-                        "terms": "Vanaf 1 oktober 2026 · freelance via Hilmar ICT Services · €95 tot €125 per uur, afhankelijk van projecttype en werk",
                         "href": "/services/consulting",
                         "linkLabel": "Hoe ik binnen een team werk"
                     }
@@ -387,13 +384,13 @@
         "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com, met de rol, de stack en wat er is opgeleverd."
     },
     "work": {
-        "sectionTitle": "Werkervaring",
+        "sectionTitle": "Twaalf opdrachten sinds 2016",
         "role": "Rol",
         "technologies": "Technieken",
         "workMode": {
             "remote": "Remote",
-            "onSite": "On-site",
-            "hybrid": "Hybrid"
+            "onSite": "Op locatie",
+            "hybrid": "Hybride"
         },
         "language": {
             "dutch": "Nederlands",
@@ -550,7 +547,7 @@
             "role": "Senior Frontend Developer",
             "body": [
                 {
-                    "paragraph": "De Belastingdienst publiceert aangiftepagina's en formulieren waar ondernemers in het hele land mee uit de voeten moeten kunnen. Een nieuwe pagina in het ondernemersportaal kostte één tot twee weken frontendwerk. Een nieuw belastingformulier kostte maanden, met een doorlopende stroom vragen tussen de redactie en het ontwikkelteam. Mijn opdracht was dat sneller te maken zonder in te leveren op toegankelijkheid en consistentie."
+                    "paragraph": "De Belastingdienst publiceert aangiftepagina's en formulieren waar ondernemers in het hele land mee uit de voeten moeten kunnen. Een nieuwe pagina in het ondernemersportaal kostte één tot twee weken frontendwerk. Een nieuw belastingformulier kostte maanden, met een doorlopende stroom vragen tussen de redactie en het ontwikkelteam. Mijn opdracht was dat sneller te maken zonder in te leveren op toegankelijkheid en consistentie. De opdracht is vier keer verlengd."
                 },
                 {
                     "paragraph": "Voor het ondernemersportaal ontwierp ik een datagedreven Angular-architectuur waarin pagina's uit backendconfiguratie worden opgebouwd. Generieke componenten halen hun logica en hun weergave uit injectable services en configuratiebestanden, zodat de btw-pagina, de loonheffingspagina en de vliegbelastingpagina dezelfde bouwstenen delen. Conditionele zichtbaarheid, meertalige labels en validatieregels komen uit JSON-schema's. Ik bouwde de filterset met dropdowns, zoekvelden en verwijderbare chips. Een wrapper sorteert kleine tabellen in de browser volgens kolomtype en de sorteerregels van het Bold design system."
@@ -826,42 +823,36 @@
         },
         "form": {
             "title": "Stuur een bericht",
-            "description": "Vertel me over uw project en ik neem binnen één werkdag contact met u op.",
+            "description": "Vertel over de pagina, de applicatie of het team, en waar het nu op draait.",
+            "requiredNote": "Velden met * zijn verplicht.",
             "interestsLabel": "Ik ben geïnteresseerd in",
             "interests": [
-                "Frontend Ontwikkeling",
-                "Full-Stack Ontwikkeling",
-                "Design Systemen",
-                "Technisch Advies",
-                "Team Begeleiding",
-                "Legacy Migratie",
-                "Performance Optimalisatie",
-                "MVP Ontwikkeling"
+                "Frontend-ontwikkeling",
+                "Full-stack ontwikkeling",
+                "Design systems",
+                "Technisch advies",
+                "Teambegeleiding",
+                "Legacy-migratie",
+                "Performance-optimalisatie",
+                "MVP-ontwikkeling"
             ],
-            "name": "Uw naam",
+            "name": "Je naam",
             "email": "E-mailadres",
-            "message": "Vertel me over uw project",
+            "message": "Vertel me over je project",
             "submit": "Verstuur bericht",
             "sending": "Versturen...",
-            "successMessage": "Bedankt! Ik neem binnen één werkdag contact met u op.",
+            "successMessage": "Bedankt. Je hoort binnen één werkdag van me.",
             "serverError": "Er ging iets mis en je bericht is niet verzonden. Probeer het zo opnieuw, of mail me direct op hilmar@hilmarvanderveen.com.",
             "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
-        },
-        "info": {
-            "title": "Contact informatie",
-            "email": "E-mail",
-            "phone": "Telefoon",
-            "location": "Locatie",
-            "availability": "Beschikbaarheid",
-            "availabilityText": "Maandag - Zaterdag, 8:00 - 20:00 CET",
-            "response": "Reactietijd",
-            "responseText": "Binnen één werkdag",
-            "locationValue": "Nederland"
         },
         "cta": {
             "description": "Dertig minuten, technisch en concreet. Neem mee wat moet veranderen en waar het nu op draait.",
             "button": "Plan een gesprek van 30 minuten",
-            "write": "Stuur een bericht"
+            "write": "Stuur een bericht",
+            "writeAction": "Schrijf me een bericht"
+        },
+        "direct": {
+            "title": "Direct contact"
         },
         "facts": {
             "title": "De praktische gegevens",
@@ -890,10 +881,6 @@
         }
     },
     "services": {
-        "meta": {
-            "title": "Diensten – Hilmar van der Veen | Software Ontwikkelaar",
-            "description": "Professional software ontwikkelingsdiensten: Frontend, Full-Stack, Design Systemen en Technisch Advies. 10+ jaar ervaring met React, Next.js en moderne technologieën."
-        },
         "hero": {
             "badge": "Freelance senior frontend engineer",
             "title": "De pagina's waar het geld binnenkomt, vernieuwd zonder downtime",
@@ -1798,7 +1785,7 @@
                 ]
             }
         },
-        "processStep": "Stap {number}"
+        "termsLabel": "Voorwaarden"
     },
     "cvModal": {
         "title": "CV Downloaden",
@@ -2215,7 +2202,7 @@
                 },
                 {
                     "title": "Als het af moet, neem ik het op me",
-                    "body": "Eigenaarschap blijkt uit wat iemand oppakt als het werk niet netjes binnen de functietitel valt. Bij de Belastingdienst moest het formulierenplatform live, dus pakte ik de backend-endpoints er ook bij. Bij bol.com las ik de oude Java om de specificatie eruit te halen, bouwde ik de pagina's opnieuw in React, stemde ik het GraphQL-contract af met de backend-engineers en schreef ik backendlogica in Kotlin als de capaciteit krap was. bol.com verlengde de opdracht drie keer.",
+                    "body": "Eigenaarschap blijkt uit wat iemand oppakt als het werk niet netjes binnen de functietitel valt. Bij de Belastingdienst moest het formulierenplatform live, dus pakte ik de backend-endpoints er ook bij. Bij bol.com las ik de oude Java om de specificatie eruit te halen, bouwde ik de pagina's opnieuw in React, stemde ik het GraphQL-contract af met de backend-engineers en schreef ik backendlogica in Kotlin als de capaciteit krap was. De Belastingdienst verlengde de opdracht vier keer, bol.com drie keer.",
                     "evidence": "Belastingdienst 2023 tot 2024, bol.com 2025 tot 2026"
                 }
             ]
@@ -2248,22 +2235,21 @@
         "services": {
             "title": "Diensten",
             "items": {
-                "frontend": "Frontend Development",
-                "fullstack": "Full-Stack Oplossingen",
-                "designSystems": "Design Systemen",
-                "consulting": "Technische Consultancy"
+                "frontend": "Frontend-ontwikkeling",
+                "fullstack": "Full-stack ontwikkeling",
+                "designSystems": "Design systems",
+                "consulting": "Technisch advies"
             },
             "bookConsultation": "Plan een gesprek van 30 minuten"
         },
         "quickLinks": {
-            "title": "Snelle Links",
+            "title": "Snelle links",
             "items": {
-                "about": "Over Mij",
+                "about": "Over mij",
                 "experience": "Werkervaring",
                 "projects": "Projecten",
                 "blog": "Blog",
-                "faq": "Veelgestelde Vragen",
-                "book": "Plan een gesprek",
+                "faq": "Veelgestelde vragen",
                 "contact": "Contact"
             }
         },
@@ -2277,18 +2263,13 @@
             }
         },
         "contact": {
-            "title": "Neem Contact Op",
+            "title": "Neem contact op",
             "social": {
                 "title": "Verbinden"
             }
         },
         "bottom": {
-            "copyright": "Alle rechten voorbehouden.",
-            "builtWith": "Gebouwd met",
-            "location": {
-                "netherlands": "Nederland",
-                "euBased": "EU Gevestigd"
-            }
+            "copyright": "Alle rechten voorbehouden."
         }
     },
     "blog": {

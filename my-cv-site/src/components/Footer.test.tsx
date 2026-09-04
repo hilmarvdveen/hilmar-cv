@@ -31,4 +31,18 @@ describe("Footer", () => {
       screen.getByRole("link", { name: "legal.items.disclaimer" })
     ).toHaveAttribute("href", "/disclaimer");
   });
+
+  it("does not list a booking link among the quick links", () => {
+    render(<Footer />);
+    expect(
+      screen.queryByRole("link", { name: "quickLinks.items.book" })
+    ).toBeNull();
+  });
+
+  it("does not render the built-with or location blocks", () => {
+    render(<Footer />);
+    expect(screen.queryByText("bottom.builtWith")).toBeNull();
+    expect(screen.queryByText("bottom.location.netherlands")).toBeNull();
+    expect(screen.queryByText("bottom.location.euBased")).toBeNull();
+  });
 });

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { SearchPageContent, type SearchLocale } from "@/features/search";
+import { PageHero } from "@/components/PageHero";
 import { localizedAlternates } from "@/lib/seo";
 
 type Props = {
@@ -24,8 +25,14 @@ export default async function SearchPage({ params, searchParams }: Props) {
   const { q } = await searchParams;
   setRequestLocale(locale);
 
+  const t = await getTranslations({ locale, namespace: "search" });
   const initialQuery = Array.isArray(q) ? (q[0] ?? "") : (q ?? "");
   const searchLocale: SearchLocale = locale === "nl" ? "nl" : "en";
 
-  return <SearchPageContent locale={searchLocale} initialQuery={initialQuery} />;
+  return (
+    <>
+      <PageHero title={t("title")} description={t("description")} />
+      <SearchPageContent locale={searchLocale} initialQuery={initialQuery} />
+    </>
+  );
 }

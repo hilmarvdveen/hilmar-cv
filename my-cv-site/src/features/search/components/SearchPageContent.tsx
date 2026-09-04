@@ -23,11 +23,6 @@ export function SearchPageContent({ locale, initialQuery = "" }: SearchPageConte
   return (
     <Section>
       <Container width="prose">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-textMain mb-3">
-          {t("title")}
-        </h1>
-        <p className="text-lg text-gray-600 mb-8">{t("description")}</p>
-
         <div className="relative mb-8">
           <Search
             className="absolute left-3 top-3.5 w-5 h-5 text-gray-400"

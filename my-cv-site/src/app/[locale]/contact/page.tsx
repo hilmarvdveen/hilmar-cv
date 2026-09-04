@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { ContactHero, ContactForm } from "@/features/contact";
+import { ContactHero, ContactChannels, ContactForm } from "@/features/contact";
 import { Section } from "@/components/Section";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
@@ -29,6 +29,7 @@ export default async function ContactPage({ params }: Props) {
         }}
       />
       <ContactHero />
+      <ContactChannels />
 
       <Section
         id="contact-form"

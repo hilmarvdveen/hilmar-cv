@@ -5,20 +5,24 @@ import { ResultsStrip } from "./ResultsStrip";
 const items = [
   {
     value: "up to 24% GMV",
+    label: "Revenue on winning experiments",
     detail:
       "on winning A/B variants at bol.com, roughly 5% to 24% across the winners",
   },
   {
     value: "months to days",
+    label: "A new tax form ready in days",
     detail: "to build a new income tax form at the Belastingdienst",
   },
   {
     value: "weeks to days",
+    label: "A campaign page live in days",
     detail:
       "for a new page with the shared design systems built for two organisations",
   },
   {
     value: "zero downtime",
+    label: "No downtime during the switch",
     detail: "phased, reversible cut-over of live account pages at bol.com",
   },
 ];
@@ -42,10 +46,11 @@ describe("ResultsStrip", () => {
     expect(heading).not.toHaveClass("sr-only");
   });
 
-  it("renders every result item with its value and detail", () => {
+  it("renders every result item with its value, label and detail", () => {
     render(<ResultsStrip />);
     for (const item of items) {
       expect(screen.getByText(item.value)).toBeInTheDocument();
+      expect(screen.getByText(item.label)).toBeInTheDocument();
       expect(screen.getByText(item.detail)).toBeInTheDocument();
     }
   });

@@ -9,10 +9,6 @@ type SectionTitleProps = {
   className?: string;
 };
 
-/**
- * Shared section heading. Every section heading goes through this component
- * so the type scale and spacing stay consistent across the site.
- */
 export const SectionTitle = ({
   title,
   subtitle,

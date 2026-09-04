@@ -43,7 +43,7 @@ export const PageHero = ({
         id={headingId}
         className="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight text-white text-balance"
       >
-        {title}
+        {title}{" "}
         {titleAccent && (
           <span className="block text-emerald-300">{titleAccent}</span>
         )}
@@ -61,7 +61,7 @@ export const PageHero = ({
   return (
     <Section background="navy" aria-labelledby={headingId}>
       <Container>
-        {breadcrumb && <div className="mb-8">{breadcrumb}</div>}
+        {breadcrumb}
         {aside ? (
           <div className="grid gap-12 md:grid-cols-2 lg:gap-16 items-center">
             <div>{heroContent}</div>

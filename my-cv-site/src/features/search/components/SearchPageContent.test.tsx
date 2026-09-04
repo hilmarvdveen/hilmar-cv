@@ -16,10 +16,10 @@ describe("SearchPageContent", () => {
     const user = userEvent.setup();
     render(<SearchPageContent locale="en" initialQuery="frontend" />);
 
-    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
     expect(screen.getByText("Frontend development")).toBeInTheDocument();
 
-    const input = screen.getByRole("searchbox");
+    const input = screen.getByLabelText("inputLabel");
     await user.clear(input);
     await user.type(input, "zzz-no-match");
     expect(screen.queryByText("Frontend development")).not.toBeInTheDocument();
@@ -30,5 +30,10 @@ describe("SearchPageContent", () => {
     render(<SearchPageContent locale="nl" initialQuery="frontend" />);
     expect(screen.getByText("Frontend-ontwikkeling")).toBeInTheDocument();
     expect(screen.queryByText("Frontend development")).not.toBeInTheDocument();
+  });
+
+  it("renders the results count text", () => {
+    render(<SearchPageContent locale="en" initialQuery="frontend" />);
+    expect(screen.getByText("resultsCount")).toBeInTheDocument();
   });
 });

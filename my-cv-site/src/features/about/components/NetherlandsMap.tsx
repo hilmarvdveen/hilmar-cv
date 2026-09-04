@@ -7,15 +7,14 @@ import { useTranslations } from "next-intl";
 import { workHistory, WorkMode } from "@/data/workHistory";
 import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
 
-// Constants
 const HOME_CITY_NAME = "Zandvoort";
 
 const COLORS = {
-  primary: "#3b82f6",
-  primaryLight: "#dbeafe",
+  primary: "#12314e",
+  primaryLight: "#dde4ea",
   secondary: "#f3f4f6",
   accent: "#10b981",
-  danger: "#ef4444",
+  home: "#047857",
   text: "#1f2937",
   textLight: "#6b7280",
 };
@@ -108,7 +107,7 @@ export const NetherlandsMap = () => {
     svg.selectAll("*").remove();
 
     const containerWidth = container.offsetWidth;
-    const mapWidth = Math.min(containerWidth - 32, 500); // Account for padding
+    const mapWidth = Math.min(containerWidth - 32, 500);
     const mapHeight = mapWidth * 0.85;
 
     const projection = d3
@@ -143,7 +142,6 @@ export const NetherlandsMap = () => {
       );
       if (!geoData) return;
 
-      // Draw provinces
       svg
         .selectAll<SVGPathElement, ProvinceFeature>("path")
         .data(geoData.features)
@@ -184,7 +182,6 @@ export const NetherlandsMap = () => {
           }
         });
 
-      // Draw work cities with larger touch targets on mobile
       const cityRadius = isMobile ? 8 : 6;
       const cityHoverRadius = isMobile ? 12 : 8;
 
@@ -231,7 +228,6 @@ export const NetherlandsMap = () => {
           d3.select(e.currentTarget).attr("r", cityHoverRadius);
         });
 
-      // Draw home city
       const homeCity = workCities.find((c) => c.isHome);
       if (homeCity) {
         svg
@@ -242,7 +238,7 @@ export const NetherlandsMap = () => {
           .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
           .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
           .attr("r", cityRadius)
-          .attr("fill", COLORS.danger)
+          .attr("fill", COLORS.home)
           .attr("stroke", "#ffffff")
           .attr("stroke-width", 2)
           .style("cursor", "pointer")
@@ -285,7 +281,6 @@ export const NetherlandsMap = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [t, selectedCity]);
 
-  // Calculate stats
   const totalCompanies = [...new Set(workCities.flatMap((c) => c.companies))]
     .length;
   const totalCities = workCities.length;
@@ -293,7 +288,6 @@ export const NetherlandsMap = () => {
 
   return (
     <section className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8">
-      {/* SEO-friendly header */}
       <div className="text-center mb-6 md:mb-8">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
           {t("companiesWorked")}
@@ -305,10 +299,9 @@ export const NetherlandsMap = () => {
         </p>
       </div>
 
-      {/* Stats cards */}
       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8 max-w-sm md:max-w-md mx-auto">
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
-          <div className="text-xl md:text-2xl font-bold text-blue-600">
+          <div className="text-xl md:text-2xl font-bold text-brand-navy">
             {totalCompanies}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
@@ -316,7 +309,7 @@ export const NetherlandsMap = () => {
           </div>
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
-          <div className="text-xl md:text-2xl font-bold text-emerald-600">
+          <div className="text-xl md:text-2xl font-bold text-brand-navy">
             {totalCities}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
@@ -324,7 +317,7 @@ export const NetherlandsMap = () => {
           </div>
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
-          <div className="text-xl md:text-2xl font-bold text-red-600">
+          <div className="text-xl md:text-2xl font-bold text-brand-navy">
             {totalProvinces}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
@@ -334,7 +327,6 @@ export const NetherlandsMap = () => {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4 md:gap-8">
-        {/* Map */}
         <div className="lg:col-span-2 order-1 lg:order-1">
           <div
             ref={containerRef}
@@ -347,17 +339,15 @@ export const NetherlandsMap = () => {
               aria-label={t("mapAriaLabel")}
             />
 
-            {/* Tooltip */}
             <div
               ref={tooltipRef}
               className="absolute pointer-events-none bg-gray-900 text-white text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 rounded-lg shadow-lg z-10"
               style={{ opacity: 0, transition: "opacity 0.2s ease" }}
             />
 
-            {/* Legend */}
             <div className="mt-3 md:mt-4 flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-1 md:gap-2">
-                <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-full border-2 border-white shadow"></div>
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-emerald-700 rounded-full border-2 border-white shadow"></div>
                 <span>{t("legend.home")}</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2">
@@ -365,21 +355,20 @@ export const NetherlandsMap = () => {
                 <span>{t("legend.city")}</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2">
-                <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-200 border border-blue-300"></div>
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-brand-navy/10 border border-brand-navy/30"></div>
                 <span>{t("legend.highlighted")}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* City Details Panel */}
         <div className="lg:col-span-1 order-2 lg:order-2">
           <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 h-fit">
             {selectedCity ? (
               <div>
                 <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                   {selectedCity.isHome ? (
-                    <Home className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-shrink-0" />
+                    <Home className="w-4 h-4 md:w-5 md:h-5 text-emerald-700 flex-shrink-0" />
                   ) : (
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-emerald-500 flex-shrink-0" />
                   )}
@@ -442,8 +431,7 @@ export const NetherlandsMap = () => {
             )}
           </div>
 
-          {/* Quick Facts */}
-          <div className="bg-gradient-to-br from-blue-50 to-emerald-50 rounded-xl p-4 md:p-6 mt-4 md:mt-6">
+          <div className="bg-gradient-to-br from-brand-navy/5 to-emerald-50 rounded-xl p-4 md:p-6 mt-4 md:mt-6">
             <h3 className="font-semibold text-gray-900 mb-2 md:mb-3 text-sm md:text-base">
               {t("highlights.title")}
             </h3>
@@ -463,11 +451,6 @@ export const NetherlandsMap = () => {
           </div>
         </div>
       </div>
-
-      {/* Structured data intentionally lives in the page-level SEOFactory
-          output only. A second Person schema here once carried a wrong
-          surname and competed with the real one, so this component renders
-          no JSON-LD at all. */}
     </section>
   );
 };

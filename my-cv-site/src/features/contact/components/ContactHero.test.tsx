@@ -37,14 +37,13 @@ describe("ContactHero", () => {
 
   it("links the primary and secondary actions", () => {
     render(<ContactHero />);
-    expect(screen.getByRole("link", { name: "book" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "cta.button" })).toHaveAttribute(
       "href",
       "/book"
     );
-    expect(screen.getByRole("link", { name: "cta.write" })).toHaveAttribute(
-      "href",
-      "#contact-form"
-    );
+    expect(
+      screen.getByRole("link", { name: "cta.writeAction" })
+    ).toHaveAttribute("href", "#contact-form");
   });
 
   it("renders every fact label and value in the aside", () => {
@@ -53,20 +52,5 @@ describe("ContactHero", () => {
       expect(screen.getByText(fact.label)).toBeInTheDocument();
       expect(screen.getByText(fact.value)).toBeInTheDocument();
     }
-  });
-
-  it("renders the email, phone, WhatsApp and location lines from the business profile", () => {
-    render(<ContactHero />);
-    expect(
-      screen.getByRole("link", { name: "hilmar@hilmarvanderveen.com" })
-    ).toHaveAttribute("href", "mailto:hilmar@hilmarvanderveen.com");
-
-    const phoneLinks = screen.getAllByRole("link", { name: "+31 6 8014 9947" });
-    expect(phoneLinks).toHaveLength(2);
-    expect(phoneLinks[0]).toHaveAttribute("href", "tel:+31680149947");
-    expect(phoneLinks[1]).toHaveAttribute("href", "https://wa.me/31680149947");
-
-    expect(screen.getByText("WhatsApp")).toBeInTheDocument();
-    expect(screen.getByText("info.locationValue")).toBeInTheDocument();
   });
 });

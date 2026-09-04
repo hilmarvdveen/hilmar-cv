@@ -25,11 +25,6 @@ type SectionProps = {
   children: ReactNode;
 };
 
-/**
- * Shared section shell. Owns the vertical rhythm and background of every
- * page section so spacing is controlled in one place instead of ad hoc
- * py-* values per feature.
- */
 export const Section = ({
   background = "white",
   padding = "default",

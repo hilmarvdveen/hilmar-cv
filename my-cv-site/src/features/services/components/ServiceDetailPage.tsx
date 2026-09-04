@@ -28,7 +28,7 @@ export type ServiceTechnologyGroup = {
 };
 
 export type ServiceProcessStep = {
-  label: string;
+  label?: string;
   title: string;
   description: string;
   details: string[];
@@ -57,6 +57,7 @@ export type ServiceDetailPageProps = {
     description: string;
     deliverables: ServiceEngagementDeliverable[];
     terms: string[];
+    termsLabel: string;
   };
   deliverables?: {
     title: string;
@@ -122,11 +123,10 @@ export const ServiceDetailPage = ({
   process,
   callToAction,
 }: ServiceDetailPageProps) => {
-  const engagementBackground: SectionBackground = "white";
-  const deliverablesBackground = flipBackground(engagementBackground);
+  const deliverablesBackground = flipBackground("white");
   const benefitsBackground = deliverables
     ? flipBackground(deliverablesBackground)
-    : flipBackground(engagementBackground);
+    : flipBackground("white");
   const technologiesBackground = flipBackground(benefitsBackground);
   const processBackground = flipBackground(technologiesBackground);
 
@@ -168,7 +168,7 @@ export const ServiceDetailPage = ({
         </ul>
       </PageHero>
 
-      <Section background={engagementBackground} aria-labelledby="service-engagement-heading">
+      <Section background="white" aria-labelledby="service-engagement-heading">
         <Container>
           <SectionTitle
             id="service-engagement-heading"
@@ -188,11 +188,14 @@ export const ServiceDetailPage = ({
               </Card>
             ))}
           </div>
-          <ul className="mt-8 flex flex-wrap gap-2">
+          <ul
+            className="mt-8 flex flex-wrap gap-2"
+            aria-label={engagement.termsLabel}
+          >
             {engagement.terms.map((term) => (
               <li
                 key={term}
-                className="rounded-md bg-bgLight px-3 py-1 text-sm text-gray-700 ring-1 ring-gray-200"
+                className="rounded-md bg-gray-100 px-3 py-1 text-sm text-gray-700 ring-1 ring-gray-300"
               >
                 {term}
               </li>
@@ -288,15 +291,15 @@ export const ServiceDetailPage = ({
             subtitle={process.description}
           />
           <div className="grid gap-8 lg:grid-cols-2">
-            {process.steps.map((step) => (
+            {process.steps.map((step, index) => (
               <Card key={step.title}>
                 <div className="flex items-start gap-4">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
                     <step.Icon className="h-6 w-6" aria-hidden="true" />
                   </div>
                   <div>
-                    <p className="mb-1 text-sm font-medium text-emerald-700">
-                      {step.label}
+                    <p className="mb-1 text-xs font-bold uppercase tracking-widest text-emerald-700">
+                      {String(index + 1).padStart(2, "0")}
                     </p>
                     <h3 className="text-xl font-bold text-textMain">{step.title}</h3>
                     <p className="mt-2 text-gray-600">{step.description}</p>

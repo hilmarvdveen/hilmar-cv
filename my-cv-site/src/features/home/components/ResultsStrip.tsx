@@ -5,6 +5,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 
 type ResultItem = {
   value: string;
+  label: string;
   detail: string;
 };
 
@@ -22,16 +23,19 @@ export const ResultsStrip = () => {
     >
       <Container>
         <SectionTitle id={RESULTS_HEADING_ID} title={t("title")} align="center" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[auto_auto_auto] gap-8 lg:gap-10">
           {items.map((item) => (
             <div
               key={item.value}
-              className="border-l-[3px] border-primary pl-6"
+              className="border-l-[3px] border-primary pl-6 lg:row-span-3 lg:grid lg:grid-rows-subgrid"
             >
-              <p className="flex min-h-10 items-end text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-none text-brand-navy tracking-tight whitespace-nowrap">
+              <p className="text-3xl xl:text-4xl font-extrabold leading-[1.1] text-brand-navy tracking-tight text-balance">
                 {item.value}
               </p>
-              <p className="mt-2.5 text-sm text-gray-600 leading-relaxed">
+              <p className="mt-2 text-sm font-semibold text-textMain">
+                {item.label}
+              </p>
+              <p className="mt-1 text-sm text-gray-600 leading-relaxed">
                 {item.detail}
               </p>
             </div>
