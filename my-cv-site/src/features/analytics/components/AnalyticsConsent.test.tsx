@@ -15,6 +15,13 @@ describe("AnalyticsConsent", () => {
     expect(screen.getByRole("button", { name: "Decline" })).toBeInTheDocument();
   });
 
+  it("sits above the mobile booking bar through the shared offset variable", () => {
+    render(<AnalyticsConsent labels={labels} />);
+    expect(screen.getByRole("region", { name: labels.accept })).toHaveClass(
+      "bottom-[var(--bottom-bar-offset,0px)]"
+    );
+  });
+
   it("stores the grant, announces it and hides the banner on Accept", async () => {
     const announced = vi.fn();
     window.addEventListener(ANALYTICS_CONSENT_EVENT, announced);

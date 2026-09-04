@@ -44,8 +44,16 @@ decisions together. The new flow asks for two.
 ### No layout shift
 
 - The time grid has a fixed minimum height. Loading (skeleton pills), empty
-  (message), failed (message plus retry) and ready (buttons) all render inside
+  (message), failed (a neutral panel) and ready (buttons) all render inside
   the same box.
+- The failed state reads as a normal panel, not an alarm: a `Card` surface
+  with a gray `AlertCircle` icon and `text-gray-700` body copy, not the red
+  alert styling used for a submission failure. Below the shortened error
+  sentence, a retry link sits next to two direct recovery actions, an email
+  `Button` (`mailto:`, primary) and a call `Button` (`tel:`, outline), stacked
+  on phones and side by side from `sm`. A slots failure is a service hiccup,
+  not the visitor's fault, so the panel offers a way through rather than a
+  warning.
 - Every field reserves one line under it for its error message, so an
   appearing error never pushes the fields below it.
 - The day strip has a fixed button height. The "another date" control lives in
@@ -90,6 +98,15 @@ button and no picker.)
 - Inputs use 16px text so iOS does not zoom on focus, the native date input
   included (`h-11 text-base`). Time buttons are 44px tall and day buttons
   56px on phones, 68px from `sm`.
+- The sticky bar measures its own rendered height with a `ResizeObserver`,
+  the same pattern the header uses for `--header-height` (see
+  `src/components/Header.tsx`), and writes it to `--bottom-bar-offset` on
+  the document root while it is mounted, removing the property on unmount.
+  `AnalyticsConsent` reads that variable for its own `bottom` offset
+  (`bottom-[var(--bottom-bar-offset,0px)]`), so the cookie banner sits above
+  the sticky bar on phones instead of covering it. Off `/book` the variable
+  is unset, the fallback is `0px`, and the banner sits flush with the
+  viewport bottom as before.
 - Scroll targets inside the form (step header, heading, time group) use
   `scroll-mt-4`. The root already carries `scroll-padding-top` for the
   header, and the two add up (see `LAYOUT.md`). With `scroll-mt-28` a step
@@ -100,7 +117,7 @@ button and no picker.)
 
 - The slots API drops times that start within the next hour and offers
   nothing on weekends, so the grid never shows a time that cannot be booked.
-- A booking draft is saved for 24 hours and restored on return. A restored
+- A booking draft is saved for seven days and restored on return. A restored
   time that is no longer free is dropped silently. A saved step is only
   restored when the data it needs is still there.
 

@@ -13,8 +13,8 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-06-28",
   readingTimeMin: 15,
   title: {
-    en: "Technical SEO in Next.js: from a 100% Lighthouse score to better Search",
-    nl: "Technische SEO in Next.js: van 100% Lighthouse-score naar betere Search",
+    en: "Technical SEO in Next.js: past Lighthouse to better Search",
+    nl: "Technische SEO in Next.js: verder dan de Lighthouse-score",
   },
   description: {
     en: "How to set up the Lighthouse SEO basics with Next.js metadata, robots and sitemaps. Then improve the page further with structured data, hreflang and Core Web Vitals.",

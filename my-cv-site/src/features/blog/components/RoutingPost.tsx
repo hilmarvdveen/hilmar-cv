@@ -14,8 +14,8 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-06-28",
   readingTimeMin: 16,
   title: {
-    en: "React Router as a Framework: routes, loaders, actions and folder structure",
-    nl: "React Router als framework: routes, loaders, actions en mappenstructuur",
+    en: "React Router as a Framework: routes, loaders and actions",
+    nl: "React Router als framework: routes, loaders en actions",
   },
   description: {
     en: "React Router is now a full framework: v7 brought Remix's ideas in and v8 continues the line. Learn nested routes, loaders, actions and a folder structure to copy — with real examples.",

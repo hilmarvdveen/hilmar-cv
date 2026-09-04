@@ -1,41 +1,24 @@
-/**
- * SEO Utility Functions
- * Helper functions for SEO components and validation
- */
-
 import type { Metadata } from 'next';
 import { BUSINESS_PROFILE } from './constants/meta-constants';
 
-/**
- * Utility functions for SEO components
- */
 export const SEOUtils = {
-  /**
-   * Generate JSON-LD script tag content
-   */
   generateJSONLD: (schemas: any[]) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     return schemas.map(schema => JSON.stringify(schema, null, 2)).join('\n\n');
   },
 
-  /**
-   * Create meta tags array for manual implementation
-   */
   createMetaTags: (metadata: Metadata) => {
     const tags = [];
 
-    // Basic meta tags
     if (metadata.title) tags.push({ name: 'title', content: metadata.title });
     if (metadata.description) tags.push({ name: 'description', content: metadata.description });
     if (metadata.keywords) tags.push({ name: 'keywords', content: Array.isArray(metadata.keywords) ? metadata.keywords.join(', ') : metadata.keywords });
 
-    // Open Graph tags
     if (metadata.openGraph) {
       Object.entries(metadata.openGraph).forEach(([key, value]) => {
         if (value) tags.push({ property: `og:${key}`, content: value });
       });
     }
 
-    // Twitter tags
     if (metadata.twitter) {
       Object.entries(metadata.twitter).forEach(([key, value]) => {
         if (value) tags.push({ name: `twitter:${key}`, content: value });
@@ -45,17 +28,11 @@ export const SEOUtils = {
     return tags;
   },
 
-  /**
-   * Validate URL structure for SEO
-   */
   validateURL: (url: string) => {
     const urlPattern = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
     return urlPattern.test(url);
   },
 
-  /**
-   * Generate robots.txt content following Google 2024 best practices
-   */
   generateRobotsTxt: () => {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || BUSINESS_PROFILE.CONTACT.WEBSITE;
     
@@ -171,16 +148,10 @@ User-agent: YandexBot
 Allow: /
 
 # =============================================================================
-# SITEMAP LOCATIONS
+# SITEMAP
 # =============================================================================
 
-# Main sitemap locations (Next.js with app router)
 Sitemap: ${siteUrl}/sitemap.xml
-Sitemap: ${siteUrl}/sitemap-0.xml
-
-# Language-specific sitemaps (if generated)
-Sitemap: ${siteUrl}/en/sitemap.xml
-Sitemap: ${siteUrl}/nl/sitemap.xml
 
 # =============================================================================
 # ADDITIONAL BEST PRACTICES

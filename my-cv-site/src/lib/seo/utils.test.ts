@@ -62,7 +62,9 @@ describe("SEOUtils.generateRobotsTxt", () => {
     expect(txt).toContain("User-agent: GPTBot");
     expect(txt).toContain("User-agent: ClaudeBot");
   });
-  it("declares sitemap locations", () => {
-    expect(txt).toMatch(/Sitemap:\s+https?:\/\/\S+\/sitemap\.xml/);
+  it("declares exactly one sitemap location, the real route", () => {
+    const sitemapLines = txt.split("\n").filter((line) => line.startsWith("Sitemap:"));
+    expect(sitemapLines).toHaveLength(1);
+    expect(sitemapLines[0]).toMatch(/^Sitemap:\s+https?:\/\/\S+\/sitemap\.xml$/);
   });
 });

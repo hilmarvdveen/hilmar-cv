@@ -372,8 +372,7 @@ export class SEOEngine {
         'React developer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/frontend',
-      lastModified: SITE_LAST_MODIFIED_DATE,
-      breadcrumbs: this.generateBreadcrumbs(['Services', 'Frontend Development'], locale)
+      lastModified: SITE_LAST_MODIFIED_DATE
     };
 
     return this.generatePageSEO(config);
@@ -400,8 +399,7 @@ export class SEOEngine {
         'Full-stack engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/fullstack',
-      lastModified: SITE_LAST_MODIFIED_DATE,
-      breadcrumbs: this.generateBreadcrumbs(['Services', 'Full-Stack Development'], locale)
+      lastModified: SITE_LAST_MODIFIED_DATE
     };
 
     return this.generatePageSEO(config);
@@ -428,8 +426,7 @@ export class SEOEngine {
         'Design system engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/design-systems',
-      lastModified: SITE_LAST_MODIFIED_DATE,
-      breadcrumbs: this.generateBreadcrumbs(['Services', 'Design Systems'], locale)
+      lastModified: SITE_LAST_MODIFIED_DATE
     };
 
     return this.generatePageSEO(config);
@@ -456,8 +453,7 @@ export class SEOEngine {
         'Frontend consulting Amsterdam Utrecht Rotterdam Den Haag'
       ],
       path: 'services/consulting',
-      lastModified: SITE_LAST_MODIFIED_DATE,
-      breadcrumbs: this.generateBreadcrumbs(['Services', 'Technical Consulting'], locale)
+      lastModified: SITE_LAST_MODIFIED_DATE
     };
 
     return this.generatePageSEO(config);
@@ -562,7 +558,11 @@ export class SEOEngine {
       'blog',
       'contact',
       'faq',
-      'book'
+      'book',
+      'privacy',
+      'terms',
+      'cookies',
+      'disclaimer'
     ];
 
     const pageDescriptors: Array<{

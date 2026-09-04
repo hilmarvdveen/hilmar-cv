@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
@@ -12,6 +12,7 @@ import { HoneypotField } from "@/components/HoneypotField";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
+  const locale = useLocale();
   const interestTags = t.raw("form.interests") as string[];
   const honeypot = useHoneypot();
 
@@ -56,6 +57,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           ...formData,
           interests: selectedTags,
+          locale,
           ...honeypot.payload(),
         }),
       });

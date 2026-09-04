@@ -1,26 +1,13 @@
-/**
- * Enterprise SEO System - Main Export Barrel
- * Comprehensive SEO solution for professional services
- * Implements Google 2024 best practices with E-E-A-T focus
- */
-
-// Core engines and managers
 export { SEOEngine } from './core/seo-engine';
 export { MetadataGenerator } from './core/metadata-generator';
 export { SchemaGenerator } from './core/schema-generator';
 
-// Factory and utilities
 export { SEOFactory } from './factory';
 export { SEOUtils } from './utils';
-export { localizedAlternates } from './alternates';
+export { localizedAlternates, localizedOpenGraph } from './alternates';
 
-// React hooks
-
-// Constants and configuration
 export * from './constants/meta-constants';
 
-// Type definitions
 export type * from './types/seo-types';
 
-// Default export - SEO Engine
-export { default as defaultSEOEngine } from './factory'; 
+export { default as defaultSEOEngine } from './factory';

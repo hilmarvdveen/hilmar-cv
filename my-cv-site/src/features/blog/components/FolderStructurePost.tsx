@@ -14,8 +14,8 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-06-28",
   readingTimeMin: 12,
   title: {
-    en: "React Folder Structure That Scales: From Type-Based to Feature-First",
-    nl: "Een React-mappenstructuur die meeschaalt: van type-gebaseerd naar feature-first",
+    en: "React Folder Structure That Scales: Feature-First",
+    nl: "React-mappenstructuur die meeschaalt: feature-first",
   },
   description: {
     en: "How to organize a modern React project so it stays easy to navigate as it grows: feature folders, clear shared boundaries, small barrels, path aliases, and colocated tests.",

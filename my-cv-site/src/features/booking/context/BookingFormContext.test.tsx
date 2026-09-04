@@ -17,8 +17,13 @@ describe("restoreBookingState", () => {
   it("returns null for nothing saved, garbage, or an expired draft", () => {
     expect(restoreBookingState(null, NOW)).toBeNull();
     expect(restoreBookingState("{not json", NOW)).toBeNull();
-    expect(restoreBookingState(saved({ name: "Jane" }, 1, 30), NOW)).toBeNull();
+    expect(restoreBookingState(saved({ name: "Jane" }, 1, 24 * 8), NOW)).toBeNull();
     expect(restoreBookingState(JSON.stringify({ details: {} }), NOW)).toBeNull();
+  });
+
+  it("keeps a draft that is under seven days old", () => {
+    const restored = restoreBookingState(saved({ name: "Jane" }, 1, 24 * 6), NOW);
+    expect(restored?.details.name).toBe("Jane");
   });
 
   it("keeps only known string fields", () => {

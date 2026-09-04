@@ -14,8 +14,8 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-06-28",
   readingTimeMin: 16,
   title: {
-    en: "A Modern React Architecture with Vite, React Router, Vitest and Storybook",
-    nl: "Een moderne React-architectuur met Vite, React Router, Vitest en Storybook",
+    en: "A Modern React Architecture: Vite, Router, Vitest, Storybook",
+    nl: "Moderne React-architectuur: Vite, Router, Vitest, Storybook",
   },
   description: {
     en: "A practical 2026 baseline for React apps: build fast with Vite, load data with React Router, test with Vitest, and develop components in Storybook — wired together.",

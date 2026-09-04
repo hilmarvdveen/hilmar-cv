@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGraphCredentials, getAccessToken, getGraphClient, sendMail } from "@/lib/graph";
+import { renderContactConfirmationEmail, type EmailLocale } from "@/lib/email";
 import {
-  escapeHtml,
   isAllowedOrigin,
   enforceRateLimit,
   looksAutomated,
@@ -18,30 +18,28 @@ type ContactFormRequest = {
   email: string;
   message: string;
   interests?: string[];
-  company_website?: string; // honeypot
+  locale?: string;
+  company_website?: string;
   formStartedAt?: number;
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    // 1. Reject cross-origin / CSRF-style requests up front.
     if (!isAllowedOrigin(request)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // 2. Per-IP rate limit (spam / mailbomb / denial-of-wallet).
     const limited = enforceRateLimit(request, "email");
     if (limited) return limited;
 
     const body = (await request.json()) as Partial<ContactFormRequest>;
     const { name, email, message, interests } = body;
+    const locale: EmailLocale = body.locale === "nl" ? "nl" : "en";
 
-    // 2. Bot mitigation (honeypot + timing) — respond 200 to avoid signalling.
     if (looksAutomated(body as Record<string, unknown>, Date.now())) {
       return NextResponse.json({ success: true, message: "Message sent successfully" });
     }
 
-    // 3. Validate and length-cap all input.
     const validation = validateFields({
       name: { value: name, required: true, maxLength: LIMITS.name },
       email: { value: email, required: true, email: true },
@@ -73,7 +71,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       ? `\n\nInteressen:\n- ${interests.join("\n- ")}`
       : "";
 
-    // Notification to the site owner (plain text — no escaping needed).
     const notificationBody = `Nieuw contactformulier bericht:
 
 Afzender: ${safeName}
@@ -96,30 +93,13 @@ Tijdstempel: ${new Date().toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam"
       replyToName: safeName,
     });
 
-    // Confirmation to the sender (HTML — user values must be escaped).
-    const confirmationBody = `<p>Hallo ${escapeHtml(safeName)},</p>
-
-<p>Bedankt voor je bericht! Ik heb je contactformulier ontvangen en zal binnen 24 uur reageren.</p>
-
-<p>Voor dringende zaken kun je me ook direct bereiken:</p>
-<ul>
-<li>Telefoon: <a href="tel:+31680149947">+31 6 8014 9947</a></li>
-<li>Email: <a href="mailto:${smtpUser}">${smtpUser}</a></li>
-<li>LinkedIn: <a href="https://www.linkedin.com/in/hilmar-van-der-veen/">linkedin.com/in/hilmar-van-der-veen</a></li>
-</ul>
-
-<p>Met vriendelijke groet,<br>
-<strong>Hilmar van der Veen</strong><br>
-Senior Frontend Developer</p>
-
-<hr>
-<p><small>Dit is een automatisch gegenereerd bericht.</small></p>`;
+    const confirmation = renderContactConfirmationEmail({ locale, name: safeName });
 
     await sendMail(client, smtpUser, {
       to: safeEmail,
       toName: safeName,
-      subject: "Bedankt voor je bericht - Hilmar van der Veen",
-      body: confirmationBody,
+      subject: confirmation.subject,
+      body: confirmation.html,
       isHtml: true,
     });
 

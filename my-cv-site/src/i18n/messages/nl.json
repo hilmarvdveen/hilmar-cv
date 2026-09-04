@@ -28,8 +28,8 @@
                     "detail": "op winnende A/B-varianten bij bol.com, grofweg 5% tot 24% over de winnaars"
                 },
                 {
-                    "value": "onafgebroken live",
-                    "label": "Geen downtime tijdens de overstap",
+                    "value": "geen onderbreking",
+                    "label": "Geen onderbreking voor klanten tijdens de overstap",
                     "detail": "gefaseerde, omkeerbare cut-over van live accountpagina's bij bol.com"
                 },
                 {
@@ -134,7 +134,7 @@
                 },
                 {
                     "title": "Per percentage opschalen",
-                    "body": "1, 10, 50 en dan 100 procent van het verkeer, gehasht per bezoeker, met rollback in één stap gedurende het hele traject, zodat het niet in één keer mis kan gaan."
+                    "body": "Eerst een klein deel van het verkeer, dan meer, dan iedereen, gehasht per bezoeker, met rollback in één stap gedurende het hele traject, zodat het niet in één keer mis kan gaan."
                 },
                 {
                     "title": "Meten vanaf dag één",
@@ -250,7 +250,7 @@
                 {
                     "label": "Contractvorm",
                     "value": "Freelance ZZP",
-                    "detail": "Circa 40 uur per week",
+                    "detail": "32 tot 40 uur per week",
                     "highlight": false
                 },
                 {
@@ -374,14 +374,19 @@
             "title": "Opgeleverd voor",
             "subtitle": "Overheid, enterprise en e-commerce uit de top, sinds 2016",
             "indicator1": "Enterprise en overheid sinds 2016",
-            "indicator2": "Legacy-migraties, onafgebroken live",
+            "indicator2": "Legacy-migraties bij bol.com, Athlon en Omniplan",
             "indicator3": "WCAG 2.1 en 2.2 AA meegeleverd",
             "invite": "Klik op een logo voor wat ik daar heb opgeleverd."
         }
     },
     "experiencePage": {
         "title": "Werkervaring",
-        "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com, met de rol, de stack en wat er is opgeleverd."
+        "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com, met de rol, de stack en wat er is opgeleverd.",
+        "close": {
+            "title": "Dertig minuten, en je weet of dit bij je platform past.",
+            "description": "Vrijblijvend, met een duidelijk antwoord in beide gevallen.",
+            "button": "Plan een gesprek van 30 minuten"
+        }
     },
     "work": {
         "sectionTitle": "Twaalf opdrachten sinds 2016",
@@ -406,7 +411,7 @@
             "vue": "Vue.js",
             "webComponents": "Web Components",
             "stencil": "Stencil",
-            "wcag": "WCAG 2.0",
+            "wcag": "WCAG",
             "playwright": "Playwright",
             "cypress": "Cypress",
             "rest": "REST",
@@ -1135,7 +1140,7 @@
                 ],
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-                    "Ongeveer 40 uur per week, zes maanden of langer",
+                    "32 tot 40 uur per week, zes maanden of langer",
                     "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
@@ -1358,7 +1363,7 @@
                 ],
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-                    "Ongeveer 40 uur per week, zes maanden of langer",
+                    "32 tot 40 uur per week, zes maanden of langer",
                     "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
@@ -1558,7 +1563,7 @@
                 ],
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-                    "Ongeveer 40 uur per week, zes maanden of langer",
+                    "32 tot 40 uur per week, zes maanden of langer",
                     "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
@@ -1778,7 +1783,7 @@
                 ],
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-                    "Ongeveer 40 uur per week, zes maanden of langer",
+                    "32 tot 40 uur per week, zes maanden of langer",
                     "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
@@ -1893,7 +1898,7 @@
                     },
                     {
                         "question": "Wanneer ben je beschikbaar en voor hoeveel uur?",
-                        "answer": "Vanaf 1 oktober 2026, en eerder in overleg. Ongeveer 40 uur per week, voor zes maanden of langer. Mijn huidige opdracht bij bol.com begon in juli 2025, is drie keer verlengd en loopt tot 1 oktober 2026."
+                        "answer": "Vanaf 1 oktober 2026, en eerder in overleg. 32 tot 40 uur per week, voor zes maanden of langer. Mijn huidige opdracht bij bol.com begon in juli 2025, is drie keer verlengd en loopt tot 1 oktober 2026."
                     },
                     {
                         "question": "Waar werk je, en in welke talen?",
@@ -2160,6 +2165,8 @@
             "another": "Nog een gesprek plannen"
         },
         "errors": {
+            "emailAction": "Mail me",
+            "callAction": "Bel me",
             "submissionFailed": "De boeking is niet gelukt",
             "loadSlotsFailed": "De beschikbare tijden konden nu niet geladen worden. Probeer het zo opnieuw, of mail naar hilmar@hilmarvanderveen.com, dan plan ik het gesprek voor je in.",
             "submissionFailedDetail": "Je boeking is niet verzonden. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook, dan plan ik het gesprek voor je in.",

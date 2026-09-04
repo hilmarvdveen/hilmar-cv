@@ -140,4 +140,45 @@ describe("CVDownloadModal", () => {
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
   });
+
+  it("opens the document before the lead request resolves, then posts the lead and closes", async () => {
+    const callOrder: string[] = [];
+    openSpy.mockImplementation(() => {
+      callOrder.push("open");
+      return null;
+    });
+    let resolveFetch: (response: Response) => void = () => {};
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => {
+        callOrder.push("fetch");
+        return new Promise<Response>((resolve) => {
+          resolveFetch = resolve;
+        });
+      })
+    );
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillValid(user);
+    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+
+    expect(callOrder).toEqual(["open", "fetch"]);
+    expect(onClose).not.toHaveBeenCalled();
+
+    resolveFetch(new Response(JSON.stringify({ success: true }), { status: 200 }));
+    await waitFor(() => expect(onClose).toHaveBeenCalled());
+  });
+
+  it("still posts the lead and closes when opening the document throws", async () => {
+    openSpy.mockImplementation(() => {
+      throw new Error("popup blocked");
+    });
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillValid(user);
+    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(onClose).toHaveBeenCalled());
+  });
 });

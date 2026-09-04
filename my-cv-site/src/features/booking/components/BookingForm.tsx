@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import {
+  AlertCircle,
   AlertTriangle,
   ArrowLeft,
   ArrowRight,
@@ -20,6 +21,7 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { HoneypotField } from "@/components/HoneypotField";
 import { useHoneypot } from "@/hooks/useHoneypot";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
   firstInvalidField,
   formatDayLabel,
@@ -111,6 +113,7 @@ export const BookingForm = () => {
   const slotGroupRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const stickyBarRef = useRef<HTMLDivElement>(null);
 
   const workingDays = useMemo(() => getUpcomingWorkingDays(new Date(), VISIBLE_DAYS), []);
   const todayKey = useMemo(() => toDateKey(new Date()), []);
@@ -173,6 +176,24 @@ export const BookingForm = () => {
       scrollAndFocus(headingRef.current, "start");
     }
   }, [step]);
+
+  useEffect(() => {
+    const bar = stickyBarRef.current;
+    if (!bar) return;
+    const applyMeasuredOffset = () => {
+      document.documentElement.style.setProperty(
+        "--bottom-bar-offset",
+        `${bar.getBoundingClientRect().height}px`
+      );
+    };
+    applyMeasuredOffset();
+    const observer = new ResizeObserver(applyMeasuredOffset);
+    observer.observe(bar);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--bottom-bar-offset");
+    };
+  }, []);
 
   const selectDay = (date: string) => {
     if (date === details.date) return;
@@ -426,16 +447,40 @@ export const BookingForm = () => {
             </div>
           )}
           {slotsStatus === "failed" && (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-              <p className="text-sm text-red-800">{t("errors.loadSlotsFailed")}</p>
-              <button
-                type="button"
-                onClick={() => void loadSlots(details.date)}
-                className="-mb-2 mt-3 rounded py-2 text-sm font-semibold text-red-800 underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-              >
-                {t("flow.moment.retry")}
-              </button>
-            </div>
+            <Card className="p-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle
+                  className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm text-gray-700">{t("errors.loadSlotsFailed")}</p>
+                  <button
+                    type="button"
+                    onClick={() => void loadSlots(details.date)}
+                    className="-mb-2 mt-3 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  >
+                    {t("flow.moment.retry")}
+                  </button>
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                    <Button
+                      href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
+                      variant="primary"
+                      size="sm"
+                    >
+                      {t("errors.emailAction")}
+                    </Button>
+                    <Button
+                      href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
+                      variant="outline"
+                      size="sm"
+                    >
+                      {t("errors.callAction")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
           )}
           {slotsStatus === "ready" && slots.length === 0 && (
             <p className="rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm text-gray-600">
@@ -672,7 +717,10 @@ export const BookingForm = () => {
         </aside>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+      <div
+        ref={stickyBarRef}
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden"
+      >
         <div className="mx-auto flex max-w-7xl items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">

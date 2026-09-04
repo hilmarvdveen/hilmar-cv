@@ -5,7 +5,6 @@ import type {
   OrganizationSchema,
   ProfessionalServiceSchema,
   WebSiteSchema,
-  WebPageSchema,
   FAQPageSchema,
   ServiceSchema,
   Locale,
@@ -78,10 +77,15 @@ export class SchemaGenerator {
     return `${BUSINESS_PROFILE.NAME}, freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} for React, Next.js, Angular and TypeScript. Legacy to modern without downtime, design systems and GraphQL contracts, across the Randstad and remote.`;
   }
 
+  private webSiteId(locale: Locale): string {
+    return `${this.baseUrl}/${locale}#website`;
+  }
+
   private generateWebSiteSchema(locale: Locale): WebSiteSchema {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.WEBSITE,
+      '@id': this.webSiteId(locale),
       name: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
       description: this.siteDescription(),
       url: `${this.baseUrl}/${locale}`,
@@ -342,9 +346,9 @@ export class SchemaGenerator {
     }));
   }
 
-  private generateWebPageSchema(config: SEOPageConfig): WebPageSchema {
+  private generateWebPageSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
-    
+
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.WEBPAGE,
@@ -352,22 +356,8 @@ export class SchemaGenerator {
       description: config.description,
       url: canonicalUrl,
       isPartOf: {
-        '@context': 'https://schema.org',
         '@type': SCHEMA_TYPES.WEBSITE,
-        name: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
-        description: this.siteDescription(),
-        url: `${this.baseUrl}/${config.locale}`,
-        author: {
-          '@type': SCHEMA_TYPES.PERSON,
-          name: BUSINESS_PROFILE.NAME,
-          url: `${this.baseUrl}/${config.locale}/about`
-        },
-        publisher: {
-          '@type': SCHEMA_TYPES.ORGANIZATION,
-          name: BUSINESS_PROFILE.COMPANY,
-          url: `${this.baseUrl}/${config.locale}`
-        },
-        inLanguage: [LOCALE_CONFIG.HREFLANG['en'], LOCALE_CONFIG.HREFLANG['nl']]
+        '@id': this.webSiteId(config.locale)
       },
       author: {
         '@type': SCHEMA_TYPES.PERSON,

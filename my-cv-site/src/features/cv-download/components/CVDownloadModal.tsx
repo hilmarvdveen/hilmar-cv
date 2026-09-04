@@ -60,9 +60,12 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
     return Object.keys(newErrors).length === 0;
   };
 
-  const openDocumentAndClose = () => {
-    window.open(cvDocumentPath(cvLanguage), "_blank");
-    onClose();
+  const openDocument = () => {
+    try {
+      window.open(cvDocumentPath(cvLanguage), "_blank");
+    } catch (error) {
+      console.error("Error opening the CV document:", error);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -72,6 +75,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
       return;
     }
 
+    openDocument();
     setIsSubmitting(true);
 
     try {
@@ -89,19 +93,16 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
         }),
       });
 
-      if (response.ok) {
-        openDocumentAndClose();
-        setFormData({ email: "", name: "", purpose: "" });
-        setErrors({});
-      } else {
-        console.warn("Lead tracking failed, but allowing download");
-        openDocumentAndClose();
+      if (!response.ok) {
+        console.warn("Lead tracking failed, but the download already started");
       }
     } catch (error) {
       console.error("Error submitting CV download form:", error);
-      openDocumentAndClose();
     } finally {
       setIsSubmitting(false);
+      setFormData({ email: "", name: "", purpose: "" });
+      setErrors({});
+      onClose();
     }
   };
 

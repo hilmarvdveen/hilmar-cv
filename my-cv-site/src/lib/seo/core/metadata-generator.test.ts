@@ -80,6 +80,11 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(title).not.toMatch(/…\s*\|/); // no ellipsis immediately before a brand pipe
   });
 
+  it("uses the name alone as the Open Graph site name, matching the developer titles", () => {
+    const og = gen.generateMetadata(cfg()).openGraph as { siteName?: string };
+    expect(og.siteName).toBe("Hilmar van der Veen");
+  });
+
   it("points OG and Twitter images at the generated card routes of the same locale", () => {
     const meta = gen.generateMetadata(cfg({ locale: "nl" }));
     const og = meta.openGraph as { images: { url: string; width: number; height: number }[] };

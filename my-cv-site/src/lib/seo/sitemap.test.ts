@@ -25,4 +25,15 @@ describe("sitemap data", () => {
       expect(byLanguage["x-default"]).toBe(`${HOST}/nl${path}`);
     }
   });
+
+  it("includes the four legal pages, both locales", () => {
+    for (const slug of ["privacy", "terms", "cookies", "disclaimer"]) {
+      expect(entries.map((entry) => entry.url)).toContain(`${HOST}/nl/${slug}`);
+      expect(entries.map((entry) => entry.url)).toContain(`${HOST}/en/${slug}`);
+    }
+  });
+
+  it("counts 34 entries, 17 pages including the four legal pages, times two locales", () => {
+    expect(entries).toHaveLength(34);
+  });
 });

@@ -11,6 +11,7 @@ vi.mock("next-intl", () => ({
     t.raw = () => ["React", "TypeScript"];
     return t;
   },
+  useLocale: () => "en",
 }));
 
 describe("ContactForm", () => {
@@ -42,6 +43,7 @@ describe("ContactForm", () => {
       name: "Jane Doe",
       email: "jane@example.com",
       message: "Hello!",
+      locale: "en",
       company_website: "",
     });
     expect(typeof body.formStartedAt).toBe("number");

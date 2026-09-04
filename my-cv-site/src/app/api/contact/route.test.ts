@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 import { __resetRateLimitStore } from "@/lib/security/rate-limit";
+import { renderContactConfirmationEmail } from "@/lib/email";
 
-// Mock the Graph layer so no network calls happen.
 const sendMail = vi.fn();
 const getGraphCredentials = vi.fn();
 vi.mock("@/lib/graph", () => ({
@@ -88,12 +88,33 @@ describe("POST /api/contact", () => {
 
   it("escapes user input in the HTML confirmation email", async () => {
     await POST(post({ ...valid, name: '<img src=x onerror=alert(1)>' }));
-    // Second call is the HTML confirmation to the sender.
     const htmlCall = sendMail.mock.calls.find((c) => c[2]?.isHtml === true);
     expect(htmlCall).toBeTruthy();
     const body: string = htmlCall![2].body;
     expect(body).not.toContain("<img src=x");
     expect(body).toContain("&lt;img src=x");
+  });
+
+  it("sends the visitor confirmation rendered by the shared template for the default locale", async () => {
+    await POST(post(valid));
+    const expected = renderContactConfirmationEmail({ locale: "en", name: valid.name });
+    const visitorCall = sendMail.mock.calls.find((call) => call[2]?.to === valid.email);
+    expect(visitorCall?.[2]).toMatchObject({
+      subject: expected.subject,
+      body: expected.html,
+      isHtml: true,
+    });
+  });
+
+  it("sends the Dutch confirmation rendered by the shared template when the visitor posts locale nl", async () => {
+    await POST(post({ ...valid, locale: "nl" }));
+    const expected = renderContactConfirmationEmail({ locale: "nl", name: valid.name });
+    const visitorCall = sendMail.mock.calls.find((call) => call[2]?.to === valid.email);
+    expect(visitorCall?.[2]).toMatchObject({
+      subject: expected.subject,
+      body: expected.html,
+      isHtml: true,
+    });
   });
 
   it("returns a generic 500 without leaking details on Graph failure", async () => {

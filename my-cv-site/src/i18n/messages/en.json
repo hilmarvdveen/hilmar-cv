@@ -28,8 +28,8 @@
                     "detail": "on winning A/B variants at bol.com, roughly 5% to 24% across the winners"
                 },
                 {
-                    "value": "zero downtime",
-                    "label": "No downtime during the switch",
+                    "value": "no outage",
+                    "label": "No customer-facing outage during the switch",
                     "detail": "phased, reversible cut-over of live account pages at bol.com"
                 },
                 {
@@ -134,7 +134,7 @@
                 },
                 {
                     "title": "Ramp by percentage",
-                    "body": "1, 10, 50, then 100 percent of traffic, hashed per visitor, with one-step rollback available the whole way, so it cannot blow up on you."
+                    "body": "A small share of the traffic first, then more, then everyone, hashed per visitor, with one-step rollback available the whole way, so it cannot blow up on you."
                 },
                 {
                     "title": "Measured from day one",
@@ -250,7 +250,7 @@
                 {
                     "label": "Contract type",
                     "value": "Freelance ZZP",
-                    "detail": "Roughly 40 hours a week",
+                    "detail": "32 to 40 hours a week",
                     "highlight": false
                 },
                 {
@@ -338,7 +338,7 @@
             "title": "Delivered for",
             "subtitle": "Government, enterprise and top-tier e-commerce since 2016",
             "indicator1": "Enterprise and government since 2016",
-            "indicator2": "Legacy migrations, live throughout",
+            "indicator2": "Legacy migrations at bol.com, Athlon and Omniplan",
             "indicator3": "WCAG 2.1 and 2.2 AA built in",
             "invite": "Click a logo to see what I delivered there."
         },
@@ -415,7 +415,12 @@
     },
     "experiencePage": {
         "title": "Work history",
-        "description": "Every engagement since 2016, including the current one at bol.com, with the role, the stack and what shipped."
+        "description": "Every engagement since 2016, including the current one at bol.com, with the role, the stack and what shipped.",
+        "close": {
+            "title": "Thirty minutes, and you know whether this fits your platform.",
+            "description": "No obligation, a clear answer either way.",
+            "button": "Book a 30-minute call"
+        }
     },
     "work": {
         "sectionTitle": "Twelve engagements since 2016",
@@ -427,8 +432,8 @@
             "hybrid": "Hybrid"
         },
         "language": {
-            "dutch": "Nederlands",
-            "english": "Engels"
+            "dutch": "Dutch",
+            "english": "English"
         },
         "tech": {
             "html5": "HTML5",
@@ -440,7 +445,7 @@
             "vue": "Vue.js",
             "webComponents": "Web Components",
             "stencil": "Stencil",
-            "wcag": "WCAG 2.0",
+            "wcag": "WCAG",
             "playwright": "Playwright",
             "cypress": "Cypress",
             "rest": "REST",
@@ -1169,7 +1174,7 @@
                 ],
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
-                    "Roughly 40 hours a week, six months or longer",
+                    "32 to 40 hours a week, six months or longer",
                     "Utrecht 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
@@ -1392,7 +1397,7 @@
                 ],
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
-                    "Roughly 40 hours a week, six months or longer",
+                    "32 to 40 hours a week, six months or longer",
                     "Utrecht 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
@@ -1592,7 +1597,7 @@
                 ],
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
-                    "Roughly 40 hours a week, six months or longer",
+                    "32 to 40 hours a week, six months or longer",
                     "Utrecht 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
@@ -1812,7 +1817,7 @@
                 ],
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
-                    "Roughly 40 hours a week, six months or longer",
+                    "32 to 40 hours a week, six months or longer",
                     "Utrecht 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
@@ -1892,7 +1897,7 @@
         "close": "Close modal",
         "language": {
             "label": "CV language",
-            "nl": "Nederlands",
+            "nl": "Dutch",
             "en": "English"
         },
         "fields": {
@@ -1951,7 +1956,7 @@
                     },
                     {
                         "question": "When are you available and for how many hours?",
-                        "answer": "From 1 October 2026, and earlier by arrangement. Roughly 40 hours a week, for six months or longer. My current engagement at bol.com started in July 2025, was extended three times, and runs to 1 October 2026."
+                        "answer": "From 1 October 2026, and earlier by arrangement. 32 to 40 hours a week, for six months or longer. My current engagement at bol.com started in July 2025, was extended three times, and runs to 1 October 2026."
                     },
                     {
                         "question": "Where do you work, and in which languages?",
@@ -2218,6 +2223,8 @@
             "another": "Book another call"
         },
         "errors": {
+            "emailAction": "Email me",
+            "callAction": "Call me",
             "submissionFailed": "The booking did not go through",
             "loadSlotsFailed": "The available times could not be loaded right now. Try again in a moment, or email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
             "submissionFailedDetail": "Your booking did not go through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947 and I will schedule the call for you.",

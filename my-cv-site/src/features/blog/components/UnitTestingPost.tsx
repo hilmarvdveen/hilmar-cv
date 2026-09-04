@@ -13,8 +13,8 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-06-28",
   readingTimeMin: 16,
   title: {
-    en: "Testing React the Right Way: behaviour, components and testable design",
-    nl: "React testen op de juiste manier: gedrag, componenten en testbaar ontwerp",
+    en: "Testing React the Right Way: behaviour and testable design",
+    nl: "React testen: gedrag, componenten en testbaar ontwerp",
   },
   description: {
     en: "What's worth testing in a React app, what to mock, and how to design components so they stay testable — with a real Vitest, Testing Library and MSW setup.",

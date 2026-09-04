@@ -4,13 +4,6 @@ import { resolve } from "node:path";
 import { SEOFactory } from "./factory";
 import type { Locale } from "./types/seo-types";
 
-/**
- * Validates the JSON-LD that each page injects into its
- * <script type="application/ld+json"> (seoData.structuredData). The single
- * most important check: the whole script must be ONE valid JSON value — a
- * regression here (e.g. concatenating objects) silently breaks rich results.
- */
-
 const LOCALES: Locale[] = ["en", "nl"];
 const CANONICAL_HOST = "www.hilmarvanderveen.com";
 const FAQ = [
@@ -36,8 +29,6 @@ function pagesFor(locale: Locale): Record<string, string> {
   };
 }
 
-// Depth-first walk over the parsed JSON, calling visit(key, value) for every
-// key/value pair encountered (including inside arrays).
 function walk(node: unknown, visit: (key: string, value: unknown) => void): void {
   if (Array.isArray(node)) {
     node.forEach((n) => walk(n, visit));
@@ -51,7 +42,6 @@ function walk(node: unknown, visit: (key: string, value: unknown) => void): void
   }
 }
 
-// Recursively collect every object whose @type matches (handles nesting/arrays).
 function collectByType(
   node: unknown,
   type: string,
@@ -157,8 +147,6 @@ describe("structured data (JSON-LD) per page", () => {
   }
 
   it("every self-hosted image/logo URL resolves to a real file in public/", () => {
-    // Catches schema images that 404 (e.g. /images/logo.png when only
-    // logo_v1.png exists) — something URL-shape validation can't see.
     const imgExt = /\.(png|jpe?g|webp|svg|gif|ico)$/i;
     const missing = new Set<string>();
     for (const locale of LOCALES) {
@@ -169,7 +157,7 @@ describe("structured data (JSON-LD) per page", () => {
             value.startsWith(`https://${CANONICAL_HOST}/`) &&
             imgExt.test(value)
           ) {
-            const path = new URL(value).pathname; // e.g. /images/logo_v1.png
+            const path = new URL(value).pathname;
             if (!existsSync(resolve(process.cwd(), "public", `.${path}`))) {
               missing.add(value);
             }
@@ -242,6 +230,46 @@ describe("structured data (JSON-LD) per page", () => {
           ).toBeUndefined();
         }
       }
+    }
+  });
+
+  it("emits the WebSite entity once at top level, referenced by @id from WebPage.isPartOf", () => {
+    const schemas = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
+      Record<string, unknown>
+    >;
+    const topLevelWebSites = schemas.filter((s) => hasType(s, "WebSite"));
+    expect(topLevelWebSites).toHaveLength(1);
+    expect(String(topLevelWebSites[0]["@id"])).toMatch(/^https:\/\/.+#website$/);
+
+    const webPage = schemas.find((s) => hasType(s, "WebPage")) as
+      | { isPartOf?: Record<string, unknown> }
+      | undefined;
+    expect(webPage?.isPartOf).toEqual({
+      "@type": "WebSite",
+      "@id": topLevelWebSites[0]["@id"],
+    });
+  });
+
+  it("service detail pages carry no BreadcrumbList from the engine (the rendered Breadcrumb component supplies the one on the live page)", () => {
+    for (const locale of LOCALES) {
+      for (const page of [
+        SEOFactory.frontendService(locale),
+        SEOFactory.fullstackService(locale),
+        SEOFactory.designSystemsService(locale),
+        SEOFactory.consultingService(locale),
+      ]) {
+        const schemas = JSON.parse(page.structuredData) as Array<Record<string, unknown>>;
+        expect(schemas.some((s) => hasType(s, "BreadcrumbList"))).toBe(false);
+      }
+    }
+  });
+
+  it("the services overview page still carries exactly one BreadcrumbList from the engine", () => {
+    for (const locale of LOCALES) {
+      const schemas = JSON.parse(SEOFactory.services(locale).structuredData) as Array<
+        Record<string, unknown>
+      >;
+      expect(schemas.filter((s) => hasType(s, "BreadcrumbList"))).toHaveLength(1);
     }
   });
 

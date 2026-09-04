@@ -131,7 +131,7 @@ export class MetadataGenerator {
       description: config.description,
       type: config.pageType === 'blog-post' ? 'article' : 'website',
       url: canonicalUrl,
-      siteName: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+      siteName: BUSINESS_PROFILE.NAME,
       locale: LOCALE_CONFIG.OPEN_GRAPH_LOCALE[config.locale],
       alternateLocale: Object.values(LOCALE_CONFIG.OPEN_GRAPH_LOCALE).filter(
         locale => locale !== LOCALE_CONFIG.OPEN_GRAPH_LOCALE[config.locale]

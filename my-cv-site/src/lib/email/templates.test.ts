@@ -4,6 +4,7 @@ import {
   renderBookingConfirmationEmail,
   renderBookingNotificationEmail,
   renderBookingCalendarEvent,
+  renderContactConfirmationEmail,
   type BookingEmailInput,
 } from "./templates";
 
@@ -208,5 +209,40 @@ describe("renderBookingCalendarEvent with a Teams join link", () => {
   it("has no join line when no joinUrl is given", () => {
     const { html } = renderBookingCalendarEvent(booking);
     expect(html.startsWith("<p>30 minuten")).toBe(true);
+  });
+});
+
+describe("renderContactConfirmationEmail", () => {
+  it("writes a Dutch confirmation with the response promise and a booking link", () => {
+    const { subject, html } = renderContactConfirmationEmail({
+      locale: "nl",
+      name: "Jane Doe",
+    });
+    expect(subject).toBe("Bedankt voor je bericht");
+    expect(html).toContain("Hi Jane Doe,");
+    expect(html).toContain("Je hoort binnen één werkdag van me.");
+    expect(html).toContain('href="https://www.hilmarvanderveen.com/nl/book"');
+    expect(html).toContain("Plan een gesprek van 30 minuten");
+    expect(html).toContain("Hilmar van der Veen, Senior Frontend Engineer");
+  });
+
+  it("writes an English confirmation with the response promise and a booking link", () => {
+    const { subject, html } = renderContactConfirmationEmail({
+      locale: "en",
+      name: "Jane Doe",
+    });
+    expect(subject).toBe("Thanks for your message");
+    expect(html).toContain("You will hear from me within one business day.");
+    expect(html).toContain('href="https://www.hilmarvanderveen.com/en/book"');
+    expect(html).toContain("Book a 30-minute call");
+  });
+
+  it("escapes the visitor's name", () => {
+    const { html } = renderContactConfirmationEmail({
+      locale: "en",
+      name: "<script>alert(1)</script>",
+    });
+    expect(html).not.toContain("<script>alert(1)</script>");
+    expect(html).toContain("&lt;script&gt;");
   });
 });

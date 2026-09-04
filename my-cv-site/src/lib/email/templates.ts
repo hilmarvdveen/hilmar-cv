@@ -208,3 +208,62 @@ export function renderBookingCalendarEvent(input: BookingEmailInput): RenderedEm
 <strong>${labels.contact}:</strong> ${name}, <a href="mailto:${email}">${email}</a></p>`;
   return { subject, html };
 }
+
+const CONTACT_SITE_URL = "https://www.hilmarvanderveen.com";
+
+export type ContactEmailInput = {
+  locale: EmailLocale;
+  name: string;
+};
+
+const CONTACT_CONFIRMATION_COPY = {
+  nl: {
+    subject: "Bedankt voor je bericht",
+    greeting: (name: string) => `Hi ${name},`,
+    received: "Je bericht is binnengekomen.",
+    response: "Je hoort binnen één werkdag van me.",
+    bookingIntro: "Je kunt ook direct een gesprek van 30 minuten inplannen.",
+    bookingLabel: "Plan een gesprek van 30 minuten",
+    signoff: "Hilmar van der Veen, Senior Frontend Engineer",
+    footer: "Dit is een automatische bevestiging van je bericht.",
+  },
+  en: {
+    subject: "Thanks for your message",
+    greeting: (name: string) => `Hi ${name},`,
+    received: "Your message has arrived.",
+    response: "You will hear from me within one business day.",
+    bookingIntro: "You can also book a 30-minute call directly.",
+    bookingLabel: "Book a 30-minute call",
+    signoff: "Hilmar van der Veen, Senior Frontend Engineer",
+    footer: "This is an automated confirmation of your message.",
+  },
+} as const;
+
+function renderContactBookingBlock(
+  introText: string,
+  buttonLabel: string,
+  bookingUrl: string
+): string {
+  const url = escapeHtml(bookingUrl);
+  return `<p style="margin:0 0 10px;">${introText}</p>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">
+<tr><td style="border-radius:8px;background-color:${BRAND_EMERALD};">
+<a href="${url}" style="display:inline-block;padding:12px 24px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">${buttonLabel}</a>
+</td></tr>
+</table>`;
+}
+
+export function renderContactConfirmationEmail(input: ContactEmailInput): RenderedEmail {
+  const copy = CONTACT_CONFIRMATION_COPY[input.locale];
+  const name = escapeHtml(input.name);
+  const bookingUrl = `${CONTACT_SITE_URL}/${input.locale}/book`;
+  const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
+<p style="margin:0 0 8px;">${copy.received}</p>
+<p style="margin:0 0 18px;">${copy.response}</p>
+${renderContactBookingBlock(copy.bookingIntro, copy.bookingLabel, bookingUrl)}
+<p style="margin:0;">${copy.signoff}</p>`;
+  return {
+    subject: copy.subject,
+    html: renderLayout(bodyHtml, copy.footer),
+  };
+}

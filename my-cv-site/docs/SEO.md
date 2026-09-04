@@ -82,6 +82,32 @@ Every page renders on demand because of the per-request CSP nonce, the
 apex domain takes two redirects to reach Dutch content, and the whole
 message file travels to the client on every page.
 
+## Audit of 3 September 2026 (sharing and structured data)
+
+A crawl of all 46 URLs plus the social card images and the sitemap and
+robots routes, described in full in
+`Hilmar/review-board/2026-09-03-P6-seo-sharing.md`. Fixed the same day:
+
+| Finding | Cause | Fix |
+|---|---|---|
+| `/experience`, `/search` and the four legal pages inherited the homepage's Open Graph, so sharing any of those 12 URLs on WhatsApp, LinkedIn or Slack showed the homepage's title, image and link | those six `generateMetadata` functions set only `title`, `description` and `alternates` | a new `localizedOpenGraph(path, locale, title, description)` next to `localizedAlternates()` in `src/lib/seo/alternates.ts`, spread into each page's returned metadata |
+| The four service detail pages emitted two `BreadcrumbList` blocks, one from the engine pointing at a URL that 404s (`/services/frontend-development`) with English labels on Dutch pages, one correct block from the rendered `Breadcrumb` component | `createFrontendServiceSEO`, `createFullstackServiceSEO`, `createDesignSystemsServiceSEO` and `createConsultingServiceSEO` in `seo-engine.ts` all passed `breadcrumbs` into the config | stopped passing `breadcrumbs` from those four methods, so the engine emits none and the component's correct block is the only one. The services overview, projects, contact and FAQ pages keep the engine's single block, because `Breadcrumb.tsx` renders nothing for a one-segment route |
+| Every engine-driven page duplicated the whole `WebSite` entity, once as its own top-level schema and again inside `WebPage.isPartOf` | `generateWebPageSchema` built a second full `WebSiteSchema` object instead of referencing the first | the top-level `WebSite` schema now carries a stable `@id` (`{origin}/{locale}#website`), and `WebPage.isPartOf` is a thin `{ "@type": "WebSite", "@id": ... }` reference to it |
+| `og:site_name` said "Hilmar van der Veen \| Senior Frontend Engineer" while every title and `og:title` says "Developer" | `MetadataGenerator.generateOpenGraphMetadata`'s `siteName` combined the name and the title | `siteName` is `BUSINESS_PROFILE.NAME` alone |
+| All ten blog post `<title>` tags were cut with a literal ellipsis while `og:title` showed the full text | the five source titles in `ArchitecturePost.tsx`, `FolderStructurePost.tsx`, `RoutingPost.tsx`, `SeoPost.tsx` and `UnitTestingPost.tsx` were all over the 60-character budget | shortened every title, both locales, to fit under 60 characters without truncation |
+| 8 indexable URLs, the four legal pages in both locales, were missing from the sitemap | `generateSitemapData`'s `staticPages` array stopped at `book` | added `privacy`, `terms`, `cookies`, `disclaimer` |
+| `robots.txt` declared three `Sitemap:` locations that do not exist (`/sitemap-0.xml`, `/en/sitemap.xml`, `/nl/sitemap.xml`) | `SEOUtils.generateRobotsTxt` listed them speculatively | declares only the one real `/sitemap.xml` route |
+
+Also added: a booking action on `/experience` (`PageHero` gets a
+"Book a 30-minute call" action reusing `home.hero.bookCall`) and a closing
+band, `ExperienceClose`, after the work-history cards.
+
+Still open, unchanged since 1 September: the social card image itself is
+one static, English-only, Amsterdam-only PNG for the whole site and every
+locale, and it carries a dash the house style forbids. `hreflang="en-US"`
+versus the broader `en`, and whether to keep blocking the named AI
+crawlers, are still Hilmar's decisions.
+
 ## How to add or adjust SEO for a page
 
 1. Add or update the page's `SEO_FOCUS` in `src/lib/seo/constants/page-content.ts`

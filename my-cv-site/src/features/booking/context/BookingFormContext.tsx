@@ -43,7 +43,7 @@ export const INITIAL_BOOKING_DETAILS: BookingDetails = {
 };
 
 const STORAGE_KEY = "hilmar-booking-form-state";
-const STORAGE_TTL_MILLISECONDS = 24 * 60 * 60 * 1000;
+const STORAGE_TTL_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 type StoredState = {
   details?: Partial<BookingDetails>;

@@ -134,6 +134,21 @@ describe("BookingForm: pick a moment", () => {
     await user.click(retry);
     expect(await screen.findByRole("button", { name: "09:00" })).toBeInTheDocument();
   });
+
+  it("offers direct email and call links when the times fail to load", async () => {
+    installFetch({ slotsStatus: 500 });
+    renderForm();
+    await screen.findByRole("button", { name: "flow.moment.retry" });
+
+    expect(screen.getByRole("link", { name: "errors.emailAction" })).toHaveAttribute(
+      "href",
+      "mailto:hilmar@hilmarvanderveen.com"
+    );
+    expect(screen.getByRole("link", { name: "errors.callAction" })).toHaveAttribute(
+      "href",
+      "tel:+31680149947"
+    );
+  });
 });
 
 describe("BookingForm: details with direct feedback", () => {
