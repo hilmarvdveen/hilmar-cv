@@ -509,7 +509,7 @@ export const workHistory: WorkEntry[] = [
   {
     id: "transdev",
     company: "Transdev",
-    logo: "transdev.webp",
+    logo: "transdev.png",
     from: "2016-08",
     to: "2017-08",
     location: "Hilversum",

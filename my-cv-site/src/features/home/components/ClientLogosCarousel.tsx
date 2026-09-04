@@ -27,7 +27,7 @@ const clients: CarouselClient[] = [
   { name: "Niped", logo: "/logos/niped.svg", id: "niped" },
   { name: "Opinity", logo: "/logos/opinity.png", id: "opinity" },
   { name: "Bluefield", logo: "/logos/bluefield.png", id: "bluefield" },
-  { name: "Transdev", logo: "/logos/transdev.webp", id: "transdev" },
+  { name: "Transdev", logo: "/logos/transdev.png", id: "transdev" },
 ];
 
 type ClientCardProps = {
