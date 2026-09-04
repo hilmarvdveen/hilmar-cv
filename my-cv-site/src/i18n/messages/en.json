@@ -6,7 +6,7 @@
             "description": "Ten-plus years senior in React and Angular, currently at bol.com. I build the pages customers see, from specification to production, shape the GraphQL contract with the backend team, and ramp them onto live traffic in reversible steps.",
             "bookCall": "Book a 30-minute call",
             "downloadCv": "Download CV (PDF)",
-            "credentials": "Hilmar ICT Services · KVK 97564303 · Zandvoort NL · Dutch native, English fluent",
+            "credentials": "Hilmar ICT Services · KVK 97564303 · Zandvoort NL",
             "chips": [
                 "Senior since 2016, ten-plus years",
                 "bol.com, extended three times",
@@ -29,30 +29,30 @@
                 },
                 {
                     "value": "no outage",
-                    "label": "No customer-facing outage during the switch",
-                    "detail": "phased, reversible cut-over of live account pages at bol.com"
+                    "label": "Customers kept using the pages",
+                    "detail": "on the phased, reversible cut-over of the live account pages at bol.com"
                 },
                 {
                     "value": "months to days",
                     "label": "A new tax form ready in days",
-                    "detail": "to build a new income tax form at the Belastingdienst"
+                    "detail": "at the Belastingdienst, where content editors now build the form themselves"
                 },
                 {
                     "value": "weeks to days",
-                    "label": "A campaign page live in days",
-                    "detail": "for a new page with the shared design systems built for two organisations"
+                    "label": "A campaign site live in days",
+                    "detail": "at the Nationale Postcode Loterij, where every label draws on the same components"
                 }
             ],
             "caveat": "Not every experiment won, so the aggregate effect was positive but modest."
         },
         "flagship": {
             "eyebrow": "Current engagement",
-            "title": "bol.com has extended the engagement three times",
-            "intro": "bol.com is one of the largest e-commerce retailers in the Netherlands and Belgium, and it keeps contractors on delivered value. My engagement started in July 2025 in the Loyalty team and continued in Digital.",
+            "title": "From a legacy Java storefront to React, one page at a time",
+            "intro": "bol.com is one of the largest online retailers in the Netherlands and Belgium. My engagement there started in July 2025.",
             "cards": [
                 {
                     "title": "Loyalty, from spec to production",
-                    "body": "The Select points-overview page: a rewards table with order points and action points, NL and FR translations, edge cases like cancelled orders and external merchants, tests and a Storybook story per scenario."
+                    "body": "The Select points-overview page. It carries a rewards table with order points and action points, Dutch and French text, and edge cases such as cancelled orders and external merchants. Every scenario has a test and a Storybook story."
                 },
                 {
                     "title": "A new app, empty folder to production",
@@ -81,8 +81,8 @@
             "linkLabel": "See the full work history"
         },
         "trackRecord": {
-            "title": "The same pattern, ten years deep",
-            "subtitle": "Each of these was a live system that kept running while it was replaced.",
+            "title": "Three live systems, replaced while they kept running",
+            "subtitle": "The Belastingdienst, the Nationale Postcode Loterij and Athlon, between 2020 and 2024.",
             "cards": [
                 {
                     "meta": "Belastingdienst · 2023 to 2024",
@@ -117,8 +117,8 @@
             ]
         },
         "method": {
-            "title": "How delivery stays boring",
-            "subtitle": "The tense moment in a migration is the switch to live traffic. The whole chain up to that moment stays in one pair of hands, in these five steps.",
+            "title": "How the switch to live traffic stays predictable",
+            "subtitle": "The whole chain up to that moment stays in one pair of hands. Five steps.",
             "steps": [
                 {
                     "title": "Read the legacy first",
@@ -126,7 +126,7 @@
                 },
                 {
                     "title": "Shape the contract",
-                    "body": "GraphQL is a real contract. When the UI needs a different shape, I take that to the backend team and we change the field, so the frontend never has to work around the backend."
+                    "body": "GraphQL is a real contract. When the page needs a different shape, I take that to the backend team and we change the field. The frontend never has to work around the backend."
                 },
                 {
                     "title": "Ship internally first",
@@ -134,7 +134,7 @@
                 },
                 {
                     "title": "Ramp by percentage",
-                    "body": "A small share of the traffic first, then more, then everyone, hashed per visitor, with one-step rollback available the whole way, so it cannot blow up on you."
+                    "body": "A small percentage of customers first, then more, then everyone. Each visitor stays in the same group, so nobody flips between the old page and the new one. Rollback stays one step away the whole way."
                 },
                 {
                     "title": "Measured from day one",
@@ -143,7 +143,7 @@
             ]
         },
         "standards": {
-            "title": "Security, accessibility and tests are in the definition of done",
+            "title": "Security, accessibility and tests are part of the delivery",
             "columns": [
                 {
                     "title": "Security",
@@ -165,7 +165,7 @@
             "panels": [
                 {
                     "title": "Three extensions",
-                    "body": "bol.com extends contractors on delivered value. Mine has been extended three times, across two teams.",
+                    "body": "bol.com extends contractors on delivered value. The engagement has run across two teams, Loyalty and then Digital.",
                     "attribution": "bol.com, Loyalty and Digital teams, July 2025 to October 2026"
                 },
                 {
@@ -174,8 +174,8 @@
                     "attribution": "bol.com, engineering manager on another senior role, 2025"
                 },
                 {
-                    "title": "Back to back since 2016",
-                    "body": "Engagements at the Belastingdienst (extended four times), Athlon, the Nationale Postcode Loterij, Omniplan and others since 2016, each one followed by the next. Retention is the signal that the work landed.",
+                    "title": "Twelve engagements since 2016",
+                    "body": "Government, enterprise and e-commerce organisations, the Belastingdienst among them, which extended the engagement four times.",
                     "attribution": "Belastingdienst, Athlon, Nationale Postcode Loterij, Omniplan and others, 2016 to 2026"
                 }
             ]
@@ -293,8 +293,8 @@
                 "linkLabel": "Read all questions"
             },
             "shapes": {
-                "title": "What you are hiring",
-                "subtitle": "The work usually takes one of these three shapes. Say which one fits and we scope it in the call.",
+                "title": "Three shapes the work takes",
+                "subtitle": "Say which one fits and we scope it in the call.",
                 "items": [
                     {
                         "title": "Own a customer-facing surface end to end",
@@ -304,13 +304,13 @@
                     },
                     {
                         "title": "Lead a migration from legacy to modern",
-                        "description": "An old system still earns money and has to be replaced while it keeps running. I read the legacy first, ship behind a gate, ramp by percentage and keep the rollback one step away the whole time.",
+                        "description": "An old system still earns money and has to be replaced while it keeps running. I read the legacy first, ship behind a switch, ramp by percentage and keep the rollback one step away the whole time.",
                         "href": "/services/design-systems",
                         "linkLabel": "How a migration runs"
                     },
                     {
                         "title": "Join an existing frontend team as the senior",
-                        "description": "Your team is shipping and needs a senior alongside it. At Athlon I coached the frontend team through an Angular migration and did their code reviews. At the Belastingdienst I taught a senior developer Angular, RxJS and services.",
+                        "description": "Your team is shipping and needs a senior frontend engineer alongside it. At bol.com I am the frontend specialist in a team of mostly backend developers. At Athlon I coached the frontend team through an Angular migration and did their code reviews.",
                         "href": "/services/consulting",
                         "linkLabel": "How I work inside a team"
                     }
@@ -324,30 +324,27 @@
         },
         "close": {
             "title": "Thirty minutes, and a clear answer either way",
-            "body": "Tell me what you are building and where it is stuck. In thirty minutes you know whether I am the right person for it and what the first step is. The call ends with a scope: which surface, which stack, and what the first weeks deliver.",
+            "body": "Tell me what you are building and where it is stuck. The call ends with a scope: which page, which stack, and what the first weeks deliver.",
             "button": "Book a 30-minute call",
             "alternative": "Prefer writing? Use the contact form."
         },
         "cta": {
-            "title": "Thirty minutes about the surface that has to change",
-            "subtitle": "Technical and concrete, no slides. Bring what has to change and what it runs on today.",
+            "title": "Which system has to change at your end?",
+            "subtitle": "No slides. Bring the page and the stack it runs on, and we work from there.",
             "button": "Book a 30-minute call",
             "buttonAlt": "Or send a message"
         },
         "clientLogos": {
             "title": "Delivered for",
-            "subtitle": "Government, enterprise and top-tier e-commerce since 2016",
-            "indicator1": "Enterprise and government since 2016",
-            "indicator2": "Legacy migrations at bol.com, Athlon and Omniplan",
-            "indicator3": "WCAG 2.1 and 2.2 AA built in",
+            "subtitle": "Government, enterprise and e-commerce.",
             "invite": "Click a logo to see what I delivered there."
         },
         "map": {
             "companiesWorked": "Where the work happened",
-            "workedIn": "Over my career, I've worked with",
+            "workedIn": "The work took me to",
             "workMode": {
                 "remote": "Remote",
-                "onSite": "On-site",
+                "onSite": "On site",
                 "hybrid": "Hybrid"
             },
             "stats": {
@@ -362,20 +359,20 @@
             },
             "mapAriaLabel": "Interactive map of the Netherlands showing work locations",
             "legend": {
-                "home": "Home Location",
-                "city": "Work Cities",
-                "highlighted": "Active Provinces",
+                "home": "Home base",
+                "city": "Work cities",
+                "highlighted": "Provinces worked in",
                 "company": "company",
                 "companies": "companies"
             },
-            "tapLocation": "Tap on a location to see details",
+            "tapLocation": "Select a city to see the work there",
             "highlights": {
-                "title": "Career Highlights",
+                "title": "Where and how I worked",
                 "basedIn": "Based in",
                 "workedAcross": "Worked across",
                 "provinces": "provinces",
-                "experience": "Experience with remote, hybrid & on-site work",
-                "years": "years of professional experience"
+                "experience": "Remote, hybrid and on site",
+                "years": "years in frontend, senior since 2016"
             }
         }
     },
@@ -390,12 +387,12 @@
             "contact": "Contact",
             "faq": "FAQ",
             "services": "Services",
-            "experience": "Experience",
+            "experience": "Work history",
             "book": "Book a call",
             "openMenu": "Open menu",
             "closeMenu": "Close menu",
             "language": "Language",
-            "availability": "Available from 1 October 2026"
+            "availability": "Available from 1 October 2026, earlier by arrangement"
         },
         "consent": {
             "text": "This site uses cookies for anonymous visit statistics. Your choice is remembered.",
@@ -403,19 +400,24 @@
             "accept": "Accept"
         },
         "images": {
-            "logoAlt": "Hilmar van der Veen logo - Senior Frontend Developer",
+            "logoAlt": "Logo of Hilmar van der Veen, senior frontend developer",
             "companyLogoAlt": "{company} company logo",
-            "viewExperience": "View my experience at {company}"
+            "viewExperience": "See what I delivered at {company}"
         },
         "error": {
             "title": "Something went wrong on this page",
             "description": "The page did not load. Reloading usually fixes it. If it keeps happening, email hilmar@hilmarvanderveen.com and I will look into it.",
-            "retry": "Try again"
+            "retry": "Reload the page"
         }
     },
     "experiencePage": {
         "title": "Work history",
-        "description": "Every engagement since 2016, including the current one at bol.com, with the role, the stack and what shipped.",
+        "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. Want one of them in depth, then thirty minutes is the shortest way there.",
+        "cta": {
+            "title": "Recognise one of these?",
+            "description": "Thirty minutes about your system, and you know whether I am the right person for it.",
+            "button": "Book a 30-minute call"
+        },
         "close": {
             "title": "Thirty minutes, and you know whether this fits your platform.",
             "description": "No obligation, a clear answer either way.",
@@ -446,6 +448,7 @@
             "webComponents": "Web Components",
             "stencil": "Stencil",
             "wcag": "WCAG",
+            "wcag22": "WCAG 2.2 AA",
             "playwright": "Playwright",
             "cypress": "Cypress",
             "rest": "REST",
@@ -578,7 +581,7 @@
                     "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them."
                 }
             ],
-            "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform, without taking them offline."
+            "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform. Those pages did not go offline along the way."
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -598,13 +601,13 @@
                     "paragraph": "The back-and-forth with the development team is gone. In the entrepreneur portal a new page went from one to two weeks to one to two days. Both stayed at WCAG 2.1 AA, verified with automated tests in the pipeline."
                 },
                 {
-                    "paragraph": "The Bold design system, built as Stencil Web Components, only pays off once other teams actually use it. I was the connective glue in that adoption. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services."
+                    "paragraph": "The Bold design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services."
                 },
                 {
                     "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and ArgoCD, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code."
                 }
             ],
-            "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days, because content editors and designers could build, check and demo it themselves."
+            "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days. Content editors and designers built, checked and demoed it themselves."
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -618,7 +621,7 @@
                     "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The first campaign site proved the approach, and the VriendenLoterij VIP-Kaarten campaign followed on the same components."
                 },
                 {
-                    "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, GitLab pipelines and Docker put a campaign live, and Playwright and Cypress keep watch over the existing campaigns while new ones arrive."
+                    "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, and GitLab pipelines and Docker put a campaign live. Playwright and Cypress keep watch over the existing campaigns while new ones arrive."
                 },
                 {
                     "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme."
@@ -715,7 +718,7 @@
                     "paragraph": "Ortec builds planning software for logistics. FedEx wanted that planning visible to the people who run and follow the routes. The data sat spread across .NET Core microservices and kept changing, and that stream had to come together on one screen."
                 },
                 {
-                    "paragraph": "I built the Angular front end of the portal, with interactive route and geo visualisations, data tables with sorting and filtering, and forms that point out straight away what does not fit. Updates arrive through observables, so a change in the planning appears on screen without anyone refreshing. Screen behaviour comes from configuration, which lets the same components serve several views. The front end is set up as micro-frontends on top of the .NET Core microservices, so parts can be released on their own."
+                    "paragraph": "I built the Angular front end of the portal. It carries interactive route and geo visualisations, data tables with sorting and filtering, and forms that point out straight away what does not fit. Updates arrive through observables, so a change in the planning appears on screen without anyone refreshing. Screen behaviour comes from configuration, which lets the same components serve several views. The front end is set up as micro-frontends on top of the .NET Core microservices, so parts can be released on their own."
                 },
                 {
                     "paragraph": "Deployment ran through Docker to Azure inside a CI/CD pipeline, so a change reached the users without manual steps."
@@ -783,10 +786,10 @@
             "role": "Fullstack Software Developer (Angular & .NET Core)",
             "body": [
                 {
-                    "paragraph": "Transdev ran on a Delphi backend that modern web and mobile applications could not reach. I designed and built a generic API layer in .NET Core that stands as a secure gateway between the new front ends and the existing logic, with authentication and authorisation at application level. External systems could reach the data through it in one uniform way."
+                    "paragraph": "Transdev ran on a Delphi backend that modern web and mobile applications could not reach. I designed and built a generic API layer in .NET Core that stands as a secure gateway between the new front ends and the existing logic. Authentication and authorisation sit at application level, so external systems could reach the data in one uniform way."
                 },
                 {
-                    "paragraph": "On that layer I built a traveller portal in Angular where travellers look up current information about bus and taxi trips, with components in TypeScript and RxJS and an interface that works on a phone. I also built a queue module that reads the status of a call from the ICE-lib platform, so a caller sees their position and the expected waiting time."
+                    "paragraph": "On that layer I built a traveller portal in Angular. Travellers look up current information about bus and taxi trips there, with components in TypeScript and RxJS and an interface that works on a phone. I also built a queue module that reads the status of a call from the platform behind it, so a caller sees their position and the expected waiting time."
                 },
                 {
                     "paragraph": "What stayed behind is a gateway that later channels could connect to, and a portal where travellers find their own answers."
@@ -798,20 +801,20 @@
     },
     "projects": {
         "hero": {
-            "badge": "Four engagements",
+            "badge": "Case studies",
             "title": "Four engagements, and what the client could measure afterwards",
-            "description": "These four engagements show the work best. Each card names the client, what changed for them, and what I built to get there. The full story of every engagement sits on the experience page."
+            "description": "Each card names the client, what changed for them, and what I built to get there. The full story of every engagement sits on the work history page."
         },
         "showcase": {
-            "title": "What each engagement changed",
-            "subtitle": "One outcome per engagement, with the work that produced it."
+            "title": "bol.com, Belastingdienst, Postcode Loterij and Athlon",
+            "subtitle": "The outcome first, then the work that produced it."
         },
         "cases": [
             {
                 "outcome": "Up to 24% GMV on winning variants",
                 "client": "bol.com",
-                "title": "Loyalty and Digital onto a new platform, live throughout",
-                "body": "bol.com moved its Select loyalty and Kobo Plus pages off a legacy Java storefront onto a new server-rendered React platform, and my engagement there was extended three times. I read the old Java to work out exactly what each page did, rebuilt the pages in React, shaped the GraphQL contract with the backend engineers, and ran the traffic cut-over in reversible steps. Employees first, then a percentage of customers, then everyone, with no customer-facing outage. I built the whole Digital app from an empty folder to production, with server rendering, routing, CI/CD and the cloud deployment. With the designer and the business team I shipped nine A/B experiments, built in code and configured in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
+                "title": "Loyalty and Digital onto a new platform, with no outage for customers",
+                "body": "bol.com moved its Select loyalty and Kobo Plus pages off a legacy Java storefront onto a new server-rendered React platform, and my engagement there was extended three times. I read the old Java to work out exactly what each page did and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and ran the traffic cut-over in reversible steps. Employees first, then a percentage of customers, then everyone, with no customer-facing outage. I built the whole Digital app from an empty folder to production, with server rendering, routing, CI/CD and the cloud deployment. With the designer and the business team I shipped nine A/B experiments, built in code and configured in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
                 "roleLabel": "Senior frontend, Loyalty and Digital",
                 "href": "/experience#experience-bol"
             },
@@ -819,7 +822,7 @@
                 "outcome": "Months to days",
                 "client": "Belastingdienst",
                 "title": "A tax form that content editors build themselves",
-                "body": "A new income-tax form used to take months of engineering and constant back-and-forth with the development team. I built a greenfield low-code visual forms editor with drag-and-drop, conditional logic, validation and i18n, so content editors and designers could build, verify and demo a form themselves. That brought a new form down to a few days. Alongside it I designed a JSON-configurable Angular component architecture for the entrepreneur portal and drove design-system governance with shared Stencil web components that other developers reuse across Angular, React and Vue, which took a new page from one to two weeks to one to two days. Accessibility to WCAG 2.1 AA, with Cypress and Playwright in the pipeline.",
+                "body": "A new income-tax form used to take months of engineering and constant back-and-forth with the development team. I built a greenfield low-code visual forms editor with drag-and-drop, conditional logic, validation and translations, so content editors and designers could build, verify and demo a form themselves. That brought a new form down to a few days. Alongside it I designed a JSON-configurable Angular component architecture for the entrepreneur portal. I also drove the shared Stencil web components that other developers reuse across Angular, React and Vue, which took a new page from one to two weeks to one to two days. Accessibility to WCAG 2.1 AA, with Cypress and Playwright in the pipeline.",
                 "roleLabel": "Senior Frontend Developer, forms editor and design system",
                 "href": "/experience#experience-belastingdienst"
             },
@@ -842,23 +845,15 @@
         ],
         "cta": {
             "title": "Which of these looks like your situation?",
-            "description": "Half an hour on a call is enough to tell whether the same approach fits your platform. Freelance through Hilmar ICT Services, available from 1 October 2026.",
+            "description": "Thirty minutes on a call is enough to tell whether the same approach fits your platform. Freelance through Hilmar ICT Services, available from 1 October 2026.",
             "button": "Book a 30-minute call"
-        },
-        "meta": {
-            "title": "Case Studies | bol.com, Belastingdienst, Postcode Loterij",
-            "description": "Four engagements with measurable outcomes: bol.com, Belastingdienst, Nationale Postcode Loterij and Athlon. Rebuilt without taking the pages offline."
         }
     },
     "contact": {
-        "meta": {
-            "title": "Contact | Hilmar van der Veen, senior frontend engineer",
-            "description": "Book a 30-minute call or send a message. Senior frontend engineer, React and Angular, available from 1 October 2026. Reply within one business day."
-        },
         "hero": {
             "badge": "Two ways to reach me",
             "title": "Book the call, or write to me",
-            "description": "A thirty-minute call gets you a scope. A message works too. No sales talk either way."
+            "description": "A thirty-minute call gets you a scope. For a short question a message is enough."
         },
         "form": {
             "title": "Send a message",
@@ -866,26 +861,25 @@
             "requiredNote": "Fields marked with * are required.",
             "interestsLabel": "I'm interested in",
             "interests": [
-                "Frontend Development",
-                "Full-Stack Development",
-                "Design Systems",
-                "Technical Consulting",
-                "Team Mentoring",
-                "Legacy Migration",
-                "Performance Optimization",
-                "MVP Development"
+                "Frontend development",
+                "Full-stack development",
+                "Design systems",
+                "Technical consulting",
+                "Legacy migration",
+                "Accessibility and WCAG",
+                "Team coaching"
             ],
             "name": "Your name",
             "email": "Email address",
-            "message": "Tell me about your project",
+            "message": "What has to change",
             "submit": "Send message",
             "sending": "Sending...",
             "successMessage": "Thank you. You will hear from me within one business day.",
-            "serverError": "Something went wrong and your message was not sent. Please try again in a moment, or email me directly at hilmar@hilmarvanderveen.com.",
+            "serverError": "Something went wrong and your message was not sent. Try again in a moment, or email me at hilmar@hilmarvanderveen.com.",
             "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
         },
         "cta": {
-            "description": "Thirty minutes, technical and concrete. Bring what has to change and what it runs on today.",
+            "description": "Rather talk it through? Pick a moment that suits you and we go through the system in thirty minutes.",
             "button": "Book a 30-minute call",
             "write": "Send a message",
             "writeAction": "Write me a message"
@@ -930,16 +924,17 @@
             "description": "Each service starts from a problem that already exists. A page where revenue comes in that is stuck on an ageing platform. An application where the backend has to move as well. A team rebuilding the same button in four places. An Angular codebase nobody wants to touch. Pick the description closest to your situation.",
             "services": {
                 "frontend": {
+                    "outcome": "The page stays open while it is rebuilt.",
                     "title": "Frontend Development",
                     "shortDescription": "A page that customers buy through is stuck on a stack you can no longer change quickly. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, page by page, while customers kept using them.",
-                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live without a stop. The old behaviour comes first. I read the existing system to work out exactly what a page does, rebuild it, and ship it behind a gate that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
+                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live without a stop. The old behaviour comes first. I read the existing system to work out exactly what a page does, then rebuild it. It ships behind a switch that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
                     "technologies": {
                         "title": "Technologies and tools"
                     },
                     "benefits": {
                         "title": "What that gives you",
                         "items": [
-                            "Live behind a gate, ramped by percentage",
+                            "Live behind a switch, ramped by percentage",
                             "Reversible in one step",
                             "WCAG 2.2 AA as the default",
                             "Tests and Storybook stories with every component"
@@ -947,6 +942,7 @@
                     }
                 },
                 "fullstack": {
+                    "outcome": "One person from the database to the screen.",
                     "title": "Full-Stack Development",
                     "shortDescription": "The frontend is ready and the endpoints it needs are not, so the release waits. At the Belastingdienst I built the visual forms editor and wrote the backend endpoints it called, so the work did not stop at the API boundary.",
                     "fullDescription": "I take a build from the data all the way to the screen. At Omniplan I moved a legacy AngularJS and .NET application to Angular 9 with a .NET Core REST and gRPC layer, including a modular service for login and membership. At bol.com I treated GraphQL as the contract between frontend and backend. When a field made the interface awkward I went back to the backend engineers to reshape it, and I contributed backend logic in Kotlin when capacity was tight.",
@@ -960,8 +956,9 @@
                     }
                 },
                 "designSystems": {
+                    "outcome": "New pages in days, on one component library.",
                     "title": "Design Systems",
-                    "shortDescription": "Every team builds the same components again and a new page takes weeks. At the Belastingdienst shared components brought a new page down from one to two weeks to one to two days, and at the Nationale Postcode Loterij a campaign site went from weeks to a few days.",
+                    "shortDescription": "Every team builds the same components again and a new page takes weeks. At the Belastingdienst shared components brought a new page down from one to two weeks to one to two days. At the Nationale Postcode Loterij a campaign site went from weeks to a few days.",
                     "fullDescription": "I build the component library and the rules around it, then get it adopted. At the Belastingdienst the shared components were Stencil web components that developers use inside Angular, React and Vue. I paired with developers across several teams and worked with their product owners to unblock the rollout. At the Nationale Postcode Loterij I built a JSON-driven design system in an Nx monorepo with a headless CMS and server-side rendering, used across European labels.",
                     "benefits": {
                         "items": [
@@ -973,9 +970,10 @@
                     }
                 },
                 "consulting": {
+                    "outcome": "A team that needs me less every week.",
                     "title": "Technical Consulting",
-                    "shortDescription": "A team is stuck on a codebase or on a framework nobody has fully learned yet. At Athlon I reviewed the frontend team's code and coached junior and senior developers on Angular, and at the Belastingdienst I taught a senior developer RxJS and streams from the ground up.",
-                    "fullDescription": "More than ten years of frontend work, senior throughout since 2016, put to work on your codebase and your team. I review architecture and code, sit next to developers while they work, and take on the change that unblocks the rest. At bol.com almost every change I shipped touched another team's area, so I aligned with two teams routinely and with up to six at once when a larger feature or a production issue needed it.",
+                    "shortDescription": "A team is stuck on a codebase, or on a framework nobody has fully learned yet. At Athlon I reviewed the frontend team's code and coached junior and senior developers on Angular. At the Belastingdienst I taught a senior developer RxJS and streams from the ground up.",
+                    "fullDescription": "More than ten years of frontend work, senior throughout since 2016, put to work on your codebase and your team. I review architecture and code, sit next to developers while they work, and take on the change that unblocks the rest. At bol.com almost every change I shipped touched another team's area. I aligned with two teams routinely, and with up to six at once when a larger feature or a production issue needed it.",
                     "benefits": {
                         "items": [
                             "Architecture and code review with a written outcome",
@@ -999,17 +997,13 @@
             "contact": "Or send a message"
         },
         "frontend": {
-            "meta": {
-                "title": "Frontend Development Services – Hilmar van der Veen",
-                "description": "Expert frontend development with React, Next.js, Vue.js and modern JavaScript. Building user-centered, high-performance applications that drive results."
-            },
             "hero": {
                 "badge": "Frontend Development",
                 "title": "Pages that earn,",
                 "titleAccent": "rebuilt without downtime",
-                "description": "A page customers buy through is stuck on a platform you can no longer change quickly, and every release feels risky. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React one page at a time, and ran the traffic cut-over myself. Employees first, then a percentage of customers, ramping to everyone, reversible at every step.",
+                "description": "A page customers buy through is stuck on a platform you can no longer change quickly, and every release feels risky. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, one page at a time. I ran the traffic cut-over myself. Employees first, then a percentage of customers, ramping to everyone, reversible at every step.",
                 "features": [
-                    "Live behind a gate, ramped by percentage",
+                    "Live behind a switch, ramped by percentage",
                     "WCAG 2.2 AA as the default"
                 ],
                 "cta": {
@@ -1053,48 +1047,39 @@
                 "items": [
                     {
                         "name": "React",
-                        "description": "Component-based UI library",
-                        "level": "Expert"
+                        "description": "Component-based UI library"
                     },
                     {
                         "name": "Next.js",
-                        "description": "Full-stack React framework",
-                        "level": "Expert"
+                        "description": "Full-stack React framework"
                     },
                     {
                         "name": "Vue.js",
-                        "description": "Progressive JavaScript framework",
-                        "level": "Advanced"
+                        "description": "Progressive JavaScript framework"
                     },
                     {
                         "name": "TypeScript",
-                        "description": "Type-safe JavaScript",
-                        "level": "Expert"
+                        "description": "Type-safe JavaScript"
                     },
                     {
                         "name": "Tailwind CSS",
-                        "description": "Utility-first CSS framework",
-                        "level": "Expert"
+                        "description": "Utility-first CSS framework"
                     },
                     {
                         "name": "Redux/Zustand",
-                        "description": "State management",
-                        "level": "Advanced"
+                        "description": "State management"
                     },
                     {
                         "name": "Angular",
-                        "description": "Full-featured TypeScript framework",
-                        "level": "Expert"
+                        "description": "Full-featured TypeScript framework"
                     },
                     {
                         "name": "NgRx",
-                        "description": "Reactive state management for Angular",
-                        "level": "Advanced"
+                        "description": "Reactive state management for Angular"
                     },
                     {
                         "name": "Signals",
-                        "description": "Modern reactive primitives",
-                        "level": "Advanced"
+                        "description": "Modern reactive primitives"
                     }
                 ]
             },
@@ -1136,7 +1121,7 @@
                         "title": "Ramp the traffic",
                         "description": "Live for employees first, then a slice of customers, then everyone.",
                         "details": [
-                            "Release behind a gate with a stable group per visitor",
+                            "Release behind a switch with a stable group per visitor",
                             "Employees first, then a percentage of the public",
                             "Error monitoring per page from day one",
                             "One switch to send the traffic back"
@@ -1146,7 +1131,7 @@
             },
             "cta": {
                 "title": "Which page is it?",
-                "description": "Tell me which page has to move and what it is stuck on. Thirty minutes, no obligation, a clear answer either way.",
+                "description": "Tell me which page has to move and what it is stuck on. After thirty minutes you know how that move would run in reversible steps.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
                 "action": "Discuss the page"
@@ -1182,10 +1167,6 @@
             }
         },
         "fullstack": {
-            "meta": {
-                "title": "Full-Stack Development Services – Hilmar van der Veen",
-                "description": "Complete web application development from backend to frontend. Expert in Node.js, .NET, Python, databases, and cloud deployment for scalable solutions."
-            },
             "hero": {
                 "badge": "Full-Stack Development",
                 "title": "The whole chain,",
@@ -1232,40 +1213,34 @@
             },
             "technologies": {
                 "title": "Technology stack",
-                "description": "The backend, data and platform work I have done on paid engagements, alongside the frontend.",
+                "description": "The backend, data and platform work I have done alongside the frontend on client engagements.",
                 "categories": [
                     {
                         "name": "Backend",
                         "items": [
                             {
                                 "name": "Node.js",
-                                "description": "Scalable server-side runtime",
-                                "level": "Expert"
+                                "description": "Scalable server-side runtime"
                             },
                             {
                                 "name": "Express",
-                                "description": "Fast, minimal web framework",
-                                "level": "Expert"
+                                "description": "Fast, minimal web framework"
                             },
                             {
                                 "name": "C# .NET",
-                                "description": "Enterprise-grade web framework",
-                                "level": "Expert"
+                                "description": "Enterprise-grade web framework"
                             },
                             {
                                 "name": "Python (FastAPI)",
-                                "description": "High-performance async API framework",
-                                "level": "Advanced"
+                                "description": "High-performance async API framework"
                             },
                             {
                                 "name": "GraphQL",
-                                "description": "Efficient API query language",
-                                "level": "Advanced"
+                                "description": "Efficient API query language"
                             },
                             {
                                 "name": "REST APIs",
-                                "description": "RESTful service architecture",
-                                "level": "Expert"
+                                "description": "RESTful service architecture"
                             }
                         ]
                     },
@@ -1274,13 +1249,11 @@
                         "items": [
                             {
                                 "name": "PostgreSQL",
-                                "description": "Robust relational database",
-                                "level": "Advanced"
+                                "description": "Robust relational database"
                             },
                             {
                                 "name": "MSSQL",
-                                "description": "Microsoft SQL Server database",
-                                "level": "Advanced"
+                                "description": "Microsoft SQL Server database"
                             }
                         ]
                     },
@@ -1289,33 +1262,27 @@
                         "items": [
                             {
                                 "name": "Azure",
-                                "description": "Microsoft cloud platform",
-                                "level": "Advanced"
+                                "description": "Microsoft cloud platform"
                             },
                             {
                                 "name": "AWS",
-                                "description": "Comprehensive cloud platform",
-                                "level": "Advanced"
+                                "description": "Comprehensive cloud platform"
                             },
                             {
                                 "name": "Kubernetes",
-                                "description": "Container orchestration platform",
-                                "level": "Advanced"
+                                "description": "Container orchestration platform"
                             },
                             {
                                 "name": "Docker",
-                                "description": "Containerization platform",
-                                "level": "Advanced"
+                                "description": "Containerization platform"
                             },
                             {
                                 "name": "Nginx",
-                                "description": "High-performance web server",
-                                "level": "Advanced"
+                                "description": "High-performance web server"
                             },
                             {
                                 "name": "CI/CD",
-                                "description": "Continuous integration/deployment",
-                                "level": "Advanced"
+                                "description": "Continuous integration/deployment"
                             }
                         ]
                     }
@@ -1360,7 +1327,7 @@
                         "description": "Deployment, gated release and monitoring, all in place before the traffic arrives.",
                         "details": [
                             "CI/CD to your cloud and Kubernetes",
-                            "Release behind a gate, ramped by percentage",
+                            "Release behind a switch, ramped by percentage",
                             "Error monitoring per page",
                             "A written handover to your team"
                         ]
@@ -1369,7 +1336,7 @@
             },
             "cta": {
                 "title": "What has to be built?",
-                "description": "Describe the application and where the backend stands today. Thirty minutes, no obligation, a clear answer either way.",
+                "description": "Describe the application and where the backend stands today. After thirty minutes you know the order I would build it in.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
                 "action": "Discuss the build"
@@ -1405,10 +1372,6 @@
             }
         },
         "designSystems": {
-            "meta": {
-                "title": "Design Systems Services – Hilmar van der Veen",
-                "description": "Comprehensive design systems and component libraries. Create consistent, scalable digital experiences with reusable components and design tokens."
-            },
             "hero": {
                 "badge": "Design Systems",
                 "title": "One component library,",
@@ -1484,8 +1447,7 @@
                         "items": [
                             {
                                 "name": "Figma",
-                                "description": "Collaborative interface design",
-                                "level": "Expert"
+                                "description": "Collaborative interface design"
                             }
                         ]
                     },
@@ -1494,18 +1456,15 @@
                         "items": [
                             {
                                 "name": "React/Storybook",
-                                "description": "Component development & documentation",
-                                "level": "Expert"
+                                "description": "Component development & documentation"
                             },
                             {
                                 "name": "Design Tokens",
-                                "description": "Systematic design decisions",
-                                "level": "Advanced"
+                                "description": "Systematic design decisions"
                             },
                             {
                                 "name": "TypeScript",
-                                "description": "Type-safe component development",
-                                "level": "Advanced"
+                                "description": "Type-safe component development"
                             }
                         ]
                     },
@@ -1514,8 +1473,7 @@
                         "items": [
                             {
                                 "name": "Markdown",
-                                "description": "Lightweight markup language",
-                                "level": "Expert"
+                                "description": "Lightweight markup language"
                             }
                         ]
                     }
@@ -1569,7 +1527,7 @@
             },
             "cta": {
                 "title": "Which teams are building the same thing twice?",
-                "description": "Tell me how many products share a brand and which frameworks they run on. Thirty minutes, no obligation, a clear answer either way.",
+                "description": "Tell me how many products share a brand and which frameworks they run on. After thirty minutes you know which components could be shared first.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
                 "action": "Scope the migration"
@@ -1605,10 +1563,6 @@
             }
         },
         "consulting": {
-            "meta": {
-                "title": "Technical Consulting Services – Hilmar van der Veen",
-                "description": "Strategic technical guidance and consulting. Architecture reviews, performance optimization, team mentoring, and strategic planning for software development success."
-            },
             "hero": {
                 "badge": "Technical Consulting",
                 "title": "A team that ships faster,",
@@ -1684,23 +1638,19 @@
                         "items": [
                             {
                                 "name": "System Architecture Review",
-                                "description": "Scalability and maintainability assessment",
-                                "level": "Expert"
+                                "description": "Scalability and maintainability assessment"
                             },
                             {
                                 "name": "Technology Stack Planning",
-                                "description": "Future-proof technology decisions",
-                                "level": "Expert"
+                                "description": "Future-proof technology decisions"
                             },
                             {
                                 "name": "Performance Optimization",
-                                "description": "Speed and efficiency improvements",
-                                "level": "Advanced"
+                                "description": "Speed and efficiency improvements"
                             },
                             {
                                 "name": "Security Auditing",
-                                "description": "Vulnerability assessment & best practices",
-                                "level": "Advanced"
+                                "description": "Vulnerability assessment & best practices"
                             }
                         ]
                     },
@@ -1709,33 +1659,28 @@
                         "items": [
                             {
                                 "name": "Code Review & Quality",
-                                "description": "Best practices and code standards",
-                                "level": "Expert"
+                                "description": "Best practices and code standards"
                             },
                             {
                                 "name": "Development Workflows",
-                                "description": "CI/CD and deployment optimization",
-                                "level": "Advanced"
+                                "description": "CI/CD and deployment optimization"
                             },
                             {
                                 "name": "Team Mentoring",
-                                "description": "Skills development and knowledge transfer",
-                                "level": "Expert"
+                                "description": "Skills development and knowledge transfer"
                             }
                         ]
                     },
                     {
-                        "name": "Technical Leadership",
+                        "name": "Planning and risk",
                         "items": [
                             {
                                 "name": "Project Planning",
-                                "description": "Timeline and resource estimation",
-                                "level": "Expert"
+                                "description": "Timeline and resource estimation"
                             },
                             {
                                 "name": "Risk Assessment",
-                                "description": "Technical and business risk evaluation",
-                                "level": "Advanced"
+                                "description": "Technical and business risk evaluation"
                             }
                         ]
                     }
@@ -1789,7 +1734,7 @@
             },
             "cta": {
                 "title": "What is slowing the team down?",
-                "description": "Tell me about the codebase, the framework and where the time goes. Thirty minutes, no obligation, a clear answer either way.",
+                "description": "Tell me about the codebase, the framework and where the time goes. After thirty minutes you know which part I would take on first.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
                 "action": "Scope the team work"
@@ -1828,15 +1773,15 @@
     },
     "notFound": {
         "title": "Page not found",
-        "description": "The page you are looking for does not exist or has moved.",
-        "backHome": "Back to home",
+        "description": "This page does not exist or has moved. The rest of the site is still here.",
+        "backHome": "Back to the homepage",
         "contact": "Contact"
     },
     "about": {
         "hero": {
             "badge": "Freelance senior frontend engineer",
             "title": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards.",
-            "description": "I am a freelance senior frontend engineer, React and Angular, senior throughout since 2016. E-commerce, enterprise and government teams in the Netherlands bring me in when a page that carries revenue has to move to a new platform and stay open while it does.",
+            "description": "I am a freelance senior frontend engineer, React and Angular, senior throughout since 2016. Dutch e-commerce, enterprise and government teams bring me in when a page that carries revenue has to move to a new platform. It has to stay open while it does.",
             "location": "{city}, Netherlands",
             "education": "BSc Physics and Astronomy, University of Amsterdam",
             "linkedin": "LinkedIn",
@@ -1844,7 +1789,7 @@
         },
         "value": {
             "title": "What changes when I join",
-            "subtitle": "Five things that change for a team and a product when I join, and where each one happened.",
+            "subtitle": "Each block names the engagement where it happened.",
             "blocks": [
                 {
                     "title": "The page that brings in money stays open while it is replaced",
@@ -1853,7 +1798,7 @@
                 },
                 {
                     "title": "The team ships faster after I leave",
-                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor so content editors and designers could build and verify a tax form themselves. A new income-tax form went from months of engineering to a few days, and a new page on the shared design system from one to two weeks to one to two days. At the Nationale Postcode Loterij a JSON-driven design system took a campaign site from weeks to a few days. At bol.com marketing swaps content and imagery on the Kobo Plus acquisition page without an engineering release.",
+                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor so content editors and designers could build and verify a tax form themselves. A new income-tax form went from months of engineering to a few days. A new page on the shared design system went from one to two weeks to one to two days. At the Nationale Postcode Loterij a JSON-driven design system took a campaign site from weeks to a few days. At bol.com marketing swaps content and imagery on the Kobo Plus acquisition page without an engineering release.",
                     "evidence": "Belastingdienst 2023 to 2024, Nationale Postcode Loterij 2022 to 2023, bol.com 2025 to 2026"
                 },
                 {
@@ -1868,67 +1813,76 @@
                 },
                 {
                     "title": "If it has to be finished, I take it on",
-                    "body": "Ownership shows in what someone picks up when the work does not fit the job title. At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the legacy Java to extract the specification, rebuilt the pages in React, shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight. The Belastingdienst extended the engagement four times, bol.com three times.",
+                    "body": "Ownership shows in what someone picks up when the work does not fit the job title. At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the legacy Java to extract the specification and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight. The Belastingdienst extended the engagement four times, bol.com three times.",
                     "evidence": "Belastingdienst 2023 to 2024, bol.com 2025 to 2026"
                 }
             ]
         },
         "standards": {
-            "title": "What comes as standard",
-            "body": "Accessibility to WCAG 2.1 AA, and 2.2 AA on the most recent work, is part of my definition of done. Components ship with unit and component tests in Vitest and Testing Library, end-to-end checks in Playwright, and a Storybook story per scenario so the next developer can see every state. I completed the full engineer security curriculum at Certified Secure, live and hands-on, from essential security through web and server security specialist, plus secure development, full-stack security, Kubernetes network security, and training on the GDPR and the EU AI Act. What I build I hand over in writing, so a team can keep it running without me."
+            "title": "What I never leave out",
+            "cards": [
+                {
+                    "title": "Security",
+                    "body": "At Certified Secure I completed the full engineer security curriculum, live and hands-on. It runs from essential security through web and server security specialist, plus secure development, full-stack security and Kubernetes network security, with training on the GDPR and the EU AI Act."
+                },
+                {
+                    "title": "Accessibility and privacy",
+                    "body": "Accessibility to WCAG 2.1 AA is part of the work and not a phase at the end, and 2.2 AA on the most recent engagements."
+                },
+                {
+                    "title": "Verification and handover",
+                    "body": "Components ship with unit and component tests in Vitest and Testing Library, end-to-end checks in Playwright, and a Storybook story per scenario, so the next developer can see every state. What I build I hand over in writing, so a team can keep it running without me."
+                }
+            ]
         },
         "map": {
             "contactLine": "Utrecht one to two days on site, or fully remote."
         },
         "cta": {
             "title": "See whether I fit your team",
-            "description": "Freelance through Hilmar ICT Services, KVK 97564303, from 1 October 2026 and earlier by arrangement. 32 to 40 hours a week, six months or longer, in Dutch or English. Half an hour on a call is enough to know either way.",
+            "description": "Freelance through Hilmar ICT Services, KVK 97564303, from 1 October 2026 and earlier by arrangement. 32 to 40 hours a week, six months or longer, in Dutch or English. Thirty minutes on a call is enough to know whether it fits.",
             "button": "Book a 30-minute call"
-        },
-        "meta": {
-            "title": "About Hilmar van der Veen | Senior Frontend Developer",
-            "description": "I rebuild the pages a business earns its money on without taking them offline. I leave behind a team that ships faster. Freelance from 1 October 2026."
         }
     },
     "cvModal": {
         "title": "Download CV",
         "subtitle": "Hilmar van der Veen",
-        "description": "Thank you for your interest! To provide you with the best service and keep track of who downloads my CV, please fill out this quick form.",
-        "close": "Close modal",
+        "description": "Pick the language and leave your name and email. The CV then opens straight away as a PDF.",
+        "close": "Close",
         "language": {
             "label": "CV language",
             "nl": "Dutch",
             "en": "English"
         },
         "fields": {
-            "name": "Full Name",
-            "email": "Email Address",
-            "purpose": "Purpose of Download"
+            "name": "Full name",
+            "email": "Email address",
+            "purpose": "Why you want it"
         },
         "placeholders": {
-            "name": "Enter your full name",
-            "email": "Enter your email address",
-            "purpose": "Select the reason for downloading"
+            "name": "Your name",
+            "email": "you@company.com",
+            "purpose": "Pick a reason"
         },
         "purposes": {
-            "recruitment": "Recruitment / Job Opportunity",
-            "projectInquiry": "Project Inquiry",
-            "businessPartnership": "Business Partnership",
+            "recruitment": "A role I am filling",
+            "projectInquiry": "An engagement I have in mind",
+            "businessPartnership": "Working together",
             "networking": "Networking",
-            "research": "Research / Information",
-            "other": "Other"
+            "research": "Information",
+            "other": "Something else"
         },
         "validation": {
-            "nameRequired": "Name is required",
-            "emailRequired": "Email is required",
-            "emailInvalid": "Please enter a valid email address",
-            "purposeRequired": "Please select a purpose"
+            "nameRequired": "Enter your name.",
+            "emailRequired": "Enter your email address.",
+            "emailInvalid": "Check the email address, it looks incomplete.",
+            "purposeRequired": "Pick a reason."
         },
-        "privacy": "Your information will only be used to understand who is interested in my profile and will not be shared with third parties.",
+        "privacy": "Your details stay with me and go nowhere else.",
         "buttons": {
             "cancel": "Cancel",
             "download": "Download CV",
-            "downloading": "Processing..."
+            "downloading": "One moment"
         }
     },
     "faq": {
@@ -1964,7 +1918,7 @@
                     },
                     {
                         "question": "Which technologies do you work in?",
-                        "answer": "React and Angular are where the depth sits, with TypeScript throughout. Around that: Next.js and React Router for server-side rendering, GraphQL as the contract with the backend, RxJS in Angular, Tailwind and SCSS, Storybook, Nx monorepos, and testing with Vitest, Jest, Playwright and Cypress. On the platform side Node, Docker, Kubernetes, GitLab CI and Azure DevOps, on Azure, AWS and Google Cloud. I have also written Kotlin and C# on backend work."
+                        "answer": "React and Angular are where the depth sits, with TypeScript throughout. Around that: Next.js and React Router for server-side rendering, GraphQL as the contract with the backend, RxJS in Angular, Tailwind and SCSS, Storybook and Nx monorepos. Testing runs on Vitest, Jest, Playwright and Cypress. On the platform side Node, Docker, Kubernetes, GitLab CI and Azure DevOps, on Azure, AWS and Google Cloud. I have also written Kotlin and C# on backend work."
                     },
                     {
                         "question": "What kind of organisations do you work for?",
@@ -1972,7 +1926,7 @@
                     },
                     {
                         "question": "What are your certifications and education?",
-                        "answer": "BSc Physics and Astronomy at the University of Amsterdam, 2012. Through bol.com I completed the full Certified Secure engineer curriculum: Essential Security, Essential Specialties, Security Specialist, Web Security Specialist and Server Security Specialist, plus hands-on training in secure development, full-stack vulnerabilities and Kubernetes network security, and compliance training on personal data under the GDPR and on the EU AI Act. Accessibility to WCAG 2.1 AA and 2.2 AA is a default in my work."
+                        "answer": "BSc Physics and Astronomy at the University of Amsterdam, 2012. Through bol.com I completed the full Certified Secure engineer curriculum: Essential Security, Essential Specialties, Security Specialist, Web Security Specialist and Server Security Specialist. On top of that came hands-on training in secure development, full-stack vulnerabilities and Kubernetes network security. Compliance training covered personal data under the GDPR and the EU AI Act. Accessibility to WCAG 2.1 AA and 2.2 AA is a default in my work."
                     }
                 ]
             },
@@ -1989,7 +1943,7 @@
                     },
                     {
                         "question": "What do you deliver on a design system?",
-                        "answer": "Design tokens, a component library with variants and states, Storybook as the documentation, and accessibility built into the components. At the Belastingdienst the shared components were Stencil web components used inside Angular, React and Vue, and a new page went from one to two weeks to one to two days. At the Nationale Postcode Loterij a JSON-driven design system brought a campaign site down from weeks to a few days across European labels."
+                        "answer": "Design tokens, a component library with variants and states, Storybook as the documentation, and accessibility built into the components. At the Belastingdienst the shared components were Stencil web components used inside Angular, React and Vue. A new page went from one to two weeks to one to two days. At the Nationale Postcode Loterij a JSON-driven design system brought a campaign site down from weeks to a few days across European labels."
                     },
                     {
                         "question": "What does the consulting and coaching cover?",
@@ -1997,16 +1951,20 @@
                     },
                     {
                         "question": "Can you take over a legacy migration?",
-                        "answer": "That is the work I do most. The old system comes first. I read the existing code to work out exactly what a page does, write that behaviour down, rebuild it, and release it behind a gate that ramps by percentage. At bol.com the legacy was a large Java storefront with its own rendering engine and Handlebars templates, and the rebuild went live page by page. At Athlon it was an Angular 1.6 application that moved to Angular 12."
+                        "answer": "That is the work I do most. The old system comes first. I read the existing code to work out exactly what a page does, write that behaviour down, rebuild it, and release it behind a switch that ramps by percentage. At bol.com the legacy was a large Java storefront with its own rendering engine and Handlebars templates, and the rebuild went live page by page. At Athlon it was an Angular 1.6 application that moved to Angular 12."
                     },
                     {
                         "question": "Do you work on accessibility?",
                         "answer": "Yes. Accessibility is part of building a component. WCAG 2.2 AA at bol.com and WCAG 2.1 AA on the earlier engagements, checked while the components are built, with Playwright and Cypress running the checks in the pipeline."
+                    },
+                    {
+                        "question": "How do you keep a page fast?",
+                        "answer": "By measuring on your own pages. I look at what the server renders, how much data a page fetches and which code the browser really needs. Then I take on the part that carries the most traffic first, and we compare the measurement before and after."
                     }
                 ]
             },
             "pricing": {
-                "title": "Rate and agreement",
+                "title": "Rate and terms",
                 "questions": [
                     {
                         "question": "What is your rate?",
@@ -2039,11 +1997,11 @@
                 "questions": [
                     {
                         "question": "What does the first month look like?",
-                        "answer": "Reading first, then shipping. At bol.com I read the legacy Java pages to work out what they did, and within weeks a page of mine was live in production and I was reviewing merge requests for other teams. Elsewhere it goes the same way. Understand the system, ship something real early, and start reviewing the work around me."
+                        "answer": "Reading first, then shipping. At bol.com I read the legacy Java pages to work out what they did. Within weeks a page of mine was live in production and I was reviewing merge requests for other teams. Elsewhere it goes the same way. Understand the system, ship something real early, and start reviewing the work around me."
                     },
                     {
                         "question": "How do you put changes live?",
-                        "answer": "Behind a gate, ramped by percentage, and reversible. A change goes live for employees first, then for a slice of customers, with each visitor kept in the same group, then for everyone. One switch sends the traffic back. On the bol.com account pages that ramp surfaced a routing order bug before customers ever saw it."
+                        "answer": "Behind a switch, ramped by percentage, and reversible. A change goes live for employees first, then for a slice of customers, with each visitor kept in the same group, then for everyone. One switch sends the traffic back. On the bol.com account pages that ramp surfaced a routing order bug before customers ever saw it."
                     },
                     {
                         "question": "What do you leave behind when the engagement ends?",
@@ -2084,7 +2042,7 @@
                     },
                     {
                         "question": "How do you handle confidentiality and intellectual property?",
-                        "answer": "Client code stays with the client. The reasoning comes with me, which is why I can explain any decision on this site in a technical interview in any depth without showing anyone else's repository. Everything I build in an engagement belongs to the client."
+                        "answer": "Client code stays with the client. The reasoning comes with me, so I can explain any decision on this site in a technical conversation in as much depth as you want. Everything I build in an engagement belongs to the client."
                     },
                     {
                         "question": "What if we turn out not to be a fit?",
@@ -2097,8 +2055,7 @@
             "title": "Still have a question?",
             "description": "Thirty minutes, no obligation, and a clear answer either way. Or send the question in a message and you get a written answer.",
             "contact": "Or send a message",
-            "book": "Book a 30-minute call",
-            "call": "Call directly"
+            "book": "Book a 30-minute call"
         }
     },
     "breadcrumb": {
@@ -2108,16 +2065,16 @@
         "frontend": "Frontend Development",
         "fullstack": "Full-Stack Development",
         "designSystems": "Design Systems",
-        "consulting": "Consulting",
+        "consulting": "Technical Consulting",
         "projects": "Projects",
         "about": "About",
         "contact": "Contact",
-        "book": "Book Appointment",
+        "book": "Book a call",
         "faq": "FAQ",
         "privacy": "Privacy",
         "blog": "Blog",
-        "terms": "Terms of Service",
-        "cookies": "Cookie Policy",
+        "terms": "Terms of service",
+        "cookies": "Cookie policy",
         "disclaimer": "Disclaimer",
         "search": "Search",
         "experience": "Work history"
@@ -2126,7 +2083,7 @@
         "title": "Search",
         "description": "Find a page, an engagement or an article on this site.",
         "inputLabel": "Search the site",
-        "placeholder": "Search the site…",
+        "placeholder": "Page, engagement or article",
         "resultsCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
         "empty": "No results found. Try another word, or book a call and ask."
     },
@@ -2134,14 +2091,10 @@
         "lastUpdated": "Last updated"
     },
     "booking": {
-        "meta": {
-            "title": "Book a 30-minute call – Hilmar van der Veen",
-            "description": "Pick a time, leave your name and email, and the invitation lands in your calendar. A 30-minute call with a senior frontend engineer, available from 1 October 2026."
-        },
         "hero": {
             "badge": "How most engagements start",
             "title": "Book a 30-minute call",
-            "description": "Most engagements begin with a 30-minute call. Tell me what has to change and what it runs on today, and you leave with a scope. The invitation lands in your calendar right away.",
+            "description": "Tell me what has to change and what it runs on today, and you leave with a scope.",
             "facts": [
                 "30 minutes",
                 "Straight into your calendar",
@@ -2175,7 +2128,7 @@
                 "company": "Company",
                 "companyPlaceholder": "Company name",
                 "topic": "What would you like to discuss?",
-                "topicPlaceholder": "The surface that has to change and what it runs on today",
+                "topicPlaceholder": "For example: our order page has to move to React and cannot go offline",
                 "optional": "optional",
                 "errors": {
                     "nameRequired": "Enter your name.",
@@ -2201,9 +2154,18 @@
             "topic": "Topic",
             "topicEmpty": "Optional",
             "expectTitle": "What to expect",
-            "expectations": ["Thirty minutes, technical and concrete. Bring what has to change and what it runs on today.", "At the end you know whether I am the right person for it and what the first step is.", "The invitation lands in your calendar right away, with a confirmation by email."],
+            "expectations": [
+                "Thirty minutes, technical and concrete. Ask anything about approach, planning and rate.",
+                "At the end you know whether I am the right person for it and what the first step is.",
+                "The confirmation and the calendar invitation arrive right after you book."
+            ],
             "practicalTitle": "Practical",
-            "practical": ["Available from 1 October 2026, earlier by arrangement", "Utrecht, hybrid or remote, 1 to 2 days on site works well", "Freelance ZZP via Hilmar ICT Services, KVK 97564303", "€95 to €125 per hour, depending on project type and work"],
+            "practical": [
+                "Available from 1 October 2026, earlier by arrangement",
+                "Utrecht, hybrid or remote, 1 to 2 days on site works well",
+                "Freelance ZZP via Hilmar ICT Services, KVK 97564303",
+                "€95 to €125 per hour, depending on project type and work"
+            ],
             "alternativeLead": "Rather not book? Email",
             "alternativeOr": "or call",
             "privacy": "Your details go only into the calendar invitation and the confirmation email."
@@ -2218,7 +2180,7 @@
             "title": "It is in the calendar",
             "message": "Thank you, {name}. The call is booked and the invitation is on its way.",
             "detailsLabel": "Your call",
-            "email": "Confirmation and invitation sent to {email}.",
+            "email": "Confirmation and invitation sent to {email}. If it has to move, just reply to that email.",
             "home": "Back to the homepage",
             "another": "Book another call"
         },
@@ -2226,8 +2188,8 @@
             "emailAction": "Email me",
             "callAction": "Call me",
             "submissionFailed": "The booking did not go through",
-            "loadSlotsFailed": "The available times could not be loaded right now. Try again in a moment, or email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
-            "submissionFailedDetail": "Your booking did not go through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947 and I will schedule the call for you.",
+            "loadSlotsFailed": "The available times could not be loaded. Try again in a moment. You can also email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
+            "submissionFailedDetail": "Your booking did not go through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947. I will schedule the call for you.",
             "tooManyRequests": "Too many attempts in a short time. Wait a minute and try again."
         }
     },
@@ -2235,7 +2197,7 @@
         "about": {
             "name": "Hilmar van der Veen",
             "title": "Senior Frontend Engineer",
-            "description": "Senior frontend engineer, ten-plus years in React and Angular, rebuilding the pages Dutch enterprises earn their money on without taking them offline.",
+            "description": "Freelance senior frontend engineer. React and Angular, in the Randstad and remote.",
             "location": "Zandvoort NL • Utrecht, hybrid or remote",
             "availability": "Available from 1 October 2026"
         },
@@ -2246,13 +2208,12 @@
                 "fullstack": "Full-Stack Development",
                 "designSystems": "Design Systems",
                 "consulting": "Technical Consulting"
-            },
-            "bookConsultation": "Book a 30-minute call"
+            }
         },
         "quickLinks": {
-            "title": "Quick Links",
+            "title": "Quick links",
             "items": {
-                "about": "About Me",
+                "about": "About me",
                 "experience": "Work history",
                 "projects": "Projects",
                 "blog": "Blog",
@@ -2263,16 +2224,16 @@
         "legal": {
             "title": "Legal",
             "items": {
-                "privacy": "Privacy Policy",
-                "terms": "Terms of Service",
-                "cookies": "Cookie Policy",
+                "privacy": "Privacy policy",
+                "terms": "Terms of service",
+                "cookies": "Cookie policy",
                 "disclaimer": "Disclaimer"
             }
         },
         "contact": {
-            "title": "Get In Touch",
+            "title": "Get in touch",
             "social": {
-                "title": "Connect"
+                "title": "Elsewhere"
             }
         },
         "bottom": {
@@ -2283,7 +2244,7 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Frontend engineering, in depth",
-            "subtitle": "Practical, example-driven articles on modern React architecture, testing, SEO and routing — the patterns I use on real production work."
+            "subtitle": "Practical articles with examples on modern React architecture, testing, SEO and routing. These are the patterns I use on real production work."
         },
         "minRead": "min read",
         "publishedOn": "Published",
@@ -2299,9 +2260,9 @@
             "fundamentals": "Fundamentals"
         },
         "cta": {
-            "title": "Building something ambitious?",
-            "text": "I help teams ship fast, well-tested, well-architected frontends. Let’s talk about your project.",
-            "button": "Get in touch"
+            "title": "Does your team run into this too?",
+            "text": "I work on exactly these questions as a freelance senior frontend engineer. Tell me what is going on at your end and you hear whether I am the right person for it.",
+            "button": "Book a 30-minute call"
         },
         "breadcrumbLabel": "Breadcrumb",
         "homeLabel": "Home"

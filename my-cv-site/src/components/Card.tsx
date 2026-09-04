@@ -1,15 +1,24 @@
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+export type CardVariant = "default" | "tinted";
+
+const VARIANTS: Record<CardVariant, string> = {
+  default: "bg-white border-gray-200",
+  tinted: "bg-bgLight border-gray-200",
+};
+
 type CardProps = {
+  variant?: CardVariant;
   className?: string;
   children: ReactNode;
 };
 
-export const Card = ({ className, children }: CardProps) => (
+export const Card = ({ variant = "default", className, children }: CardProps) => (
   <div
     className={twMerge(
-      "bg-white rounded-xl border border-gray-200 shadow-sm p-7",
+      "rounded-xl border shadow-sm p-7",
+      VARIANTS[variant],
       className
     )}
   >

@@ -4,8 +4,8 @@ import { Code, Eye, Search, Smartphone, Users, BarChart3, Zap, Palette } from "l
 import { ServiceDetailPage } from "@/features/services";
 import type {
   ServiceEngagementDeliverable,
-  ServiceLevelledItem,
   ServiceProcessStep,
+  ServiceTechnologyItem,
   ServiceTitledItem,
 } from "@/features/services";
 import { SEOFactory } from "@/lib/seo";
@@ -32,7 +32,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
   const tServices = await getTranslations({ locale, namespace: "services" });
   const seoData = SEOFactory.frontendService(locale as Locale);
 
-  const technologyItems = t.raw("technologies.items") as ServiceLevelledItem[];
+  const technologyItems = t.raw("technologies.items") as ServiceTechnologyItem[];
   const processSteps = t.raw("process.steps") as Array<{
     title: string;
     description: string;

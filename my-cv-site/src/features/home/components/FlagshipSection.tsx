@@ -27,11 +27,12 @@ export const FlagshipSection = () => {
             id="flagship-heading"
             title={t("title")}
             subtitle={t("intro")}
+            size="display"
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {cards.map((card, index) => (
-            <Card key={index}>
+            <Card key={index} variant="tinted">
               <h3 className="text-base font-bold text-brand-navy mb-2">
                 {card.title}
               </h3>

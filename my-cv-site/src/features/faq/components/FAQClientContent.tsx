@@ -10,16 +10,13 @@ import {
   Users,
   ChevronDown,
   ChevronUp,
-  Mail,
-  Calendar,
-  Phone,
 } from "lucide-react";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
-import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import { Link } from "@/i18n/navigation";
 import { FAQ_CATEGORY_IDS, type FaqCategoryId } from "../categories";
 
 type FaqQuestion = {
@@ -35,9 +32,13 @@ const CATEGORY_ICONS: Record<FaqCategoryId, typeof HelpCircle> = {
   collaboration: Users,
 };
 
+const INITIAL_OPEN_ITEMS = FAQ_CATEGORY_IDS.map(
+  (_, categoryIndex) => categoryIndex * 100
+);
+
 export function FAQClientContent() {
   const t = useTranslations("faq");
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [openItems, setOpenItems] = useState<number[]>(INITIAL_OPEN_ITEMS);
 
   const toggleItem = (index: number) => {
     setOpenItems((prev) =>
@@ -158,23 +159,16 @@ export function FAQClientContent() {
             align="center"
             onDark
           />
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button href="/contact" variant="white" size="lg">
-              <Mail className="h-5 w-5" aria-hidden="true" />
-              {t("cta.contact")}
-            </Button>
-            <Button href="/book" variant="outlineOnDark" size="lg">
-              <Calendar className="h-5 w-5" aria-hidden="true" />
+          <div className="flex flex-col items-center gap-4">
+            <Button href="/book" variant="white" size="lg">
               {t("cta.book")}
             </Button>
-            <Button
-              href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
-              variant="outlineOnDark"
-              size="lg"
+            <Link
+              href="/contact"
+              className="text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
             >
-              <Phone className="h-5 w-5" aria-hidden="true" />
-              {t("cta.call")}
-            </Button>
+              {t("cta.contact")}
+            </Link>
           </div>
         </Container>
       </Section>

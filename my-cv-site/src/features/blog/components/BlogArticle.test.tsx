@@ -69,6 +69,9 @@ describe("BlogArticle", () => {
     expect(screen.getByText("Work together?")).toBeInTheDocument();
     expect(screen.getByText("Back to all articles")).toBeInTheDocument();
     expect(screen.getByText(/June/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Get in touch" })
+    ).toHaveAttribute("href", "/book");
   });
 
   it("renders the Dutch title when the locale is nl", () => {

@@ -25,4 +25,10 @@ describe("CloseSection", () => {
       "/contact"
     );
   });
+
+  it("keeps a visible boundary so the close band does not merge into the footer", () => {
+    const { container } = render(<CloseSection />);
+    const section = container.querySelector("section");
+    expect(section).toHaveClass("border-b", "bg-brand-navy-deep");
+  });
 });

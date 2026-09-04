@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { StickyCallToActionBar } from "@/components/StickyCallToActionBar";
 import { AnalyticsConsent, GoogleTagManager } from "@/features/analytics";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
@@ -124,6 +125,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <main className="flex-1 pt-[var(--header-height)]">{children}</main>
             <Footer />
           </div>
+          <StickyCallToActionBar />
         </NextIntlClientProvider>
 
         {gtmId && <AnalyticsConsent labels={consentLabels} />}

@@ -61,6 +61,23 @@ describe("ResultsStrip", () => {
     expect(cells).toHaveLength(items.length);
   });
 
+  it("gives every stat cell fixed rows so short details never leave a gap", () => {
+    const { container } = render(<ResultsStrip />);
+    const cells = container.querySelectorAll(".border-l-\\[3px\\]");
+    for (const cell of cells) {
+      expect(cell).toHaveClass("lg:grid-rows-[5rem_2.5rem_1fr]");
+      expect(cell).not.toHaveClass("lg:grid-rows-subgrid");
+      expect(cell).not.toHaveClass("lg:row-span-3");
+    }
+  });
+
+  it("gives the value the emerald figure treatment", () => {
+    render(<ResultsStrip />);
+    for (const item of items) {
+      expect(screen.getByText(item.value)).toHaveClass("text-primary");
+    }
+  });
+
   it("renders the caveat text", () => {
     render(<ResultsStrip />);
     expect(screen.getByText("caveat")).toBeInTheDocument();

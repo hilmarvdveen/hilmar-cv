@@ -22,6 +22,12 @@ describe("AnalyticsConsent", () => {
     );
   });
 
+  it("keeps the accept button off the site's one action colour", () => {
+    render(<AnalyticsConsent labels={labels} />);
+    const accept = screen.getByRole("button", { name: "Accept" });
+    expect(accept).not.toHaveClass("bg-emerald-700");
+  });
+
   it("stores the grant, announces it and hides the banner on Accept", async () => {
     const announced = vi.fn();
     window.addEventListener(ANALYTICS_CONSENT_EVENT, announced);

@@ -16,15 +16,14 @@ export type ServiceTitledItem = {
   Icon: ServiceIcon;
 };
 
-export type ServiceLevelledItem = {
+export type ServiceTechnologyItem = {
   name: string;
   description: string;
-  level: string;
 };
 
 export type ServiceTechnologyGroup = {
   name?: string;
-  items: ServiceLevelledItem[];
+  items: ServiceTechnologyItem[];
 };
 
 export type ServiceProcessStep = {
@@ -85,19 +84,6 @@ export type ServiceDetailPageProps = {
     bookLabel: string;
     viewAllLabel: string;
   };
-};
-
-const EXPERT_LEVELS = ["Expert"];
-const ADVANCED_LEVELS = ["Advanced", "Gevorderd"];
-
-const levelPillClassName = (level: string): string => {
-  if (EXPERT_LEVELS.includes(level)) {
-    return "bg-emerald-50 text-emerald-800";
-  }
-  if (ADVANCED_LEVELS.includes(level)) {
-    return "bg-brand-navy/10 text-brand-navy";
-  }
-  return "bg-gray-100 text-gray-700";
 };
 
 const flipBackground = (background: SectionBackground): SectionBackground =>
@@ -168,6 +154,24 @@ export const ServiceDetailPage = ({
         </ul>
       </PageHero>
 
+      <Section background="navy" padding="compact">
+        <Container>
+          <ul
+            aria-label={engagement.termsLabel}
+            className="flex flex-wrap justify-center gap-2"
+          >
+            {engagement.terms.map((term) => (
+              <li
+                key={term}
+                className="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 sm:rounded-lg sm:px-4 sm:py-2 sm:text-sm"
+              >
+                {term}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
       <Section background="white" aria-labelledby="service-engagement-heading">
         <Container>
           <SectionTitle
@@ -188,19 +192,6 @@ export const ServiceDetailPage = ({
               </Card>
             ))}
           </div>
-          <ul
-            className="mt-8 flex flex-wrap gap-2"
-            aria-label={engagement.termsLabel}
-          >
-            {engagement.terms.map((term) => (
-              <li
-                key={term}
-                className="rounded-md bg-gray-100 px-3 py-1 text-sm text-gray-700 ring-1 ring-gray-300"
-              >
-                {term}
-              </li>
-            ))}
-          </ul>
         </Container>
       </Section>
 
@@ -262,16 +253,9 @@ export const ServiceDetailPage = ({
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {group.items.map((item) => (
                       <Card key={item.name}>
-                        <div className="flex items-start justify-between gap-3">
-                          <ItemHeading className="text-lg font-bold text-textMain">
-                            {item.name}
-                          </ItemHeading>
-                          <span
-                            className={`shrink-0 rounded-full px-2 py-1 text-xs font-medium ${levelPillClassName(item.level)}`}
-                          >
-                            {item.level}
-                          </span>
-                        </div>
+                        <ItemHeading className="text-lg font-bold text-textMain">
+                          {item.name}
+                        </ItemHeading>
                         <p className="mt-3 text-gray-600">{item.description}</p>
                       </Card>
                     ))}
@@ -331,12 +315,9 @@ export const ServiceDetailPage = ({
             align="center"
             onDark
           />
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="flex justify-center">
             <Button href="/book" variant="white" size="lg">
               {callToAction.bookLabel}
-            </Button>
-            <Button href="/services" variant="outlineOnDark" size="lg">
-              {callToAction.viewAllLabel}
             </Button>
           </div>
         </Container>

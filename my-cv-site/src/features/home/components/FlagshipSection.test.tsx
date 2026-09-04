@@ -109,4 +109,18 @@ describe("FlagshipSection", () => {
     expect(section).toHaveAttribute("aria-labelledby", "flagship-heading");
     expect(heading).toHaveAttribute("id", "flagship-heading");
   });
+
+  it("renders the flagship heading at display size", () => {
+    render(<FlagshipSection />);
+    const heading = screen.getByRole("heading", {
+      name: flagshipMessages.title,
+    });
+    expect(heading).toHaveClass("text-3xl", "sm:text-4xl", "md:text-5xl");
+  });
+
+  it("gives the flagship cards the tinted surface", () => {
+    render(<FlagshipSection />);
+    const firstCardTitle = screen.getByText(flagshipMessages.cards[0].title);
+    expect(firstCardTitle.closest("div")).toHaveClass("bg-bgLight");
+  });
 });

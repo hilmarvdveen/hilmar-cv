@@ -13,6 +13,13 @@ vi.mock("next-intl", () => {
         { title: "Block two", body: "Body two", evidence: "Evidence two" },
       ];
     }
+    if (key === "standards.cards") {
+      return [
+        { title: "Security", body: "Security body" },
+        { title: "Accessibility and privacy", body: "Accessibility body" },
+        { title: "Verification and handover", body: "Verification body" },
+      ];
+    }
     return [];
   };
   return { useTranslations: () => t, useLocale: () => "en" };
@@ -62,6 +69,43 @@ describe("AboutPageContent", () => {
   it("renders the CV download trigger with the hero label", () => {
     render(<AboutPageContent />);
     expect(screen.getByRole("button", { name: "hero.cv" })).toBeInTheDocument();
+  });
+
+  it("orders the hero actions as book, then LinkedIn, then the CV download", () => {
+    render(<AboutPageContent />);
+    const bookLink = screen.getAllByRole("link", { name: "cta.button" })[0];
+    const linkedinLink = screen.getByRole("link", { name: "hero.linkedin" });
+    const cvButton = screen.getByRole("button", { name: "hero.cv" });
+
+    expect(bookLink).toHaveAttribute("href", "/book");
+    expect(
+      bookLink.compareDocumentPosition(linkedinLink) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(
+      linkedinLink.compareDocumentPosition(cvButton) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it("renders the standards prose as three cards", () => {
+    render(<AboutPageContent />);
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Security" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("Security body")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Accessibility and privacy",
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Verification and handover",
+      })
+    ).toBeInTheDocument();
   });
 
   it("renders the Netherlands map alongside the booking call to action", () => {

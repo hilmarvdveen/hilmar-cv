@@ -16,9 +16,9 @@ vi.mock("next/image", () => ({
 }));
 
 describe("ClientLogosCarousel", () => {
-  it("renders client logos", () => {
-    const { container } = render(<ClientLogosCarousel />);
-    expect(container.firstChild).toBeTruthy();
+  it("renders every client logo as a link, by role", () => {
+    render(<ClientLogosCarousel />);
+    expect(screen.getAllByRole("link")).toHaveLength(12);
   });
 
   it("links every client to its engagement on the experience page", () => {
@@ -32,6 +32,7 @@ describe("ClientLogosCarousel", () => {
       container.querySelector('a[href="/experience#experience-belastingdienst"]')
     ).toBeTruthy();
     expect(container.querySelector('a[href="/experience#experience-bol"]')).toBeTruthy();
+    expect(container.querySelector('a[href="/experience#experience-athlon"]')).toBeTruthy();
   });
 
   it("renders the bol.com logo asset", () => {
@@ -39,9 +40,12 @@ describe("ClientLogosCarousel", () => {
     expect(container.querySelector('img[src="/logos/bol.svg"]')).toBeTruthy();
   });
 
-  it("renders the section heading and the invite line", () => {
+  it("renders the section heading and the invite line, with the indicator row retired", () => {
     render(<ClientLogosCarousel />);
     expect(screen.getByRole("heading", { level: 2, name: "title" })).toBeInTheDocument();
     expect(screen.getByText("invite")).toBeInTheDocument();
+    expect(screen.queryByText("indicator1")).not.toBeInTheDocument();
+    expect(screen.queryByText("indicator2")).not.toBeInTheDocument();
+    expect(screen.queryByText("indicator3")).not.toBeInTheDocument();
   });
 });

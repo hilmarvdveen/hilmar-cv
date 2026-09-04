@@ -24,8 +24,14 @@ vi.mock("next/link", () => ({
   ),
 }));
 vi.mock("next/image", () => ({
-  // eslint-disable-next-line @next/next/no-img-element
-  default: (p: Record<string, unknown>) => <img alt="" src={String(p.src ?? "")} />,
+  default: (p: Record<string, unknown>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      alt={String(p.alt ?? "")}
+      className={String(p.className ?? "")}
+      src={String(p.src ?? "")}
+    />
+  ),
 }));
 
 describe("HeroSection", () => {
@@ -57,5 +63,15 @@ describe("HeroSection", () => {
   it("renders the CTA note under the button row", () => {
     render(<HeroSection />);
     expect(screen.getByText("ctaNote")).toBeInTheDocument();
+  });
+
+  it("hides the reader line on phones and shows it from sm so the button clears the fold", () => {
+    render(<HeroSection />);
+    expect(screen.getByText("readerLine")).toHaveClass("hidden", "sm:block");
+  });
+
+  it("shrinks the byline face to 48px on phones", () => {
+    render(<HeroSection />);
+    expect(screen.getByAltText("imageAlt")).toHaveClass("h-12", "w-12");
   });
 });

@@ -126,6 +126,104 @@ The header is an app bar below `lg`:
   400px so the label fits on the narrowest phones.
 - The hamburger is a 24px icon with `p-3`, which makes the 48px row.
 
+## Homepage consistency pass (4 September 2026)
+
+Package R1 of the P5/P7/P8 joint review board pass (see
+`Hilmar/review-board/2026-09-03-P5-P7-P8-joint.md`, section 1 "the six
+questions" and the code change list C-1 to C-6, C-20, C-21).
+
+### `SectionTitle` sizes and character budgets
+
+`SectionTitle` takes `size?: "display" | "default" | "compact"`, default
+`"default"`, which is pixel-identical to the size every section used before
+this pass.
+
+| Size | Classes | Use | Budget (characters) |
+|---|---|---|---|
+| `display` | `text-3xl sm:text-4xl md:text-5xl` | the flagship heading only | 62, two lines at 1280, three at 390 |
+| `default` | `text-3xl md:text-4xl` | most sections | 47, two lines at 390 |
+| `compact` | `text-[26px] leading-[1.15] sm:text-3xl md:text-4xl` | headings that carry the whole message on their own (track record, method, standards, stack, hiring shapes, the projects showcase) | 55, two lines at 390 |
+
+This package applies `size="display"` to the flagship section, the only
+consumer inside its ownership. The `compact` consumers named above belong to
+other sections and still need the prop applied where those files are owned.
+
+### Results strip: explicit rows instead of subgrid
+
+`ResultsStrip` used to size each tile with `lg:row-span-3 lg:grid
+lg:grid-rows-subgrid` against a `lg:grid-rows-[auto_auto_auto]` parent. Auto
+sizing made every row as tall as its tallest cell, which left roughly 70px of
+white space under short details on the other tiles.
+
+Each tile is now its own three-row grid with fixed tracks,
+`lg:grid-rows-[5rem_2.5rem_1fr]`: the value box is always two lines tall, the
+label box is always two lines tall, and the detail takes whatever is left.
+Tiles no longer depend on their neighbours' content height. The value carries
+the emerald figure treatment (`text-primary` instead of `text-brand-navy`) so
+the numbers read as numbers against the navy body copy around them.
+
+### Client logos: a static grid, not a carousel
+
+`ClientLogosCarousel` no longer auto-scrolls. The CSS-driven `.slider` marquee
+(`@keyframes autoRun`, the white card background, the per-brand colour
+variables) is gone from `globals.css`. Logos render in a plain responsive grid
+(2 columns on phones up to 6 at `lg`), grayscale by default with
+`group-hover:grayscale-0` revealing the logo's own colour on hover. Because
+nothing scrolls, every logo including the four named clients (bol.com,
+Belastingdienst, Nationale Postcode Loterij, Athlon) is on screen at once
+instead of only some of them at any one scroll frame. The three sector
+indicator lines under the logos are gone, they repeated hero chips from two
+screens earlier. What is left under the title: one subtitle line and the
+invite line.
+
+### Card tinted variant
+
+`Card` takes `variant?: "default" | "tinted"`. `default` is the existing
+white surface. `tinted` swaps to `bg-bgLight` so a card grid sitting on a
+`background="white"` `Section` gets its own definition instead of reading as
+flat white-on-white. The flagship cards use it, since the flagship section
+(white background) sits directly above the track record cards (light
+background, white cards), and without the swap the two adjacent card grids
+read as one long strip.
+
+### Close band boundary
+
+`CloseSection` and the footer are both `bg-brand-navy`, back to back, which
+read as one 1000px navy field. `CloseSection` now overrides to
+`bg-brand-navy-deep` (already defined in `globals.css`, previously unused)
+with a `border-b border-white/10` seam, so the close band is visibly its own
+element above the footer rather than a continuation of it.
+
+### Sticky call-to-action bar and `--bottom-bar-offset`
+
+`StickyCallToActionBar` (`src/components/StickyCallToActionBar.tsx`) is
+mounted once in `src/app/[locale]/layout.tsx`, inside `<body>`, alongside
+`AnalyticsConsent`. It renders nothing until the visitor has scrolled past
+the page's hero, then shows one `Button href="/book"` in a bottom bar
+(`fixed inset-x-0 bottom-0 z-40 ... lg:hidden`), so mobile and tablet
+visitors always have the booking action one thumb away without the hero's
+button leaving the screen forever.
+
+It has no reference to any specific hero component, which matters because the
+homepage hero (`HeroSection`) and every other page's hero (`PageHero`) are
+different components. Instead it observes `document.querySelector("main")
+?.firstElementChild`, which is always the page's hero regardless of which
+component renders it, with a plain `IntersectionObserver`: once that element
+is no longer intersecting the viewport, the bar appears. This is the same
+"appears after the hero leaves the viewport" behaviour the review board asked
+for, without threading a sentinel prop through every hero component.
+
+The bar is hidden entirely on `/book`, which already has its own sticky
+bar inside `BookingForm`. It measures its own rendered height with a
+`ResizeObserver` and writes it to the `--header-height`-style custom property
+`--bottom-bar-offset` on `<html>`, exactly like `BookingForm`'s sticky bar
+does. `AnalyticsConsent` reads that same property
+(`bottom-[var(--bottom-bar-offset,0px)]`) so the cookie banner always stacks
+above whichever bottom bar is currently showing, booking's or this one, and
+sits flush with the viewport bottom when neither is present. The property is
+removed whenever the bar is not rendered, so the banner does not carry a
+stale offset from a page that no longer has a bottom bar.
+
 ## WCAG 2.2 pass (31 August 2026)
 
 Contrast and focus fixes applied after a UX-agent audit:

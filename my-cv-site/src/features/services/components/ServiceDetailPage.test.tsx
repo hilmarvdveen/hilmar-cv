@@ -63,10 +63,10 @@ const baseProps: ServiceDetailPageProps = {
       {
         name: "Core stack",
         items: [
-          { name: "React", description: "Component-based UI library.", level: "Expert" },
-          { name: "Next.js", description: "Full-stack React framework.", level: "Advanced" },
-          { name: "Vue.js", description: "Progressive framework.", level: "Gevorderd" },
-          { name: "Redux", description: "State management.", level: "Familiar" },
+          { name: "React", description: "Component-based UI library." },
+          { name: "Next.js", description: "Full-stack React framework." },
+          { name: "Vue.js", description: "Progressive framework." },
+          { name: "Redux", description: "State management." },
         ],
       },
       {
@@ -74,7 +74,6 @@ const baseProps: ServiceDetailPageProps = {
           {
             name: "Tailwind CSS",
             description: "Utility-first styling.",
-            level: "Beginner",
           },
         ],
       },
@@ -144,7 +143,7 @@ describe("ServiceDetailPage", () => {
     ).toHaveAttribute("href", "/contact");
   });
 
-  it("numbers the engagement deliverables and renders every term", () => {
+  it("numbers the engagement deliverables", () => {
     render(<ServiceDetailPage {...baseProps} />);
     const engagementRegion = screen.getByRole("region", {
       name: baseProps.engagement.title,
@@ -155,6 +154,10 @@ describe("ServiceDetailPage", () => {
       expect(screen.getByText(deliverable.title)).toBeInTheDocument();
       expect(screen.getByText(deliverable.description)).toBeInTheDocument();
     }
+  });
+
+  it("renders the engagement terms as a fact strip directly under the hero", () => {
+    render(<ServiceDetailPage {...baseProps} />);
     const termsList = screen.getByRole("list", {
       name: baseProps.engagement.termsLabel,
     });
@@ -215,20 +218,11 @@ describe("ServiceDetailPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("colours the expert level pill emerald", () => {
+  it("renders no self-rated level badge on a technology card", () => {
     render(<ServiceDetailPage {...baseProps} />);
-    expect(screen.getByText("Expert").className).toContain("bg-emerald-50");
-  });
-
-  it("colours the advanced and gevorderd level pills navy", () => {
-    render(<ServiceDetailPage {...baseProps} />);
-    expect(screen.getByText("Advanced").className).toContain("bg-brand-navy/10");
-    expect(screen.getByText("Gevorderd").className).toContain("bg-brand-navy/10");
-  });
-
-  it("colours every other level pill gray", () => {
-    render(<ServiceDetailPage {...baseProps} />);
-    expect(screen.getByText("Familiar").className).toContain("bg-gray-100");
+    expect(screen.queryByText("Expert")).toBeNull();
+    expect(screen.queryByText("Advanced")).toBeNull();
+    expect(screen.queryByText("Gevorderd")).toBeNull();
   });
 
   it("renders every process step numbered, with its title and details", () => {
@@ -248,14 +242,14 @@ describe("ServiceDetailPage", () => {
     }
   });
 
-  it("links the final call to action to book and services", () => {
+  it("links the final call to action to book, as the one forward action", () => {
     render(<ServiceDetailPage {...baseProps} />);
     expect(
       screen.getByRole("link", { name: baseProps.callToAction.bookLabel })
     ).toHaveAttribute("href", "/book");
     expect(
-      screen.getByRole("link", { name: baseProps.callToAction.viewAllLabel })
-    ).toHaveAttribute("href", "/services");
+      screen.queryByRole("link", { name: baseProps.callToAction.viewAllLabel })
+    ).not.toBeInTheDocument();
   });
 
   it("renders the structured data script", () => {

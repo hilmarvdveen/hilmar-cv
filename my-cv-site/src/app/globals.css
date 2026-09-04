@@ -27,134 +27,14 @@ html {
   scroll-behavior: smooth;
 }
 
-.slider {
-  position: relative;
-  width: 100%;
-  height: var(--height);
-  mask-image: linear-gradient(
+.quick-nav-fade {
+  mask-image: linear-gradient(to right, black 0%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 20%,
-    black 80%,
+    black 0%,
+    black 90%,
     transparent 100%
   );
-  background-color: transparent;
-  border-radius: 8px;
-  overflow-x: hidden;
-}
-
-.slider .list {
-  display: flex;
-  min-width: calc(var(--width) * var(--quantity));
-  position: relative;
-}
-
-.slider .list .item {
-  width: var(--width);
-  height: var(--height);
-  position: absolute;
-  left: 100%;
-  will-change: transform;
-  animation: autoRun 30s linear infinite;
-  animation-delay: calc((30s / var(--quantity)) * (var(--position) * -1));
-  padding: 8px;
-  overflow: hidden;
-  box-sizing: border-box;
-  display: flex;
-  justify-items: center;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  margin: 0 8px;
-  transition: all 0.3s ease;
-}
-
-.slider .list .item:hover {
-  border-color: #d1d5db;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-}
-
-.slider .list .item img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: all 0.3s ease;
-  filter: grayscale(1);
-}
-
-.slider .list .item:hover img {
-  filter: grayscale(0);
-  transform: scale(1.1);
-}
-
-.slider .list .item.branded {
-  background: #f3f4f6;
-  color: var(--brand-color);
-}
-
-.slider .list .item.branded:hover {
-  background: var(--brand-color);
-  color: white;
-}
-
-.slider .list .item.branded img {
-  filter: grayscale(0.3);
-}
-
-.slider .list .item.branded:hover img {
-  filter: grayscale(0);
-}
-
-.slider .list .item svg,
-.slider .list .item svg * {
-  color: inherit !important;
-  fill: currentColor !important;
-}
-
-.slider .list .item.branded svg path,
-.slider .list .item.branded svg text,
-.slider .list .item.branded svg .st0 {
-  fill: currentColor !important;
-  color: inherit !important;
-}
-
-.slider .list .item.branded:hover svg path,
-.slider .list .item.branded:hover svg text,
-.slider .list .item.branded:hover svg .st0 {
-  fill: white !important;
-  color: white !important;
-}
-
-@keyframes autoRun {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(var(--width) * (var(--quantity) + 1) * -1));
-  }
-}
-
-.slider:hover .item {
-  animation-play-state: paused !important;
-}
-
-@media (max-width: 768px) {
-  .slider {
-    --width: 140px;
-    --height: 70px;
-  }
-}
-
-@media (max-width: 480px) {
-  .slider {
-    --width: 120px;
-    --height: 60px;
-  }
 }
 
 .mobile-drawer-enter {

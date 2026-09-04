@@ -61,4 +61,20 @@ describe("BlogIndex", () => {
     render(<BlogIndex posts={posts} locale="nl" labels={labels} />);
     expect(screen.getByText("nl-one")).toBeInTheDocument();
   });
+
+  it("features the newest post ahead of the others", () => {
+    render(<BlogIndex posts={posts} locale="en" labels={labels} />);
+    const featuredHeading = screen.getByRole("heading", {
+      level: 2,
+      name: "First Post",
+    });
+    const otherHeading = screen.getByRole("heading", {
+      level: 2,
+      name: "Second Post",
+    });
+    expect(
+      featuredHeading.compareDocumentPosition(otherHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
 });

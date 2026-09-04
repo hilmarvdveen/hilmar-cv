@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { Container } from "@/components/Container";
 import {
@@ -19,6 +20,7 @@ import {
 
 export const Footer = () => {
   const t = useTranslations("footer");
+  const commonTranslations = useTranslations("common");
 
   const services = [
     {
@@ -70,7 +72,7 @@ export const Footer = () => {
       name: "GitHub",
       icon: Github,
       href: BUSINESS_PROFILE.SOCIAL.GITHUB,
-      color: "hover:text-gray-900",
+      color: "hover:text-emerald-400",
     },
     {
       name: "WhatsApp",
@@ -86,9 +88,13 @@ export const Footer = () => {
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <Code className="w-5 h-5 text-white" />
-              </div>
+              <Image
+                src="/images/logo_v1.svg"
+                alt={commonTranslations("images.logoAlt")}
+                width={40}
+                height={40}
+                className="h-10 w-10"
+              />
               <div>
                 <h2 className="font-bold text-white text-lg">
                   {t("about.name")}
@@ -134,16 +140,6 @@ export const Footer = () => {
                 );
               })}
             </ul>
-
-            <div className="mt-8">
-              <Link
-                href="/book"
-                className="inline-flex items-center space-x-2 bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-800 transition-all duration-200 hover:scale-105"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>{t("services.bookConsultation")}</span>
-              </Link>
-            </div>
           </div>
 
           <div>

@@ -46,8 +46,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
           ],
           bullets: [
             "Contact form — your name, email address, message and any topics you select, so I can answer your enquiry. Legal basis: your consent and/or taking steps at your request prior to entering into a contract (Art. 6(1)(a)/(b) GDPR).",
-            "CV download — your name, email address and the purpose you select, so I know who is interested in my profile. Legal basis: your consent (Art. 6(1)(a) GDPR).",
-            "Consultation booking — your name, email address, optional phone number and company, and the project details and time slot you choose, so I can schedule and prepare our meeting. Legal basis: steps prior to a contract and my legitimate interest in managing bookings (Art. 6(1)(b)/(f) GDPR).",
+            "CV download — your name, email address, the purpose you select and the CV language you choose, so I know who is interested in my profile. Legal basis: your consent (Art. 6(1)(a) GDPR).",
+            "Consultation booking — your name, email address and company, and the project details and time slot you choose, so I can schedule and prepare our meeting. Legal basis: steps prior to a contract and my legitimate interest in managing bookings (Art. 6(1)(b)/(f) GDPR).",
             "Analytics — aggregated, statistical usage data (see the Cookie Policy). Legal basis: your consent for cookie-based analytics; legitimate interest for privacy-friendly, cookieless measurement.",
           ],
         },
@@ -113,8 +113,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
           ],
           bullets: [
             "Contactformulier — je naam, e-mailadres, bericht en eventueel gekozen onderwerpen, zodat ik je vraag kan beantwoorden. Grondslag: jouw toestemming en/of stappen op jouw verzoek vóór een eventuele overeenkomst (art. 6 lid 1 a/b AVG).",
-            "CV-download — je naam, e-mailadres en het gekozen doel, zodat ik weet wie interesse heeft in mijn profiel. Grondslag: jouw toestemming (art. 6 lid 1 a AVG).",
-            "Afspraak inplannen — je naam, e-mailadres, optioneel telefoonnummer en bedrijf, en de projectdetails en het tijdslot dat je kiest, zodat ik onze afspraak kan plannen en voorbereiden. Grondslag: stappen vóór een overeenkomst en mijn gerechtvaardigd belang bij het beheren van afspraken (art. 6 lid 1 b/f AVG).",
+            "CV-download — je naam, e-mailadres, het gekozen doel en de taal van het CV die je kiest, zodat ik weet wie interesse heeft in mijn profiel. Grondslag: jouw toestemming (art. 6 lid 1 a AVG).",
+            "Afspraak inplannen — je naam, e-mailadres en bedrijf, en de projectdetails en het tijdslot dat je kiest, zodat ik onze afspraak kan plannen en voorbereiden. Grondslag: stappen vóór een overeenkomst en mijn gerechtvaardigd belang bij het beheren van afspraken (art. 6 lid 1 b/f AVG).",
             "Statistieken — geaggregeerde, statistische gebruiksgegevens (zie het Cookiebeleid). Grondslag: jouw toestemming voor analytische cookies; gerechtvaardigd belang voor privacyvriendelijke, cookieloze meting.",
           ],
         },

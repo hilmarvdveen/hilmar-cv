@@ -19,8 +19,8 @@ export const HeroSection = () => {
     >
       <Container>
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
-          <div className="md:col-span-2">
-            <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 mb-4 sm:px-4 sm:py-2 sm:text-sm sm:mb-6">
+          <div className="md:col-span-2 flex flex-col">
+            <p className="order-1 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 mb-4 sm:px-4 sm:py-2 sm:text-sm sm:mb-6">
               <span
                 className="h-2 w-2 rounded-full bg-emerald-400"
                 aria-hidden="true"
@@ -28,22 +28,18 @@ export const HeroSection = () => {
               {t("badge")}
             </p>
 
-            <p className="mb-3 text-base sm:text-lg font-medium text-emerald-200">
+            <p className="hidden text-base font-medium text-emerald-200 sm:order-2 sm:mb-3 sm:block sm:text-lg">
               {t("readerLine")}
             </p>
 
             <h1
               id="hero-heading"
-              className="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 sm:mb-5 tracking-tight text-balance"
+              className="order-2 text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 sm:mb-5 tracking-tight text-balance sm:order-3"
             >
               {t("heading")}
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
-              {t("description")}
-            </p>
-
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+            <div className="order-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4 sm:order-5">
               <Button
                 href="/book"
                 variant="primary"
@@ -57,9 +53,13 @@ export const HeroSection = () => {
               <CvDownloadTrigger label={t("downloadCv")} locale={locale} />
             </div>
 
-            <p className="mt-3 text-sm text-slate-300">{t("ctaNote")}</p>
+            <p className="order-4 text-base sm:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
+              {t("description")}
+            </p>
 
-            <p className="text-[13px] text-slate-400">{t("credentials")}</p>
+            <p className="order-5 text-sm text-slate-300 sm:order-6">{t("ctaNote")}</p>
+
+            <p className="order-6 text-[13px] text-slate-400 sm:order-7">{t("credentials")}</p>
           </div>
 
           <div className="order-first flex items-center gap-4 md:order-none md:flex-col">
@@ -69,7 +69,7 @@ export const HeroSection = () => {
                 alt={t("imageAlt")}
                 width={200}
                 height={200}
-                className="object-cover h-20 w-20 md:h-50 md:w-50"
+                className="object-cover h-12 w-12 md:h-50 md:w-50"
                 priority
               />
               <figcaption className="sr-only">{t("name")}</figcaption>

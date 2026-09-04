@@ -33,9 +33,8 @@ export default async function SearchPage({ params, searchParams }: Props) {
   const searchLocale: SearchLocale = locale === "nl" ? "nl" : "en";
 
   return (
-    <>
-      <PageHero title={t("title")} description={t("description")} />
+    <PageHero title={t("title")} description={t("description")}>
       <SearchPageContent locale={searchLocale} initialQuery={initialQuery} />
-    </>
+    </PageHero>
   );
 }

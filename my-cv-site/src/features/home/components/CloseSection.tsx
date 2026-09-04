@@ -5,7 +5,6 @@ import { Link } from "@/i18n/navigation";
 import { Calendar } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-/** The closing ask: one calm call-to-action at the end of the page. */
 export const CloseSection = () => {
   const t = useTranslations("home.close");
 
@@ -14,6 +13,7 @@ export const CloseSection = () => {
       background="navy"
       padding="spacious"
       aria-labelledby="close-heading"
+      className="border-b border-white/10 bg-brand-navy-deep"
     >
       <Container width="narrow" className="text-center">
         <h2

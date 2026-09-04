@@ -19,6 +19,14 @@ const cases = [
     roleLabel: "See the bol.com case",
     href: "/experience#experience-bol",
   },
+  {
+    outcome: "No data yet",
+    client: "Example Co",
+    title: "A case without a work history entry",
+    body: "This case intentionally links outside the experience anchors.",
+    roleLabel: "See the example case",
+    href: "/contact",
+  },
 ];
 
 vi.mock("next-intl", () => {
@@ -43,6 +51,13 @@ vi.mock("@/i18n/navigation", () => ({
       {children}
     </a>
   ),
+}));
+
+vi.mock("next/image", () => ({
+  default: (props: Record<string, unknown>) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img {...props} />;
+  },
 }));
 
 describe("ProjectShowcase", () => {
@@ -70,6 +85,13 @@ describe("ProjectShowcase", () => {
       const link = screen.getByRole("link", { name: projectCase.roleLabel });
       expect(link).toHaveAttribute("href", projectCase.href);
     }
+  });
+
+  it("renders the client logo only when the case matches a work history entry", () => {
+    render(<ProjectShowcase />);
+    expect(screen.getByRole("img", { name: "Belastingdienst" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "bol.com" })).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Example Co" })).toBeNull();
   });
 
   it("renders the closing call to action", () => {

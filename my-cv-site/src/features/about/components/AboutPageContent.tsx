@@ -1,6 +1,14 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { Briefcase, Check, GraduationCap, MapPin } from "lucide-react";
+import {
+  Accessibility,
+  Briefcase,
+  Check,
+  ClipboardCheck,
+  GraduationCap,
+  MapPin,
+  Shield,
+} from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -17,10 +25,18 @@ type ValueBlock = {
   evidence: string;
 };
 
+type StandardsCard = {
+  title: string;
+  body: string;
+};
+
+const standardsCardIcons = [Shield, Accessibility, ClipboardCheck];
+
 export function AboutPageContent() {
   const t = useTranslations("about");
   const locale = useLocale();
   const blocks = t.raw("value.blocks") as ValueBlock[];
+  const standardsCards = t.raw("standards.cards") as StandardsCard[];
 
   return (
     <>
@@ -63,6 +79,9 @@ export function AboutPageContent() {
         }
         actions={
           <>
+            <Button href="/book" variant="primary">
+              {t("cta.button")}
+            </Button>
             <Button
               href={BUSINESS_PROFILE.SOCIAL.LINKEDIN}
               variant="outlineOnDark"
@@ -101,9 +120,20 @@ export function AboutPageContent() {
       </Section>
 
       <Section background="white" aria-labelledby="about-standards-heading">
-        <Container width="prose">
+        <Container>
           <SectionTitle id="about-standards-heading" title={t("standards.title")} />
-          <p className="text-[15px] leading-relaxed text-gray-700">{t("standards.body")}</p>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {standardsCards.map((card, index) => {
+              const CardIcon = standardsCardIcons[index];
+              return (
+                <Card key={card.title} className="bg-bgLight">
+                  <CardIcon className="mb-3 h-6 w-6 text-primary" aria-hidden="true" />
+                  <h3 className="mb-2 text-lg font-bold text-textMain">{card.title}</h3>
+                  <p className="text-[14.5px] leading-relaxed text-gray-600">{card.body}</p>
+                </Card>
+              );
+            })}
+          </div>
         </Container>
       </Section>
 

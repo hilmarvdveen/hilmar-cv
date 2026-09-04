@@ -4,7 +4,7 @@ export type {
   ServiceDetailPageProps,
   ServiceIcon,
   ServiceTitledItem,
-  ServiceLevelledItem,
+  ServiceTechnologyItem,
   ServiceTechnologyGroup,
   ServiceProcessStep,
   ServiceEngagementDeliverable,

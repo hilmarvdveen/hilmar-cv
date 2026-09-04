@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FAQClientContent } from "./FAQClientContent";
+import { FAQ_CATEGORY_IDS } from "../categories";
 
 vi.mock("next-intl", async () => {
   const base = (await import("@/test/intl")).intlMock();
@@ -14,27 +15,43 @@ vi.mock("next-intl", async () => {
 });
 
 describe("FAQClientContent", () => {
-  it("renders questions and toggles them open/closed", async () => {
-    const user = userEvent.setup();
+  it("opens the first question of every category on arrival", () => {
     render(<FAQClientContent />);
     const toggles = screen.getAllByRole("button", { name: /What\?/ });
-    await user.click(toggles[0]);
-    await user.click(toggles[0]);
+    expect(toggles).toHaveLength(FAQ_CATEGORY_IDS.length);
+    toggles.forEach((toggle) =>
+      expect(toggle).toHaveAttribute("aria-expanded", "true")
+    );
+    expect(screen.getAllByText("Because.")).toHaveLength(
+      FAQ_CATEGORY_IDS.length
+    );
   });
 
-  it("renders the closing CTA as links to contact, book and a phone call", () => {
+  it("toggles a question closed and open again", async () => {
+    const user = userEvent.setup();
     render(<FAQClientContent />);
-    expect(screen.getByRole("link", { name: "cta.contact" })).toHaveAttribute(
-      "href",
-      "/contact"
-    );
-    expect(screen.getByRole("link", { name: "cta.book" })).toHaveAttribute(
-      "href",
-      "/book"
-    );
-    expect(screen.getByRole("link", { name: "cta.call" })).toHaveAttribute(
-      "href",
-      "tel:+31680149947"
-    );
+    const [firstToggle] = screen.getAllByRole("button", { name: /What\?/ });
+
+    await user.click(firstToggle);
+    expect(firstToggle).toHaveAttribute("aria-expanded", "false");
+
+    await user.click(firstToggle);
+    expect(firstToggle).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("renders the closing call-to-action as one primary booking button and a plain contact link", () => {
+    render(<FAQClientContent />);
+    const bookLink = screen.getByRole("link", { name: "cta.book" });
+    expect(bookLink).toHaveAttribute("href", "/book");
+
+    const contactLink = screen.getByRole("link", { name: "cta.contact" });
+    expect(contactLink).toHaveAttribute("href", "/contact");
+
+    expect(
+      screen.queryByRole("link", { name: "cta.call" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "cta.call" })
+    ).not.toBeInTheDocument();
   });
 });

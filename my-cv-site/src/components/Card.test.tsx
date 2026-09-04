@@ -18,4 +18,18 @@ describe("Card", () => {
     expect(element).toHaveClass("p-4");
     expect(element).not.toHaveClass("p-7");
   });
+
+  it("switches to the tinted surface so consecutive grids stop looking alike", () => {
+    render(<Card variant="tinted">Tinted content</Card>);
+    const element = screen.getByText("Tinted content");
+    expect(element).toHaveClass("bg-bgLight");
+    expect(element).not.toHaveClass("bg-white");
+  });
+
+  it("keeps the white surface as the default variant", () => {
+    render(<Card>Default content</Card>);
+    const element = screen.getByText("Default content");
+    expect(element).toHaveClass("bg-white");
+    expect(element).not.toHaveClass("bg-bgLight");
+  });
 });

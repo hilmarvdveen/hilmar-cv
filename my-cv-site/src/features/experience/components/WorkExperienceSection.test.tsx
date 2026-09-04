@@ -68,4 +68,19 @@ describe("WorkExperienceSection", () => {
       screen.getAllByRole("list", { name: "technologies" })
     ).toHaveLength(workHistory.length);
   });
+
+  it("renders a compact navy call-to-action band after the second card, without changing the article count", () => {
+    render(<WorkExperienceSection />);
+    const articles = screen.getAllByRole("article");
+    expect(articles).toHaveLength(workHistory.length);
+
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: "cta.title",
+    });
+    expect(heading).toBeInTheDocument();
+    expect(screen.getByText("cta.description")).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "cta.button" });
+    expect(link).toHaveAttribute("href", "/book");
+  });
 });

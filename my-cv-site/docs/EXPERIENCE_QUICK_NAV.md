@@ -7,12 +7,14 @@ them, so the next change does not reintroduce one.
 
 ## What it is
 
-- One chip per work-history entry: the company's logo mark plus its name, in
-  one horizontally scrolling row that pins at `top-[var(--header-height)]`
-  once the page has scrolled past it.
-- Logos are grayscale like the client carousel and gain colour on hover. The
-  active chip has an emerald border and background and carries
-  `aria-current="location"`.
+- One chip per work-history entry: the company's name, in one horizontally
+  scrolling row that pins at `top-[var(--header-height)]` once the page has
+  scrolled past it. Chips are text only. The per-chip logo image was
+  dropped on 4 September 2026, so `ExperienceChip` no longer carries a
+  `logo` or `color` field.
+- A right-edge fade (the `quick-nav-fade` utility in `globals.css`) shows the
+  strip continues before a visitor touches it. The active chip has an
+  emerald border and background and carries `aria-current="location"`.
 - The chip for the card currently on screen is centred in the strip whenever
   the strip overflows.
 

@@ -31,10 +31,15 @@ describe("ServicesHero", () => {
     ["fullstack", "/services/fullstack"],
     ["designSystems", "/services/design-systems"],
     ["consulting", "/services/consulting"],
-  ])("links the %s card to %s", (id, href) => {
+  ])("links the %s card to %s and names its outcome", (id, href) => {
     render(<ServicesHero />);
-    const link = screen.getByRole("link", { name: `main.services.${id}.title` });
-    expect(link).toHaveAttribute("href", href);
+    const links = screen.getAllByRole("link");
+    const link = links.find(
+      (candidate) => candidate.getAttribute("href") === href
+    );
+    expect(link).toBeDefined();
+    expect(link).toHaveTextContent(`main.services.${id}.title`);
+    expect(link).toHaveTextContent(`main.services.${id}.outcome`);
   });
 
   it("renders the two hero actions", () => {

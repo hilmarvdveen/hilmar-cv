@@ -8,6 +8,12 @@ vi.mock("next/link", () => ({
     <a href={href}>{children}</a>
   ),
 }));
+vi.mock("next/image", () => ({
+  default: (props: Record<string, unknown>) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img {...props} />;
+  },
+}));
 
 describe("Footer", () => {
   it("renders all footer sections", () => {
@@ -37,6 +43,18 @@ describe("Footer", () => {
     expect(
       screen.queryByRole("link", { name: "quickLinks.items.book" })
     ).toBeNull();
+  });
+
+  it("does not render a booking link in the services column", () => {
+    render(<Footer />);
+    expect(
+      screen.queryByRole("link", { name: "services.bookConsultation" })
+    ).toBeNull();
+  });
+
+  it("renders the logo mark with the shared logo alt text", () => {
+    render(<Footer />);
+    expect(screen.getByAltText("images.logoAlt")).toBeInTheDocument();
   });
 
   it("does not render the built-with or location blocks", () => {

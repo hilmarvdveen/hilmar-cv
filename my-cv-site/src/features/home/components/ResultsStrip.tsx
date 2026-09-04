@@ -23,13 +23,13 @@ export const ResultsStrip = () => {
     >
       <Container>
         <SectionTitle id={RESULTS_HEADING_ID} title={t("title")} align="center" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[auto_auto_auto] gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {items.map((item) => (
             <div
               key={item.value}
-              className="border-l-[3px] border-primary pl-6 lg:row-span-3 lg:grid lg:grid-rows-subgrid"
+              className="border-l-[3px] border-primary pl-6 lg:grid lg:grid-rows-[5rem_2.5rem_1fr]"
             >
-              <p className="text-3xl xl:text-4xl font-extrabold leading-[1.1] text-brand-navy tracking-tight text-balance">
+              <p className="text-3xl xl:text-4xl font-extrabold leading-[1.1] text-primary tracking-tight text-balance">
                 {item.value}
               </p>
               <p className="mt-2 text-sm font-semibold text-textMain">

@@ -21,7 +21,7 @@ export function SearchPageContent({ locale, initialQuery = "" }: SearchPageConte
   const results = useMemo(() => searchEntries(query, locale), [query, locale]);
 
   return (
-    <Section>
+    <Section padding="compact">
       <Container width="prose">
         <div className="relative mb-8">
           <Search
