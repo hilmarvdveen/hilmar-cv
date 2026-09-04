@@ -20,7 +20,7 @@ export const ContactHero = () => {
       description={t("hero.description")}
       actions={
         <>
-          <Button href="/book" variant="primary" size="lg">
+          <Button href="/book" variant="primary" size="lg" data-placement="contact-hero">
             {t("cta.button")}
           </Button>
           <Button href="#contact-form" variant="outlineOnDark" size="lg">

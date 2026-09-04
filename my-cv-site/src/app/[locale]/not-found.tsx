@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowRight, Home, Mail, Search } from "lucide-react";
+import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { PageHero } from "@/components/PageHero";
 import { Link } from "@/i18n/navigation";
@@ -14,6 +15,7 @@ export default async function NotFound() {
   const t = await getTranslations("notFound");
   const searchTranslations = await getTranslations("search");
   const commonTranslations = await getTranslations("common");
+  const homeTranslations = await getTranslations("home");
 
   const destinationLabels: Record<(typeof RECOVERY_DESTINATIONS)[number]["href"], string> = {
     "/": t("backHome"),
@@ -44,6 +46,15 @@ export default async function NotFound() {
               </Card>
             </Link>
           ))}
+          <Button
+            href="/book"
+            variant="white"
+            size="lg"
+            data-placement="not-found"
+            className="w-full"
+          >
+            {homeTranslations("hero.bookCall")}
+          </Button>
         </div>
       }
     />

@@ -379,6 +379,7 @@
     "experiencePage": {
         "title": "Werkervaring",
         "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Wil je er één uitgediept hebben, dan is dertig minuten de kortste weg.",
+        "metaDescription": "Twaalf opdrachten sinds 2016, met bol.com, en per opdracht wat het opleverde, mijn rol en de stack. Senior frontend engineer, React en Angular, freelance.",
         "cta": {
             "title": "Herken je hier iets in?",
             "description": "Dertig minuten over jullie systeem, en je weet of ik de juiste persoon ben.",
@@ -415,6 +416,7 @@
             "stencil": "Stencil",
             "wcag": "WCAG",
             "wcag22": "WCAG 2.2 AA",
+            "wcag21": "WCAG 2.1 AA",
             "playwright": "Playwright",
             "cypress": "Cypress",
             "rest": "REST",
@@ -541,7 +543,7 @@
                     "paragraph": "Ik zorgde ook dat de cijfers achter die beslissingen klopten. Placeholder-ID's werden echte product-ID's, zodat de funnels van productpagina en winkelmandje weer op elkaar aansluiten. Een alles-of-niets-afhandeling van GraphQL herschreef ik, zodat een gedeeltelijk antwoord toch toont wat er wel is en elke fout in Sentry terechtkomt. Sentry zette ik end-to-end aan, met leesbare stack traces op staging en productie."
                 },
                 {
-                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. In refinements stel ik veel vragen, zodat randgevallen vroeg boven tafel komen en schattingen kloppen. Junior ontwikkelaars begeleidde ik. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend, en waar de pagina's dat vroegen schreef ik backendlogica in Kotlin."
+                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. In refinements stel ik veel vragen, zodat randgevallen vroeg boven tafel komen en schattingen kloppen. Junior ontwikkelaars begeleidde ik. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend, en als de capaciteit krap was schreef ik backendlogica in Kotlin."
                 },
                 {
                     "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen."
@@ -842,7 +844,10 @@
             "sending": "Versturen...",
             "successMessage": "Bedankt. Je hoort binnen één werkdag van me.",
             "serverError": "Er ging iets mis en je bericht is niet verzonden. Probeer het zo opnieuw, of mail me op hilmar@hilmarvanderveen.com.",
-            "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
+            "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw.",
+            "company": "Bedrijf",
+            "start": "Wanneer wil je starten?",
+            "startPlaceholder": "Bijvoorbeeld 1 oktober 2026, of zo snel mogelijk"
         },
         "cta": {
             "description": "Liever meteen praten? Kies een moment dat jou uitkomt, dan lopen we het systeem in dertig minuten door.",
@@ -1038,14 +1043,6 @@
                     {
                         "name": "Angular",
                         "description": "Uitgebreid TypeScript framework"
-                    },
-                    {
-                        "name": "NgRx",
-                        "description": "Reactief state management voor Angular"
-                    },
-                    {
-                        "name": "Signals",
-                        "description": "Moderne reactieve primitieven"
                     }
                 ]
             },
@@ -1197,10 +1194,6 @@
                                 "description": "Enterprise-grade web framework"
                             },
                             {
-                                "name": "Python (FastAPI)",
-                                "description": "High-performance async API framework"
-                            },
-                            {
                                 "name": "GraphQL",
                                 "description": "Efficiënte API query taal"
                             },
@@ -1213,10 +1206,6 @@
                     {
                         "name": "Databases",
                         "items": [
-                            {
-                                "name": "PostgreSQL",
-                                "description": "Robuuste relationele database"
-                            },
                             {
                                 "name": "MSSQL",
                                 "description": "Microsoft SQL Server database"
@@ -1241,10 +1230,6 @@
                             {
                                 "name": "Docker",
                                 "description": "Containerisatie platform"
-                            },
-                            {
-                                "name": "Nginx",
-                                "description": "High-performance web server"
                             },
                             {
                                 "name": "CI/CD",
@@ -1408,15 +1393,6 @@
                 "title": "Tools en technologieën",
                 "description": "De tools waarmee deze systemen zijn gebouwd en gedocumenteerd.",
                 "categories": [
-                    {
-                        "name": "Design Tools",
-                        "items": [
-                            {
-                                "name": "Figma",
-                                "description": "Collaboratief interface design"
-                            }
-                        ]
-                    },
                     {
                         "name": "Development",
                         "items": [
@@ -1609,10 +1585,6 @@
                             {
                                 "name": "Technology Stack Planning",
                                 "description": "Toekomstbestendige technologie beslissingen"
-                            },
-                            {
-                                "name": "Performance Optimalisatie",
-                                "description": "Snelheid en efficiëntie verbeteringen"
                             },
                             {
                                 "name": "Security Auditing",
@@ -2129,15 +2101,15 @@
     "about": {
         "hero": {
             "badge": "Freelance senior frontend engineer",
-            "title": "Ik vernieuw de pagina's waar een bedrijf zijn geld mee verdient zonder dat ze eruit gaan, en ik laat een team achter dat daarna sneller levert.",
-            "description": "Ik ben freelance senior frontend engineer, React en Angular, sinds 2016 op seniorniveau. Nederlandse e-commerce, enterprise en overheid halen mij erbij als een pagina waar omzet binnenkomt naar een nieuw platform moet. Die pagina moet ondertussen open blijven.",
+            "title": "Wat er verandert als ik bij je team kom",
+            "description": "Ik vernieuw de pagina's waar een bedrijf zijn geld mee verdient zonder dat ze eruit gaan, en ik laat een team achter dat daarna sneller levert. E-commerce, enterprise en overheid in Nederland halen mij erbij als een pagina waar omzet binnenkomt naar een nieuw platform moet en ondertussen gewoon open blijft.",
             "location": "{city}, Nederland",
             "education": "BSc Natuur- en Sterrenkunde, Universiteit van Amsterdam",
             "linkedin": "LinkedIn",
             "cv": "CV downloaden"
         },
         "value": {
-            "title": "Wat er verandert als ik erbij kom",
+            "title": "Vijf veranderingen, en waar ze gebeurden",
             "subtitle": "Bij elk blok staat de opdracht waar het gebeurde.",
             "blocks": [
                 {
@@ -2243,8 +2215,8 @@
     "blog": {
         "eyebrow": "Blog",
         "index": {
-            "title": "Frontend-engineering, tot in de details",
-            "subtitle": "Praktische artikelen met voorbeelden over moderne React-architectuur, testen, SEO en routing. Dit zijn de patronen die ik in echt productiewerk gebruik."
+            "title": "Engineering, tot in de details",
+            "subtitle": "Praktische artikelen met voorbeelden over React-architectuur, testen, SEO en routing, en over hexagonale backends in C#, Kotlin en Java. De patronen die ik in echt productiewerk gebruik."
         },
         "minRead": "min lezen",
         "publishedOn": "Gepubliceerd",

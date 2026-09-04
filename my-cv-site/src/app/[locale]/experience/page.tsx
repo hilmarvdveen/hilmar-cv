@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "experiencePage" });
   const title = t("title");
-  const description = t("description");
+  const description = t("metaDescription");
 
   return {
     title,
@@ -35,7 +35,7 @@ export default async function ExperiencePage({ params }: Props) {
         title={t("title")}
         description={t("description")}
         actions={
-          <Button href="/book" variant="primary" size="lg">
+          <Button href="/book" variant="primary" size="lg" data-placement="experience-hero">
             {tHome("hero.bookCall")}
           </Button>
         }

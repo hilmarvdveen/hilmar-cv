@@ -29,4 +29,11 @@ describe("NotFound", () => {
       screen.getByRole("link", { name: "common.nav.contact" })
     ).toHaveAttribute("href", "/contact");
   });
+
+  it("offers a booking action alongside the recovery destinations", async () => {
+    render(await NotFound());
+    expect(
+      screen.getByRole("link", { name: "home.hero.bookCall" })
+    ).toHaveAttribute("href", "/book");
+  });
 });

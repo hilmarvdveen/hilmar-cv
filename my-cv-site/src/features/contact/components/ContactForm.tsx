@@ -9,6 +9,8 @@ import { Card } from "@/components/Card";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
+import { LIMITS } from "@/lib/security";
+import { pushSiteEvent } from "@/lib/analytics/events";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
@@ -20,6 +22,8 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    company: "",
+    start: "",
     message: "",
   });
 
@@ -75,7 +79,8 @@ export default function ContactForm() {
       }
 
       setSuccessMessage(t("form.successMessage"));
-      setFormData({ name: "", email: "", message: "" });
+      pushSiteEvent("contact_submit", { locale });
+      setFormData({ name: "", email: "", company: "", start: "", message: "" });
       setSelectedTags([]);
     } catch (error: unknown) {
       console.error(error);
@@ -169,6 +174,46 @@ export default function ContactForm() {
             </div>
           </div>
 
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label
+                htmlFor="contact-company"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+              >
+                {t("form.company")}
+              </label>
+              <input
+                id="contact-company"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                type="text"
+                autoComplete="organization"
+                maxLength={LIMITS.name}
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="contact-start"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+              >
+                {t("form.start")}
+              </label>
+              <input
+                id="contact-start"
+                name="start"
+                value={formData.start}
+                onChange={handleChange}
+                type="text"
+                maxLength={LIMITS.start}
+                placeholder={t("form.startPlaceholder")}
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+              />
+            </div>
+          </div>
+
           <div>
             <label
               htmlFor="contact-message"
@@ -197,6 +242,14 @@ export default function ContactForm() {
               aria-live="polite"
             >
               {successMessage}
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="text-center">
+              <Button href="/book" variant="primary" size="lg">
+                {t("cta.button")}
+              </Button>
             </div>
           )}
 

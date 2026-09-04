@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
+import { pushSiteEvent } from "@/lib/analytics/events";
 import { storeConsent, useAnalyticsConsent } from "../consentStore";
 
 export {
@@ -24,6 +25,11 @@ export function AnalyticsConsent({ labels }: AnalyticsConsentProps) {
 
   if (consent !== null) return null;
 
+  const chooseConsent = (granted: boolean) => {
+    pushSiteEvent("consent_choice", { choice: granted ? "accept" : "decline" });
+    storeConsent(granted);
+  };
+
   return (
     <section
       aria-label={labels.accept}
@@ -32,10 +38,10 @@ export function AnalyticsConsent({ labels }: AnalyticsConsentProps) {
       <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-gray-700">{labels.text}</p>
         <div className="flex gap-2">
-          <Button type="button" variant="neutral" size="sm" onClick={() => storeConsent(false)}>
+          <Button type="button" variant="outline" size="sm" onClick={() => chooseConsent(false)}>
             {labels.decline}
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => storeConsent(true)}>
+          <Button type="button" variant="outline" size="sm" onClick={() => chooseConsent(true)}>
             {labels.accept}
           </Button>
         </div>

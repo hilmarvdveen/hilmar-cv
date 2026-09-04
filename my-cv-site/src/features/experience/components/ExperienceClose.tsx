@@ -20,7 +20,7 @@ export const ExperienceClose = () => {
         <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
           {t("close.description")}
         </p>
-        <Button href="/book" variant="white" size="lg">
+        <Button href="/book" variant="white" size="lg" data-placement="experience-close">
           {t("close.button")}
         </Button>
       </Container>

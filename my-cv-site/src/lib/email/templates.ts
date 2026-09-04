@@ -91,6 +91,8 @@ const CONFIRMATION_COPY = {
     greeting: (name: string) => `Hi ${name},`,
     intro: "Ons gesprek is bevestigd:",
     momentCaption: "30 minuten · tijd in Amsterdam",
+    reschedule:
+      "Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw moment.",
     expectTitle: "Waar je op kunt rekenen",
     expectations: [
       "Dertig minuten, technisch en concreet.",
@@ -108,6 +110,7 @@ const CONFIRMATION_COPY = {
     greeting: (name: string) => `Hi ${name},`,
     intro: "Our call is confirmed:",
     momentCaption: "30 minutes · Amsterdam time",
+    reschedule: "Need another moment? Reply to this email and we pick a new one.",
     expectTitle: "What you can count on",
     expectations: [
       "Thirty minutes, technical and concrete.",
@@ -138,9 +141,63 @@ export function renderBookingConfirmationEmail(input: BookingEmailInput): Render
   const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
 <p style="margin:0;">${copy.intro}</p>
 ${renderMomentBlock(escapeHtml(moment), copy.momentCaption)}
-${joinBlock}<p style="margin:0 0 8px;font-weight:700;color:${BRAND_NAVY};">${copy.expectTitle}</p>
+${joinBlock}<p style="margin:0 0 18px;font-size:14px;color:#4b5563;">${copy.reschedule}</p>
+<p style="margin:0 0 8px;font-weight:700;color:${BRAND_NAVY};">${copy.expectTitle}</p>
 <ul style="margin:0 0 18px;padding-left:20px;">${bullets}</ul>
 <p style="margin:0 0 18px;">${copy.next}</p>
+<p style="margin:0;">${copy.signoff}<br><strong>Hilmar van der Veen</strong></p>`;
+  return {
+    subject: copy.subject(moment),
+    html: renderLayout(bodyHtml, copy.footer),
+  };
+}
+
+export type BookingReminderEmailInput = {
+  locale: EmailLocale;
+  name: string;
+  isoDate: string;
+  joinUrl?: string;
+};
+
+const REMINDER_COPY = {
+  nl: {
+    subject: (moment: string) => `Herinnering: ons gesprek op ${moment}`,
+    greeting: (name: string) => `Hi ${name},`,
+    intro: "Een herinnering voor ons gesprek morgen:",
+    momentCaption: "30 minuten · tijd in Amsterdam",
+    reschedule:
+      "Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw moment.",
+    signoff: "Tot morgen,",
+    footer: "Dit is een automatische herinnering aan je boeking.",
+    joinButtonLabel: "Deelnemen aan het Teams-gesprek",
+    joinLinkLabel: "Werkt de knop niet? Kopieer deze link:",
+  },
+  en: {
+    subject: (moment: string) => `Reminder: our call on ${moment}`,
+    greeting: (name: string) => `Hi ${name},`,
+    intro: "A reminder for our call tomorrow:",
+    momentCaption: "30 minutes · Amsterdam time",
+    reschedule: "Need another moment? Reply to this email and we pick a new one.",
+    signoff: "See you tomorrow,",
+    footer: "This is an automated reminder of your booking.",
+    joinButtonLabel: "Join the Teams call",
+    joinLinkLabel: "If the button does not work, copy this link:",
+  },
+} as const;
+
+export function renderBookingReminderEmail(
+  input: BookingReminderEmailInput
+): RenderedEmail {
+  const copy = REMINDER_COPY[input.locale];
+  const moment = formatBookingMoment(input.isoDate, input.locale);
+  const name = escapeHtml(input.name);
+  const joinBlock = input.joinUrl
+    ? renderJoinBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
+    : "";
+  const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
+<p style="margin:0;">${copy.intro}</p>
+${renderMomentBlock(escapeHtml(moment), copy.momentCaption)}
+${joinBlock}<p style="margin:0 0 18px;font-size:14px;color:#4b5563;">${copy.reschedule}</p>
 <p style="margin:0;">${copy.signoff}<br><strong>Hilmar van der Veen</strong></p>`;
   return {
     subject: copy.subject(moment),

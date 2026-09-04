@@ -4,6 +4,8 @@ import { meta as architectureMeta, Body as ArchitectureBody } from "./components
 import { meta as unitTestingMeta, Body as UnitTestingBody } from "./components/UnitTestingPost";
 import { meta as seoMeta, Body as SeoBody } from "./components/SeoPost";
 import { meta as routingMeta, Body as RoutingBody } from "./components/RoutingPost";
+import { meta as hexagonalCSharpMeta, Body as HexagonalCSharpBody } from "./components/HexagonalCSharpPost";
+import { meta as hexagonalKotlinMeta, Body as HexagonalKotlinBody } from "./components/HexagonalKotlinPost";
 
 /**
  * Central registry of all blog posts. Each post file co-locates its `meta` with
@@ -16,6 +18,8 @@ const POSTS: BlogPost[] = [
   { ...unitTestingMeta, Body: UnitTestingBody },
   { ...seoMeta, Body: SeoBody },
   { ...routingMeta, Body: RoutingBody },
+  { ...hexagonalCSharpMeta, Body: HexagonalCSharpBody },
+  { ...hexagonalKotlinMeta, Body: HexagonalKotlinBody },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((a, b) =>

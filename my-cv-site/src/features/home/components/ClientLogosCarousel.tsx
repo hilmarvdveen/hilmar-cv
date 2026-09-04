@@ -45,17 +45,18 @@ const ClientCard = ({ name, id, logo, priority }: ClientCardProps) => {
       href={`/experience#experience-${id}`}
       title={commonT("images.viewExperience", { company: name })}
       aria-label={commonT("images.viewExperience", { company: name })}
-      className="group flex h-14 w-full items-center justify-center sm:h-16"
+      className="group flex items-center justify-center rounded-lg bg-white p-3 ring-1 ring-gray-200 transition-colors hover:ring-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
     >
-      <Image
-        src={logo}
-        alt={commonT("images.companyLogoAlt", { company: name })}
-        width={120}
-        height={60}
-        style={{ width: "auto", height: "auto" }}
-        className="max-h-full max-w-full object-contain grayscale transition-all duration-300 group-hover:grayscale-0"
-        loading={priority ? "eager" : "lazy"}
-      />
+      <span className="relative h-12 w-full">
+        <Image
+          src={logo}
+          alt={commonT("images.companyLogoAlt", { company: name })}
+          fill
+          sizes="(min-width: 1024px) 160px, 40vw"
+          className="object-contain grayscale opacity-80 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 group-focus-visible:grayscale-0 group-focus-visible:opacity-100"
+          loading={priority ? "eager" : "lazy"}
+        />
+      </span>
     </Link>
   );
 };
@@ -74,7 +75,7 @@ export const ClientLogosCarousel = () => {
         />
         <p className="mb-10 text-center text-sm text-gray-600">{t("invite")}</p>
 
-        <div className="grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {clients.map((client, index) => (
             <ClientCard
               key={client.id}

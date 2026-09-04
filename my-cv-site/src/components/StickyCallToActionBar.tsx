@@ -56,7 +56,7 @@ export const StickyCallToActionBar = () => {
       ref={barRef}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden"
     >
-      <Button href="/book" variant="primary" size="sm" className="w-full">
+      <Button href="/book" variant="primary" size="sm" className="w-full" data-placement="sticky-bar">
         {t("nav.book")}
       </Button>
     </div>

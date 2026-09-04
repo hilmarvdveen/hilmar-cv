@@ -57,6 +57,7 @@ export const HiringSection = () => {
                 <Link
                   href={shape.href}
                   className="mt-auto inline-flex items-center gap-1.5 text-primary font-semibold text-sm"
+                  data-placement="hiring-shape"
                 >
                   {shape.linkLabel}
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -76,8 +77,8 @@ export const HiringSection = () => {
           <p className="text-sm text-gray-600">{t("pitch.examples")}</p>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <Card className="lg:sticky lg:top-[calc(var(--header-height)+2rem)] lg:self-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Card className="flex h-full flex-col justify-center lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
               {facts.map((fact) => (
                 <div key={fact.label}>

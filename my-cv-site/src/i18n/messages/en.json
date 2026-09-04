@@ -413,6 +413,7 @@
     "experiencePage": {
         "title": "Work history",
         "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. Want one of them in depth, then thirty minutes is the shortest way there.",
+        "metaDescription": "Twelve engagements since 2016, bol.com included, each with what it delivered, my role and the stack. Senior frontend engineer, React and Angular, freelance.",
         "cta": {
             "title": "Recognise one of these?",
             "description": "Thirty minutes about your system, and you know whether I am the right person for it.",
@@ -449,6 +450,7 @@
             "stencil": "Stencil",
             "wcag": "WCAG",
             "wcag22": "WCAG 2.2 AA",
+            "wcag21": "WCAG 2.1 AA",
             "playwright": "Playwright",
             "cypress": "Cypress",
             "rest": "REST",
@@ -575,7 +577,7 @@
                     "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production."
                 },
                 {
-                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend, and I wrote backend logic in Kotlin where the pages needed it."
+                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend, and I wrote backend logic in Kotlin when capacity was tight."
                 },
                 {
                     "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them."
@@ -876,7 +878,10 @@
             "sending": "Sending...",
             "successMessage": "Thank you. You will hear from me within one business day.",
             "serverError": "Something went wrong and your message was not sent. Try again in a moment, or email me at hilmar@hilmarvanderveen.com.",
-            "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again."
+            "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again.",
+            "company": "Company",
+            "start": "When would you like to start?",
+            "startPlaceholder": "For example 1 October 2026, or as soon as possible"
         },
         "cta": {
             "description": "Rather talk it through? Pick a moment that suits you and we go through the system in thirty minutes.",
@@ -1072,14 +1077,6 @@
                     {
                         "name": "Angular",
                         "description": "Full-featured TypeScript framework"
-                    },
-                    {
-                        "name": "NgRx",
-                        "description": "Reactive state management for Angular"
-                    },
-                    {
-                        "name": "Signals",
-                        "description": "Modern reactive primitives"
                     }
                 ]
             },
@@ -1231,10 +1228,6 @@
                                 "description": "Enterprise-grade web framework"
                             },
                             {
-                                "name": "Python (FastAPI)",
-                                "description": "High-performance async API framework"
-                            },
-                            {
                                 "name": "GraphQL",
                                 "description": "Efficient API query language"
                             },
@@ -1247,10 +1240,6 @@
                     {
                         "name": "Databases",
                         "items": [
-                            {
-                                "name": "PostgreSQL",
-                                "description": "Robust relational database"
-                            },
                             {
                                 "name": "MSSQL",
                                 "description": "Microsoft SQL Server database"
@@ -1275,10 +1264,6 @@
                             {
                                 "name": "Docker",
                                 "description": "Containerization platform"
-                            },
-                            {
-                                "name": "Nginx",
-                                "description": "High-performance web server"
                             },
                             {
                                 "name": "CI/CD",
@@ -1442,15 +1427,6 @@
                 "title": "Tools and technologies",
                 "description": "The tools these systems were built and documented with.",
                 "categories": [
-                    {
-                        "name": "Design Tools",
-                        "items": [
-                            {
-                                "name": "Figma",
-                                "description": "Collaborative interface design"
-                            }
-                        ]
-                    },
                     {
                         "name": "Development",
                         "items": [
@@ -1645,10 +1621,6 @@
                                 "description": "Future-proof technology decisions"
                             },
                             {
-                                "name": "Performance Optimization",
-                                "description": "Speed and efficiency improvements"
-                            },
-                            {
                                 "name": "Security Auditing",
                                 "description": "Vulnerability assessment & best practices"
                             }
@@ -1780,15 +1752,15 @@
     "about": {
         "hero": {
             "badge": "Freelance senior frontend engineer",
-            "title": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards.",
-            "description": "I am a freelance senior frontend engineer, React and Angular, senior throughout since 2016. Dutch e-commerce, enterprise and government teams bring me in when a page that carries revenue has to move to a new platform. It has to stay open while it does.",
+            "title": "What changes when I join your team",
+            "description": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards. E-commerce, enterprise and government teams in the Netherlands bring me in when a page that carries revenue has to move to a new platform and stay open while it does.",
             "location": "{city}, Netherlands",
             "education": "BSc Physics and Astronomy, University of Amsterdam",
             "linkedin": "LinkedIn",
             "cv": "Download CV"
         },
         "value": {
-            "title": "What changes when I join",
+            "title": "Five changes, and where they happened",
             "subtitle": "Each block names the engagement where it happened.",
             "blocks": [
                 {
@@ -2243,8 +2215,8 @@
     "blog": {
         "eyebrow": "Blog",
         "index": {
-            "title": "Frontend engineering, in depth",
-            "subtitle": "Practical articles with examples on modern React architecture, testing, SEO and routing. These are the patterns I use on real production work."
+            "title": "Engineering, in depth",
+            "subtitle": "Practical articles with examples on React architecture, testing, SEO and routing, and on hexagonal backends in C#, Kotlin and Java. The patterns I use in production work."
         },
         "minRead": "min read",
         "publishedOn": "Published",

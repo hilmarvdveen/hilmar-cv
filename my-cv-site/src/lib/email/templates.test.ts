@@ -4,8 +4,10 @@ import {
   renderBookingConfirmationEmail,
   renderBookingNotificationEmail,
   renderBookingCalendarEvent,
+  renderBookingReminderEmail,
   renderContactConfirmationEmail,
   type BookingEmailInput,
+  type BookingReminderEmailInput,
 } from "./templates";
 
 const booking: BookingEmailInput = {
@@ -39,6 +41,9 @@ describe("renderBookingConfirmationEmail", () => {
     expect(html).toContain("10:00");
     expect(html).toContain("KVK 97564303");
     expect(html).toContain("automatische bevestiging");
+    expect(html).toContain(
+      "Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw moment."
+    );
   });
 
   it("writes an English confirmation for the en locale", () => {
@@ -46,6 +51,9 @@ describe("renderBookingConfirmationEmail", () => {
     expect(subject).toContain("Confirmed: our call on Wednesday");
     expect(html).toContain("What you can count on");
     expect(html).toContain("Amsterdam time");
+    expect(html).toContain(
+      "Need another moment? Reply to this email and we pick a new one."
+    );
   });
 
   it("escapes the visitor's name", () => {
@@ -90,6 +98,73 @@ describe("renderBookingConfirmationEmail with a Teams join link", () => {
 
   it("omits the join block entirely when no joinUrl is given", () => {
     const { html } = renderBookingConfirmationEmail(booking);
+    expect(html).not.toContain("Teams");
+  });
+
+  it("places the reschedule line under the join block", () => {
+    const { html } = renderBookingConfirmationEmail({
+      ...booking,
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    const joinIndex = html.indexOf("Deelnemen aan het Teams-gesprek");
+    const rescheduleIndex = html.indexOf(
+      "Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw moment."
+    );
+    expect(joinIndex).toBeGreaterThan(-1);
+    expect(rescheduleIndex).toBeGreaterThan(joinIndex);
+  });
+});
+
+const reminder: BookingReminderEmailInput = {
+  locale: "nl",
+  name: "Jane Doe",
+  isoDate: "2026-10-07T08:00:00.000Z",
+};
+
+describe("renderBookingReminderEmail", () => {
+  it("writes a Dutch reminder with the moment and the reschedule line", () => {
+    const { subject, html } = renderBookingReminderEmail(reminder);
+    expect(subject).toContain("Herinnering: ons gesprek op woensdag");
+    expect(html).toContain("Hi Jane Doe,");
+    expect(html).toContain("Een herinnering voor ons gesprek morgen:");
+    expect(html).toContain("10:00");
+    expect(html).toContain(
+      "Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw moment."
+    );
+    expect(html).toContain("automatische herinnering");
+  });
+
+  it("writes an English reminder for the en locale", () => {
+    const { subject, html } = renderBookingReminderEmail({ ...reminder, locale: "en" });
+    expect(subject).toContain("Reminder: our call on Wednesday");
+    expect(html).toContain("A reminder for our call tomorrow:");
+    expect(html).toContain(
+      "Need another moment? Reply to this email and we pick a new one."
+    );
+  });
+
+  it("escapes the visitor's name", () => {
+    const { html } = renderBookingReminderEmail({
+      ...reminder,
+      name: "<script>alert(1)</script>",
+    });
+    expect(html).not.toContain("<script>alert(1)</script>");
+    expect(html).toContain("&lt;script&gt;");
+  });
+
+  it("renders the Teams join button and link when joinUrl is given", () => {
+    const { html } = renderBookingReminderEmail({
+      ...reminder,
+      joinUrl: "https://teams.microsoft.com/l/meetup-join/abc",
+    });
+    expect(html).toContain("Deelnemen aan het Teams-gesprek");
+    expect(html.match(/https:\/\/teams\.microsoft\.com\/l\/meetup-join\/abc/g)).toHaveLength(
+      3
+    );
+  });
+
+  it("omits the join block when no joinUrl is given", () => {
+    const { html } = renderBookingReminderEmail(reminder);
     expect(html).not.toContain("Teams");
   });
 });

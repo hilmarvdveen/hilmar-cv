@@ -31,6 +31,12 @@ describe("isValidEmail", () => {
   });
 });
 
+describe("LIMITS", () => {
+  it("defines a length cap for the intended-start field", () => {
+    expect(LIMITS.start).toBe(80);
+  });
+});
+
 describe("validateFields", () => {
   it("passes valid required fields", () => {
     expect(

@@ -41,7 +41,7 @@ export const PageHero = ({
       )}
       <h1
         id={headingId}
-        className="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight text-white text-balance"
+        className="text-[1.75rem] leading-[1.15] sm:text-5xl font-extrabold tracking-tight text-white text-balance"
       >
         {title}{" "}
         {titleAccent && (

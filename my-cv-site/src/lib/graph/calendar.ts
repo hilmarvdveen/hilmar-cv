@@ -2,19 +2,15 @@ import { Client } from "@microsoft/microsoft-graph-client";
 
 export const BOOKING_TIMEZONE = "Europe/Amsterdam";
 const SLOT_MINUTES = 30;
-const SLOTS_PER_DAY = 16; // 09:00 - 17:00 in 30-minute steps
+const SLOTS_PER_DAY = 16;
 const WORKDAY_START_HOUR = 9;
+const REMINDER_MINUTES_BEFORE_START = 60;
 
 export type CalendarEvent = {
   start: { dateTime: string };
   end: { dateTime: string };
 }
 
-/**
- * The UTC offset (in minutes) that BOOKING_TIMEZONE has at the given instant.
- * Derived via Intl so daylight saving is handled by the runtime's zone data
- * instead of a hardcoded offset.
- */
 function bookingTimezoneOffsetMinutes(instant: Date): number {
   const timeZoneName = new Intl.DateTimeFormat("en-US", {
     timeZone: BOOKING_TIMEZONE,
@@ -29,13 +25,6 @@ function bookingTimezoneOffsetMinutes(instant: Date): number {
   return sign * (Number(offsetMatch[2]) * 60 + Number(offsetMatch[3]));
 }
 
-/**
- * The UTC instant at which the given wall-clock time occurs in
- * BOOKING_TIMEZONE on the given day (YYYY-MM-DD). This must not depend on the
- * server's own timezone: Vercel runs on UTC while bookings are Amsterdam
- * wall-clock times. The second pass handles a daylight-saving boundary
- * between the naive guess and the corrected instant.
- */
 export function bookingWallClockToUtc(
   date: string,
   hour: number,
@@ -58,13 +47,6 @@ export function bookingWallClockToUtc(
   return instant;
 }
 
-/**
- * Parse a Microsoft Graph dateTime string as a UTC instant. Under
- * `Prefer: outlook.timezone="Europe/Amsterdam"` Graph returns wall-clock
- * strings with no offset (for example "2026-09-01T10:00:00.0000000"), which
- * `new Date(...)` would wrongly read in the server's timezone. Strings that
- * already carry a Z or an explicit offset parse as they are.
- */
 export function parseGraphDateTime(dateTime: string): Date {
   if (/(Z|[+-]\d{2}:\d{2})$/.test(dateTime)) {
     return new Date(dateTime);
@@ -83,12 +65,6 @@ export function parseGraphDateTime(dateTime: string): Date {
   );
 }
 
-/**
- * Format a UTC instant as an Amsterdam wall-clock string without an offset,
- * the exact shape Microsoft Graph expects in a dateTimeTimeZone body. Sending
- * an ISO string with a trailing Z next to `timeZone: "Europe/Amsterdam"`
- * would make Graph read the UTC digits as Amsterdam time and shift the event.
- */
 export function formatAsBookingWallClock(instant: Date): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: BOOKING_TIMEZONE,
@@ -110,10 +86,31 @@ export function formatAsBookingWallClock(instant: Date): string {
   );
 }
 
-/**
- * Generate the bookable 30-minute slot start times (UTC ISO strings) for a
- * given day, 09:00-17:00 Amsterdam wall-clock time. Pure function, unit-tested.
- */
+function bookingTimezoneDateKey(instant: Date): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: BOOKING_TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(instant);
+
+  const partValue = (type: string): string =>
+    parts.find((part) => part.type === type)?.value ?? "";
+
+  return `${partValue("year")}-${partValue("month")}-${partValue("day")}`;
+}
+
+export function tomorrowBookingDateKey(instant: Date): string {
+  const [year, month, day] = bookingTimezoneDateKey(instant)
+    .split("-")
+    .map(Number);
+  const nextDay = new Date(Date.UTC(year, month - 1, day) + 86400000);
+  const pad = (value: number): string => String(value).padStart(2, "0");
+  return `${nextDay.getUTCFullYear()}-${pad(nextDay.getUTCMonth() + 1)}-${pad(
+    nextDay.getUTCDate()
+  )}`;
+}
+
 export function generateTimeSlots(date: string): string[] {
   const firstSlotStart = bookingWallClockToUtc(date, WORKDAY_START_HOUR, 0);
   const slots: string[] = [];
@@ -127,12 +124,6 @@ export function generateTimeSlots(date: string): string[] {
   return slots;
 }
 
-/**
- * True when a 30-minute slot starting at `slotStart` does not overlap any
- * existing calendar event. Event times are parsed with parseGraphDateTime so
- * Graph's offset-less Amsterdam strings compare on the same clock as the
- * slot instants. Pure function, unit-tested.
- */
 export function isSlotAvailable(
   slotStart: Date,
   events: CalendarEvent[]
@@ -163,6 +154,8 @@ type CalendarEventBody = {
   start: { dateTime: string; timeZone: string };
   end: { dateTime: string; timeZone: string };
   attendees: { emailAddress: { address: string; name: string }; type: "required" }[];
+  isReminderOn: boolean;
+  reminderMinutesBeforeStart: number;
   isOnlineMeeting?: boolean;
   onlineMeetingProvider?: "teamsForBusiness";
 }
@@ -195,6 +188,8 @@ function buildCalendarEventBody(
         type: "required",
       },
     ],
+    isReminderOn: true,
+    reminderMinutesBeforeStart: REMINDER_MINUTES_BEFORE_START,
     ...(withTeamsMeeting
       ? { isOnlineMeeting: true, onlineMeetingProvider: "teamsForBusiness" as const }
       : {}),
@@ -217,4 +212,48 @@ export async function createCalendarEvent(
       .post(buildCalendarEventBody(input, false));
     return { joinUrl: undefined };
   }
+}
+
+const BOOKING_EVENT_SUBJECT_PREFIXES = {
+  nl: "Kennismaking:",
+  en: "Intro call:",
+} as const;
+
+export type BookingEmailLocale = keyof typeof BOOKING_EVENT_SUBJECT_PREFIXES;
+
+function matchesBookingSubject(subject: string): boolean {
+  return Object.values(BOOKING_EVENT_SUBJECT_PREFIXES).some((prefix) =>
+    subject.startsWith(prefix)
+  );
+}
+
+export function bookingSubjectLocale(subject: string): BookingEmailLocale {
+  return subject.startsWith(BOOKING_EVENT_SUBJECT_PREFIXES.nl) ? "nl" : "en";
+}
+
+export type UpcomingBookingEvent = {
+  subject: string;
+  start: { dateTime: string };
+  attendees: { emailAddress: { address: string; name: string } }[];
+  onlineMeeting?: { joinUrl?: string };
+}
+
+export async function listUpcomingBookings(
+  client: Client,
+  userEmail: string,
+  from: Date,
+  to: Date
+): Promise<UpcomingBookingEvent[]> {
+  const result = (await client
+    .api(`/users/${userEmail}/calendarview`)
+    .query({
+      startDateTime: from.toISOString(),
+      endDateTime: to.toISOString(),
+      $orderby: "start/dateTime",
+    })
+    .header("Prefer", `outlook.timezone="${BOOKING_TIMEZONE}"`)
+    .get()) as { value?: UpcomingBookingEvent[] } | undefined;
+
+  const events = result?.value ?? [];
+  return events.filter((event) => matchesBookingSubject(event.subject));
 }

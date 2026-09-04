@@ -1,3 +1,5 @@
+import { pushDataLayerEvent } from "@/lib/analytics/events";
+
 export type BookingEventName =
   | "booking_step_view"
   | "booking_day_selected"
@@ -11,19 +13,9 @@ export type BookingEventName =
 
 export type BookingEventParameters = Record<string, string | number | boolean>;
 
-type DataLayerGlobal = {
-  dataLayer?: unknown[];
-};
-
 export function trackBookingEvent(
   name: BookingEventName,
   parameters: BookingEventParameters = {}
 ): void {
-  try {
-    const globalScope = globalThis as unknown as DataLayerGlobal;
-    globalScope.dataLayer = globalScope.dataLayer ?? [];
-    globalScope.dataLayer.push({ event: name, event_category: "booking", ...parameters });
-  } catch {
-    return;
-  }
+  pushDataLayerEvent(name, "booking", parameters);
 }

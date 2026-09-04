@@ -96,7 +96,7 @@ export const ProjectShowcase = () => {
           <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
             {t("cta.description")}
           </p>
-          <Button href="/book" variant="white" size="lg">
+          <Button href="/book" variant="white" size="lg" data-placement="projects-close">
             {t("cta.button")}
           </Button>
         </Container>

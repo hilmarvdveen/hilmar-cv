@@ -8,15 +8,20 @@ import {
   validateFields,
   validateStringArray,
   serverErrorResponse,
+  escapeHtml,
   LIMITS,
 } from "@/lib/security";
 
 export const runtime = "nodejs";
 
+const NOT_PROVIDED = "Niet opgegeven";
+
 type ContactFormRequest = {
   name: string;
   email: string;
   message: string;
+  company?: string;
+  start?: string;
   interests?: string[];
   locale?: string;
   company_website?: string;
@@ -33,7 +38,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (limited) return limited;
 
     const body = (await request.json()) as Partial<ContactFormRequest>;
-    const { name, email, message, interests } = body;
+    const { name, email, message, company, start, interests } = body;
     const locale: EmailLocale = body.locale === "nl" ? "nl" : "en";
 
     if (looksAutomated(body as Record<string, unknown>, Date.now())) {
@@ -44,6 +49,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       name: { value: name, required: true, maxLength: LIMITS.name },
       email: { value: email, required: true, email: true },
       message: { value: message, required: true, maxLength: LIMITS.message },
+      company: { value: company, maxLength: LIMITS.name },
+      start: { value: start, maxLength: LIMITS.start },
     });
     if (!validation.ok) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
@@ -66,6 +73,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const safeName = name as string;
     const safeEmail = email as string;
     const safeMessage = message as string;
+    const safeCompany = company ? escapeHtml(company) : NOT_PROVIDED;
+    const safeStart = start ? escapeHtml(start) : NOT_PROVIDED;
 
     const interestText = interests?.length
       ? `\n\nInteressen:\n- ${interests.join("\n- ")}`
@@ -75,6 +84,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 Afzender: ${safeName}
 Email: ${safeEmail}
+Bedrijf: ${safeCompany}
+Startdatum: ${safeStart}
 
 Bericht:
 ${safeMessage}${interestText}

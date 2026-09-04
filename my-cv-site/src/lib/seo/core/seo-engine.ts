@@ -490,7 +490,7 @@ export class SEOEngine {
     const baseUrl = `${this.baseUrl}/${locale}`;
     
     return [{
-      name: `${BUSINESS_PROFILE.NAME} - ${BUSINESS_PROFILE.TITLE}`,
+      name: BUSINESS_PROFILE.NAME,
       url: baseUrl,
       position: 1
     }];

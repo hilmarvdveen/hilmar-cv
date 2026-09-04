@@ -11,14 +11,21 @@ vi.mock("@/i18n/navigation", () => ({
   ),
 }));
 vi.mock("next/image", () => ({
-  // eslint-disable-next-line @next/next/no-img-element
-  default: (p: Record<string, unknown>) => <img alt="" src={String(p.src ?? "")} />,
+  default: (p: Record<string, unknown>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt={String(p.alt ?? "")} src={String(p.src ?? "")} />
+  ),
 }));
 
 describe("ClientLogosCarousel", () => {
   it("renders every client logo as a link, by role", () => {
     render(<ClientLogosCarousel />);
     expect(screen.getAllByRole("link")).toHaveLength(12);
+  });
+
+  it("renders every client logo as an image with an accessible name", () => {
+    render(<ClientLogosCarousel />);
+    expect(screen.getAllByAltText("images.companyLogoAlt")).toHaveLength(12);
   });
 
   it("links every client to its engagement on the experience page", () => {

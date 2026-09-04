@@ -77,4 +77,11 @@ describe("BlogIndex", () => {
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
+
+  it("closes with the site's one booking call to action", () => {
+    render(<BlogIndex posts={posts} locale="en" labels={labels} />);
+    expect(screen.getByRole("heading", { level: 2, name: "x" })).toBeInTheDocument();
+    expect(screen.getByText("y")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "z" })).toHaveAttribute("href", "/book");
+  });
 });

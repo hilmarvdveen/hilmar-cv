@@ -1,19 +1,13 @@
-/**
- * Lightweight, dependency-free input validation for the public API routes.
- * Guards against missing fields, malformed emails, and oversized payloads
- * (denial-of-wallet / mailbomb amplification via huge bodies).
- */
-
 export const LIMITS = {
   name: 100,
-  email: 254, // RFC 5321 max
+  email: 254,
   subjectLike: 200,
   message: 5000,
   interestItem: 100,
   interestCount: 20,
+  start: 80,
 } as const;
 
-// Same pragmatic email shape already used across the routes/forms.
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isValidEmail(email: string): boolean {
@@ -32,10 +26,6 @@ export type ValidationResult = {
   error?: string;
 }
 
-/**
- * Validate a map of named fields. Returns the first failure, if any.
- * String values are checked for presence (when required) and length.
- */
 export function validateFields(fields: Record<string, FieldSpec>): ValidationResult {
   for (const [name, spec] of Object.entries(fields)) {
     const { value, required, maxLength, email } = spec;
@@ -61,7 +51,6 @@ export function validateFields(fields: Record<string, FieldSpec>): ValidationRes
   return { ok: true };
 }
 
-/** Validate an optional array of short string tags (e.g. contact interests). */
 export function validateStringArray(
   value: unknown,
   maxItems = LIMITS.interestCount,

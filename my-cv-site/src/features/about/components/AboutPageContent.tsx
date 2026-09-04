@@ -79,7 +79,7 @@ export function AboutPageContent() {
         }
         actions={
           <>
-            <Button href="/book" variant="primary">
+            <Button href="/book" variant="primary" data-placement="about-hero">
               {t("cta.button")}
             </Button>
             <Button
@@ -162,7 +162,7 @@ export function AboutPageContent() {
           <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
             {t("cta.description")}
           </p>
-          <Button href="/book" variant="white" size="lg">
+          <Button href="/book" variant="white" size="lg" data-placement="about-close">
             {t("cta.button")}
           </Button>
         </Container>

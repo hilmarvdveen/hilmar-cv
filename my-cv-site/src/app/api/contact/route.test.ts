@@ -66,6 +66,18 @@ describe("POST /api/contact", () => {
     expect(res.status).toBe(400);
   });
 
+  it("returns 400 when the company field exceeds the maximum length", async () => {
+    const res = await POST(post({ ...valid, company: "x".repeat(101) }));
+    expect(res.status).toBe(400);
+    expect(sendMail).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 when the intended start field exceeds the maximum length", async () => {
+    const res = await POST(post({ ...valid, start: "x".repeat(81) }));
+    expect(res.status).toBe(400);
+    expect(sendMail).not.toHaveBeenCalled();
+  });
+
   it("silently succeeds and sends nothing when the honeypot is filled", async () => {
     const res = await POST(post({ ...valid, company_website: "bot" }));
     expect(res.status).toBe(200);
@@ -93,6 +105,31 @@ describe("POST /api/contact", () => {
     const body: string = htmlCall![2].body;
     expect(body).not.toContain("<img src=x");
     expect(body).toContain("&lt;img src=x");
+  });
+
+  it("adds escaped company and start rows to the owner notification when provided", async () => {
+    await POST(
+      post({
+        ...valid,
+        company: "<script>evil()</script>",
+        start: "1 oktober 2026",
+      })
+    );
+    const ownerCall = sendMail.mock.calls.find((call) => call[2]?.to === CREDS.smtpUser);
+    expect(ownerCall).toBeTruthy();
+    const body: string = ownerCall![2].body;
+    expect(body).not.toContain("<script>evil()</script>");
+    expect(body).toContain("&lt;script&gt;evil()&lt;/script&gt;");
+    expect(body).toContain("Startdatum: 1 oktober 2026");
+  });
+
+  it("marks company and start as not provided in the owner notification when omitted", async () => {
+    await POST(post(valid));
+    const ownerCall = sendMail.mock.calls.find((call) => call[2]?.to === CREDS.smtpUser);
+    expect(ownerCall).toBeTruthy();
+    const body: string = ownerCall![2].body;
+    expect(body).toContain("Bedrijf: Niet opgegeven");
+    expect(body).toContain("Startdatum: Niet opgegeven");
   });
 
   it("sends the visitor confirmation rendered by the shared template for the default locale", async () => {

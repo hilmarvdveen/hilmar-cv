@@ -152,23 +152,25 @@ export function FAQClientContent() {
         aria-labelledby="faq-cta-heading"
       >
         <Container width="narrow" className="text-center">
-          <SectionTitle
-            id="faq-cta-heading"
-            title={t("cta.title")}
-            subtitle={t("cta.description")}
-            align="center"
-            onDark
-          />
-          <div className="flex flex-col items-center gap-4">
-            <Button href="/book" variant="white" size="lg">
-              {t("cta.book")}
-            </Button>
-            <Link
-              href="/contact"
-              className="text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
-            >
-              {t("cta.contact")}
-            </Link>
+          <div data-track-section="faq-close">
+            <SectionTitle
+              id="faq-cta-heading"
+              title={t("cta.title")}
+              subtitle={t("cta.description")}
+              align="center"
+              onDark
+            />
+            <div className="flex flex-col items-center gap-4">
+              <Button href="/book" variant="white" size="lg" data-placement="faq-close">
+                {t("cta.book")}
+              </Button>
+              <Link
+                href="/contact"
+                className="text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
+              >
+                {t("cta.contact")}
+              </Link>
+            </div>
           </div>
         </Container>
       </Section>

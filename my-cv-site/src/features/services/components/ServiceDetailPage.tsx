@@ -132,7 +132,7 @@ export const ServiceDetailPage = ({
         description={hero.description}
         actions={
           <>
-            <Button href="/book" variant="primary" size="lg">
+            <Button href="/book" variant="primary" size="lg" data-placement="service-hero">
               {hero.bookLabel}
             </Button>
             <Button href="/contact" variant="outlineOnDark" size="lg">
@@ -316,7 +316,7 @@ export const ServiceDetailPage = ({
             onDark
           />
           <div className="flex justify-center">
-            <Button href="/book" variant="white" size="lg">
+            <Button href="/book" variant="white" size="lg" data-placement="service-close">
               {callToAction.bookLabel}
             </Button>
           </div>

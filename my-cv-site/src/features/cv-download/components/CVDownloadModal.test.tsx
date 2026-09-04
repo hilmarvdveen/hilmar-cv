@@ -7,6 +7,9 @@ vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
+const pushSiteEvent = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/analytics/events", () => ({ pushSiteEvent }));
+
 const ENGLISH_CV = "/data/cv/hilmar_van_der_veen_cv_en.pdf";
 const DUTCH_CV = "/data/cv/hilmar_van_der_veen_cv_nl.pdf";
 
@@ -23,6 +26,7 @@ describe("CVDownloadModal", () => {
   beforeEach(() => {
     onClose = vi.fn();
     openSpy = vi.fn();
+    pushSiteEvent.mockClear();
     vi.stubGlobal("open", openSpy);
     vi.stubGlobal(
       "fetch",
@@ -98,6 +102,29 @@ describe("CVDownloadModal", () => {
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it("pushes the download event with the chosen language once the document opens", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillValid(user);
+    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+
+    await waitFor(() => expect(openSpy).toHaveBeenCalled());
+    expect(pushSiteEvent).toHaveBeenCalledWith("cv_download", { language: "en" });
+  });
+
+  it("does not push the download event when opening the document throws", async () => {
+    openSpy.mockImplementation(() => {
+      throw new Error("popup blocked");
+    });
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillValid(user);
+    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    expect(pushSiteEvent).not.toHaveBeenCalled();
   });
 
   it("lets an English page visitor pick the Dutch CV", async () => {

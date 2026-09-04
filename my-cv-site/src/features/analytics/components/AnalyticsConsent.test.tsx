@@ -3,9 +3,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AnalyticsConsent, ANALYTICS_CONSENT_EVENT, readStoredConsent } from "./AnalyticsConsent";
 
+const pushSiteEvent = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/analytics/events", () => ({ pushSiteEvent }));
+
 const labels = { text: "We count visits anonymously.", decline: "Decline", accept: "Accept" };
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  pushSiteEvent.mockClear();
+});
 
 describe("AnalyticsConsent", () => {
   it("shows the banner with the given labels when no choice has been made", () => {
@@ -28,6 +34,13 @@ describe("AnalyticsConsent", () => {
     expect(accept).not.toHaveClass("bg-emerald-700");
   });
 
+  it("gives the decline button the same outline weight as accept, not a filled colour", () => {
+    render(<AnalyticsConsent labels={labels} />);
+    const decline = screen.getByRole("button", { name: "Decline" });
+    expect(decline).not.toHaveClass("bg-gray-100");
+    expect(decline).toHaveClass("border-2", "border-emerald-600");
+  });
+
   it("stores the grant, announces it and hides the banner on Accept", async () => {
     const announced = vi.fn();
     window.addEventListener(ANALYTICS_CONSENT_EVENT, announced);
@@ -47,6 +60,20 @@ describe("AnalyticsConsent", () => {
     await user.click(screen.getByRole("button", { name: "Decline" }));
     expect(localStorage.getItem("analytics-consent")).toBe("denied");
     expect(screen.queryByRole("button", { name: "Decline" })).not.toBeInTheDocument();
+  });
+
+  it("pushes the consent choice as accept before storing the grant", async () => {
+    const user = userEvent.setup();
+    render(<AnalyticsConsent labels={labels} />);
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+    expect(pushSiteEvent).toHaveBeenCalledWith("consent_choice", { choice: "accept" });
+  });
+
+  it("pushes the consent choice as decline before storing the refusal", async () => {
+    const user = userEvent.setup();
+    render(<AnalyticsConsent labels={labels} />);
+    await user.click(screen.getByRole("button", { name: "Decline" }));
+    expect(pushSiteEvent).toHaveBeenCalledWith("consent_choice", { choice: "decline" });
   });
 
   it("stays hidden when a choice was stored earlier", () => {

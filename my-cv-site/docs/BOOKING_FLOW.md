@@ -146,6 +146,49 @@ is what turns them into reports. The hypotheses are measured with them.
 Step conversion is `booking_step_view(step n+1) / booking_step_view(step n)`,
 and end-to-end conversion is `booking_completed / booking_step_view(step 1)`.
 
+## Site events
+
+Measurement does not stop at the booking form. `src/lib/analytics/events.ts`
+holds `pushDataLayerEvent(name, category, parameters)`, the same push
+mechanics as the booking helper (create the array if it is missing, push,
+swallow a dataLayer that refuses the write), and `pushSiteEvent(name,
+parameters)`, which calls it with `event_category: "site"`.
+`trackBookingEvent` in `src/lib/booking/analytics.ts` now calls
+`pushDataLayerEvent` with `event_category: "booking"` too, so both live
+behind one push function without any booking event name changing.
+
+`SiteEvents`, a client island mounted once in `src/app/[locale]/layout.tsx`
+inside the message provider, emits these events for every page on the site:
+
+| Event | When | Parameters |
+|---|---|---|
+| `cta_click` | a click reaches an anchor whose `href` ends with `/book` | `placement`, `path` |
+| `contact_click` | a click reaches an anchor whose `href` ends with `/contact` | `placement`, `path` |
+| `section_view` | an element carrying `data-track-section` first enters the viewport | `section` |
+| `consent_choice` | the visitor accepts or declines the cookie banner | `choice` ("accept" or "decline") |
+| `cv_download` | the CV document opens from the download modal | `language` |
+| `contact_submit` | the contact form is submitted successfully | |
+
+`placement` comes from a `data-placement` attribute on the clicked anchor
+(`hero`, `sticky-bar`, `header`, `close`, `mid-cta`, `hiring-shape`,
+`experience-hero`, `experience-band`, `experience-close`, `faq-close`,
+`service-hero`, `service-close`, `about-hero`, `about-close`,
+`contact-hero`, `projects-close`), or `unlabelled` when the attribute is
+absent. `path` comes from `usePathname()` at the moment of the click.
+`section_view` fires once per page view per section: the observer
+unobserves a target after its first intersection, and a fresh set of seen
+sections is created whenever the pathname changes. `data-track-section` is
+carried by the results strip, the homepage close band, the experience mid
+page band, and the FAQ close band.
+
+`consent_choice` is pushed by `AnalyticsConsent` in the same handler that
+calls `storeConsent`, so the choice reaches the dataLayer before Google Tag
+Manager has necessarily loaded. That is not a problem: GTM reads the whole
+array once it starts, the same reason a `booking_*` push made before consent
+is not lost. GTM owns turning every event above into a report: add a GA4
+event tag with a Custom Event trigger per event name, the same pattern
+already used for the booking funnel events.
+
 ## Hypothesis tests
 
 The site does not carry enough traffic for split tests to reach significance
@@ -187,13 +230,30 @@ chips. No pricing cards.
 
 ## Emails
 
-`src/lib/email/templates.ts` renders three pieces for every booking:
+`src/lib/email/templates.ts` renders four pieces for every booking:
 
 | Piece | Recipient | Language | Subject |
 |---|---|---|---|
 | `renderBookingConfirmationEmail` | the visitor | the visitor's locale | "Bevestigd: ons gesprek op {moment}" / "Confirmed: our call on {moment}" |
 | `renderBookingNotificationEmail` | the site owner | Dutch, reply-to set to the visitor | "Nieuwe boeking: {name}, {moment}" |
 | `renderBookingCalendarEvent` | the calendar invitation body | the visitor's locale | "Kennismaking: Hilmar van der Veen en {name}" / "Intro call: Hilmar van der Veen and {name}" |
+| `renderBookingReminderEmail` | the visitor, the day before the call | the visitor's locale | "Herinnering: ons gesprek op {moment}" / "Reminder: our call on {moment}" |
+
+The confirmation email carries a reschedule line under the join block:
+"Komt het toch niet uit? Beantwoord deze mail, dan kiezen we een nieuw
+moment." / "Need another moment? Reply to this email and we pick a new
+one." The reminder email carries the same line. Both emails ask the
+visitor to reply to the sender rather than pointing at a self-service
+reschedule flow, because none exists yet.
+
+`renderBookingReminderEmail` shares the confirmation's layout, greeting and
+moment block, with one paragraph in place of the "what you can count on"
+list ("Een herinnering voor ons gesprek morgen:" / "A reminder for our call
+tomorrow:") and the same Teams join button when the event carries a join
+link. `GET /api/booking/reminders`, gated by `CRON_SECRET` and run once a
+day by Vercel Cron, is what calls it. See the "Reminders" section of
+`docs/MICROSOFT_GRAPH.md` for the cron schedule, the token gate and how to
+test it.
 
 Rules the templates follow:
 
@@ -219,6 +279,9 @@ Rules the templates follow:
   line at the top. When the mailbox has no Teams licence, Graph could not
   create the meeting, `joinUrl` is undefined, and all three templates
   render exactly as they did before Teams support existed.
+- Every calendar event carries `isReminderOn: true` and
+  `reminderMinutesBeforeStart: 60`, so Outlook shows its own native
+  60-minute reminder to the organiser on top of the reminder email.
 
 To preview the templates outside the test runner, render them with
 `node --experimental-strip-types` on a copy that concatenates

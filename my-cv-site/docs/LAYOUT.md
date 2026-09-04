@@ -42,7 +42,7 @@ scale so a new page never hand rolls its own hero markup:
 | Background and text | `bg-brand-navy text-white` |
 | Vertical padding | `py-16 sm:py-20` |
 | Badge | optional uppercase eyebrow in `text-emerald-300`, with an optional icon |
-| Heading | `text-3xl sm:text-5xl`, white, with an optional accent line |
+| Heading | `text-[1.75rem] leading-[1.15]` on phones (the shared `text-3xl` budget wrapped a 58-character title to four lines at 390), `sm:text-5xl` from `sm`, white, with an optional accent line |
 | Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background |
 | Breadcrumb | optional, rendered at the top of the band through the `breadcrumb` slot |
 | Aside | optional second column for a summary or preview |
@@ -166,15 +166,41 @@ the numbers read as numbers against the navy body copy around them.
 
 `ClientLogosCarousel` no longer auto-scrolls. The CSS-driven `.slider` marquee
 (`@keyframes autoRun`, the white card background, the per-brand colour
-variables) is gone from `globals.css`. Logos render in a plain responsive grid
-(2 columns on phones up to 6 at `lg`), grayscale by default with
-`group-hover:grayscale-0` revealing the logo's own colour on hover. Because
-nothing scrolls, every logo including the four named clients (bol.com,
-Belastingdienst, Nationale Postcode Loterij, Athlon) is on screen at once
+variables) is gone from `globals.css`. Logos render in a plain responsive grid,
+`grid-cols-2 sm:grid-cols-3 lg:grid-cols-6` with one equal `gap-4`, grayscale
+and `opacity-80` by default with `group-hover:grayscale-0
+group-hover:opacity-100` (and the `group-focus-visible` equivalents) revealing
+the logo's own colour on hover and keyboard focus. Because nothing scrolls,
+every logo including the four named clients (bol.com, Belastingdienst,
+Nationale Postcode Loterij, Athlon), which lead the list, is on screen at once
 instead of only some of them at any one scroll frame. The three sector
 indicator lines under the logos are gone, they repeated hero chips from two
 screens earlier. What is left under the title: one subtitle line and the
 invite line.
+
+Every logo sits in its own fixed box: a `relative h-12 w-full` span inside a
+`bg-white ring-1 ring-gray-200` frame with padding, holding a `next/image`
+with `fill`, `object-contain` and `sizes="(min-width: 1024px) 160px, 40vw"`.
+The white frame also normalises the four rasters that read badly on the bare
+`bg-bgLight` section background: Opinity and Conclusion are dark rasters on a
+black background, Omniplan and Transdev are marks meant for a light ground,
+and the frame gives every one of them the same light neutral surround.
+
+Before this fix eight of the twelve logos measured 0 by 0 below `sm`. The
+component rendered `next/image` at a fixed intrinsic size (`width={120}
+height={60}`) with `style={{ width: "auto", height: "auto" }}` so CSS, not the
+HTML attributes, decided the rendered box. That removes the browser's built-in
+box reservation for an image that has not loaded yet, and eight of the twelve
+logos carried `loading="lazy"`. At 390 wide the grid is two columns, so those
+eight sit three and four rows below the fold. A full-page capture at that
+width never scrolled them into the viewport, native lazy loading never fired,
+and an unloaded image with no CSS-declared size and no HTML-attribute
+fallback collapses to 0 by 0 while its flex wrapper (`h-14 w-full`) kept its
+own height, leaving four logos and a band of empty space. At 1280 the six-
+column grid fits every logo above the fold, lazy loading fires immediately,
+and the bug did not show. `fill` sizes the image from the parent box
+regardless of load state or column count, which is why it closes the bug at
+every width rather than only masking it at the width that was tested.
 
 ### Card tinted variant
 
@@ -186,6 +212,18 @@ flat white-on-white. The flagship cards use it, since the flagship section
 background, white cards), and without the swap the two adjacent card grids
 read as one long strip.
 
+### Experience card container width
+
+`WorkExperienceSection`'s two card grids sit in their own `Container
+width="narrow"` (`max-w-4xl`), separate from the `Container` (`max-w-7xl`)
+that holds the section heading. At 1280 the default container let each card
+grow to 1232px wide while the prose inside stayed capped at `max-w-[68ch]`
+(about 700px), so 41 percent of every card was empty. The narrow container
+now bounds the card at 896px, close enough to the 68 character measure that
+the `max-w-[68ch]` caps on the summary and body paragraphs are gone, the
+container does that job. The quick-nav chip bar and the section heading keep
+the default container, only the card grids moved.
+
 ### Close band boundary
 
 `CloseSection` and the footer are both `bg-brand-navy`, back to back, which
@@ -193,6 +231,15 @@ read as one 1000px navy field. `CloseSection` now overrides to
 `bg-brand-navy-deep` (already defined in `globals.css`, previously unused)
 with a `border-b border-white/10` seam, so the close band is visibly its own
 element above the footer rather than a continuation of it.
+
+### One button treatment on navy
+
+Every navy close band uses `variant="white"` on its `Button`, including the
+homepage close (`CloseSection`), which used to be the one exception on
+`variant="primary"` (the site's emerald action colour). One navy band should
+not carry two different primary-button treatments, so the homepage close
+matches the FAQ, about, projects and service-page closes. `data-placement`
+stays on the button for the funnel events.
 
 ### Sticky call-to-action bar and `--bottom-bar-offset`
 
@@ -223,6 +270,15 @@ above whichever bottom bar is currently showing, booking's or this one, and
 sits flush with the viewport bottom when neither is present. The property is
 removed whenever the bar is not rendered, so the banner does not carry a
 stale offset from a page that no longer has a bottom bar.
+
+### Cookie banner buttons
+
+`AnalyticsConsent` renders Decline before Accept, both `variant="outline"`
+and `size="sm"`. Decline used to be `variant="neutral"`, a filled grey
+button, next to Accept's outline, which read as Decline being the primary
+action on a banner that wants the visitor to accept. Giving both the same
+outline weight removes that reversed emphasis without picking a winner
+between the two choices.
 
 ## WCAG 2.2 pass (31 August 2026)
 

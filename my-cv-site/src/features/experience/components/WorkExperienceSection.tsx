@@ -93,11 +93,11 @@ export const WorkExperienceSection = () => {
             <span className="font-semibold">{t("role")}:</span> {role}
           </p>
 
-          <p className="mt-2 max-w-[68ch] text-[15px] font-medium leading-relaxed text-textMain">
+          <p className="mt-2 text-[15px] font-medium leading-relaxed text-textMain">
             {summary}
           </p>
 
-          <div className="mt-4 max-w-[68ch] space-y-4 text-[17px] leading-relaxed text-gray-700">
+          <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-gray-700">
             {bodyParagraphs.map((item, index) =>
               item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
             )}
@@ -132,7 +132,8 @@ export const WorkExperienceSection = () => {
       <Section background="light" aria-labelledby={SECTION_HEADING_ID}>
         <Container>
           <SectionTitle id={SECTION_HEADING_ID} title={sectionTitle} />
-
+        </Container>
+        <Container width="narrow">
           <div className="grid grid-cols-1 gap-8">
             {leadEntries.map((entry) => renderEntry(entry))}
           </div>
@@ -146,23 +147,25 @@ export const WorkExperienceSection = () => {
           aria-labelledby={MID_CTA_HEADING_ID}
         >
           <Container width="narrow" className="text-center">
-            <SectionTitle
-              id={MID_CTA_HEADING_ID}
-              title={experiencePageT("cta.title")}
-              subtitle={experiencePageT("cta.description")}
-              align="center"
-              onDark
-            />
-            <Button href="/book" variant="white" size="lg">
-              {experiencePageT("cta.button")}
-            </Button>
+            <div data-track-section="experience-band">
+              <SectionTitle
+                id={MID_CTA_HEADING_ID}
+                title={experiencePageT("cta.title")}
+                subtitle={experiencePageT("cta.description")}
+                align="center"
+                onDark
+              />
+              <Button href="/book" variant="white" size="lg" data-placement="experience-band">
+                {experiencePageT("cta.button")}
+              </Button>
+            </div>
           </Container>
         </Section>
       )}
 
       {remainingEntries.length > 0 && (
         <Section background="light">
-          <Container>
+          <Container width="narrow">
             <div className="grid grid-cols-1 gap-8">
               {remainingEntries.map((entry) => renderEntry(entry))}
             </div>

@@ -45,6 +45,7 @@ export const HeroSection = () => {
                 variant="primary"
                 size="lg"
                 className="w-full px-4 text-[15px] sm:w-auto sm:px-8 sm:text-base"
+                data-placement="hero"
               >
                 <Calendar className="hidden w-5 h-5 sm:block group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
                 <span>{t("bookCall")}</span>

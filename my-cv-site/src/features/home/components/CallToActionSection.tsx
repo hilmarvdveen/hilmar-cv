@@ -26,7 +26,13 @@ export const CallToActionSection = () => {
             {t("subtitle")}
           </p>
         </div>
-        <Button href="/book" variant="primary" size="lg" className="shrink-0">
+        <Button
+          href="/book"
+          variant="primary"
+          size="lg"
+          className="shrink-0"
+          data-placement="mid-cta"
+        >
           <Calendar className="w-5 h-5" />
           <span>{t("button")}</span>
         </Button>

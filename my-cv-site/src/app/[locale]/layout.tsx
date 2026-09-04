@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCallToActionBar } from "@/components/StickyCallToActionBar";
-import { AnalyticsConsent, GoogleTagManager } from "@/features/analytics";
+import { AnalyticsConsent, GoogleTagManager, SiteEvents } from "@/features/analytics";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
 import "@/app/globals.css";
@@ -126,6 +126,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <Footer />
           </div>
           <StickyCallToActionBar />
+          <SiteEvents />
         </NextIntlClientProvider>
 
         {gtmId && <AnalyticsConsent labels={consentLabels} />}

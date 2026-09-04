@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
+import { Button } from "@/components/Button";
 import type { BlogPost, BlogLabels } from "../types";
 import { formatDate } from "../format";
 
@@ -80,6 +81,25 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
               <PostCard key={post.slug} post={post} locale={locale} labels={labels} featured={false} />
             ))}
           </div>
+        </Container>
+      </Section>
+
+      <Section background="navy" padding="default" aria-labelledby="blog-index-cta-heading">
+        <Container width="prose">
+          <h2 id="blog-index-cta-heading" className="text-2xl font-bold text-white">
+            {labels.ctaTitle}
+          </h2>
+          <p className="mt-2 max-w-xl text-slate-300">{labels.ctaText}</p>
+          <Button
+            href="/book"
+            variant="primary"
+            size="md"
+            className="mt-5"
+            data-placement="blog-close"
+          >
+            {labels.ctaButton}
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </Container>
       </Section>
     </div>

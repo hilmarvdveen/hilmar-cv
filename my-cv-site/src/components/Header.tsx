@@ -167,7 +167,13 @@ export const Header = () => {
               })}
 
               <span className="mx-2 h-6 w-px bg-gray-200" aria-hidden="true" />
-              <Button href="/book" variant="primary" size="sm" className="ml-6 whitespace-nowrap">
+              <Button
+                href="/book"
+                variant="primary"
+                size="sm"
+                className="ml-6 whitespace-nowrap"
+                data-placement="header"
+              >
                 <Calendar className="w-4 h-4" />
                 <span>{t("nav.book")}</span>
               </Button>
@@ -209,7 +215,13 @@ export const Header = () => {
             </div>
 
             <div className="flex items-center gap-1 lg:hidden">
-              <Button href="/book" variant="primary" size="sm" className="px-3 whitespace-nowrap">
+              <Button
+                href="/book"
+                variant="primary"
+                size="sm"
+                className="px-3 whitespace-nowrap"
+                data-placement="header"
+              >
                 <Calendar className="hidden h-4 w-4 min-[400px]:block" />
                 <span>{t("nav.book")}</span>
               </Button>

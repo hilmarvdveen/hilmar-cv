@@ -6,6 +6,7 @@ import { X, Download, Mail, MessageSquare, User } from "lucide-react";
 import { Button } from "@/components/Button";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
+import { pushSiteEvent } from "@/lib/analytics/events";
 
 export type CvLanguage = "nl" | "en";
 
@@ -63,6 +64,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
   const openDocument = () => {
     try {
       window.open(cvDocumentPath(cvLanguage), "_blank");
+      pushSiteEvent("cv_download", { language: cvLanguage });
     } catch (error) {
       console.error("Error opening the CV document:", error);
     }
