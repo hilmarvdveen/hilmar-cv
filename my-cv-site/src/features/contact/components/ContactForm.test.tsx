@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import type { Mock } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from "./ContactForm";
@@ -50,7 +51,7 @@ describe("ContactForm", () => {
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
 
-    const [url, init] = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0];
+    const [url, init] = (fetch as unknown as Mock).mock.calls[0];
     expect(url).toBe("/api/contact");
     const body = JSON.parse((init as RequestInit).body as string);
     expect(body).toMatchObject({
@@ -77,7 +78,7 @@ describe("ContactForm", () => {
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
 
-    const [, init] = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0];
+    const [, init] = (fetch as unknown as Mock).mock.calls[0];
     const body = JSON.parse((init as RequestInit).body as string);
     expect(body).toMatchObject({ company: "", start: "" });
   });

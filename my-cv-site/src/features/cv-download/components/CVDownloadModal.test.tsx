@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import type { Mock } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CVDownloadModal, cvDocumentPath } from "./CVDownloadModal";
@@ -20,8 +21,8 @@ async function fillValid(user: ReturnType<typeof userEvent.setup>) {
 }
 
 describe("CVDownloadModal", () => {
-  let onClose: ReturnType<typeof vi.fn>;
-  let openSpy: ReturnType<typeof vi.fn>;
+  let onClose: Mock;
+  let openSpy: Mock;
 
   beforeEach(() => {
     onClose = vi.fn();
@@ -89,7 +90,7 @@ describe("CVDownloadModal", () => {
     await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-    const body = JSON.parse((fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1].body);
+    const body = JSON.parse((fetch as unknown as Mock).mock.calls[0][1].body);
     expect(body).toMatchObject({
       name: "Jane",
       email: "jane@example.com",
@@ -135,7 +136,7 @@ describe("CVDownloadModal", () => {
     await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(DUTCH_CV, "_blank"));
-    const body = JSON.parse((fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1].body);
+    const body = JSON.parse((fetch as unknown as Mock).mock.calls[0][1].body);
     expect(body.cvLanguage).toBe("nl");
   });
 

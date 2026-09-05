@@ -70,9 +70,11 @@ export function formatShortDate(key: string, locale: string): string {
 }
 
 export function formatSlotTime(iso: string): string {
+  const moment = new Date(iso);
+  if (Number.isNaN(moment.getTime())) return "";
   return new Intl.DateTimeFormat("nl-NL", {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: BOOKING_TIMEZONE,
-  }).format(new Date(iso));
+  }).format(moment);
 }

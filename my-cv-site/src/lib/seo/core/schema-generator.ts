@@ -74,7 +74,7 @@ export class SchemaGenerator {
   }
 
   private siteDescription(): string {
-    return `${BUSINESS_PROFILE.NAME}, freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} for React, Next.js, Angular and TypeScript. Legacy to modern without downtime, design systems and GraphQL contracts, across the Randstad and remote.`;
+    return `${BUSINESS_PROFILE.NAME}, freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} for React, Next.js, Angular and TypeScript. Legacy to modern without interruption, design systems and GraphQL contracts, across the Randstad and remote.`;
   }
 
   private webSiteId(locale: Locale): string {
@@ -230,8 +230,6 @@ export class SchemaGenerator {
       '@type': 'Offer' as const,
       name,
       description,
-      price: `${PRICING.HOURLY_RATE_MIN}`,
-      priceCurrency: PRICING.CURRENCY,
       priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
       availability: 'https://schema.org/InStock',
       seller: {
@@ -334,8 +332,6 @@ export class SchemaGenerator {
         '@type': 'Offer',
         name: service.name,
         description: `${service.description} Hourly rate excluding VAT.`,
-        price: `${PRICING.HOURLY_RATE_MIN}`,
-        priceCurrency: PRICING.CURRENCY,
         priceRange: `€${PRICING.HOURLY_RATE_MIN}-${PRICING.HOURLY_RATE_MAX}`,
         availability: 'https://schema.org/InStock',
         seller: {

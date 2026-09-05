@@ -24,12 +24,12 @@ vi.mock("next/link", () => ({
   ),
 }));
 vi.mock("next/image", () => ({
-  default: (p: Record<string, unknown>) => (
+  default: (properties: Record<string, unknown>) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      alt={String(p.alt ?? "")}
-      className={String(p.className ?? "")}
-      src={String(p.src ?? "")}
+      alt={String(properties.alt ?? "")}
+      className={String(properties.className ?? "")}
+      src={String(properties.src ?? "")}
     />
   ),
 }));

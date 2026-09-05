@@ -12,13 +12,13 @@ describe("Button", () => {
         Send
       </Button>
     );
-    const btn = screen.getByRole("button", { name: "Send" });
-    expect(btn.tagName).toBe("BUTTON");
-    expect(btn).toHaveAttribute("type", "submit");
-    expect(btn).toBeDisabled();
+    const button = screen.getByRole("button", { name: "Send" });
+    expect(button.tagName).toBe("BUTTON");
+    expect(button).toHaveAttribute("type", "submit");
+    expect(button).toBeDisabled();
     // primary: filled emerald that darkens on hover (never lightens)
-    expect(btn.className).toContain("bg-emerald-700");
-    expect(btn.className).toContain("hover:bg-emerald-800");
+    expect(button.className).toContain("bg-emerald-700");
+    expect(button.className).toContain("hover:bg-emerald-800");
   });
 
   it("renders an internal href as a Link (anchor)", () => {

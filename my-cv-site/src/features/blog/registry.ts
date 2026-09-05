@@ -19,8 +19,8 @@ const POSTS: BlogPost[] = [
   { ...hexagonalJavaMeta, Body: HexagonalJavaBody },
 ];
 
-export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((a, b) =>
-  b.publishedDate.localeCompare(a.publishedDate)
+export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((first, second) =>
+  second.publishedDate.localeCompare(first.publishedDate)
 );
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

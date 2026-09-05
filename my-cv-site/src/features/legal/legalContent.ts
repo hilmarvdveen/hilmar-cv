@@ -45,25 +45,25 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
             "I only collect personal data that you actively provide through one of the forms on this site, plus limited technical and analytics data:",
           ],
           bullets: [
-            "Contact form — your name, email address, message and any topics you select, so I can answer your enquiry. Legal basis: your consent and/or taking steps at your request prior to entering into a contract (Art. 6(1)(a)/(b) GDPR).",
-            "CV download — your name, email address, the purpose you select and the CV language you choose, so I know who is interested in my profile. Legal basis: your consent (Art. 6(1)(a) GDPR).",
-            "Consultation booking — your name, email address and company, and the project details and time slot you choose, so I can schedule and prepare our meeting. Legal basis: steps prior to a contract and my legitimate interest in managing bookings (Art. 6(1)(b)/(f) GDPR).",
-            "Analytics — aggregated, statistical usage data (see the Cookie Policy). Legal basis: your consent for cookie-based analytics; legitimate interest for privacy-friendly, cookieless measurement.",
+            "Contact form: your name, email address, company, intended start, message and any topics you select, so I can answer your enquiry. Legal basis: your consent and/or taking steps at your request prior to entering into a contract (Art. 6(1)(a)/(b) GDPR).",
+            "CV download: your name, email address, the purpose you select and the CV language, so I can follow up on your request and answer questions about the CV. Legal basis: your consent (Art. 6(1)(a) GDPR).",
+            "Consultation booking: your name, email address and company, and the project details and time slot you choose, so I can schedule and prepare our meeting. Legal basis: steps prior to a contract and my legitimate interest in managing bookings (Art. 6(1)(b)/(f) GDPR).",
+            "Analytics: aggregated, statistical usage data (see the Cookie Policy). Legal basis: your consent for cookie-based analytics, and legitimate interest for privacy-friendly, cookieless measurement.",
           ],
         },
         {
           heading: "Who receives your data",
           paragraphs: ["I do not sell your data. I share it only with service providers that help me run this site, acting as processors under a data processing agreement:"],
           bullets: [
-            "Microsoft (Microsoft 365 / Microsoft Graph) — to deliver form submissions to my mailbox and to create calendar bookings.",
-            "Vercel — hosting of this website (privacy-friendly, cookieless analytics).",
-            "Google — Google Analytics / Tag Manager, only after you consent to analytics cookies.",
+            "Microsoft (Microsoft 365 / Microsoft Graph): to deliver form submissions to my mailbox and to create calendar bookings.",
+            "Vercel: hosting of this website (privacy-friendly, cookieless analytics).",
+            "Google: Google Analytics / Tag Manager, only after you consent to analytics cookies.",
           ],
         },
         {
           heading: "International transfers",
           paragraphs: [
-            "Some of these providers (e.g. Microsoft and Google) may process data outside the European Economic Area, including in the United States. Where that happens, transfers are covered by appropriate safeguards such as the EU Standard Contractual Clauses and/or the EU–US Data Privacy Framework.",
+            "Some of these providers (e.g. Microsoft and Google) may process data outside the European Economic Area, including in the United States. Where that happens, transfers are covered by appropriate safeguards such as the EU Standard Contractual Clauses and/or the EU-US Data Privacy Framework.",
           ],
         },
         {
@@ -112,25 +112,25 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
             "Ik verzamel alleen persoonsgegevens die je zelf via een formulier op deze site verstrekt, plus beperkte technische en analytische gegevens:",
           ],
           bullets: [
-            "Contactformulier — je naam, e-mailadres, bericht en eventueel gekozen onderwerpen, zodat ik je vraag kan beantwoorden. Grondslag: jouw toestemming en/of stappen op jouw verzoek vóór een eventuele overeenkomst (art. 6 lid 1 a/b AVG).",
-            "CV-download — je naam, e-mailadres, het gekozen doel en de taal van het CV die je kiest, zodat ik weet wie interesse heeft in mijn profiel. Grondslag: jouw toestemming (art. 6 lid 1 a AVG).",
-            "Afspraak inplannen — je naam, e-mailadres en bedrijf, en de projectdetails en het tijdslot dat je kiest, zodat ik onze afspraak kan plannen en voorbereiden. Grondslag: stappen vóór een overeenkomst en mijn gerechtvaardigd belang bij het beheren van afspraken (art. 6 lid 1 b/f AVG).",
-            "Statistieken — geaggregeerde, statistische gebruiksgegevens (zie het Cookiebeleid). Grondslag: jouw toestemming voor analytische cookies; gerechtvaardigd belang voor privacyvriendelijke, cookieloze meting.",
+            "Contactformulier: je naam, e-mailadres, bedrijf, gewenste startmoment, bericht en eventueel gekozen onderwerpen, zodat ik je vraag kan beantwoorden. Grondslag: jouw toestemming en/of stappen op jouw verzoek vóór een eventuele overeenkomst (art. 6 lid 1 a/b AVG).",
+            "CV-download: je naam, e-mailadres, het gekozen doel en de taal van het CV, zodat ik je verzoek kan opvolgen en vragen over het CV kan beantwoorden. Grondslag: jouw toestemming (art. 6 lid 1 a AVG).",
+            "Afspraak inplannen: je naam, e-mailadres en bedrijf, en de projectdetails en het tijdslot dat je kiest, zodat ik onze afspraak kan plannen en voorbereiden. Grondslag: stappen vóór een overeenkomst en mijn gerechtvaardigd belang bij het beheren van afspraken (art. 6 lid 1 b/f AVG).",
+            "Statistieken: geaggregeerde, statistische gebruiksgegevens (zie het Cookiebeleid). Grondslag: jouw toestemming voor analytische cookies, en gerechtvaardigd belang voor privacyvriendelijke, cookieloze meting.",
           ],
         },
         {
           heading: "Wie jouw gegevens ontvangt",
           paragraphs: ["Ik verkoop je gegevens niet. Ik deel ze alleen met dienstverleners die mij helpen deze site te laten werken, als verwerker onder een verwerkersovereenkomst:"],
           bullets: [
-            "Microsoft (Microsoft 365 / Microsoft Graph) — om formulierinzendingen in mijn mailbox te bezorgen en afspraken in de agenda te zetten.",
-            "Vercel — hosting van deze website (privacyvriendelijke, cookieloze statistieken).",
-            "Google — Google Analytics / Tag Manager, alleen nadat je toestemming geeft voor analytische cookies.",
+            "Microsoft (Microsoft 365 / Microsoft Graph): om formulierinzendingen in mijn mailbox te bezorgen en afspraken in de agenda te zetten.",
+            "Vercel: hosting van deze website (privacyvriendelijke, cookieloze statistieken).",
+            "Google: Google Analytics / Tag Manager, alleen nadat je toestemming geeft voor analytische cookies.",
           ],
         },
         {
           heading: "Doorgifte buiten de EER",
           paragraphs: [
-            "Sommige van deze partijen (bijv. Microsoft en Google) kunnen gegevens buiten de Europese Economische Ruimte verwerken, waaronder in de Verenigde Staten. Waar dat gebeurt, gelden passende waarborgen zoals de EU-modelcontractbepalingen en/of het EU–US Data Privacy Framework.",
+            "Sommige van deze partijen (bijv. Microsoft en Google) kunnen gegevens buiten de Europese Economische Ruimte verwerken, waaronder in de Verenigde Staten. Waar dat gebeurt, gelden passende waarborgen zoals de EU-modelcontractbepalingen en/of het EU-US Data Privacy Framework.",
           ],
         },
         {
@@ -185,8 +185,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Functional storage (no consent required)",
           bullets: [
-            "ga-consent (local storage) — remembers your cookie choice so you are not asked again.",
-            "Booking form draft (local storage) — temporarily keeps what you typed in the booking form so you don't lose it. Stored only in your browser; never sent unless you submit.",
+            "ga-consent (local storage): remembers your cookie choice so you are not asked again.",
+            "Booking form draft (local storage): temporarily keeps what you typed in the booking form so you do not lose it. It is stored only in your browser and is never sent unless you submit.",
           ],
         },
         {
@@ -199,7 +199,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Your choice",
           paragraphs: [
-            "When you first visit, a banner lets you Accept or Decline analytics cookies — declining is as easy as accepting, and the site works fully either way. Google Analytics is only loaded after you accept.",
+            "When you first visit, a banner lets you Accept or Decline analytics cookies. Declining is as easy as accepting, and the site works fully either way. Google Analytics is only loaded after you accept.",
             "You can change your mind at any time by clearing this site's cookies and local storage in your browser, which makes the banner appear again.",
           ],
         },
@@ -223,8 +223,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Functionele opslag (geen toestemming nodig)",
           bullets: [
-            "ga-consent (local storage) — onthoudt je cookiekeuze zodat je het niet opnieuw gevraagd wordt.",
-            "Concept boekingsformulier (local storage) — bewaart tijdelijk wat je in het boekingsformulier typt zodat het niet verloren gaat. Alleen in je browser opgeslagen; pas verzonden als je verstuurt.",
+            "ga-consent (local storage): onthoudt je cookiekeuze zodat je het niet opnieuw gevraagd wordt.",
+            "Concept boekingsformulier (local storage): bewaart tijdelijk wat je in het boekingsformulier typt zodat het niet verloren gaat. Het staat alleen in je browser en wordt pas verzonden als je verstuurt.",
           ],
         },
         {
@@ -237,8 +237,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Jouw keuze",
           paragraphs: [
-            "Bij je eerste bezoek kun je in een balk analytische cookies Accepteren of Weigeren — weigeren is net zo eenvoudig als accepteren, en de site werkt in beide gevallen volledig. Google Analytics wordt pas geladen nadat je accepteert.",
-            "Je kunt je keuze altijd wijzigen door de cookies en local storage van deze site in je browser te wissen; dan verschijnt de balk opnieuw.",
+            "Bij je eerste bezoek kun je in een balk analytische cookies accepteren of weigeren. Weigeren is net zo eenvoudig als accepteren, en de site werkt in beide gevallen volledig. Google Analytics wordt pas geladen nadat je accepteert.",
+            "Je kunt je keuze altijd wijzigen door de cookies en local storage van deze site in je browser te wissen. Dan verschijnt de balk opnieuw.",
           ],
         },
         {
@@ -253,7 +253,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     en: {
       title: "Terms of Use",
       lastUpdated: UPDATED_EN,
-      intro: `These terms govern your use of the website ${SITE}. By using the site you agree to them. They cover the website only — any paid work is governed by a separate written agreement.`,
+      intro: `These terms govern your use of the website ${SITE}. By using the site you agree to them. They cover the website only. Any paid work is governed by a separate written agreement.`,
       sections: [
         {
           heading: "Use of the site",
@@ -264,7 +264,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Intellectual property",
           paragraphs: [
-            `All content on this site — text, design, code, logos and images — belongs to ${CONTROLLER} unless stated otherwise, and is protected by intellectual-property law. You may not copy, redistribute or reuse it without prior written permission, except for normal personal viewing.`,
+            `All content on this site, including text, design, code, logos and images, belongs to ${CONTROLLER} unless stated otherwise, and is protected by intellectual-property law. You may not copy, redistribute or reuse it without prior written permission, except for normal personal viewing.`,
           ],
         },
         {
@@ -282,7 +282,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "External links",
           paragraphs: [
-            "This site may link to third-party sites. I am not responsible for their content or practices; visiting them is at your own risk.",
+            "This site may link to third-party sites. I am not responsible for their content or practices. Visiting them is at your own risk.",
           ],
         },
         {
@@ -294,7 +294,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Changes and contact",
           paragraphs: [
-            `I may update these terms; the date above shows the latest version. Questions? Email ${EMAIL}.`,
+            `I may update these terms. The date above shows the latest version. Questions? Email ${EMAIL}.`,
           ],
         },
       ],
@@ -302,7 +302,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     nl: {
       title: "Gebruiksvoorwaarden",
       lastUpdated: UPDATED_NL,
-      intro: `Deze voorwaarden gelden voor je gebruik van de website ${SITE}. Door de site te gebruiken ga je ermee akkoord. Ze gaan alleen over de website — betaald werk valt onder een aparte schriftelijke overeenkomst.`,
+      intro: `Deze voorwaarden gelden voor je gebruik van de website ${SITE}. Door de site te gebruiken ga je ermee akkoord. Ze gaan alleen over de website. Betaald werk valt onder een aparte schriftelijke overeenkomst.`,
       sections: [
         {
           heading: "Gebruik van de site",
@@ -313,7 +313,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Intellectueel eigendom",
           paragraphs: [
-            `Alle inhoud op deze site — tekst, ontwerp, code, logo's en afbeeldingen — is van ${CONTROLLER}, tenzij anders vermeld, en wordt beschermd door intellectueel-eigendomsrecht. Je mag het niet kopiëren, verspreiden of hergebruiken zonder voorafgaande schriftelijke toestemming, behalve voor normaal persoonlijk gebruik.`,
+            `Alle inhoud op deze site, waaronder tekst, ontwerp, code, logo's en afbeeldingen, is van ${CONTROLLER}, tenzij anders vermeld, en wordt beschermd door intellectueel-eigendomsrecht. Je mag het niet kopiëren, verspreiden of hergebruiken zonder voorafgaande schriftelijke toestemming, behalve voor normaal persoonlijk gebruik.`,
           ],
         },
         {
@@ -331,7 +331,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Externe links",
           paragraphs: [
-            "Deze site kan linken naar sites van derden. Ik ben niet verantwoordelijk voor hun inhoud of werkwijze; bezoek is op eigen risico.",
+            "Deze site kan linken naar sites van derden. Ik ben niet verantwoordelijk voor hun inhoud of werkwijze. Bezoek is op eigen risico.",
           ],
         },
         {
@@ -343,7 +343,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
         {
           heading: "Wijzigingen en contact",
           paragraphs: [
-            `Ik kan deze voorwaarden bijwerken; de datum hierboven toont de meest recente versie. Vragen? Mail ${EMAIL}.`,
+            `Ik kan deze voorwaarden bijwerken. De datum hierboven toont de meest recente versie. Vragen? Mail ${EMAIL}.`,
           ],
         },
       ],

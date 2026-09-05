@@ -82,6 +82,31 @@ describe("AnalyticsConsent", () => {
     expect(screen.queryByRole("button", { name: "Accept" })).not.toBeInTheDocument();
   });
 
+  it("reserves its height on the page while shown and releases it after a choice", async () => {
+    const user = userEvent.setup();
+    render(<AnalyticsConsent labels={labels} />);
+    expect(document.documentElement.style.getPropertyValue("--consent-height")).toMatch(/px$/);
+    await user.click(screen.getByRole("button", { name: "Accept" }));
+    expect(document.documentElement.style.getPropertyValue("--consent-height")).toBe("");
+  });
+
+  it("watches its own size when the browser can observe resizes", () => {
+    const observe = vi.fn();
+    const disconnect = vi.fn();
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        observe = observe;
+        disconnect = disconnect;
+      }
+    );
+    const { unmount } = render(<AnalyticsConsent labels={labels} />);
+    expect(observe).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(disconnect).toHaveBeenCalledTimes(1);
+    vi.unstubAllGlobals();
+  });
+
   it("reads the stored choice and treats a broken storage as no choice", () => {
     expect(readStoredConsent()).toBeNull();
     localStorage.setItem("analytics-consent", "granted");

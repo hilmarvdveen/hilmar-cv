@@ -11,7 +11,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   publishedDate: "2026-09-02",
   updatedDate: "2026-09-05",
-  readingTimeMin: 11,
+  readingTimeMin: 19,
   title: {
     en: "Hexagonal architecture in Kotlin: ports and adapters",
     nl: "Hexagonale architectuur in Kotlin: ports en adapters",
@@ -38,15 +38,15 @@ export const meta: BlogPostMeta = {
 function buildHexagon(locale: Locale) {
   const copy = COPY;
   const nodes = [
-    flowNode("resolver", copy.nodeResolver[locale], { x: 0, y: 0 }, { tone: "blue", sub: "pauseSubscription", dir: "TB", width: 200 }),
-    flowNode("controller", copy.nodeController[locale], { x: 230, y: 0 }, { tone: "blue", sub: "PUT /subscriptions", dir: "TB", width: 200 }),
-    flowNode("consumer", copy.nodeConsumer[locale], { x: 460, y: 0 }, { tone: "blue", sub: "PauseRequested", dir: "TB", width: 210 }),
-    flowNode("useCase", "PauseSubscription", { x: 230, y: 140 }, { tone: "violet", sub: copy.nodeUseCaseSub[locale], dir: "TB", width: 210 }),
-    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", sub: "Subscription · SubscriptionState", dir: "TB", width: 240 }),
-    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 280, y: 290 }, { tone: "slate", sub: "SubscriptionRepository · PaymentProvider", dir: "TB", width: 340 }),
-    flowNode("repository", copy.nodeRepository[locale], { x: 200, y: 440 }, { tone: "amber", sub: "PostgreSQL", dir: "TB", width: 190 }),
-    flowNode("payment", copy.nodePayment[locale], { x: 410, y: 440 }, { tone: "amber", sub: copy.nodePaymentSub[locale], dir: "TB", width: 190 }),
-    flowNode("outbox", copy.nodeOutbox[locale], { x: 620, y: 440 }, { tone: "amber", sub: copy.nodeOutboxSub[locale], dir: "TB", width: 190 }),
+    flowNode("resolver", copy.nodeResolver[locale], { x: 0, y: 0 }, { tone: "blue", subtitle: "pauseSubscription", direction: "TB", width: 200 }),
+    flowNode("controller", copy.nodeController[locale], { x: 230, y: 0 }, { tone: "blue", subtitle: "PUT /subscriptions", direction: "TB", width: 200 }),
+    flowNode("consumer", copy.nodeConsumer[locale], { x: 460, y: 0 }, { tone: "blue", subtitle: "PauseRequested", direction: "TB", width: 210 }),
+    flowNode("useCase", "PauseSubscription", { x: 230, y: 140 }, { tone: "violet", subtitle: copy.nodeUseCaseSub[locale], direction: "TB", width: 210 }),
+    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", subtitle: "Subscription · SubscriptionState", direction: "TB", width: 240 }),
+    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 280, y: 290 }, { tone: "slate", subtitle: "SubscriptionRepository · PaymentProvider", direction: "TB", width: 340 }),
+    flowNode("repository", copy.nodeRepository[locale], { x: 200, y: 440 }, { tone: "amber", subtitle: "PostgreSQL", direction: "TB", width: 190 }),
+    flowNode("payment", copy.nodePayment[locale], { x: 410, y: 440 }, { tone: "amber", subtitle: copy.nodePaymentSub[locale], direction: "TB", width: 190 }),
+    flowNode("outbox", copy.nodeOutbox[locale], { x: 620, y: 440 }, { tone: "amber", subtitle: copy.nodeOutboxSub[locale], direction: "TB", width: 190 }),
   ];
   const edges = [
     flowEdge("resolver", "useCase", { label: "GraphQL" }),
@@ -154,6 +154,8 @@ export function Body({ locale }: { locale: Locale }) {
         <LI><Strong>{copy.mappingLabel[locale]}</Strong> {copy.mappingBody[locale]}</LI>
         <LI><Strong>{copy.transactionLabel[locale]}</Strong> {copy.transactionBody[locale]}</LI>
       </UL>
+      <P>{copy.boundaries2[locale]}</P>
+      <P>{copy.moneyPath[locale]}</P>
 
       <H2>{copy.schemaTitle[locale]}</H2>
       <P>{copy.schema1[locale]}</P>
@@ -334,8 +336,6 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import subscriptions.application.SubscriptionRepository
@@ -386,10 +386,10 @@ fun Subscription.toRow(): SubscriptionRow = when (val current = state) {
 class JpaSubscriptionRepository(private val rows: SubscriptionRows) : SubscriptionRepository {
 
     override suspend fun findById(id: SubscriptionId): Subscription? =
-        withContext(Dispatchers.IO) { rows.findById(id.value).orElse(null)?.toSubscription() }
+        rows.findById(id.value).orElse(null)?.toSubscription()
 
     override suspend fun save(subscription: Subscription) {
-        withContext(Dispatchers.IO) { rows.save(subscription.toRow()) }
+        rows.save(subscription.toRow())
     }
 }`;
 
@@ -766,8 +766,8 @@ const COPY = {
     nl: "De persistentie-adapter bevat de JPA-entiteit, en die entiteit is niet het abonnement. Het is een rij met nullable kolommen en muteerbare properties, gevormd naar wat Hibernate nodig heeft. Elke kolom heeft een standaardwaarde, en zo geeft Kotlin aan Hibernate de constructor zonder argumenten die het wil.",
   },
   adapters2: {
-    en: "Two extension functions carry the data across the border, and they are the only place that knows both shapes. The port suspends while JPA blocks, so the adapter moves the call to a dispatcher meant for blocking work. That choice sits in the adapter, which is exactly where a choice about threads belongs.",
-    nl: "Twee extensiefuncties dragen de gegevens over de grens, en zij zijn de enige plek die beide vormen kent. De port is suspend terwijl JPA blokkeert, dus verplaatst de adapter de aanroep naar een dispatcher die voor blokkerend werk bedoeld is. Die keuze staat in de adapter, en daar hoort een keuze over threads ook thuis.",
+    en: "Two extension functions carry the data across the border, and they are the only place that knows both shapes. The port suspends while JPA blocks, and the adapter deliberately stays on the thread it is called on. Spring binds the transaction and the EntityManager to that thread, so a hop to another dispatcher inside the adapter would leave the transaction behind. The transaction runner below owns the choice of dispatcher for the whole use case.",
+    nl: "Twee extensiefuncties dragen de gegevens over de grens, en zij zijn de enige plek die beide vormen kent. De port is suspend terwijl JPA blokkeert, en de adapter blijft bewust op de thread waarop hij wordt aangeroepen. Spring bindt de transactie en de EntityManager aan die thread, dus een sprong naar een andere dispatcher binnen de adapter zou de transactie achterlaten. De transactierunner hieronder bepaalt de dispatcher voor de hele use case.",
   },
   adapters3: {
     en: "The resolver does the same work in the other direction. It owns the payload type the schema promises, it maps every rejection to a code the client can switch on, and it lets no domain type reach the wire. Both when expressions are exhaustive, so a fifth rejection breaks the build right here.",
@@ -833,6 +833,10 @@ const COPY = {
     en: "The drawing is easy. The discipline lives in four familiar places, and every one of them fails quietly.",
     nl: "De tekening is makkelijk. De discipline zit op vier bekende plekken, en elk daarvan gaat stilletjes mis.",
   },
+  moneyPath: {
+    en: "One sequence deserves its own paragraph, because it costs money. The use case asks the payment provider to suspend collection and then saves the paused subscription, both inside the transaction. The test covers the safe direction, a refused provider that saves nothing. The other direction is the provider that accepts while the commit fails afterwards, and now collection has stopped for a subscription the database still calls active. That is what the outbox adapter in the diagram is for. The use case records the intent to suspend in the same transaction as the state change, and a relay calls the provider after the commit and retries until it succeeds. The provider call moves out of the transaction, the intent never gets lost, and the port on the use case side stays exactly as it is.",
+    nl: "Eén volgorde verdient een eigen alinea, omdat ze geld kost. De use case vraagt de betaalprovider om de incasso te pauzeren en slaat daarna het gepauzeerde abonnement op, allebei binnen de transactie. De test dekt de veilige richting, een provider die weigert waarbij niets wordt opgeslagen. De andere richting is de provider die akkoord gaat terwijl de commit daarna mislukt, en dan is de incasso gestopt voor een abonnement dat de database nog actief noemt. Daar is de outbox-adapter in de tekening voor. De use case legt de intentie om te pauzeren vast in dezelfde transactie als de statuswijziging, en een relay roept de provider na de commit aan en probeert het opnieuw tot het lukt. De provideraanroep verhuist uit de transactie, de intentie raakt nooit kwijt, en de port aan de kant van de use case blijft precies zoals hij is.",
+  },
   entityLabel: { en: "JPA entities.", nl: "JPA-entiteiten." },
   entityBody: {
     en: "The strongest temptation is to annotate the aggregate and skip the mapping. Then Hibernate asks for a no-argument constructor and mutable properties, and your sealed states become nullable columns on a class you no longer control.",
@@ -852,6 +856,10 @@ const COPY = {
   transactionBody: {
     en: "A transaction spans a use case, not one repository call. Put it behind a port and the use case decides the boundary while the adapter decides whether that means a template, a suspending bridge or an outbox row.",
     nl: "Een transactie omspant een use case, niet één repository-aanroep. Zet hem achter een port, dan bepaalt de use case de grens terwijl de adapter bepaalt of dat een template, een suspend-brug of een outboxrij betekent.",
+  },
+  boundaries2: {
+    en: "The four places above cover a subscription that pauses, where a refused payment safely stops the save from happening. A subscription that renews and charges money runs the opposite risk, the one that costs money when it goes wrong. The payment provider accepts the charge, and the local commit fails afterwards, so nothing in the system knows the customer already paid. The fix is to stop calling the payment provider from inside the use case. The use case writes the charge as an intent, in the same transaction as the domain change, which is the outbox row the transaction boundary above already allows. A relay reads that row once the transaction is durable and performs the charge from there. The outbox writer in the diagram is that relay, and because only the relay ever touches the network, the two writes cannot disagree with each other.",
+    nl: "De vier plekken hierboven gaan over een abonnement dat pauzeert, waar een geweigerde betaling het opslaan meteen veilig stopt. Een abonnement dat verlengt en geld incasseert loopt het omgekeerde risico, het risico dat geld kost als het misgaat. De betaalprovider accepteert de incasso, en de lokale commit mislukt daarna, waardoor niets in het systeem weet dat de klant al heeft betaald. De oplossing is te stoppen met de betaalprovider vanuit de use case aan te roepen. De use case legt de incasso vast als intentie, in dezelfde transactie als de domeinwijziging, wat de outboxrij is die de transactiegrens hierboven al toestaat. Een relay leest die rij zodra de transactie duurzaam is en voert de incasso van daaruit uit. De outbox-schrijver in de tekening is die relay, en omdat alleen de relay het netwerk raakt, kunnen de twee schrijfacties nooit met elkaar in tegenspraak zijn.",
   },
   schemaTitle: {
     en: "The schema is the contract, so reshaping a field stays cheap",

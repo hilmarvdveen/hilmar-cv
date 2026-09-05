@@ -63,19 +63,14 @@ const baseProps: ServiceDetailPageProps = {
       {
         name: "Core stack",
         items: [
-          { name: "React", description: "Component-based UI library." },
-          { name: "Next.js", description: "Full-stack React framework." },
-          { name: "Vue.js", description: "Progressive framework." },
-          { name: "Redux", description: "State management." },
+          { name: "React" },
+          { name: "Next.js" },
+          { name: "Vue.js" },
+          { name: "Redux" },
         ],
       },
       {
-        items: [
-          {
-            name: "Tailwind CSS",
-            description: "Utility-first styling.",
-          },
-        ],
+        items: [{ name: "Tailwind CSS" }],
       },
     ],
   },
@@ -201,28 +196,39 @@ describe("ServiceDetailPage", () => {
     }
   });
 
-  it("renders a named technology group heading with h4 items", () => {
+  it("renders a named technology group as a heading with a pill list", () => {
     render(<ServiceDetailPage {...baseProps} />);
     expect(
       screen.getByRole("heading", { level: 3, name: "Core stack" })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { level: 4, name: "React" })
-    ).toBeInTheDocument();
+    const list = screen.getByRole("list", { name: "Core stack" });
+    expect(within(list).getAllByRole("listitem").map((item) => item.textContent)).toEqual([
+      "React",
+      "Next.js",
+      "Vue.js",
+      "Redux",
+    ]);
   });
 
-  it("renders an unnamed technology group with h3 items instead of h4", () => {
+  it("names an unnamed technology group's list after the block title", () => {
     render(<ServiceDetailPage {...baseProps} />);
-    expect(
-      screen.getByRole("heading", { level: 3, name: "Tailwind CSS" })
-    ).toBeInTheDocument();
+    const list = screen.getByRole("list", { name: "Technologies and tools" });
+    expect(within(list).getByText("Tailwind CSS")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Tailwind CSS" })).toBeNull();
   });
 
-  it("renders no self-rated level badge on a technology card", () => {
+  it("renders no self-rated level badge and no per-technology description", () => {
     render(<ServiceDetailPage {...baseProps} />);
     expect(screen.queryByText("Expert")).toBeNull();
     expect(screen.queryByText("Advanced")).toBeNull();
     expect(screen.queryByText("Gevorderd")).toBeNull();
+    expect(screen.queryByText(/Component-based/)).toBeNull();
+  });
+
+  it("omits the technologies section when none is given", () => {
+    render(<ServiceDetailPage {...baseProps} technologies={undefined} />);
+    expect(screen.queryByRole("heading", { name: "Technologies and tools" })).toBeNull();
+    expect(screen.queryByRole("list", { name: "Core stack" })).toBeNull();
   });
 
   it("renders every process step numbered, with its title and details", () => {

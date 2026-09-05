@@ -101,7 +101,6 @@ export const Tech = {
   TSLint: "tech.TSLint",
   OctopusDeploy: "tech.OctopusDeploy",
   UIKit: "tech.UIKit",
-  IceLib: "tech.IceLib",
   IntegrationTesting: "tech.IntegrationTesting",
   NodeJS: "tech.NodeJS",
   Express: "tech.Express",
@@ -223,7 +222,7 @@ export const workHistory: WorkEntry[] = [
   {
     id: "postcode-loterij", // used to fetch from i18n
     company: "Postcode Loterij",
-    logo: "nationale-postcode-loterij.png",
+    logo: "nationale-postcode-loterij-mark.png",
     from: "2022-07",
     to: "2023-01",
     location: "Amsterdam",
@@ -325,7 +324,7 @@ export const workHistory: WorkEntry[] = [
   {
     id: "opinity",
     company: "Opinity",
-    logo: "opinity.png",
+    logo: "opinity-mark.png",
     from: "2020-03",
     to: "2020-07",
     location: "Rotterdam",
@@ -536,7 +535,6 @@ export const workHistory: WorkEntry[] = [
       Tech.Jenkins,
       Tech.Confluence,
       Tech.Git,
-      Tech.IceLib,
       Tech.IntegrationTesting,
     ],
   },

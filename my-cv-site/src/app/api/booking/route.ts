@@ -34,16 +34,16 @@ type BookingData = {
   formStartedAt?: number;
 }
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    if (!isAllowedOrigin(req)) {
+    if (!isAllowedOrigin(request)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const limited = enforceRateLimit(req, "email");
+    const limited = enforceRateLimit(request, "email");
     if (limited) return limited;
 
-    const body = (await req.json()) as Partial<BookingData>;
+    const body = (await request.json()) as Partial<BookingData>;
     const { name, email, date, company, topic } = body;
     const locale: BookingEmailInput["locale"] = body.locale === "en" ? "en" : "nl";
 

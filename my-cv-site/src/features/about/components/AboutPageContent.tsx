@@ -46,14 +46,16 @@ export function AboutPageContent() {
         description={t("hero.description")}
         aside={
           <div>
-            <Image
-              src="/images/profile.jpg"
-              alt={BUSINESS_PROFILE.NAME}
-              width={400}
-              height={400}
-              className="mx-auto w-full max-w-xs rounded-2xl object-cover md:mx-0"
-              priority
-            />
+            <figure className="mx-auto w-fit overflow-hidden rounded-full ring-2 ring-white/15 md:mx-0 md:ring-4">
+              <Image
+                src="/images/profile.jpg"
+                alt={BUSINESS_PROFILE.NAME}
+                width={200}
+                height={200}
+                className="h-50 w-50 object-cover"
+                priority
+              />
+            </figure>
             <ul className="mt-6 space-y-3 text-sm text-slate-300">
               <li className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
@@ -144,7 +146,7 @@ export function AboutPageContent() {
             {t("map.contactLine")}
           </p>
           <div className="mt-4 flex justify-center">
-            <Button href="/book" variant="primary">
+            <Button href="/book" variant="primary" data-placement="about-map">
               {t("cta.button")}
             </Button>
           </div>

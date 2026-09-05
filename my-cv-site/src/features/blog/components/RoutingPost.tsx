@@ -12,18 +12,18 @@ export const meta: BlogPostMeta = {
   category: "routing",
   publishedDate: "2026-06-26",
   updatedDate: "2026-06-28",
-  readingTimeMin: 16,
+  readingTimeMin: 10,
   title: {
     en: "React Router as a Framework: routes, loaders and actions",
     nl: "React Router als framework: routes, loaders en actions",
   },
   description: {
-    en: "React Router is now a full framework: v7 brought Remix's ideas in and v8 continues the line. Learn nested routes, loaders, actions and a folder structure to copy — with real examples.",
-    nl: "React Router is nu een volwaardig framework: v7 bracht de Remix-ideeën binnen en v8 zet die lijn door. Leer geneste routes, loaders, actions en een mappenstructuur — met echte voorbeelden.",
+    en: "React Router is now a full framework: v7 brought the Remix ideas in and v8 continues the line. Nested routes, loaders, actions and a folder structure to copy.",
+    nl: "React Router is nu een volwaardig framework: v7 bracht de Remix-ideeën binnen en v8 zet die lijn door. Geneste routes, loaders, actions en een mappenstructuur.",
   },
   excerpt: {
-    en: "Nested routes create nested UI, loaders fetch before render, actions handle writes. A clear, example-driven tour of React Router as a framework — and where v7 and v8 fit.",
-    nl: "Geneste routes maken geneste UI, loaders laden vóór render, actions verwerken mutaties. Een heldere, voorbeeldgedreven rondleiding door React Router als framework — en waar v7 en v8 passen.",
+    en: "Nested routes create nested UI, loaders fetch before render, actions handle writes. A clear, example-driven tour of React Router as a framework, and where v7 and v8 fit.",
+    nl: "Geneste routes maken geneste UI, loaders laden vóór render, actions verwerken mutaties. Een heldere, voorbeeldgedreven rondleiding door React Router als framework, en waar v7 en v8 passen.",
   },
   keywords: [
     "react router v7",
@@ -38,10 +38,10 @@ export const meta: BlogPostMeta = {
 
 // Stacked downward: root → dashboard, then dashboard renders its children.
 const nestNodes = [
-  flowNode("root", "root.tsx", { x: 215, y: 0 }, { tone: "slate", sub: "<html> + <Outlet/>", dir: "TB", width: 190 }),
-  flowNode("dash", "dashboard.tsx", { x: 215, y: 140 }, { tone: "blue", sub: "layout + <Outlet/>", dir: "TB", width: 200 }),
-  flowNode("products", "products", { x: 0, y: 300 }, { tone: "emerald", sub: "/dashboard/products", dir: "TB", width: 220 }),
-  flowNode("settings", "settings", { x: 440, y: 300 }, { tone: "emerald", sub: "/dashboard/settings", dir: "TB", width: 220 }),
+  flowNode("root", "root.tsx", { x: 215, y: 0 }, { tone: "slate", subtitle: "<html> + <Outlet/>", direction: "TB", width: 190 }),
+  flowNode("dash", "dashboard.tsx", { x: 215, y: 140 }, { tone: "blue", subtitle: "layout + <Outlet/>", direction: "TB", width: 200 }),
+  flowNode("products", "products", { x: 0, y: 300 }, { tone: "emerald", subtitle: "/dashboard/products", direction: "TB", width: 220 }),
+  flowNode("settings", "settings", { x: 440, y: 300 }, { tone: "emerald", subtitle: "/dashboard/settings", direction: "TB", width: 220 }),
 ];
 const nestEdges = [
   flowEdge("root", "dash", { label: "Outlet" }),
@@ -51,11 +51,11 @@ const nestEdges = [
 
 // Stacked downward: request → match → loaders → render → hydrate.
 const lifecycleNodes = [
-  flowNode("req", "Request", { x: 0, y: 0 }, { tone: "slate", sub: "GET /dashboard/products", dir: "TB", width: 250 }),
-  flowNode("match", "Match routes", { x: 0, y: 115 }, { tone: "violet", sub: "root → dashboard → products", dir: "TB", width: 250 }),
-  flowNode("loaders", "Run loaders", { x: 0, y: 230 }, { tone: "emerald", sub: "in parallel", dir: "TB", width: 250 }),
-  flowNode("render", "Render HTML", { x: 0, y: 345 }, { tone: "blue", sub: "server", dir: "TB", width: 250 }),
-  flowNode("hydrate", "Hydrate", { x: 0, y: 460 }, { tone: "amber", sub: "client takes over", dir: "TB", width: 250 }),
+  flowNode("req", "Request", { x: 0, y: 0 }, { tone: "slate", subtitle: "GET /dashboard/products", direction: "TB", width: 250 }),
+  flowNode("match", "Match routes", { x: 0, y: 115 }, { tone: "violet", subtitle: "root → dashboard → products", direction: "TB", width: 250 }),
+  flowNode("loaders", "Run loaders", { x: 0, y: 230 }, { tone: "emerald", subtitle: "in parallel", direction: "TB", width: 250 }),
+  flowNode("render", "Render HTML", { x: 0, y: 345 }, { tone: "blue", subtitle: "server", direction: "TB", width: 250 }),
+  flowNode("hydrate", "Hydrate", { x: 0, y: 460 }, { tone: "amber", subtitle: "client takes over", direction: "TB", width: 250 }),
 ];
 const lifecycleEdges = [
   flowEdge("req", "match"),
@@ -65,109 +65,109 @@ const lifecycleEdges = [
 ];
 
 function buildTree(locale: Locale): FileNode[] {
-  const c = COPY;
+  const copy = COPY;
   return [
     {
       name: "app",
       children: [
-        { name: "root.tsx", comment: c.treeRoot[locale] },
-        { name: "routes.ts", comment: c.treeRoutesTs[locale] },
+        { name: "root.tsx", comment: copy.treeRoot[locale] },
+        { name: "routes.ts", comment: copy.treeRoutesTs[locale] },
         {
           name: "routes",
           children: [
-            { name: "home.tsx", comment: c.treeHome[locale] },
-            { name: "dashboard.tsx", comment: c.treeDashboard[locale] },
-            { name: "dashboard.products.tsx", comment: c.treeProducts[locale] },
-            { name: "dashboard.products.$id.tsx", comment: c.treeParam[locale] },
+            { name: "home.tsx", comment: copy.treeHome[locale] },
+            { name: "dashboard.tsx", comment: copy.treeDashboard[locale] },
+            { name: "dashboard.products.tsx", comment: copy.treeProducts[locale] },
+            { name: "dashboard.products.$id.tsx", comment: copy.treeParam[locale] },
             { name: "dashboard.settings.tsx" },
           ],
         },
-        { name: "products.server.ts", comment: c.treeServer[locale] },
+        { name: "products.server.ts", comment: copy.treeServer[locale] },
       ],
     },
   ];
 }
 
 export function Body({ locale }: { locale: Locale }) {
-  const c = COPY;
+  const copy = COPY;
   return (
     <>
-      <Lead>{c.lead[locale]}</Lead>
-      <P>{c.intro[locale]}</P>
-      <Quote>{c.quote[locale]}</Quote>
+      <Lead>{copy.lead[locale]}</Lead>
+      <P>{copy.intro[locale]}</P>
+      <Quote>{copy.quote[locale]}</Quote>
 
-      <H2>{c.historyTitle[locale]}</H2>
-      <P>{c.history1[locale]}</P>
-      <P>{c.history2[locale]}</P>
-      <Callout variant="info" title={c.modesTitle[locale]}>
-        {c.modesBody[locale]}
+      <H2>{copy.historyTitle[locale]}</H2>
+      <P>{copy.history1[locale]}</P>
+      <P>{copy.history2[locale]}</P>
+      <Callout variant="info" title={copy.modesTitle[locale]}>
+        {copy.modesBody[locale]}
       </Callout>
 
-      <H2>{c.nestTitle[locale]}</H2>
-      <P>{c.nest1[locale]}</P>
+      <H2>{copy.nestTitle[locale]}</H2>
+      <P>{copy.nest1[locale]}</P>
       <FlowDiagram
         nodes={nestNodes}
         edges={nestEdges}
         height={420}
-        ariaLabel={c.nestAria[locale]}
-        caption={c.nestCaption[locale]}
+        ariaLabel={copy.nestAria[locale]}
+        caption={copy.nestCaption[locale]}
       />
-      <P>{c.nest2[locale]}</P>
-      <P>{c.nest3[locale]}</P>
-      <CodeBlock lang="ts" filename="app/routes.ts" code={c.routesCode[locale]} />
-      <P>{c.nest4[locale]}</P>
-      <CodeBlock lang="tsx" filename="app/routes/dashboard.tsx" code={c.layoutCode[locale]} />
+      <P>{copy.nest2[locale]}</P>
+      <P>{copy.nest3[locale]}</P>
+      <CodeBlock lang="ts" filename="app/routes.ts" code={copy.routesCode[locale]} />
+      <P>{copy.nest4[locale]}</P>
+      <CodeBlock lang="tsx" filename="app/routes/dashboard.tsx" code={copy.layoutCode[locale]} />
 
-      <H2>{c.loaderTitle[locale]}</H2>
-      <P>{c.loader1[locale]}</P>
-      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.tsx" code={c.productsCode[locale]} />
-      <P>{c.loader2[locale]}</P>
+      <H2>{copy.loaderTitle[locale]}</H2>
+      <P>{copy.loader1[locale]}</P>
+      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.tsx" code={copy.productsCode[locale]} />
+      <P>{copy.loader2[locale]}</P>
 
-      <H3>{c.lifecycleTitle[locale]}</H3>
-      <P>{c.lifecycle1[locale]}</P>
+      <H3>{copy.lifecycleTitle[locale]}</H3>
+      <P>{copy.lifecycle1[locale]}</P>
       <FlowDiagram
         nodes={lifecycleNodes}
         edges={lifecycleEdges}
         height={520}
-        ariaLabel={c.lifecycleAria[locale]}
-        caption={c.lifecycleCaption[locale]}
+        ariaLabel={copy.lifecycleAria[locale]}
+        caption={copy.lifecycleCaption[locale]}
       />
-      <Callout variant="tip" title={c.lifecycleTipTitle[locale]}>
-        {c.lifecycleTipBody[locale]}
+      <Callout variant="tip" title={copy.lifecycleTipTitle[locale]}>
+        {copy.lifecycleTipBody[locale]}
       </Callout>
 
       <Divider />
 
-      <H2>{c.paramsTitle[locale]}</H2>
-      <P>{c.params1[locale]}</P>
-      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.$id.tsx" code={c.paramCode[locale]} />
+      <H2>{copy.paramsTitle[locale]}</H2>
+      <P>{copy.params1[locale]}</P>
+      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.$id.tsx" code={copy.paramCode[locale]} />
 
-      <H2>{c.errorTitle[locale]}</H2>
-      <P>{c.error1[locale]}</P>
-      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.$id.tsx" code={c.errorCode[locale]} />
-      <Callout variant="warning" title={c.errorWarnTitle[locale]}>
-        {c.errorWarnBody[locale]}
+      <H2>{copy.errorTitle[locale]}</H2>
+      <P>{copy.error1[locale]}</P>
+      <CodeBlock lang="tsx" filename="app/routes/dashboard.products.$id.tsx" code={copy.errorCode[locale]} />
+      <Callout variant="warning" title={copy.errorWarnTitle[locale]}>
+        {copy.errorWarnBody[locale]}
       </Callout>
 
-      <H2>{c.folderTitle[locale]}</H2>
-      <P>{c.folder1[locale]}</P>
-      <FileTree tree={buildTree(locale)} caption={c.treeCaption[locale]} />
-      <P>{c.folder2[locale]}</P>
+      <H2>{copy.folderTitle[locale]}</H2>
+      <P>{copy.folder1[locale]}</P>
+      <FileTree tree={buildTree(locale)} caption={copy.treeCaption[locale]} />
+      <P>{copy.folder2[locale]}</P>
       <UL>
-        <LI><Strong>{c.f1S[locale]}</Strong> {c.f1[locale]}</LI>
-        <LI><Strong>{c.f2S[locale]}</Strong> {c.f2[locale]}</LI>
-        <LI><Strong>{c.f3S[locale]}</Strong> {c.f3[locale]}</LI>
+        <LI><Strong>{copy.f1S[locale]}</Strong> {copy.f1[locale]}</LI>
+        <LI><Strong>{copy.f2S[locale]}</Strong> {copy.f2[locale]}</LI>
+        <LI><Strong>{copy.f3S[locale]}</Strong> {copy.f3[locale]}</LI>
       </UL>
 
-      <H2>{c.takeawayTitle[locale]}</H2>
+      <H2>{copy.takeawayTitle[locale]}</H2>
       <OL>
-        <LI>{c.t1[locale]}</LI>
-        <LI>{c.t2[locale]}</LI>
-        <LI>{c.t3[locale]}</LI>
-        <LI>{c.t4[locale]}</LI>
+        <LI>{copy.t1[locale]}</LI>
+        <LI>{copy.t2[locale]}</LI>
+        <LI>{copy.t3[locale]}</LI>
+        <LI>{copy.t4[locale]}</LI>
       </OL>
       <P>
-        {c.outro[locale]} <InlineCode>npx create-react-router@latest</InlineCode>.
+        {copy.outro[locale]} <InlineCode>npx create-react-router@latest</InlineCode>.
       </P>
     </>
   );

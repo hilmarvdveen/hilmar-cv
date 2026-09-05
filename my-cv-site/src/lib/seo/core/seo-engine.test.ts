@@ -22,8 +22,8 @@ describe("SEOEngine.generatePageSEO", () => {
     const engine = new SEOEngine();
     const { metadata, jsonLd, structuredData } = engine.generatePageSEO(baseConfig());
     expect(typeof metadata.title).toBe("string");
-    expect(jsonLd.some((s) => (s as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
-    expect(jsonLd.some((s) => (s as { "@type": string })["@type"] === "BreadcrumbList")).toBe(true);
+    expect(jsonLd.some((schema) => (schema as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
+    expect(jsonLd.some((schema) => (schema as { "@type": string })["@type"] === "BreadcrumbList")).toBe(true);
     expect(structuredData).toContain("@type");
   });
 });
@@ -42,9 +42,9 @@ describe("SEOEngine.createBlogPostSEO", () => {
   it("emits BlogPosting + breadcrumb schema for the default locale", () => {
     const engine = new SEOEngine();
     const { jsonLd, metadata } = engine.createBlogPostSEO("nl", post);
-    expect(jsonLd.some((s) => (s as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
+    expect(jsonLd.some((schema) => (schema as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
     const crumbs = jsonLd.find(
-      (s) => (s as { "@type": string })["@type"] === "BreadcrumbList"
+      (schema) => (schema as { "@type": string })["@type"] === "BreadcrumbList"
     ) as { itemListElement: unknown[] };
     expect(crumbs.itemListElement).toHaveLength(3);
     expect(metadata.alternates?.canonical).toBeTruthy();
@@ -66,7 +66,7 @@ describe("SEOEngine.generateSitemapData with dynamic pages", () => {
     const entries = engine.generateSitemapData([
       { path: "blog/my-post", lastModified: "2026-01-01T00:00:00.000Z", changeFrequency: "daily", priority: 0.6 },
     ]);
-    const match = entries.find((e) => e.url.endsWith("/blog/my-post"));
+    const match = entries.find((entry) => entry.url.endsWith("/blog/my-post"));
     expect(match).toBeDefined();
     expect(match?.priority).toBe(0.6);
     expect(match?.changeFrequency).toBe("daily");
@@ -76,38 +76,38 @@ describe("SEOEngine.generateSitemapData with dynamic pages", () => {
   it("falls back to defaults when a dynamic page omits optional fields", () => {
     const engine = new SEOEngine();
     const entries = engine.generateSitemapData([{ path: "blog/other" }]);
-    const match = entries.find((e) => e.url.endsWith("/blog/other"));
+    const match = entries.find((entry) => entry.url.endsWith("/blog/other"));
     expect(match?.priority).toBe(0.7);
     expect(match?.changeFrequency).toBe("monthly");
     // the static blog index is also present
-    expect(entries.some((e) => e.url.endsWith("/blog"))).toBe(true);
+    expect(entries.some((entry) => entry.url.endsWith("/blog"))).toBe(true);
   });
 });
 
 describe("SEOEngine.validateSEOConfig", () => {
   it("flags a too-short title/description and too-few keywords as warnings", () => {
     const engine = new SEOEngine();
-    const r = engine.validateSEOConfig(baseConfig({ title: "Short", description: "Tiny", keywords: ["x"] }));
-    expect(r.isValid).toBe(true); // warnings only
-    expect(r.warnings.length).toBeGreaterThan(0);
+    const result = engine.validateSEOConfig(baseConfig({ title: "Short", description: "Tiny", keywords: ["x"] }));
+    expect(result.isValid).toBe(true); // warnings only
+    expect(result.warnings.length).toBeGreaterThan(0);
   });
 
   it("flags an over-long title and description as errors (invalid)", () => {
     const engine = new SEOEngine();
-    const r = engine.validateSEOConfig(
+    const result = engine.validateSEOConfig(
       baseConfig({
         title: "T".repeat(70),
         description: "D".repeat(200),
-        keywords: Array.from({ length: 16 }, (_, i) => `k${i}`),
+        keywords: Array.from({ length: 16 }, (_, index) => `k${index}`),
       })
     );
-    expect(r.isValid).toBe(false);
-    expect(r.errors.length).toBeGreaterThan(0);
+    expect(result.isValid).toBe(false);
+    expect(result.errors.length).toBeGreaterThan(0);
   });
 
   it("passes a well-formed config", () => {
     const engine = new SEOEngine();
-    const r = engine.validateSEOConfig(
+    const result = engine.validateSEOConfig(
       baseConfig({
         title: "A reasonably descriptive page title for SEO testing",
         description:
@@ -115,6 +115,6 @@ describe("SEOEngine.validateSEOConfig", () => {
         keywords: ["a", "b", "c", "d", "e", "f"],
       })
     );
-    expect(r.isValid).toBe(true);
+    expect(result.isValid).toBe(true);
   });
 });

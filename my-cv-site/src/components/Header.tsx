@@ -220,7 +220,7 @@ export const Header = () => {
                 variant="primary"
                 size="sm"
                 className="px-3 whitespace-nowrap"
-                data-placement="header"
+                data-placement="header-drawer"
               >
                 <Calendar className="hidden h-4 w-4 min-[400px]:block" />
                 <span>{t("nav.book")}</span>

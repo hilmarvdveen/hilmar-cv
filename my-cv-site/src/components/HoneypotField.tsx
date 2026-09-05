@@ -24,7 +24,7 @@ export function HoneypotField({ value, onChange }: HoneypotFieldProps) {
         tabIndex={-1}
         autoComplete="off"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(event) => onChange(event.target.value)}
       />
     </div>
   );

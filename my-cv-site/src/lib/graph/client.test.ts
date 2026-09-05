@@ -58,8 +58,8 @@ describe("getGraphCredentials", () => {
         MS_TENANT_ID: "tenant",
         SMTP_USER: "hilmar@example.com",
       };
-      for (const [k, v] of Object.entries(all)) {
-        if (k !== missing) process.env[k] = v;
+      for (const [key, value] of Object.entries(all)) {
+        if (key !== missing) process.env[key] = value;
       }
       expect(getGraphCredentials()).toBeNull();
     }

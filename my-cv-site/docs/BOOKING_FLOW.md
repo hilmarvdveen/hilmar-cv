@@ -288,3 +288,20 @@ To preview the templates outside the test runner, render them with
 `src/lib/security/escape.ts` and `templates.ts` (esbuild is not exposed by
 pnpm in this project), or read the rendered HTML in `templates.test.ts`.
 
+
+## Stale drafts and the consent banner (5 September 2026)
+
+A draft is kept for seven days. When a visitor returns with a draft at
+step 3 whose time has passed or is no longer offered, the slot effects
+clear the time. Two rules keep that from crashing the page: the slot
+time formatter returns an empty string for a value it cannot parse, and
+the form returns to step 1 whenever the time is empty while the step is
+higher, keeping the date. The regression test seeds a stale step 3 draft
+into local storage and expects the time grid.
+
+The consent banner writes its measured height into `--consent-height`
+on the root element while it is visible, and `main` reserves that space
+as bottom padding. On a short page (the booking failure state on a
+phone) the recovery buttons therefore never sit behind the banner. The
+banner still stacks above the sticky booking bar through
+`--bottom-bar-offset`.

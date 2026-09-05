@@ -119,8 +119,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
 ];
 
 export function searchEntries(query: string, locale: SearchLocale): SearchEntry[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return SEARCH_INDEX;
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) return SEARCH_INDEX;
   return SEARCH_INDEX.filter((entry) => {
     const haystack = [
       entry.title[locale],
@@ -129,6 +129,6 @@ export function searchEntries(query: string, locale: SearchLocale): SearchEntry[
     ]
       .join(" ")
       .toLowerCase();
-    return haystack.includes(q);
+    return haystack.includes(normalizedQuery);
   });
 }

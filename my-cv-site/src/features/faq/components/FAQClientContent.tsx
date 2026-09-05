@@ -41,10 +41,10 @@ export function FAQClientContent() {
   const [openItems, setOpenItems] = useState<number[]>(INITIAL_OPEN_ITEMS);
 
   const toggleItem = (index: number) => {
-    setOpenItems((prev) =>
-      prev.includes(index)
-        ? prev.filter((openIndex) => openIndex !== index)
-        : [...prev, index]
+    setOpenItems((previous) =>
+      previous.includes(index)
+        ? previous.filter((openIndex) => openIndex !== index)
+        : [...previous, index]
     );
   };
 

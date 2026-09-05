@@ -91,7 +91,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
             {labels.ctaTitle}
           </h2>
           <p className="mt-2 max-w-xl text-slate-300">{labels.ctaText}</p>
-          <Button href="/book" variant="primary" size="md" className="mt-5">
+          <Button href="/book" variant="primary" size="md" className="mt-5" data-placement="blog-article-close">
             {labels.ctaButton}
             <ArrowRight className="h-4 w-4" />
           </Button>

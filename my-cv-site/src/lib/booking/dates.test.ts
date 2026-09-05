@@ -71,5 +71,7 @@ describe("formatting", () => {
   it("renders slot instants as Amsterdam wall-clock time", () => {
     expect(formatSlotTime("2026-07-01T08:00:00.000Z")).toBe("10:00");
     expect(formatSlotTime("2026-01-15T08:00:00.000Z")).toBe("09:00");
+    expect(formatSlotTime("")).toBe("");
+    expect(formatSlotTime("not a moment")).toBe("");
   });
 });

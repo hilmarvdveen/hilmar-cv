@@ -25,8 +25,8 @@ export function Flag({ code, className = "w-5 h-3.5 rounded-sm" }: FlagProps) {
   return (
     <svg className={className} viewBox="0 0 19 10" aria-hidden="true" role="img">
       <rect width="19" height="10" fill="#fff" />
-      {[0, 2, 4, 6, 8, 10, 12].map((i) => (
-        <rect key={i} y={(i * 10) / 13} width="19" height={10 / 13} fill="#B22234" />
+      {[0, 2, 4, 6, 8, 10, 12].map((index) => (
+        <rect key={index} y={(index * 10) / 13} width="19" height={10 / 13} fill="#B22234" />
       ))}
       <rect width="7.6" height={(7 * 10) / 13} fill="#3C3B6E" />
       {[0.9, 2.5, 4.1].map((cy) =>

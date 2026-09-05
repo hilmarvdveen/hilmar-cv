@@ -11,7 +11,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   publishedDate: "2026-09-01",
   updatedDate: "2026-09-03",
-  readingTimeMin: 11,
+  readingTimeMin: 20,
   title: {
     en: "Hexagonal architecture in C#: ports and adapters",
     nl: "Hexagonale architectuur in C#: ports en adapters",
@@ -38,15 +38,15 @@ export const meta: BlogPostMeta = {
 function buildHexagon(locale: Locale) {
   const copy = COPY;
   const nodes = [
-    flowNode("minimalApi", copy.nodeMinimalApi[locale], { x: 0, y: 0 }, { tone: "blue", sub: "POST /renewals", dir: "TB", width: 200 }),
-    flowNode("grpc", copy.nodeGrpc[locale], { x: 230, y: 0 }, { tone: "blue", sub: "MembershipService", dir: "TB", width: 200 }),
-    flowNode("consumer", copy.nodeConsumer[locale], { x: 460, y: 0 }, { tone: "blue", sub: "RenewalRequested", dir: "TB", width: 210 }),
-    flowNode("useCase", "RenewMembership", { x: 230, y: 140 }, { tone: "violet", sub: copy.nodeUseCaseSub[locale], dir: "TB", width: 210 }),
-    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", sub: "Member · Membership", dir: "TB", width: 220 }),
-    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 260, y: 290 }, { tone: "slate", sub: "IMembershipRepository · IPaymentGateway", dir: "TB", width: 340 }),
-    flowNode("repository", copy.nodeRepository[locale], { x: 200, y: 440 }, { tone: "amber", sub: "MSSQL", dir: "TB", width: 190 }),
-    flowNode("payment", copy.nodePayment[locale], { x: 410, y: 440 }, { tone: "amber", sub: copy.nodePaymentSub[locale], dir: "TB", width: 190 }),
-    flowNode("mail", copy.nodeMail[locale], { x: 620, y: 440 }, { tone: "amber", sub: copy.nodeMailSub[locale], dir: "TB", width: 190 }),
+    flowNode("minimalApi", copy.nodeMinimalApi[locale], { x: 0, y: 0 }, { tone: "blue", subtitle: "POST /renewals", direction: "TB", width: 200 }),
+    flowNode("grpc", copy.nodeGrpc[locale], { x: 230, y: 0 }, { tone: "blue", subtitle: "MembershipService", direction: "TB", width: 200 }),
+    flowNode("consumer", copy.nodeConsumer[locale], { x: 460, y: 0 }, { tone: "blue", subtitle: "RenewalRequested", direction: "TB", width: 210 }),
+    flowNode("useCase", "RenewMembership", { x: 230, y: 140 }, { tone: "violet", subtitle: copy.nodeUseCaseSub[locale], direction: "TB", width: 210 }),
+    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", subtitle: "Member · Membership", direction: "TB", width: 220 }),
+    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 260, y: 290 }, { tone: "slate", subtitle: "IMembershipRepository · IPaymentGateway", direction: "TB", width: 340 }),
+    flowNode("repository", copy.nodeRepository[locale], { x: 200, y: 440 }, { tone: "amber", subtitle: "MSSQL", direction: "TB", width: 190 }),
+    flowNode("payment", copy.nodePayment[locale], { x: 410, y: 440 }, { tone: "amber", subtitle: copy.nodePaymentSub[locale], direction: "TB", width: 190 }),
+    flowNode("mail", copy.nodeMail[locale], { x: 620, y: 440 }, { tone: "amber", subtitle: copy.nodeMailSub[locale], direction: "TB", width: 190 }),
   ];
   const edges = [
     flowEdge("minimalApi", "useCase", { label: "HTTP" }),
@@ -152,6 +152,8 @@ export function Body({ locale }: { locale: Locale }) {
         <LI><Strong>{copy.transactionLabel[locale]}</Strong> {copy.transactionBody[locale]}</LI>
         <LI><Strong>{copy.eventsLabel[locale]}</Strong> {copy.eventsBody[locale]}</LI>
       </UL>
+      <P>{copy.boundaries2[locale]}</P>
+      <P>{copy.moneyPath[locale]}</P>
 
       <H2>{copy.mazeTitle[locale]}</H2>
       <P>{copy.maze1[locale]}</P>
@@ -296,6 +298,11 @@ public sealed class RenewMembership(
             await memberships.FindAsync(command.MembershipId, cancellationToken)
             ?? throw new MembershipNotFoundException(command.MembershipId);
 
+        if (!membership.CanRenewOn(clock.Today))
+        {
+            throw new MembershipCannotRenewException(membership.Id);
+        }
+
         PaymentResult payment =
             await payments.ChargeAsync(membership.MemberId, command.Amount, cancellationToken);
 
@@ -420,6 +427,12 @@ public static class MembershipEndpoints
         catch (MembershipNotFoundException)
         {
             return Results.NotFound();
+        }
+        catch (MembershipCannotRenewException exception)
+        {
+            return Results.Problem(
+                exception.Message,
+                statusCode: StatusCodes.Status409Conflict);
         }
         catch (PaymentRefusedException exception)
         {
@@ -810,6 +823,10 @@ const COPY = {
     en: "The hexagon is easy to draw and easy to get wrong in four familiar places.",
     nl: "De hexagon is makkelijk te tekenen en op vier bekende plekken makkelijk verkeerd te doen.",
   },
+  moneyPath: {
+    en: "One sequence deserves its own sentence, because it costs money. The use case charges the payment provider first and commits the renewal afterwards. The test covers the safe direction, a refused payment that saves nothing. The other direction is the charge that succeeds while the commit fails, and the customer has paid for a renewal that does not exist. Two things answer it. The charge carries an idempotency key derived from the membership and the term, so a retry after the failed commit charges nobody twice, and a compensating refund runs when the commit cannot be retried. When a team sees that path more than once a month, it is time to grow the sequence into an outbox: the use case records the intent in the same transaction as the renewal, and a relay performs the charge after the commit.",
+    nl: "Eén volgorde verdient een eigen zin, omdat ze geld kost. De use case belast eerst de betaalprovider en legt de verlenging daarna vast. De test dekt de veilige richting, een geweigerde betaling waarbij niets wordt opgeslagen. De andere richting is de betaling die slaagt terwijl de commit mislukt, en dan heeft de klant betaald voor een verlenging die niet bestaat. Twee dingen beantwoorden dat. De betaling draagt een idempotentiesleutel die is afgeleid van het lidmaatschap en de termijn, zodat een herhaling na de mislukte commit niemand twee keer belast, en een compenserende terugbetaling loopt wanneer de commit niet opnieuw kan. Ziet een team dat pad vaker dan één keer per maand, dan is het tijd om de volgorde uit te bouwen tot een outbox: de use case legt de intentie vast in dezelfde transactie als de verlenging, en een relay voert de betaling na de commit uit.",
+  },
   transferLabel: { en: "Data transfer objects.", nl: "Data transfer objects." },
   transferBody: {
     en: "They belong to the adapter that speaks that protocol and they never travel inward. A use case takes a command built from primitives and domain types. The moment a JSON contract reaches the domain, that contract owns the domain.",
@@ -829,6 +846,10 @@ const COPY = {
   eventsBody: {
     en: "Let the entity record what happened, in a plain list on the aggregate. The use case reads that list after the commit and hands it to a publisher port. Raising an event straight onto a message bus from inside an entity puts a broker in the middle of your rules.",
     nl: "Laat de entiteit vastleggen wat er is gebeurd, in een gewone lijst op het aggregate. De use case leest die lijst na de commit en geeft hem aan een publisher-port. Een event vanuit een entiteit rechtstreeks op een message bus zetten, plaatst een broker midden in je regels.",
+  },
+  boundaries2: {
+    en: "The four boundaries above assume the local commit is the last thing that can fail. The direction that actually costs money runs the other way. The payment gateway accepts the charge, and the local commit fails afterwards, so the customer has paid for a renewal the system never recorded. A charge that carries its own idempotency key turns a retry into a safe no-op, so the endpoint can ask the gateway to charge again after a failed commit without charging the customer twice. A refusal that still slips through needs an answer of its own, a compensating refund issued against the same reference. Once that reconciliation stops being an exception and starts being a routine step, the team has outgrown this shape, and the charge belongs in an outbox row, written in the same transaction as the domain event above and relayed once the commit is durable.",
+    nl: "De vier grenzen hierboven gaan ervan uit dat de lokale commit het laatste is dat kan mislukken. De richting die echt geld kost loopt de andere kant op. De betaalprovider accepteert de incasso, en de lokale commit mislukt daarna, waardoor de klant heeft betaald voor een verlenging die het systeem nooit heeft vastgelegd. Een incasso met een eigen idempotentiesleutel maakt van een nieuwe poging een veilige no-op, zodat het endpoint de provider na een mislukte commit opnieuw om een incasso kan vragen zonder de klant twee keer te laten betalen. Een weigering die daar toch doorheen glipt, vraagt om een eigen antwoord, een compenserende terugbetaling tegen dezelfde referentie. Zodra die afstemming geen uitzondering meer is maar een routinestap, is het team deze vorm ontgroeid, en hoort de incasso in een outboxrij, geschreven in dezelfde transactie als het domain event hierboven en doorgezet zodra de commit duurzaam is.",
   },
   mazeTitle: {
     en: "A hexagon turns into a maze when every class gets an interface",

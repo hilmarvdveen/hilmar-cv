@@ -33,6 +33,16 @@ import {
 
 const SITE_LAST_MODIFIED = new Date().toISOString();
 const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
+const DUTCH_BREADCRUMB_LABELS: Record<string, string> = {
+  About: 'Over mij',
+  Services: 'Diensten',
+  Projects: 'Projecten',
+  Contact: 'Contact',
+  FAQ: 'Veelgestelde vragen',
+  Book: 'Afspraak boeken',
+  Blog: 'Blog',
+  Privacy: 'Privacy'
+};
 
 export class SEOEngine {
   private metadataGenerator: MetadataGenerator;
@@ -129,8 +139,8 @@ export class SEOEngine {
         ? 'Diensten | Freelance frontend developer, Randstad'
         : 'Services | Freelance frontend developer, Randstad',
       description: locale === 'nl'
-        ? `Frontend developer inhuren voor React, Next.js of Angular: legacy naar modern zonder downtime en design systems. ${RATE_TEXT.nl}.`
-        : `Hire a frontend developer for React, Next.js or Angular: legacy to modern without downtime and design systems. ${RATE_TEXT.en}.`,
+        ? `Frontend developer inhuren voor React, Next.js of Angular: legacy naar modern zonder onderbreking en design systems. ${RATE_TEXT.nl}.`
+        : `Hire a frontend developer for React, Next.js or Angular: legacy to modern without interruption and design systems. ${RATE_TEXT.en}.`,
       keywords: [
         ...SERVICES_CONTENT.SEO_FOCUS.SECONDARY,
         ...SERVICES_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
@@ -213,8 +223,8 @@ export class SEOEngine {
         ? 'Veelgestelde vragen | Freelance frontend developer'
         : 'Frequently asked questions | Freelance frontend developer',
       description: locale === 'nl'
-        ? `Antwoorden over inzet, tarief (${RATE_TEXT.nl}), beschikbaarheid vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH}, hybride werken in de Randstad en hoe een opdracht start.`
-        : `Answers on engagements, the rate (${RATE_TEXT.en}), availability from ${BUSINESS_PROFILE.AVAILABLE_FROM}, hybrid work across the Randstad and how a contract starts.`,
+        ? `Inzet, tarief (${RATE_TEXT.nl}), beschikbaarheid vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH}, hybride werken in de Randstad en hoe een opdracht start.`
+        : `Engagements, the rate (${RATE_TEXT.en}), availability from ${BUSINESS_PROFILE.AVAILABLE_FROM}, hybrid work in the Randstad and how a contract starts.`,
       keywords: [
         ...FAQ_CONTENT.SEO_FOCUS.SECONDARY,
         ...FAQ_CONTENT.SEO_FOCUS.SERVICE_FOCUSED,
@@ -466,9 +476,9 @@ export class SEOEngine {
   private generateBreadcrumbs(pathSegments: string[], locale: Locale): BreadcrumbItem[] {
     const breadcrumbs: BreadcrumbItem[] = [];
     const baseUrl = `${this.baseUrl}/${locale}`;
-    
+
     breadcrumbs.push({
-      name: locale === 'nl' ? 'Home' : 'Home',
+      name: 'Home',
       url: baseUrl,
       position: 1
     });
@@ -477,7 +487,7 @@ export class SEOEngine {
     pathSegments.forEach((segment, index) => {
       currentPath += `/${segment.toLowerCase().replace(/\s+/g, '-')}`;
       breadcrumbs.push({
-        name: segment,
+        name: locale === 'nl' ? DUTCH_BREADCRUMB_LABELS[segment] ?? segment : segment,
         url: currentPath,
         position: index + 2
       });

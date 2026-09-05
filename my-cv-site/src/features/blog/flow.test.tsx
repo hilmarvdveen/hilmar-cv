@@ -11,7 +11,7 @@ describe("flow helpers", () => {
   });
 
   it("builds a node with top/bottom handles and a subtitle when requested", () => {
-    const node = flowNode("b", "Beta", { x: 0, y: 0 }, { dir: "TB", tone: "emerald", sub: "note", width: 200 });
+    const node = flowNode("b", "Beta", { x: 0, y: 0 }, { direction: "TB", tone: "emerald", subtitle: "note", width: 200 });
     expect(node.sourcePosition).toBe("bottom");
     expect(node.targetPosition).toBe("top");
     expect(node.style?.width).toBe(200);

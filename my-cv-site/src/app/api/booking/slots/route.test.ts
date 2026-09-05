@@ -58,25 +58,25 @@ beforeEach(() => {
 
 describe("GET /api/booking/slots", () => {
   it("returns 400 when date is missing (before any Graph call)", async () => {
-    const res = await GET(get());
-    expect(res.status).toBe(400);
+    const response = await GET(get());
+    expect(response.status).toBe(400);
     expect(getGraphCredentials).not.toHaveBeenCalled();
   });
 
   it("returns 400 for a malformed date", async () => {
-    const res = await GET(get("07-01-2026"));
-    expect(res.status).toBe(400);
+    const response = await GET(get("07-01-2026"));
+    expect(response.status).toBe(400);
   });
 
   it("returns 400 for a past date", async () => {
-    const res = await GET(get("2000-01-01"));
-    expect(res.status).toBe(400);
+    const response = await GET(get("2000-01-01"));
+    expect(response.status).toBe(400);
   });
 
   it("returns 16 slots for an empty day", async () => {
-    const res = await GET(get(futureDate()));
-    expect(res.status).toBe(200);
-    const json = await res.json();
+    const response = await GET(get(futureDate()));
+    expect(response.status).toBe(200);
+    const json = await response.json();
     expect(json.totalAvailable).toBe(16);
     expect(json.slots).toHaveLength(16);
   });
@@ -86,15 +86,15 @@ describe("GET /api/booking/slots", () => {
     getEvents.mockResolvedValue({
       value: [{ start: { dateTime: `${day}T09:00:00` }, end: { dateTime: `${day}T09:30:00` } }],
     });
-    const res = await GET(get(day));
-    const json = await res.json();
+    const response = await GET(get(day));
+    const json = await response.json();
     expect(json.totalAvailable).toBeLessThan(16);
   });
 
   it("offers no slots on a weekend", async () => {
-    const res = await GET(get(futureWeekendDate()));
-    expect(res.status).toBe(200);
-    const json = await res.json();
+    const response = await GET(get(futureWeekendDate()));
+    expect(response.status).toBe(200);
+    const json = await response.json();
     expect(json.slots).toEqual([]);
     expect(json.totalAvailable).toBe(0);
   });
@@ -103,8 +103,8 @@ describe("GET /api/booking/slots", () => {
     vi.useFakeTimers();
     try {
       vi.setSystemTime(new Date("2026-07-01T07:45:00.000Z"));
-      const res = await GET(get("2026-07-01"));
-      const json = await res.json();
+      const response = await GET(get("2026-07-01"));
+      const json = await response.json();
       expect(json.totalAvailable).toBe(12);
       expect(json.slots[0].label).toBe("11:00");
     } finally {
@@ -114,7 +114,7 @@ describe("GET /api/booking/slots", () => {
 
   it("returns 500 config error when credentials are missing", async () => {
     getGraphCredentials.mockReturnValue(null);
-    const res = await GET(get(futureDate()));
-    expect(res.status).toBe(500);
+    const response = await GET(get(futureDate()));
+    expect(response.status).toBe(500);
   });
 });

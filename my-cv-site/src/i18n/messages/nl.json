@@ -192,6 +192,7 @@
                         "TypeScript",
                         "GraphQL · gql.tada · urql",
                         "Angular 6 tot 12",
+                        "RxJS",
                         "Next.js",
                         "Tailwind",
                         "Stencil web components",
@@ -279,7 +280,7 @@
                     },
                     {
                         "question": "Werk je samen met ons backendteam?",
-                        "answer": "Daar word ik precies voor ingehuurd. Ik heb tot zes teams gecoördineerd in één gedeelde monorepo en stem het GraphQL-contract af met het backendteam."
+                        "answer": "Daar word ik precies voor ingehuurd. Ik heb tot zes teams gecoördineerd in één gedeelde monorepo."
                     },
                     {
                         "question": "Hoe zit de contractvorm in elkaar?",
@@ -298,13 +299,13 @@
                 "items": [
                     {
                         "title": "Een pagina voor klanten, van specificatie tot live",
-                        "description": "Jullie hebben een pagina of een flow die klanten gebruiken en die geld oplevert. Ik neem die van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en draag hem over met tests, Storybook en documentatie.",
+                        "description": "Jullie hebben een pagina of een flow die klanten gebruiken en die geld oplevert. Ik neem die als geheel op me en draag hem over met tests, Storybook en documentatie.",
                         "href": "/services/frontend",
                         "linkLabel": "Hoe ik een pagina van begin tot eind bouw"
                     },
                     {
                         "title": "Een migratie van legacy naar modern leiden",
-                        "description": "Een oud systeem verdient nog geld en moet vervangen worden terwijl het blijft draaien. Ik lees eerst de legacy, zet het achter een schakelaar live, schaal per percentage op en houd de rollback het hele traject op één stap afstand.",
+                        "description": "Een oud systeem verdient nog geld en moet vervangen worden terwijl het blijft draaien. Ik lees eerst de legacy, zet het achter een schakelaar live en houd de rollback het hele traject op één stap afstand.",
                         "href": "/services/design-systems",
                         "linkLabel": "Hoe een migratie verloopt"
                     },
@@ -489,7 +490,6 @@
             "TSLint": "TSLint",
             "OctopusDeploy": "Octopus Deploy",
             "UIKit": "UIKit",
-            "IceLib": "IceLib",
             "IntegrationTesting": "Integratietesten",
             "NodeJS": "Node.js",
             "Express": "Express",
@@ -629,7 +629,7 @@
             "role": "Frontend Developer / UI Coach",
             "body": [
                 {
-                    "paragraph": "Randstad en Yacht vernieuwden hun merk, en de bestaande sites moesten mee. Ik bouwde de frontendcomponenten daarvoor opnieuw op, in vanilla JavaScript, Angular en React, met SCSS en de BEM-methodiek zodat de structuur over de platformen heen hetzelfde blijft. Toegankelijkheid volgens WCAG 2.0 zat vanaf het begin in de componenten. Ook maakte ik de stylingcomponenten voor het Hippo Bloomreach headless CMS."
+                    "paragraph": "Randstad en Yacht vernieuwden hun merk, en de bestaande sites moesten mee. Ik bouwde de frontendcomponenten daarvoor opnieuw op, in vanilla JavaScript, Angular en React, met SCSS en de BEM-methodiek zodat de structuur over de platformen heen hetzelfde blijft. Ook maakte ik de stylingcomponenten voor het Hippo Bloomreach headless CMS."
                 },
                 {
                     "paragraph": "Pagina's en flows stemde ik af met de UX-designers en de business, en ontwerpkeuzes die in code niet standhielden besprak ik meteen tijdens het bouwen. Elk visueel en functioneel element testte ik op toegankelijkheid en op gedrag over schermformaten heen."
@@ -1017,32 +1017,28 @@
                 "description": "De frameworks en libraries waar deze herbouwen op draaien. React en Angular zijn waar de diepte zit, de rest ondersteunt dat.",
                 "items": [
                     {
-                        "name": "React",
-                        "description": "Component-gebaseerde UI bibliotheek"
+                        "name": "React"
                     },
                     {
-                        "name": "Next.js",
-                        "description": "Full-stack React framework"
+                        "name": "Next.js"
                     },
                     {
-                        "name": "Vue.js",
-                        "description": "Progressief JavaScript framework"
+                        "name": "Vue.js"
                     },
                     {
-                        "name": "TypeScript",
-                        "description": "Type-veilig JavaScript"
+                        "name": "TypeScript"
                     },
                     {
-                        "name": "Tailwind CSS",
-                        "description": "Utility-first CSS framework"
+                        "name": "Tailwind CSS"
                     },
                     {
-                        "name": "Redux/Zustand",
-                        "description": "State management"
+                        "name": "Redux/Zustand"
                     },
                     {
-                        "name": "Angular",
-                        "description": "Uitgebreid TypeScript framework"
+                        "name": "Angular"
+                    },
+                    {
+                        "name": "RxJS"
                     }
                 ]
             },
@@ -1175,31 +1171,26 @@
                 ]
             },
             "technologies": {
-                "title": "Technologiestack",
+                "title": "Technologieën en tools",
                 "description": "Het backend-, data- en platformwerk dat ik naast de frontend in opdrachten heb gedaan.",
                 "categories": [
                     {
                         "name": "Backend",
                         "items": [
                             {
-                                "name": "Node.js",
-                                "description": "Schaalbare server-side runtime"
+                                "name": "Node.js"
                             },
                             {
-                                "name": "Express",
-                                "description": "Snelle, minimale web framework"
+                                "name": "Express"
                             },
                             {
-                                "name": "C# .NET",
-                                "description": "Enterprise-grade web framework"
+                                "name": "C# .NET"
                             },
                             {
-                                "name": "GraphQL",
-                                "description": "Efficiënte API query taal"
+                                "name": "GraphQL"
                             },
                             {
-                                "name": "REST APIs",
-                                "description": "RESTful service architectuur"
+                                "name": "REST APIs"
                             }
                         ]
                     },
@@ -1207,33 +1198,27 @@
                         "name": "Databases",
                         "items": [
                             {
-                                "name": "MSSQL",
-                                "description": "Microsoft SQL Server database"
+                                "name": "MSSQL"
                             }
                         ]
                     },
                     {
-                        "name": "Cloud & DevOps",
+                        "name": "Cloud en DevOps",
                         "items": [
                             {
-                                "name": "Azure",
-                                "description": "Microsoft cloud platform"
+                                "name": "Azure"
                             },
                             {
-                                "name": "AWS",
-                                "description": "Uitgebreid cloud platform"
+                                "name": "AWS"
                             },
                             {
-                                "name": "Kubernetes",
-                                "description": "Container orchestratie platform"
+                                "name": "Kubernetes"
                             },
                             {
-                                "name": "Docker",
-                                "description": "Containerisatie platform"
+                                "name": "Docker"
                             },
                             {
-                                "name": "CI/CD",
-                                "description": "Continue integratie/deployment"
+                                "name": "CI/CD"
                             }
                         ]
                     }
@@ -1390,32 +1375,28 @@
                 "description": "Een bibliotheek is alleen waard wat de teams er echt mee doen, dus de adoptie hoort bij het werk."
             },
             "technologies": {
-                "title": "Tools en technologieën",
+                "title": "Technologieën en tools",
                 "description": "De tools waarmee deze systemen zijn gebouwd en gedocumenteerd.",
                 "categories": [
                     {
-                        "name": "Development",
+                        "name": "Ontwikkeling",
                         "items": [
                             {
-                                "name": "React/Storybook",
-                                "description": "Component ontwikkeling & documentatie"
+                                "name": "React/Storybook"
                             },
                             {
-                                "name": "Design Tokens",
-                                "description": "Systematische design beslissingen"
+                                "name": "Design Tokens"
                             },
                             {
-                                "name": "TypeScript",
-                                "description": "Type-veilige component ontwikkeling"
+                                "name": "TypeScript"
                             }
                         ]
                     },
                     {
-                        "name": "Documentation",
+                        "name": "Documentatie",
                         "items": [
                             {
-                                "name": "Markdown",
-                                "description": "Lightweight markup taal"
+                                "name": "Markdown"
                             }
                         ]
                     }
@@ -1570,59 +1551,6 @@
                 ],
                 "title": "Wat het team overhoudt",
                 "description": "Het doel is een team dat mij elke week minder nodig heeft."
-            },
-            "expertise": {
-                "title": "Expertisegebieden",
-                "description": "Waar een review meestal op uitkomt. Op de frontend-architectuur, op hoe werk wordt uitgebracht, en op het team eromheen.",
-                "categories": [
-                    {
-                        "name": "Architectuur & Strategie",
-                        "items": [
-                            {
-                                "name": "Systeem Architectuur Review",
-                                "description": "Schaalbaarheid en onderhoudbaarheid assessment"
-                            },
-                            {
-                                "name": "Technology Stack Planning",
-                                "description": "Toekomstbestendige technologie beslissingen"
-                            },
-                            {
-                                "name": "Security Auditing",
-                                "description": "Kwetsbaarheid assessment & best practices"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Team & Proces",
-                        "items": [
-                            {
-                                "name": "Code Review & Kwaliteit",
-                                "description": "Best practices en code standaarden"
-                            },
-                            {
-                                "name": "Development Workflows",
-                                "description": "CI/CD en deployment optimalisatie"
-                            },
-                            {
-                                "name": "Team Mentoring",
-                                "description": "Vaardigheidsontwikkeling en kennisoverdracht"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Planning en risico",
-                        "items": [
-                            {
-                                "name": "Project Planning",
-                                "description": "Tijdlijn en resource schatting"
-                            },
-                            {
-                                "name": "Risico Assessment",
-                                "description": "Technische en zakelijke risico evaluatie"
-                            }
-                        ]
-                    }
-                ]
             },
             "process": {
                 "title": "Hoe een adviesopdracht verloopt",
@@ -1815,7 +1743,7 @@
                     },
                     {
                         "question": "Wanneer ben je beschikbaar en voor hoeveel uur?",
-                        "answer": "Vanaf 1 oktober 2026, en eerder in overleg. 32 tot 40 uur per week, voor zes maanden of langer. Mijn huidige opdracht bij bol.com begon in juli 2025, is drie keer verlengd en loopt tot 1 oktober 2026."
+                        "answer": "Vanaf 1 oktober 2026, en eerder in overleg. 32 tot 40 uur per week, voor zes maanden of langer. Mijn huidige opdracht bij bol.com begon in juli 2025 en is drie keer verlengd."
                     },
                     {
                         "question": "Waar werk je, en in welke talen?",
@@ -2216,7 +2144,7 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Engineering, tot in de details",
-            "subtitle": "Praktische artikelen met voorbeelden over React-architectuur, testen, SEO en routing, en over hexagonale backends in C#, Kotlin en Java. De patronen die ik in echt productiewerk gebruik."
+            "subtitle": "Praktische artikelen met voorbeelden over React-architectuur, testen, SEO en routing, en over hexagonale backends in C#, Kotlin en Java."
         },
         "minRead": "min lezen",
         "publishedOn": "Gepubliceerd",

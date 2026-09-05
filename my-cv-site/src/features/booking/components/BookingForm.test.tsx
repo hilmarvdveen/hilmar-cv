@@ -236,3 +236,25 @@ describe("BookingForm: confirm", () => {
     expect(screen.getByRole("button", { name: /09:00/, pressed: true })).toBeInTheDocument();
   });
 });
+
+describe("BookingForm: a stale draft", () => {
+  it("returns a saved step 3 draft to step 1 when its time is no longer offered", async () => {
+    installFetch();
+    localStorage.setItem(
+      "hilmar-booking-form-state",
+      JSON.stringify({
+        details: {
+          date: FIRST_DAY,
+          time: `${FIRST_DAY}T05:00:00.000Z`,
+          name: "Jane Doe",
+          email: "jane@example.com",
+        },
+        step: 3,
+        timestamp: Date.now() - 60 * 60 * 1000,
+      })
+    );
+    renderForm();
+    expect(await screen.findByRole("button", { name: "09:00" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "flow.steps.confirm" })).toBeNull();
+  });
+});

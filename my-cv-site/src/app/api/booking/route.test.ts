@@ -58,30 +58,30 @@ const valid = () => ({
 
 describe("POST /api/booking", () => {
   it("rejects cross-origin with 403", async () => {
-    const res = await POST(post(valid(), { origin: "https://evil.example.com" }));
-    expect(res.status).toBe(403);
+    const response = await POST(post(valid(), { origin: "https://evil.example.com" }));
+    expect(response.status).toBe(403);
   });
 
   it("returns 400 when the date is missing", async () => {
-    const res = await POST(post({ ...valid(), date: undefined }));
-    expect(res.status).toBe(400);
+    const response = await POST(post({ ...valid(), date: undefined }));
+    expect(response.status).toBe(400);
   });
 
   it("returns 400 for a past booking date", async () => {
-    const res = await POST(post({ ...valid(), date: new Date(Date.now() - 86400000).toISOString() }));
-    expect(res.status).toBe(400);
-    expect((await res.json()).error).toMatch(/past/i);
+    const response = await POST(post({ ...valid(), date: new Date(Date.now() - 86400000).toISOString() }));
+    expect(response.status).toBe(400);
+    expect((await response.json()).error).toMatch(/past/i);
   });
 
   it("silently succeeds on honeypot without creating an event", async () => {
-    const res = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(res.status).toBe(200);
+    const response = await POST(post({ ...valid(), company_website: "bot" }));
+    expect(response.status).toBe(200);
     expect(createCalendarEvent).not.toHaveBeenCalled();
   });
 
   it("creates an event, notifies the owner and confirms to the visitor", async () => {
-    const res = await POST(post(valid()));
-    expect(res.status).toBe(200);
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(200);
     expect(createCalendarEvent).toHaveBeenCalledTimes(1);
     expect(sendMail).toHaveBeenCalledTimes(2);
     const mails = sendMail.mock.calls.map((call) => call[2] as Record<string, string>);

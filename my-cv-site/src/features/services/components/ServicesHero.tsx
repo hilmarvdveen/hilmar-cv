@@ -32,7 +32,7 @@ export const ServicesHero = () => {
       description={t("hero.description")}
       actions={
         <>
-          <Button href="/book" variant="primary" size="lg">
+          <Button href="/book" variant="primary" size="lg" data-placement="services-hero">
             {t("cta.book")}
           </Button>
           <Button href="/contact" variant="outlineOnDark" size="lg">

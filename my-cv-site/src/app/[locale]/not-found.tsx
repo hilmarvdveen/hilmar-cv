@@ -48,10 +48,10 @@ export default async function NotFound() {
           ))}
           <Button
             href="/book"
-            variant="white"
+            variant="primary"
             size="lg"
             data-placement="not-found"
-            className="w-full"
+            className="w-full sm:w-auto"
           >
             {homeTranslations("hero.bookCall")}
           </Button>

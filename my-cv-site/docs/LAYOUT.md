@@ -304,3 +304,20 @@ Advisories that were logged and deliberately not applied:
 - The credentials line under the hero uses `slate-400`, which meets AA but
   not AAA.
 - Inner links in the mobile drawer do not yet share the focus ring.
+
+## Wide diagrams on phones (5 September 2026)
+
+A React Flow diagram in a blog post used to fit its whole graph into
+the phone width, which put the node titles at roughly a third of their
+size. Below `sm` the diagram now keeps a minimum width of 640px inside
+its own horizontally scrolling frame, panning and scroll capture are
+off so a touch scrolls the frame, and from `sm` up it fills the column
+as before. The page body never scrolls sideways.
+
+## Reserved space at the bottom of the page
+
+Two fixed elements can sit at the bottom: the sticky booking bar (sets
+`--bottom-bar-offset`, the consent banner stacks above it) and the
+consent banner (sets `--consent-height`, `main` pads its bottom by it).
+Anything new that is fixed to the bottom follows the same pattern:
+measure, publish a custom property, and let the page reserve the space.

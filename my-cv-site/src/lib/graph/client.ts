@@ -32,7 +32,7 @@ export async function getAccessToken({
   clientSecret,
   tenantId,
 }: Pick<GraphCredentials, "clientId" | "clientSecret" | "tenantId">): Promise<string> {
-  const res = await fetch(
+  const response = await fetch(
     `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
     {
       method: "POST",
@@ -46,8 +46,8 @@ export async function getAccessToken({
     }
   );
 
-  const data = await res.json();
-  if (!res.ok) {
+  const data = await response.json();
+  if (!response.ok) {
     throw new Error(data.error_description || "Failed to get Microsoft Graph token");
   }
   return data.access_token as string;

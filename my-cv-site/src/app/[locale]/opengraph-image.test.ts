@@ -6,14 +6,19 @@ describe("opengraph-image route", () => {
     expect(size).toEqual({ width: 1200, height: 630 });
     expect(contentType).toBe("image/png");
     expect(alt).toContain("Hilmar van der Veen");
+    expect(alt).not.toMatch(/—| - /);
   });
 
-  it("renders without throwing by reading the co-located logo (Vercel FS-safe)", async () => {
-    // Executes `readFile(new URL("./og-logo.png", import.meta.url))`. If the asset
-    // path regressed to `process.cwd()/public/...` (which doesn't exist in
-    // Vercel's serverless FS) or the co-located logo were removed, this throws.
-    const res = await OpengraphImage();
-    expect(res).toBeInstanceOf(Response);
-    expect(res.headers.get("content-type")).toContain("image/png");
+  it("renders a PNG response without params", async () => {
+    const response = await OpengraphImage();
+    expect(response).toBeInstanceOf(Response);
+    expect(response.headers.get("content-type")).toContain("image/png");
+  });
+
+  it("renders a PNG response for each locale", async () => {
+    for (const locale of ["nl", "en"]) {
+      const response = await OpengraphImage({ params: Promise.resolve({ locale }) });
+      expect(response.headers.get("content-type")).toContain("image/png");
+    }
   });
 });

@@ -16,20 +16,20 @@ function isDir(node: FileNode): boolean {
 function TreeRows({ nodes, depth }: { nodes: FileNode[]; depth: number }) {
   return (
     <>
-      {nodes.map((node, i) => {
-        const dir = isDir(node);
+      {nodes.map((node, index) => {
+        const isDirectory = isDir(node);
         return (
-          <div key={`${node.name}-${i}`}>
+          <div key={`${node.name}-${index}`}>
             <div
               className="flex items-center gap-2 py-1"
               style={{ paddingLeft: `${depth * 1.25}rem` }}
             >
-              {dir ? (
+              {isDirectory ? (
                 <Folder className="h-4 w-4 flex-shrink-0 text-blue-400" aria-hidden="true" />
               ) : (
                 <FileCode className="h-4 w-4 flex-shrink-0 text-gray-400" aria-hidden="true" />
               )}
-              <span className={dir ? "font-semibold text-gray-100" : "text-gray-300"}>
+              <span className={isDirectory ? "font-semibold text-gray-100" : "text-gray-300"}>
                 {node.name}
               </span>
               {node.comment && (

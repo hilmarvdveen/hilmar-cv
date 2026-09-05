@@ -63,7 +63,7 @@ describe("SEOFactory page builders", () => {
         { question: "Q1?", answer: "A1" },
         { question: "Q2?", answer: "A2" },
       ]);
-      const hasFaq = result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "FAQPage");
+      const hasFaq = result.jsonLd.some((schema) => (schema as { "@type": string })["@type"] === "FAQPage");
       expect(hasFaq).toBe(true);
     }
   });
@@ -129,7 +129,7 @@ describe("SEO structured-data & robots correctness", () => {
 
   it("uses valid (URL) sameAs entries on Person/Organization schemas", () => {
     const withSameAs = home.jsonLd.filter(
-      (s) => Array.isArray((s as { sameAs?: unknown[] }).sameAs)
+      (schema) => Array.isArray((schema as { sameAs?: unknown[] }).sameAs)
     ) as Array<{ sameAs: string[] }>;
     expect(withSameAs.length).toBeGreaterThan(0);
     for (const schema of withSameAs) {
@@ -141,7 +141,7 @@ describe("SEO structured-data & robots correctness", () => {
 
   it("references an existing profile image in the Person schema", () => {
     const person = home.jsonLd.find(
-      (s) => (s as { "@type"?: string })["@type"] === "Person"
+      (schema) => (schema as { "@type"?: string })["@type"] === "Person"
     ) as { image?: string } | undefined;
     expect(person?.image).toContain("/images/profile.jpg");
   });
@@ -165,7 +165,7 @@ describe("SEOFactory.blogPost", () => {
   it("produces BlogPosting structured data for both locales", () => {
     for (const locale of locales) {
       const result = SEOFactory.blogPost(locale, post);
-      expect(result.jsonLd.some((s) => (s as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
+      expect(result.jsonLd.some((schema) => (schema as { "@type": string })["@type"] === "BlogPosting")).toBe(true);
       expect(result.metadata.alternates?.canonical).toBeTruthy();
       expect(result.structuredData).toContain("BlogPosting");
     }
@@ -176,13 +176,13 @@ describe("SEOFactory.generateSitemapData", () => {
   const entries = SEOFactory.generateSitemapData();
   it("returns entries with url, priority and hreflang alternates", () => {
     expect(entries.length).toBeGreaterThan(0);
-    for (const e of entries) {
-      expect(typeof e.url).toBe("string");
-      expect(typeof e.priority).toBe("number");
-      expect(Array.isArray(e.alternates)).toBe(true);
-      expect(e.alternates.length).toBeGreaterThan(0);
-      expect(e.alternates[0]).toHaveProperty("hreflang");
-      expect(e.alternates[0]).toHaveProperty("href");
+    for (const entry of entries) {
+      expect(typeof entry.url).toBe("string");
+      expect(typeof entry.priority).toBe("number");
+      expect(Array.isArray(entry.alternates)).toBe(true);
+      expect(entry.alternates.length).toBeGreaterThan(0);
+      expect(entry.alternates[0]).toHaveProperty("hreflang");
+      expect(entry.alternates[0]).toHaveProperty("href");
     }
   });
 });

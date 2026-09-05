@@ -118,7 +118,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
   }, [details, step, isInitialized, status]);
 
   const updateDetail = useCallback((field: keyof BookingDetails, value: string) => {
-    setDetails((prev) => ({ ...prev, [field]: value }));
+    setDetails((previous) => ({ ...previous, [field]: value }));
   }, []);
 
   const goToStep = useCallback((nextStep: BookingStep) => {

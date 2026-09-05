@@ -5,8 +5,8 @@ import { flowNode, flowEdge } from "../flow";
 
 describe("FlowDiagram", () => {
   const nodes = [
-    flowNode("a", "Alpha", { x: 0, y: 0 }, { tone: "blue", sub: "start" }),
-    flowNode("b", "Beta", { x: 220, y: 0 }, { dir: "TB" }),
+    flowNode("a", "Alpha", { x: 0, y: 0 }, { tone: "blue", subtitle: "start" }),
+    flowNode("b", "Beta", { x: 220, y: 0 }, { direction: "TB" }),
   ];
   const edges = [flowEdge("a", "b", { label: "go", dashed: true, animated: true })];
 

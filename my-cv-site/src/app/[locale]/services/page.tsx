@@ -85,7 +85,8 @@ export default async function ServicesPage({ params }: Props) {
         "Tailwind CSS",
         "SCSS",
         "Design Tokens",
-        "WCAG 2.1 and 2.2 AA",
+        "WCAG 2.1 AA",
+        "WCAG 2.2 AA",
         "Storyblok",
       ],
       benefits: t.raw("main.services.designSystems.benefits.items") as string[],
@@ -216,7 +217,7 @@ export default async function ServicesPage({ params }: Props) {
           />
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button href="/book" variant="primary" size="lg">
+            <Button href="/book" variant="primary" size="lg" data-placement="services-close">
               {t("finalCta.bookConsultation")}
             </Button>
             <Button href="/contact" variant="outlineOnDark" size="lg">

@@ -109,9 +109,9 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((previous) => ({ ...previous, [field]: value }));
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
+      setErrors((previous) => ({ ...previous, [field]: undefined }));
     }
   };
 

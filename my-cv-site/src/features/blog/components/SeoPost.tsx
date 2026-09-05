@@ -11,14 +11,14 @@ export const meta: BlogPostMeta = {
   category: "seo",
   publishedDate: "2026-06-24",
   updatedDate: "2026-06-28",
-  readingTimeMin: 15,
+  readingTimeMin: 8,
   title: {
     en: "Technical SEO in Next.js: past Lighthouse to better Search",
     nl: "Technische SEO in Next.js: verder dan de Lighthouse-score",
   },
   description: {
-    en: "How to set up the Lighthouse SEO basics with Next.js metadata, robots and sitemaps. Then improve the page further with structured data, hreflang and Core Web Vitals.",
-    nl: "Hoe je de Lighthouse SEO-basis goed zet met Next.js-metadata, robots en sitemaps. Daarna verbeter je je pagina verder met structured data, hreflang en Core Web Vitals.",
+    en: "How to set up the Lighthouse SEO basics with Next.js metadata, robots and sitemaps, then go further with structured data, hreflang and Core Web Vitals.",
+    nl: "Hoe je de Lighthouse SEO-basis goed zet met Next.js-metadata, robots en sitemaps, en daarna verder gaat met structured data, hreflang en Core Web Vitals.",
   },
   excerpt: {
     en: "A 100% Lighthouse SEO score is a technical baseline, not a ranking guarantee. Here is how to pass it in Next.js, then go further with structured data, hreflang and Core Web Vitals.",
@@ -38,11 +38,11 @@ export const meta: BlogPostMeta = {
 // screens. Structured data and Core Web Vitals are side factors described in
 // the caption rather than drawn as crossing side-inputs.
 const pipelineNodes = [
-  flowNode("sitemap", "sitemap.xml", { x: 0, y: 0 }, { tone: "violet", sub: "discovery", dir: "TB", width: 190 }),
-  flowNode("crawl", "Crawl", { x: 0, y: 110 }, { tone: "blue", dir: "TB", width: 190 }),
-  flowNode("render", "Render", { x: 0, y: 220 }, { tone: "blue", sub: "JS executed", dir: "TB", width: 190 }),
-  flowNode("index", "Index", { x: 0, y: 330 }, { tone: "emerald", dir: "TB", width: 190 }),
-  flowNode("rank", "Rank", { x: 0, y: 440 }, { tone: "amber", sub: "results page", dir: "TB", width: 190 }),
+  flowNode("sitemap", "sitemap.xml", { x: 0, y: 0 }, { tone: "violet", subtitle: "discovery", direction: "TB", width: 190 }),
+  flowNode("crawl", "Crawl", { x: 0, y: 110 }, { tone: "blue", direction: "TB", width: 190 }),
+  flowNode("render", "Render", { x: 0, y: 220 }, { tone: "blue", subtitle: "JS executed", direction: "TB", width: 190 }),
+  flowNode("index", "Index", { x: 0, y: 330 }, { tone: "emerald", direction: "TB", width: 190 }),
+  flowNode("rank", "Rank", { x: 0, y: 440 }, { tone: "amber", subtitle: "results page", direction: "TB", width: 190 }),
 ];
 const pipelineEdges = [
   flowEdge("sitemap", "crawl"),
@@ -52,11 +52,11 @@ const pipelineEdges = [
 ];
 
 const sourcesNodes = [
-  flowNode("meta", "generateMetadata()", { x: 0, y: 0 }, { tone: "blue", sub: "title · description · canonical", dir: "TB", width: 240 }),
-  flowNode("jsonld", "JSON-LD", { x: -200, y: 120 }, { tone: "rose", sub: "BlogPosting, Person…", dir: "TB", width: 180 }),
-  flowNode("robots", "robots.txt", { x: 0, y: 120 }, { tone: "violet", sub: "crawl rules", dir: "TB", width: 160 }),
-  flowNode("alt", "hreflang", { x: 190, y: 120 }, { tone: "emerald", sub: "nl ⇄ en", dir: "TB", width: 160 }),
-  flowNode("serp", "Search result", { x: 0, y: 240 }, { tone: "amber", sub: "title, snippet, rich result", dir: "TB", width: 240 }),
+  flowNode("meta", "generateMetadata()", { x: 0, y: 0 }, { tone: "blue", subtitle: "title · description · canonical", direction: "TB", width: 240 }),
+  flowNode("jsonld", "JSON-LD", { x: -200, y: 120 }, { tone: "rose", subtitle: "BlogPosting, Person…", direction: "TB", width: 180 }),
+  flowNode("robots", "robots.txt", { x: 0, y: 120 }, { tone: "violet", subtitle: "crawl rules", direction: "TB", width: 160 }),
+  flowNode("alt", "hreflang", { x: 190, y: 120 }, { tone: "emerald", subtitle: "nl ⇄ en", direction: "TB", width: 160 }),
+  flowNode("serp", "Search result", { x: 0, y: 240 }, { tone: "amber", subtitle: "title, snippet, rich result", direction: "TB", width: 240 }),
 ];
 const sourcesEdges = [
   flowEdge("meta", "serp"),
@@ -66,98 +66,98 @@ const sourcesEdges = [
 ];
 
 export function Body({ locale }: { locale: Locale }) {
-  const c = COPY;
+  const copy = COPY;
   return (
     <>
-      <Lead>{c.lead[locale]}</Lead>
-      <P>{c.intro1[locale]}</P>
-      <P>{c.intro2[locale]}</P>
-      <Quote>{c.quote[locale]}</Quote>
+      <Lead>{copy.lead[locale]}</Lead>
+      <P>{copy.intro1[locale]}</P>
+      <P>{copy.intro2[locale]}</P>
+      <Quote>{copy.quote[locale]}</Quote>
 
-      <H2>{c.lhTitle[locale]}</H2>
-      <P>{c.lh1[locale]}</P>
+      <H2>{copy.lhTitle[locale]}</H2>
+      <P>{copy.lh1[locale]}</P>
       <UL>
-        <LI>{c.lhi1[locale]}</LI>
-        <LI>{c.lhi2[locale]}</LI>
-        <LI>{c.lhi3[locale]}</LI>
-        <LI>{c.lhi4[locale]}</LI>
+        <LI>{copy.lhi1[locale]}</LI>
+        <LI>{copy.lhi2[locale]}</LI>
+        <LI>{copy.lhi3[locale]}</LI>
+        <LI>{copy.lhi4[locale]}</LI>
       </UL>
-      <Callout variant="info" title={c.fontNoteTitle[locale]}>
-        {c.fontNoteBody[locale]}
+      <Callout variant="info" title={copy.fontNoteTitle[locale]}>
+        {copy.fontNoteBody[locale]}
       </Callout>
-      <P>{c.lh2[locale]}</P>
-      <CodeBlock lang="tsx" filename="app/[locale]/blog/[slug]/page.tsx" code={c.metadataCode[locale]} />
-      <Callout variant="success" title={c.lhDoneTitle[locale]}>
-        {c.lhDoneBody[locale]}
+      <P>{copy.lh2[locale]}</P>
+      <CodeBlock lang="tsx" filename="app/[locale]/blog/[slug]/page.tsx" code={copy.metadataCode[locale]} />
+      <Callout variant="success" title={copy.lhDoneTitle[locale]}>
+        {copy.lhDoneBody[locale]}
       </Callout>
 
-      <H2>{c.beyondTitle[locale]}</H2>
-      <P>{c.beyond1[locale]}</P>
+      <H2>{copy.beyondTitle[locale]}</H2>
+      <P>{copy.beyond1[locale]}</P>
       <FlowDiagram
         nodes={pipelineNodes}
         edges={pipelineEdges}
         height={520}
-        ariaLabel={c.pipelineAria[locale]}
-        caption={c.pipelineCaption[locale]}
+        ariaLabel={copy.pipelineAria[locale]}
+        caption={copy.pipelineCaption[locale]}
       />
-      <P>{c.beyond2[locale]}</P>
+      <P>{copy.beyond2[locale]}</P>
 
-      <H2>{c.semanticTitle[locale]}</H2>
-      <P>{c.semantic1[locale]}</P>
-      <CodeBlock lang="html" code={c.semanticCode[locale]} />
-      <Callout variant="warning" title={c.semanticWarnTitle[locale]}>
-        {c.semanticWarnBody[locale]}
+      <H2>{copy.semanticTitle[locale]}</H2>
+      <P>{copy.semantic1[locale]}</P>
+      <CodeBlock lang="html" code={copy.semanticCode[locale]} />
+      <Callout variant="warning" title={copy.semanticWarnTitle[locale]}>
+        {copy.semanticWarnBody[locale]}
       </Callout>
 
-      <H2>{c.crawlTitle[locale]}</H2>
-      <P>{c.crawl1[locale]}</P>
+      <H2>{copy.crawlTitle[locale]}</H2>
+      <P>{copy.crawl1[locale]}</P>
       <CodeBlock lang="text" filename="robots.txt" code={ROBOTS_CODE} />
-      <P>{c.crawl2[locale]}</P>
+      <P>{copy.crawl2[locale]}</P>
       <CodeBlock lang="xml" filename="sitemap.xml" code={SITEMAP_CODE} />
 
       <Divider />
 
-      <H2>{c.sdTitle[locale]}</H2>
-      <P>{c.sd1[locale]}</P>
+      <H2>{copy.sdTitle[locale]}</H2>
+      <P>{copy.sd1[locale]}</P>
       <FlowDiagram
         nodes={sourcesNodes}
         edges={sourcesEdges}
         height={360}
-        ariaLabel={c.sourcesAria[locale]}
-        caption={c.sourcesCaption[locale]}
+        ariaLabel={copy.sourcesAria[locale]}
+        caption={copy.sourcesCaption[locale]}
       />
-      <P>{c.sd2[locale]}</P>
+      <P>{copy.sd2[locale]}</P>
       <CodeBlock lang="json" filename="JSON-LD: BlogPosting" code={JSONLD_CODE} />
-      <Callout variant="info" title={c.sdInfoTitle[locale]}>
-        {c.sdInfoBody[locale]}
+      <Callout variant="info" title={copy.sdInfoTitle[locale]}>
+        {copy.sdInfoBody[locale]}
       </Callout>
 
-      <H3>{c.hreflangTitle[locale]}</H3>
-      <P>{c.hreflang1[locale]}</P>
+      <H3>{copy.hreflangTitle[locale]}</H3>
+      <P>{copy.hreflang1[locale]}</P>
       <CodeBlock lang="html" code={HREFLANG_CODE} />
-      <Callout variant="tip" title={c.hreflangTipTitle[locale]}>
-        {c.hreflangTipBody[locale]}
+      <Callout variant="tip" title={copy.hreflangTipTitle[locale]}>
+        {copy.hreflangTipBody[locale]}
       </Callout>
 
-      <H2>{c.cwvTitle[locale]}</H2>
-      <P>{c.cwv1[locale]}</P>
+      <H2>{copy.cwvTitle[locale]}</H2>
+      <P>{copy.cwv1[locale]}</P>
       <UL>
-        <LI><Strong>LCP</Strong> {c.cwvLcp[locale]}</LI>
-        <LI><Strong>INP</Strong> {c.cwvInp[locale]}</LI>
-        <LI><Strong>CLS</Strong> {c.cwvCls[locale]}</LI>
+        <LI><Strong>LCP</Strong> {copy.cwvLcp[locale]}</LI>
+        <LI><Strong>INP</Strong> {copy.cwvInp[locale]}</LI>
+        <LI><Strong>CLS</Strong> {copy.cwvCls[locale]}</LI>
       </UL>
 
-      <H2>{c.checklistTitle[locale]}</H2>
+      <H2>{copy.checklistTitle[locale]}</H2>
       <OL>
-        <LI>{c.ck1[locale]}</LI>
-        <LI>{c.ck2[locale]}</LI>
-        <LI>{c.ck3[locale]}</LI>
-        <LI>{c.ck4[locale]}</LI>
-        <LI>{c.ck5[locale]}</LI>
-        <LI>{c.ck6[locale]}</LI>
+        <LI>{copy.ck1[locale]}</LI>
+        <LI>{copy.ck2[locale]}</LI>
+        <LI>{copy.ck3[locale]}</LI>
+        <LI>{copy.ck4[locale]}</LI>
+        <LI>{copy.ck5[locale]}</LI>
+        <LI>{copy.ck6[locale]}</LI>
       </OL>
-      <P>{c.outro1[locale]}</P>
-      <P>{c.outro2[locale]}</P>
+      <P>{copy.outro1[locale]}</P>
+      <P>{copy.outro2[locale]}</P>
     </>
   );
 }

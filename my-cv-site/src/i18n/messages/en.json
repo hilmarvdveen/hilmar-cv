@@ -192,6 +192,7 @@
                         "TypeScript",
                         "GraphQL · gql.tada · urql",
                         "Angular 6 to 12",
+                        "RxJS",
                         "Next.js",
                         "Tailwind",
                         "Stencil web components",
@@ -279,7 +280,7 @@
                     },
                     {
                         "question": "Can you work with our backend team?",
-                        "answer": "That is exactly what I get hired for. I have coordinated up to six teams in one shared monorepo and agree the GraphQL contract with the backend team."
+                        "answer": "That is exactly what I get hired for. I have coordinated up to six teams in one shared monorepo."
                     },
                     {
                         "question": "How does the contract work?",
@@ -298,13 +299,13 @@
                 "items": [
                     {
                         "title": "Own a customer-facing surface end to end",
-                        "description": "You have a page or a flow that customers use and that earns money. I take it from specification to production, shape the GraphQL contract with the backend team, and hand it over with tests, Storybook and documentation.",
+                        "description": "You have a page or a flow that customers use and that earns money. I take it on as a whole and hand it over with tests, Storybook and documentation.",
                         "href": "/services/frontend",
                         "linkLabel": "How I build a page end to end"
                     },
                     {
                         "title": "Lead a migration from legacy to modern",
-                        "description": "An old system still earns money and has to be replaced while it keeps running. I read the legacy first, ship behind a switch, ramp by percentage and keep the rollback one step away the whole time.",
+                        "description": "An old system still earns money and has to be replaced while it keeps running. I read the legacy first, ship behind a switch and keep the rollback one step away the whole time.",
                         "href": "/services/design-systems",
                         "linkLabel": "How a migration runs"
                     },
@@ -523,7 +524,6 @@
             "TSLint": "TSLint",
             "OctopusDeploy": "Octopus Deploy",
             "UIKit": "UIKit",
-            "IceLib": "IceLib",
             "IntegrationTesting": "Integration Testing",
             "NodeJS": "Node.js",
             "Express": "Express",
@@ -663,7 +663,7 @@
             "role": "Frontend Developer / UI Coach",
             "body": [
                 {
-                    "paragraph": "Randstad and Yacht renewed their brand, and the existing sites had to follow. I rebuilt the front-end components for that in vanilla JavaScript, Angular and React, with SCSS and the BEM method so the structure stays the same across platforms. Accessibility to WCAG 2.0 sat in the components from the start. I also built the styling components for the Hippo Bloomreach headless CMS."
+                    "paragraph": "Randstad and Yacht renewed their brand, and the existing sites had to follow. I rebuilt the front-end components for that in vanilla JavaScript, Angular and React, with SCSS and the BEM method so the structure stays the same across platforms. I also built the styling components for the Hippo Bloomreach headless CMS."
                 },
                 {
                     "paragraph": "Pages and flows I aligned with the UX designers and the business, and design choices that did not hold up in code I raised while I was building them. Every visual and functional element was tested for accessibility and for behaviour across screen sizes."
@@ -921,7 +921,7 @@
     "services": {
         "hero": {
             "badge": "Freelance senior frontend engineer",
-            "title": "The pages where the money comes in, rebuilt without downtime",
+            "title": "The pages where the money comes in, rebuilt without interruption",
             "description": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards. The four services below are the shapes that work usually takes."
         },
         "main": {
@@ -1005,7 +1005,7 @@
             "hero": {
                 "badge": "Frontend Development",
                 "title": "Pages that earn,",
-                "titleAccent": "rebuilt without downtime",
+                "titleAccent": "rebuilt without interruption",
                 "description": "A page customers buy through is stuck on a platform you can no longer change quickly, and every release feels risky. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, one page at a time. I ran the traffic cut-over myself. Employees first, then a percentage of customers, ramping to everyone, reversible at every step.",
                 "features": [
                     "Live behind a switch, ramped by percentage",
@@ -1051,32 +1051,28 @@
                 "description": "The frameworks and libraries these rebuilds run on. React and Angular are where the depth sits, the rest supports them.",
                 "items": [
                     {
-                        "name": "React",
-                        "description": "Component-based UI library"
+                        "name": "React"
                     },
                     {
-                        "name": "Next.js",
-                        "description": "Full-stack React framework"
+                        "name": "Next.js"
                     },
                     {
-                        "name": "Vue.js",
-                        "description": "Progressive JavaScript framework"
+                        "name": "Vue.js"
                     },
                     {
-                        "name": "TypeScript",
-                        "description": "Type-safe JavaScript"
+                        "name": "TypeScript"
                     },
                     {
-                        "name": "Tailwind CSS",
-                        "description": "Utility-first CSS framework"
+                        "name": "Tailwind CSS"
                     },
                     {
-                        "name": "Redux/Zustand",
-                        "description": "State management"
+                        "name": "Redux/Zustand"
                     },
                     {
-                        "name": "Angular",
-                        "description": "Full-featured TypeScript framework"
+                        "name": "Angular"
+                    },
+                    {
+                        "name": "RxJS"
                     }
                 ]
             },
@@ -1209,31 +1205,26 @@
                 ]
             },
             "technologies": {
-                "title": "Technology stack",
+                "title": "Technologies and tools",
                 "description": "The backend, data and platform work I have done alongside the frontend on client engagements.",
                 "categories": [
                     {
                         "name": "Backend",
                         "items": [
                             {
-                                "name": "Node.js",
-                                "description": "Scalable server-side runtime"
+                                "name": "Node.js"
                             },
                             {
-                                "name": "Express",
-                                "description": "Fast, minimal web framework"
+                                "name": "Express"
                             },
                             {
-                                "name": "C# .NET",
-                                "description": "Enterprise-grade web framework"
+                                "name": "C# .NET"
                             },
                             {
-                                "name": "GraphQL",
-                                "description": "Efficient API query language"
+                                "name": "GraphQL"
                             },
                             {
-                                "name": "REST APIs",
-                                "description": "RESTful service architecture"
+                                "name": "REST APIs"
                             }
                         ]
                     },
@@ -1241,33 +1232,27 @@
                         "name": "Databases",
                         "items": [
                             {
-                                "name": "MSSQL",
-                                "description": "Microsoft SQL Server database"
+                                "name": "MSSQL"
                             }
                         ]
                     },
                     {
-                        "name": "Cloud & DevOps",
+                        "name": "Cloud and DevOps",
                         "items": [
                             {
-                                "name": "Azure",
-                                "description": "Microsoft cloud platform"
+                                "name": "Azure"
                             },
                             {
-                                "name": "AWS",
-                                "description": "Comprehensive cloud platform"
+                                "name": "AWS"
                             },
                             {
-                                "name": "Kubernetes",
-                                "description": "Container orchestration platform"
+                                "name": "Kubernetes"
                             },
                             {
-                                "name": "Docker",
-                                "description": "Containerization platform"
+                                "name": "Docker"
                             },
                             {
-                                "name": "CI/CD",
-                                "description": "Continuous integration/deployment"
+                                "name": "CI/CD"
                             }
                         ]
                     }
@@ -1424,23 +1409,20 @@
                 "description": "A library is only worth what the teams actually use, so adoption is part of the work."
             },
             "technologies": {
-                "title": "Tools and technologies",
+                "title": "Technologies and tools",
                 "description": "The tools these systems were built and documented with.",
                 "categories": [
                     {
                         "name": "Development",
                         "items": [
                             {
-                                "name": "React/Storybook",
-                                "description": "Component development & documentation"
+                                "name": "React/Storybook"
                             },
                             {
-                                "name": "Design Tokens",
-                                "description": "Systematic design decisions"
+                                "name": "Design Tokens"
                             },
                             {
-                                "name": "TypeScript",
-                                "description": "Type-safe component development"
+                                "name": "TypeScript"
                             }
                         ]
                     },
@@ -1448,8 +1430,7 @@
                         "name": "Documentation",
                         "items": [
                             {
-                                "name": "Markdown",
-                                "description": "Lightweight markup language"
+                                "name": "Markdown"
                             }
                         ]
                     }
@@ -1604,59 +1585,6 @@
                 ],
                 "title": "What the team keeps",
                 "description": "The point is a team that needs me less every week."
-            },
-            "expertise": {
-                "title": "Areas of expertise",
-                "description": "Where a review usually lands. On the frontend architecture, on how work gets released, and on the team around it.",
-                "categories": [
-                    {
-                        "name": "Architecture & Strategy",
-                        "items": [
-                            {
-                                "name": "System Architecture Review",
-                                "description": "Scalability and maintainability assessment"
-                            },
-                            {
-                                "name": "Technology Stack Planning",
-                                "description": "Future-proof technology decisions"
-                            },
-                            {
-                                "name": "Security Auditing",
-                                "description": "Vulnerability assessment & best practices"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Team & Process",
-                        "items": [
-                            {
-                                "name": "Code Review & Quality",
-                                "description": "Best practices and code standards"
-                            },
-                            {
-                                "name": "Development Workflows",
-                                "description": "CI/CD and deployment optimization"
-                            },
-                            {
-                                "name": "Team Mentoring",
-                                "description": "Skills development and knowledge transfer"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Planning and risk",
-                        "items": [
-                            {
-                                "name": "Project Planning",
-                                "description": "Timeline and resource estimation"
-                            },
-                            {
-                                "name": "Risk Assessment",
-                                "description": "Technical and business risk evaluation"
-                            }
-                        ]
-                    }
-                ]
             },
             "process": {
                 "title": "How an advisory engagement runs",
@@ -1882,7 +1810,7 @@
                     },
                     {
                         "question": "When are you available and for how many hours?",
-                        "answer": "From 1 October 2026, and earlier by arrangement. 32 to 40 hours a week, for six months or longer. My current engagement at bol.com started in July 2025, was extended three times, and runs to 1 October 2026."
+                        "answer": "From 1 October 2026, and earlier by arrangement. 32 to 40 hours a week, for six months or longer. My current engagement at bol.com started in July 2025 and has been extended three times."
                     },
                     {
                         "question": "Where do you work, and in which languages?",
@@ -2216,7 +2144,7 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Engineering, in depth",
-            "subtitle": "Practical articles with examples on React architecture, testing, SEO and routing, and on hexagonal backends in C#, Kotlin and Java. The patterns I use in production work."
+            "subtitle": "Practical articles with examples on React architecture, testing, SEO and routing, and on hexagonal backends in C#, Kotlin and Java."
         },
         "minRead": "min read",
         "publishedOn": "Published",

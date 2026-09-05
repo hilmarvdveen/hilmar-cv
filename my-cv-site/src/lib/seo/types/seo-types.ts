@@ -262,7 +262,7 @@ export type Offer = {
   name: string;
   description: string;
   price?: string;
-  priceCurrency: string;
+  priceCurrency?: string;
   priceRange?: string;
   availability: string;
   validFrom?: string;

@@ -12,14 +12,14 @@ export const meta: BlogPostMeta = {
   category: "fundamentals",
   publishedDate: "2026-06-10",
   updatedDate: "2026-06-28",
-  readingTimeMin: 12,
+  readingTimeMin: 7,
   title: {
     en: "React Folder Structure That Scales: Feature-First",
     nl: "React-mappenstructuur die meeschaalt: feature-first",
   },
   description: {
-    en: "How to organize a modern React project so it stays easy to navigate as it grows: feature folders, clear shared boundaries, small barrels, path aliases, and colocated tests.",
-    nl: "Hoe je een modern React-project organiseert zodat het overzichtelijk blijft naarmate het groeit: featuremappen, duidelijke gedeelde grenzen, kleine barrels, path-aliassen en gecolokeerde tests.",
+    en: "How to organize a React project so it stays easy to navigate as it grows: feature folders, clear shared boundaries, small barrels, path aliases and colocated tests.",
+    nl: "Hoe je een React-project organiseert zodat het overzichtelijk blijft als het groeit: featuremappen, duidelijke grenzen, kleine barrels, path-aliassen en tests naast de code.",
   },
   excerpt: {
     en: "Folder layout decides how fast you find, change and delete code. A practical move from type-based folders to a feature-first structure that scales.",
@@ -36,10 +36,10 @@ export const meta: BlogPostMeta = {
 };
 
 const dependencyNodes = [
-  flowNode("pages", "app/ (routes)", { x: 0, y: 0 }, { tone: "blue", sub: "thin pages", dir: "TB", width: 200 }),
-  flowNode("features", "features/", { x: 0, y: 110 }, { tone: "emerald", sub: "domain logic + UI", dir: "TB", width: 200 }),
-  flowNode("shared", "components/ · hooks/", { x: -120, y: 230 }, { tone: "violet", sub: "shared UI", dir: "TB", width: 200 }),
-  flowNode("lib", "lib/ · utils/", { x: 140, y: 230 }, { tone: "amber", sub: "pure logic", dir: "TB", width: 180 }),
+  flowNode("pages", "app/ (routes)", { x: 0, y: 0 }, { tone: "blue", subtitle: "thin pages", direction: "TB", width: 200 }),
+  flowNode("features", "features/", { x: 0, y: 110 }, { tone: "emerald", subtitle: "domain logic + UI", direction: "TB", width: 200 }),
+  flowNode("shared", "components/ · hooks/", { x: -120, y: 230 }, { tone: "violet", subtitle: "shared UI", direction: "TB", width: 200 }),
+  flowNode("lib", "lib/ · utils/", { x: 140, y: 230 }, { tone: "amber", subtitle: "pure logic", direction: "TB", width: 180 }),
 ];
 const dependencyEdges = [
   flowEdge("pages", "features", { label: "imports" }),
@@ -49,10 +49,10 @@ const dependencyEdges = [
 
 // Feature on top fanning down into the type folders, so the arrows point down.
 const byTypeNodes = [
-  flowNode("feat", "one feature", { x: 200, y: 0 }, { tone: "slate", sub: "scattered across folders", dir: "TB", width: 200 }),
-  flowNode("c1", "components/", { x: 0, y: 160 }, { tone: "rose", dir: "TB", width: 160 }),
-  flowNode("h1", "hooks/", { x: 210, y: 160 }, { tone: "rose", dir: "TB", width: 160 }),
-  flowNode("u1", "utils/", { x: 420, y: 160 }, { tone: "rose", dir: "TB", width: 160 }),
+  flowNode("feat", "one feature", { x: 200, y: 0 }, { tone: "slate", subtitle: "scattered across folders", direction: "TB", width: 200 }),
+  flowNode("c1", "components/", { x: 0, y: 160 }, { tone: "rose", direction: "TB", width: 160 }),
+  flowNode("h1", "hooks/", { x: 210, y: 160 }, { tone: "rose", direction: "TB", width: 160 }),
+  flowNode("u1", "utils/", { x: 420, y: 160 }, { tone: "rose", direction: "TB", width: 160 }),
 ];
 const byTypeEdges = [
   flowEdge("feat", "c1", { dashed: true }),
@@ -61,125 +61,125 @@ const byTypeEdges = [
 ];
 
 function buildTree(locale: Locale): FileNode[] {
-  const c = COPY;
+  const copy = COPY;
   return [
     {
       name: "src",
       children: [
         {
           name: "app",
-          comment: c.treeApp[locale],
+          comment: copy.treeApp[locale],
           children: [{ name: "[locale]", children: [{ name: "checkout", children: [{ name: "page.tsx" }] }] }],
         },
         {
           name: "features",
-          comment: c.treeFeatures[locale],
+          comment: copy.treeFeatures[locale],
           children: [
             {
               name: "checkout",
               children: [
                 { name: "components", children: [{ name: "CartSummary.tsx" }, { name: "PaymentForm.tsx" }] },
                 { name: "hooks", children: [{ name: "useCart.ts" }] },
-                { name: "api.ts", comment: c.treeApi[locale] },
+                { name: "api.ts", comment: copy.treeApi[locale] },
                 { name: "types.ts" },
-                { name: "index.ts", comment: c.treeBarrel[locale] },
+                { name: "index.ts", comment: copy.treeBarrel[locale] },
               ],
             },
-            { name: "catalog", comment: c.treeCatalog[locale] },
+            { name: "catalog", comment: copy.treeCatalog[locale] },
           ],
         },
-        { name: "components", comment: c.treeShared[locale], children: [{ name: "Button.tsx" }, { name: "Modal.tsx" }] },
-        { name: "hooks", comment: c.treeSharedHooks[locale] },
-        { name: "lib", comment: c.treeLib[locale], children: [{ name: "money.ts" }, { name: "http.ts" }] },
+        { name: "components", comment: copy.treeShared[locale], children: [{ name: "Button.tsx" }, { name: "Modal.tsx" }] },
+        { name: "hooks", comment: copy.treeSharedHooks[locale] },
+        { name: "lib", comment: copy.treeLib[locale], children: [{ name: "money.ts" }, { name: "http.ts" }] },
       ],
     },
   ];
 }
 
 export function Body({ locale }: { locale: Locale }) {
-  const c = COPY;
+  const copy = COPY;
   return (
     <>
-      <Lead>{c.lead[locale]}</Lead>
-      <P>{c.intro1[locale]}</P>
-      <P>{c.intro2[locale]}</P>
-      <Quote>{c.quote[locale]}</Quote>
+      <Lead>{copy.lead[locale]}</Lead>
+      <P>{copy.intro1[locale]}</P>
+      <P>{copy.intro2[locale]}</P>
+      <Quote>{copy.quote[locale]}</Quote>
 
-      <H2>{c.byTypeTitle[locale]}</H2>
-      <P>{c.byType1[locale]}</P>
+      <H2>{copy.byTypeTitle[locale]}</H2>
+      <P>{copy.byType1[locale]}</P>
       <FlowDiagram
         nodes={byTypeNodes}
         edges={byTypeEdges}
         height={320}
-        ariaLabel={c.byTypeAria[locale]}
-        caption={c.byTypeCaption[locale]}
+        ariaLabel={copy.byTypeAria[locale]}
+        caption={copy.byTypeCaption[locale]}
       />
-      <P>{c.byType2[locale]}</P>
-      <Callout variant="warning" title={c.byTypeWarnTitle[locale]}>
-        {c.byTypeWarnBody[locale]}
+      <P>{copy.byType2[locale]}</P>
+      <Callout variant="warning" title={copy.byTypeWarnTitle[locale]}>
+        {copy.byTypeWarnBody[locale]}
       </Callout>
 
-      <H2>{c.featureTitle[locale]}</H2>
-      <P>{c.feature1[locale]}</P>
-      <P>{c.feature2[locale]}</P>
-      <P>{c.feature3[locale]}</P>
-      <FileTree tree={buildTree(locale)} caption={c.featureTreeCaption[locale]} />
+      <H2>{copy.featureTitle[locale]}</H2>
+      <P>{copy.feature1[locale]}</P>
+      <P>{copy.feature2[locale]}</P>
+      <P>{copy.feature3[locale]}</P>
+      <FileTree tree={buildTree(locale)} caption={copy.featureTreeCaption[locale]} />
 
-      <H3>{c.coloc[locale]}</H3>
-      <P>{c.coloc1[locale]}</P>
-      <CodeBlock lang="text" filename="features/checkout/components/" code={c.colocationCode[locale]} />
-      <P>{c.coloc2[locale]}</P>
+      <H3>{copy.coloc[locale]}</H3>
+      <P>{copy.coloc1[locale]}</P>
+      <CodeBlock lang="text" filename="features/checkout/components/" code={copy.colocationCode[locale]} />
+      <P>{copy.coloc2[locale]}</P>
 
       <Divider />
 
-      <H2>{c.boundaryTitle[locale]}</H2>
-      <P>{c.boundary1[locale]}</P>
+      <H2>{copy.boundaryTitle[locale]}</H2>
+      <P>{copy.boundary1[locale]}</P>
       <FlowDiagram
         nodes={dependencyNodes}
         edges={dependencyEdges}
         height={420}
-        ariaLabel={c.boundaryAria[locale]}
-        caption={c.boundaryCaption[locale]}
+        ariaLabel={copy.boundaryAria[locale]}
+        caption={copy.boundaryCaption[locale]}
       />
-      <P>{c.boundary2[locale]}</P>
+      <P>{copy.boundary2[locale]}</P>
       <UL>
-        <LI><Strong>{c.rule1Strong[locale]}</Strong> {c.rule1[locale]}</LI>
-        <LI><Strong>{c.rule2Strong[locale]}</Strong> {c.rule2[locale]}</LI>
-        <LI><Strong>{c.rule3Strong[locale]}</Strong> {c.rule3[locale]}</LI>
+        <LI><Strong>{copy.rule1Strong[locale]}</Strong> {copy.rule1[locale]}</LI>
+        <LI><Strong>{copy.rule2Strong[locale]}</Strong> {copy.rule2[locale]}</LI>
+        <LI><Strong>{copy.rule3Strong[locale]}</Strong> {copy.rule3[locale]}</LI>
       </UL>
-      <Callout variant="warning" title={c.sharedWarnTitle[locale]}>
-        {c.sharedWarnBody[locale]}
+      <Callout variant="warning" title={copy.sharedWarnTitle[locale]}>
+        {copy.sharedWarnBody[locale]}
       </Callout>
 
-      <H2>{c.barrelTitle[locale]}</H2>
-      <P>{c.barrel1[locale]}</P>
-      <CodeBlock lang="tsx" filename="features/checkout/index.ts" code={c.barrelCode[locale]} />
-      <CodeBlock lang="tsx" filename="app/[locale]/checkout/page.tsx" code={c.pageCode[locale]} />
-      <Callout variant="tip" title={c.barrelTipTitle[locale]}>
-        {c.barrelTipBody[locale]}
+      <H2>{copy.barrelTitle[locale]}</H2>
+      <P>{copy.barrel1[locale]}</P>
+      <CodeBlock lang="tsx" filename="features/checkout/index.ts" code={copy.barrelCode[locale]} />
+      <CodeBlock lang="tsx" filename="app/[locale]/checkout/page.tsx" code={copy.pageCode[locale]} />
+      <Callout variant="tip" title={copy.barrelTipTitle[locale]}>
+        {copy.barrelTipBody[locale]}
       </Callout>
 
-      <H2>{c.aliasTitle[locale]}</H2>
-      <P>{c.alias1[locale]}</P>
+      <H2>{copy.aliasTitle[locale]}</H2>
+      <P>{copy.alias1[locale]}</P>
       <CodeBlock lang="json" filename="tsconfig.json" code={TSCONFIG_CODE} />
-      <P>{c.alias2[locale]}</P>
+      <P>{copy.alias2[locale]}</P>
       <CodeBlock lang="ts" filename="vite.config.ts" code={VITE_CONFIG} />
       <P>
-        {c.alias3[locale]} <InlineCode>@/features/checkout</InlineCode>.
+        {copy.alias3[locale]} <InlineCode>@/features/checkout</InlineCode>.
       </P>
 
-      <H2>{c.checklistTitle[locale]}</H2>
-      <P>{c.checklist1[locale]}</P>
+      <H2>{copy.checklistTitle[locale]}</H2>
+      <P>{copy.checklist1[locale]}</P>
       <OL>
-        <LI>{c.check1[locale]}</LI>
-        <LI>{c.check2[locale]}</LI>
-        <LI>{c.check3[locale]}</LI>
-        <LI>{c.check4[locale]}</LI>
-        <LI>{c.check5[locale]}</LI>
+        <LI>{copy.check1[locale]}</LI>
+        <LI>{copy.check2[locale]}</LI>
+        <LI>{copy.check3[locale]}</LI>
+        <LI>{copy.check4[locale]}</LI>
+        <LI>{copy.check5[locale]}</LI>
       </OL>
-      <P>{c.outro1[locale]}</P>
-      <P>{c.outro2[locale]}</P>
-      <P>{c.outro3[locale]}</P>
+      <P>{copy.outro1[locale]}</P>
+      <P>{copy.outro2[locale]}</P>
+      <P>{copy.outro3[locale]}</P>
     </>
   );
 }

@@ -13,12 +13,12 @@ export const runtime = "nodejs";
 
 const MINIMUM_NOTICE_MILLISECONDS = 60 * 60 * 1000;
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const limited = enforceRateLimit(req, "read");
+    const limited = enforceRateLimit(request, "read");
     if (limited) return limited;
 
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(request.url);
     const date = searchParams.get("date");
 
     if (!date) {

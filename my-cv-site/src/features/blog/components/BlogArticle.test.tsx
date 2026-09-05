@@ -58,7 +58,7 @@ describe("BlogArticle", () => {
 
     const toOverview = screen
       .getAllByRole("link")
-      .filter((a) => a.getAttribute("href") === "/blog");
+      .filter((anchor) => anchor.getAttribute("href") === "/blog");
     expect(toOverview.length).toBeGreaterThan(0);
     expect(
       screen.getByText("Title EN", { selector: '[aria-current="page"]' })

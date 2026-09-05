@@ -11,9 +11,9 @@ vi.mock("@/i18n/navigation", () => ({
   ),
 }));
 vi.mock("next/image", () => ({
-  default: (p: Record<string, unknown>) => (
+  default: (properties: Record<string, unknown>) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img alt={String(p.alt ?? "")} src={String(p.src ?? "")} />
+    <img alt={String(properties.alt ?? "")} src={String(properties.src ?? "")} />
   ),
 }));
 

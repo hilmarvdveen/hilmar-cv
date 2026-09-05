@@ -14,7 +14,7 @@ export const ProjectsHero = () => {
       title={t("hero.title")}
       description={t("hero.description")}
       actions={
-        <Button href="/book" variant="primary" size="lg">
+        <Button href="/book" variant="primary" size="lg" data-placement="projects-hero">
           <Calendar className="h-5 w-5" aria-hidden="true" />
           <span>{t("cta.button")}</span>
         </Button>

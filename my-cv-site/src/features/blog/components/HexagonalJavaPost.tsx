@@ -11,7 +11,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   publishedDate: "2026-09-03",
   updatedDate: "2026-09-05",
-  readingTimeMin: 10,
+  readingTimeMin: 17,
   title: {
     en: "Hexagonal architecture in Java: ports and adapters",
     nl: "Hexagonale architectuur in Java: ports en adapters",
@@ -38,15 +38,15 @@ export const meta: BlogPostMeta = {
 function buildHexagon(locale: Locale) {
   const copy = COPY;
   const nodes = [
-    flowNode("rest", copy.nodeRest[locale], { x: 0, y: 0 }, { tone: "blue", sub: "POST /publication", dir: "TB", width: 200 }),
-    flowNode("job", copy.nodeJob[locale], { x: 230, y: 0 }, { tone: "blue", sub: copy.nodeJobSub[locale], dir: "TB", width: 200 }),
-    flowNode("listener", copy.nodeListener[locale], { x: 460, y: 0 }, { tone: "blue", sub: "VersionApproved", dir: "TB", width: 210 }),
-    flowNode("useCase", "PublishFormVersion", { x: 230, y: 140 }, { tone: "violet", sub: copy.nodeUseCaseSub[locale], dir: "TB", width: 230 }),
-    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", sub: "FormDefinition · FormVersion", dir: "TB", width: 240 }),
-    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 280, y: 290 }, { tone: "slate", sub: "FormDefinitionRepository · Clock", dir: "TB", width: 340 }),
-    flowNode("jpa", copy.nodeJpa[locale], { x: 200, y: 440 }, { tone: "amber", sub: "MySQL", dir: "TB", width: 190 }),
-    flowNode("jdbc", copy.nodeJdbc[locale], { x: 410, y: 440 }, { tone: "amber", sub: copy.nodeJdbcSub[locale], dir: "TB", width: 190 }),
-    flowNode("clock", copy.nodeClock[locale], { x: 620, y: 440 }, { tone: "amber", sub: "java.time", dir: "TB", width: 190 }),
+    flowNode("rest", copy.nodeRest[locale], { x: 0, y: 0 }, { tone: "blue", subtitle: "POST /publication", direction: "TB", width: 200 }),
+    flowNode("job", copy.nodeJob[locale], { x: 230, y: 0 }, { tone: "blue", subtitle: copy.nodeJobSub[locale], direction: "TB", width: 200 }),
+    flowNode("listener", copy.nodeListener[locale], { x: 460, y: 0 }, { tone: "blue", subtitle: "VersionApproved", direction: "TB", width: 210 }),
+    flowNode("useCase", "PublishFormVersion", { x: 230, y: 140 }, { tone: "violet", subtitle: copy.nodeUseCaseSub[locale], direction: "TB", width: 230 }),
+    flowNode("domain", copy.nodeDomain[locale], { x: 0, y: 290 }, { tone: "emerald", subtitle: "FormDefinition · FormVersion", direction: "TB", width: 240 }),
+    flowNode("drivenPorts", copy.nodeDrivenPorts[locale], { x: 280, y: 290 }, { tone: "slate", subtitle: "FormDefinitionRepository · Clock", direction: "TB", width: 340 }),
+    flowNode("jpa", copy.nodeJpa[locale], { x: 200, y: 440 }, { tone: "amber", subtitle: "MySQL", direction: "TB", width: 190 }),
+    flowNode("jdbc", copy.nodeJdbc[locale], { x: 410, y: 440 }, { tone: "amber", subtitle: copy.nodeJdbcSub[locale], direction: "TB", width: 190 }),
+    flowNode("clock", copy.nodeClock[locale], { x: 620, y: 440 }, { tone: "amber", subtitle: "java.time", direction: "TB", width: 190 }),
   ];
   const edges = [
     flowEdge("rest", "useCase", { label: "HTTP" }),
@@ -813,8 +813,8 @@ const COPY = {
     nl: "De applicatiemodule bevat use cases en de ports die zij nodig hebben. De namen komen uit het domein, nooit uit de techniek. FormDefinitionRepository is een goede naam. MySqlFormDefinitionDao heeft de opslag al midden in de applicatie gelekt.",
   },
   ports2: {
-    en: "Give the port the two methods this use case needs, not the fourteen a generic repository offers. The second port needs no code, because java.time.Clock is already an interface with Clock.fixed as its test implementation.",
-    nl: "Geef de port de twee methodes die deze use case nodig heeft, niet de veertien die een generieke repository aanbiedt. De tweede port kost geen code, want java.time.Clock is al een interface met Clock.fixed als testimplementatie.",
+    en: "Give the port the two methods this use case needs, not the fourteen a generic repository offers. The second port needs no code, because the JDK already ships the abstraction: java.time.Clock is an abstract class, and Clock.fixed gives the test its implementation.",
+    nl: "Geef de port de twee methodes die deze use case nodig heeft, niet de veertien die een generieke repository aanbiedt. De tweede port kost geen code, want de JDK levert de abstractie al mee: java.time.Clock is een abstracte klasse, en Clock.fixed geeft de test zijn implementatie.",
   },
   resultTitle: {
     en: "A sealed result forces the caller to answer every outcome",

@@ -8,9 +8,9 @@ describe("blog registry", () => {
     expect(BLOG_POSTS.length).toBeGreaterThan(0);
     expect(new Set(slugs).size).toBe(slugs.length);
 
-    for (let i = 1; i < BLOG_POSTS.length; i++) {
+    for (let index = 1; index < BLOG_POSTS.length; index++) {
       expect(
-        BLOG_POSTS[i - 1].publishedDate.localeCompare(BLOG_POSTS[i].publishedDate)
+        BLOG_POSTS[index - 1].publishedDate.localeCompare(BLOG_POSTS[index].publishedDate)
       ).toBeGreaterThanOrEqual(0);
     }
   });

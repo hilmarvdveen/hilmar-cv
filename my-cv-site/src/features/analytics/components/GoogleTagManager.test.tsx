@@ -4,7 +4,7 @@ import { GoogleTagManager } from "./GoogleTagManager";
 import { storeConsent } from "../consentStore";
 
 vi.mock("next/script", () => ({
-  default: (p: Record<string, unknown>) => <script data-id={String(p.id ?? "")} />,
+  default: (properties: Record<string, unknown>) => <script data-id={String(properties.id ?? "")} />,
 }));
 
 beforeEach(() => localStorage.clear());

@@ -15,7 +15,7 @@ describe("FolderStructurePost", () => {
     expect(screen.getByText("tsconfig.json")).toBeInTheDocument();
     // a diagram is present (ReactFlow canvas with an aria-label)
     expect(
-      screen.getAllByRole("img").some((el) => el.getAttribute("aria-label")?.length)
+      screen.getAllByRole("img").some((element) => element.getAttribute("aria-label")?.length)
     ).toBe(true);
   });
 

@@ -18,7 +18,6 @@ export type ServiceTitledItem = {
 
 export type ServiceTechnologyItem = {
   name: string;
-  description: string;
 };
 
 export type ServiceTechnologyGroup = {
@@ -68,7 +67,7 @@ export type ServiceDetailPageProps = {
     description: string;
     items: ServiceTitledItem[];
   };
-  technologies: {
+  technologies?: {
     title: string;
     description: string;
     groups: ServiceTechnologyGroup[];
@@ -230,42 +229,42 @@ export const ServiceDetailPage = ({
         </Container>
       </Section>
 
-      <Section
-        background={technologiesBackground}
-        aria-labelledby="service-technologies-heading"
-      >
-        <Container>
-          <SectionTitle
-            id="service-technologies-heading"
-            title={technologies.title}
-            subtitle={technologies.description}
-          />
-          <div className="space-y-12">
-            {technologies.groups.map((group, groupIndex) => {
-              const ItemHeading = group.name ? "h4" : "h3";
-              return (
+      {technologies && (
+        <Section
+          background={technologiesBackground}
+          aria-labelledby="service-technologies-heading"
+        >
+          <Container>
+            <SectionTitle
+              id="service-technologies-heading"
+              title={technologies.title}
+              subtitle={technologies.description}
+            />
+            <div className="space-y-10">
+              {technologies.groups.map((group, groupIndex) => (
                 <div key={group.name ?? `technology-group-${groupIndex}`}>
                   {group.name && (
-                    <h3 className="mb-6 text-2xl font-bold text-textMain">
-                      {group.name}
-                    </h3>
+                    <h3 className="mb-4 text-xl font-bold text-textMain">{group.name}</h3>
                   )}
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <ul
+                    aria-label={group.name ?? technologies.title}
+                    className="flex flex-wrap gap-2"
+                  >
                     {group.items.map((item) => (
-                      <Card key={item.name}>
-                        <ItemHeading className="text-lg font-bold text-textMain">
-                          {item.name}
-                        </ItemHeading>
-                        <p className="mt-3 text-gray-600">{item.description}</p>
-                      </Card>
+                      <li
+                        key={item.name}
+                        className="rounded-full bg-bgLight px-3 py-1 text-[13px] font-medium text-textMain ring-1 ring-gray-200"
+                      >
+                        {item.name}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
-              );
-            })}
-          </div>
-        </Container>
-      </Section>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
 
       <Section background={processBackground} aria-labelledby="service-process-heading">
         <Container>

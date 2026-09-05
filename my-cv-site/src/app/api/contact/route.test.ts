@@ -50,57 +50,57 @@ beforeEach(() => {
 
 describe("POST /api/contact", () => {
   it("rejects cross-origin requests with 403", async () => {
-    const res = await POST(post(valid, { origin: "https://evil.example.com" }));
-    expect(res.status).toBe(403);
+    const response = await POST(post(valid, { origin: "https://evil.example.com" }));
+    expect(response.status).toBe(403);
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("returns 400 when required fields are missing", async () => {
-    const res = await POST(post({ ...valid, email: "" }));
-    expect(res.status).toBe(400);
+    const response = await POST(post({ ...valid, email: "" }));
+    expect(response.status).toBe(400);
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("returns 400 on invalid email", async () => {
-    const res = await POST(post({ ...valid, email: "not-an-email" }));
-    expect(res.status).toBe(400);
+    const response = await POST(post({ ...valid, email: "not-an-email" }));
+    expect(response.status).toBe(400);
   });
 
   it("returns 400 when the company field exceeds the maximum length", async () => {
-    const res = await POST(post({ ...valid, company: "x".repeat(101) }));
-    expect(res.status).toBe(400);
+    const response = await POST(post({ ...valid, company: "x".repeat(101) }));
+    expect(response.status).toBe(400);
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("returns 400 when the intended start field exceeds the maximum length", async () => {
-    const res = await POST(post({ ...valid, start: "x".repeat(81) }));
-    expect(res.status).toBe(400);
+    const response = await POST(post({ ...valid, start: "x".repeat(81) }));
+    expect(response.status).toBe(400);
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("silently succeeds and sends nothing when the honeypot is filled", async () => {
-    const res = await POST(post({ ...valid, company_website: "bot" }));
-    expect(res.status).toBe(200);
+    const response = await POST(post({ ...valid, company_website: "bot" }));
+    expect(response.status).toBe(200);
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("returns 500 (config error) when Graph credentials are missing", async () => {
     getGraphCredentials.mockReturnValue(null);
-    const res = await POST(post(valid));
-    expect(res.status).toBe(500);
-    expect(await res.json()).toMatchObject({ error: "Server configuration error" });
+    const response = await POST(post(valid));
+    expect(response.status).toBe(500);
+    expect(await response.json()).toMatchObject({ error: "Server configuration error" });
     expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("sends both emails on the happy path", async () => {
-    const res = await POST(post(valid));
-    expect(res.status).toBe(200);
+    const response = await POST(post(valid));
+    expect(response.status).toBe(200);
     expect(sendMail).toHaveBeenCalledTimes(2);
   });
 
   it("escapes user input in the HTML confirmation email", async () => {
     await POST(post({ ...valid, name: '<img src=x onerror=alert(1)>' }));
-    const htmlCall = sendMail.mock.calls.find((c) => c[2]?.isHtml === true);
+    const htmlCall = sendMail.mock.calls.find((call) => call[2]?.isHtml === true);
     expect(htmlCall).toBeTruthy();
     const body: string = htmlCall![2].body;
     expect(body).not.toContain("<img src=x");
@@ -156,9 +156,9 @@ describe("POST /api/contact", () => {
 
   it("returns a generic 500 without leaking details on Graph failure", async () => {
     sendMail.mockRejectedValueOnce(new Error("super secret graph internals"));
-    const res = await POST(post(valid));
-    expect(res.status).toBe(500);
-    const json = await res.json();
+    const response = await POST(post(valid));
+    expect(response.status).toBe(500);
+    const json = await response.json();
     expect(json.error).toBe("Failed to send message");
     expect(JSON.stringify(json)).not.toContain("super secret graph internals");
   });

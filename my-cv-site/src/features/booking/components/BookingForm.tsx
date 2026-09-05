@@ -137,7 +137,7 @@ export const BookingForm = () => {
       if (!response.ok) throw new Error(data.error ?? "Failed to load available slots");
       if (requestedDate.current !== date) return;
       const loaded = (data.slots ?? []) as TimeSlot[];
-      setSlotsByDate((prev) => ({ ...prev, [date]: loaded }));
+      setSlotsByDate((previous) => ({ ...previous, [date]: loaded }));
       setSlotsStatus("ready");
       if (loaded.length === 0) trackBookingEvent("booking_slots_empty", { date });
     } catch (error) {
@@ -168,6 +168,10 @@ export const BookingForm = () => {
     if (slotsStatus !== "ready" || !details.time) return;
     if (!slots.some((slot) => slot.value === details.time)) updateDetail("time", "");
   }, [slotsStatus, slots, details.time, updateDetail]);
+
+  useEffect(() => {
+    if (!details.time && step !== 1) goToStep(1);
+  }, [details.time, step, goToStep]);
 
   useEffect(() => {
     trackBookingEvent("booking_step_view", { step });
@@ -213,7 +217,7 @@ export const BookingForm = () => {
     updateDetail(field, value);
     if (field in fieldErrors) {
       const next = validateDetails({ ...details, [field]: value });
-      setFieldErrors((prev) => ({ ...prev, [field]: next[field as DetailsField] }));
+      setFieldErrors((previous) => ({ ...previous, [field]: next[field as DetailsField] }));
     }
   };
 

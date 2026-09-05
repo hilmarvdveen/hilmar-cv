@@ -8,8 +8,8 @@ describe("searchEntries", () => {
   });
 
   it("matches title, description and keywords case-insensitively", () => {
-    expect(searchEntries("FRONTEND", "en").some((e) => e.href === "/services/frontend")).toBe(true);
-    expect(searchEntries("projecten", "nl").some((e) => e.href === "/projects")).toBe(true);
+    expect(searchEntries("FRONTEND", "en").some((entry) => entry.href === "/services/frontend")).toBe(true);
+    expect(searchEntries("projecten", "nl").some((entry) => entry.href === "/projects")).toBe(true);
   });
 
   it("returns nothing for a non-matching query", () => {

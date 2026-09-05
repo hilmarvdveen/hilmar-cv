@@ -11,14 +11,14 @@ export const meta: BlogPostMeta = {
   category: "testing",
   publishedDate: "2026-06-20",
   updatedDate: "2026-06-28",
-  readingTimeMin: 16,
+  readingTimeMin: 10,
   title: {
     en: "Testing React the Right Way: behaviour and testable design",
     nl: "React testen: gedrag, componenten en testbaar ontwerp",
   },
   description: {
-    en: "What's worth testing in a React app, what to mock, and how to design components so they stay testable — with a real Vitest, Testing Library and MSW setup.",
-    nl: "Wat de moeite waard is om te testen in een React-app, wat je mockt, en hoe je componenten ontwerpt zodat ze testbaar blijven — met een echte Vitest-, Testing Library- en MSW-setup.",
+    en: "What is worth testing in a React app, what to mock, and how to design components so they stay testable, with a real Vitest, Testing Library and MSW setup.",
+    nl: "Wat je test in een React-app, wat je mockt, en hoe je componenten ontwerpt zodat ze testbaar blijven, met een echte Vitest-, Testing Library- en MSW-setup.",
   },
   excerpt: {
     en: "Tests exist to let you change code safely, not to chase a coverage number. Test behaviour, mock only real boundaries, and design components to be testable.",
@@ -35,10 +35,10 @@ export const meta: BlogPostMeta = {
 };
 
 const trophyNodes = [
-  flowNode("e2e", "End-to-end", { x: 0, y: 0 }, { tone: "rose", sub: "few · slow · high confidence", dir: "TB", width: 240 }),
-  flowNode("int", "Integration", { x: 0, y: 100 }, { tone: "emerald", sub: "most of your value", dir: "TB", width: 300 }),
-  flowNode("unit", "Unit", { x: 0, y: 200 }, { tone: "blue", sub: "pure logic · many · fast", dir: "TB", width: 240 }),
-  flowNode("static", "Static (types + lint)", { x: 0, y: 300 }, { tone: "slate", sub: "free, always-on", dir: "TB", width: 280 }),
+  flowNode("e2e", "End-to-end", { x: 0, y: 0 }, { tone: "rose", subtitle: "few · slow · high confidence", direction: "TB", width: 240 }),
+  flowNode("int", "Integration", { x: 0, y: 100 }, { tone: "emerald", subtitle: "most of your value", direction: "TB", width: 300 }),
+  flowNode("unit", "Unit", { x: 0, y: 200 }, { tone: "blue", subtitle: "pure logic · many · fast", direction: "TB", width: 240 }),
+  flowNode("static", "Static (types + lint)", { x: 0, y: 300 }, { tone: "slate", subtitle: "free, always-on", direction: "TB", width: 280 }),
 ];
 const trophyEdges = [
   flowEdge("e2e", "int", { dashed: true }),
@@ -49,10 +49,10 @@ const trophyEdges = [
 // Stacked downward: Test → Component, then Component fans out to its real
 // children and the mocked network boundary.
 const mockNodes = [
-  flowNode("test", "Test", { x: 210, y: 0 }, { tone: "violet", sub: "renders + asserts", dir: "TB", width: 180 }),
-  flowNode("comp", "Component", { x: 210, y: 140 }, { tone: "blue", sub: "REAL", dir: "TB", width: 180 }),
-  flowNode("child", "Child components", { x: 0, y: 300 }, { tone: "emerald", sub: "REAL — do not mock", dir: "TB", width: 200 }),
-  flowNode("net", "Network / API", { x: 430, y: 300 }, { tone: "amber", sub: "MOCK here (MSW)", dir: "TB", width: 190 }),
+  flowNode("test", "Test", { x: 210, y: 0 }, { tone: "violet", subtitle: "renders + asserts", direction: "TB", width: 180 }),
+  flowNode("comp", "Component", { x: 210, y: 140 }, { tone: "blue", subtitle: "REAL", direction: "TB", width: 180 }),
+  flowNode("child", "Child components", { x: 0, y: 300 }, { tone: "emerald", subtitle: "REAL — do not mock", direction: "TB", width: 200 }),
+  flowNode("net", "Network / API", { x: 430, y: 300 }, { tone: "amber", subtitle: "MOCK here (MSW)", direction: "TB", width: 190 }),
 ];
 const mockEdges = [
   flowEdge("test", "comp", { label: "renders" }),
@@ -61,96 +61,96 @@ const mockEdges = [
 ];
 
 export function Body({ locale }: { locale: Locale }) {
-  const c = COPY;
+  const copy = COPY;
   return (
     <>
-      <Lead>{c.lead[locale]}</Lead>
-      <P>{c.intro1[locale]}</P>
-      <P>{c.intro2[locale]}</P>
-      <Quote>{c.quote[locale]}</Quote>
+      <Lead>{copy.lead[locale]}</Lead>
+      <P>{copy.intro1[locale]}</P>
+      <P>{copy.intro2[locale]}</P>
+      <Quote>{copy.quote[locale]}</Quote>
 
-      <H2>{c.trophyTitle[locale]}</H2>
-      <P>{c.trophy1[locale]}</P>
+      <H2>{copy.trophyTitle[locale]}</H2>
+      <P>{copy.trophy1[locale]}</P>
       <FlowDiagram
         nodes={trophyNodes}
         edges={trophyEdges}
         height={420}
-        ariaLabel={c.trophyAria[locale]}
-        caption={c.trophyCaption[locale]}
+        ariaLabel={copy.trophyAria[locale]}
+        caption={copy.trophyCaption[locale]}
       />
-      <P>{c.trophy2[locale]}</P>
+      <P>{copy.trophy2[locale]}</P>
 
-      <H2>{c.queryTitle[locale]}</H2>
-      <P>{c.query1[locale]}</P>
-      <Callout variant="warning" title={c.queryWarnTitle[locale]}>
-        {c.queryWarnBody[locale]}
+      <H2>{copy.queryTitle[locale]}</H2>
+      <P>{copy.query1[locale]}</P>
+      <Callout variant="warning" title={copy.queryWarnTitle[locale]}>
+        {copy.queryWarnBody[locale]}
       </Callout>
-      <P>{c.query2[locale]}</P>
-      <CodeBlock lang="tsx" filename="Counter.test.tsx" code={c.counterCode[locale]} />
-      <P>{c.query3[locale]}</P>
+      <P>{copy.query2[locale]}</P>
+      <CodeBlock lang="tsx" filename="Counter.test.tsx" code={copy.counterCode[locale]} />
+      <P>{copy.query3[locale]}</P>
 
-      <H2>{c.setupTitle[locale]}</H2>
-      <P>{c.setup1[locale]}</P>
+      <H2>{copy.setupTitle[locale]}</H2>
+      <P>{copy.setup1[locale]}</P>
       <CodeBlock lang="ts" filename="vitest.config.ts" code={VITEST_CONFIG} />
       <CodeBlock lang="ts" filename="vitest.setup.ts" code={VITEST_SETUP} />
 
-      <H2>{c.pureTitle[locale]}</H2>
-      <P>{c.pure1[locale]}</P>
+      <H2>{copy.pureTitle[locale]}</H2>
+      <P>{copy.pure1[locale]}</P>
       <CodeBlock lang="ts" filename="money.ts" code={MONEY_CODE} />
       <CodeBlock lang="ts" filename="money.test.ts" code={MONEY_TEST} />
-      <P>{c.pure2[locale]}</P>
+      <P>{copy.pure2[locale]}</P>
 
       <Divider />
 
-      <H2>{c.mockTitle[locale]}</H2>
-      <P>{c.mock1[locale]}</P>
+      <H2>{copy.mockTitle[locale]}</H2>
+      <P>{copy.mock1[locale]}</P>
       <FlowDiagram
         nodes={mockNodes}
         edges={mockEdges}
         height={420}
-        ariaLabel={c.mockAria[locale]}
-        caption={c.mockCaption[locale]}
+        ariaLabel={copy.mockAria[locale]}
+        caption={copy.mockCaption[locale]}
       />
-      <P>{c.mock2[locale]}</P>
-      <CodeBlock lang="ts" filename="test/handlers.ts" code={c.handlersCode[locale]} />
-      <P>{c.mock3[locale]}</P>
-      <CodeBlock lang="ts" filename="test/server.ts" code={c.serverCode[locale]} />
-      <CodeBlock lang="ts" filename="vitest.setup.ts" code={c.mswSetupCode[locale]} />
-      <P>{c.mockNote[locale]}</P>
-      <Callout variant="tip" title={c.mockTipTitle[locale]}>
-        {c.mockTipBody[locale]}
+      <P>{copy.mock2[locale]}</P>
+      <CodeBlock lang="ts" filename="test/handlers.ts" code={copy.handlersCode[locale]} />
+      <P>{copy.mock3[locale]}</P>
+      <CodeBlock lang="ts" filename="test/server.ts" code={copy.serverCode[locale]} />
+      <CodeBlock lang="ts" filename="vitest.setup.ts" code={copy.mswSetupCode[locale]} />
+      <P>{copy.mockNote[locale]}</P>
+      <Callout variant="tip" title={copy.mockTipTitle[locale]}>
+        {copy.mockTipBody[locale]}
       </Callout>
 
-      <H2>{c.testableTitle[locale]}</H2>
-      <P>{c.testable1[locale]}</P>
+      <H2>{copy.testableTitle[locale]}</H2>
+      <P>{copy.testable1[locale]}</P>
       <UL>
-        <LI><Strong>{c.r1S[locale]}</Strong> {c.r1[locale]}</LI>
-        <LI><Strong>{c.r2S[locale]}</Strong> {c.r2[locale]}</LI>
-        <LI><Strong>{c.r3S[locale]}</Strong> {c.r3[locale]}</LI>
-        <LI><Strong>{c.r4S[locale]}</Strong> {c.r4[locale]}</LI>
+        <LI><Strong>{copy.r1S[locale]}</Strong> {copy.r1[locale]}</LI>
+        <LI><Strong>{copy.r2S[locale]}</Strong> {copy.r2[locale]}</LI>
+        <LI><Strong>{copy.r3S[locale]}</Strong> {copy.r3[locale]}</LI>
+        <LI><Strong>{copy.r4S[locale]}</Strong> {copy.r4[locale]}</LI>
       </UL>
-      <CodeBlock lang="tsx" filename="UserGreeting.tsx" code={c.greetingCode[locale]} />
+      <CodeBlock lang="tsx" filename="UserGreeting.tsx" code={copy.greetingCode[locale]} />
 
-      <H2>{c.asyncTitle[locale]}</H2>
-      <P>{c.async1[locale]}</P>
-      <CodeBlock lang="tsx" filename="ProductList.test.tsx" code={c.productListCode[locale]} />
+      <H2>{copy.asyncTitle[locale]}</H2>
+      <P>{copy.async1[locale]}</P>
+      <CodeBlock lang="tsx" filename="ProductList.test.tsx" code={copy.productListCode[locale]} />
 
-      <H2>{c.coverageTitle[locale]}</H2>
-      <P>{c.coverage1[locale]}</P>
-      <Callout variant="info" title={c.coverageInfoTitle[locale]}>
-        {c.coverageInfoBody[locale]}
+      <H2>{copy.coverageTitle[locale]}</H2>
+      <P>{copy.coverage1[locale]}</P>
+      <Callout variant="info" title={copy.coverageInfoTitle[locale]}>
+        {copy.coverageInfoBody[locale]}
       </Callout>
 
-      <H2>{c.checklistTitle[locale]}</H2>
+      <H2>{copy.checklistTitle[locale]}</H2>
       <OL>
-        <LI>{c.ck1[locale]}</LI>
-        <LI>{c.ck2[locale]}</LI>
-        <LI>{c.ck3[locale]}</LI>
-        <LI>{c.ck4[locale]}</LI>
-        <LI>{c.ck5[locale]}</LI>
+        <LI>{copy.ck1[locale]}</LI>
+        <LI>{copy.ck2[locale]}</LI>
+        <LI>{copy.ck3[locale]}</LI>
+        <LI>{copy.ck4[locale]}</LI>
+        <LI>{copy.ck5[locale]}</LI>
       </OL>
-      <P>{c.outro1[locale]}</P>
-      <P>{c.outro2[locale]}</P>
+      <P>{copy.outro1[locale]}</P>
+      <P>{copy.outro2[locale]}</P>
     </>
   );
 }

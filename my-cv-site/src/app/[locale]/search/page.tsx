@@ -6,7 +6,7 @@ import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ q?: string | string[] }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,16 +25,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SearchPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  const { q } = await searchParams;
+  const rawQuery = (await searchParams)["q"];
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "search" });
-  const initialQuery = Array.isArray(q) ? (q[0] ?? "") : (q ?? "");
+  const initialQuery = Array.isArray(rawQuery) ? (rawQuery[0] ?? "") : (rawQuery ?? "");
   const searchLocale: SearchLocale = locale === "nl" ? "nl" : "en";
 
   return (
-    <PageHero title={t("title")} description={t("description")}>
+    <>
+      <PageHero title={t("title")} description={t("description")} />
       <SearchPageContent locale={searchLocale} initialQuery={initialQuery} />
-    </PageHero>
+    </>
   );
 }

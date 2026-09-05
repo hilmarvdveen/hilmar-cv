@@ -16,7 +16,7 @@ const clients: CarouselClient[] = [
   { name: "Belastingdienst", logo: "/logos/belastingdienst.svg", id: "belastingdienst" },
   {
     name: "Nationale Postcode Loterij",
-    logo: "/logos/nationale-postcode-loterij.png",
+    logo: "/logos/nationale-postcode-loterij-mark.png",
     id: "postcode-loterij",
   },
   { name: "Athlon", logo: "/logos/athlon.svg", id: "athlon" },
@@ -25,7 +25,7 @@ const clients: CarouselClient[] = [
   { name: "Ortec", logo: "/logos/ortec.png", id: "ortec" },
   { name: "Omniplan", logo: "/logos/omniplan.svg", id: "omniplan" },
   { name: "Niped", logo: "/logos/niped.svg", id: "niped" },
-  { name: "Opinity", logo: "/logos/opinity.png", id: "opinity" },
+  { name: "Opinity", logo: "/logos/opinity-mark.png", id: "opinity" },
   { name: "Bluefield", logo: "/logos/bluefield.png", id: "bluefield" },
   { name: "Transdev", logo: "/logos/transdev.png", id: "transdev" },
 ];

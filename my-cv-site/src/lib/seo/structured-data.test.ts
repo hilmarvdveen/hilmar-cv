@@ -31,13 +31,13 @@ function pagesFor(locale: Locale): Record<string, string> {
 
 function walk(node: unknown, visit: (key: string, value: unknown) => void): void {
   if (Array.isArray(node)) {
-    node.forEach((n) => walk(n, visit));
+    node.forEach((child) => walk(child, visit));
     return;
   }
   if (node && typeof node === "object") {
-    for (const [k, v] of Object.entries(node)) {
-      visit(k, v);
-      walk(v, visit);
+    for (const [key, value] of Object.entries(node)) {
+      visit(key, value);
+      walk(value, visit);
     }
   }
 }
@@ -48,29 +48,29 @@ function collectByType(
   out: Array<Record<string, unknown>> = []
 ): Array<Record<string, unknown>> {
   if (Array.isArray(node)) {
-    node.forEach((n) => collectByType(n, type, out));
+    node.forEach((child) => collectByType(child, type, out));
     return out;
   }
   if (node && typeof node === "object") {
-    const obj = node as Record<string, unknown>;
-    if (obj["@type"] === type) out.push(obj);
-    for (const v of Object.values(obj)) collectByType(v, type, out);
+    const object = node as Record<string, unknown>;
+    if (object["@type"] === type) out.push(object);
+    for (const value of Object.values(object)) collectByType(value, type, out);
   }
   return out;
 }
 
 function typeSet(schemas: Array<Record<string, unknown>>): Set<string> {
   const set = new Set<string>();
-  for (const s of schemas) {
-    const t = s["@type"];
-    (Array.isArray(t) ? t : [t]).forEach((x) => typeof x === "string" && set.add(x));
+  for (const schema of schemas) {
+    const schemaType = schema["@type"];
+    (Array.isArray(schemaType) ? schemaType : [schemaType]).forEach((x) => typeof x === "string" && set.add(x));
   }
   return set;
 }
 
 function hasType(schema: Record<string, unknown>, type: string): boolean {
-  const t = schema["@type"];
-  return Array.isArray(t) ? t.includes(type) : t === type;
+  const schemaType = schema["@type"];
+  return Array.isArray(schemaType) ? schemaType.includes(type) : schemaType === type;
 }
 
 describe("structured data (JSON-LD) per page", () => {
@@ -88,17 +88,17 @@ describe("structured data (JSON-LD) per page", () => {
 
         it("every schema has @context schema.org and a @type", () => {
           const schemas = JSON.parse(raw) as Array<Record<string, unknown>>;
-          for (const s of schemas) {
-            expect(String(s["@context"])).toMatch(/schema\.org/);
-            const t = s["@type"];
-            expect(typeof t === "string" || Array.isArray(t)).toBe(true);
+          for (const schema of schemas) {
+            expect(String(schema["@context"])).toMatch(/schema\.org/);
+            const schemaType = schema["@type"];
+            expect(typeof schemaType === "string" || Array.isArray(schemaType)).toBe(true);
           }
         });
 
         it("includes the core entity types (WebSite, Organization, Person, WebPage)", () => {
           const types = typeSet(JSON.parse(raw));
-          for (const t of ["WebSite", "Organization", "Person", "WebPage"]) {
-            expect(types.has(t)).toBe(true);
+          for (const schemaType of ["WebSite", "Organization", "Person", "WebPage"]) {
+            expect(types.has(schemaType)).toBe(true);
           }
         });
 
@@ -115,22 +115,22 @@ describe("structured data (JSON-LD) per page", () => {
               }
             }
             if (key === "sameAs") {
-              const arr = Array.isArray(value) ? value : [value];
-              for (const v of arr) expect(String(v)).toMatch(/^https?:\/\//);
+              const array = Array.isArray(value) ? value : [value];
+              for (const value of array) expect(String(value)).toMatch(/^https?:\/\//);
             }
           });
         });
 
         it("self/canonical URLs use the www host", () => {
           const schemas = JSON.parse(raw) as Array<Record<string, unknown>>;
-          const webpage = schemas.find((s) => hasType(s, "WebPage"));
+          const webpage = schemas.find((schema) => hasType(schema, "WebPage"));
           expect(webpage?.url).toBeTruthy();
           expect(new URL(String(webpage!.url)).host).toBe(CANONICAL_HOST);
         });
 
         it("WebSite SearchAction (if present) targets /search", () => {
           const schemas = JSON.parse(raw) as Array<Record<string, unknown>>;
-          const site = schemas.find((s) => hasType(s, "WebSite"));
+          const site = schemas.find((schema) => hasType(schema, "WebSite"));
           const action = site?.potentialAction as
             | { target?: unknown }
             | undefined;
@@ -172,46 +172,49 @@ describe("structured data (JSON-LD) per page", () => {
     const schemas = JSON.parse(
       SEOFactory.homepage("en").structuredData
     ) as Array<Record<string, unknown>>;
-    const person = schemas.find((s) => hasType(s, "Person")) as
+    const person = schemas.find((schema) => hasType(schema, "Person")) as
       | { hasCredential?: unknown[] }
       | undefined;
     if (person?.hasCredential) {
-      for (const c of person.hasCredential) {
-        expect(typeof c).toBe("object");
-        expect((c as Record<string, unknown>)["@type"]).toBe(
+      for (const credential of person.hasCredential) {
+        expect(typeof credential).toBe("object");
+        expect((credential as Record<string, unknown>)["@type"]).toBe(
           "EducationalOccupationalCredential"
         );
       }
     }
   });
 
-  it("every Offer has a numeric price and a currency", () => {
+  it("every paid Offer carries the published range and never a single price", () => {
     const schemas = JSON.parse(SEOFactory.homepage("en").structuredData);
     const offers = collectByType(schemas, "Offer");
     expect(offers.length).toBeGreaterThan(0);
-    for (const o of offers) {
-      expect(String(o.price)).toMatch(/^\d+(\.\d+)?$/);
-      expect(o.priceCurrency).toBeTruthy();
+    const paidOffers = offers.filter((offer) => offer.price !== "0");
+    expect(paidOffers.length).toBeGreaterThan(0);
+    for (const offer of paidOffers) {
+      expect(offer.price).toBeUndefined();
+      expect(offer.priceCurrency).toBeUndefined();
+      expect(String(offer.priceRange)).toMatch(/^€\d+-\d+$/);
     }
   });
 
   it("schema dates are stable across calls (not new Date() per request)", () => {
-    const a = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
+    const first = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
       Record<string, unknown>
     >;
-    const b = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
+    const second = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
       Record<string, unknown>
     >;
-    const dm = (s: Array<Record<string, unknown>>) =>
-      s.find((x) => hasType(x, "WebPage"))?.dateModified;
-    expect(dm(a)).toBe(dm(b));
+    const dm = (schema: Array<Record<string, unknown>>) =>
+      schema.find((x) => hasType(x, "WebPage"))?.dateModified;
+    expect(dm(first)).toBe(dm(second));
   });
 
   it("Organization carries the legal identity (legalName + KvK number)", () => {
     const schemas = JSON.parse(
       SEOFactory.homepage("en").structuredData
     ) as Array<Record<string, unknown>>;
-    const org = schemas.find((s) => hasType(s, "Organization"));
+    const org = schemas.find((schema) => hasType(schema, "Organization"));
     expect(org?.legalName).toBe("Hilmar ICT Services");
     const id = org?.identifier as
       | { propertyID?: string; value?: string }
@@ -237,11 +240,11 @@ describe("structured data (JSON-LD) per page", () => {
     const schemas = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
       Record<string, unknown>
     >;
-    const topLevelWebSites = schemas.filter((s) => hasType(s, "WebSite"));
+    const topLevelWebSites = schemas.filter((schema) => hasType(schema, "WebSite"));
     expect(topLevelWebSites).toHaveLength(1);
     expect(String(topLevelWebSites[0]["@id"])).toMatch(/^https:\/\/.+#website$/);
 
-    const webPage = schemas.find((s) => hasType(s, "WebPage")) as
+    const webPage = schemas.find((schema) => hasType(schema, "WebPage")) as
       | { isPartOf?: Record<string, unknown> }
       | undefined;
     expect(webPage?.isPartOf).toEqual({
@@ -259,7 +262,7 @@ describe("structured data (JSON-LD) per page", () => {
         SEOFactory.consultingService(locale),
       ]) {
         const schemas = JSON.parse(page.structuredData) as Array<Record<string, unknown>>;
-        expect(schemas.some((s) => hasType(s, "BreadcrumbList"))).toBe(false);
+        expect(schemas.some((schema) => hasType(schema, "BreadcrumbList"))).toBe(false);
       }
     }
   });
@@ -269,7 +272,7 @@ describe("structured data (JSON-LD) per page", () => {
       const schemas = JSON.parse(SEOFactory.services(locale).structuredData) as Array<
         Record<string, unknown>
       >;
-      expect(schemas.filter((s) => hasType(s, "BreadcrumbList"))).toHaveLength(1);
+      expect(schemas.filter((schema) => hasType(schema, "BreadcrumbList"))).toHaveLength(1);
     }
   });
 
@@ -277,16 +280,16 @@ describe("structured data (JSON-LD) per page", () => {
     const schemas = JSON.parse(
       SEOFactory.faq("en", FAQ).structuredData
     ) as Array<Record<string, unknown>>;
-    const faqPage = schemas.find((s) => hasType(s, "FAQPage")) as
+    const faqPage = schemas.find((schema) => hasType(schema, "FAQPage")) as
       | { mainEntity?: Array<Record<string, unknown>> }
       | undefined;
     expect(faqPage).toBeTruthy();
     expect(Array.isArray(faqPage!.mainEntity)).toBe(true);
     expect(faqPage!.mainEntity!.length).toBeGreaterThan(0);
-    for (const q of faqPage!.mainEntity!) {
-      expect(hasType(q, "Question")).toBe(true);
-      expect(q.name).toBeTruthy();
-      expect((q.acceptedAnswer as { text?: string } | undefined)?.text).toBeTruthy();
+    for (const question of faqPage!.mainEntity!) {
+      expect(hasType(question, "Question")).toBe(true);
+      expect(question.name).toBeTruthy();
+      expect((question.acceptedAnswer as { text?: string } | undefined)?.text).toBeTruthy();
     }
   });
 });

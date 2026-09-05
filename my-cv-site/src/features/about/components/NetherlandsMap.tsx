@@ -146,9 +146,9 @@ export const NetherlandsMap = () => {
         .selectAll<SVGPathElement, ProvinceFeature>("path")
         .data(geoData.features)
         .join("path")
-        .attr("d", (d) => pathGenerator(d) ?? "")
-        .attr("fill", (d) =>
-          highlightedRegions.includes(d.properties.statnaam)
+        .attr("d", (datum) => pathGenerator(datum) ?? "")
+        .attr("fill", (datum) =>
+          highlightedRegions.includes(datum.properties.statnaam)
             ? COLORS.primaryLight
             : COLORS.secondary
         )
@@ -156,24 +156,24 @@ export const NetherlandsMap = () => {
         .attr("stroke-width", 1)
         .style("cursor", "pointer")
         .style("transition", "all 0.2s ease")
-        .on("mouseenter touchstart", (event, d) => {
+        .on("mouseenter touchstart", (event, datum) => {
           d3.select(event.currentTarget).attr(
             "fill",
-            highlightedRegions.includes(d.properties.statnaam)
+            highlightedRegions.includes(datum.properties.statnaam)
               ? COLORS.primary
               : "#e5e7eb"
           );
           if (!isMobile) {
             showTooltip(
               event,
-              `<div class="font-medium">${d.properties.statnaam}</div>`
+              `<div class="font-medium">${datum.properties.statnaam}</div>`
             );
           }
         })
-        .on("mouseleave touchend", (event, d) => {
+        .on("mouseleave touchend", (event, datum) => {
           d3.select(event.currentTarget).attr(
             "fill",
-            highlightedRegions.includes(d.properties.statnaam)
+            highlightedRegions.includes(datum.properties.statnaam)
               ? COLORS.primaryLight
               : COLORS.secondary
           );
@@ -187,84 +187,84 @@ export const NetherlandsMap = () => {
 
       svg
         .selectAll(".work-city")
-        .data(workCities.filter((c) => !c.isHome))
+        .data(workCities.filter((city) => !city.isHome))
         .join("circle")
         .attr("class", "work-city")
-        .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
-        .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
+        .attr("cx", (datum) => projection(datum.coordinates)?.[0] || 0)
+        .attr("cy", (datum) => projection(datum.coordinates)?.[1] || 0)
         .attr("r", cityRadius)
         .attr("fill", COLORS.accent)
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 2)
         .style("cursor", "pointer")
         .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
-        .on("mouseenter touchstart", (e, d) => {
-          d3.select(e.currentTarget).attr("r", cityHoverRadius);
+        .on("mouseenter touchstart", (event, datum) => {
+          d3.select(event.currentTarget).attr("r", cityHoverRadius);
           if (!isMobile) {
             const companiesText =
-              d.companies.length === 1
+              datum.companies.length === 1
                 ? t("legend.company")
                 : t("legend.companies");
             showTooltip(
-              e,
+              event,
               `
-              <div class="font-medium">${d.name}</div>
-              <div class="text-sm text-white">${d.companies.length} ${companiesText}</div>
+              <div class="font-medium">${datum.name}</div>
+              <div class="text-sm text-white">${datum.companies.length} ${companiesText}</div>
             `
             );
           }
         })
-        .on("mouseleave touchend", (e, d) => {
-          if (!selectedCity || selectedCity.name !== d.name) {
-            d3.select(e.currentTarget).attr("r", cityRadius);
+        .on("mouseleave touchend", (event, datum) => {
+          if (!selectedCity || selectedCity.name !== datum.name) {
+            d3.select(event.currentTarget).attr("r", cityRadius);
           }
           if (!isMobile) {
             hideTooltip();
           }
         })
-        .on("click touchend", (e, d) => {
-          setSelectedCity(d);
+        .on("click touchend", (event, datum) => {
+          setSelectedCity(datum);
           svg.selectAll(".work-city").attr("r", cityRadius);
-          d3.select(e.currentTarget).attr("r", cityHoverRadius);
+          d3.select(event.currentTarget).attr("r", cityHoverRadius);
         });
 
-      const homeCity = workCities.find((c) => c.isHome);
+      const homeCity = workCities.find((city) => city.isHome);
       if (homeCity) {
         svg
           .selectAll(".home-city")
           .data([homeCity])
           .join("circle")
           .attr("class", "home-city")
-          .attr("cx", (d) => projection(d.coordinates)?.[0] || 0)
-          .attr("cy", (d) => projection(d.coordinates)?.[1] || 0)
+          .attr("cx", (datum) => projection(datum.coordinates)?.[0] || 0)
+          .attr("cy", (datum) => projection(datum.coordinates)?.[1] || 0)
           .attr("r", cityRadius)
           .attr("fill", COLORS.home)
           .attr("stroke", "#ffffff")
           .attr("stroke-width", 2)
           .style("cursor", "pointer")
           .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
-          .on("mouseenter touchstart", (e, d) => {
-            d3.select(e.currentTarget).attr("r", cityHoverRadius);
+          .on("mouseenter touchstart", (event, datum) => {
+            d3.select(event.currentTarget).attr("r", cityHoverRadius);
             if (!isMobile) {
               showTooltip(
-                e,
+                event,
                 `
-                <div class="font-medium">${d.name}</div>
+                <div class="font-medium">${datum.name}</div>
                 <div class="text-sm text-white">${t("legend.home")}</div>
               `
               );
             }
           })
-          .on("mouseleave touchend", (e, d) => {
-            if (!selectedCity || selectedCity.name !== d.name) {
-              d3.select(e.currentTarget).attr("r", cityRadius);
+          .on("mouseleave touchend", (event, datum) => {
+            if (!selectedCity || selectedCity.name !== datum.name) {
+              d3.select(event.currentTarget).attr("r", cityRadius);
             }
             if (!isMobile) {
               hideTooltip();
             }
           })
-          .on("click touchend", (e, d) => {
-            setSelectedCity(d);
+          .on("click touchend", (event, datum) => {
+            setSelectedCity(datum);
             svg.selectAll(".home-city").attr("r", cityHoverRadius);
             svg.selectAll(".work-city").attr("r", cityRadius);
           });
@@ -282,7 +282,7 @@ export const NetherlandsMap = () => {
   }, [t, selectedCity]);
 
   const totalCompanies = [
-    ...new Set(workCities.filter((c) => !c.isHome).flatMap((c) => c.companies)),
+    ...new Set(workCities.filter((city) => !city.isHome).flatMap((city) => city.companies)),
   ].length;
   const totalCities = workCities.length;
   const totalProvinces = highlightedRegions.length;

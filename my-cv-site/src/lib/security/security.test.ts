@@ -48,20 +48,20 @@ describe("validateFields", () => {
   });
 
   it("fails on missing required field", () => {
-    const r = validateFields({ name: { value: "  ", required: true } });
-    expect(r.ok).toBe(false);
-    expect(r.error).toMatch(/required/i);
+    const result = validateFields({ name: { value: "  ", required: true } });
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/required/i);
   });
 
   it("fails on oversized field", () => {
-    const r = validateFields({ name: { value: "x".repeat(101), maxLength: 100 } });
-    expect(r.ok).toBe(false);
-    expect(r.error).toMatch(/maximum length/i);
+    const result = validateFields({ name: { value: "x".repeat(101), maxLength: 100 } });
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/maximum length/i);
   });
 
   it("fails on invalid email", () => {
-    const r = validateFields({ email: { value: "bad", email: true } });
-    expect(r.ok).toBe(false);
+    const result = validateFields({ email: { value: "bad", email: true } });
+    expect(result.ok).toBe(false);
   });
 
   it("skips optional empty fields", () => {
@@ -69,9 +69,9 @@ describe("validateFields", () => {
   });
 
   it("rejects a non-string value supplied for a present field", () => {
-    const r = validateFields({ name: { value: 42 as unknown as string } });
-    expect(r.ok).toBe(false);
-    expect(r.error).toMatch(/must be a string/i);
+    const result = validateFields({ name: { value: 42 as unknown as string } });
+    expect(result.ok).toBe(false);
+    expect(result.error).toMatch(/must be a string/i);
   });
 });
 

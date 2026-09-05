@@ -32,18 +32,18 @@ export default function ContactForm() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const toggleTag = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag)
-        ? prev.filter((selectedTag) => selectedTag !== tag)
-        : [...prev, tag]
+    setSelectedTags((previous) =>
+      previous.includes(tag)
+        ? previous.filter((selectedTag) => selectedTag !== tag)
+        : [...previous, tag]
     );
   };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((previous) => ({
+      ...previous,
       [event.target.name]: event.target.value,
     }));
   };
@@ -247,7 +247,7 @@ export default function ContactForm() {
 
           {successMessage && (
             <div className="text-center">
-              <Button href="/book" variant="primary" size="lg">
+              <Button href="/book" variant="primary" size="lg" data-placement="contact-success">
                 {t("cta.button")}
               </Button>
             </div>

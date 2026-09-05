@@ -1,6 +1,15 @@
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import nextTypescript from "eslint-config-next/typescript";
 
+const ABBREVIATED_IDENTIFIERS = [
+  "a", "b", "c", "d", "i", "j", "k", "m", "n", "p", "q", "r", "s", "v", "prev",
+  "e", "err", "ev", "evt", "el", "elem",
+  "res", "req", "resp", "cb", "ctx", "idx",
+  "btn", "msg", "cfg", "fn", "func", "arr", "obj", "str", "num", "val",
+  "tmp", "temp", "acc", "cur", "curr", "opts", "attr", "attrs",
+  "desc", "pos", "len", "ret", "dir", "sub",
+];
+
 const eslintConfig = [
   {
     ignores: [".next/**", "node_modules/**", "coverage/**", "next-env.d.ts"],
@@ -11,13 +20,9 @@ const eslintConfig = [
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
-      // Prefer `type` over `interface` (composes better for component props /
-      // Storybook). Global `declare`d augmentations are exempted inline.
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-      // Advisory perf hint from react-hooks v6. Reading client-only state
-      // (e.g. localStorage consent) in an effect is hydration-safe and
-      // intentional here, so treat it as a warning rather than an error.
       "react-hooks/set-state-in-effect": "warn",
+      "id-denylist": ["error", ...ABBREVIATED_IDENTIFIERS],
     },
   },
 ];

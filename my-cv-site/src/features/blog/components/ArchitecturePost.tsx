@@ -12,18 +12,18 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   publishedDate: "2026-06-16",
   updatedDate: "2026-06-28",
-  readingTimeMin: 16,
+  readingTimeMin: 10,
   title: {
     en: "A Modern React Architecture: Vite, Router, Vitest, Storybook",
     nl: "Moderne React-architectuur: Vite, Router, Vitest, Storybook",
   },
   description: {
-    en: "A practical 2026 baseline for React apps: build fast with Vite, load data with React Router, test with Vitest, and develop components in Storybook — wired together.",
-    nl: "Een praktische 2026-basis voor React-apps: snel bouwen met Vite, data laden via React Router, testen met Vitest en componenten ontwikkelen in Storybook — aan elkaar geknoopt.",
+    en: "A practical 2026 baseline for React apps: build fast with Vite, load data with React Router, test with Vitest and develop components in Storybook, wired together.",
+    nl: "Een praktische 2026-basis voor React-apps: snel bouwen met Vite, data laden via React Router, testen met Vitest en componenten bouwen in Storybook, als één geheel.",
   },
   excerpt: {
-    en: "Vite, React Router, Vitest and Storybook each own one concern and hand off to the next. Here is how they fit into one architecture — with config, routes, a loader and a story.",
-    nl: "Vite, React Router, Vitest en Storybook hebben elk één taak en sluiten op elkaar aan. Zo passen ze in één architectuur — met config, routes, een loader en een story.",
+    en: "Vite, React Router, Vitest and Storybook each own one concern and hand off to the next. Here is how they fit into one architecture, with config, routes, a loader and a story.",
+    nl: "Vite, React Router, Vitest en Storybook hebben elk één taak en sluiten op elkaar aan. Zo passen ze in één architectuur, met config, routes, een loader en een story.",
   },
   keywords: [
     "modern react architecture 2026",
@@ -36,11 +36,11 @@ export const meta: BlogPostMeta = {
 };
 
 const stackNodes = [
-  flowNode("vite", "Vite", { x: 0, y: 0 }, { tone: "violet", sub: "dev server + build", dir: "TB", width: 180 }),
-  flowNode("react", "React 19", { x: 0, y: 110 }, { tone: "blue", sub: "UI runtime", dir: "TB", width: 180 }),
-  flowNode("router", "React Router", { x: 0, y: 220 }, { tone: "emerald", sub: "routes · loaders · actions", dir: "TB", width: 220 }),
-  flowNode("vitest", "Vitest", { x: -170, y: 330 }, { tone: "amber", sub: "unit + component", dir: "TB", width: 170 }),
-  flowNode("sb", "Storybook", { x: 180, y: 330 }, { tone: "rose", sub: "isolated components", dir: "TB", width: 170 }),
+  flowNode("vite", "Vite", { x: 0, y: 0 }, { tone: "violet", subtitle: "dev server + build", direction: "TB", width: 180 }),
+  flowNode("react", "React 19", { x: 0, y: 110 }, { tone: "blue", subtitle: "UI runtime", direction: "TB", width: 180 }),
+  flowNode("router", "React Router", { x: 0, y: 220 }, { tone: "emerald", subtitle: "routes · loaders · actions", direction: "TB", width: 220 }),
+  flowNode("vitest", "Vitest", { x: -170, y: 330 }, { tone: "amber", subtitle: "unit + component", direction: "TB", width: 170 }),
+  flowNode("sb", "Storybook", { x: 180, y: 330 }, { tone: "rose", subtitle: "isolated components", direction: "TB", width: 170 }),
 ];
 const stackEdges = [
   flowEdge("vite", "react", { label: "bundles" }),
@@ -55,12 +55,12 @@ const stackEdges = [
 // Two vertical stacks side by side (arrows point down), so it stays readable on
 // narrow screens: read path in the left column, write path in the right.
 const dataNodes = [
-  flowNode("url", "URL change", { x: 0, y: 0 }, { tone: "slate", dir: "TB", width: 180 }),
-  flowNode("loader", "loader()", { x: 0, y: 140 }, { tone: "emerald", sub: "reads data", dir: "TB", width: 180 }),
-  flowNode("comp", "ProductList", { x: 0, y: 280 }, { tone: "blue", sub: "useLoaderData()", dir: "TB", width: 180 }),
-  flowNode("submit", "<Form> submit", { x: 340, y: 0 }, { tone: "slate", dir: "TB", width: 180 }),
-  flowNode("action", "action()", { x: 340, y: 140 }, { tone: "amber", sub: "writes data", dir: "TB", width: 180 }),
-  flowNode("revalidate", "revalidate", { x: 340, y: 280 }, { tone: "violet", sub: "loaders re-run", dir: "TB", width: 180 }),
+  flowNode("url", "URL change", { x: 0, y: 0 }, { tone: "slate", direction: "TB", width: 180 }),
+  flowNode("loader", "loader()", { x: 0, y: 140 }, { tone: "emerald", subtitle: "reads data", direction: "TB", width: 180 }),
+  flowNode("comp", "ProductList", { x: 0, y: 280 }, { tone: "blue", subtitle: "useLoaderData()", direction: "TB", width: 180 }),
+  flowNode("submit", "<Form> submit", { x: 340, y: 0 }, { tone: "slate", direction: "TB", width: 180 }),
+  flowNode("action", "action()", { x: 340, y: 140 }, { tone: "amber", subtitle: "writes data", direction: "TB", width: 180 }),
+  flowNode("revalidate", "revalidate", { x: 340, y: 280 }, { tone: "violet", subtitle: "loaders re-run", direction: "TB", width: 180 }),
 ];
 const dataEdges = [
   flowEdge("url", "loader", { label: "navigation" }),
@@ -70,13 +70,13 @@ const dataEdges = [
 ];
 
 function buildTree(locale: Locale): FileNode[] {
-  const c = COPY;
+  const copy = COPY;
   return [
     {
       name: "src",
       children: [
-        { name: "main.tsx", comment: c.treeMain[locale] },
-        { name: "router.tsx", comment: c.treeRouter[locale] },
+        { name: "main.tsx", comment: copy.treeMain[locale] },
+        { name: "router.tsx", comment: copy.treeRouter[locale] },
         {
           name: "features",
           children: [
@@ -84,106 +84,106 @@ function buildTree(locale: Locale): FileNode[] {
               name: "products",
               children: [
                 { name: "ProductList.tsx" },
-                { name: "ProductList.stories.tsx", comment: c.treeStories[locale] },
-                { name: "ProductList.test.tsx", comment: c.treeTest[locale] },
-                { name: "products.loader.ts", comment: c.treeLoader[locale] },
+                { name: "ProductList.stories.tsx", comment: copy.treeStories[locale] },
+                { name: "ProductList.test.tsx", comment: copy.treeTest[locale] },
+                { name: "products.loader.ts", comment: copy.treeLoader[locale] },
                 { name: "api.ts" },
               ],
             },
           ],
         },
-        { name: "components", comment: c.treeComponents[locale] },
-        { name: "test", comment: c.treeTestDir[locale] },
+        { name: "components", comment: copy.treeComponents[locale] },
+        { name: "test", comment: copy.treeTestDir[locale] },
       ],
     },
     { name: "vite.config.ts" },
     {
       name: ".storybook",
-      comment: c.treeStorybook[locale],
+      comment: copy.treeStorybook[locale],
       children: [{ name: "main.ts" }, { name: "preview.ts" }],
     },
   ];
 }
 
 export function Body({ locale }: { locale: Locale }) {
-  const c = COPY;
+  const copy = COPY;
   return (
     <>
-      <Lead>{c.lead[locale]}</Lead>
-      <P>{c.intro1[locale]}</P>
-      <P>{c.intro2[locale]}</P>
+      <Lead>{copy.lead[locale]}</Lead>
+      <P>{copy.intro1[locale]}</P>
+      <P>{copy.intro2[locale]}</P>
 
       <FlowDiagram
         nodes={stackNodes}
         edges={stackEdges}
         height={460}
-        ariaLabel={c.stackAria[locale]}
-        caption={c.stackCaption[locale]}
+        ariaLabel={copy.stackAria[locale]}
+        caption={copy.stackCaption[locale]}
       />
-      <Quote>{c.quote[locale]}</Quote>
+      <Quote>{copy.quote[locale]}</Quote>
 
-      <H2>{c.viteTitle[locale]}</H2>
-      <P>{c.vite1[locale]}</P>
+      <H2>{copy.viteTitle[locale]}</H2>
+      <P>{copy.vite1[locale]}</P>
       <UL>
-        <LI><Strong>{c.viteB1S[locale]}</Strong> {c.viteB1[locale]}</LI>
-        <LI><Strong>{c.viteB2S[locale]}</Strong> {c.viteB2[locale]}</LI>
-        <LI><Strong>{c.viteB3S[locale]}</Strong> {c.viteB3[locale]}</LI>
+        <LI><Strong>{copy.viteB1S[locale]}</Strong> {copy.viteB1[locale]}</LI>
+        <LI><Strong>{copy.viteB2S[locale]}</Strong> {copy.viteB2[locale]}</LI>
+        <LI><Strong>{copy.viteB3S[locale]}</Strong> {copy.viteB3[locale]}</LI>
       </UL>
       <CodeBlock lang="ts" filename="vite.config.ts" code={VITE_CONFIG} />
 
-      <H2>{c.routerTitle[locale]}</H2>
-      <P>{c.router1[locale]}</P>
-      <P>{c.router2[locale]}</P>
-      <P>{c.router3[locale]}</P>
-      <CodeBlock lang="tsx" filename="src/router.tsx" code={c.routerCode[locale]} />
+      <H2>{copy.routerTitle[locale]}</H2>
+      <P>{copy.router1[locale]}</P>
+      <P>{copy.router2[locale]}</P>
+      <P>{copy.router3[locale]}</P>
+      <CodeBlock lang="tsx" filename="src/router.tsx" code={copy.routerCode[locale]} />
       <CodeBlock lang="tsx" filename="src/main.tsx" code={MAIN_CODE} />
-      <P>{c.router4[locale]}</P>
-      <CodeBlock lang="ts" filename="src/features/products/products.loader.ts" code={c.loaderCode[locale]} />
-      <CodeBlock lang="ts" filename="src/features/products/api.ts" code={c.apiCode[locale]} />
-      <CodeBlock lang="tsx" filename="src/features/products/ProductList.tsx" code={c.productListCode[locale]} />
+      <P>{copy.router4[locale]}</P>
+      <CodeBlock lang="ts" filename="src/features/products/products.loader.ts" code={copy.loaderCode[locale]} />
+      <CodeBlock lang="ts" filename="src/features/products/api.ts" code={copy.apiCode[locale]} />
+      <CodeBlock lang="tsx" filename="src/features/products/ProductList.tsx" code={copy.productListCode[locale]} />
 
-      <H3>{c.dataTitle[locale]}</H3>
-      <P>{c.data1[locale]}</P>
+      <H3>{copy.dataTitle[locale]}</H3>
+      <P>{copy.data1[locale]}</P>
       <FlowDiagram
         nodes={dataNodes}
         edges={dataEdges}
         height={420}
-        ariaLabel={c.dataAria[locale]}
-        caption={c.dataCaption[locale]}
+        ariaLabel={copy.dataAria[locale]}
+        caption={copy.dataCaption[locale]}
       />
-      <Callout variant="tip" title={c.queryTitle[locale]}>
-        {c.queryBody[locale]}
+      <Callout variant="tip" title={copy.queryTitle[locale]}>
+        {copy.queryBody[locale]}
       </Callout>
 
       <Divider />
 
-      <H2>{c.sbTitle[locale]}</H2>
-      <P>{c.sb1[locale]}</P>
-      <P>{c.sb2[locale]}</P>
-      <CodeBlock lang="tsx" filename="src/components/Button.stories.tsx" code={c.storiesCode[locale]} />
-      <Callout variant="info" title={c.sbTestTitle[locale]}>
-        {c.sbTestBody[locale]}
+      <H2>{copy.sbTitle[locale]}</H2>
+      <P>{copy.sb1[locale]}</P>
+      <P>{copy.sb2[locale]}</P>
+      <CodeBlock lang="tsx" filename="src/components/Button.stories.tsx" code={copy.storiesCode[locale]} />
+      <Callout variant="info" title={copy.sbTestTitle[locale]}>
+        {copy.sbTestBody[locale]}
       </Callout>
 
-      <H2>{c.testTitle[locale]}</H2>
-      <P>{c.test1[locale]}</P>
-      <CodeBlock lang="tsx" filename="src/components/Button.test.tsx" code={c.testCode[locale]} />
-      <P>{c.test2[locale]}</P>
+      <H2>{copy.testTitle[locale]}</H2>
+      <P>{copy.test1[locale]}</P>
+      <CodeBlock lang="tsx" filename="src/components/Button.test.tsx" code={copy.testCode[locale]} />
+      <P>{copy.test2[locale]}</P>
 
-      <H2>{c.togetherTitle[locale]}</H2>
-      <P>{c.together1[locale]}</P>
-      <FileTree tree={buildTree(locale)} caption={c.treeCaption[locale]} />
+      <H2>{copy.togetherTitle[locale]}</H2>
+      <P>{copy.together1[locale]}</P>
+      <FileTree tree={buildTree(locale)} caption={copy.treeCaption[locale]} />
 
-      <H2>{c.takeawayTitle[locale]}</H2>
+      <H2>{copy.takeawayTitle[locale]}</H2>
       <OL>
-        <LI><Strong>{c.t1S[locale]}</Strong> {c.t1[locale]}</LI>
-        <LI><Strong>{c.t2S[locale]}</Strong> {c.t2[locale]}</LI>
-        <LI><Strong>{c.t3S[locale]}</Strong> {c.t3[locale]}</LI>
-        <LI><Strong>{c.t4S[locale]}</Strong> {c.t4[locale]}</LI>
+        <LI><Strong>{copy.t1S[locale]}</Strong> {copy.t1[locale]}</LI>
+        <LI><Strong>{copy.t2S[locale]}</Strong> {copy.t2[locale]}</LI>
+        <LI><Strong>{copy.t3S[locale]}</Strong> {copy.t3[locale]}</LI>
+        <LI><Strong>{copy.t4S[locale]}</Strong> {copy.t4[locale]}</LI>
       </OL>
-      <P>{c.outro1[locale]}</P>
+      <P>{copy.outro1[locale]}</P>
       <P>
-        {c.outro2[locale]} <InlineCode>npm create vite@latest</InlineCode>.
+        {copy.outro2[locale]} <InlineCode>npm create vite@latest</InlineCode>.
       </P>
     </>
   );

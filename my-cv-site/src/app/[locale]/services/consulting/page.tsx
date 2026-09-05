@@ -5,7 +5,6 @@ import { ServiceDetailPage } from "@/features/services";
 import type {
   ServiceEngagementDeliverable,
   ServiceProcessStep,
-  ServiceTechnologyGroup,
   ServiceTitledItem,
 } from "@/features/services";
 import { SEOFactory } from "@/lib/seo";
@@ -33,7 +32,6 @@ export default async function TechnicalConsultingPage({ params }: Props) {
   const tServices = await getTranslations({ locale, namespace: "services" });
   const seoData = SEOFactory.consultingService(locale as Locale);
 
-  const technologyGroups = t.raw("expertise.categories") as ServiceTechnologyGroup[];
   const processSteps = t.raw("process.steps") as Array<{
     title: string;
     description: string;
@@ -88,11 +86,6 @@ export default async function TechnicalConsultingPage({ params }: Props) {
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],
         })),
-      }}
-      technologies={{
-        title: t("expertise.title"),
-        description: t("expertise.description"),
-        groups: technologyGroups,
       }}
       process={{
         title: t("process.title"),
