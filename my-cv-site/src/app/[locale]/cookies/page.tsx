@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
-import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 
 const SLUG = "cookies" as const;
 
@@ -10,9 +10,9 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const doc = getLegalDoc(SLUG, locale);
-  const description = doc.intro ?? doc.title;
+  const description = clampDescription(doc.intro ?? doc.title);
   return {
-    title: doc.title,
+    title: brandedTitle(doc.title),
     description,
     alternates: localizedAlternates(SLUG, locale),
     ...localizedOpenGraph(SLUG, locale, doc.title, description),

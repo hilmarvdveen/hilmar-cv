@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clampDescription, localizedAlternates, localizedOpenGraph } from "./alternates";
+import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "./alternates";
 
 describe("localizedAlternates", () => {
   it("builds a prefixed canonical and one alternate per locale plus x-default", () => {
@@ -88,5 +88,11 @@ describe("clampDescription", () => {
 
   it("cuts hard when a long description has no usable word boundary", () => {
     expect(clampDescription("x".repeat(200))).toHaveLength(160);
+  });
+});
+
+describe("brandedTitle", () => {
+  it("appends the site owner to a bare page title", () => {
+    expect(brandedTitle("Werkervaring")).toBe("Werkervaring | Hilmar van der Veen");
   });
 });

@@ -5,7 +5,7 @@ import { WorkExperienceSection, ExperienceClose } from "@/features/experience";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
-import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph, brandedTitle } from "@/lib/seo";
 import { experienceHubSchema } from "@/lib/seo/experienceSchema";
 
 type Props = {
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = t("metaDescription");
 
   return {
-    title,
+    title: brandedTitle(title),
     description,
     alternates: localizedAlternates("experience", locale),
     ...localizedOpenGraph("experience", locale, title, description),

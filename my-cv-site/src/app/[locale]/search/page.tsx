@@ -4,7 +4,7 @@ import { SearchPageContent, type SearchEntry, type SearchLocale } from "@/featur
 import { BLOG_POSTS } from "@/features/blog";
 import { workHistory } from "@/data/workHistory";
 import { PageHero } from "@/components/PageHero";
-import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph, brandedTitle } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = t("title");
   const description = t("description");
   return {
-    title,
+    title: brandedTitle(title),
     description,
     alternates: localizedAlternates("search", locale),
     ...localizedOpenGraph("search", locale, title, description),

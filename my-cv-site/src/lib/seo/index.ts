@@ -4,7 +4,7 @@ export { SchemaGenerator } from './core/schema-generator';
 
 export { SEOFactory } from './factory';
 export { SEOUtils } from './utils';
-export { clampDescription, localizedAlternates, localizedOpenGraph } from './alternates';
+export { clampDescription, brandedTitle, localizedAlternates, localizedOpenGraph } from './alternates';
 
 export * from './constants/meta-constants';
 

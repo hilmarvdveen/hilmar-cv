@@ -104,7 +104,7 @@ const inspect = async (locale, route) => {
   const url = `${baseUrl}/${locale}${route}`;
   const response = await fetchWithRetry(url);
   const html = await response.text();
-  const text = visibleText(html);
+  const text = visibleText(html).replace(/Hilmar van der Veen/g, "Hilmar");
   const problems =
     route === unknownRoute
       ? inspectUnknownRoute(locale, response, html)

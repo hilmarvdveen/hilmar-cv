@@ -85,3 +85,5 @@ export const localizedOpenGraph = (
     },
   };
 };
+
+export const brandedTitle = (title: string): string => `${title} | ${BUSINESS_PROFILE.NAME}`;
