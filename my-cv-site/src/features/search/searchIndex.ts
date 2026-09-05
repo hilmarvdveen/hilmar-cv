@@ -26,8 +26,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "About", nl: "Over mij" },
     description: {
-      en: "Experience, strengths and background.",
-      nl: "Ervaring, sterke punten en achtergrond.",
+      en: "What changes for your team and your platform when I join, with the engagement behind each change.",
+      nl: "Wat er verandert voor je team en je platform als ik meedoe, met de opdracht achter elke verandering.",
     },
     keywords: ["about", "over", "experience", "ervaring", "cv", "resume"],
   },
@@ -46,8 +46,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Services", nl: "Diensten" },
     description: {
-      en: "Frontend, fullstack, design systems and consulting services.",
-      nl: "Frontend, fullstack, design systems en consultancy diensten.",
+      en: "Frontend, fullstack, design systems and consulting, each with the problem it solves and a real example.",
+      nl: "Frontend, fullstack, design systems en consultancy, elk met het probleem dat het oplost en een echt voorbeeld.",
     },
     keywords: ["services", "diensten", "hire", "inhuren"],
   },
@@ -56,8 +56,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Frontend development", nl: "Frontend-ontwikkeling" },
     description: {
-      en: "React, Angular and Next.js frontend development.",
-      nl: "React-, Angular- en Next.js-frontendontwikkeling.",
+      en: "Pages that earn money, rebuilt without interruption. React, Angular and Next.js.",
+      nl: "Pagina's die geld verdienen, vernieuwd zonder onderbreking. React, Angular en Next.js.",
     },
     keywords: ["frontend", "react", "angular", "next.js", "typescript"],
   },
@@ -66,8 +66,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Fullstack development", nl: "Fullstack-ontwikkeling" },
     description: {
-      en: "End-to-end fullstack web application development.",
-      nl: "End-to-end fullstack webapplicatieontwikkeling.",
+      en: "The whole chain from frontend to API and data, so a feature ships as one piece.",
+      nl: "De hele keten van frontend tot API en data, zodat een feature als één geheel live gaat.",
     },
     keywords: ["fullstack", "node", "api", "backend"],
   },
@@ -76,8 +76,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Design systems", nl: "Design systems" },
     description: {
-      en: "Scalable, accessible component libraries and design systems.",
-      nl: "Schaalbare, toegankelijke componentbibliotheken en design systems.",
+      en: "A component library that lets the team build pages in days, tested and documented in Storybook.",
+      nl: "Een componentenbibliotheek waarmee het team pagina's in dagen bouwt, getest en gedocumenteerd in Storybook.",
     },
     keywords: ["design system", "components", "storybook", "ui", "accessibility"],
   },
@@ -86,8 +86,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Consulting", nl: "Consultancy" },
     description: {
-      en: "Frontend architecture and technical consulting.",
-      nl: "Frontend-architectuur en technische consultancy.",
+      en: "Architecture and migration advice from someone who has done the cut-over, plus coaching for the team.",
+      nl: "Architectuur- en migratieadvies van iemand die de cut-over zelf heeft gedaan, plus begeleiding van het team.",
     },
     keywords: ["consulting", "consultancy", "architecture", "advies"],
   },
@@ -96,8 +96,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Projects", nl: "Projecten" },
     description: {
-      en: "Selected work and case studies.",
-      nl: "Geselecteerd werk en casestudy's.",
+      en: "Four engagements and what the client could measure afterwards.",
+      nl: "Vier opdrachten, en wat de opdrachtgever daarna kon meten.",
     },
     keywords: ["projects", "projecten", "portfolio", "work", "cases"],
   },
@@ -106,8 +106,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "FAQ", nl: "Veelgestelde vragen" },
     description: {
-      en: "Answers about services, pricing and collaboration.",
-      nl: "Antwoorden over diensten, prijzen en samenwerking.",
+      en: "Answers on rate, availability, the Wet DBA, accessibility and how an engagement runs.",
+      nl: "Antwoorden over tarief, beschikbaarheid, de Wet DBA, toegankelijkheid en hoe een opdracht loopt.",
     },
     keywords: [
       "faq",
@@ -133,8 +133,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Book a consultation", nl: "Plan een gesprek" },
     description: {
-      en: "Schedule a consultation slot.",
-      nl: "Plan een gesprek in.",
+      en: "Pick a moment for a 30-minute call that ends with a scope.",
+      nl: "Kies een moment voor een gesprek van dertig minuten dat eindigt met een scope.",
     },
     keywords: ["book", "boeken", "schedule", "afspraak", "consultation"],
   },
@@ -143,10 +143,10 @@ export const SEARCH_INDEX: SearchEntry[] = [
     kind: "page",
     title: { en: "Contact", nl: "Contact" },
     description: {
-      en: "Get in touch by email or phone.",
-      nl: "Neem contact op via e-mail of telefoon.",
+      en: "Book the call, send a WhatsApp message, or write. The recruiter facts in one card.",
+      nl: "Plan het gesprek, app me, of schrijf. De praktische gegevens in één kaart.",
     },
-    keywords: ["contact", "email", "phone", "telefoon"],
+    keywords: ["contact", "email", "phone", "telefoon", "whatsapp", "bellen"],
   },
 ];
 

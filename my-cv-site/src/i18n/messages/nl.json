@@ -958,7 +958,7 @@
             "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw.",
             "company": "Bedrijf",
             "start": "Wanneer wil je starten?",
-            "startPlaceholder": "Bijvoorbeeld 1 oktober 2026, of zo snel mogelijk"
+            "startPlaceholder": "Bijvoorbeeld 1 oktober 2026"
         },
         "cta": {
             "description": "Liever meteen praten? Kies een moment dat jou uitkomt, dan lopen we het systeem in dertig minuten door.",

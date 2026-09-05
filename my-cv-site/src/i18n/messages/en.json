@@ -995,7 +995,7 @@
             "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again.",
             "company": "Company",
             "start": "When would you like to start?",
-            "startPlaceholder": "For example 1 October 2026, or as soon as possible"
+            "startPlaceholder": "For example 1 October 2026"
         },
         "cta": {
             "description": "Rather talk it through? Pick a moment that suits you and we go through the system in thirty minutes.",

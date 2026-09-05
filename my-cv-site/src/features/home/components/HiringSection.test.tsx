@@ -92,8 +92,8 @@ vi.mock("@/i18n/navigation", () => ({
 
 describe("HiringSection", () => {
   it("renders the section title wired to the heading id", () => {
-    const { container } = render(<HiringSection />);
-    const section = container.querySelector("section");
+    render(<HiringSection />);
+    const section = screen.getByRole("region", { name: "title" });
     const heading = screen.getByRole("heading", { name: "title", level: 2 });
     expect(section).toHaveAttribute("aria-labelledby", "hiring-heading");
     expect(heading).toHaveAttribute("id", "hiring-heading");
