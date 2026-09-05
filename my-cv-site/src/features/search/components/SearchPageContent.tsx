@@ -7,18 +7,26 @@ import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
-import { searchEntries, type SearchLocale } from "../searchIndex";
+import { searchEntries, type SearchEntry, type SearchLocale } from "../searchIndex";
 
 type SearchPageContentProps = {
   locale: SearchLocale;
   initialQuery?: string;
+  extraEntries?: SearchEntry[];
 };
 
-export function SearchPageContent({ locale, initialQuery = "" }: SearchPageContentProps) {
+export function SearchPageContent({
+  locale,
+  initialQuery = "",
+  extraEntries = [],
+}: SearchPageContentProps) {
   const t = useTranslations("search");
   const [query, setQuery] = useState(initialQuery);
 
-  const results = useMemo(() => searchEntries(query, locale), [query, locale]);
+  const results = useMemo(
+    () => searchEntries(query, locale, extraEntries),
+    [query, locale, extraEntries]
+  );
 
   return (
     <Section padding="compact">

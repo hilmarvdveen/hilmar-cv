@@ -14,6 +14,7 @@ export const DeliveryMethodSection = () => {
 
   return (
     <Section background="navy" aria-labelledby="method-heading">
+      <div data-track-section="method">
       <Container>
         <SectionTitle
           id="method-heading"
@@ -40,6 +41,7 @@ export const DeliveryMethodSection = () => {
           ))}
         </div>
       </Container>
+      </div>
     </Section>
   );
 };

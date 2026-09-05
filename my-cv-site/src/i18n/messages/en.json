@@ -581,7 +581,13 @@
                     "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them."
                 }
             ],
-            "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform. Those pages did not go offline along the way."
+            "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform. Those pages did not go offline along the way.",
+            "delivered": [
+                "Loyalty and subscription pages rebuilt in React, from a reverse-engineered specification to production",
+                "The Digital app from an empty folder to production inside the Nx monorepo",
+                "Cut-over of the live account pages, ramped by percentage and reversible in one move",
+                "Nine A/B experiments across five places in the shop, built in code and configured in the tool"
+            ]
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -607,7 +613,13 @@
                     "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and ArgoCD, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code."
                 }
             ],
-            "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days. Content editors and designers built, checked and demoed it themselves."
+            "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days. Content editors and designers built, checked and demoed it themselves.",
+            "delivered": [
+                "Data-driven Angular architecture for the entrepreneur portal, pages assembled from backend configuration",
+                "Visual forms editor in which editors build, check and demo a form themselves",
+                "A new portal page from one to two weeks to one to two days, WCAG 2.1 AA kept",
+                "Bold design system rolled out across teams, with wrappers for Angular, React and Vue"
+            ]
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -627,7 +639,13 @@
                     "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme."
                 }
             ],
-            "summary": "A new campaign site went from weeks to a few days, because every brand draws on the same set of components and the content lives in the CMS."
+            "summary": "A new campaign site went from weeks to a few days, because every brand draws on the same set of components and the content lives in the CMS.",
+            "delivered": [
+                "International design system in an Nx monorepo, campaign pages assembled from JSON",
+                "React and Next.js components with Storyblok content and WCAG 2.1 AA built in",
+                "A brand layer per label, so a new label comes down to a theme",
+                "Serverless APIs on AWS, GitLab pipelines and Docker for every campaign"
+            ]
         },
         "athlon": {
             "company": "Athlon",
@@ -653,7 +671,13 @@
                     "paragraph": "The application I left behind is easier to maintain than the one I found. Responsibilities are spread across services and components, the code reads without a guide, and unit tests cover the logic. The component library gives the next developer a tested starting point for every new screen."
                 }
             ],
-            "summary": "I renewed Athlon's ageing self-service application on a current Angular stack, so customers could arrange more themselves and fewer of them had to call support."
+            "summary": "I renewed Athlon's ageing self-service application on a current Angular stack, so customers could arrange more themselves and fewer of them had to call support.",
+            "delivered": [
+                "Migration from Angular 1.6 to Angular 12, architecture around RxJS",
+                "Component library with the same behaviour and accessible markup on every screen",
+                "Generic self-service platform with conditional logic and validation",
+                "Coaching and code reviews for junior and senior developers"
+            ]
         },
         "randstad": {
             "company": "Randstad",
@@ -670,7 +694,12 @@
                     "paragraph": "As UI Coach I guided colleagues in Angular and in component-driven work. What stayed behind is a shared component library that gives the Randstad and Yacht teams the same building blocks."
                 }
             ],
-            "summary": "During the rebranding, Randstad and Yacht got one set of accessible components that carries the new brand identity on both sites."
+            "summary": "During the rebranding, Randstad and Yacht got one set of accessible components that carries the new brand identity on both sites.",
+            "delivered": [
+                "Front-end components for the rebrand in vanilla JavaScript, Angular and React",
+                "SCSS with the BEM method, so the structure stays the same across platforms",
+                "Styling components for the Hippo Bloomreach headless CMS"
+            ]
         },
         "opinity": {
             "company": "Opinity",
@@ -687,7 +716,12 @@
                     "paragraph": "The application went live on time, works on a phone and is built for use out on the road and on site."
                 }
             ],
-            "summary": "Drivers and managers record and check freight data in one application, delivered inside the four-month deadline."
+            "summary": "Drivers and managers record and check freight data in one application, delivered inside the four-month deadline.",
+            "delivered": [
+                "Angular front end and ASP.NET Core backend with role-based access",
+                "Trip and freight entry for drivers, verification for managers",
+                "Live on time inside the four-month deadline"
+            ]
         },
         "omniplan": {
             "company": "Omniplan",
@@ -707,7 +741,13 @@
                     "paragraph": "I left a platform behind in which authorisation is a separate, reusable service. New integrations connect to it while the rest of the system stays as it is."
                 }
             ],
-            "summary": "Omniplan could let outside organisations into its platform securely, without tying the two systems together."
+            "summary": "Omniplan could let outside organisations into its platform securely, without tying the two systems together.",
+            "delivered": [
+                "Front end migrated from AngularJS to Angular 9",
+                "Backend moved to .NET Core with REST and gRPC services",
+                "Modular authorisation and membership service on Microsoft Identity and JWT",
+                "Screens driven by backend configuration, so a change often needs no new code"
+            ]
         },
         "ortec": {
             "company": "Ortec",
@@ -727,7 +767,13 @@
                     "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the front end and the microservices in step while both sides changed. What stayed behind is a portal that takes new integrations and new views without a rebuild."
                 }
             ],
-            "summary": "FedEx staff follow routes, loads and delivery locations live on one screen in the portal."
+            "summary": "FedEx staff follow routes, loads and delivery locations live on one screen in the portal.",
+            "delivered": [
+                "Angular portal with live route and geo visualisations",
+                "Updates through observables, so the planning appears without a refresh",
+                "Micro-frontends on top of .NET Core microservices",
+                "REST contracts settled on OpenAPI with the backend teams"
+            ]
         },
         "bluefield": {
             "company": "Bluefield",
@@ -744,7 +790,12 @@
                     "paragraph": "For Ziggo I built a WPF application for network administrators and a map view in React on which incidents appear as they happen, with faulty network nodes marked. It reached the C# microservices through an Angular layer, with RabbitMQ and MassTransit carrying the messages. For Tommy Hilfiger I built an application in which employees reserve a parking spot in a calendar and get an access ticket. All of it ran in a Docker pipeline."
                 }
             ],
-            "summary": "Administrators see complex processes and network incidents in one view, so they know where to step in."
+            "summary": "Administrators see complex processes and network incidents in one view, so they know where to step in.",
+            "delivered": [
+                "Cycle dashboard on a Neo4J graph database, in React and Redux",
+                "Incident map view for Ziggo with faulty network nodes marked",
+                "Parking reservation application with access tickets for Tommy Hilfiger"
+            ]
         },
         "niped": {
             "company": "Niped",
@@ -761,7 +812,12 @@
                     "paragraph": "In a Scrum team I took part in refinements, planning sessions and demos, and with the backend developers I settled what the interfaces would look like. We kept code quality in check with SonarQube, Prettier and ESLint."
                 }
             ],
-            "summary": "Users got insight into their vitality and health risks, and the editors could manage the content behind it themselves."
+            "summary": "Users got insight into their vitality and health risks, and the editors could manage the content behind it themselves.",
+            "delivered": [
+                "Existing React application restructured with reusable logic, Redux and React Router",
+                "WPF management application on MVVM for the editors, version control included",
+                "Code quality kept with SonarQube, Prettier and ESLint"
+            ]
         },
         "conclusion": {
             "company": "Conclusion",
@@ -778,7 +834,12 @@
                     "paragraph": "I was the point of contact for client reports under the SLA, ran the analyses into the cause, wrote the findings down and set the improvements in motion. In the Scrum team I contributed to planning sessions, demos and sprint reviews."
                 }
             ],
-            "summary": "The CLASS learning platform moved to a modern, accessible front end step by step while the existing environment stayed in service."
+            "summary": "The CLASS learning platform moved to a modern, accessible front end step by step while the existing environment stayed in service.",
+            "delivered": [
+                "Modular Vue front end with reusable, accessible UI elements",
+                "REST WebAPIs with CQRS and NHibernate, backend logic covered with xUnit",
+                "Point of contact for SLA reports, from analysis to improvement"
+            ]
         },
         "transdev": {
             "company": "Transdev",
@@ -795,9 +856,16 @@
                     "paragraph": "What stayed behind is a gateway that later channels could connect to, and a portal where travellers find their own answers."
                 }
             ],
-            "summary": "Travellers could look up trip information and waiting times themselves, because a new API layer opened up the data in the old system."
+            "summary": "Travellers could look up trip information and waiting times themselves, because a new API layer opened up the data in the old system.",
+            "delivered": [
+                "Generic .NET Core API layer as a secure gateway over the Delphi backend",
+                "Traveller portal in Angular with TypeScript and RxJS",
+                "Queue module that shows a caller their position and waiting time"
+            ]
         },
-        "period": "{from} to {to}"
+        "period": "{from} to {to}",
+        "deliveredTitle": "Delivered",
+        "readMore": "Read the whole story"
     },
     "projects": {
         "hero": {

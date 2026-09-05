@@ -30,7 +30,7 @@ import {
   CONSULTING_SERVICE_CONTENT
 } from '../constants/page-content';
 
-const SITE_LAST_MODIFIED = new Date().toISOString();
+const SITE_LAST_MODIFIED = process.env.NEXT_PUBLIC_BUILD_DATE ?? new Date().toISOString();
 const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
 const DUTCH_BREADCRUMB_LABELS: Record<string, string> = {
   About: 'Over mij',

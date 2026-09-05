@@ -118,10 +118,15 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
 ];
 
-export function searchEntries(query: string, locale: SearchLocale): SearchEntry[] {
+export function searchEntries(
+  query: string,
+  locale: SearchLocale,
+  extraEntries: SearchEntry[] = []
+): SearchEntry[] {
+  const entries = [...SEARCH_INDEX, ...extraEntries];
   const normalizedQuery = query.trim().toLowerCase();
-  if (!normalizedQuery) return SEARCH_INDEX;
-  return SEARCH_INDEX.filter((entry) => {
+  if (!normalizedQuery) return entries;
+  return entries.filter((entry) => {
     const haystack = [
       entry.title[locale],
       entry.description[locale],

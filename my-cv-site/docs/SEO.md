@@ -139,3 +139,14 @@ The per-locale `opengraph-image` and `twitter-image` routes stay as the
 default card without a title. Titles are cleaned by `socialCardTitle`:
 the brand suffix goes, whitespace collapses, and anything over 90
 characters is cut on a word boundary.
+
+## Robots, build date and the search index (5 September 2026)
+
+`robots.txt` is one `User-agent: *` group (`Allow: /api/og` for the
+social card, `Disallow: /api/`), the AI and scraper blocks, and one
+sitemap line. The JSON-LD `dateModified` comes from
+`NEXT_PUBLIC_BUILD_DATE`, which `next.config.ts` sets at build time, so
+every instance of one deploy reports the same date. The search page
+indexes the static pages plus the eight blog posts and the twelve
+engagements, built on the server and handed to the client as extra
+entries so the post bodies never reach the browser bundle.

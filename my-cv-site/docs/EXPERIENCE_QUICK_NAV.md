@@ -88,3 +88,16 @@ Check these by hand:
 - Press back after several chip clicks. The browser leaves the page.
 - Enable reduced motion in the OS. Every scroll is instant.
 - Zoom the browser to 150 percent. The bar still pins flush under the header.
+
+## Card structure (5 September 2026)
+
+Each engagement card reads in this order: company and period, the fact
+list (location, mode, language), the role, the one-sentence summary, a
+"Delivered" list of three or four facts (`work.<id>.delivered`), the
+full story behind a native `details` element whose `summary` carries
+`work.readMore`, and the technology pills. The list items come from
+the entry's own paragraphs and add no claim of their own. The GMV
+figure never appears in a bullet, because the canonical sentence with
+its caveat may not be split. The disclosure is closed by default. The
+prose stays in the document, so search engines and the locale crawl
+still read it.

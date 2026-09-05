@@ -547,7 +547,13 @@
                     "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen."
                 }
             ],
-            "summary": "Ik verhuisde de pagina's waar klanten van bol.com hun abonnementen, software en games beheren van een verouderde Java-webshop naar een modern React-platform. Die pagina's zijn er onderweg niet uit gegaan."
+            "summary": "Ik verhuisde de pagina's waar klanten van bol.com hun abonnementen, software en games beheren van een verouderde Java-webshop naar een modern React-platform. Die pagina's zijn er onderweg niet uit gegaan.",
+            "delivered": [
+                "Loyalty- en abonnementspagina's herbouwd in React, van reverse-engineered specificatie tot productie",
+                "De Digital-app van lege map tot productie binnen de Nx-monorepo",
+                "Cut-over van de live accountpagina's, per percentage opgeschaald en in één stap terug te draaien",
+                "Negen A/B-experimenten op vijf plekken in de shop, gebouwd in code en ingericht in de tool"
+            ]
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -573,7 +579,13 @@
                     "paragraph": "Wat achterblijft is een platform waarin andere ontwikkelaars verder kunnen. De code leest zonder toelichting, verantwoordelijkheden lopen niet door elkaar, unittests dekken de logica af, en de technische documentatie in Confluence bevat voorbeelden per framework, randgevallen en beperkingen. CI/CD liep via GitLab, Jenkins, Tekton en ArgoCD, met testautomatisering in Cypress en Playwright. Tijdens het bouwen legde ik ontwerpfouten en verbeteringen voor aan de product owner en de ontwerper, zodat ze in het ontwerp werden opgelost en niet in de code werden gerepareerd."
                 }
             ],
-            "summary": "Bij de Belastingdienst ging een nieuw belastingformulier van maanden engineeringwerk naar een paar dagen. Redacteuren en ontwerpers bouwden, controleerden en demonstreerden het formulier zelf."
+            "summary": "Bij de Belastingdienst ging een nieuw belastingformulier van maanden engineeringwerk naar een paar dagen. Redacteuren en ontwerpers bouwden, controleerden en demonstreerden het formulier zelf.",
+            "delivered": [
+                "Datagedreven Angular-architectuur voor het ondernemersportaal, pagina's opgebouwd uit backendconfiguratie",
+                "Visuele formulierenbouwer waarin redacteuren zelf een formulier bouwen, controleren en demonstreren",
+                "Een nieuwe portaalpagina van één tot twee weken naar één tot twee dagen, WCAG 2.1 AA behouden",
+                "Bold design system uitgerold over teams, met wrappers voor Angular, React en Vue"
+            ]
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -593,7 +605,13 @@
                     "paragraph": "De componenten werkte ik uit met de designers en de marketingteams, en ontwerpkeuzes die in code niet standhielden besprak ik meteen tijdens het bouwen. Wat achterbleef is een geteste componentenbibliotheek waar de teams zelf op verderbouwen, en een werkwijze waarin een nieuw merk neerkomt op een thema."
                 }
             ],
-            "summary": "Een nieuwe campagnesite ging van weken naar een paar dagen, doordat elk merk uit dezelfde componentenset put en de content in het CMS staat."
+            "summary": "Een nieuwe campagnesite ging van weken naar een paar dagen, doordat elk merk uit dezelfde componentenset put en de content in het CMS staat.",
+            "delivered": [
+                "Internationaal design system in een Nx-monorepo, campagnepagina's opgebouwd uit JSON",
+                "React- en Next.js-componenten met Storyblok-content en WCAG 2.1 AA ingebouwd",
+                "Een merklaag per label, zodat een nieuw label neerkomt op een thema",
+                "Serverless API's op AWS, GitLab-pipelines en Docker voor elke campagne"
+            ]
         },
         "athlon": {
             "company": "Athlon",
@@ -619,7 +637,13 @@
                     "paragraph": "De applicatie die achterbleef is beter te onderhouden dan die ik aantrof. Verantwoordelijkheden zijn verdeeld over services en componenten, de code leest zonder toelichting en unittests dekken de logica af. De componentenbibliotheek geeft de volgende ontwikkelaar een geteste basis voor elk nieuw scherm."
                 }
             ],
-            "summary": "Ik vernieuwde de verouderde selfserviceapplicatie van Athlon op een actuele Angular-stack, zodat klanten meer zelf konden regelen en er minder vragen bij support terechtkwamen."
+            "summary": "Ik vernieuwde de verouderde selfserviceapplicatie van Athlon op een actuele Angular-stack, zodat klanten meer zelf konden regelen en er minder vragen bij support terechtkwamen.",
+            "delivered": [
+                "Migratie van Angular 1.6 naar Angular 12, architectuur rond RxJS",
+                "Componentenbibliotheek met hetzelfde gedrag en toegankelijke opmaak op elk scherm",
+                "Generiek selfserviceplatform met conditionele logica en validatie",
+                "Coaching en code reviews voor junior en senior developers"
+            ]
         },
         "randstad": {
             "company": "Randstad",
@@ -636,7 +660,12 @@
                     "paragraph": "Als UI Coach begeleidde ik collega's in Angular en in componentgedreven werken. Wat achterbleef is een gedeelde componentenbibliotheek waarmee de teams van Randstad en Yacht dezelfde bouwstenen gebruiken."
                 }
             ],
-            "summary": "Randstad en Yacht kregen bij hun rebranding één set toegankelijke componenten die de nieuwe merkidentiteit op beide sites draagt."
+            "summary": "Randstad en Yacht kregen bij hun rebranding één set toegankelijke componenten die de nieuwe merkidentiteit op beide sites draagt.",
+            "delivered": [
+                "Frontendcomponenten voor de rebranding in vanilla JavaScript, Angular en React",
+                "SCSS met de BEM-methodiek, zodat de structuur op elk platform hetzelfde blijft",
+                "Stylingcomponenten voor het Hippo Bloomreach headless CMS"
+            ]
         },
         "opinity": {
             "company": "Opinity",
@@ -653,7 +682,12 @@
                     "paragraph": "De applicatie stond op tijd live, werkt op een telefoon en is gemaakt voor gebruik onderweg en op de werkvloer."
                 }
             ],
-            "summary": "Chauffeurs en managers registreren en controleren vrachtgegevens in één applicatie, opgeleverd binnen de gestelde vier maanden."
+            "summary": "Chauffeurs en managers registreren en controleren vrachtgegevens in één applicatie, opgeleverd binnen de gestelde vier maanden.",
+            "delivered": [
+                "Angular-frontend en ASP.NET Core-backend met rolgebaseerde toegang",
+                "Rit- en vrachtinvoer voor chauffeurs, controle voor managers",
+                "Op tijd live binnen de deadline van vier maanden"
+            ]
         },
         "omniplan": {
             "company": "Omniplan",
@@ -673,7 +707,13 @@
                     "paragraph": "Ik liet een platform achter waarin de autorisatie een losstaande, herbruikbare dienst is. Nieuwe integraties sluiten daarop aan terwijl de rest van het systeem blijft zoals het is."
                 }
             ],
-            "summary": "Omniplan kon externe organisaties veilig op zijn platform aansluiten, zonder de systemen aan elkaar vast te koppelen."
+            "summary": "Omniplan kon externe organisaties veilig op zijn platform aansluiten, zonder de systemen aan elkaar vast te koppelen.",
+            "delivered": [
+                "Frontend gemigreerd van AngularJS naar Angular 9",
+                "Backend verhuisd naar .NET Core met REST- en gRPC-services",
+                "Modulaire autorisatie- en lidmaatschapsservice op Microsoft Identity en JWT",
+                "Schermen gestuurd door backendconfiguratie, zodat een wijziging vaak geen nieuwe code vraagt"
+            ]
         },
         "ortec": {
             "company": "Ortec",
@@ -693,7 +733,13 @@
                     "paragraph": "De REST-contracten stemde ik af met de backendteams op basis van OpenAPI, zodat de frontend en de microservices gelijk opliepen terwijl beide kanten veranderden. Wat achterbleef is een portaal dat nieuwe koppelingen en nieuwe weergaven aankan zonder herbouw."
                 }
             ],
-            "summary": "Medewerkers van FedEx volgen ritten, ladingen en bezorglocaties live op één scherm in het portaal."
+            "summary": "Medewerkers van FedEx volgen ritten, ladingen en bezorglocaties live op één scherm in het portaal.",
+            "delivered": [
+                "Angular-portaal met live route- en geovisualisaties",
+                "Updates via observables, zodat de planning zonder verversen verschijnt",
+                "Micro-frontends bovenop .NET Core-microservices",
+                "REST-contracten met de backendteams vastgelegd in OpenAPI"
+            ]
         },
         "bluefield": {
             "company": "Bluefield",
@@ -710,7 +756,12 @@
                     "paragraph": "Voor Ziggo bouwde ik een WPF-applicatie voor netwerkbeheerders en een kaartweergave in React waarop storingen verschijnen zodra ze optreden, met foutieve netwerknodes gemarkeerd. De communicatie met de C#-microservices liep via een Angular-laag, met RabbitMQ en MassTransit voor het berichtenverkeer. Voor Tommy Hilfiger bouwde ik een applicatie waarin medewerkers via een kalender een parkeerplaats reserveren en een toegangsticket krijgen. Alles draaide in een Docker-pijplijn."
                 }
             ],
-            "summary": "Beheerders zien complexe processen en netwerkstoringen in één beeld, zodat ze weten waar ze moeten ingrijpen."
+            "summary": "Beheerders zien complexe processen en netwerkstoringen in één beeld, zodat ze weten waar ze moeten ingrijpen.",
+            "delivered": [
+                "Cyclusdashboard op een Neo4J-graafdatabase, in React en Redux",
+                "Incidentenkaart voor Ziggo met gemarkeerde defecte netwerkknooppunten",
+                "Parkeerreserveringsapplicatie met toegangstickets voor Tommy Hilfiger"
+            ]
         },
         "niped": {
             "company": "Niped",
@@ -727,7 +778,12 @@
                     "paragraph": "In een Scrumteam werkte ik mee aan refinements, planningen en demo's, en met de backendontwikkelaars stemde ik af hoe de koppelingen eruit kwamen te zien. De codekwaliteit bewaakten we met SonarQube, Prettier en ESLint."
                 }
             ],
-            "summary": "Gebruikers kregen inzicht in hun vitaliteit en gezondheidsrisico's, en de redactie kon de inhoud daarachter zelf beheren."
+            "summary": "Gebruikers kregen inzicht in hun vitaliteit en gezondheidsrisico's, en de redactie kon de inhoud daarachter zelf beheren.",
+            "delivered": [
+                "Bestaande React-applicatie herstructureerd met herbruikbare logica, Redux en React Router",
+                "WPF-beheerapplicatie op MVVM voor de redacteuren, inclusief versiebeheer",
+                "Codekwaliteit bewaakt met SonarQube, Prettier en ESLint"
+            ]
         },
         "conclusion": {
             "company": "Conclusion",
@@ -744,7 +800,12 @@
                     "paragraph": "Ik was het aanspreekpunt voor klantmeldingen onder de SLA, deed de analyses naar de oorzaak, legde de bevindingen vast en zette de verbeteringen in gang. In het Scrumteam leverde ik input bij planningen, demo's en sprintreviews."
                 }
             ],
-            "summary": "De leeromgeving CLASS kreeg stap voor stap een moderne, toegankelijke voorkant terwijl de bestaande omgeving in beheer bleef."
+            "summary": "De leeromgeving CLASS kreeg stap voor stap een moderne, toegankelijke voorkant terwijl de bestaande omgeving in beheer bleef.",
+            "delivered": [
+                "Modulaire Vue-frontend met herbruikbare, toegankelijke UI-elementen",
+                "REST WebAPI's met CQRS en NHibernate, backendlogica gedekt met xUnit",
+                "Aanspreekpunt voor SLA-meldingen, van analyse tot verbetering"
+            ]
         },
         "transdev": {
             "company": "Transdev",
@@ -761,9 +822,16 @@
                     "paragraph": "Wat achterbleef is een koppellaag waarop volgende kanalen konden aansluiten, en een portaal waarin reizigers hun eigen antwoorden vinden."
                 }
             ],
-            "summary": "Reizigers konden ritinformatie en wachttijden zelf opzoeken, doordat een nieuwe API-laag de gegevens uit het oude systeem beschikbaar maakte."
+            "summary": "Reizigers konden ritinformatie en wachttijden zelf opzoeken, doordat een nieuwe API-laag de gegevens uit het oude systeem beschikbaar maakte.",
+            "delivered": [
+                "Generieke .NET Core API-laag als beveiligde gateway over de Delphi-backend",
+                "Reizigersportaal in Angular met TypeScript en RxJS",
+                "Wachtrijmodule die een beller zijn positie en wachttijd laat zien"
+            ]
         },
-        "period": "{from} tot {to}"
+        "period": "{from} tot {to}",
+        "deliveredTitle": "Opgeleverd",
+        "readMore": "Lees het hele verhaal"
     },
     "projects": {
         "hero": {

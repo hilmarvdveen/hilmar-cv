@@ -185,7 +185,6 @@ export class MetadataGenerator {
       'referrer': 'origin-when-cross-origin',
       
       'apple-mobile-web-app-title': BUSINESS_PROFILE.NAME,
-      'application-name': `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
 
       'DC.title': config.title,
       'DC.creator': BUSINESS_PROFILE.NAME,

@@ -37,6 +37,7 @@ export function FlowDiagram({ nodes, edges, height = 340, caption, ariaLabel }: 
             zoomOnScroll={false}
             panOnDrag={false}
             preventScrolling={false}
+            disableKeyboardA11y
             minZoom={0.2}
           >
             <Background id={diagramId} gap={20} color="#e2e8f0" />

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { WorkExperienceSection } from "./WorkExperienceSection";
 import { workHistory } from "@/data/workHistory";
 
@@ -14,8 +14,11 @@ vi.mock("next-intl", () => {
     if (key === "bol.company") return "bol.com";
     return key;
   }) as TranslateFunction;
-  t.raw = (key: string) =>
-    key.endsWith(".body") ? [{ paragraph: "Did impactful work" }] : [];
+  t.raw = (key: string) => {
+    if (key.endsWith(".body")) return [{ paragraph: "Did impactful work" }];
+    if (key.endsWith(".delivered")) return [`${key} first`, `${key} second`];
+    return [];
+  };
   return {
     useTranslations: () => t,
     useLocale: () => "en",
@@ -82,5 +85,18 @@ describe("WorkExperienceSection", () => {
     expect(screen.getByText("cta.description")).toBeInTheDocument();
     const link = screen.getByRole("link", { name: "cta.button" });
     expect(link).toHaveAttribute("href", "/book");
+  });
+});
+
+describe("WorkExperienceSection: scannable cards", () => {
+  it("lists what was delivered per engagement and keeps the story behind a disclosure", () => {
+    render(<WorkExperienceSection />);
+    const lists = screen.getAllByRole("list", { name: "deliveredTitle" });
+    expect(lists.length).toBeGreaterThan(1);
+    expect(within(lists[0]).getAllByRole("listitem")).toHaveLength(2);
+    const disclosures = screen.getAllByRole("group");
+    expect(disclosures.length).toBeGreaterThan(1);
+    expect(disclosures[0]).not.toHaveAttribute("open");
+    expect(within(disclosures[0]).getByText("readMore")).toBeInTheDocument();
   });
 });

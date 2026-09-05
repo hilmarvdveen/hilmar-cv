@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   
   compress: true,
   poweredByHeader: false,
+  env: {
+    NEXT_PUBLIC_BUILD_DATE: new Date().toISOString(),
+  },
   
   images: {
     formats: ['image/webp', 'image/avif'],

@@ -18,6 +18,7 @@ export const FlagshipSection = () => {
 
   return (
     <Section background="white" padding="default" aria-labelledby="flagship-heading">
+      <div data-track-section="flagship">
       <Container>
         <div className="max-w-3xl">
           <p className="text-[13px] font-bold uppercase tracking-widest text-primary mb-3">
@@ -65,6 +66,7 @@ export const FlagshipSection = () => {
           </Link>
         </div>
       </Container>
+      </div>
     </Section>
   );
 };

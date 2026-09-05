@@ -1,6 +1,6 @@
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
-import { MapPin, Globe, Languages } from "lucide-react";
+import { Check, MapPin, Globe, Languages } from "lucide-react";
 import { workHistory, type WorkEntry } from "@/data/workHistory";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -37,6 +37,7 @@ export const WorkExperienceSection = () => {
     const summary = t(`${id}.summary`);
     const bodyParagraphs =
       (t.raw(`${id}.body`) as BodyParagraph[] | undefined) ?? [];
+    const delivered = (t.raw(`${id}.delivered`) as string[] | undefined) ?? [];
 
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
@@ -97,11 +98,27 @@ export const WorkExperienceSection = () => {
             {summary}
           </p>
 
-          <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-gray-700">
-            {bodyParagraphs.map((item, index) =>
-              item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
-            )}
-          </div>
+          {delivered.length > 0 && (
+            <ul aria-label={t("deliveredTitle")} className="mt-4 space-y-2">
+              {delivered.map((item) => (
+                <li key={item} className="flex gap-2 text-[15px] leading-relaxed text-gray-700">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <details className="group mt-4">
+            <summary className="cursor-pointer list-none rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+              {t("readMore")}
+            </summary>
+            <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-gray-700">
+              {bodyParagraphs.map((item, index) =>
+                item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
+              )}
+            </div>
+          </details>
 
           {entry.tech.length > 0 && (
             <ul
