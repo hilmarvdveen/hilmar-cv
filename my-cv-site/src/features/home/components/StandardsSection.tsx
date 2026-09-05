@@ -26,7 +26,7 @@ export const StandardsSection = () => {
           {columns.map((column, index) => {
             const ColumnIcon = columnIcons[index];
             return (
-              <Card key={column.title} className="bg-bgLight">
+              <Card key={column.title} variant="tinted">
                 <ColumnIcon className="w-6 h-6 text-primary mb-3" />
                 <h3 className="text-lg font-bold text-textMain mb-2">
                   {column.title}

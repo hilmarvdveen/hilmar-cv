@@ -47,7 +47,7 @@ export const HiringSection = () => {
           <p className="text-sm text-gray-600 mb-6 max-w-2xl">{t("shapes.subtitle")}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {shapes.map((shape) => (
-              <Card key={shape.title} className="flex h-full flex-col">
+              <Card key={shape.title} variant="quiet" className="flex h-full flex-col">
                 <h3 className="text-base font-bold text-textMain mb-2">
                   {shape.title}
                 </h3>

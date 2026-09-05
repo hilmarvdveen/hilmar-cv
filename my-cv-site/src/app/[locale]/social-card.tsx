@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { OG_LOGO_DATA_URI } from "./og-logo";
+import { OG_MOTIF_DATA_URI, OG_MOTIF_OPACITY, OG_MOTIF_SIZE } from "./og-motif";
 import { loadSocialCardFonts } from "@/lib/seo/socialCardFont";
 
 export const SOCIAL_CARD_SIZE = { width: 1200, height: 630 };
@@ -34,6 +35,8 @@ export async function renderSocialCard(locale: SocialCardLocale, title?: string,
     (
       <div
         style={{
+          position: "relative",
+          overflow: "hidden",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -45,6 +48,14 @@ export async function renderSocialCard(locale: SocialCardLocale, title?: string,
           padding: 72,
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={OG_MOTIF_DATA_URI}
+          width={OG_MOTIF_SIZE.width}
+          height={OG_MOTIF_SIZE.height}
+          alt=""
+          style={{ position: "absolute", right: -60, bottom: -125, opacity: OG_MOTIF_OPACITY }}
+        />
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={OG_LOGO_DATA_URI} width={96} height={66} alt="" />

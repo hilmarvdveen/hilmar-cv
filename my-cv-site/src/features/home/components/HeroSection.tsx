@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { CvDownloadTrigger } from "./CvDownloadTrigger";
+import { RampDevice } from "@/components/RampDevice";
 
 export const HeroSection = () => {
   const t = useTranslations("home.hero");
@@ -79,6 +80,12 @@ export const HeroSection = () => {
               <p className="text-[15px] font-bold text-white">{t("name")}</p>
               <p className="text-[13px] text-slate-400">{t("role")}</p>
             </div>
+            <RampDevice
+              tone="onNavy"
+              width={340}
+              height={170}
+              className="hidden md:block mt-6 w-full max-w-[340px] h-auto"
+            />
           </div>
         </div>
 

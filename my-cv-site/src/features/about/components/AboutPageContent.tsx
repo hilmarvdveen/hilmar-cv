@@ -128,7 +128,7 @@ export function AboutPageContent() {
             {standardsCards.map((card, index) => {
               const CardIcon = standardsCardIcons[index];
               return (
-                <Card key={card.title} className="bg-bgLight">
+                <Card key={card.title} variant="tinted">
                   <CardIcon className="mb-3 h-6 w-6 text-primary" aria-hidden="true" />
                   <h3 className="mb-2 text-lg font-bold text-textMain">{card.title}</h3>
                   <p className="text-[14.5px] leading-relaxed text-gray-600">{card.body}</p>

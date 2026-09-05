@@ -13,6 +13,18 @@ describe("SectionTitle", () => {
     expect(screen.getByText("More context")).toBeInTheDocument();
   });
 
+  it("renders an eyebrow above the heading in the accent colour", () => {
+    render(<SectionTitle title="Framed" eyebrow="Current engagement" />);
+    const eyebrow = screen.getByText("Current engagement");
+    expect(eyebrow).toHaveClass("uppercase", "text-primary");
+    expect(eyebrow.nextElementSibling).toBe(screen.getByText("Framed"));
+  });
+
+  it("lightens the eyebrow on dark backgrounds", () => {
+    render(<SectionTitle title="Framed" eyebrow="Method" onDark />);
+    expect(screen.getByText("Method")).toHaveClass("text-emerald-300");
+  });
+
   it("omits the subtitle element when none is given", () => {
     render(<SectionTitle title="Only a title" />);
     expect(screen.getByText("Only a title").parentElement?.querySelector("p")).toBeNull();

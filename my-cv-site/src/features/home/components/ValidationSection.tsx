@@ -20,7 +20,7 @@ export const ValidationSection = () => {
         <SectionTitle title={t("title")} id="validation-heading" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {panels.map((panel, index) => (
-            <Card key={index}>
+            <Card key={index} variant="quiet">
               <h3 className="text-[15px] font-bold text-primary mb-2">
                 {panel.title}
               </h3>

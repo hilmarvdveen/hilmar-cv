@@ -10,6 +10,7 @@ const SIZES: Record<SectionTitleSize, string> = {
 
 type SectionTitleProps = {
   title: string;
+  eyebrow?: string;
   subtitle?: string;
   align?: "left" | "center";
   size?: SectionTitleSize;
@@ -20,6 +21,7 @@ type SectionTitleProps = {
 
 export const SectionTitle = ({
   title,
+  eyebrow,
   subtitle,
   align = "left",
   size = "default",
@@ -34,6 +36,16 @@ export const SectionTitle = ({
       className
     )}
   >
+    {eyebrow && (
+      <p
+        className={twMerge(
+          "mb-3 text-[13px] font-bold uppercase tracking-widest",
+          onDark ? "text-emerald-300" : "text-primary"
+        )}
+      >
+        {eyebrow}
+      </p>
+    )}
     <h2
       id={id}
       className={twMerge(

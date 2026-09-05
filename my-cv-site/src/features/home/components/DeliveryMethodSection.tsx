@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SectionTitle } from "@/components/SectionTitle";
+import { RampDevice } from "@/components/RampDevice";
 
 type MethodStep = {
   title: string;
@@ -22,11 +23,12 @@ export const DeliveryMethodSection = () => {
           subtitle={t("subtitle")}
           onDark
         />
+        <RampDevice lockup="wide" tone="onNavy" showReturn className="hidden lg:block w-full h-auto mb-2" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className="border-t-2 border-emerald-300/50 pt-4"
+              className="border-t-2 border-emerald-300/50 pt-4 lg:border-t-0 lg:pt-0"
             >
               <p className="text-[13px] font-bold text-emerald-300 mb-2">
                 {String(index + 1).padStart(2, "0")}

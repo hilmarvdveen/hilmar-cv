@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-export type CardVariant = "default" | "tinted";
+export type CardVariant = "default" | "tinted" | "quiet";
 
 const VARIANTS: Record<CardVariant, string> = {
   default: "bg-white border-gray-200",
   tinted: "bg-bgLight border-gray-200",
+  quiet: "bg-transparent border-0 border-t-2 border-emerald-700 rounded-none shadow-none p-0 pt-4",
 };
 
 type CardProps = {

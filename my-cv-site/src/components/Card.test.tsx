@@ -26,6 +26,15 @@ describe("Card", () => {
     expect(element).not.toHaveClass("bg-white");
   });
 
+  it("draws the quiet variant as a top rule without a box", () => {
+    render(<Card variant="quiet">Quiet content</Card>);
+    const element = screen.getByText("Quiet content");
+    expect(element).toHaveClass("border-t-2", "border-emerald-700", "rounded-none", "shadow-none", "pt-4");
+    expect(element).not.toHaveClass("bg-white");
+    expect(element).not.toHaveClass("rounded-xl");
+    expect(element).not.toHaveClass("p-7");
+  });
+
   it("keeps the white surface as the default variant", () => {
     render(<Card>Default content</Card>);
     const element = screen.getByText("Default content");

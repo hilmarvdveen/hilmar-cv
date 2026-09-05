@@ -8,6 +8,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
 import { Link } from "@/i18n/navigation";
 import { workHistory } from "@/data/workHistory";
+import { CaseSchematic, type CaseSchematicKind } from "@/components/CaseSchematic";
 
 type ProjectCase = {
   outcome: string;
@@ -19,6 +20,13 @@ type ProjectCase = {
 };
 
 const EXPERIENCE_PAGE_PREFIX = "/experience/";
+
+const CASE_SCHEMATICS: Record<string, CaseSchematicKind> = {
+  bol: "ramp",
+  belastingdienst: "formBuilder",
+  "postcode-loterij": "sourceToPages",
+  athlon: "versionToVersion",
+};
 
 function findWorkEntry(href: string) {
   if (!href.startsWith(EXPERIENCE_PAGE_PREFIX)) {
@@ -68,13 +76,18 @@ export const ProjectShowcase = () => {
                   <p className="mt-4 max-w-[68ch] text-[15px] leading-relaxed text-gray-600">
                     {projectCase.body}
                   </p>
-                  <Link
-                    href={projectCase.href}
-                    className="mt-4 inline-flex items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                  >
-                    {work("readMore")}
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                  <div className="mt-4 flex items-end justify-between gap-4">
+                    <Link
+                      href={projectCase.href}
+                      className="inline-flex items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    >
+                      {work("readMore")}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                    {workEntry && CASE_SCHEMATICS[workEntry.id] && (
+                      <CaseSchematic schematic={CASE_SCHEMATICS[workEntry.id]} className="hidden shrink-0 sm:block" />
+                    )}
+                  </div>
                 </Card>
               );
             })}

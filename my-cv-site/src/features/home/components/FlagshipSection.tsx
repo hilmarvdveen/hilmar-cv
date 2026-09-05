@@ -21,11 +21,9 @@ export const FlagshipSection = () => {
       <div data-track-section="flagship">
       <Container>
         <div className="max-w-3xl">
-          <p className="text-[13px] font-bold uppercase tracking-widest text-primary mb-3">
-            {t("eyebrow")}
-          </p>
           <SectionTitle
             id="flagship-heading"
+            eyebrow={t("eyebrow")}
             title={t("title")}
             subtitle={t("intro")}
             size="display"
