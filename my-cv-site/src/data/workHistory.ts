@@ -1,4 +1,3 @@
-// Work mode
 export const WorkMode = {
   Remote: "workMode.remote",
   OnSite: "workMode.onSite",
@@ -7,7 +6,6 @@ export const WorkMode = {
 
 export type WorkMode = (typeof WorkMode)[keyof typeof WorkMode];
 
-// Languages
 export const Language = {
   Dutch: "language.dutch",
   English: "language.english",
@@ -15,7 +13,6 @@ export const Language = {
 
 export type Language = (typeof Language)[keyof typeof Language];
 
-// Tech stack
 export const Tech = {
   HTML5: "tech.html5",
   CSS3: "tech.css3",
@@ -36,7 +33,6 @@ export const Tech = {
   JWT: "tech.jwt",
   Java8: "tech.java8",
   Maven: "tech.maven",
-  Gitlabs: "tech.gitlabs",
   Git: "tech.git",
   NPM: "tech.npm",
   Jenkins: "tech.jenkins",
@@ -56,7 +52,6 @@ export const Tech = {
   WPF: "tech.WPF",
   MVVM: "tech.MVVM",
   WebForms: "tech.WebForms",
-  API: "tech.API",
   Azure: "tech.Azure",
   MSSQL: "tech.MSSQL",
   TailwindCSS: "tech.TailwindCSS",
@@ -98,7 +93,6 @@ export const Tech = {
   AspNetMVC: "tech.AspNetMVC",
   CQRS: "tech.CQRS",
   MediatorPattern: "tech.MediatorPattern",
-  TSLint: "tech.TSLint",
   OctopusDeploy: "tech.OctopusDeploy",
   UIKit: "tech.UIKit",
   IntegrationTesting: "tech.IntegrationTesting",
@@ -129,7 +123,6 @@ export const Tech = {
 } as const;
 
 export type Tech = (typeof Tech)[keyof typeof Tech];
-
 
 export type WorkEntry = {
   id: string;
@@ -203,7 +196,7 @@ export const workHistory: WorkEntry[] = [
       Tech.JWT,
       Tech.Java8,
       Tech.Maven,
-      Tech.Gitlabs,
+      Tech.Gitlab,
       Tech.Git,
       Tech.NPM,
       Tech.Jenkins,
@@ -220,7 +213,7 @@ export const workHistory: WorkEntry[] = [
     ],
   },
   {
-    id: "postcode-loterij", // used to fetch from i18n
+    id: "postcode-loterij",
     company: "Postcode Loterij",
     logo: "nationale-postcode-loterij-mark.png",
     from: "2022-07",
@@ -495,7 +488,6 @@ export const workHistory: WorkEntry[] = [
       Tech.SonarQube,
       Tech.xUnit,
       Tech.MediatorPattern,
-      Tech.TSLint,
       Tech.Prettier,
       Tech.Confluence,
       Tech.Bitbucket,
@@ -527,11 +519,9 @@ export const workHistory: WorkEntry[] = [
       Tech.AspNetMVC,
       Tech.SQLServer,
       Tech.RestAPI,
-      Tech.API,
       Tech.JWT,
       Tech.SonarQube,
       Tech.Prettier,
-      Tech.TSLint,
       Tech.Jenkins,
       Tech.Confluence,
       Tech.Git,

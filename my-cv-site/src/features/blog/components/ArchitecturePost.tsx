@@ -49,11 +49,6 @@ const stackEdges = [
   flowEdge("router", "sb", { dashed: true, label: "documented by" }),
 ];
 
-// Two tidy left-to-right lanes (read on top, write below). A cyclic layout
-// crosses badly because default nodes have a single handle per side, so the
-// "loaders re-run" loop is described in the caption instead of drawn back.
-// Two vertical stacks side by side (arrows point down), so it stays readable on
-// narrow screens: read path in the left column, write path in the right.
 const dataNodes = [
   flowNode("url", "URL change", { x: 0, y: 0 }, { tone: "slate", direction: "TB", width: 180 }),
   flowNode("loader", "loader()", { x: 0, y: 140 }, { tone: "emerald", subtitle: "reads data", direction: "TB", width: 180 }),
@@ -189,7 +184,6 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
-// ── Comment-free code (shared) ───────────────────────────────────────────────
 const VITE_CONFIG = `import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
@@ -212,7 +206,6 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>
 );`;
 
-// ── Code with teaching comments (translated per locale) ──────────────────────
 const ROUTER_CODE_EN = `import { createBrowserRouter } from "react-router";
 import { RootLayout } from "./RootLayout";
 import { ProductList } from "./features/products/ProductList";
@@ -399,7 +392,6 @@ describe("Button", () => {
   });
 });`;
 
-// ── Bilingual copy ────────────────────────────────────────────────────────────
 const COPY = {
   lead: {
     en: "The quality of a React app depends on more than React itself. The tools around it matter just as much: the build tool, the router, the test environment, and where you develop components in isolation.",
@@ -541,7 +533,6 @@ const COPY = {
     en: "Together these choices give you a calm baseline for a serious React app: less duplicate configuration, features kept close together, and room to extend later. Start simple with these four layers and add more tools only when your project really needs them. Start a new app with",
     nl: "Samen geven deze keuzes je een rustige basis voor een serieuze React-app: minder dubbele configuratie, features dicht bij elkaar en ruimte om later uit te breiden. Begin eenvoudig met deze vier lagen en voeg extra tools pas toe wanneer je project daar echt om vraagt. Begin een nieuwe app met",
   },
-  // File-tree comments (localized)
   treeMain: { en: "app entry: createRoot + RouterProvider", nl: "app-entry: createRoot + RouterProvider" },
   treeRouter: { en: "route tree (createBrowserRouter)", nl: "routeboom (createBrowserRouter)" },
   treeStories: { en: "Storybook story", nl: "Storybook-story" },
@@ -550,7 +541,6 @@ const COPY = {
   treeComponents: { en: "shared UI (Button, Card…)", nl: "gedeelde UI (Button, Card…)" },
   treeTestDir: { en: "setup.ts, MSW handlers", nl: "setup.ts, MSW-handlers" },
   treeStorybook: { en: "Storybook config", nl: "Storybook-config" },
-  // Code samples keyed by locale
   routerCode: { en: ROUTER_CODE_EN, nl: ROUTER_CODE_NL },
   loaderCode: { en: LOADER_CODE_EN, nl: LOADER_CODE_NL },
   apiCode: { en: API_CODE_EN, nl: API_CODE_NL },

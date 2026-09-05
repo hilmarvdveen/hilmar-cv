@@ -47,7 +47,6 @@ const dependencyEdges = [
   flowEdge("features", "lib"),
 ];
 
-// Feature on top fanning down into the type folders, so the arrows point down.
 const byTypeNodes = [
   flowNode("feat", "one feature", { x: 200, y: 0 }, { tone: "slate", subtitle: "scattered across folders", direction: "TB", width: 200 }),
   flowNode("c1", "components/", { x: 0, y: 160 }, { tone: "rose", direction: "TB", width: 160 }),
@@ -184,7 +183,6 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
-// ── Comment-free code (shared) ───────────────────────────────────────────────
 const TSCONFIG_CODE = `{
   "compilerOptions": {
     "baseUrl": ".",
@@ -207,7 +205,6 @@ export default defineConfig({
   },
 });`;
 
-// ── Code with teaching comments (translated per locale) ──────────────────────
 const COLOCATION_CODE_EN = `PaymentForm.tsx          # the component
 PaymentForm.test.tsx     # its unit test
 PaymentForm.stories.tsx  # its Storybook story`;
@@ -254,7 +251,6 @@ export default function CheckoutPage() {
   );
 }`;
 
-// ── Bilingual copy ────────────────────────────────────────────────────────────
 const COPY = {
   lead: {
     en: "Folder structure is one of the cheapest architecture decisions to make early, and one of the most painful to change later. It affects how quickly developers can find code, how safely they can change it, and how confidently they can remove it.",
@@ -417,7 +413,6 @@ const COPY = {
     en: "When this works, the codebase becomes easier to navigate. New files have an obvious home, old features are easier to remove, and imports stay readable as the project grows.",
     nl: "Als dit werkt, wordt de codebase makkelijker te navigeren. Nieuwe bestanden hebben een vanzelfsprekende plek, oude features zijn makkelijker te verwijderen, en imports blijven leesbaar naarmate het project groeit.",
   },
-  // File-tree comments (localized)
   treeApp: { en: "routes only — thin pages", nl: "alleen routes — dunne pagina's" },
   treeFeatures: { en: "one folder per domain", nl: "één map per domein" },
   treeApi: { en: "data access", nl: "datatoegang" },
@@ -426,7 +421,6 @@ const COPY = {
   treeShared: { en: "SHARED ui only", nl: "alleen GEDEELDE ui" },
   treeSharedHooks: { en: "shared hooks", nl: "gedeelde hooks" },
   treeLib: { en: "framework-free logic", nl: "framework-vrije logica" },
-  // Code samples keyed by locale
   colocationCode: { en: COLOCATION_CODE_EN, nl: COLOCATION_CODE_NL },
   barrelCode: { en: BARREL_CODE_EN, nl: BARREL_CODE_NL },
   pageCode: { en: PAGE_CODE_EN, nl: PAGE_CODE_NL },

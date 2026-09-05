@@ -21,11 +21,6 @@ type GraphMessage = {
   replyTo?: GraphRecipient[];
 }
 
-/**
- * Send an email as `userEmail` via Microsoft Graph. Single implementation
- * replacing the three near-duplicate `sendEmailViaGraph` helpers; the
- * optional `replyTo` supports the contact form's reply-to-sender behaviour.
- */
 export async function sendMail(
   client: Client,
   userEmail: string,

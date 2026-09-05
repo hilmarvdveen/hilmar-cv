@@ -36,7 +36,6 @@ export const meta: BlogPostMeta = {
   ],
 };
 
-// Stacked downward: root → dashboard, then dashboard renders its children.
 const nestNodes = [
   flowNode("root", "root.tsx", { x: 215, y: 0 }, { tone: "slate", subtitle: "<html> + <Outlet/>", direction: "TB", width: 190 }),
   flowNode("dash", "dashboard.tsx", { x: 215, y: 140 }, { tone: "blue", subtitle: "layout + <Outlet/>", direction: "TB", width: 200 }),
@@ -49,7 +48,6 @@ const nestEdges = [
   flowEdge("dash", "settings"),
 ];
 
-// Stacked downward: request → match → loaders → render → hydrate.
 const lifecycleNodes = [
   flowNode("req", "Request", { x: 0, y: 0 }, { tone: "slate", subtitle: "GET /dashboard/products", direction: "TB", width: 250 }),
   flowNode("match", "Match routes", { x: 0, y: 115 }, { tone: "violet", subtitle: "root → dashboard → products", direction: "TB", width: 250 }),
@@ -173,7 +171,6 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
-// ── Code samples (identical per locale; only the comments are translated) ─────
 const ROUTES_CODE_EN = `import { type RouteConfig, route, index } from "@react-router/dev/routes";
 
 export default [
@@ -360,7 +357,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return <p>Er ging iets mis.</p>;
 }`;
 
-// ── Bilingual copy ────────────────────────────────────────────────────────────
 const COPY = {
   lead: {
     en: "React Router used to be mostly a way to map URLs to components: /products shows the products page, /settings the settings. Today the router does much more.",
@@ -507,7 +503,6 @@ const COPY = {
     en: "Start with your routes; the folder structure follows from there, and you need less extra state code — fewer manual useEffect fetches, loading states and cache logic. Start a project with",
     nl: "Begin bij je routes. Daarna volgt de mappenstructuur vanzelf, en heb je minder losse state-code nodig: minder handmatige useEffect-fetches, loading-states en cachelogica. Start een project met",
   },
-  // File-tree comments (localized)
   treeRoot: {
     en: "document shell + <Outlet/> + ErrorBoundary",
     nl: "document-shell + <Outlet/> + ErrorBoundary",
@@ -524,7 +519,6 @@ const COPY = {
     en: "server-only data access (not in the client bundle)",
     nl: "server-only datatoegang (niet in de client-bundle)",
   },
-  // Code samples keyed by locale
   routesCode: { en: ROUTES_CODE_EN, nl: ROUTES_CODE_NL },
   layoutCode: { en: LAYOUT_CODE_EN, nl: LAYOUT_CODE_NL },
   productsCode: { en: PRODUCTS_CODE_EN, nl: PRODUCTS_CODE_NL },

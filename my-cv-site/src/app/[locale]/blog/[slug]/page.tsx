@@ -10,11 +10,6 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-// Rendered dynamically per request (like every other page on the site) so the
-// URL locale is always respected and the per-request CSP nonce from proxy.ts
-// applies. A static generateStaticParams without `locale` would prerender posts
-// under the default locale (nl) and break /en/blog/* — see git history.
-
 function postSeoInput(post: NonNullable<ReturnType<typeof getPostBySlug>>, locale: Locale) {
   return {
     slug: post.slug,

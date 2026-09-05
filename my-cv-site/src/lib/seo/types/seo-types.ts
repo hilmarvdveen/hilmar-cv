@@ -1,12 +1,4 @@
-/**
- * Enterprise SEO TypeScript Definitions
- * Type-safe interfaces for comprehensive SEO system
- * Supports all Google 2024 best practices and E-E-A-T requirements
- */
 
-// =============================================================================
-// CORE TYPES
-// =============================================================================
 
 export type Locale = 'nl' | 'en';
 
@@ -41,10 +33,6 @@ export type SchemaType =
   | 'AggregateRating'
   | 'CollectionPage'
   | 'Blog';
-
-// =============================================================================
-// METADATA INTERFACES
-// =============================================================================
 
 export type BaseMetadata = {
   title: string;
@@ -99,10 +87,6 @@ export type ExtendedMetadata = BaseMetadata & {
   section?: string;
   tags?: string[];
 }
-
-// =============================================================================
-// SCHEMA.ORG INTERFACES
-// =============================================================================
 
 export type JsonLdSchema = {
   '@context': string;
@@ -200,10 +184,6 @@ export type ServiceSchema = JsonLdSchema & {
   offers: Offer;
   hasOfferCatalog?: OfferCatalog;
 }
-
-// =============================================================================
-// SUPPORTING SCHEMA INTERFACES
-// =============================================================================
 
 export type PostalAddress = {
   '@type': 'PostalAddress';
@@ -335,19 +315,11 @@ export type Thing = {
   url?: string;
 }
 
-// =============================================================================
-// NAVIGATION & BREADCRUMB INTERFACES
-// =============================================================================
-
 export type BreadcrumbItem = {
   name: string;
   url: string;
   position: number;
 }
-
-// =============================================================================
-// ANALYTICS INTERFACES
-// =============================================================================
 
 export type GA4Configuration = {
   measurementId: string;
@@ -386,10 +358,6 @@ export type ConversionEvent = EventConfig & {
   conversionCurrency?: string;
 }
 
-// =============================================================================
-// CONTENT OPTIMIZATION INTERFACES
-// =============================================================================
-
 export type ContentAnalysis = {
   wordCount: number;
   readabilityScore: number;
@@ -419,10 +387,6 @@ export type ImageAnalysis = {
   optimized: boolean;
   lazyLoaded: boolean;
 }
-
-// =============================================================================
-// SEO CONFIGURATION INTERFACES
-// =============================================================================
 
 export type SEOPageConfig = {
   pageType: PageType;
@@ -478,11 +442,11 @@ export type SEORecommendation = {
 }
 
 export type PerformanceMetrics = {
-  lcp: number; // Largest Contentful Paint
-  fid: number; // First Input Delay
-  cls: number; // Cumulative Layout Shift
-  fcp: number; // First Contentful Paint
-  ttfb: number; // Time to First Byte
+  lcp: number;
+  fid: number;
+  cls: number;
+  fcp: number;
+  ttfb: number;
   score: number;
 }
 
@@ -515,10 +479,6 @@ export type BestPracticeAudit = {
   passed: boolean;
 }
 
-// =============================================================================
-// SITEMAP INTERFACES
-// =============================================================================
-
 export type SitemapUrl = {
   loc: string;
   lastmod?: string;
@@ -540,10 +500,6 @@ export type SitemapImage = {
   geoLocation?: string;
   license?: string;
 }
-
-// =============================================================================
-// ROBOTS.TXT INTERFACES
-// =============================================================================
 
 export type RobotsConfig = {
   userAgent: string;

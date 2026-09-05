@@ -50,7 +50,6 @@ describe("checkRateLimit", () => {
     checkRateLimit("k", rule, now);
     checkRateLimit("k", rule, now);
     expect(checkRateLimit("k", rule, now).success).toBe(false);
-    // Far enough in the future that all earlier hits expired.
     expect(checkRateLimit("k", rule, now + 2000).success).toBe(true);
   });
 });
@@ -80,7 +79,6 @@ describe("enforceRateLimit", () => {
     for (let index = 0; index < RATE_LIMITS.email.limit; index++) {
       enforceRateLimit(buildRequest({ "x-real-ip": "3.3.3.3" }), "email", now);
     }
-    // A different IP is unaffected.
     expect(enforceRateLimit(buildRequest({ "x-real-ip": "4.4.4.4" }), "email", now)).toBeNull();
   });
 });

@@ -37,7 +37,6 @@ describe("prose primitives", () => {
 
     expect(screen.getByText("Heading Two").id).toBe("heading-two");
     expect(screen.getByText("Explicit Id").id).toBe("custom");
-    // non-string heading child → no derived id
     expect(screen.getByText("Non String").closest("h2")?.id).toBe("");
     expect(screen.getByText("external link").getAttribute("target")).toBe("_blank");
     expect(screen.getByText("internal link").getAttribute("target")).toBeNull();

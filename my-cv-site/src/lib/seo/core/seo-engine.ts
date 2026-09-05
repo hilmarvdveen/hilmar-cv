@@ -5,7 +5,6 @@ import type {
   SEOPageConfig,
   JsonLdSchema,
   Locale,
-  PageType,
   BreadcrumbItem,
   FAQItem
 } from '../types/seo-types';

@@ -1,15 +1,8 @@
 type FlagProps = {
-  /** Locale code: "nl" renders the Dutch flag, anything else the US flag. */
   code: string;
   className?: string;
 };
 
-/**
- * Inline SVG flags. Flag *emoji* (🇺🇸/🇳🇱) don't render on Windows and some
- * browsers (they fall back to the "US"/"NL" letter pair), so we draw the flags
- * as SVG to guarantee they're visible everywhere. Decorative — the adjacent
- * locale label conveys the meaning, so these are aria-hidden.
- */
 export function Flag({ code, className = "w-5 h-3.5 rounded-sm" }: FlagProps) {
   if (code === "nl") {
     return (
@@ -21,7 +14,6 @@ export function Flag({ code, className = "w-5 h-3.5 rounded-sm" }: FlagProps) {
     );
   }
 
-  // United States (used for the English locale).
   return (
     <svg className={className} viewBox="0 0 19 10" aria-hidden="true" role="img">
       <rect width="19" height="10" fill="#fff" />

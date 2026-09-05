@@ -13,7 +13,6 @@ describe("FolderStructurePost", () => {
     render(<Body locale="en" />);
     expect(screen.getByRole("heading", { name: /Feature-first/ })).toBeInTheDocument();
     expect(screen.getByText("tsconfig.json")).toBeInTheDocument();
-    // a diagram is present (ReactFlow canvas with an aria-label)
     expect(
       screen.getAllByRole("img").some((element) => element.getAttribute("aria-label")?.length)
     ).toBe(true);

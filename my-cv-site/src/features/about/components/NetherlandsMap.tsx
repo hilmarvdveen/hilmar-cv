@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { Briefcase, Globe, MapPin, Home, Calendar, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { workHistory, WorkMode } from "@/data/workHistory";
+import { formatMonthYear } from "@/lib/workPeriod";
 import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
 
 const HOME_CITY_NAME = "Zandvoort";
@@ -71,6 +72,7 @@ const workCities: CityLocation[] = [
 
 export const NetherlandsMap = () => {
   const t = useTranslations("home.map");
+  const locale = useLocale();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -404,10 +406,10 @@ export const NetherlandsMap = () => {
                               <div className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
                                 <span className="text-xs">
-                                  {workEntry.from.split("-")[1]}/
-                                  {workEntry.from.split("-")[0]} -{" "}
-                                  {workEntry.to.split("-")[1]}/
-                                  {workEntry.to.split("-")[0]}
+                                  {t("period", {
+                                    from: formatMonthYear(workEntry.from, locale),
+                                    to: formatMonthYear(workEntry.to, locale),
+                                  })}
                                 </span>
                               </div>
                               <div className="flex items-center gap-1">

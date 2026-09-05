@@ -34,9 +34,6 @@ export const meta: BlogPostMeta = {
   ],
 };
 
-// A clean linear chain, stacked top-to-bottom so it stays readable on narrow
-// screens. Structured data and Core Web Vitals are side factors described in
-// the caption rather than drawn as crossing side-inputs.
 const pipelineNodes = [
   flowNode("sitemap", "sitemap.xml", { x: 0, y: 0 }, { tone: "violet", subtitle: "discovery", direction: "TB", width: 190 }),
   flowNode("crawl", "Crawl", { x: 0, y: 110 }, { tone: "blue", direction: "TB", width: 190 }),
@@ -162,8 +159,6 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
-// ── Code samples ─────────────────────────────────────────────────────────────
-// Metadata + semantic markup carry teaching comments, so they are translated.
 const METADATA_CODE_EN = `import type { Metadata } from "next";
 
 // Page metadata only. robots.txt and sitemap.xml are separate file
@@ -224,7 +219,6 @@ const SEMANTIC_CODE_NL = `<!-- Eén h1 per pagina; koppen nesten en slaan nooit 
   </article>
 </main>`;
 
-// robots/sitemap/JSON-LD/hreflang are language-neutral (the prose explains them).
 const ROBOTS_CODE = `User-agent: *
 Allow: /
 
@@ -274,7 +268,6 @@ const HREFLANG_CODE = `<link rel="alternate" hreflang="en" href="https://example
 <link rel="alternate" hreflang="nl" href="https://example.com/nl/blog/x" />
 <link rel="alternate" hreflang="x-default" href="https://example.com/en/blog/x" />`;
 
-// ── Bilingual copy ────────────────────────────────────────────────────────────
 const COPY = {
   lead: {
     en: "A 100% Lighthouse SEO score is useful, but limited. Lighthouse mainly checks whether your page is technically easy to crawl, index and understand: a good title, a meta description, crawlable links, robots rules, canonical links and hreflang.",
@@ -448,7 +441,6 @@ const COPY = {
     en: "The real value comes from the combination: clear metadata, crawlable HTML, a reliable sitemap, correct hreflang, valid structured data and good Core Web Vitals on real user data. Use Lighthouse as the gate check, then use Search Console, the Rich Results Test and performance data to keep improving.",
     nl: "De echte waarde zit in de combinatie: duidelijke metadata, crawlbare HTML, een betrouwbare sitemap, correcte hreflang, geldige structured data en goede Core Web Vitals op echte gebruikersdata. Gebruik Lighthouse als check aan de poort, en daarna Search Console, de Rich Results Test en performance-data om te blijven verbeteren.",
   },
-  // Code samples keyed by locale
   metadataCode: { en: METADATA_CODE_EN, nl: METADATA_CODE_NL },
   semanticCode: { en: SEMANTIC_CODE_EN, nl: SEMANTIC_CODE_NL },
 } as const;

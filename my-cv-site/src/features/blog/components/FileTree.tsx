@@ -2,9 +2,7 @@ import { Folder, FileCode } from "lucide-react";
 
 export type FileNode = {
   name: string;
-  /** Defaults to `dir` when `children` is present, otherwise `file`. */
   type?: "dir" | "file";
-  /** Inline annotation shown muted to the right of the name. */
   comment?: string;
   children?: FileNode[];
 };
@@ -46,7 +44,6 @@ function TreeRows({ nodes, depth }: { nodes: FileNode[]; depth: number }) {
   );
 }
 
-/** Renders a project/folder structure as an annotated, monospaced tree. */
 export function FileTree({ tree, caption }: { tree: FileNode[]; caption?: string }) {
   return (
     <figure className="my-6 overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-sm">

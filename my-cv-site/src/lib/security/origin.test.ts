@@ -33,10 +33,7 @@ describe("isAllowedOrigin", () => {
   });
 
   it("treats a malformed Origin as no origin (falls back to referer/env)", () => {
-    // Malformed Origin -> hostFromUrl throws/returns null; with no referer and
-    // a non-production env this resolves to allowed.
     expect(isAllowedOrigin(buildRequest({ origin: "not a url" }))).toBe(true);
-    // Malformed origin but a foreign referer -> rejected.
     expect(
       isAllowedOrigin(buildRequest({ origin: "::::", referer: "https://evil.example.com/x" }))
     ).toBe(false);

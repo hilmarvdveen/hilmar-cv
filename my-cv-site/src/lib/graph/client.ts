@@ -7,11 +7,6 @@ export type GraphCredentials = {
   smtpUser: string;
 }
 
-/**
- * Read and validate the Microsoft Graph credentials from the environment.
- * Returns null when any are missing so callers can respond with a generic
- * "Server configuration error" without leaking which var is absent.
- */
 export function getGraphCredentials(): GraphCredentials | null {
   const clientId = process.env.MS_CLIENT_ID;
   const clientSecret = process.env.MS_CLIENT_SECRET;
@@ -24,9 +19,6 @@ export function getGraphCredentials(): GraphCredentials | null {
   return { clientId, clientSecret, tenantId, smtpUser };
 }
 
-/**
- * Acquire an application (client-credentials) access token for Microsoft Graph.
- */
 export async function getAccessToken({
   clientId,
   clientSecret,
@@ -53,11 +45,8 @@ export async function getAccessToken({
   return data.access_token as string;
 }
 
-/** Build a Graph client bound to a previously-acquired access token. */
 export function getGraphClient(accessToken: string): Client {
   return Client.init({
-    // The Graph SDK invokes this callback internally at request time, so it is
-    // not reachable from a unit test that only constructs the client.
     /* v8 ignore next */
     authProvider: (done) => done(null, accessToken),
   });

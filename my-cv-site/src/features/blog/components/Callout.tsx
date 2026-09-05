@@ -39,7 +39,6 @@ const STYLES: Record<
   },
 };
 
-/** Coloured aside for tips, warnings and key notes inside an article. */
 export function Callout({ variant = "info", title, children }: CalloutProps) {
   const style = STYLES[variant];
   const { Icon } = style;

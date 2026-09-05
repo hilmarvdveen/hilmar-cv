@@ -5,11 +5,6 @@ type HoneypotFieldProps = {
   onChange: (value: string) => void;
 }
 
-/**
- * Visually-hidden decoy input. Real users never see or fill it; bots that
- * auto-complete every field will, which the API rejects. Kept out of the tab
- * order and hidden from assistive tech.
- */
 export function HoneypotField({ value, onChange }: HoneypotFieldProps) {
   return (
     <div

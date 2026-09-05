@@ -79,7 +79,6 @@ describe("SEOEngine.generateSitemapData with dynamic pages", () => {
     const match = entries.find((entry) => entry.url.endsWith("/blog/other"));
     expect(match?.priority).toBe(0.7);
     expect(match?.changeFrequency).toBe("monthly");
-    // the static blog index is also present
     expect(entries.some((entry) => entry.url.endsWith("/blog"))).toBe(true);
   });
 });
@@ -88,7 +87,7 @@ describe("SEOEngine.validateSEOConfig", () => {
   it("flags a too-short title/description and too-few keywords as warnings", () => {
     const engine = new SEOEngine();
     const result = engine.validateSEOConfig(baseConfig({ title: "Short", description: "Tiny", keywords: ["x"] }));
-    expect(result.isValid).toBe(true); // warnings only
+    expect(result.isValid).toBe(true);
     expect(result.warnings.length).toBeGreaterThan(0);
   });
 

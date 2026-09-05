@@ -1,12 +1,5 @@
 import type { ReactNode } from "react";
 
-/**
- * Typed article primitives. The site has no `@tailwindcss/typography` plugin, so
- * long-form posts compose these instead of relying on a `.prose` cascade. Each
- * element is a small, fully-testable component with consistent rhythm.
- */
-
-/** Turn heading text into a stable anchor id for in-page links / a future TOC. */
 export function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -95,7 +88,6 @@ export function Divider() {
   return <hr className="my-12 border-gray-200" />;
 }
 
-/** A pull-quote / key takeaway block. */
 export function Quote({ children }: { children: ReactNode }) {
   return (
     <blockquote className="my-8 border-l-4 border-blue-500 bg-blue-50/60 py-3 pl-5 pr-4 text-lg italic text-gray-700">

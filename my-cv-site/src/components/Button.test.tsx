@@ -2,8 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Button, buttonClassName } from "./Button";
 
-// The locale-aware Link is mocked globally in vitest.setup.ts (rendered as <a>).
-
 describe("Button", () => {
   it("renders a <button> with primary styles by default and passes through props", () => {
     const onClick = vi.fn();
@@ -16,7 +14,6 @@ describe("Button", () => {
     expect(button.tagName).toBe("BUTTON");
     expect(button).toHaveAttribute("type", "submit");
     expect(button).toBeDisabled();
-    // primary: filled emerald that darkens on hover (never lightens)
     expect(button.className).toContain("bg-emerald-700");
     expect(button.className).toContain("hover:bg-emerald-800");
   });
@@ -47,7 +44,6 @@ describe("Button", () => {
       "text-emerald-300"
     );
     expect(buttonClassName({ size: "sm" })).toContain("px-4 py-2.5");
-    // custom className is appended
     expect(buttonClassName({ className: "w-full" })).toContain("w-full");
   });
 });

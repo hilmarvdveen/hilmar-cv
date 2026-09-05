@@ -18,7 +18,6 @@ describe("HoneypotField", () => {
   it("shows the controlled value", () => {
     render(<HoneypotField value="filled" onChange={() => {}} />);
     expect((document.getElementById(HONEYPOT_FIELD) as HTMLInputElement).value).toBe("filled");
-    // label is present for the decoy
     expect(screen.getByText(/company website/i)).toBeInTheDocument();
   });
 });

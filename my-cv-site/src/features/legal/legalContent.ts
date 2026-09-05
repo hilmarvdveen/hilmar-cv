@@ -35,7 +35,7 @@ const AP_NL = "de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl)";
 export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
   privacy: {
     en: {
-      title: "Privacy Policy",
+      title: "Privacy policy",
       lastUpdated: UPDATED_EN,
       intro: `This Privacy Policy explains how ${CONTROLLER} ("I", "me") processes your personal data when you use ${SITE}. I act as the data controller. You can reach me at ${EMAIL}.`,
       sections: [
@@ -172,7 +172,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
 
   cookies: {
     en: {
-      title: "Cookie Policy",
+      title: "Cookie policy",
       lastUpdated: UPDATED_EN,
       intro: `This Cookie Policy explains how ${SITE} uses cookies and similar technologies, in line with the Dutch Telecommunications Act (art. 11.7a) and the GDPR/AVG.`,
       sections: [
@@ -251,7 +251,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
 
   terms: {
     en: {
-      title: "Terms of Use",
+      title: "Terms of use",
       lastUpdated: UPDATED_EN,
       intro: `These terms govern your use of the website ${SITE}. By using the site you agree to them. They cover the website only. Any paid work is governed by a separate written agreement.`,
       sections: [

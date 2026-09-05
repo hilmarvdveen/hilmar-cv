@@ -146,7 +146,7 @@ export function AboutPageContent() {
             {t("map.contactLine")}
           </p>
           <div className="mt-4 flex justify-center">
-            <Button href="/book" variant="primary" data-placement="about-map">
+            <Button href="/book" variant="outline" data-placement="about-map">
               {t("cta.button")}
             </Button>
           </div>

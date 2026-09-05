@@ -22,7 +22,7 @@ vi.mock("@/i18n/navigation", () => ({
 vi.mock("next/image", () => ({
   default: (props: Record<string, unknown>) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />;
+    return <img alt="" {...props} />;
   },
 }));
 
@@ -48,7 +48,6 @@ describe("Header", () => {
   it("switches locale via the language switcher", async () => {
     const user = userEvent.setup();
     render(<Header />);
-    // The mobile drawer always renders both locale buttons.
     const dutch = screen.getAllByText("Nederlands")[0].closest("button")!;
     await user.click(dutch);
     expect(replace).toHaveBeenCalledWith("/services", { locale: "nl" });
@@ -58,7 +57,6 @@ describe("Header", () => {
     const user = userEvent.setup();
     render(<Header />);
     await user.click(screen.getByLabelText("nav.openMenu"));
-    // Drawer nav links close the menu on click (covers that handler).
     const drawerLink = screen.getAllByText("nav.contact")[0].closest("a")!;
     await user.click(drawerLink);
   });
@@ -66,9 +64,8 @@ describe("Header", () => {
   it("opens the desktop language dropdown and selects English", async () => {
     const user = userEvent.setup();
     render(<Header />);
-    // Desktop switcher button shows the current locale label ("English").
     const langButton = screen.getAllByText("English")[0].closest("button")!;
-    await user.click(langButton); // opens dropdown (covers setIsLanguageOpen)
+    await user.click(langButton);
     const englishOptions = screen.getAllByText("English");
     await user.click(englishOptions[englishOptions.length - 1].closest("button")!);
     expect(replace).toHaveBeenCalledWith("/services", { locale: "en" });

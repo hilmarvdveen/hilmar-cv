@@ -1,8 +1,3 @@
-/**
- * Dynamic robots.txt Route
- * Generates robots.txt following Google 2024 best practices
- * Replaces static public/robots.txt with dynamic generation
- */
 
 import { NextResponse } from 'next/server';
 import { SEOUtils } from '@/lib/seo';
@@ -21,7 +16,6 @@ export function GET() {
   } catch (error) {
     console.error('Failed to generate robots.txt:', error);
     
-    // Fallback robots.txt
     const fallbackRobots = `User-agent: *
 Allow: /
 

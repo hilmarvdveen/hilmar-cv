@@ -6,11 +6,9 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   
-  // SEO and Performance optimizations
   compress: true,
   poweredByHeader: false,
   
-  // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
     remotePatterns: [
@@ -28,13 +26,9 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000, // 1 year
   },
   
-  // Headers for SEO and performance
   async headers() {
     return [
       {
-        // Static security headers applied to ALL routes (incl. API & static
-        // assets). The Content-Security-Policy is intentionally NOT here — it
-        // is set per-request with a nonce in src/proxy.ts (single source).
         source: '/(.*)',
         headers: [
           {
@@ -67,7 +61,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Cache static assets
       {
         source: '/images/(.*)',
         headers: [
@@ -77,7 +70,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Cache fonts
       {
         source: '/fonts/(.*)',
         headers: [
@@ -87,7 +79,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Cache logos
       {
         source: '/logos/(.*)',
         headers: [
@@ -97,7 +88,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Favicon files
       {
         source: '/favicon.(ico|svg|png)',
         headers: [
@@ -132,13 +122,9 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['www.hilmarvanderveen.com', 'hilmarvanderveen.com', 'localhost:3000', 'localhost:3001'],
     },
     optimizePackageImports: ['lucide-react', 'd3'],
-    // Inline the page's CSS into the HTML <head> instead of a render-blocking
-    // <link rel="stylesheet">. Removes the critical-path CSS request (the
-    // global stylesheet is small) and speeds up FCP/LCP.
     inlineCss: true,
   },
   
-  // Enable webpack optimizations
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.optimization.splitChunks.cacheGroups.commons = {

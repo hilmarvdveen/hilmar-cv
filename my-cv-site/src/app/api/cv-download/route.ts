@@ -93,7 +93,6 @@ This lead was generated from the CV download modal on hilmarvanderveen.com`;
       isHtml: false,
     });
 
-    // Thank-you to the user (HTML — escape user name).
     const safeName = escapeHtml(name);
     const thankYouBody =
       locale === "nl"

@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
 
-/**
- * Build a 500 response that never leaks internals in production.
- * In development the original error message/stack is included to aid debugging.
- */
 export function serverErrorResponse(
   error: unknown,
   publicMessage = "Internal Server Error"

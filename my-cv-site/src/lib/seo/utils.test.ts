@@ -45,7 +45,6 @@ describe("SEOUtils.createMetaTags", () => {
     } as never);
     expect(tags).toContainEqual({ name: "keywords", content: "single" });
     expect(tags.some((t) => "property" in t && t.property === "og:title")).toBe(true);
-    // falsy values are not emitted
     expect(tags.some((t) => "property" in t && t.property === "og:description")).toBe(false);
     expect(tags.some((t) => "name" in t && t.name === "twitter:card")).toBe(false);
   });

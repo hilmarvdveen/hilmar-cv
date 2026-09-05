@@ -1,8 +1,3 @@
-/**
- * Dynamic Sitemap Generator
- * Implements Google 2024 best practices for multilingual sitemaps
- * Includes proper hreflang implementation and all page types
- */
 
 import { SEOFactory } from '@/lib/seo';
 import { BLOG_POSTS } from '@/features/blog';

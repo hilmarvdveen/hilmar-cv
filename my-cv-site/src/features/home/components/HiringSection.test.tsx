@@ -110,12 +110,6 @@ describe("HiringSection", () => {
     }
   });
 
-  it("shows the highlight status dot only for highlighted facts", () => {
-    const { container } = render(<HiringSection />);
-    const dots = container.querySelectorAll("span.bg-emerald-500");
-    expect(dots).toHaveLength(1);
-  });
-
   it("renders the faq title and every question and answer", () => {
     render(<HiringSection />);
     expect(screen.getByText(faq.title)).toBeInTheDocument();

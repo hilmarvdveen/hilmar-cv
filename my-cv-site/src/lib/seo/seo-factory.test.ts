@@ -2,9 +2,6 @@ import { describe, it, expect } from "vitest";
 import { SEOFactory } from "./factory";
 import type { Locale } from "./types/seo-types";
 
-// Exercising SEOFactory transitively covers SEOEngine + MetadataGenerator +
-// SchemaGenerator (the bulk of the SEO logic) with no mocking.
-
 const PAGES = [
   "homepage",
   "about",
@@ -31,18 +28,15 @@ describe("SEOFactory page builders", () => {
         expect((result.metadata.title as string).length).toBeGreaterThan(0);
         expect(typeof result.metadata.description).toBe("string");
 
-        // canonical + language alternates present
         expect(result.metadata.alternates?.canonical).toBeTruthy();
         expect(result.metadata.alternates?.languages).toBeTruthy();
 
-        // at least one JSON-LD schema, each with an @type
         expect(Array.isArray(result.jsonLd)).toBe(true);
         expect(result.jsonLd.length).toBeGreaterThan(0);
         for (const schema of result.jsonLd) {
           expect(schema).toHaveProperty("@type");
         }
 
-        // structuredData is a serialized <script>-ready string
         expect(typeof result.structuredData).toBe("string");
         expect(result.structuredData).toContain("@type");
       });
@@ -69,7 +63,6 @@ describe("SEOFactory page builders", () => {
   });
 });
 
-
 describe("metadata quality across all pages (regression: title/desc/robots)", () => {
   const PAGE_FNS = [
     "homepage",
@@ -93,13 +86,9 @@ describe("metadata quality across all pages (regression: title/desc/robots)", ()
 
       it(`${page}/${locale}: title is clean and within length`, () => {
         expect(title.length).toBeGreaterThan(0);
-        // Google truncates titles around 60 chars.
         expect(title.length).toBeLessThanOrEqual(60);
-        // The bug we fixed: a literal three-dot ellipsis, and never
-        // "<truncated>… | Brand".
         expect(title).not.toContain("...");
         expect(title).not.toMatch(/…\s*\|/);
-        // The brand name must not be duplicated in one title.
         expect(title.split("Hilmar van der Veen").length - 1).toBeLessThanOrEqual(1);
       });
 
@@ -107,7 +96,6 @@ describe("metadata quality across all pages (regression: title/desc/robots)", ()
         const description = String(meta.description ?? "");
         expect(description.length).toBeGreaterThan(50);
         expect(description.length).toBeLessThanOrEqual(165);
-        // Content pages must be indexable with large image previews.
         expect(String(meta.robots)).toMatch(/index/);
         expect(String(meta.robots)).not.toMatch(/noindex/);
         expect(String(meta.robots)).toContain("max-image-preview:large");
@@ -134,7 +122,7 @@ describe("SEO structured-data & robots correctness", () => {
     expect(withSameAs.length).toBeGreaterThan(0);
     for (const schema of withSameAs) {
       for (const ref of schema.sameAs) {
-        expect(ref).toMatch(/^https?:\/\//); // no bare @handles
+        expect(ref).toMatch(/^https?:\/\//);
       }
     }
   });

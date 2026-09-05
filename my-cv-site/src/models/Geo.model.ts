@@ -13,10 +13,10 @@ export type ProvinceFeature = {
 }
 
 export type ProvinceProperties = {
-  statcode: string;       // e.g. "PV20"
-  jrstatcode: string;     // e.g. "2025PV20"
-  statnaam: string;       // e.g. "Groningen"
+  statcode: string;
+  jrstatcode: string;
+  statnaam: string;
   rubriek: "provincie";
   id: number;
-  FID: string;            // e.g. "provincie_gegeneraliseerd.<uuid>"
+  FID: string;
 }

@@ -122,7 +122,7 @@
             "steps": [
                 {
                     "title": "Read the legacy first",
-                    "body": "Reverse-engineer the old system, undocumented Java included, so the rebuild matches what runs today and no behaviour your customers rely on goes missing."
+                    "body": "Reverse-engineer the old system, undocumented Java included, and check the reading with the engineers who own it, so the rebuild matches what runs today and no behaviour your customers rely on goes missing."
                 },
                 {
                     "title": "Shape the contract",
@@ -134,7 +134,7 @@
                 },
                 {
                     "title": "Ramp by percentage",
-                    "body": "A small percentage of customers first, then more, then everyone. Each visitor stays in the same group, so nobody flips between the old page and the new one. Rollback stays one step away the whole way."
+                    "body": "A small percentage of customers first, then more, then everyone, verified before each next step. Each visitor stays in the same group, so nobody flips between the old page and the new one. Rollback stays one step away the whole way."
                 },
                 {
                     "title": "Measured from day one",
@@ -341,6 +341,7 @@
             "invite": "Click a logo to see what I delivered there."
         },
         "map": {
+            "period": "{from} to {to}",
             "companiesWorked": "Where the work happened",
             "workedIn": "The work took me to",
             "workMode": {
@@ -432,7 +433,7 @@
         "technologies": "Technologies",
         "workMode": {
             "remote": "Remote",
-            "onSite": "On-site",
+            "onSite": "On site",
             "hybrid": "Hybrid"
         },
         "language": {
@@ -459,7 +460,6 @@
             "jwt": "JWT",
             "java8": "Java 8",
             "maven": "Maven",
-            "gitlabs": "GitLab",
             "git": "Git",
             "npm": "NPM",
             "jenkins": "Jenkins",
@@ -479,7 +479,6 @@
             "WPF": "WPF",
             "MVVM": "MVVM",
             "WebForms": "Web Forms",
-            "API": "API",
             "Azure": "Azure",
             "MSSQL": "MSSQL",
             "TailwindCSS": "Tailwind CSS",
@@ -521,7 +520,6 @@
             "AspNetMVC": "ASP.NET MVC",
             "CQRS": "CQRS",
             "MediatorPattern": "Mediator Pattern",
-            "TSLint": "TSLint",
             "OctopusDeploy": "Octopus Deploy",
             "UIKit": "UIKit",
             "IntegrationTesting": "Integration Testing",
@@ -1221,7 +1219,13 @@
                                 "name": "C# .NET"
                             },
                             {
+                                "name": "Kotlin"
+                            },
+                            {
                                 "name": "GraphQL"
+                            },
+                            {
+                                "name": "gRPC"
                             },
                             {
                                 "name": "REST APIs"
@@ -1727,7 +1731,7 @@
                 },
                 {
                     "title": "Accessibility and privacy",
-                    "body": "Accessibility to WCAG 2.1 AA is part of the work and not a phase at the end, and 2.2 AA on the most recent engagements."
+                    "body": "Accessibility to WCAG 2.1 AA is part of the work and not a phase at the end, and 2.2 AA on the most recent engagements. GDPR training on personal data and EU AI Act literacy come with it."
                 },
                 {
                     "title": "Verification and handover",
@@ -1947,6 +1951,10 @@
                     {
                         "question": "What if we turn out not to be a fit?",
                         "answer": "Then you hear it in the call. If the work sits outside what I do, or the timing does not line up, I say so, and where I can I point at what would fit better."
+                    },
+                    {
+                        "question": "What if the backend cannot change the field in time?",
+                        "answer": "Then the page takes the shape as it is, in one adapter at the edge of the frontend, with a note that says why it is there. The proposal for the source goes to the backend team the same week, so the next version fixes it where it belongs and the adapter comes out."
                     }
                 ]
             }
@@ -1973,7 +1981,7 @@
         "faq": "FAQ",
         "privacy": "Privacy",
         "blog": "Blog",
-        "terms": "Terms of service",
+        "terms": "Terms of use",
         "cookies": "Cookie policy",
         "disclaimer": "Disclaimer",
         "search": "Search",
@@ -2125,7 +2133,7 @@
             "title": "Legal",
             "items": {
                 "privacy": "Privacy policy",
-                "terms": "Terms of service",
+                "terms": "Terms of use",
                 "cookies": "Cookie policy",
                 "disclaimer": "Disclaimer"
             }

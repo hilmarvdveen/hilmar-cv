@@ -46,8 +46,6 @@ const trophyEdges = [
   flowEdge("unit", "static", { dashed: true }),
 ];
 
-// Stacked downward: Test → Component, then Component fans out to its real
-// children and the mocked network boundary.
 const mockNodes = [
   flowNode("test", "Test", { x: 210, y: 0 }, { tone: "violet", subtitle: "renders + asserts", direction: "TB", width: 180 }),
   flowNode("comp", "Component", { x: 210, y: 140 }, { tone: "blue", subtitle: "REAL", direction: "TB", width: 180 }),
@@ -155,7 +153,6 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
-// ── Comment-free code (shared across locales) ────────────────────────────────
 const VITEST_CONFIG = `import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -185,7 +182,6 @@ it.each([
   expect(formatPrice(cents, locale)).toBe(expected);
 });`;
 
-// ── Code with teaching comments (translated per locale) ──────────────────────
 const COUNTER_CODE_EN = `import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, it } from "vitest";
@@ -306,7 +302,6 @@ it("shows products once they load", async () => {
   expect(await screen.findByText("Keyboard")).toBeInTheDocument();
 });`;
 
-// ── Bilingual copy ────────────────────────────────────────────────────────────
 const COPY = {
   lead: {
     en: "Tests don't exist to chase a high coverage number. They help you change code safely later, without breaking existing behaviour.",
@@ -472,7 +467,6 @@ const COPY = {
     en: "Coverage helps you find gaps, but it is not a goal in itself. A strong suite combines clear behaviour tests, small unit tests for pure logic, a few critical end-to-end tests, and deliberate exceptions where another test layer fits better.",
     nl: "Coverage helpt om gaten te vinden, maar het is geen doel op zichzelf. Een sterke suite combineert duidelijke gedragstests, kleine unit-tests voor pure logica, een paar kritieke end-to-end-tests en bewuste uitzonderingen waar een andere testlaag beter past.",
   },
-  // Code samples keyed by locale
   counterCode: { en: COUNTER_CODE_EN, nl: COUNTER_CODE_NL },
   handlersCode: { en: HANDLERS_CODE_EN, nl: HANDLERS_CODE_NL },
   serverCode: { en: SERVER_CODE_EN, nl: SERVER_CODE_NL },
