@@ -127,3 +127,15 @@ crawlers, are still Hilmar's decisions.
 - Keep the canonical host (`https://www.hilmarvanderveen.com`) in sync with
   `next.config.ts` `images.remotePatterns`. The bare domain redirects to
   `www` at the platform.
+
+## Page-aware social card (5 September 2026)
+
+Every page's `og:image` and `twitter:image` point at `/api/og` with the
+locale and the page title as query parameters (`socialCardUrl` in
+`src/lib/seo/socialCard.ts`, used by the metadata generator and by
+`localizedOpenGraph()`). The route renders the navy card with the logo,
+the name, the page title and the positioning line, cached for a day.
+The per-locale `opengraph-image` and `twitter-image` routes stay as the
+default card without a title. Titles are cleaned by `socialCardTitle`:
+the brand suffix goes, whitespace collapses, and anything over 90
+characters is cut on a word boundary.

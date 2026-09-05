@@ -15,13 +15,13 @@ export const BUSINESS_PROFILE = {
     COUNTRY_CODE: 'NL',
   },
   LOCATION: {
-    CITY: 'Utrecht',
+    CITY: 'Zandvoort',
     COUNTRY: 'Netherlands',
     COUNTRY_CODE: 'NL',
-    REGION: 'UT',
+    REGION: 'NH',
     COORDINATES: {
-      LAT: 52.0907,
-      LNG: 5.1214
+      LAT: 52.3731,
+      LNG: 4.5322
     }
   },
   SERVICE_AREA: {

@@ -1,7 +1,7 @@
 {
     "home": {
         "hero": {
-            "badge": "Available from 1 October 2026 · Utrecht, hybrid or remote",
+            "badge": "Available from 1 October 2026 · Randstad, hybrid or remote",
             "heading": "Senior frontend, owned end to end. From legacy spec to live cut-over.",
             "description": "Ten-plus years senior in React and Angular, currently at bol.com. I build the pages customers see, from specification to production, shape the GraphQL contract with the backend team, and ramp them onto live traffic in reversible steps.",
             "bookCall": "Book a 30-minute call",
@@ -238,7 +238,7 @@
                 },
                 {
                     "label": "Location",
-                    "value": "Utrecht, hybrid or remote",
+                    "value": "Randstad, hybrid or remote",
                     "detail": "1 to 2 days on site works well",
                     "highlight": false
                 },
@@ -903,7 +903,7 @@
                 },
                 {
                     "label": "Location",
-                    "value": "Utrecht, hybrid or remote, 1 to 2 days on site works well"
+                    "value": "Randstad, hybrid or remote, 1 to 2 days on site works well"
                 },
                 {
                     "label": "Languages",
@@ -1151,7 +1151,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Utrecht 1 to 2 days on site, or fully remote",
+                    "Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1339,7 +1339,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Utrecht 1 to 2 days on site, or fully remote",
+                    "Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1517,7 +1517,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Utrecht 1 to 2 days on site, or fully remote",
+                    "Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1667,7 +1667,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Utrecht 1 to 2 days on site, or fully remote",
+                    "Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1740,7 +1740,7 @@
             ]
         },
         "map": {
-            "contactLine": "Utrecht one to two days on site, or fully remote."
+            "contactLine": "Randstad, one to two days on site, or fully remote."
         },
         "cta": {
             "title": "See whether I fit your team",
@@ -1798,7 +1798,7 @@
             "features": {
                 "quick": "From 1 October 2026",
                 "expert": "React and Angular, senior since 2016",
-                "remote": "Utrecht or remote"
+                "remote": "Randstad or remote"
             }
         },
         "quickNav": {
@@ -1930,7 +1930,7 @@
                 "questions": [
                     {
                         "question": "Do you work on site or remote?",
-                        "answer": "Hybrid, with one to two days a week on site in Utrecht, and fully remote works too. Amsterdam, Rotterdam and Den Haag are within reach on the same terms. I am based in Zandvoort and work in the Dutch timezone."
+                        "answer": "Hybrid, with one to two days a week on site in the Randstad, and fully remote works too. Amsterdam, Utrecht, Rotterdam and Den Haag are within reach on the same terms. I am based in Zandvoort and work in the Dutch timezone."
                     },
                     {
                         "question": "Can you work inside our existing team?",
@@ -2070,7 +2070,7 @@
             "practicalTitle": "Practical",
             "practical": [
                 "Available from 1 October 2026, earlier by arrangement",
-                "Utrecht, hybrid or remote, 1 to 2 days on site works well",
+                "Randstad, hybrid or remote, 1 to 2 days on site works well",
                 "Freelance ZZP via Hilmar ICT Services, KVK 97564303",
                 "€95 to €125 per hour, depending on project type and work"
             ],
@@ -2106,7 +2106,7 @@
             "name": "Hilmar van der Veen",
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React and Angular, in the Randstad and remote.",
-            "location": "Zandvoort NL • Utrecht, hybrid or remote",
+            "location": "Zandvoort NL • Randstad, hybrid or remote",
             "availability": "Available from 1 October 2026"
         },
         "services": {

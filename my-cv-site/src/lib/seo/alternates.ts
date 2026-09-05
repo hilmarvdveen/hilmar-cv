@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BUSINESS_PROFILE, LOCALE_CONFIG, SOCIAL_OPTIMIZATION } from "./constants/meta-constants";
+import { socialCardUrl } from "./socialCard";
 
 type SupportedLocale = (typeof LOCALE_CONFIG.SUPPORTED)[number];
 
@@ -58,7 +59,7 @@ export const localizedOpenGraph = (
       alternateLocale,
       images: [
         {
-          url: `${siteBase()}/${currentLocale}/opengraph-image`,
+          url: socialCardUrl(siteBase(), currentLocale, title),
           width: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.WIDTH,
           height: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.HEIGHT,
           alt: title,
@@ -69,7 +70,7 @@ export const localizedOpenGraph = (
       card: SOCIAL_OPTIMIZATION.TWITTER.CARD,
       title,
       description,
-      images: [`${siteBase()}/${currentLocale}/twitter-image`],
+      images: [socialCardUrl(siteBase(), currentLocale, title)],
     },
   };
 };

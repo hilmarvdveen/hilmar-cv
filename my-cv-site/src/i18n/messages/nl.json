@@ -1,7 +1,7 @@
 {
     "home": {
         "hero": {
-            "badge": "Beschikbaar vanaf 1 oktober 2026 · Utrecht, hybride of remote",
+            "badge": "Beschikbaar vanaf 1 oktober 2026 · Randstad, hybride of remote",
             "heading": "Senior frontend engineer voor de hele keten. Van legacy-specificatie tot live cut-over.",
             "description": "Ruim tien jaar senior in React en Angular, nu bij bol.com. Ik bouw de pagina's die klanten zien, van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en zet ze in omkeerbare stappen live op echt verkeer.",
             "bookCall": "Plan een gesprek van 30 minuten",
@@ -238,7 +238,7 @@
                 },
                 {
                     "label": "Locatie",
-                    "value": "Utrecht, hybride of remote",
+                    "value": "Randstad, hybride of remote",
                     "detail": "1 à 2 dagen op locatie werkt goed",
                     "highlight": false
                 },
@@ -869,7 +869,7 @@
                 },
                 {
                     "label": "Locatie",
-                    "value": "Utrecht, hybride of remote, 1 à 2 dagen op locatie werkt goed"
+                    "value": "Randstad, hybride of remote, 1 à 2 dagen op locatie werkt goed"
                 },
                 {
                     "label": "Talen",
@@ -1117,7 +1117,7 @@
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
                     "32 tot 40 uur per week, zes maanden of langer",
-                    "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
+                    "Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
                 ]
@@ -1305,7 +1305,7 @@
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
                     "32 tot 40 uur per week, zes maanden of langer",
-                    "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
+                    "Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
                 ]
@@ -1483,7 +1483,7 @@
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
                     "32 tot 40 uur per week, zes maanden of langer",
-                    "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
+                    "Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
                 ]
@@ -1633,7 +1633,7 @@
                 "terms": [
                     "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
                     "32 tot 40 uur per week, zes maanden of langer",
-                    "Utrecht 1 tot 2 dagen op locatie, of volledig remote",
+                    "Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
                     "€95 tot €125 per uur, afhankelijk van projecttype en werk"
                 ]
@@ -1731,7 +1731,7 @@
             "features": {
                 "quick": "Vanaf 1 oktober 2026",
                 "expert": "React en Angular, senior sinds 2016",
-                "remote": "Utrecht of remote"
+                "remote": "Randstad of remote"
             }
         },
         "quickNav": {
@@ -1863,7 +1863,7 @@
                 "questions": [
                     {
                         "question": "Werk je op locatie of remote?",
-                        "answer": "Hybride, met één tot twee dagen per week op locatie in Utrecht, en volledig remote kan ook. Amsterdam, Rotterdam en Den Haag liggen op dezelfde voorwaarden binnen bereik. Ik woon in Zandvoort en werk in de Nederlandse tijdzone."
+                        "answer": "Hybride, met één tot twee dagen per week op locatie in de Randstad, en volledig remote kan ook. Amsterdam, Utrecht, Rotterdam en Den Haag liggen op dezelfde voorwaarden binnen bereik. Ik woon in Zandvoort en werk in de Nederlandse tijdzone."
                     },
                     {
                         "question": "Kun je binnen ons bestaande team werken?",
@@ -2003,7 +2003,7 @@
             "practicalTitle": "Praktisch",
             "practical": [
                 "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-                "Utrecht, hybride of remote, 1 à 2 dagen op locatie werkt goed",
+                "Randstad, hybride of remote, 1 à 2 dagen op locatie werkt goed",
                 "Freelance ZZP via Hilmar ICT Services, KVK 97564303",
                 "€95 tot €125 per uur, afhankelijk van projecttype en werk"
             ],
@@ -2093,7 +2093,7 @@
             ]
         },
         "map": {
-            "contactLine": "Utrecht één tot twee dagen op locatie, of volledig remote."
+            "contactLine": "Randstad, één tot twee dagen op locatie, of volledig remote."
         },
         "cta": {
             "title": "Kijk of ik bij je team pas",
@@ -2106,7 +2106,7 @@
             "name": "Hilmar van der Veen",
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React en Angular, in de Randstad en remote.",
-            "location": "Zandvoort NL • Utrecht, hybride of remote",
+            "location": "Zandvoort NL • Randstad, hybride of remote",
             "availability": "Beschikbaar vanaf 1 oktober 2026"
         },
         "services": {

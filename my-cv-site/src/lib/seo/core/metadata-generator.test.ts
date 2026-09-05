@@ -96,9 +96,9 @@ describe("MetadataGenerator.generateMetadata", () => {
     const meta = gen.generateMetadata(buildConfiguration({ locale: "nl" }));
     const og = meta.openGraph as { images: { url: string; width: number; height: number }[] };
     const tw = meta.twitter as { images: string[] };
-    expect(og.images[0].url).toBe("https://www.hilmarvanderveen.com/nl/opengraph-image");
+    expect(og.images[0].url).toContain("https://www.hilmarvanderveen.com/api/og?locale=nl&title=");
     expect(og.images[0].width).toBe(1200);
     expect(og.images[0].height).toBe(630);
-    expect(tw.images[0]).toBe("https://www.hilmarvanderveen.com/nl/twitter-image");
+    expect(tw.images[0]).toContain("https://www.hilmarvanderveen.com/api/og?locale=nl&title=");
   });
 });

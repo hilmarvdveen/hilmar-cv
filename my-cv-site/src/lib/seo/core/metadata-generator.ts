@@ -1,6 +1,7 @@
 
 import { Metadata } from 'next';
-import type { 
+import { socialCardUrl } from '../socialCard';
+import type {
   SEOPageConfig, 
   Locale, 
   PageType, 
@@ -138,7 +139,7 @@ export class MetadataGenerator {
       ),
       images: [
         {
-          url: `${this.baseUrl}/${config.locale}/opengraph-image`,
+          url: socialCardUrl(this.baseUrl, config.locale, config.title),
           width: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.WIDTH,
           height: SOCIAL_OPTIMIZATION.OPEN_GRAPH.IMAGE_SIZE.HEIGHT,
           alt: config.title,
@@ -152,7 +153,7 @@ export class MetadataGenerator {
       card: SOCIAL_OPTIMIZATION.TWITTER.CARD,
       title: config.title,
       description: config.description,
-      images: [`${this.baseUrl}/${config.locale}/twitter-image`],
+      images: [socialCardUrl(this.baseUrl, config.locale, config.title)],
     };
   }
 

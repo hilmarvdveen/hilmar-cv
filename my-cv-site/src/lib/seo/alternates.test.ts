@@ -56,7 +56,7 @@ describe("localizedOpenGraph", () => {
     };
     expect(openGraph.images).toEqual([
       {
-        url: "https://www.hilmarvanderveen.com/nl/opengraph-image",
+        url: "https://www.hilmarvanderveen.com/api/og?locale=nl&title=Privacyverklaring",
         width: 1200,
         height: 630,
         alt: "Privacyverklaring",
@@ -64,7 +64,9 @@ describe("localizedOpenGraph", () => {
     ]);
     const twitter = result.twitter as { card: string; images: string[] };
     expect(twitter.card).toBe("summary_large_image");
-    expect(twitter.images).toEqual(["https://www.hilmarvanderveen.com/nl/twitter-image"]);
+    expect(twitter.images).toEqual([
+      "https://www.hilmarvanderveen.com/api/og?locale=nl&title=Privacyverklaring",
+    ]);
   });
 
   it("falls back to the default locale for an unsupported locale code", () => {
