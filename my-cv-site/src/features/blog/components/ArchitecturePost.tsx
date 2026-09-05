@@ -270,7 +270,7 @@ const DUMMY: Product[] = [
   { id: "p3", name: "Standing Desk", price: 549 },
 ];
 
-// Dummy data for now — replace with fetch('/api/products') later.
+// Dummy data for now. Replace with fetch('/api/products') later.
 export async function fetchProducts(): Promise<Product[]> {
   await new Promise((r) => setTimeout(r, 150));
   return DUMMY;
@@ -284,7 +284,7 @@ const DUMMY: Product[] = [
   { id: "p3", name: "Standing Desk", price: 549 },
 ];
 
-// Voorlopig dummydata — vervang later door fetch('/api/products').
+// Voorlopig dummydata. Vervang later door fetch('/api/products').
 export async function fetchProducts(): Promise<Product[]> {
   await new Promise((r) => setTimeout(r, 150));
   return DUMMY;
@@ -301,7 +301,7 @@ export function ProductList() {
     <ul>
       {products.map((product) => (
         <li key={product.id}>
-          {product.name} — €{product.price}
+          {product.name}: €{product.price}
         </li>
       ))}
     </ul>
@@ -319,7 +319,7 @@ export function ProductList() {
     <ul>
       {products.map((product) => (
         <li key={product.id}>
-          {product.name} — €{product.price}
+          {product.name}: €{product.price}
         </li>
       ))}
     </ul>
@@ -402,7 +402,7 @@ const COPY = {
     nl: "Voor veel moderne React-apps vormen Vite, React Router, Vitest en Storybook samen een sterke basis. Vite zorgt voor snelle development en builds. React Router koppelt routes aan data. Vitest laat je testen binnen dezelfde toolchain. Storybook maakt componenten zichtbaar en testbaar buiten de volledige app.",
   },
   intro2: {
-    en: "This article shows how these tools fit together — not as separate choices, but as one architecture for a React app that is still pleasant to work on after year two.",
+    en: "This article shows how these tools fit together, not as separate choices but as one architecture for a React app that is still pleasant to work on after year two.",
     nl: "In dit artikel laat ik zien hoe deze tools op elkaar aansluiten. Niet als losse keuzes, maar als één architectuur voor een React-app die ook na jaar twee nog prettig blijft om aan te werken.",
   },
   stackAria: {
@@ -424,8 +424,8 @@ const COPY = {
   },
   viteB1S: { en: "Instant startup.", nl: "Directe start." },
   viteB1: {
-    en: "No bundling on boot — the dev server is ready in milliseconds.",
-    nl: "Geen bundeling bij het opstarten — de dev-server is in milliseconden klaar.",
+    en: "No bundling on boot, so the dev server is ready in milliseconds.",
+    nl: "Geen bundeling bij het opstarten, dus de dev-server is in milliseconden klaar.",
   },
   viteB2S: { en: "TypeScript & JSX, transpile-only.", nl: "TypeScript & JSX, alleen transpiling." },
   viteB2: {
@@ -439,25 +439,25 @@ const COPY = {
   },
   routerTitle: { en: "React Router: routes and data", nl: "React Router: routes en data" },
   router1: {
-    en: "Modern React Router became a framework layer in v7 through the merge with Remix. In 2026, v8 is the current major — a non-breaking upgrade with higher baselines: Node 22+, Vite 7+, React 19+ and ESM-only. The data APIs from v7 are the foundation: loaders, actions, route objects and automatic revalidation.",
-    nl: "Moderne React Router werd in v7 ook een frameworklaag, door de samenvoeging met Remix. In 2026 is v8 de actuele major — een non-breaking upgrade met hogere baselines: Node 22+, Vite 7+, React 19+ en ESM-only. De data-API’s uit v7 blijven de basis: loaders, actions, route objects en automatische revalidatie.",
+    en: "Modern React Router became a framework layer in v7 through the merge with Remix. In 2026, v8 is the current major, a non-breaking upgrade with higher baselines: Node 22+, Vite 7+, React 19+ and ESM-only. The data APIs from v7 are the foundation: loaders, actions, route objects and automatic revalidation.",
+    nl: "Moderne React Router werd in v7 ook een frameworklaag, door de samenvoeging met Remix. In 2026 is v8 de actuele major, een non-breaking upgrade met hogere baselines: Node 22+, Vite 7+, React 19+ en ESM-only. De data-API’s uit v7 blijven de basis: loaders, actions, route objects en automatische revalidatie.",
   },
   router2: {
-    en: "React Router has three modes: Declarative, Data and Framework. This article uses Data Mode with createBrowserRouter — loaders, actions and pending states without the full build integration. The same concepts exist in Framework Mode, which adds the Vite plugin, route types and code splitting.",
-    nl: "React Router kent drie modes: Declarative, Data en Framework. Dit artikel gebruikt Data Mode met createBrowserRouter — loaders, actions en pending states zonder de volledige build-integratie. Dezelfde concepten bestaan in Framework Mode, die daar de Vite-plugin, route-types en code splitting aan toevoegt.",
+    en: "React Router has three modes: Declarative, Data and Framework. This article uses Data Mode with createBrowserRouter: loaders, actions and pending states without the full build integration. The same concepts exist in Framework Mode, which adds the Vite plugin, route types and code splitting.",
+    nl: "React Router kent drie modes: Declarative, Data en Framework. Dit artikel gebruikt Data Mode met createBrowserRouter: loaders, actions en pending states zonder de volledige build-integratie. Dezelfde concepten bestaan in Framework Mode, die daar de Vite-plugin, route-types en code splitting aan toevoegt.",
   },
   router3: {
-    en: "Define the route tree once. The Component + loader pairing means the data is ready before the component renders. RootLayout is a parent route; it must render an <Outlet /> where the matched child appears.",
-    nl: "Definieer de routeboom één keer. De Component + loader-koppeling betekent dat de data klaar is vóór de component rendert. RootLayout is een parent route; die moet een <Outlet /> renderen waar het gematchte kind verschijnt.",
+    en: "Define the route tree once. The Component + loader pairing means the data is ready before the component renders. RootLayout is a parent route, so it must render an <Outlet /> where the matched child appears.",
+    nl: "Definieer de routeboom één keer. De Component + loader-koppeling betekent dat de data klaar is vóór de component rendert. RootLayout is een parent route, dus die moet een <Outlet /> renderen waar het gematchte kind verschijnt.",
   },
   router4: {
-    en: "The loader is plain async code. Here it returns dummy data; later you can replace it with a real endpoint without changing how the component uses it. The component reads the result with useLoaderData.",
-    nl: "De loader is gewone async-code. Hier geeft hij dummydata terug; later kun je die vervangen door een echt endpoint, zonder de component anders te laten werken. De component leest het resultaat met useLoaderData.",
+    en: "The loader is plain async code. Here it returns dummy data. Later you can replace it with a real endpoint without changing how the component uses it. The component reads the result with useLoaderData.",
+    nl: "De loader is gewone async-code. Hier geeft hij dummydata terug. Later kun je die vervangen door een echt endpoint, zonder de component anders te laten werken. De component leest het resultaat met useLoaderData.",
   },
   dataTitle: { en: "Loaders, actions and revalidation", nl: "Loaders, actions en revalidatie" },
   data1: {
-    en: "Reads and writes use separate doors. A navigation triggers loaders; a form submission triggers an action. After an action, React Router revalidates the loader data on the page automatically, so the UI usually stays in sync without manual cache management.",
-    nl: "Lezen en schrijven hebben aparte deuren. Een navigatie triggert loaders; een formulierverzending triggert een action. Na een action revalideert React Router de loader-data op de pagina automatisch, zodat de UI meestal synchroon blijft zonder handmatig cachebeheer.",
+    en: "Reads and writes use separate doors. A navigation triggers loaders and a form submission triggers an action. After an action, React Router revalidates the loader data on the page automatically, so the UI usually stays in sync without manual cache management.",
+    nl: "Lezen en schrijven hebben aparte deuren. Een navigatie triggert loaders en een formulierverzending triggert een action. Na een action revalideert React Router de loader-data op de pagina automatisch, zodat de UI meestal synchroon blijft zonder handmatig cachebeheer.",
   },
   dataAria: {
     en: "Two columns: the read path (navigation → loader → component) on the left, and the write path (form submit → action → revalidate) on the right",
@@ -469,17 +469,17 @@ const COPY = {
   },
   queryTitle: { en: "When TanStack Query still fits", nl: "Wanneer TanStack Query alsnog past" },
   queryBody: {
-    en: "Loaders work well for data that belongs directly to a route, so for much route data you don't need a separate cache layer. When a query library is still useful — cross-route caching, background refetching, optimistic updates beyond one route — add something like TanStack Query on top. Start with loaders and add it only when you feel the need.",
-    nl: "Loaders werken goed voor data die direct bij een route hoort, dus voor veel routedata heb je geen aparte cachelaag nodig. Wanneer een query-library alsnog nuttig is — caching over routes heen, achtergrond-refetching of optimistische updates buiten één route — leg je er iets als TanStack Query bovenop. Begin met loaders en voeg het pas toe als je de behoefte voelt.",
+    en: "Loaders work well for data that belongs directly to a route, so for much route data you don't need a separate cache layer. When a query library is still useful, for cross-route caching, background refetching or optimistic updates beyond one route, add something like TanStack Query on top. Start with loaders and add it only when you feel the need.",
+    nl: "Loaders werken goed voor data die direct bij een route hoort, dus voor veel routedata heb je geen aparte cachelaag nodig. Wanneer een query-library alsnog nuttig is, voor caching over routes heen, achtergrond-refetching of optimistische updates buiten één route, leg je er iets als TanStack Query bovenop. Begin met loaders en voeg het pas toe als je de behoefte voelt.",
   },
   sbTitle: { en: "Storybook: develop components in isolation", nl: "Storybook: componenten apart ontwikkelen" },
   sb1: {
-    en: "Storybook runs your components outside the app, one state at a time. You build a Button against every variant — primary, disabled, loading — without first clicking through three screens to reach it. The modern format is CSF3: stories are plain objects with args. For React + Vite, use the @storybook/react-vite framework.",
-    nl: "Storybook draait je componenten buiten de app, één staat tegelijk. Je bouwt een Button tegen elke variant — primary, disabled, loading — zonder eerst door drie schermen te klikken om er te komen. Het moderne formaat is CSF3: stories zijn gewone objecten met args. Voor React + Vite gebruik je het framework @storybook/react-vite.",
+    en: "Storybook runs your components outside the app, one state at a time. You build a Button against every variant (primary, disabled, loading) without first clicking through three screens to reach it. The modern format is CSF3: stories are plain objects with args. For React + Vite, use the @storybook/react-vite framework.",
+    nl: "Storybook draait je componenten buiten de app, één staat tegelijk. Je bouwt een Button tegen elke variant (primary, disabled, loading) zonder eerst door drie schermen te klikken om er te komen. Het moderne formaat is CSF3: stories zijn gewone objecten met args. Voor React + Vite gebruik je het framework @storybook/react-vite.",
   },
   sb2: {
-    en: "Add the autodocs tag and Storybook generates a documentation page from your component's props and stories — a living component catalogue your whole team can browse.",
-    nl: "Voeg de autodocs-tag toe en Storybook genereert een documentatiepagina uit de props en stories van je component — een levende componentcatalogus die je hele team kan doorbladeren.",
+    en: "Add the autodocs tag and Storybook generates a documentation page from your component's props and stories: a living component catalogue your whole team can browse.",
+    nl: "Voeg de autodocs-tag toe en Storybook genereert een documentatiepagina uit de props en stories van je component: een levende componentcatalogus die je hele team kan doorbladeren.",
   },
   sbTestTitle: { en: "Stories can also work as tests", nl: "Stories kunnen ook als tests werken" },
   sbTestBody: {
@@ -488,8 +488,8 @@ const COPY = {
   },
   testTitle: { en: "Vitest: tests in the same toolchain", nl: "Vitest: tests in dezelfde toolchain" },
   test1: {
-    en: "Vitest is the Vite-native test runner. Because it reuses vite.config.ts, your aliases and transforms work the same in tests and at runtime — no second toolchain to keep in sync. Pair it with React Testing Library and you test components the way users use them: by role and by behaviour.",
-    nl: "Vitest is de Vite-native testrunner. Omdat het vite.config.ts hergebruikt, werken je aliassen en transforms identiek in tests en runtime — geen tweede toolchain om gesynchroniseerd te houden. Combineer het met React Testing Library en je test componenten zoals gebruikers ze gebruiken: op rol en op gedrag.",
+    en: "Vitest is the Vite-native test runner. Because it reuses vite.config.ts, your aliases and transforms work the same in tests and at runtime. There is no second toolchain to keep in sync. Pair it with React Testing Library and you test components the way users use them: by role and by behaviour.",
+    nl: "Vitest is de Vite-native testrunner. Omdat het vite.config.ts hergebruikt, werken je aliassen en transforms identiek in tests en runtime. Er is geen tweede toolchain om gesynchroniseerd te houden. Combineer het met React Testing Library en je test componenten zoals gebruikers ze gebruiken: op rol en op gedrag.",
   },
   test2: {
     en: "For components that depend on real browser APIs, Vitest Browser Mode can help. It runs tests in a browser, but needs extra configuration and isn't automatically a replacement for all end-to-end tests. We go deeper on testing strategy in a dedicated post.",
@@ -497,12 +497,12 @@ const COPY = {
   },
   togetherTitle: { en: "A practical feature structure", nl: "Een praktische featurestructuur" },
   together1: {
-    en: "A feature folder holds everything for a slice of the product: its component, its story, its test, its loader and its data access — colocated so the whole feature moves as a unit.",
-    nl: "Een featuremap bevat alles voor een stuk van het product: de component, de story, de test, de loader en de datatoegang — gecolokeerd zodat de hele feature als één geheel meebeweegt.",
+    en: "A feature folder holds everything for a slice of the product: its component, its story, its test, its loader and its data access, colocated so the whole feature moves as a unit.",
+    nl: "Een featuremap bevat alles voor een stuk van het product: de component, de story, de test, de loader en de datatoegang, gecolokeerd zodat de hele feature als één geheel meebeweegt.",
   },
   treeCaption: {
-    en: "Each feature colocates component, story, test and data — Vite, Router, Vitest and Storybook all point here.",
-    nl: "Elke feature colokeert component, story, test en data — Vite, Router, Vitest en Storybook wijzen allemaal hierheen.",
+    en: "Each feature colocates component, story, test and data. Vite, Router, Vitest and Storybook all point here.",
+    nl: "Elke feature colokeert component, story, test en data. Vite, Router, Vitest en Storybook wijzen allemaal hierheen.",
   },
   takeawayTitle: { en: "Four choices for a stable baseline", nl: "Vier keuzes voor een stabiele basis" },
   t1S: { en: "Build with Vite.", nl: "Bouw met Vite." },

@@ -393,8 +393,8 @@ const COPY = {
     nl: "De route /dashboard/products bestaat uit meerdere lagen. De root-route rendert de basis van de app. De dashboard-route rendert de dashboard-layout. De products-route rendert de productlijst in de <Outlet /> van die layout.",
   },
   nestAria: {
-    en: "Diagram: root renders dashboard in its Outlet; dashboard renders products or settings in its Outlet",
-    nl: "Diagram: root rendert dashboard in zijn Outlet; dashboard rendert products of settings in zijn Outlet",
+    en: "Diagram: root renders dashboard in its Outlet, and dashboard renders products or settings in its Outlet",
+    nl: "Diagram: root rendert dashboard in zijn Outlet, en dashboard rendert products of settings in zijn Outlet",
   },
   nestCaption: {
     en: "Each route renders its child in an <Outlet/>. The shared layout stays in place when you navigate between children.",
@@ -405,12 +405,12 @@ const COPY = {
     nl: "Zo hebben de routeboom en de componentboom dezelfde vorm. Gedeelde layout staat in de ouder en re-mount niet bij navigatie tussen kinderen.",
   },
   nest3: {
-    en: "You declare that structure once in app/routes.ts. route() adds a URL segment and can nest children; index() attaches the default page for a segment.",
-    nl: "Je legt die structuur één keer vast in app/routes.ts. route() voegt een URL-segment toe en kan kinderen nesten; index() koppelt de standaardpagina van een segment.",
+    en: "You declare that structure once in app/routes.ts. route() adds a URL segment and can nest children. index() attaches the default page for a segment.",
+    nl: "Je legt die structuur één keer vast in app/routes.ts. route() voegt een URL-segment toe en kan kinderen nesten. index() koppelt de standaardpagina van een segment.",
   },
   nest4: {
-    en: "The dashboard route renders the shared layout and places an <Outlet /> where the active child route appears. Switching between products and settings changes only the Outlet — the navigation stays put.",
-    nl: "De dashboard-route rendert de gedeelde layout en plaatst een <Outlet /> waar de actieve child-route verschijnt. Wissel je tussen products en settings, dan verandert alleen de Outlet — de navigatie blijft staan.",
+    en: "The dashboard route renders the shared layout and places an <Outlet /> where the active child route appears. Switching between products and settings changes only the Outlet. The navigation stays put.",
+    nl: "De dashboard-route rendert de gedeelde layout en plaatst een <Outlet /> waar de actieve child-route verschijnt. Wissel je tussen products en settings, dan verandert alleen de Outlet. De navigatie blijft staan.",
   },
   loaderTitle: { en: "Loaders and actions: load and mutate data", nl: "Loaders en actions: data laden en muteren" },
   loader1: {
@@ -418,8 +418,8 @@ const COPY = {
     nl: "Een loader haalt data op voordat een route rendert. Een action verwerkt een mutatie, bijvoorbeeld een formulier dat een nieuw product opslaat. Elke route-module kan beide exporteren.",
   },
   loader2: {
-    en: "The component receives the data through loaderData, fully typed. For the normal view the data is already there, so you usually don't need a separate loading state. The <Form> posts to the action; afterwards React Router re-runs the page's loaders, so the list refreshes automatically — with no cache code of your own.",
-    nl: "De component krijgt de data via loaderData, volledig getypeerd. Voor de standaardweergave is de data dus al beschikbaar en hoef je geen aparte loading-state te tonen. Het <Form> post naar de action. Daarna draait React Router de loaders van de pagina opnieuw, zodat de lijst automatisch ververst — zonder eigen cachecode.",
+    en: "The component receives the data through loaderData, fully typed. For the normal view the data is already there, so you usually don't need a separate loading state. The <Form> posts to the action. Afterwards React Router re-runs the page's loaders, so the list refreshes automatically, with no cache code of your own.",
+    nl: "De component krijgt de data via loaderData, volledig getypeerd. Voor de standaardweergave is de data dus al beschikbaar en hoef je geen aparte loading-state te tonen. Het <Form> post naar de action. Daarna draait React Router de loaders van de pagina opnieuw, zodat de lijst automatisch ververst, zonder eigen cachecode.",
   },
   lifecycleTitle: { en: "What happens on a request?", nl: "Wat gebeurt er bij een request?" },
   lifecycle1: {
@@ -431,8 +431,8 @@ const COPY = {
     nl: "Diagram: request, routes matchen, loaders parallel draaien, HTML renderen, hydrateren op de client",
   },
   lifecycleCaption: {
-    en: "The loaders for all matched routes start together — nesting doesn't mean sequential loading.",
-    nl: "De loaders van alle gematchte routes starten tegelijk — nesting betekent geen sequentieel laden.",
+    en: "The loaders for all matched routes start together. Nesting doesn't mean sequential loading.",
+    nl: "De loaders van alle gematchte routes starten tegelijk. Nesting betekent geen sequentieel laden.",
   },
   lifecycleTipTitle: { en: "Loaders run in parallel by default", nl: "Loaders draaien standaard parallel" },
   lifecycleTipBody: {
@@ -446,12 +446,12 @@ const COPY = {
   },
   errorTitle: { en: "Error boundaries per route", nl: "Error boundaries per route" },
   error1: {
-    en: "Every route module can export its own ErrorBoundary. If a loader throws an error — or a Response like the 404 above — React Router finds the nearest ErrorBoundary. Only that part of the UI shows an error; the rest of the layout stays visible.",
-    nl: "Elke route-module kan een eigen ErrorBoundary exporteren. Gooit een loader een fout — of een Response zoals de 404 hierboven — dan zoekt React Router de dichtstbijzijnde ErrorBoundary. Alleen dat deel van de UI toont een foutmelding; de rest van de layout blijft zichtbaar.",
+    en: "Every route module can export its own ErrorBoundary. If a loader throws an error, or a Response like the 404 above, React Router finds the nearest ErrorBoundary. Only that part of the UI shows an error. The rest of the layout stays visible.",
+    nl: "Elke route-module kan een eigen ErrorBoundary exporteren. Gooit een loader een fout, of een Response zoals de 404 hierboven, dan zoekt React Router de dichtstbijzijnde ErrorBoundary. Alleen dat deel van de UI toont een foutmelding. De rest van de layout blijft zichtbaar.",
   },
   errorWarnTitle: { en: "Throw errors, don't return them as data", nl: "Gooi fouten, geef ze niet terug als data" },
   errorWarnBody: {
-    en: "Don't return an error as normal loader data — then every component has to check for an error itself. Throw the error instead, and React Router routes it to the right ErrorBoundary automatically.",
+    en: "Don't return an error as normal loader data, because then every component has to check for an error itself. Throw the error instead, and React Router routes it to the right ErrorBoundary automatically.",
     nl: "Geef een fout niet terug als gewone loader-data, want dan moet elke component zelf controleren of er een fout is. Gooi de fout met throw. React Router stuurt die dan automatisch naar de juiste ErrorBoundary.",
   },
   folderTitle: { en: "A folder structure that scales", nl: "Een mappenstructuur die logisch blijft groeien" },
@@ -460,8 +460,8 @@ const COPY = {
     nl: "In de Framework mode is app/routes.ts de bron van waarheid: daar koppel je URL-patronen aan route-modules. De route-config bepaalt de URL, niet de bestandsnaam. Veel teams geven de bestanden wel namen die op de URL lijken, omdat dat makkelijker leest. Gebruik je file-route conventions, dan krijgen die namen extra betekenis: een punt staat dan voor een URL-segment en een $ voor een dynamische parameter.",
   },
   treeCaption: {
-    en: "routes.ts maps URLs to modules; .server.ts stays on the server; filenames mirror the URL for readability.",
-    nl: "routes.ts koppelt URL’s aan modules; .server.ts blijft op de server; bestandsnamen spiegelen de URL voor leesbaarheid.",
+    en: "routes.ts maps URLs to modules, .server.ts stays on the server, and filenames mirror the URL for readability.",
+    nl: "routes.ts koppelt URL’s aan modules, .server.ts blijft op de server, en bestandsnamen spiegelen de URL voor leesbaarheid.",
   },
   folder2: {
     en: "Three things keep a large route folder readable:",
@@ -479,8 +479,8 @@ const COPY = {
   },
   f3S: { en: ".server.ts stays on the server.", nl: ".server.ts blijft op de server." },
   f3: {
-    en: "Put database code, secrets and server-only logic in a .server.ts file; it doesn't belong in the client bundle. Don't make route modules themselves .server.tsx — they must exist in both the server and client graphs.",
-    nl: "Zet databasecode, secrets en server-only logica in een .server.ts-bestand; dat hoort niet in de client-bundle. Maak route-modules zelf niet .server.tsx — die moeten in zowel de server- als clientgraph bekend zijn.",
+    en: "Put database code, secrets and server-only logic in a .server.ts file. It doesn't belong in the client bundle. Don't make route modules themselves .server.tsx, because they must exist in both the server and client graphs.",
+    nl: "Zet databasecode, secrets en server-only logica in een .server.ts-bestand. Dat hoort niet in de client-bundle. Maak route-modules zelf niet .server.tsx, want die moeten in zowel de server- als clientgraph bekend zijn.",
   },
   takeawayTitle: { en: "What to remember", nl: "Wat te onthouden" },
   t1: {
@@ -496,11 +496,11 @@ const COPY = {
     nl: "Error boundaries houden fouten lokaal. Een fout in één route hoeft niet je hele app te breken.",
   },
   t4: {
-    en: "routes.ts decides the URL; keep server-only code in .server.ts files.",
-    nl: "routes.ts bepaalt de URL; zet server-only code in .server.ts-bestanden.",
+    en: "routes.ts decides the URL. Keep server-only code in .server.ts files.",
+    nl: "routes.ts bepaalt de URL. Zet server-only code in .server.ts-bestanden.",
   },
   outro: {
-    en: "Start with your routes; the folder structure follows from there, and you need less extra state code — fewer manual useEffect fetches, loading states and cache logic. Start a project with",
+    en: "Start with your routes. The folder structure follows from there, and you need less extra state code: fewer manual useEffect fetches, loading states and cache logic. Start a project with",
     nl: "Begin bij je routes. Daarna volgt de mappenstructuur vanzelf, en heb je minder losse state-code nodig: minder handmatige useEffect-fetches, loading-states en cachelogica. Start een project met",
   },
   treeRoot: {

@@ -308,8 +308,8 @@ const COPY = {
   },
   fontNoteTitle: { en: "Not an SEO check anymore", nl: "Niet meer een SEO-check" },
   fontNoteBody: {
-    en: "Older guides list legible font sizes and tap-target sizes here. Recent Lighthouse versions removed the font-size SEO audit and handle tap targets separately. They still matter — but for UX and accessibility, not the SEO score.",
-    nl: "Oudere gidsen noemen hier leesbare lettergroottes en tikdoelen. Recente Lighthouse-versies hebben de font-size SEO-audit verwijderd en behandelen tikdoelen apart. Ze blijven belangrijk — maar voor UX en toegankelijkheid, niet voor de SEO-score.",
+    en: "Older guides list legible font sizes and tap-target sizes here. Recent Lighthouse versions removed the font-size SEO audit and handle tap targets separately. They still matter, but for UX and accessibility, not the SEO score.",
+    nl: "Oudere gidsen noemen hier leesbare lettergroottes en tikdoelen. Recente Lighthouse-versies hebben de font-size SEO-audit verwijderd en behandelen tikdoelen apart. Ze blijven belangrijk, maar voor UX en toegankelijkheid, niet voor de SEO-score.",
   },
   lh2: {
     en: "In a Next.js App Router project, you manage much of the page metadata through the Metadata API. A single generateMetadata export covers title, description, canonical and language alternates. For robots.txt and sitemap.xml you use separate file conventions like app/robots.ts and app/sitemap.ts.",
@@ -325,20 +325,20 @@ const COPY = {
     nl: "Voorbij Lighthouse: hoe Google je pagina verwerkt",
   },
   beyond1: {
-    en: "Ranking starts with a technical chain. A crawler discovers your URL (ideally from a sitemap), renders it — running your JavaScript — indexes the result, and only then ranks it. Structured data helps Google understand the page better. Core Web Vitals show how well the page performs for users.",
-    nl: "Ranking begint met een technische keten. Een crawler ontdekt je URL (idealiter uit een sitemap), rendert die — jouw JavaScript draaiend — indexeert het resultaat en rankt het pas daarna. Structured data helpt Google de pagina beter te begrijpen. Core Web Vitals laten zien hoe goed de pagina presteert voor gebruikers.",
+    en: "Ranking starts with a technical chain. A crawler discovers your URL (ideally from a sitemap), renders it (running your JavaScript), indexes the result, and only then ranks it. Structured data helps Google understand the page better. Core Web Vitals show how well the page performs for users.",
+    nl: "Ranking begint met een technische keten. Een crawler ontdekt je URL (idealiter uit een sitemap), rendert die (met jouw JavaScript), indexeert het resultaat en rankt het pas daarna. Structured data helpt Google de pagina beter te begrijpen. Core Web Vitals laten zien hoe goed de pagina presteert voor gebruikers.",
   },
   pipelineAria: {
     en: "Pipeline diagram: sitemap, then crawl, render, index and rank",
     nl: "Pijplijn-diagram: sitemap, dan crawl, render, index en rank",
   },
   pipelineCaption: {
-    en: "Something can go wrong at each step. A sitemap helps discovery; structured data adds context; Core Web Vitals reflect page experience.",
-    nl: "In elke stap kan iets misgaan. Een sitemap helpt ontdekking; structured data geeft context; Core Web Vitals weerspiegelen de page experience.",
+    en: "Something can go wrong at each step. A sitemap helps discovery, structured data adds context, and Core Web Vitals reflect page experience.",
+    nl: "In elke stap kan iets misgaan. Een sitemap helpt ontdekking, structured data geeft context, en Core Web Vitals weerspiegelen de page experience.",
   },
   beyond2: {
-    en: "Because Google renders JavaScript, a client-only React app can be indexed — but rendering can be queued, so it may take longer. Server-rendered or static HTML is faster to crawl and prevents many bugs where content only becomes visible after JavaScript runs. This blog is server-rendered for that reason.",
-    nl: "Omdat Google JavaScript rendert, kan een client-only React-app geïndexeerd worden — maar rendering kan in de wachtrij komen, dus het kan langer duren. Server-gerenderde of statische HTML is sneller te crawlen en voorkomt veel bugs waarbij content pas zichtbaar wordt na JavaScript-uitvoering. Deze blog is om die reden server-gerenderd.",
+    en: "Because Google renders JavaScript, a client-only React app can be indexed. Rendering can be queued, though, so it may take longer. Server-rendered or static HTML is faster to crawl and prevents many bugs where content only becomes visible after JavaScript runs. This blog is server-rendered for that reason.",
+    nl: "Omdat Google JavaScript rendert, kan een client-only React-app geïndexeerd worden. Rendering kan wel in de wachtrij komen, dus het kan langer duren. Server-gerenderde of statische HTML is sneller te crawlen en voorkomt veel bugs waarbij content pas zichtbaar wordt na JavaScript-uitvoering. Deze blog is om die reden server-gerenderd.",
   },
   semanticTitle: { en: "Semantic HTML and clear headings", nl: "Semantische HTML en duidelijke koppen" },
   semantic1: {
@@ -347,8 +347,8 @@ const COPY = {
   },
   semanticWarnTitle: { en: "The most common heading bug", nl: "De meest voorkomende kopbug" },
   semanticWarnBody: {
-    en: "Multiple h1s, or jumping from h1 to h3 because h3 'looked the right size'. Style with classes; structure with heading levels — never the other way around.",
-    nl: "Meerdere h1's, of springen van h1 naar h3 omdat h3 'de juiste grootte leek'. Stijl met classes; structureer met kopniveaus — nooit andersom.",
+    en: "Multiple h1s, or jumping from h1 to h3 because h3 'looked the right size'. Style with classes and structure with heading levels, never the other way around.",
+    nl: "Meerdere h1's, of springen van h1 naar h3 omdat h3 'de juiste grootte leek'. Stijl met classes en structureer met kopniveaus, nooit andersom.",
   },
   crawlTitle: { en: "Crawlability with robots.txt and sitemaps", nl: "Crawlbaarheid met robots.txt en sitemaps" },
   crawl1: {
@@ -356,13 +356,13 @@ const COPY = {
     nl: "Vertel crawlers welke delen ze mogen bezoeken en waar je sitemap staat. Een robots.txt die alles toestaat en naar je sitemap verwijst, is genoeg voor de meeste sites. In Next.js genereert app/robots.ts dit bestand.",
   },
   crawl2: {
-    en: "The sitemap lists every canonical URL and declares its language alternates, so Google groups the nl and en versions instead of treating them as duplicates. Each language URL gets its own <url> entry that lists all alternates, including itself. Add a <lastmod> only when it reflects a real, significant update — Google trusts it only if it is consistently accurate.",
-    nl: "De sitemap somt elke canonieke URL op en declareert de taalalternatieven, zodat Google de nl- en en-versies groepeert in plaats van ze als duplicaten te zien. Elke taal-URL krijgt een eigen <url>-entry die alle alternatieven opsomt, inclusief zichzelf. Voeg een <lastmod> alleen toe als die een echte, belangrijke wijziging weergeeft — Google vertrouwt die alleen als hij consistent klopt.",
+    en: "The sitemap lists every canonical URL and declares its language alternates, so Google groups the nl and en versions instead of treating them as duplicates. Each language URL gets its own <url> entry that lists all alternates, including itself. Add a <lastmod> only when it reflects a real, significant update. Google trusts it only if it is consistently accurate.",
+    nl: "De sitemap somt elke canonieke URL op en declareert de taalalternatieven, zodat Google de nl- en en-versies groepeert in plaats van ze als duplicaten te zien. Elke taal-URL krijgt een eigen <url>-entry die alle alternatieven opsomt, inclusief zichzelf. Voeg een <lastmod> alleen toe als die een echte, belangrijke wijziging weergeeft. Google vertrouwt die alleen als hij consistent klopt.",
   },
   sdTitle: { en: "Structured data: give Google extra context", nl: "Structured data: geef Google extra context" },
   sd1: {
-    en: "Your title, description, canonical, robots rules and language alternates all shape one search result. Structured data (JSON-LD) adds machine-readable context — author, dates, breadcrumbs — that can make a richer result possible.",
-    nl: "Je title, description, canonical, robots-regels en taalalternatieven vormen samen één zoekresultaat. Structured data (JSON-LD) voegt machineleesbare context toe — auteur, datums, broodkruimels — die een rijker resultaat mogelijk kan maken.",
+    en: "Your title, description, canonical, robots rules and language alternates all shape one search result. Structured data (JSON-LD) adds machine-readable context such as author, dates and breadcrumbs, which can make a richer result possible.",
+    nl: "Je title, description, canonical, robots-regels en taalalternatieven vormen samen één zoekresultaat. Structured data (JSON-LD) voegt machineleesbare context toe, zoals auteur, datums en broodkruimels, die een rijker resultaat mogelijk kan maken.",
   },
   sourcesAria: {
     en: "Diagram: generateMetadata, JSON-LD, robots and hreflang all feed the search result",
@@ -373,13 +373,13 @@ const COPY = {
     nl: "Vier onafhankelijke signalen vormen één zoekresultaat. JSON-LD kan rich results mogelijk maken.",
   },
   sd2: {
-    en: "For an article, the BlogPosting type tells Google the headline, author, publisher, dates and image. Add as many relevant properties as you can — especially image, author, datePublished and dateModified. This site generates it from a typed SEO engine, and a test suite keeps it valid.",
-    nl: "Voor een artikel vertelt het BlogPosting-type Google de kop, auteur, uitgever, datums en afbeelding. Voeg zoveel mogelijk relevante properties toe — vooral image, author, datePublished en dateModified. Deze site genereert het uit een getypte SEO-engine, en een testsuite houdt het geldig.",
+    en: "For an article, the BlogPosting type tells Google the headline, author, publisher, dates and image. Add as many relevant properties as you can, especially image, author, datePublished and dateModified. This site generates it from a typed SEO engine, and a test suite keeps it valid.",
+    nl: "Voor een artikel vertelt het BlogPosting-type Google de kop, auteur, uitgever, datums en afbeelding. Voeg zoveel mogelijk relevante properties toe, vooral image, author, datePublished en dateModified. Deze site genereert het uit een getypte SEO-engine, en een testsuite houdt het geldig.",
   },
   sdInfoTitle: { en: "Validate, don't guess", nl: "Valideer, gok niet" },
   sdInfoBody: {
-    en: "Run every JSON-LD block through Google's Rich Results Test and the Schema.org validator. Invalid structured data can be ignored or become ineligible for rich results — and it fails silently.",
-    nl: "Haal elk JSON-LD-blok door Google's Rich Results Test en de Schema.org-validator. Ongeldige structured data kan worden genegeerd of niet in aanmerking komen voor rich results — en dat gebeurt stilletjes.",
+    en: "Run every JSON-LD block through Google's Rich Results Test and the Schema.org validator. Invalid structured data can be ignored or become ineligible for rich results, and it fails silently.",
+    nl: "Haal elk JSON-LD-blok door Google's Rich Results Test en de Schema.org-validator. Ongeldige structured data kan worden genegeerd of niet in aanmerking komen voor rich results, en dat gebeurt stilletjes.",
   },
   hreflangTitle: { en: "hreflang for Dutch and English pages", nl: "hreflang voor Nederlandse en Engelse pagina’s" },
   hreflang1: {
@@ -397,16 +397,16 @@ const COPY = {
     nl: "Snelheid en stabiliteit horen bij Google's page-experience-signalen, die aansluiten op de ranking-systemen. Het is geen magische rankingknop, maar een trage of onstabiele pagina werkt tegen je. Drie metrieken tellen:",
   },
   cwvLcp: {
-    en: "(Largest Contentful Paint) — the main content is visible within 2.5s. Optimize images and server response.",
-    nl: "(Largest Contentful Paint) — de hoofdinhoud is zichtbaar binnen 2,5s. Optimaliseer afbeeldingen en serverrespons.",
+    en: "(Largest Contentful Paint): the main content is visible within 2.5s. Optimize images and server response.",
+    nl: "(Largest Contentful Paint): de hoofdinhoud is zichtbaar binnen 2,5s. Optimaliseer afbeeldingen en serverrespons.",
   },
   cwvInp: {
-    en: "(Interaction to Next Paint) — the page responds to input within 200ms. Keep the main thread free.",
-    nl: "(Interaction to Next Paint) — de pagina reageert op input binnen 200ms. Houd de main thread vrij.",
+    en: "(Interaction to Next Paint): the page responds to input within 200ms. Keep the main thread free.",
+    nl: "(Interaction to Next Paint): de pagina reageert op input binnen 200ms. Houd de main thread vrij.",
   },
   cwvCls: {
-    en: "(Cumulative Layout Shift) — nothing jumps while loading. Reserve space for images, fonts and embeds.",
-    nl: "(Cumulative Layout Shift) — niets springt tijdens het laden. Reserveer ruimte voor afbeeldingen, fonts en embeds.",
+    en: "(Cumulative Layout Shift): nothing jumps while loading. Reserve space for images, fonts and embeds.",
+    nl: "(Cumulative Layout Shift): niets springt tijdens het laden. Reserveer ruimte voor afbeeldingen, fonts en embeds.",
   },
   checklistTitle: { en: "Checklist for technical SEO in Next.js", nl: "Checklist voor technische SEO in Next.js" },
   ck1: {

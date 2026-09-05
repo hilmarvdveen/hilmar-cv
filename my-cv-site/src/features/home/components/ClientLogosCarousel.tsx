@@ -27,7 +27,7 @@ const clients: CarouselClient[] = [
   { name: "Randstad", logo: "/logos/randstad.svg", id: "randstad", markHeight: "h-6" },
   { name: "Conclusion", logo: "/logos/conclusion.svg", id: "conclusion", markHeight: "h-6" },
   { name: "Ortec", logo: "/logos/ortec.png", id: "ortec", markHeight: "h-10" },
-  { name: "Omniplan", logo: "/logos/omniplan.svg", id: "omniplan", markHeight: "h-7" },
+  { name: "Omniplan", logo: "/logos/omniplan.svg", id: "omniplan", markHeight: "h-10" },
   { name: "Niped", logo: "/logos/niped.svg", id: "niped", markHeight: "h-9" },
   { name: "Opinity", logo: "/logos/opinity-mark.png", id: "opinity", markHeight: "h-10" },
   { name: "Bluefield Smart Access", logo: "/logos/bluefield.png", id: "bluefield", markHeight: "h-8" },

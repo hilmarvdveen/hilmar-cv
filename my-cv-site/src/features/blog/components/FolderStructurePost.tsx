@@ -226,7 +226,7 @@ export { useCart } from "./hooks/useCart";
 export type { CartLine } from "./types";`;
 
 const PAGE_CODE_EN = `// Next.js App Router-style page; the folder defines the route segment.
-// One import surface — internals can move freely behind the barrel.
+// One import surface. Internals can move freely behind the barrel.
 import { CartSummary, PaymentForm } from "@/features/checkout";
 
 export default function CheckoutPage() {
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
 }`;
 
 const PAGE_CODE_NL = `// Next.js App Router-pagina; de map bepaalt het route-segment.
-// Eén import-oppervlak — interne code kan vrij bewegen achter de barrel.
+// Eén import-oppervlak. Interne code kan vrij bewegen achter de barrel.
 import { CartSummary, PaymentForm } from "@/features/checkout";
 
 export default function CheckoutPage() {
@@ -261,8 +261,8 @@ const COPY = {
     nl: "Een kleine React-app overleeft vrijwel elke indeling. De problemen beginnen meestal wanneer de codebase groeit. Eén productfeature, zoals checkout of catalog, kan uitgesmeerd raken over components, hooks, utils en services. Vanaf dat moment vraagt elke wijziging extra zoekwerk.",
   },
   intro2: {
-    en: "React itself has no opinion about folder structure — the docs mention grouping by feature/route and grouping by file type as common options. This post shows a practical, opinionated move from type-based folders to a feature-first structure. The examples use a Next.js App Router-style project, but the same principles work in Vite, React Router or other React setups. The goal: related code lives close together, shared code has clear boundaries, and imports stay predictable.",
-    nl: "React zelf heeft geen mening over mappenstructuur — de docs noemen groeperen per feature/route en groeperen per bestandstype als gangbare opties. Deze post laat een praktische, gekozen stap zien van type-gebaseerde mappen naar een feature-first structuur. De voorbeelden gebruiken een Next.js App Router-project, maar dezelfde principes werken in Vite, React Router of andere React-setups. Het doel: verwante code staat dicht bij elkaar, gedeelde code heeft duidelijke grenzen, en imports blijven voorspelbaar.",
+    en: "React itself has no opinion about folder structure. The docs mention grouping by feature/route and grouping by file type as common options. This post shows a practical, opinionated move from type-based folders to a feature-first structure. The examples use a Next.js App Router-style project, but the same principles work in Vite, React Router or other React setups. The goal: related code lives close together, shared code has clear boundaries, and imports stay predictable.",
+    nl: "React zelf heeft geen mening over mappenstructuur. De docs noemen groeperen per feature/route en groeperen per bestandstype als gangbare opties. Deze post laat een praktische, gekozen stap zien van type-gebaseerde mappen naar een feature-first structuur. De voorbeelden gebruiken een Next.js App Router-project, maar dezelfde principes werken in Vite, React Router of andere React-setups. Het doel: verwante code staat dicht bij elkaar, gedeelde code heeft duidelijke grenzen, en imports blijven voorspelbaar.",
   },
   quote: {
     en: "Your top-level folders should make the product clear, not only the framework behind it.",
@@ -282,8 +282,8 @@ const COPY = {
     nl: "Type-gebaseerd: één feature raakt veel mappen, en geen enkele map vertelt je wat de app doet.",
   },
   byType2: {
-    en: "To change checkout, you open four folders. To delete it, you have to search for leftover files. Worse, nothing in the tree communicates intent. components/ tells a newcomer the project uses components — which they already knew.",
-    nl: "Om checkout te wijzigen, open je vier mappen. Om het te verwijderen, moet je zoeken naar achtergebleven bestanden. Erger nog: niets in de boom communiceert intentie. components/ vertelt een nieuwkomer dat het project componenten gebruikt — wat ze al wisten.",
+    en: "To change checkout, you open four folders. To delete it, you have to search for leftover files. Worse, nothing in the tree communicates intent. components/ tells a newcomer the project uses components, which they already knew.",
+    nl: "Om checkout te wijzigen, open je vier mappen. Om het te verwijderen, moet je zoeken naar achtergebleven bestanden. Erger nog: niets in de boom communiceert intentie. components/ vertelt een nieuwkomer dat het project componenten gebruikt, wat ze al wisten.",
   },
   byTypeWarnTitle: { en: "The smell to watch for", nl: "Het signaal om op te letten" },
   byTypeWarnBody: {
@@ -292,20 +292,20 @@ const COPY = {
   },
   featureTitle: { en: "Feature-first: group files by product area", nl: "Feature-first: groepeer bestanden per productgebied" },
   feature1: {
-    en: "Change the way you group files. Group by feature (a slice of the product) instead of by file type. Everything checkout needs — components, hooks, data access, types — lives in features/checkout/. The folder name is a domain term a product manager would recognize.",
-    nl: "Verander hoe je bestanden groepeert. Groepeer per feature (een stuk van het product) in plaats van per bestandstype. Alles wat checkout nodig heeft — componenten, hooks, datatoegang, types — leeft in features/checkout/. De mapnaam is een domeinterm die een productmanager zou herkennen.",
+    en: "Change the way you group files. Group by feature (a slice of the product) instead of by file type. Everything checkout needs (components, hooks, data access, types) lives in features/checkout/. The folder name is a domain term a product manager would recognize.",
+    nl: "Verander hoe je bestanden groepeert. Groepeer per feature (een stuk van het product) in plaats van per bestandstype. Alles wat checkout nodig heeft (componenten, hooks, datatoegang, types) leeft in features/checkout/. De mapnaam is een domeinterm die een productmanager zou herkennen.",
   },
   feature2: {
-    en: "Cross-cutting building blocks that several features reuse — a Button, a Modal, a useDebounce hook, money math — stay in a small set of shared folders. The important part is deciding what belongs to one feature and what is truly shared.",
-    nl: "Overkoepelende bouwblokken die meerdere features hergebruiken — een Button, een Modal, een useDebounce-hook, geldberekeningen — blijven in een kleine set gedeelde mappen. Het belangrijke is bepalen wat bij één feature hoort en wat echt gedeeld is.",
+    en: "Cross-cutting building blocks that several features reuse, such as a Button, a Modal, a useDebounce hook or money math, stay in a small set of shared folders. The important part is deciding what belongs to one feature and what is truly shared.",
+    nl: "Overkoepelende bouwblokken die meerdere features hergebruiken, zoals een Button, een Modal, een useDebounce-hook of geldberekeningen, blijven in een kleine set gedeelde mappen. Het belangrijke is bepalen wat bij één feature hoort en wat echt gedeeld is.",
   },
   feature3: {
-    en: "The tree below is one example, not a universal standard. It uses a Next.js App Router-style project; in a Vite or React Router app the same idea applies, but the route folder may be called routes, pages or app depending on your setup.",
-    nl: "De boom hieronder is één voorbeeld, geen universele standaard. Hij gebruikt een Next.js App Router-project; in een Vite- of React Router-app geldt hetzelfde idee, maar de route-map heet misschien routes, pages of app, afhankelijk van je setup.",
+    en: "The tree below is one example, not a universal standard. It uses a Next.js App Router-style project. In a Vite or React Router app the same idea applies, but the route folder may be called routes, pages or app depending on your setup.",
+    nl: "De boom hieronder is één voorbeeld, geen universele standaard. Hij gebruikt een Next.js App Router-project. In een Vite- of React Router-app geldt hetzelfde idee, maar de route-map heet misschien routes, pages of app, afhankelijk van je setup.",
   },
   featureTreeCaption: {
-    en: "Feature-first: each domain is self-contained; shared/lib hold only what is genuinely reused.",
-    nl: "Feature-first: elk domein is zelfstandig; shared/lib bevatten alleen wat echt hergebruikt wordt.",
+    en: "Feature-first: each domain is self-contained, and shared/lib hold only what is genuinely reused.",
+    nl: "Feature-first: elk domein is zelfstandig, en shared/lib bevatten alleen wat echt hergebruikt wordt.",
   },
   coloc: { en: "Colocation: keep related files close", nl: "Colocatie: houd verwante bestanden dicht bij elkaar" },
   coloc1: {
@@ -318,8 +318,8 @@ const COPY = {
   },
   boundaryTitle: { en: "Dependency direction: keep imports predictable", nl: "Afhankelijkheidsrichting: houd imports voorspelbaar" },
   boundary1: {
-    en: "Feature folders only help if dependencies flow one way. Pages depend on features; features depend on shared UI and framework-free lib code. Lower-level folders should not import from higher-level folders.",
-    nl: "Featuremappen helpen alleen als afhankelijkheden één kant op stromen. Pagina's hangen af van features; features hangen af van gedeelde UI en framework-vrije lib-code. Lagere mappen mogen niet importeren uit hogere mappen.",
+    en: "Feature folders only help if dependencies flow one way. Pages depend on features. Features depend on shared UI and framework-free lib code. Lower-level folders should not import from higher-level folders.",
+    nl: "Featuremappen helpen alleen als afhankelijkheden één kant op stromen. Pagina's hangen af van features. Features hangen af van gedeelde UI en framework-vrije lib-code. Lagere mappen mogen niet importeren uit hogere mappen.",
   },
   boundaryAria: {
     en: "Layered diagram: routes depend on features, features depend on shared UI and pure lib code",
@@ -335,8 +335,8 @@ const COPY = {
   },
   rule1Strong: { en: "Avoid direct feature-to-feature imports.", nl: "Vermijd directe feature-naar-feature-imports." },
   rule1: {
-    en: "If two features need the same code, move it to a shared domain module or lib — not into shared just because it is convenient once.",
-    nl: "Hebben twee features dezelfde code nodig, verplaats die dan naar een gedeelde domeinmodule of lib — niet naar shared alleen omdat het één keer handig is.",
+    en: "If two features need the same code, move it to a shared domain module or lib, not into shared just because it is convenient once.",
+    nl: "Hebben twee features dezelfde code nodig, verplaats die dan naar een gedeelde domeinmodule of lib, niet naar shared alleen omdat het één keer handig is.",
   },
   rule2Strong: { en: "Shared code stays domain-agnostic.", nl: "Gedeelde code blijft domein-agnostisch." },
   rule2: {
@@ -345,8 +345,8 @@ const COPY = {
   },
   rule3Strong: { en: "Pages stay thin.", nl: "Pagina's blijven dun." },
   rule3: {
-    en: "A route file wires features together and reads data; it does not contain business logic. If a page grows past a screen of code, push the logic into a feature.",
-    nl: "Een route-bestand knoopt features aan elkaar en leest data; het bevat geen businesslogica. Groeit een pagina voorbij één scherm code, duw de logica dan een feature in.",
+    en: "A route file wires features together and reads data. It does not contain business logic. If a page grows past a screen of code, push the logic into a feature.",
+    nl: "Een route-bestand knoopt features aan elkaar en leest data. Het bevat geen businesslogica. Groeit een pagina voorbij één scherm code, duw de logica dan een feature in.",
   },
   sharedWarnTitle: { en: "Watch the shared folder", nl: "Let op de shared-map" },
   sharedWarnBody: {
@@ -355,8 +355,8 @@ const COPY = {
   },
   barrelTitle: { en: "Barrels: expose a small public API", nl: "Barrels: stel een kleine publieke API beschikbaar" },
   barrel1: {
-    en: "Each feature exposes a single public API through an index.ts barrel. Consumers import from the front door; the internals behind it can be rearranged without touching a single caller.",
-    nl: "Elke feature stelt één publieke API beschikbaar via een index.ts-barrel. Consumenten importeren via de voordeur; de interne code erachter kun je herinrichten zonder ook maar één aanroeper aan te raken.",
+    en: "Each feature exposes a single public API through an index.ts barrel. Consumers import from the front door. The internals behind it can be rearranged without touching a single caller.",
+    nl: "Elke feature stelt één publieke API beschikbaar via een index.ts-barrel. Consumenten importeren via de voordeur. De interne code erachter kun je herinrichten zonder ook maar één aanroeper aan te raken.",
   },
   barrelTipTitle: { en: "Keep barrels small and explicit", nl: "Houd barrels klein en expliciet" },
   barrelTipBody: {
@@ -413,7 +413,7 @@ const COPY = {
     en: "When this works, the codebase becomes easier to navigate. New files have an obvious home, old features are easier to remove, and imports stay readable as the project grows.",
     nl: "Als dit werkt, wordt de codebase makkelijker te navigeren. Nieuwe bestanden hebben een vanzelfsprekende plek, oude features zijn makkelijker te verwijderen, en imports blijven leesbaar naarmate het project groeit.",
   },
-  treeApp: { en: "routes only — thin pages", nl: "alleen routes — dunne pagina's" },
+  treeApp: { en: "routes only, thin pages", nl: "alleen routes, dunne pagina's" },
   treeFeatures: { en: "one folder per domain", nl: "één map per domein" },
   treeApi: { en: "data access", nl: "datatoegang" },
   treeBarrel: { en: "public API (barrel)", nl: "publieke API (barrel)" },

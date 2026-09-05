@@ -49,7 +49,7 @@ const trophyEdges = [
 const mockNodes = [
   flowNode("test", "Test", { x: 210, y: 0 }, { tone: "violet", subtitle: "renders + asserts", direction: "TB", width: 180 }),
   flowNode("comp", "Component", { x: 210, y: 140 }, { tone: "blue", subtitle: "REAL", direction: "TB", width: 180 }),
-  flowNode("child", "Child components", { x: 0, y: 300 }, { tone: "emerald", subtitle: "REAL — do not mock", direction: "TB", width: 200 }),
+  flowNode("child", "Child components", { x: 0, y: 300 }, { tone: "emerald", subtitle: "REAL, do not mock", direction: "TB", width: 200 }),
   flowNode("net", "Network / API", { x: 430, y: 300 }, { tone: "amber", subtitle: "MOCK here (MSW)", direction: "TB", width: 190 }),
 ];
 const mockEdges = [
@@ -238,7 +238,7 @@ import { handlers } from "./handlers";
 // Eén server voor alle tests, opgebouwd uit je request handlers.
 export const server = setupServer(...handlers);`;
 
-const MSW_SETUP_CODE_EN = `// vitest.setup.ts — extend the existing setup
+const MSW_SETUP_CODE_EN = `// vitest.setup.ts: extend the existing setup
 import "@testing-library/jest-dom/vitest";
 import { afterAll, afterEach, beforeAll } from "vitest";
 import { server } from "./test/server";
@@ -248,7 +248,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());`;
 
-const MSW_SETUP_CODE_NL = `// vitest.setup.ts — breid de bestaande setup uit
+const MSW_SETUP_CODE_NL = `// vitest.setup.ts: breid de bestaande setup uit
 import "@testing-library/jest-dom/vitest";
 import { afterAll, afterEach, beforeAll } from "vitest";
 import { server } from "./test/server";
@@ -308,8 +308,8 @@ const COPY = {
     nl: "Tests zijn er niet om alleen een hoog coverage-percentage te halen. Ze helpen je om code later veilig te wijzigen, zonder bestaand gedrag kapot te maken.",
   },
   intro1: {
-    en: "A good test looks at behaviour. What does the user see? What happens after a click? Which error appears on invalid input? A bad test focuses on internal details — state, hooks, exact render counts — and breaks on a normal refactor, even when the app still works exactly the same.",
-    nl: "Een goede test kijkt naar gedrag. Wat ziet de gebruiker? Wat gebeurt er na een klik? Welke foutmelding verschijnt bij ongeldige input? Een slechte test kijkt vooral naar interne details — state, hooks, exacte render-aantallen — en breekt bij een normale refactor, ook als de applicatie nog precies hetzelfde werkt.",
+    en: "A good test looks at behaviour. What does the user see? What happens after a click? Which error appears on invalid input? A bad test focuses on internal details (state, hooks, exact render counts) and breaks on a normal refactor, even when the app still works exactly the same.",
+    nl: "Een goede test kijkt naar gedrag. Wat ziet de gebruiker? Wat gebeurt er na een klik? Welke foutmelding verschijnt bij ongeldige input? Een slechte test kijkt vooral naar interne details (state, hooks, exacte render-aantallen) en breekt bij een normale refactor, ook als de applicatie nog precies hetzelfde werkt.",
   },
   intro2: {
     en: "This article looks at three questions: what is worth testing, what should you mock, and how do you design React components so they stay testable?",
@@ -321,8 +321,8 @@ const COPY = {
   },
   trophyTitle: { en: "Use the testing trophy as a guideline", nl: "Gebruik de testing trophy als richtlijn" },
   trophy1: {
-    en: "The test pyramid often emphasizes many small tests. The testing trophy — a well-known heuristic, not an official React standard — shifts the focus to confidence: write enough unit tests for pure logic, but test UI behaviour mostly at the component or integration level.",
-    nl: "De testpiramide legt vaak de nadruk op veel kleine tests. De testing trophy — een bekende heuristiek, geen officiële React-standaard — verschuift de aandacht naar vertrouwen: schrijf genoeg unit-tests voor pure logica, maar test UI-gedrag vooral op component- of integratieniveau.",
+    en: "The test pyramid often emphasizes many small tests. The testing trophy, a well-known heuristic and not an official React standard, shifts the focus to confidence: write enough unit tests for pure logic, but test UI behaviour mostly at the component or integration level.",
+    nl: "De testpiramide legt vaak de nadruk op veel kleine tests. De testing trophy, een bekende heuristiek en geen officiële React-standaard, verschuift de aandacht naar vertrouwen: schrijf genoeg unit-tests voor pure logica, maar test UI-gedrag vooral op component- of integratieniveau.",
   },
   trophyAria: {
     en: "Testing trophy from bottom to top: static checks, unit, integration (largest), end-to-end",
@@ -333,8 +333,8 @@ const COPY = {
     nl: "De integratielaag geeft meestal het meeste vertrouwen per test. Steek je inspanning daarin.",
   },
   trophy2: {
-    en: "In practice, most React tests render a component with Testing Library, interact with it, and assert on what the user sees — not on internal state or function calls. Many are really component or integration tests, even if we loosely call them 'unit tests'.",
-    nl: "In de praktijk renderen de meeste React-tests een component met Testing Library, interacteren ermee en asserten op wat de gebruiker ziet — niet op interne state of functieaanroepen. Veel ervan zijn eigenlijk component- of integratietests, ook al noemen we ze losjes 'unit-tests'.",
+    en: "In practice, most React tests render a component with Testing Library, interact with it, and assert on what the user sees, not on internal state or function calls. Many are really component or integration tests, even if we loosely call them 'unit tests'.",
+    nl: "In de praktijk renderen de meeste React-tests een component met Testing Library, interacteren ermee en asserten op wat de gebruiker ziet, niet op interne state of functieaanroepen. Veel ervan zijn eigenlijk component- of integratietests, ook al noemen we ze losjes 'unit-tests'.",
   },
   queryTitle: { en: "Find elements the way users do", nl: "Zoek elementen zoals gebruikers ze vinden" },
   query1: {
@@ -343,16 +343,16 @@ const COPY = {
   },
   queryWarnTitle: { en: "Use data-testid only as a fallback", nl: "Gebruik data-testid alleen als fallback" },
   queryWarnBody: {
-    en: "data-testid is a fallback, not a default. Reaching for it usually means the element has no accessible name — fix the markup (a label, a heading, button text) and query by role instead. Your users benefit too.",
-    nl: "data-testid is een fallback, geen standaard. Ernaar grijpen betekent meestal dat het element geen toegankelijke naam heeft — repareer de markup (een label, een kop, knoptekst) en zoek op rol. Je gebruikers profiteren ook.",
+    en: "data-testid is a fallback, not a default. Reaching for it usually means the element has no accessible name. Fix the markup (a label, a heading, button text) and query by role instead. Your users benefit too.",
+    nl: "data-testid is een fallback, geen standaard. Ernaar grijpen betekent meestal dat het element geen toegankelijke naam heeft. Repareer de markup (een label, een kop, knoptekst) en zoek op rol. Je gebruikers profiteren ook.",
   },
   query2: {
     en: "A behaviour test reads like a user story: render, act, assert on the visible result. Create one user per test with userEvent.setup().",
     nl: "Een gedragstest leest als een user story: render, handel, assert op het zichtbare resultaat. Maak per test één user met userEvent.setup().",
   },
   query3: {
-    en: "Notice what this test does not do: it never inspects state, never checks that a specific hook ran, never counts renders. Rewrite Counter with useReducer instead of useState and the test still passes — the behaviour did not change.",
-    nl: "Let op wat deze test níét doet: hij inspecteert nooit state, controleert nooit of een specifieke hook draaide, telt nooit renders. Herschrijf Counter met useReducer in plaats van useState en de test slaagt nog steeds — het gedrag veranderde niet.",
+    en: "Notice what this test does not do: it never inspects state, never checks that a specific hook ran, never counts renders. Rewrite Counter with useReducer instead of useState and the test still passes, because the behaviour did not change.",
+    nl: "Let op wat deze test níét doet: hij inspecteert nooit state, controleert nooit of een specifieke hook draaide, telt nooit renders. Herschrijf Counter met useReducer in plaats van useState en de test slaagt nog steeds, want het gedrag veranderde niet.",
   },
   setupTitle: { en: "Set up Vitest and Testing Library", nl: "Stel Vitest en Testing Library in" },
   setup1: {
@@ -361,8 +361,8 @@ const COPY = {
   },
   pureTitle: { en: "Test pure logic separately from React", nl: "Test pure logica los van React" },
   pure1: {
-    en: "Not everything belongs in a component. Pull formatting, calculations, parsing and validation into plain functions with no React, no DOM, no I/O. These are the cheapest, fastest and most valuable tests you will write — and they are easy, because the function is pure: same input, same output.",
-    nl: "Niet alles hoort in een component. Trek formatteren, berekeningen, parsen en validatie in gewone functies zonder React, zonder DOM, zonder I/O. Dit zijn de goedkoopste, snelste en waardevolste tests die je schrijft — en ze zijn eenvoudig, want de functie is puur: zelfde input, zelfde output.",
+    en: "Not everything belongs in a component. Pull formatting, calculations, parsing and validation into plain functions with no React, no DOM, no I/O. These are the cheapest, fastest and most valuable tests you will write, and they are easy, because the function is pure: same input, same output.",
+    nl: "Niet alles hoort in een component. Trek formatteren, berekeningen, parsen en validatie in gewone functies zonder React, zonder DOM, zonder I/O. Dit zijn de goedkoopste, snelste en waardevolste tests die je schrijft, en ze zijn eenvoudig, want de functie is puur: zelfde input, zelfde output.",
   },
   pure2: {
     en: "A few table-driven cases pin down the behaviour. When a currency bug shows up in production, you reproduce it as one more row here, not by clicking through the UI.",
@@ -370,20 +370,20 @@ const COPY = {
   },
   mockTitle: { en: "Mock only real system boundaries", nl: "Mock alleen echte systeemgrenzen" },
   mock1: {
-    en: "The most common testing mistake is mocking too much. If you mock a component's own child or an internal module, you no longer test the real interaction between your code — you mostly test whether your mock behaves as you expect. Mock only the true boundaries of your system: the network, time, and randomness.",
-    nl: "De meest voorkomende testfout is te veel mocken. Als je een eigen child component of interne module mockt, test je niet meer de echte samenwerking tussen je code — je test vooral of je mock zich gedraagt zoals je verwacht. Mock alleen de echte grenzen van je systeem: het netwerk, tijd en willekeur.",
+    en: "The most common testing mistake is mocking too much. If you mock a component's own child or an internal module, you no longer test the real interaction between your code. You mostly test whether your mock behaves as you expect. Mock only the true boundaries of your system: the network, time, and randomness.",
+    nl: "De meest voorkomende testfout is te veel mocken. Als je een eigen child component of interne module mockt, test je niet meer de echte samenwerking tussen je code. Je test vooral of je mock zich gedraagt zoals je verwacht. Mock alleen de echte grenzen van je systeem: het netwerk, tijd en willekeur.",
   },
   mockAria: {
-    en: "Diagram: the test renders the real component with real children; only the network boundary is mocked",
-    nl: "Diagram: de test rendert de echte component met echte kinderen; alleen de netwerkgrens wordt gemockt",
+    en: "Diagram: the test renders the real component with real children, and only the network boundary is mocked",
+    nl: "Diagram: de test rendert de echte component met echte kinderen, en alleen de netwerkgrens wordt gemockt",
   },
   mockCaption: {
-    en: "Keep the component and its children real. Replace only the network — ideally with MSW.",
-    nl: "Houd de component en haar kinderen echt. Vervang alleen het netwerk — bij voorkeur met MSW.",
+    en: "Keep the component and its children real. Replace only the network, ideally with MSW.",
+    nl: "Houd de component en haar kinderen echt. Vervang alleen het netwerk, bij voorkeur met MSW.",
   },
   mock2: {
-    en: "Mock Service Worker (MSW) intercepts real fetch calls at the network layer. Your component runs its normal data code but gets controlled test responses back. No fetch stubbing, no patched modules — the code under test is the code that ships.",
-    nl: "Mock Service Worker (MSW) onderschept echte fetch-aanroepen op de netwerklaag. Daardoor draait je component de normale datacode, maar krijgt hij gecontroleerde testresponses terug. Geen fetch-stubbing, geen gepatchte modules — de geteste code is de code die live gaat.",
+    en: "Mock Service Worker (MSW) intercepts real fetch calls at the network layer. Your component runs its normal data code but gets controlled test responses back. No fetch stubbing, no patched modules. The code under test is the code that ships.",
+    nl: "Mock Service Worker (MSW) onderschept echte fetch-aanroepen op de netwerklaag. Daardoor draait je component de normale datacode, maar krijgt hij gecontroleerde testresponses terug. Geen fetch-stubbing, geen gepatchte modules. De geteste code is de code die live gaat.",
   },
   mock3: {
     en: "Handlers alone aren't enough. In Vitest (Node) you build a server from the handlers, then start it, reset handlers between tests, and close it afterwards.",
@@ -405,8 +405,8 @@ const COPY = {
   },
   r1S: { en: "Data in via props.", nl: "Data erin via props." },
   r1: {
-    en: "Prefer explicit props over reading globals or context deep inside; then every state is reachable from a test.",
-    nl: "Verkies expliciete props boven het diep van binnen lezen van globals of context; dan is elke state bereikbaar vanuit een test.",
+    en: "Prefer explicit props over reading globals or context deep inside. Then every state is reachable from a test.",
+    nl: "Verkies expliciete props boven het diep van binnen lezen van globals of context. Dan is elke state bereikbaar vanuit een test.",
   },
   r2S: { en: "Keep render pure.", nl: "Houd render puur." },
   r2: {
