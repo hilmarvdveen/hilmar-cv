@@ -124,6 +124,8 @@ export const SEARCH_INDEX: SearchEntry[] = [
       "accessibility",
       "wcag",
       "wet dba",
+      "performance",
+      "snelheid",
       "freelance",
       "zzp",
     ],

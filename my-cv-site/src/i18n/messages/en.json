@@ -52,7 +52,7 @@
             "cards": [
                 {
                     "title": "Loyalty, from spec to production",
-                    "body": "The Select points-overview page. It carries a rewards table with order points and action points, Dutch and French text, and edge cases such as cancelled orders and external merchants. Every scenario has a test and a Storybook story."
+                    "body": "The Select points-overview page. It carries a rewards table with order points and action points, Dutch and French text, and edge cases such as cancelled orders and external merchants. Every scenario has a test and a Storybook story. When the page received a bare mandate reference, I had the backend team reshape it into a structured mandate object in the GraphQL schema, so the frontend stayed data-driven."
                 },
                 {
                     "title": "A new app, empty folder to production",
@@ -155,9 +155,10 @@
                 },
                 {
                     "title": "Verification and handover",
-                    "body": "Co-located tests with Vitest and Testing Library over GraphQL mocks, Playwright, and a Storybook story per scenario. Written handover documentation, so a team with most of its weight in backend maintains the work on its own after the engagement."
+                    "body": "Co-located tests: behaviour gets a unit test with Vitest and Testing Library over GraphQL mocks, every visible scenario a Storybook story, and the flows money runs through a Playwright check. Written handover documentation, so a team with most of its weight in backend maintains the work on its own after the engagement."
                 }
             ],
+            "link": "How I test, in an article",
             "subtitle": "The security review, the accessibility audit and the handover all arrive at some point. This part is already done when they do."
         },
         "validation": {
@@ -594,7 +595,7 @@
                     "heading": "Nine experiments"
                 },
                 {
-                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production.",
+                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production. For the Kobo Plus promotion codes every backend outcome got its own message, so a customer never sees a generic error.",
                     "heading": "Numbers that hold up"
                 },
                 {
@@ -602,7 +603,7 @@
                     "heading": "Working across team boundaries"
                 },
                 {
-                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them.",
+                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, the types run from the GraphQL query into the component without casts, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them.",
                     "heading": "What stays behind"
                 }
             ],
@@ -1839,7 +1840,7 @@
                 },
                 {
                     "title": "The team ships faster after I leave",
-                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor so content editors and designers could build and verify a tax form themselves. A new income-tax form went from months of engineering to a few days. A new page on the shared design system went from one to two weeks to one to two days. At the Nationale Postcode Loterij a JSON-driven design system took a campaign site from weeks to a few days. At bol.com marketing swaps content and imagery on the Kobo Plus acquisition page without an engineering release.",
+                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor so content editors and designers could build and verify a tax form themselves. A new income-tax form went from months of engineering to a few days. A new page on the shared design system went from one to two weeks to one to two days. That design system came into use across several teams because I built its adoption with their developers, hands-on. At the Nationale Postcode Loterij a JSON-driven design system took a campaign site from weeks to a few days. At bol.com marketing swaps content and imagery on the Kobo Plus acquisition page without an engineering release.",
                     "evidence": "Belastingdienst 2023 to 2024, Nationale Postcode Loterij 2022 to 2023, bol.com 2025 to 2026"
                 },
                 {
@@ -2059,6 +2060,10 @@
                     {
                         "question": "Do you work with experiments and measurement?",
                         "answer": "Yes, when the page is commercial. At bol.com I built nine A/B experiments in code and configured them in the experimentation tool, with the designer and the business team. I also repaired tracking that carried placeholder identifiers, because a funnel is only worth what its data says."
+                    },
+                    {
+                        "question": "How do you handle performance?",
+                        "answer": "Without a percentage up front. I start with what a visitor notices: server-side rendering so the page stands before JavaScript runs, images and fonts sized to fit, and a limit on third-party scripts. Then I measure on your platform, per page and with real visitors, and we discuss what those numbers say. A figure I have not measured on your platform myself is not one I quote."
                     }
                 ]
             },

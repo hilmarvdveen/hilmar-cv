@@ -4,6 +4,7 @@ import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Shield, Accessibility, ClipboardCheck } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 type StandardsColumn = {
   title: string;
@@ -11,6 +12,7 @@ type StandardsColumn = {
 };
 
 const columnIcons = [Shield, Accessibility, ClipboardCheck];
+const TESTING_POST_HREF = "/blog/unit-testing-react-the-right-way";
 
 export const StandardsSection = () => {
   const t = useTranslations("home.standards");
@@ -36,6 +38,14 @@ export const StandardsSection = () => {
             );
           })}
         </div>
+        <p className="mt-6 text-center text-sm text-gray-600">
+          <Link
+            href={TESTING_POST_HREF}
+            className="rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          >
+            {t("link")}
+          </Link>
+        </p>
       </Container>
     </Section>
   );

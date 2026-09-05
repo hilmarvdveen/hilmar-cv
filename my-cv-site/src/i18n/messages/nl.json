@@ -52,7 +52,7 @@
             "cards": [
                 {
                     "title": "Loyalty, van specificatie tot productie",
-                    "body": "De Select-puntenpagina. Daarin zitten een beloningstabel met orderpunten en actiepunten, Nederlandse en Franse teksten en randgevallen zoals geannuleerde bestellingen en externe verkopers. Elk scenario heeft een test en een Storybook-story."
+                    "body": "De Select-puntenpagina. Daarin zitten een beloningstabel met orderpunten en actiepunten, Nederlandse en Franse teksten en randgevallen zoals geannuleerde bestellingen en externe verkopers. Elk scenario heeft een test en een Storybook-story. Toen de pagina een kaal mandaatkenmerk kreeg, liet ik het backendteam er een gestructureerd mandaatobject van maken in het GraphQL-schema, zodat de frontend datagestuurd bleef."
                 },
                 {
                     "title": "Een nieuwe app, van lege map tot productie",
@@ -155,9 +155,10 @@
                 },
                 {
                     "title": "Verificatie en overdracht",
-                    "body": "Tests naast de code met Vitest en Testing Library over GraphQL-mocks, Playwright, en een Storybook-story per scenario. Geschreven overdrachtsdocumentatie, zodat een team met vooral backend-ontwikkelaars het werk daarna zelfstandig onderhoudt."
+                    "body": "Tests naast de code: gedrag krijgt een unittest met Vitest en Testing Library over GraphQL-mocks, elk zichtbaar scenario een Storybook-story, en de flows waar geld doorheen loopt een Playwright-check. Geschreven overdrachtsdocumentatie, zodat een team met vooral backend-ontwikkelaars het werk daarna zelfstandig onderhoudt."
                 }
             ],
+            "link": "Hoe ik test, in een artikel",
             "subtitle": "De security-review, de toegankelijkheidsaudit en de overdracht komen er hoe dan ook. Dat werk is dan al gedaan."
         },
         "validation": {
@@ -557,7 +558,7 @@
                     "heading": "Negen experimenten"
                 },
                 {
-                    "paragraph": "Ik zorgde ook dat de cijfers achter die beslissingen klopten. Placeholder-ID's werden echte product-ID's, zodat de funnels van productpagina en winkelmandje weer op elkaar aansluiten. Een alles-of-niets-afhandeling van GraphQL herschreef ik, zodat een gedeeltelijk antwoord toch toont wat er wel is en elke fout in Sentry terechtkomt. Sentry zette ik end-to-end aan, met leesbare stack traces op staging en productie.",
+                    "paragraph": "Ik zorgde ook dat de cijfers achter die beslissingen klopten. Placeholder-ID's werden echte product-ID's, zodat de funnels van productpagina en winkelmandje weer op elkaar aansluiten. Een alles-of-niets-afhandeling van GraphQL herschreef ik, zodat een gedeeltelijk antwoord toch toont wat er wel is en elke fout in Sentry terechtkomt. Sentry zette ik end-to-end aan, met leesbare stack traces op staging en productie. Voor de kortingscodes van Kobo Plus kreeg elke uitkomst van de backend zijn eigen melding, zodat een klant nooit een algemene foutmelding te zien krijgt.",
                     "heading": "Cijfers die kloppen"
                 },
                 {
@@ -565,7 +566,7 @@
                     "heading": "Werken over teamgrenzen heen"
                 },
                 {
-                    "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen.",
+                    "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, de types lopen van de GraphQL-query tot in de component door zonder casts, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen.",
                     "heading": "Wat er blijft"
                 }
             ],
@@ -1992,6 +1993,10 @@
                     {
                         "question": "Werk je met experimenten en meten?",
                         "answer": "Ja, als de pagina commercieel is. Bij bol.com bouwde ik negen A/B-experimenten in code en configureerde ik ze in de experimenteertool, samen met de designer en het business team. Ik heb ook tracking hersteld die placeholder-identifiers meestuurde, want een funnel is alleen waard wat de data zegt."
+                    },
+                    {
+                        "question": "Hoe ga je om met performance?",
+                        "answer": "Zonder een percentage vooraf. Ik kijk eerst naar wat een bezoeker merkt: server-side rendering zodat de pagina staat voordat JavaScript draait, afbeeldingen en fonts op maat, en een grens aan scripts van derden. Daarna meet ik op jullie platform, per pagina en bij echte bezoekers, en bespreken we wat die cijfers zeggen. Een getal dat ik niet zelf op jullie platform heb gemeten, noem ik niet."
                     }
                 ]
             },
@@ -2198,7 +2203,7 @@
                 },
                 {
                     "title": "Het team levert sneller nadat ik weg ben",
-                    "body": "Snelheid daarna komt van een platform dat anderen kunnen lezen en aanpassen. Bij de Belastingdienst bouwde ik een visuele formulierenbouwer waarmee contentredacteuren en ontwerpers zelf een belastingformulier konden samenstellen en controleren. Een nieuw inkomstenbelastingformulier ging van maanden engineering naar een paar dagen. Een nieuwe pagina op het gedeelde design system ging van één tot twee weken naar één tot twee dagen. Bij de Nationale Postcode Loterij ging een campagnesite dankzij een JSON-gedreven design system van weken naar een paar dagen. Bij bol.com wisselt marketing content en beeld op de Kobo Plus-acquisitiepagina zonder release van engineering.",
+                    "body": "Snelheid daarna komt van een platform dat anderen kunnen lezen en aanpassen. Bij de Belastingdienst bouwde ik een visuele formulierenbouwer waarmee contentredacteuren en ontwerpers zelf een belastingformulier konden samenstellen en controleren. Een nieuw inkomstenbelastingformulier ging van maanden engineering naar een paar dagen. Een nieuwe pagina op het gedeelde design system ging van één tot twee weken naar één tot twee dagen. Dat design system kwam bij meerdere teams in gebruik doordat ik met hun ontwikkelaars aan de implementatie meebouwde. Bij de Nationale Postcode Loterij ging een campagnesite dankzij een JSON-gedreven design system van weken naar een paar dagen. Bij bol.com wisselt marketing content en beeld op de Kobo Plus-acquisitiepagina zonder release van engineering.",
                     "evidence": "Belastingdienst 2023 tot 2024, Nationale Postcode Loterij 2022 tot 2023, bol.com 2025 tot 2026"
                 },
                 {

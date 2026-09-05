@@ -1,6 +1,8 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { GET } from "./route";
+
+vi.mock("@/lib/seo/socialCardFont", () => ({ loadSocialCardFonts: async () => [] }));
 
 describe("GET /api/og", () => {
   it("renders a cacheable PNG card for a page title", async () => {

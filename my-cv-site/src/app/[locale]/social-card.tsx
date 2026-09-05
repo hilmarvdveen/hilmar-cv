@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { OG_LOGO_DATA_URI } from "./og-logo";
+import { loadSocialCardFonts } from "@/lib/seo/socialCardFont";
 
 export const SOCIAL_CARD_SIZE = { width: 1200, height: 630 };
 
@@ -22,8 +23,9 @@ const headingSize = (heading: string) => {
   return 64;
 };
 
-export function renderSocialCard(locale: SocialCardLocale, title?: string, headers?: Record<string, string>) {
+export async function renderSocialCard(locale: SocialCardLocale, title?: string, headers?: Record<string, string>) {
   const copy = CARD_COPY[locale];
+  const fonts = await loadSocialCardFonts();
   const [titleHeading, titleDetail] = (title ?? "").split(" | ").map((part) => part.trim());
   const heading = titleHeading && titleHeading.length > 0 ? titleHeading : copy.role;
   const subline = titleHeading && titleHeading.length > 0 ? titleDetail || copy.role : copy.reach;
@@ -39,7 +41,7 @@ export function renderSocialCard(locale: SocialCardLocale, title?: string, heade
           justifyContent: "space-between",
           background: "#12314e",
           color: "#ffffff",
-          fontFamily: "sans-serif",
+          fontFamily: fonts.length > 0 ? "Inter" : "sans-serif",
           padding: 72,
         }}
       >
@@ -57,6 +59,6 @@ export function renderSocialCard(locale: SocialCardLocale, title?: string, heade
         <div style={{ fontSize: 26, color: "#cbd5e1" }}>{copy.reach}</div>
       </div>
     ),
-    { ...SOCIAL_CARD_SIZE, headers }
+    { ...SOCIAL_CARD_SIZE, headers, fonts: fonts.length > 0 ? fonts : undefined }
   );
 }

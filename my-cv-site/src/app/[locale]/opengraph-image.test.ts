@@ -1,5 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import OpengraphImage, { size, contentType, alt } from "./opengraph-image";
+
+vi.mock("@/lib/seo/socialCardFont", () => ({ loadSocialCardFonts: async () => [] }));
 
 describe("opengraph-image route", () => {
   it("declares a 1200x630 PNG share card", () => {

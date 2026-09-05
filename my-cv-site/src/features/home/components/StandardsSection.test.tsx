@@ -32,6 +32,14 @@ vi.mock("next-intl", () => {
   };
 });
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  ),
+}));
+
 describe("StandardsSection", () => {
   it("renders the section heading wired to the section via aria-labelledby", () => {
     const { container } = render(<StandardsSection />);
@@ -59,6 +67,14 @@ describe("StandardsSection", () => {
     const { container } = render(<StandardsSection />);
     expect(container.querySelectorAll("svg")).toHaveLength(
       standardsColumns.length
+    );
+  });
+
+  it("links to the testing article under the columns", () => {
+    render(<StandardsSection />);
+    expect(screen.getByRole("link", { name: "link" })).toHaveAttribute(
+      "href",
+      "/blog/unit-testing-react-the-right-way"
     );
   });
 });
