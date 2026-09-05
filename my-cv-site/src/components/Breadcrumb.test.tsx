@@ -55,3 +55,12 @@ describe("Breadcrumb", () => {
     expect(screen.getByText("Some unknown segment")).toBeInTheDocument();
   });
 });
+
+describe("Breadcrumb with a current label", () => {
+  it("shows the given label for the last segment and keeps the parent link", () => {
+    state.path = "/en/experience/postcode-loterij";
+    render(<Breadcrumb currentLabel="Nationale Postcode Loterij" />);
+    expect(screen.getByText("Nationale Postcode Loterij")).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "experience" })).toHaveAttribute("href", "/en/experience");
+  });
+});

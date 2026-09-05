@@ -43,7 +43,7 @@ describe("Button", () => {
     expect(buttonClassName({ variant: "outlineOnDark" })).toContain(
       "text-emerald-300"
     );
-    expect(buttonClassName({ size: "sm" })).toContain("px-4 py-2.5");
+    expect(buttonClassName({ size: "sm" })).toContain("px-3.5 py-2");
     expect(buttonClassName({ className: "w-full" })).toContain("w-full");
   });
 });

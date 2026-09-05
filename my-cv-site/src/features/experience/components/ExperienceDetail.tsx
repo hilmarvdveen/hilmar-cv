@@ -12,8 +12,10 @@ type ExperienceDetailProps = {
   entry: WorkEntry;
   previous?: WorkEntry;
   next?: WorkEntry;
+  others?: WorkEntry[];
 };
 
+const OTHERS_HEADING_ID = "experience-others-heading";
 const STORY_HEADING_ID = "experience-story-heading";
 const DELIVERED_HEADING_ID = "experience-delivered-heading";
 const TECHNOLOGY_HEADING_ID = "experience-technology-heading";
@@ -22,7 +24,7 @@ const FACTS_HEADING_ID = "experience-facts-heading";
 const neighbourLinkClass =
   "inline-flex items-center gap-2 rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
-export const ExperienceDetail = ({ entry, previous, next }: ExperienceDetailProps) => {
+export const ExperienceDetail = ({ entry, previous, next, others = [] }: ExperienceDetailProps) => {
   const t = useTranslations("work");
   const page = useTranslations("experiencePage");
   const locale = useLocale();
@@ -146,6 +148,26 @@ export const ExperienceDetail = ({ entry, previous, next }: ExperienceDetailProp
             <span />
           )}
         </nav>
+
+        {others.length > 0 && (
+          <>
+            <h2 id={OTHERS_HEADING_ID} className="mt-10 text-[13px] font-bold uppercase tracking-widest text-primary">
+              {page("detail.others")}
+            </h2>
+            <ul aria-labelledby={OTHERS_HEADING_ID} className="mt-3 flex flex-wrap gap-2">
+              {others.map((other) => (
+                <li key={other.id}>
+                  <Link
+                    href={`/experience/${other.id}`}
+                    className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-textMain transition-colors hover:border-emerald-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  >
+                    {t(`${other.id}.company`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </Container>
     </Section>
   );

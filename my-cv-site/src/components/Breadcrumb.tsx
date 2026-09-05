@@ -36,7 +36,11 @@ const SEGMENT_LABEL_KEYS: Record<string, string> = {
 const dehyphenate = (segment: string) =>
   segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
 
-export const Breadcrumb = () => {
+type BreadcrumbProps = {
+  currentLabel?: string;
+};
+
+export const Breadcrumb = ({ currentLabel }: BreadcrumbProps = {}) => {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations("breadcrumb");
@@ -63,7 +67,8 @@ export const Breadcrumb = () => {
       currentPath += `/${segment}`;
       const isLast = index === segments.length - 1;
       const labelKey = SEGMENT_LABEL_KEYS[segment];
-      const label = labelKey ? t(labelKey) : dehyphenate(segment);
+      const resolvedLabel = labelKey ? t(labelKey) : dehyphenate(segment);
+      const label = isLast && currentLabel ? currentLabel : resolvedLabel;
 
       items.push({
         label,
@@ -73,7 +78,7 @@ export const Breadcrumb = () => {
     });
 
     return items;
-  }, [pathname, locale, t]);
+  }, [pathname, locale, t, currentLabel]);
 
   if (breadcrumbItems.length <= 1) {
     return null;

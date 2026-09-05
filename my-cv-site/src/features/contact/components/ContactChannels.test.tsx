@@ -4,6 +4,9 @@ import { ContactChannels } from "./ContactChannels";
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
+const linkByHref = (href: string) =>
+  screen.getAllByRole("link").find((link) => link.getAttribute("href") === href);
+
 describe("ContactChannels", () => {
   it("renders an accessible heading for the channel list", () => {
     render(<ContactChannels />);
@@ -12,26 +15,19 @@ describe("ContactChannels", () => {
     ).toBeInTheDocument();
   });
 
-  it("links to email, phone and WhatsApp with the right hrefs", () => {
+  it("links to email, phone and WhatsApp with the right hrefs and shows the value on each card", () => {
     render(<ContactChannels />);
-    expect(
-      screen.getByRole("link", { name: "hilmar@hilmarvanderveen.com" })
-    ).toHaveAttribute("href", "mailto:hilmar@hilmarvanderveen.com");
-    expect(screen.getByRole("link", { name: "+31 6 8014 9947" })).toHaveAttribute(
-      "href",
-      "tel:+31680149947"
+    expect(linkByHref("mailto:hilmar@hilmarvanderveen.com")).toHaveTextContent(
+      "hilmar@hilmarvanderveen.com"
     );
-    expect(screen.getByRole("link", { name: "WhatsApp" })).toHaveAttribute(
-      "href",
-      "https://wa.me/31680149947"
-    );
+    expect(linkByHref("tel:+31680149947")).toHaveTextContent("+31 6 8014 9947");
+    expect(linkByHref("https://wa.me/31680149947")).toHaveTextContent("+31 6 8014 9947");
+    expect(screen.getAllByRole("listitem")).toHaveLength(3);
   });
 
-  it("opens WhatsApp in a new tab", () => {
+  it("opens WhatsApp in a new tab and keeps the other two in place", () => {
     render(<ContactChannels />);
-    expect(screen.getByRole("link", { name: "WhatsApp" })).toHaveAttribute(
-      "target",
-      "_blank"
-    );
+    expect(linkByHref("https://wa.me/31680149947")).toHaveAttribute("target", "_blank");
+    expect(linkByHref("mailto:hilmar@hilmarvanderveen.com")).not.toHaveAttribute("target");
   });
 });

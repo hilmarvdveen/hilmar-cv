@@ -61,6 +61,15 @@ describe("ExperienceDetail", () => {
     expect(screen.getByRole("link", { name: "detail.back" })).toHaveAttribute("href", "/experience");
   });
 
+  it("lists the other engagements as links to their pages", () => {
+    render(<ExperienceDetail entry={second} others={[first, third]} />);
+    const others = screen.getByRole("list", { name: "detail.others" });
+    const links = within(others).getAllByRole("link");
+    expect(links).toHaveLength(2);
+    expect(links[0]).toHaveAttribute("href", `/experience/${first.id}`);
+    expect(links[1]).toHaveTextContent(`${third.id}.company`);
+  });
+
   it("omits the neighbours at the ends and the lists when an entry has none", () => {
     const bare = { ...first, id: "empty", tech: [] };
     render(<ExperienceDetail entry={bare} />);

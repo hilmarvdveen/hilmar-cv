@@ -183,6 +183,17 @@ export const Footer = () => {
                 <Phone className="w-4 h-4" />
                 <span>{BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY}</span>
               </a>
+
+              <a
+                href={BUSINESS_PROFILE.CONTACT.WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-placement="footer-whatsapp"
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>{commonTranslations("whatsapp")}</span>
+              </a>
             </div>
 
             <div>

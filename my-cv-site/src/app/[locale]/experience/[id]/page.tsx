@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft } from "lucide-react";
 import { workHistory } from "@/data/workHistory";
 import { ExperienceDetail, ExperienceClose } from "@/features/experience";
 import { PageHero } from "@/components/PageHero";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
-import { Link } from "@/i18n/navigation";
 import { formatMonthYear } from "@/lib/workPeriod";
 import { clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { experienceDetailSchema } from "@/lib/seo/experienceSchema";
@@ -66,15 +65,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
         title={work(`${id}.headline`)}
         description={work(`${id}.role`)}
         badge={`${company} · ${period}`}
-        breadcrumb={
-          <Link
-            href="/experience"
-            className="mb-6 inline-flex items-center gap-2 rounded-md text-sm font-semibold text-emerald-300 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            {page("detail.back")}
-          </Link>
-        }
+        breadcrumb={<Breadcrumb currentLabel={company} />}
         actions={
           <Button href="/book" variant="primary" size="lg" data-placement="experience-detail-hero">
             {home("hero.bookCall")}
@@ -85,6 +76,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
         entry={entry}
         previous={workHistory[index - 1]}
         next={workHistory[index + 1]}
+        others={workHistory.filter((other) => other.id !== id)}
       />
       <ExperienceClose />
     </>

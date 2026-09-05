@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
+import { MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 type ContactFact = {
   label: string;
@@ -10,6 +12,7 @@ type ContactFact = {
 
 export const ContactHero = () => {
   const t = useTranslations("contact");
+  const common = useTranslations("common");
   const facts = t.raw("facts.items") as ContactFact[];
 
   return (
@@ -24,8 +27,16 @@ export const ContactHero = () => {
           <Button href="/book" variant="primary" size="lg" data-placement="contact-hero">
             {t("cta.button")}
           </Button>
-          <Button href="#contact-form" variant="outlineOnDark" size="lg">
-            {t("cta.writeAction")}
+          <Button
+            href={BUSINESS_PROFILE.CONTACT.WHATSAPP}
+            variant="outlineOnDark"
+            size="lg"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-placement="contact-whatsapp"
+          >
+            <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            {common("whatsapp")}
           </Button>
         </>
       }

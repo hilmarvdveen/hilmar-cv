@@ -411,7 +411,9 @@
             "title": "Something went wrong on this page",
             "description": "The page did not load. Reloading usually fixes it. If it keeps happening, email hilmar@hilmarvanderveen.com and I will look into it.",
             "retry": "Reload the page"
-        }
+        },
+        "whatsapp": "Message me on WhatsApp",
+        "whatsappHint": "For a quick question, a short answer"
     },
     "experiencePage": {
         "detail": {
@@ -425,7 +427,8 @@
             "locationLabel": "Location",
             "modeLabel": "Work mode",
             "languageLabel": "Language",
-            "roleLabel": "Role"
+            "roleLabel": "Role",
+            "others": "Other engagements"
         },
         "title": "Work history",
         "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. If you want one of them in depth, thirty minutes is the shortest way there.",
@@ -963,12 +966,12 @@
     },
     "contact": {
         "hero": {
-            "badge": "Two ways to reach me",
-            "title": "Book the call, or write to me",
-            "description": "A thirty-minute call gets you a scope. For a short question a message is enough."
+            "badge": "Three ways to reach me",
+            "title": "Book the call, message me, or write",
+            "description": "A thirty-minute call ends with a scope. For a quick question, a message on WhatsApp is enough. For anything longer, the form below."
         },
         "form": {
-            "title": "Send a message",
+            "title": "Rather write it down?",
             "description": "Tell me about the page, the application or the team, and what it runs on today.",
             "requiredNote": "Fields marked with * are required.",
             "interestsLabel": "I'm interested in",
@@ -995,12 +998,24 @@
         },
         "cta": {
             "description": "Rather talk it through? Pick a moment that suits you and we go through the system in thirty minutes.",
-            "button": "Book a 30-minute call",
-            "write": "Send a message",
-            "writeAction": "Write me a message"
+            "button": "Book a 30-minute call"
         },
         "direct": {
-            "title": "Direct contact"
+            "title": "Direct contact",
+            "items": [
+                {
+                    "label": "Email",
+                    "hint": "For a question with some background"
+                },
+                {
+                    "label": "Call",
+                    "hint": "Weekdays, and I call back when I miss you"
+                },
+                {
+                    "label": "WhatsApp",
+                    "hint": "For a quick question, a short answer"
+                }
+            ]
         },
         "facts": {
             "title": "The practical details",

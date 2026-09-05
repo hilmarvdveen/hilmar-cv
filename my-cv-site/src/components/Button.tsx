@@ -15,25 +15,25 @@ export type ButtonVariant =
 export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE =
-  "group inline-flex items-center justify-center gap-2 rounded-lg font-semibold " +
-  "transition-all duration-200 focus:outline-none focus-visible:ring-2 " +
-  "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none";
+  "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold " +
+  "transition-colors duration-200 focus:outline-none focus-visible:ring-2 " +
+  "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none";
 
 const SIZES: Record<ButtonSize, string> = {
-  sm: "px-4 py-2.5 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-base",
+  sm: "px-3.5 py-2 text-sm",
+  md: "px-5 py-2.5 text-[15px]",
+  lg: "px-6 py-3 text-base",
 };
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-emerald-700 text-white hover:bg-emerald-800 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm hover:shadow-lg hover:scale-105",
+    "bg-emerald-700 text-white hover:bg-emerald-800 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm hover:shadow-md",
   outline:
     "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-700 hover:text-white focus-visible:ring-emerald-500",
   outlineOnDark:
     "border-2 border-emerald-500/60 text-emerald-300 hover:bg-emerald-700 hover:text-white hover:border-emerald-700 focus-visible:ring-emerald-400",
   white:
-    "bg-white text-emerald-700 hover:bg-emerald-50 focus-visible:ring-white shadow-sm hover:shadow-lg hover:scale-105",
+    "bg-white text-emerald-700 hover:bg-emerald-50 focus-visible:ring-white shadow-sm hover:shadow-md",
   neutral:
     "bg-gray-100 text-gray-800 border border-gray-300 hover:bg-gray-200 focus-visible:ring-gray-400",
 };

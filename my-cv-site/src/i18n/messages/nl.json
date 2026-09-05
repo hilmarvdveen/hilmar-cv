@@ -390,7 +390,8 @@
             "locationLabel": "Locatie",
             "modeLabel": "Werkvorm",
             "languageLabel": "Taal",
-            "roleLabel": "Rol"
+            "roleLabel": "Rol",
+            "others": "Andere opdrachten"
         },
         "title": "Werkervaring",
         "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Wil je er één uitgediept hebben, dan is dertig minuten de kortste weg.",
@@ -928,12 +929,12 @@
     },
     "contact": {
         "hero": {
-            "badge": "Twee manieren om me te bereiken",
-            "title": "Plan het gesprek, of schrijf me",
-            "description": "Een gesprek van dertig minuten levert een scope op. Voor een korte vraag is een bericht genoeg."
+            "badge": "Drie manieren om me te bereiken",
+            "title": "Plan het gesprek, app me, of schrijf",
+            "description": "Een gesprek van dertig minuten eindigt met een scope. Voor een snelle vraag is een appje genoeg. Voor iets langers, het formulier hieronder."
         },
         "form": {
-            "title": "Stuur een bericht",
+            "title": "Liever opschrijven?",
             "description": "Vertel over de pagina, de applicatie of het team, en waar het nu op draait.",
             "requiredNote": "Velden met * zijn verplicht.",
             "interestsLabel": "Ik ben geïnteresseerd in",
@@ -960,12 +961,24 @@
         },
         "cta": {
             "description": "Liever meteen praten? Kies een moment dat jou uitkomt, dan lopen we het systeem in dertig minuten door.",
-            "button": "Plan een gesprek van 30 minuten",
-            "write": "Stuur een bericht",
-            "writeAction": "Schrijf me een bericht"
+            "button": "Plan een gesprek van 30 minuten"
         },
         "direct": {
-            "title": "Direct contact"
+            "title": "Direct contact",
+            "items": [
+                {
+                    "label": "E-mail",
+                    "hint": "Voor een vraag met wat achtergrond"
+                },
+                {
+                    "label": "Bellen",
+                    "hint": "Op werkdagen, en ik bel terug als ik je mis"
+                },
+                {
+                    "label": "WhatsApp",
+                    "hint": "Voor een snelle vraag, een kort antwoord"
+                }
+            ]
         },
         "facts": {
             "title": "De praktische gegevens",
@@ -1835,7 +1848,9 @@
             "title": "Er ging iets mis op deze pagina",
             "description": "De pagina is niet geladen. Opnieuw laden helpt meestal. Blijft het misgaan, mail dan hilmar@hilmarvanderveen.com, dan kijk ik ernaar.",
             "retry": "Pagina opnieuw laden"
-        }
+        },
+        "whatsapp": "App me via WhatsApp",
+        "whatsappHint": "Voor een snelle vraag, een kort antwoord"
     },
     "notFound": {
         "title": "Pagina niet gevonden",

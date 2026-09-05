@@ -2,11 +2,13 @@ import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { Section } from "@/components/Section";
 import { Link } from "@/i18n/navigation";
-import { Calendar } from "lucide-react";
+import { Calendar, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 export const CloseSection = () => {
   const t = useTranslations("home.close");
+  const common = useTranslations("common");
 
   return (
     <Section
@@ -37,6 +39,16 @@ export const CloseSection = () => {
             >
               {t("alternative")}
             </Link>
+            <a
+              href={BUSINESS_PROFILE.CONTACT.WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-placement="close-whatsapp"
+              className="inline-flex items-center gap-2 rounded-md text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              {common("whatsapp")}
+            </a>
           </div>
         </div>
       </Container>

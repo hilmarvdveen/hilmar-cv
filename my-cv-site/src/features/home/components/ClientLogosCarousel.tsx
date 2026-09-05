@@ -5,7 +5,7 @@ import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SectionTitle } from "@/components/SectionTitle";
 
-type MarkHeight = "h-7" | "h-8" | "h-9" | "h-10" | "h-12";
+type MarkHeight = "h-6" | "h-7" | "h-8" | "h-9" | "h-10" | "h-12";
 
 type CarouselClient = {
   name: string;
@@ -15,23 +15,23 @@ type CarouselClient = {
 };
 
 const clients: CarouselClient[] = [
-  { name: "bol.com", logo: "/logos/bol.svg", id: "bol", markHeight: "h-7" },
-  { name: "Belastingdienst", logo: "/logos/belastingdienst.svg", id: "belastingdienst", markHeight: "h-12" },
+  { name: "bol.com", logo: "/logos/bol.svg", id: "bol", markHeight: "h-10" },
+  { name: "Belastingdienst", logo: "/logos/belastingdienst-mark.png", id: "belastingdienst", markHeight: "h-12" },
   {
     name: "Nationale Postcode Loterij",
     logo: "/logos/nationale-postcode-loterij-mark.png",
     id: "postcode-loterij",
     markHeight: "h-12",
   },
-  { name: "Athlon", logo: "/logos/athlon.svg", id: "athlon", markHeight: "h-8" },
-  { name: "Randstad", logo: "/logos/randstad.svg", id: "randstad", markHeight: "h-8" },
-  { name: "Conclusion", logo: "/logos/conclusion.svg", id: "conclusion", markHeight: "h-7" },
+  { name: "Athlon", logo: "/logos/athlon.svg", id: "athlon", markHeight: "h-7" },
+  { name: "Randstad", logo: "/logos/randstad.svg", id: "randstad", markHeight: "h-6" },
+  { name: "Conclusion", logo: "/logos/conclusion.svg", id: "conclusion", markHeight: "h-6" },
   { name: "Ortec", logo: "/logos/ortec.png", id: "ortec", markHeight: "h-10" },
-  { name: "Omniplan", logo: "/logos/omniplan.svg", id: "omniplan", markHeight: "h-8" },
+  { name: "Omniplan", logo: "/logos/omniplan.svg", id: "omniplan", markHeight: "h-7" },
   { name: "Niped", logo: "/logos/niped.svg", id: "niped", markHeight: "h-9" },
-  { name: "Opinity", logo: "/logos/opinity-mark.png", id: "opinity", markHeight: "h-9" },
-  { name: "Bluefield", logo: "/logos/bluefield.png", id: "bluefield", markHeight: "h-10" },
-  { name: "Transdev", logo: "/logos/transdev.png", id: "transdev", markHeight: "h-10" },
+  { name: "Opinity", logo: "/logos/opinity-mark.png", id: "opinity", markHeight: "h-10" },
+  { name: "Bluefield Smart Access", logo: "/logos/bluefield.png", id: "bluefield", markHeight: "h-8" },
+  { name: "Transdev", logo: "/logos/transdev.png", id: "transdev", markHeight: "h-9" },
 ];
 
 type ClientCardProps = {

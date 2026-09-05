@@ -120,3 +120,13 @@ and the social card whitelist. Every logo mark, project case, flagship
 link and search result points at them. Hilmar's reason (5 September
 2026): the detail must stay one click away and shareable, never
 hidden, and the site goes to the best solution for the page's value.
+
+## The way back and onward (5 September 2026, late)
+
+Hilmar felt stuck on an engagement page. Three routes now sit on every
+page: the breadcrumb in the hero (Home, the work history, the company,
+through `Breadcrumb` with `currentLabel`), the previous and next
+engagement links under the technology, and an "Andere opdrachten" row
+with every other company as a pill. The hub carries the breadcrumb
+too. WhatsApp sits under the experience close band as well, with its
+own placement label.

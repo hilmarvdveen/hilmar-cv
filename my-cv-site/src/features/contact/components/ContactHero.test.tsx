@@ -41,9 +41,9 @@ describe("ContactHero", () => {
       "href",
       "/book"
     );
-    expect(
-      screen.getByRole("link", { name: "cta.writeAction" })
-    ).toHaveAttribute("href", "#contact-form");
+    const whatsapp = screen.getByRole("link", { name: "whatsapp" });
+    expect(whatsapp).toHaveAttribute("href", "https://wa.me/31680149947");
+    expect(whatsapp).toHaveAttribute("target", "_blank");
   });
 
   it("renders every fact label and value in the aside", () => {

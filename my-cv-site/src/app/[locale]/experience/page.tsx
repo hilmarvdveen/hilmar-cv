@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { workHistory } from "@/data/workHistory";
 import { WorkExperienceSection, ExperienceClose } from "@/features/experience";
 import { PageHero } from "@/components/PageHero";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
 import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { experienceHubSchema } from "@/lib/seo/experienceSchema";
@@ -43,6 +44,7 @@ export default async function ExperiencePage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
       <PageHero
         width="narrow"
+        breadcrumb={<Breadcrumb />}
         title={t("title")}
         description={t("description")}
         actions={

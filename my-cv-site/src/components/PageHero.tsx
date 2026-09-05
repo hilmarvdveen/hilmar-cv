@@ -55,7 +55,9 @@ export const PageHero = ({
       </p>
       {children && <div className="mt-6">{children}</div>}
       {actions && (
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row">{actions}</div>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          {actions}
+        </div>
       )}
     </>
   );

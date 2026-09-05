@@ -172,7 +172,7 @@ export const workHistory: WorkEntry[] = [
   {
     id: "belastingdienst",
     company: "Belastingdienst",
-    logo: "belastingdienst.svg",
+    logo: "belastingdienst-mark.png",
     from: "2023-01",
     to: "2024-12",
     location: "Apeldoorn",
