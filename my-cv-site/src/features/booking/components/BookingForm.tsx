@@ -148,6 +148,10 @@ export const BookingForm = () => {
     }
   }, []);
 
+  const retryLoadingSlots = () => {
+    void loadSlots(details.date);
+  };
+
   useEffect(() => {
     if (!details.date || details.date < todayKey) {
       updateDetail("date", workingDays[0]);
@@ -461,7 +465,7 @@ export const BookingForm = () => {
                   <p className="text-sm text-gray-700">{t("errors.loadSlotsFailed")}</p>
                   <button
                     type="button"
-                    onClick={() => void loadSlots(details.date)}
+                    onClick={retryLoadingSlots}
                     className="-mb-2 mt-3 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                   >
                     {t("flow.moment.retry")}

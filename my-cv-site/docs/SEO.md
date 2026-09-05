@@ -164,3 +164,16 @@ hub a ProfilePage whose Person lists every engagement as an occupation
 (`src/lib/seo/experienceSchema.ts`). The catch-all route sets noindex
 and no canonical, so a 404 no longer points search engines at the
 homepage. The schema generator and the engine share the build date.
+
+## Social card typeface (5 September 2026)
+
+The card renderer (`src/app/[locale]/social-card.tsx`) sets its text in
+Inter 400 and 700. `next/og` renders with Satori, which needs a font
+file per weight and accepts TTF, OTF and WOFF, not WOFF2. The loader in
+`src/lib/seo/socialCardFont.ts` fetches the Google Fonts stylesheet
+with a legacy user agent (so the stylesheet lists TTF or WOFF faces),
+parses the two faces, downloads both, and caches the buffers for the
+life of the serverless instance. Each request times out after three
+seconds. When anything fails the card renders in the system sans and
+the next request tries again. The image route tests mock the loader so
+the suite never touches the network.

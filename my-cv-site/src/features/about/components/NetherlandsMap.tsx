@@ -1,74 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import * as d3 from "d3";
+import { useMemo, useRef, useState } from "react";
 import { Briefcase, Globe, MapPin, Home, Calendar, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { workHistory, WorkMode } from "@/data/workHistory";
 import { formatMonthYear } from "@/lib/workPeriod";
-import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
+import {
+  HOME_CITY_NAME,
+  highlightedRegionCount,
+  workCityCount,
+  workCompanyCount,
+  type CityLocation,
+} from "../netherlandsMapData";
+import { useNetherlandsMapDrawing } from "../hooks/useNetherlandsMapDrawing";
 
-const HOME_CITY_NAME = "Zandvoort";
-
-const COLORS = {
-  primary: "#12314e",
-  primaryLight: "#dde4ea",
-  secondary: "#f3f4f6",
-  accent: "#10b981",
-  home: "#047857",
-  text: "#1f2937",
-  textLight: "#6b7280",
-};
-
-const highlightedRegions = [
-  "Noord-Holland",
-  "Utrecht",
-  "Zuid-Holland",
-  "Gelderland",
-  "Flevoland",
-  "Noord-Brabant",
-  "Fryslân",
-];
-
-type CityLocation = {
-  name: string;
-  coordinates: [number, number];
-  companies: string[];
-  isHome?: boolean;
-};
-
-const workCities: CityLocation[] = [
-  {
-    name: HOME_CITY_NAME,
-    coordinates: [4.5386, 52.3749],
-    companies: ["Home Base"],
-    isHome: true,
-  },
-  {
-    name: "Amsterdam",
-    coordinates: [4.8952, 52.3702],
-    companies: ["Conclusion", "Randstad", "Postcode Loterij", "Omniplan"],
-  },
-  {
-    name: "Apeldoorn",
-    coordinates: [5.9699, 52.2112],
-    companies: ["Belastingdienst"],
-  },
-  {
-    name: "Hilversum",
-    coordinates: [5.1606, 52.2292],
-    companies: ["Transdev"],
-  },
-  { name: "Hoorn", coordinates: [5.0594, 52.6425], companies: ["Niped"] },
-  { name: "Utrecht", coordinates: [5.1214, 52.0907], companies: ["Bluefield", "bol.com"] },
-  { name: "Zoetermeer", coordinates: [4.4933, 52.0607], companies: ["Ortec"] },
-  { name: "Almere", coordinates: [5.2141, 52.3508], companies: ["Athlon"] },
-  {
-    name: "Rotterdam",
-    coordinates: [4.47917, 51.9225],
-    companies: ["Opinity"],
-  },
-];
+const FIRST_YEAR = 2016;
 
 export const NetherlandsMap = () => {
   const t = useTranslations("home.map");
@@ -77,6 +23,23 @@ export const NetherlandsMap = () => {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [selectedCity, setSelectedCity] = useState<CityLocation | null>(null);
+  const labels = useMemo(
+    () => ({
+      company: t("legend.company"),
+      companies: t("legend.companies"),
+      home: t("legend.home"),
+    }),
+    [t]
+  );
+
+  useNetherlandsMapDrawing({
+    svgRef,
+    tooltipRef,
+    containerRef,
+    selectedCity,
+    onSelectCity: setSelectedCity,
+    labels,
+  });
 
   const getWorkModeIcon = (mode: WorkMode) => {
     switch (mode) {
@@ -100,195 +63,6 @@ export const NetherlandsMap = () => {
     }
   };
 
-  useEffect(() => {
-    const svg = d3.select(svgRef.current);
-    const tooltip = d3.select(tooltipRef.current);
-    const container = containerRef.current;
-    if (!svgRef.current || !tooltipRef.current || !container) return;
-
-    svg.selectAll("*").remove();
-
-    const containerWidth = container.offsetWidth;
-    const mapWidth = Math.min(containerWidth - 32, 500);
-    const mapHeight = mapWidth * 0.85;
-
-    const projection = d3
-      .geoMercator()
-      .center([5.4, 52.2])
-      .scale(mapWidth * 11)
-      .translate([mapWidth / 2, mapHeight / 2]);
-
-    const pathGenerator = d3.geoPath().projection(projection);
-
-    const isMobile = window.innerWidth < 768;
-
-    const showTooltip = (event: MouseEvent, content: string) => {
-      const bounds = container.getBoundingClientRect();
-      const left = event.clientX - bounds.left + 10;
-      const top = event.clientY - bounds.top - 10;
-
-      tooltip
-        .style("opacity", "1")
-        .style("left", `${Math.min(left, containerWidth - 200)}px`)
-        .style("top", `${Math.max(top, 10)}px`)
-        .html(content);
-    };
-
-    const hideTooltip = () => {
-      tooltip.style("opacity", "0");
-    };
-
-    const drawMap = async () => {
-      const geoData = await d3.json<ProvinceGeoJSON>(
-        "/data/geo-provinces.json"
-      );
-      if (!geoData) return;
-
-      svg
-        .selectAll<SVGPathElement, ProvinceFeature>("path")
-        .data(geoData.features)
-        .join("path")
-        .attr("d", (datum) => pathGenerator(datum) ?? "")
-        .attr("fill", (datum) =>
-          highlightedRegions.includes(datum.properties.statnaam)
-            ? COLORS.primaryLight
-            : COLORS.secondary
-        )
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 1)
-        .style("cursor", "pointer")
-        .style("transition", "all 0.2s ease")
-        .on("mouseenter touchstart", (event, datum) => {
-          d3.select(event.currentTarget).attr(
-            "fill",
-            highlightedRegions.includes(datum.properties.statnaam)
-              ? COLORS.primary
-              : "#e5e7eb"
-          );
-          if (!isMobile) {
-            showTooltip(
-              event,
-              `<div class="font-medium">${datum.properties.statnaam}</div>`
-            );
-          }
-        })
-        .on("mouseleave touchend", (event, datum) => {
-          d3.select(event.currentTarget).attr(
-            "fill",
-            highlightedRegions.includes(datum.properties.statnaam)
-              ? COLORS.primaryLight
-              : COLORS.secondary
-          );
-          if (!isMobile) {
-            hideTooltip();
-          }
-        });
-
-      const cityRadius = isMobile ? 8 : 6;
-      const cityHoverRadius = isMobile ? 12 : 8;
-
-      svg
-        .selectAll(".work-city")
-        .data(workCities.filter((city) => !city.isHome))
-        .join("circle")
-        .attr("class", "work-city")
-        .attr("cx", (datum) => projection(datum.coordinates)?.[0] || 0)
-        .attr("cy", (datum) => projection(datum.coordinates)?.[1] || 0)
-        .attr("r", cityRadius)
-        .attr("fill", COLORS.accent)
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 2)
-        .style("cursor", "pointer")
-        .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
-        .on("mouseenter touchstart", (event, datum) => {
-          d3.select(event.currentTarget).attr("r", cityHoverRadius);
-          if (!isMobile) {
-            const companiesText =
-              datum.companies.length === 1
-                ? t("legend.company")
-                : t("legend.companies");
-            showTooltip(
-              event,
-              `
-              <div class="font-medium">${datum.name}</div>
-              <div class="text-sm text-white">${datum.companies.length} ${companiesText}</div>
-            `
-            );
-          }
-        })
-        .on("mouseleave touchend", (event, datum) => {
-          if (!selectedCity || selectedCity.name !== datum.name) {
-            d3.select(event.currentTarget).attr("r", cityRadius);
-          }
-          if (!isMobile) {
-            hideTooltip();
-          }
-        })
-        .on("click touchend", (event, datum) => {
-          setSelectedCity(datum);
-          svg.selectAll(".work-city").attr("r", cityRadius);
-          d3.select(event.currentTarget).attr("r", cityHoverRadius);
-        });
-
-      const homeCity = workCities.find((city) => city.isHome);
-      if (homeCity) {
-        svg
-          .selectAll(".home-city")
-          .data([homeCity])
-          .join("circle")
-          .attr("class", "home-city")
-          .attr("cx", (datum) => projection(datum.coordinates)?.[0] || 0)
-          .attr("cy", (datum) => projection(datum.coordinates)?.[1] || 0)
-          .attr("r", cityRadius)
-          .attr("fill", COLORS.home)
-          .attr("stroke", "#ffffff")
-          .attr("stroke-width", 2)
-          .style("cursor", "pointer")
-          .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))")
-          .on("mouseenter touchstart", (event, datum) => {
-            d3.select(event.currentTarget).attr("r", cityHoverRadius);
-            if (!isMobile) {
-              showTooltip(
-                event,
-                `
-                <div class="font-medium">${datum.name}</div>
-                <div class="text-sm text-white">${t("legend.home")}</div>
-              `
-              );
-            }
-          })
-          .on("mouseleave touchend", (event, datum) => {
-            if (!selectedCity || selectedCity.name !== datum.name) {
-              d3.select(event.currentTarget).attr("r", cityRadius);
-            }
-            if (!isMobile) {
-              hideTooltip();
-            }
-          })
-          .on("click touchend", (event, datum) => {
-            setSelectedCity(datum);
-            svg.selectAll(".home-city").attr("r", cityHoverRadius);
-            svg.selectAll(".work-city").attr("r", cityRadius);
-          });
-      }
-    };
-
-    drawMap();
-
-    const handleResize = () => {
-      drawMap();
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [t, selectedCity]);
-
-  const totalCompanies = [
-    ...new Set(workCities.filter((city) => !city.isHome).flatMap((city) => city.companies)),
-  ].length;
-  const totalCities = workCities.length;
-  const totalProvinces = highlightedRegions.length;
-
   return (
     <section className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8">
       <div className="text-center mb-6 md:mb-8">
@@ -296,16 +70,16 @@ export const NetherlandsMap = () => {
           {t("companiesWorked")}
         </h2>
         <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          {t("workedIn")} {totalCompanies} {t("stats.companies")}{" "}
-          {t("stats.across")} {totalCities} {t("stats.cities")} {t("stats.in")}{" "}
-          {totalProvinces} {t("stats.provinces")}.
+          {t("workedIn")} {workCompanyCount} {t("stats.companies")}{" "}
+          {t("stats.across")} {workCityCount} {t("stats.cities")} {t("stats.in")}{" "}
+          {highlightedRegionCount} {t("stats.provinces")}.
         </p>
       </div>
 
       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8 max-w-sm md:max-w-md mx-auto">
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
           <div className="text-xl md:text-2xl font-bold text-brand-navy">
-            {totalCompanies}
+            {workCompanyCount}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
             {t("stats.companiesLabel")}
@@ -313,7 +87,7 @@ export const NetherlandsMap = () => {
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
           <div className="text-xl md:text-2xl font-bold text-brand-navy">
-            {totalCities}
+            {workCityCount}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
             {t("stats.citiesLabel")}
@@ -321,7 +95,7 @@ export const NetherlandsMap = () => {
         </div>
         <div className="text-center p-3 md:p-4 bg-white rounded-lg shadow-sm border">
           <div className="text-xl md:text-2xl font-bold text-brand-navy">
-            {totalProvinces}
+            {highlightedRegionCount}
           </div>
           <div className="text-xs md:text-sm text-gray-600">
             {t("stats.provincesLabel")}
@@ -391,7 +165,7 @@ export const NetherlandsMap = () => {
                   <div className="space-y-2 md:space-y-3">
                     {selectedCity.companies.map((company) => {
                       const workEntry = workHistory.find(
-                        (w) => w.company === company
+                        (entry) => entry.company === company
                       );
                       return (
                         <div
@@ -443,12 +217,12 @@ export const NetherlandsMap = () => {
                 • {t("highlights.basedIn")} {HOME_CITY_NAME}, Noord-Holland
               </li>
               <li>
-                • {t("highlights.workedAcross")} {totalProvinces}{" "}
+                • {t("highlights.workedAcross")} {highlightedRegionCount}{" "}
                 {t("highlights.provinces")}
               </li>
               <li>• {t("highlights.experience")}</li>
               <li>
-                • {new Date().getFullYear() - 2016}+ {t("highlights.years")}
+                • {new Date().getFullYear() - FIRST_YEAR}+ {t("highlights.years")}
               </li>
             </ul>
           </div>
