@@ -321,3 +321,28 @@ Two fixed elements can sit at the bottom: the sticky booking bar (sets
 consent banner (sets `--consent-height`, `main` pads its bottom by it).
 Anything new that is fixed to the bottom follows the same pattern:
 measure, publish a custom property, and let the page reserve the space.
+
+## The identity device (6 September 2026)
+
+One drawing, the ramp, carries the site's idea: a gray lane that keeps
+running (the live system) and an emerald path that climbs in four equal
+steps with a bead per method step. Geometry, weights and tones live in
+`src/lib/rampGeometry.ts`. `RampDevice` renders it, `CaseSchematic`
+renders it or one of three sibling drawings per project case.
+
+- Placements: under the portrait in the hero (md and up, 340 by 170),
+  a wide lockup above the five method columns (lg and up, the column
+  rules disappear there), a 96 by 48 glyph bottom right of each project
+  card (sm and up), and a fine-weight motif on the social card at 18
+  percent through a data URI.
+- Every instance is decorative: `aria-hidden`, no role, nothing the
+  page does not also say in text. Tests count svg elements on the
+  render container.
+- The return arrow (the rollback) is opt-in through `showReturn` and
+  appears only where copy explains it in the same breath. Standing
+  alone it reads as a climb that ends in a fall.
+- Card variants: `default` for things the reader can act on, `tinted`
+  for a grid under one claim, `quiet` (top rule, no box) for an
+  enumeration the reader reads and does not click. Three is the
+  ceiling. `SectionTitle` takes an `eyebrow`, the element that
+  separates sections.
