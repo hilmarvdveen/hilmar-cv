@@ -97,7 +97,7 @@ describe("FlagshipSection", () => {
     const link = screen.getByRole("link", {
       name: flagshipMessages.linkLabel,
     });
-    expect(link).toHaveAttribute("href", "/experience");
+    expect(link).toHaveAttribute("href", "/experience/bol");
   });
 
   it("wires the section aria-labelledby to the heading id", () => {

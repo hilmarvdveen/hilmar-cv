@@ -17,6 +17,7 @@ const routes = [
   "/services/fullstack",
   "/projects",
   "/experience",
+  "/experience/bol",
   "/faq",
   "/book",
   "/contact",

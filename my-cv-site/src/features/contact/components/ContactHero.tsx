@@ -14,6 +14,7 @@ export const ContactHero = () => {
 
   return (
     <PageHero
+      width="narrow"
       breadcrumb={<Breadcrumb />}
       badge={t("hero.badge")}
       title={t("hero.title")}

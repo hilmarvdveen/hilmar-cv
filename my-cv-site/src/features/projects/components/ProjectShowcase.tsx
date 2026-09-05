@@ -18,13 +18,13 @@ type ProjectCase = {
   href: string;
 };
 
-const EXPERIENCE_ANCHOR_PREFIX = "/experience#experience-";
+const EXPERIENCE_PAGE_PREFIX = "/experience/";
 
 function findWorkEntry(href: string) {
-  if (!href.startsWith(EXPERIENCE_ANCHOR_PREFIX)) {
+  if (!href.startsWith(EXPERIENCE_PAGE_PREFIX)) {
     return undefined;
   }
-  const entryId = href.slice(EXPERIENCE_ANCHOR_PREFIX.length);
+  const entryId = href.slice(EXPERIENCE_PAGE_PREFIX.length);
   return workHistory.find((entry) => entry.id === entryId);
 }
 

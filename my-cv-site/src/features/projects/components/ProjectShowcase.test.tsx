@@ -9,7 +9,7 @@ const cases = [
     title: "Forms editor rebuild",
     body: "Rebuilt the forms editor on a modern stack.",
     roleLabel: "See the Belastingdienst case",
-    href: "/experience#experience-belastingdienst",
+    href: "/experience/belastingdienst",
   },
   {
     outcome: "Zero downtime",
@@ -17,7 +17,7 @@ const cases = [
     title: "Traffic cut-over",
     body: "Moved live traffic to the rebuilt page without an outage.",
     roleLabel: "See the bol.com case",
-    href: "/experience#experience-bol",
+    href: "/experience/bol",
   },
   {
     outcome: "No data yet",

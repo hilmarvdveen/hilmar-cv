@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { localizedAlternates, localizedOpenGraph } from "./alternates";
+import { clampDescription, localizedAlternates, localizedOpenGraph } from "./alternates";
 
 describe("localizedAlternates", () => {
   it("builds a prefixed canonical and one alternate per locale plus x-default", () => {
@@ -74,5 +74,19 @@ describe("localizedOpenGraph", () => {
     const openGraph = result.openGraph as Record<string, unknown>;
     expect(openGraph.url).toBe("https://www.hilmarvanderveen.com/nl/terms");
     expect(openGraph.locale).toBe("nl_NL");
+  });
+});
+
+describe("clampDescription", () => {
+  it("keeps a short description and cuts a long one on a word boundary with an ellipsis", () => {
+    expect(clampDescription("  Short   text. ")).toBe("Short text.");
+    const long = Array.from({ length: 40 }, () => "word").join(" ");
+    const clamped = clampDescription(long);
+    expect(clamped.length).toBeLessThanOrEqual(160);
+    expect(clamped.endsWith("word…")).toBe(true);
+  });
+
+  it("cuts hard when a long description has no usable word boundary", () => {
+    expect(clampDescription("x".repeat(200))).toHaveLength(160);
   });
 });

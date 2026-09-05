@@ -1,7 +1,7 @@
 {
     "home": {
         "hero": {
-            "badge": "Available from 1 October 2026 · Randstad, hybrid or remote",
+            "badge": "Available from 1 October 2026 · the Randstad, hybrid or remote",
             "heading": "Senior frontend, owned end to end. From legacy spec to live cut-over.",
             "description": "Ten-plus years senior in React and Angular, currently at bol.com. I build the pages customers see, from specification to production, shape the GraphQL contract with the backend team, and ramp them onto live traffic in reversible steps.",
             "bookCall": "Book a 30-minute call",
@@ -238,7 +238,7 @@
                 },
                 {
                     "label": "Location",
-                    "value": "Randstad, hybrid or remote",
+                    "value": "the Randstad, hybrid or remote",
                     "detail": "1 to 2 days on site works well",
                     "highlight": false
                 },
@@ -394,7 +394,8 @@
             "openMenu": "Open menu",
             "closeMenu": "Close menu",
             "language": "Language",
-            "availability": "Available from 1 October 2026, earlier by arrangement"
+            "availability": "Available from 1 October 2026, earlier by arrangement",
+            "search": "Search"
         },
         "consent": {
             "text": "This site uses cookies for anonymous visit statistics. Your choice is remembered.",
@@ -413,8 +414,21 @@
         }
     },
     "experiencePage": {
+        "detail": {
+            "storyTitle": "The story",
+            "technologyTitle": "Technology",
+            "back": "All engagements",
+            "factsTitle": "Facts",
+            "previous": "Previous engagement",
+            "next": "Next engagement",
+            "periodLabel": "Period",
+            "locationLabel": "Location",
+            "modeLabel": "Work mode",
+            "languageLabel": "Language",
+            "roleLabel": "Role"
+        },
         "title": "Work history",
-        "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. Want one of them in depth, then thirty minutes is the shortest way there.",
+        "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. If you want one of them in depth, thirty minutes is the shortest way there.",
         "metaDescription": "Twelve engagements since 2016, bol.com included, each with what it delivered, my role and the stack. Senior frontend engineer, React and Angular, freelance.",
         "cta": {
             "title": "Recognise one of these?",
@@ -557,37 +571,46 @@
                     "paragraph": "bol.com is one of the largest online retailers in the Netherlands and Belgium. Its storefront ran on a large Java application that is being replaced by a server-side-rendered React platform. Since July 2025 I have been the frontend specialist there in teams made up mostly of backend developers, first in Loyalty and then in Digital. The engagement has been extended three times."
                 },
                 {
-                    "paragraph": "The pages I had to move had no written specification. Their behaviour lived in server-side Java and 226 Handlebars templates. I read that code and wrote down what each page actually does: the exact URLs, the user-facing text, the classification rules and the analytics events. I checked my reading with the backend engineers who own the services. That blueprint is what made a low-risk, page-by-page migration possible."
+                    "paragraph": "The pages I had to move had no written specification. Their behaviour lived in server-side Java and 226 Handlebars templates. I read that code and wrote down what each page actually does: the exact URLs, the user-facing text, the classification rules and the analytics events. I checked my reading with the backend engineers who own the services. That blueprint is what made a low-risk, page-by-page migration possible.",
+                    "heading": "The specification that did not exist"
                 },
                 {
-                    "paragraph": "In Loyalty I built the Select points-overview page from that specification to production. It carries a rewards table for order points and action points, Dutch and French text, and edge cases such as cancelled orders and external merchants. In Digital I built the shared page where a customer manages both a Kobo Plus and a Select subscription. The server fetches both subscriptions at once and one pure function maps the result to one of five mutually exclusive situations, so every situation is derived in one place. Where the schema did not fit a data-driven frontend, I took the change into the GraphQL contract with the backend team. One example is a bare mandate reference that became a structured mandate object."
+                    "paragraph": "In Loyalty I built the Select points-overview page from that specification to production. It carries a rewards table for order points and action points, Dutch and French text, and edge cases such as cancelled orders and external merchants. In Digital I built the shared page where a customer manages both a Kobo Plus and a Select subscription. The server fetches both subscriptions at once and one pure function maps the result to one of five mutually exclusive situations, so every situation is derived in one place. Where the schema did not fit a data-driven frontend, I took the change into the GraphQL contract with the backend team. One example is a bare mandate reference that became a structured mandate object.",
+                    "heading": "Loyalty and the shared subscription page"
                 },
                 {
-                    "paragraph": "I rebuilt the Kobo Plus acquisition page as a server-rendered page whose content marketers manage in the headless CMS. One page registry swaps the seasonal, experiment and refer-a-friend variants with a single line of code, and visitors who arrive through an invitation see a personalised hero. Marketing has been changing that page ever since without an engineering deploy."
+                    "paragraph": "I rebuilt the Kobo Plus acquisition page as a server-rendered page whose content marketers manage in the headless CMS. One page registry swaps the seasonal, experiment and refer-a-friend variants with a single line of code, and visitors who arrive through an invitation see a personalised hero. Marketing has been changing that page ever since without an engineering deploy.",
+                    "heading": "Marketing without a deploy"
                 },
                 {
-                    "paragraph": "In Digital I built the app for software and games from an empty folder to production inside the Nx monorepo. That included server rendering, routing, CI/CD, Google Cloud and Kubernetes, the security profile and the authentication allow-list. I then ran the cut-over of the live account pages through the platform's routing layer, which another team owns. Employees saw the new pages first, then a percentage of customers, hashed per visitor so nobody bounced between the old and the new page. Every step was reversible in one move. During the ramp I found and fixed a route-matching-order bug. Customers moved across with no customer-facing outage."
+                    "paragraph": "In Digital I built the app for software and games from an empty folder to production inside the Nx monorepo. That included server rendering, routing, CI/CD, Google Cloud and Kubernetes, the security profile and the authentication allow-list. I then ran the cut-over of the live account pages through the platform's routing layer, which another team owns. Employees saw the new pages first, then a percentage of customers, hashed per visitor so nobody bounced between the old and the new page. Every step was reversible in one move. During the ramp I found and fixed a route-matching-order bug. Customers moved across with no customer-facing outage.",
+                    "heading": "The Digital app and the cut-over"
                 },
                 {
-                    "paragraph": "With the designer and the business team I shipped nine A/B experiments across five places in the shop, from the acquisition page to the product page and the basket. I built them in code and configured them in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest. When a variant won I made it the new default and removed the experiment scaffolding."
+                    "paragraph": "With the designer and the business team I shipped nine A/B experiments across five places in the shop, from the acquisition page to the product page and the basket. I built them in code and configured them in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest. When a variant won I made it the new default and removed the experiment scaffolding.",
+                    "heading": "Nine experiments"
                 },
                 {
-                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production."
+                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production.",
+                    "heading": "Numbers that hold up"
                 },
                 {
-                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend, and I wrote backend logic in Kotlin when capacity was tight."
+                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend, and I wrote backend logic in Kotlin when capacity was tight.",
+                    "heading": "Working across team boundaries"
                 },
                 {
-                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them."
+                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them.",
+                    "heading": "What stays behind"
                 }
             ],
             "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform. Those pages did not go offline along the way.",
             "delivered": [
-                "Loyalty and subscription pages rebuilt in React, from a reverse-engineered specification to production",
-                "The Digital app from an empty folder to production inside the Nx monorepo",
-                "Cut-over of the live account pages, ramped by percentage and reversible in one move",
-                "Nine A/B experiments across five places in the shop, built in code and configured in the tool"
-            ]
+                "Customers manage subscriptions, software and games on the new React platform, moved page by page from the legacy Java shop",
+                "Marketing changes the Kobo Plus acquisition page without an engineering deploy, through the headless CMS and a page registry",
+                "The live account pages moved without a customer-facing outage, ramped by percentage and reversible in one move",
+                "Product decisions rest on trustworthy numbers: nine experiments built and configured, funnels repaired, Sentry end to end"
+            ],
+            "headline": "Loyalty and Digital on a new platform, without interruption"
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -598,28 +621,34 @@
                     "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency. The engagement was extended four times."
                 },
                 {
-                    "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the Bold design system."
+                    "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the Bold design system.",
+                    "heading": "Pages from configuration"
                 },
                 {
-                    "paragraph": "That approach became the foundation under the visual forms editor I then built from scratch. Editors drag form blocks onto a canvas and configure each block in a side panel: labels, validations, conditions and dependencies, with comments and versions per component. In a tryout view they run their own form the way a visitor sees it. I worked on the backend as well and extended the endpoints. The editors' work is stored in configuration files, so the state of every form is reproducible from the backend."
+                    "paragraph": "That approach became the foundation under the visual forms editor I then built from scratch. Editors drag form blocks onto a canvas and configure each block in a side panel: labels, validations, conditions and dependencies, with comments and versions per component. In a tryout view they run their own form the way a visitor sees it. I worked on the backend as well and extended the endpoints. The editors' work is stored in configuration files, so the state of every form is reproducible from the backend.",
+                    "heading": "The visual forms editor"
                 },
                 {
-                    "paragraph": "The back-and-forth with the development team is gone. In the entrepreneur portal a new page went from one to two weeks to one to two days. Both stayed at WCAG 2.1 AA, verified with automated tests in the pipeline."
+                    "paragraph": "The back-and-forth with the development team is gone. In the entrepreneur portal a new page went from one to two weeks to one to two days. Both stayed at WCAG 2.1 AA, verified with automated tests in the pipeline.",
+                    "heading": "From weeks to days"
                 },
                 {
-                    "paragraph": "The Bold design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services."
+                    "paragraph": "The Bold design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services.",
+                    "heading": "The design system in the teams"
                 },
                 {
-                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and ArgoCD, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code."
+                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and ArgoCD, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code.",
+                    "heading": "What stays behind"
                 }
             ],
             "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days. Content editors and designers built, checked and demoed it themselves.",
             "delivered": [
-                "Data-driven Angular architecture for the entrepreneur portal, pages assembled from backend configuration",
-                "Visual forms editor in which editors build, check and demo a form themselves",
-                "A new portal page from one to two weeks to one to two days, WCAG 2.1 AA kept",
-                "Bold design system rolled out across teams, with wrappers for Angular, React and Vue"
-            ]
+                "Editors build, check and demo a new tax form themselves in the visual forms editor, in days where it took months",
+                "A new portal page takes one to two days where it took one to two weeks, from a data-driven Angular architecture",
+                "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
+                "Teams adopt the Bold design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
+            ],
+            "headline": "From months to days for a new tax form"
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -630,22 +659,26 @@
                     "paragraph": "The lotteries live on campaigns. Every campaign got its own site, and every site was built up again from the start. That took weeks, and the result differed per brand. There was nothing to build on yet, so the design system started from zero."
                 },
                 {
-                    "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The first campaign site proved the approach, and the VriendenLoterij VIP-Kaarten campaign followed on the same components."
+                    "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The first campaign site proved the approach, and the VriendenLoterij VIP-Kaarten campaign followed on the same components.",
+                    "heading": "One component set, a theme per label"
                 },
                 {
-                    "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, and GitLab pipelines and Docker put a campaign live. Playwright and Cypress keep watch over the existing campaigns while new ones arrive."
+                    "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, and GitLab pipelines and Docker put a campaign live. Playwright and Cypress keep watch over the existing campaigns while new ones arrive.",
+                    "heading": "Across the European labels"
                 },
                 {
-                    "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme."
+                    "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme.",
+                    "heading": "What stays behind"
                 }
             ],
             "summary": "A new campaign site went from weeks to a few days, because every brand draws on the same set of components and the content lives in the CMS.",
             "delivered": [
-                "International design system in an Nx monorepo, campaign pages assembled from JSON",
-                "React and Next.js components with Storyblok content and WCAG 2.1 AA built in",
-                "A brand layer per label, so a new label comes down to a theme",
-                "Serverless APIs on AWS, GitLab pipelines and Docker for every campaign"
-            ]
+                "A new campaign site is live in days where it took weeks, assembled from JSON on one component set",
+                "A new label comes down to a theme: colours, buttons and animations change per brand, the logic stays",
+                "Marketing manages campaign content in Storyblok, accessible to WCAG 2.1 AA from the first day",
+                "Existing campaigns stay safe while new ones ship, guarded by Playwright and Cypress in GitLab pipelines"
+            ],
+            "headline": "A campaign site in days, from one component set"
         },
         "athlon": {
             "company": "Athlon",
@@ -656,28 +689,33 @@
                     "paragraph": "Athlon ran its self-service application on Angular 1.6. The framework was long past its useful life, the interface was hard to change, and accessibility was not where it had to be. Everything the application already did had to keep working."
                 },
                 {
-                    "paragraph": "I led the migration to Angular 12 and designed the frontend architecture around RxJS and reactive data streams. On top of that I built a component library that gives every screen the same behaviour and the same accessible markup. That library is what kept the rebuild affordable, because each new screen is assembled from parts that were already tested."
+                    "paragraph": "I led the migration to Angular 12 and designed the frontend architecture around RxJS and reactive data streams. On top of that I built a component library that gives every screen the same behaviour and the same accessible markup. That library is what kept the rebuild affordable, because each new screen is assembled from parts that were already tested.",
+                    "heading": "From Angular 1.6 to 12"
                 },
                 {
-                    "paragraph": "For the customer side I built a generic self-service platform with conditional logic and validation, configurable in the same low-code spirit. The dashboards got dynamic data visualisations with responsive charts and sortable tables. The frontend talks to several backend REST APIs through OpenAPI 3.0, the content comes from a headless CMS, and delivery runs on Azure DevOps with Docker and Kubernetes."
+                    "paragraph": "For the customer side I built a generic self-service platform with conditional logic and validation, configurable in the same low-code spirit. The dashboards got dynamic data visualisations with responsive charts and sortable tables. The frontend talks to several backend REST APIs through OpenAPI 3.0, the content comes from a headless CMS, and delivery runs on Azure DevOps with Docker and Kubernetes.",
+                    "heading": "Self-service and dashboards"
                 },
                 {
                     "paragraph": "The application came back on a current stack, accessible to WCAG 2.1 AA and straightforward to extend."
                 },
                 {
-                    "paragraph": "I tutored the developers around me in the best practices of Angular, junior and senior alike, and took them by the hand where the framework got in their way. I did their code reviews and helped them make their code better. With the UX designers I turned wireframes and user feedback into one consistent, accessible frontend. Design flaws that showed up while building went back to the designer and the product owner while there was still room to change them."
+                    "paragraph": "I tutored the developers around me in the best practices of Angular, junior and senior alike, and took them by the hand where the framework got in their way. I did their code reviews and helped them make their code better. With the UX designers I turned wireframes and user feedback into one consistent, accessible frontend. Design flaws that showed up while building went back to the designer and the product owner while there was still room to change them.",
+                    "heading": "Coaching and reviews"
                 },
                 {
-                    "paragraph": "The application I left behind is easier to maintain than the one I found. Responsibilities are spread across services and components, the code reads without a guide, and unit tests cover the logic. The component library gives the next developer a tested starting point for every new screen."
+                    "paragraph": "The application I left behind is easier to maintain than the one I found. Responsibilities are spread across services and components, the code reads without a guide, and unit tests cover the logic. The component library gives the next developer a tested starting point for every new screen.",
+                    "heading": "What stays behind"
                 }
             ],
-            "summary": "I renewed Athlon's ageing self-service application on a current Angular stack, so customers could arrange more themselves and fewer of them had to call support.",
+            "summary": "I renewed Athlon's ageing self-service application on a current Angular stack, so customers could arrange more themselves.",
             "delivered": [
-                "Migration from Angular 1.6 to Angular 12, architecture around RxJS",
-                "Component library with the same behaviour and accessible markup on every screen",
-                "Generic self-service platform with conditional logic and validation",
-                "Coaching and code reviews for junior and senior developers"
-            ]
+                "Customers arrange more themselves in a self-service platform with conditional logic and validation",
+                "The application runs on Angular 12 again, accessible to WCAG 2.1 AA and straightforward to extend",
+                "Every new screen starts from a tested component library, which kept the rebuild affordable",
+                "The team writes better Angular after coaching and code reviews, junior and senior alike"
+            ],
+            "headline": "Self-service renewed on a current Angular stack"
         },
         "randstad": {
             "company": "Randstad",
@@ -696,10 +734,11 @@
             ],
             "summary": "During the rebranding, Randstad and Yacht got one set of accessible components that carries the new brand identity on both sites.",
             "delivered": [
-                "Front-end components for the rebrand in vanilla JavaScript, Angular and React",
-                "SCSS with the BEM method, so the structure stays the same across platforms",
-                "Styling components for the Hippo Bloomreach headless CMS"
-            ]
+                "Randstad and Yacht carry the new brand on both sites from one accessible component set",
+                "The same structure on every platform, in vanilla JavaScript, Angular and React with SCSS and BEM",
+                "Colleagues work component-driven in Angular after coaching as UI coach"
+            ],
+            "headline": "One accessible component set for two brands"
         },
         "opinity": {
             "company": "Opinity",
@@ -718,10 +757,11 @@
             ],
             "summary": "Drivers and managers record and check freight data in one application, delivered inside the four-month deadline.",
             "delivered": [
-                "Angular front end and ASP.NET Core backend with role-based access",
-                "Trip and freight entry for drivers, verification for managers",
-                "Live on time inside the four-month deadline"
-            ]
+                "Drivers record trips and freight on the road and managers verify the same entries, live inside four months",
+                "Mistakes surface the moment someone makes them, with validation in the interface and in the API",
+                "One person carried front end and backend, Angular on ASP.NET Core with role-based access"
+            ],
+            "headline": "Freight registration live inside four months"
         },
         "omniplan": {
             "company": "Omniplan",
@@ -743,11 +783,11 @@
             ],
             "summary": "Omniplan could let outside organisations into its platform securely, without tying the two systems together.",
             "delivered": [
-                "Front end migrated from AngularJS to Angular 9",
-                "Backend moved to .NET Core with REST and gRPC services",
-                "Modular authorisation and membership service on Microsoft Identity and JWT",
-                "Screens driven by backend configuration, so a change often needs no new code"
-            ]
+                "Outside organisations get exactly the rights of their role through a separate authorisation and membership service",
+                "Connecting a new partner became a matter of configuration, because screens take their behaviour from the backend",
+                "The platform runs on Angular 9 and .NET Core with REST and gRPC, on Azure with Docker and Kubernetes"
+            ],
+            "headline": "Outside organisations on the platform, securely"
         },
         "ortec": {
             "company": "Ortec",
@@ -769,14 +809,14 @@
             ],
             "summary": "FedEx staff follow routes, loads and delivery locations live on one screen in the portal.",
             "delivered": [
-                "Angular portal with live route and geo visualisations",
-                "Updates through observables, so the planning appears without a refresh",
-                "Micro-frontends on top of .NET Core microservices",
-                "REST contracts settled on OpenAPI with the backend teams"
-            ]
+                "FedEx staff see routes, loads and delivery locations change on screen without a refresh, through observables",
+                "New views and integrations arrive without a rebuild, because screen behaviour comes from configuration",
+                "Parts release on their own as micro-frontends on .NET Core microservices, with contracts settled on OpenAPI"
+            ],
+            "headline": "Live routes and loads on one screen for FedEx"
         },
         "bluefield": {
-            "company": "Bluefield",
+            "company": "Bluefield Smart Access",
             "location": "Maarssen Utrecht",
             "role": "Fullstack Developer (ReactJS, .NET Core, Neo4J)",
             "body": [
@@ -792,10 +832,11 @@
             ],
             "summary": "Administrators see complex processes and network incidents in one view, so they know where to step in.",
             "delivered": [
-                "Cycle dashboard on a Neo4J graph database, in React and Redux",
-                "Incident map view for Ziggo with faulty network nodes marked",
-                "Parking reservation application with access tickets for Tommy Hilfiger"
-            ]
+                "Administrators see every cycle's status at a glance and start diagnostics or recovery from the tile, on a Neo4J graph",
+                "Ziggo's network administrators see incidents on a map as they happen, faulty nodes marked",
+                "Tommy Hilfiger employees reserve a parking spot in a calendar and get their access ticket"
+            ],
+            "headline": "Processes and network incidents in one view"
         },
         "niped": {
             "company": "Niped",
@@ -814,10 +855,11 @@
             ],
             "summary": "Users got insight into their vitality and health risks, and the editors could manage the content behind it themselves.",
             "delivered": [
-                "Existing React application restructured with reusable logic, Redux and React Router",
-                "WPF management application on MVVM for the editors, version control included",
-                "Code quality kept with SonarQube, Prettier and ESLint"
-            ]
+                "Users see where they stand on vitality and health risks in a React application with better error handling and accessibility",
+                "Editors manage texts and media themselves, with version control, in a WPF application on MVVM",
+                "Interfaces settled with the backend developers, code quality kept with SonarQube, Prettier and ESLint"
+            ],
+            "headline": "Health insight for users, content in the editors' hands"
         },
         "conclusion": {
             "company": "Conclusion",
@@ -836,10 +878,11 @@
             ],
             "summary": "The CLASS learning platform moved to a modern, accessible front end step by step while the existing environment stayed in service.",
             "delivered": [
-                "Modular Vue front end with reusable, accessible UI elements",
-                "REST WebAPIs with CQRS and NHibernate, backend logic covered with xUnit",
-                "Point of contact for SLA reports, from analysis to improvement"
-            ]
+                "Learners got a modern, accessible front end in Vue, step by step, while the existing platform stayed in service",
+                "Client reports under the SLA went from analysis to improvement with one point of contact",
+                "Backend logic on REST WebAPIs with CQRS and NHibernate, covered with xUnit"
+            ],
+            "headline": "A learning platform modernised while it stayed in service"
         },
         "transdev": {
             "company": "Transdev",
@@ -858,14 +901,15 @@
             ],
             "summary": "Travellers could look up trip information and waiting times themselves, because a new API layer opened up the data in the old system.",
             "delivered": [
-                "Generic .NET Core API layer as a secure gateway over the Delphi backend",
-                "Traveller portal in Angular with TypeScript and RxJS",
-                "Queue module that shows a caller their position and waiting time"
-            ]
+                "Travellers look up trip information and waiting times themselves in a portal that works on a phone",
+                "Callers see their position and expected waiting time through a queue module",
+                "Later channels connect to the same secure .NET Core gateway over the Delphi backend"
+            ],
+            "headline": "Trip information travellers look up themselves"
         },
         "period": "{from} to {to}",
-        "deliveredTitle": "Delivered",
-        "readMore": "Read the whole story"
+        "deliveredTitle": "What it changed",
+        "readMore": "Read the full engagement"
     },
     "projects": {
         "hero": {
@@ -884,7 +928,7 @@
                 "title": "Loyalty and Digital onto a new platform, with no outage for customers",
                 "body": "bol.com moved its Select loyalty and Kobo Plus pages off a legacy Java storefront onto a new server-rendered React platform, and my engagement there was extended three times. I read the old Java to work out exactly what each page did and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and ran the traffic cut-over in reversible steps. Employees first, then a percentage of customers, then everyone, with no customer-facing outage. I built the whole Digital app from an empty folder to production, with server rendering, routing, CI/CD and the cloud deployment. With the designer and the business team I shipped nine A/B experiments, built in code and configured in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
                 "roleLabel": "Senior frontend, Loyalty and Digital",
-                "href": "/experience#experience-bol"
+                "href": "/experience/bol"
             },
             {
                 "outcome": "Months to days",
@@ -892,7 +936,7 @@
                 "title": "A tax form that content editors build themselves",
                 "body": "A new income-tax form used to take months of engineering and constant back-and-forth with the development team. I built a greenfield low-code visual forms editor with drag-and-drop, conditional logic, validation and translations, so content editors and designers could build, verify and demo a form themselves. That brought a new form down to a few days. Alongside it I designed a JSON-configurable Angular component architecture for the entrepreneur portal. I also drove the shared Stencil web components that other developers reuse across Angular, React and Vue, which took a new page from one to two weeks to one to two days. Accessibility to WCAG 2.1 AA, with Cypress and Playwright in the pipeline.",
                 "roleLabel": "Senior Frontend Developer, forms editor and design system",
-                "href": "/experience#experience-belastingdienst"
+                "href": "/experience/belastingdienst"
             },
             {
                 "outcome": "Weeks to days",
@@ -900,7 +944,7 @@
                 "title": "Campaign sites out of a JSON-driven design system",
                 "body": "Campaign sites for the European lottery labels took weeks to put together. I built a greenfield JSON-driven international design system in an Nx monorepo, with Storyblok as the headless CMS, Next.js server rendering and WCAG 2.1 AA accessibility. Campaign time-to-market across the labels went from weeks to a few days. Serverless APIs on AWS sat behind it, with Playwright and Cypress covering the flows.",
                 "roleLabel": "Senior Frontend Developer, design system",
-                "href": "/experience#experience-postcode-loterij"
+                "href": "/experience/postcode-loterij"
             },
             {
                 "outcome": "Angular 1.6 to Angular 12",
@@ -908,7 +952,7 @@
                 "title": "A legacy application moved onto a modern stack",
                 "body": "Athlon's application ran on Angular 1.6. I led the migration to a modern Angular 12 stack: a component library, dynamic dashboards, a headless CMS, WCAG 2.1 AA accessibility, and CI/CD with Azure DevOps, Docker and Kubernetes. I coached the frontend team through it, junior and senior developers alike, on Angular practice. I reviewed their code and worked through the improvements with them.",
                 "roleLabel": "Senior Frontend Developer, migration and coaching",
-                "href": "/experience#experience-athlon"
+                "href": "/experience/athlon"
             }
         ],
         "cta": {
@@ -971,7 +1015,7 @@
                 },
                 {
                     "label": "Location",
-                    "value": "Randstad, hybrid or remote, 1 to 2 days on site works well"
+                    "value": "The Randstad, hybrid or remote, 1 to 2 days on site works well"
                 },
                 {
                     "label": "Languages",
@@ -998,7 +1042,7 @@
                     "outcome": "The page stays open while it is rebuilt.",
                     "title": "Frontend Development",
                     "shortDescription": "A page that customers buy through is stuck on a stack you can no longer change quickly. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, page by page, while customers kept using them.",
-                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live without a stop. The old behaviour comes first. I read the existing system to work out exactly what a page does, then rebuild it. It ships behind a switch that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
+                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live without a stop. The old behaviour comes first. I read the existing system to work out exactly what a page does, then rebuild it. It ships behind a switch that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team.",
                     "technologies": {
                         "title": "Technologies and tools"
                     },
@@ -1100,7 +1144,7 @@
                     },
                     {
                         "title": "Experiments you can run",
-                        "description": "At bol.com I built and configured nine A/B experiments with the designer and the business team. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest."
+                        "description": "At bol.com I built and configured nine A/B experiments with the designer and the business team."
                     },
                     {
                         "title": "Content editable without a deploy",
@@ -1219,7 +1263,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Randstad, 1 to 2 days on site, or fully remote",
+                    "The Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1305,6 +1349,15 @@
                         "items": [
                             {
                                 "name": "MSSQL"
+                            },
+                            {
+                                "name": "MySQL"
+                            },
+                            {
+                                "name": "Neo4J"
+                            },
+                            {
+                                "name": "Entity Framework"
                             }
                         ]
                     },
@@ -1407,7 +1460,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Randstad, 1 to 2 days on site, or fully remote",
+                    "The Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1585,7 +1638,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Randstad, 1 to 2 days on site, or fully remote",
+                    "The Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1735,7 +1788,7 @@
                 "terms": [
                     "Available from 1 October 2026, earlier by arrangement",
                     "32 to 40 hours a week, six months or longer",
-                    "Randstad, 1 to 2 days on site, or fully remote",
+                    "The Randstad, 1 to 2 days on site, or fully remote",
                     "Freelance through Hilmar ICT Services, KVK 97564303",
                     "€95 to €125 per hour, depending on project type and work"
                 ]
@@ -1780,7 +1833,7 @@
                 },
                 {
                     "title": "Design flaws come up while the work is still open",
-                    "body": "I talk to the product owner and the designer while the work is still open. Flaws and better options come up while they are still cheap to act on. At bol.com that conversation with the designer and the business team became nine A/B experiments, which I built in code and configured in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
+                    "body": "I talk to the product owner and the designer while the work is still open. Flaws and better options come up while they are still cheap to act on. At bol.com that conversation with the designer and the business team became nine A/B experiments, which I built in code and configured in the experimentation tool.",
                     "evidence": "bol.com, Loyalty and Digital, 2025 to 2026"
                 },
                 {
@@ -1808,7 +1861,7 @@
             ]
         },
         "map": {
-            "contactLine": "Randstad, one to two days on site, or fully remote."
+            "contactLine": "The Randstad, one to two days on site, or fully remote."
         },
         "cta": {
             "title": "See whether I fit your team",
@@ -1866,7 +1919,7 @@
             "features": {
                 "quick": "From 1 October 2026",
                 "expert": "React and Angular, senior since 2016",
-                "remote": "Randstad or remote"
+                "remote": "The Randstad or remote"
             }
         },
         "quickNav": {
@@ -1989,7 +2042,7 @@
                     },
                     {
                         "question": "Do you work with experiments and measurement?",
-                        "answer": "Yes, when the page is commercial. At bol.com I built nine A/B experiments in code and configured them in the experimentation tool, with the designer and the business team. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest. I also repaired tracking that carried placeholder identifiers, because a funnel is only worth what its data says."
+                        "answer": "Yes, when the page is commercial. At bol.com I built nine A/B experiments in code and configured them in the experimentation tool, with the designer and the business team. I also repaired tracking that carried placeholder identifiers, because a funnel is only worth what its data says."
                     }
                 ]
             },
@@ -2061,7 +2114,8 @@
         "inputLabel": "Search the site",
         "placeholder": "Page, engagement or article",
         "resultsCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
-        "empty": "No results found. Try another word, or book a call and ask."
+        "empty": "No results found. Try another word, or book a call and ask.",
+        "emptyAction": "Book a 30-minute call"
     },
     "legal": {
         "lastUpdated": "Last updated"
@@ -2138,7 +2192,7 @@
             "practicalTitle": "Practical",
             "practical": [
                 "Available from 1 October 2026, earlier by arrangement",
-                "Randstad, hybrid or remote, 1 to 2 days on site works well",
+                "The Randstad, hybrid or remote, 1 to 2 days on site works well",
                 "Freelance ZZP via Hilmar ICT Services, KVK 97564303",
                 "€95 to €125 per hour, depending on project type and work"
             ],
@@ -2174,7 +2228,7 @@
             "name": "Hilmar van der Veen",
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React and Angular, in the Randstad and remote.",
-            "location": "Zandvoort NL • Randstad, hybrid or remote",
+            "location": "Zandvoort NL • the Randstad, hybrid or remote",
             "availability": "Available from 1 October 2026"
         },
         "services": {
@@ -2194,7 +2248,8 @@
                 "projects": "Projects",
                 "blog": "Blog",
                 "faq": "FAQ",
-                "contact": "Contact"
+                "contact": "Contact",
+                "search": "Search"
             }
         },
         "legal": {

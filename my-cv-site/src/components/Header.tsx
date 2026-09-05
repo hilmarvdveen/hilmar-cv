@@ -14,6 +14,7 @@ import {
   Calendar,
   Briefcase,
   BookOpen,
+  Search,
 } from "lucide-react";
 import Image from "next/image";
 import { Flag } from "@/components/Flag";
@@ -166,6 +167,13 @@ export const Header = () => {
                 );
               })}
 
+              <Link
+                href="/search"
+                aria-label={t("nav.search")}
+                className="ml-1 rounded-md p-2 text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              >
+                <Search className="h-5 w-5" aria-hidden="true" />
+              </Link>
               <span className="mx-2 h-6 w-px bg-gray-200" aria-hidden="true" />
               <Button
                 href="/book"
@@ -307,6 +315,17 @@ export const Header = () => {
                 </Link>
               );
             })}
+          </div>
+
+          <div className="px-6 pb-4">
+            <Link
+              href="/search"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center space-x-3 rounded-lg px-4 py-4 text-base font-medium text-gray-600 transition-colors duration-200 touch-manipulation hover:bg-gray-50 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-inset"
+            >
+              <Search className="h-5 w-5" aria-hidden="true" />
+              <span>{t("nav.search")}</span>
+            </Link>
           </div>
 
           <div className="px-6 py-4 border-t border-gray-200 mt-4">

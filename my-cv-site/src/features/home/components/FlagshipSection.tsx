@@ -58,7 +58,7 @@ export const FlagshipSection = () => {
         </ul>
         <div className="mt-8">
           <Link
-            href="/experience"
+            href="/experience/bol"
             className="text-primary font-semibold underline underline-offset-4"
           >
             {t("linkLabel")}

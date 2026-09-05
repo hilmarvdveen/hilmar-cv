@@ -35,13 +35,24 @@ export const localizedAlternates = (path: string, locale: string): LocalizedAlte
   return { canonical: localizedUrl(path, resolveLocale(locale)), languages };
 };
 
+const DESCRIPTION_LIMIT = 160;
+
+export const clampDescription = (description: string): string => {
+  const clean = description.replace(/\s+/g, " ").trim();
+  if (clean.length <= DESCRIPTION_LIMIT) return clean;
+  const cut = clean.slice(0, DESCRIPTION_LIMIT - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > DESCRIPTION_LIMIT / 2 ? cut.slice(0, lastSpace) : cut).trim()}…`;
+};
+
 export const localizedOpenGraph = (
   path: string,
   locale: string,
   title: string,
-  description: string
+  rawDescription: string
 ): LocalizedOpenGraph => {
   const currentLocale = resolveLocale(locale);
+  const description = clampDescription(rawDescription);
   const canonicalUrl = localizedUrl(path, currentLocale);
   const ogLocale = LOCALE_CONFIG.OPEN_GRAPH_LOCALE[currentLocale];
   const alternateLocale = Object.values(LOCALE_CONFIG.OPEN_GRAPH_LOCALE).filter(

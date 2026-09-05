@@ -609,13 +609,15 @@ class PublishFormVersionTest {
     @Test
     void names_every_reason_a_draft_stays_where_it_is() {
         formDefinitions.save(new FormDefinition("permit", "Permit request",
-                List.of(new FormVersion(1, List.of(), null))));
+                List.of(new FormVersion(1, List.of(), MOMENT))));
 
         PublishResult result = publishFormVersion.handle("permit", 1);
 
         PublishResult.ValidationFailed failed =
                 assertInstanceOf(PublishResult.ValidationFailed.class, result);
-        assertEquals(List.of("A version without fields cannot be published."), failed.reasons());
+        assertEquals(List.of(
+                "A version without fields cannot be published.",
+                "This version was published already."), failed.reasons());
     }
 
     private static FormDefinition permitWithDraft() {

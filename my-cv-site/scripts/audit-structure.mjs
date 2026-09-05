@@ -1,6 +1,6 @@
 const baseUrl = process.argv[2] || "http://localhost:3000";
 const routes = [
-  "", "/about", "/services", "/services/frontend", "/projects", "/experience", "/faq", "/book",
+  "", "/about", "/services", "/services/frontend", "/projects", "/experience", "/experience/bol", "/faq", "/book",
   "/contact", "/blog", "/blog/react-folder-structure", "/search", "/privacy",
 ];
 

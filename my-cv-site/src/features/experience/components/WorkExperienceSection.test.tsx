@@ -57,12 +57,10 @@ describe("WorkExperienceSection", () => {
     expect(screen.getByText("July 2025 to October 2026")).toBeInTheDocument();
   });
 
-  it("renders the summary lead and the body paragraphs for every entry", () => {
+  it("renders the summary lead for every entry", () => {
     render(<WorkExperienceSection />);
     expect(screen.getByText("bol.summary")).toBeInTheDocument();
-    expect(screen.getAllByText("Did impactful work")).toHaveLength(
-      workHistory.length
-    );
+    expect(screen.getAllByText(/\.summary$/)).toHaveLength(workHistory.length);
   });
 
   it("renders the technologies as a named list on every entry", () => {
@@ -89,14 +87,13 @@ describe("WorkExperienceSection", () => {
 });
 
 describe("WorkExperienceSection: scannable cards", () => {
-  it("lists what was delivered per engagement and keeps the story behind a disclosure", () => {
+  it("lists what was delivered, keeps the story behind a closed disclosure and links to the own page", () => {
     render(<WorkExperienceSection />);
     const lists = screen.getAllByRole("list", { name: "deliveredTitle" });
     expect(lists.length).toBeGreaterThan(1);
     expect(within(lists[0]).getAllByRole("listitem")).toHaveLength(2);
-    const disclosures = screen.getAllByRole("group");
-    expect(disclosures.length).toBeGreaterThan(1);
-    expect(disclosures[0]).not.toHaveAttribute("open");
-    expect(within(disclosures[0]).getByText("readMore")).toBeInTheDocument();
+    const links = screen.getAllByRole("link", { name: "readMore" });
+    expect(links).toHaveLength(workHistory.length);
+    expect(links[0]).toHaveAttribute("href", `/experience/${workHistory[0].id}`);
   });
 });

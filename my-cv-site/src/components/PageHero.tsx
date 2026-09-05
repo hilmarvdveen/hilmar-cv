@@ -1,10 +1,11 @@
 import type { ComponentType, ReactNode } from "react";
 import { Section } from "@/components/Section";
-import { Container } from "@/components/Container";
+import { Container, type ContainerWidth } from "@/components/Container";
 
 const DEFAULT_TITLE_ID = "page-hero-title";
 
 type PageHeroProps = {
+  width?: ContainerWidth;
   title: string;
   titleAccent?: string;
   description: string;
@@ -18,6 +19,7 @@ type PageHeroProps = {
 };
 
 export const PageHero = ({
+  width = "default",
   title,
   titleAccent,
   description,
@@ -60,7 +62,7 @@ export const PageHero = ({
 
   return (
     <Section background="navy" aria-labelledby={headingId}>
-      <Container>
+      <Container width={width}>
         {breadcrumb}
         {aside ? (
           <div className="grid gap-12 md:grid-cols-2 lg:gap-16 items-center">

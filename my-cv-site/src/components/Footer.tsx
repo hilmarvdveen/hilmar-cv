@@ -51,6 +51,7 @@ export const Footer = () => {
     { name: t("quickLinks.items.projects"), href: "/projects" },
     { name: t("quickLinks.items.blog"), href: "/blog" },
     { name: t("quickLinks.items.faq"), href: "/faq" },
+    { name: t("quickLinks.items.search"), href: "/search" },
     { name: t("quickLinks.items.contact"), href: "/contact" },
   ];
 

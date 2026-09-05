@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
+import { Button } from "@/components/Button";
 import { searchEntries, type SearchEntry, type SearchLocale } from "../searchIndex";
 
 type SearchPageContentProps = {
@@ -53,7 +54,14 @@ export function SearchPageContent({
         </p>
 
         {results.length === 0 ? (
-          <p className="text-gray-600">{t("empty")}</p>
+          <div>
+            <p className="text-gray-600">{t("empty")}</p>
+            <div className="mt-4">
+              <Button href="/book" variant="primary" data-placement="search-empty">
+                {t("emptyAction")}
+              </Button>
+            </div>
+          </div>
         ) : (
           <ul className="space-y-4">
             {results.map((entry) => (

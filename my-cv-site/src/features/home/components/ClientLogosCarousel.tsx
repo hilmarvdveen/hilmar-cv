@@ -47,7 +47,7 @@ const ClientCard = ({ name, id, logo, markHeight, priority }: ClientCardProps) =
 
   return (
     <Link
-      href={`/experience#experience-${id}`}
+      href={`/experience/${id}`}
       title={commonT("images.viewExperience", { company: name })}
       aria-label={commonT("images.viewExperience", { company: name })}
       className="group flex h-[4.5rem] items-center justify-center rounded-lg bg-white p-3 ring-1 ring-gray-200 transition-colors hover:ring-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"

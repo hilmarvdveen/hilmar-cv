@@ -45,7 +45,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
     const summary = work(`${entry.id}.summary`);
     const role = work(`${entry.id}.role`);
     return {
-      href: `/experience#experience-${entry.id}`,
+      href: `/experience/${entry.id}`,
       title: { en: entry.company, nl: entry.company },
       description: { en: `${role}. ${summary}`, nl: `${role}. ${summary}` },
       keywords: [entry.id, entry.location, ...entry.tech.map((tech) => tech.replace("tech.", ""))],
@@ -54,7 +54,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <PageHero title={t("title")} description={t("description")} />
+      <PageHero width="prose" title={t("title")} description={t("description")} />
       <SearchPageContent
         locale={searchLocale}
         initialQuery={initialQuery}

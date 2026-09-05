@@ -39,6 +39,7 @@ export default async function FAQPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: seoData.structuredData }}
       />
       <PageHero
+        width="narrow"
         badge={t("badge")}
         badgeIcon={HelpCircle}
         title={t("hero.title")}

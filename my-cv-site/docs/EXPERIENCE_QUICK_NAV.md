@@ -93,11 +93,30 @@ Check these by hand:
 
 Each engagement card reads in this order: company and period, the fact
 list (location, mode, language), the role, the one-sentence summary, a
-"Delivered" list of three or four facts (`work.<id>.delivered`), the
-full story behind a native `details` element whose `summary` carries
-`work.readMore`, and the technology pills. The list items come from
-the entry's own paragraphs and add no claim of their own. The GMV
-figure never appears in a bullet, because the canonical sentence with
-its caveat may not be split. The disclosure is closed by default. The
-prose stays in the document, so search engines and the locale crawl
-still read it.
+visible "What it changed" heading with three or four outcome-first
+bullets (`work.<id>.delivered`, the client's gain first and the
+technique as the tail), one full-width link to the engagement's own
+page (`work.readMore`), and the technology pills. The bullets come from
+the entry's own story and add no claim of their own. The GMV figure
+never appears in a bullet, because the canonical sentence with its
+caveat may not be split. The story itself is not on the hub: the
+second review round (5 September 2026) measured that an inline
+disclosure doubled the page, duplicated every story on two indexable
+URLs and broke the browser's Back from a detail page, so the story
+lives on one URL.
+
+Every engagement has its own page at `/experience/<id>`
+(`ExperienceDetail` behind `app/[locale]/experience/[id]/page.tsx`).
+The hero leads with the outcome headline (`work.<id>.headline`),
+carries company and period as the eyebrow, the role under it, a back
+link at the top and the booking action. The body: the summary, the
+delivered list beside a facts panel (period, location, work mode,
+language, role), the story with `h3` subheadings where a paragraph
+carries `heading`, the technology pills, and previous and next
+engagement links. WebPage and BreadcrumbList JSON-LD come from
+`experienceDetailSchema`, the hub's ProfilePage from
+`experienceHubSchema`. The pages are in the sitemap, the search index
+and the social card whitelist. Every logo mark, project case, flagship
+link and search result points at them. Hilmar's reason (5 September
+2026): the detail must stay one click away and shareable, never
+hidden, and the site goes to the best solution for the page's value.

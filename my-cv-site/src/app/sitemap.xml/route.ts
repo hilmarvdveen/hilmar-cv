@@ -1,8 +1,15 @@
 
 import { SEOFactory } from '@/lib/seo';
 import { BLOG_POSTS } from '@/features/blog';
+import { workHistory } from '@/data/workHistory';
 
 export async function GET() {
+  const experienceDetailPages = workHistory.map((entry) => ({
+    path: `experience/${entry.id}`,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
   const blogPostPages = BLOG_POSTS.map((post) => ({
     path: `blog/${post.slug}`,
     lastModified: new Date(`${post.updatedDate ?? post.publishedDate}T00:00:00`).toISOString(),
@@ -18,6 +25,7 @@ export async function GET() {
 
   const sitemapData = SEOFactory.generateSitemapData([
     experiencePage,
+    ...experienceDetailPages,
     ...blogPostPages,
   ]);
 

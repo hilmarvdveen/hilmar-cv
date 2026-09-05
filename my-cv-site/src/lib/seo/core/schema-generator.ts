@@ -21,7 +21,7 @@ import {
   LOCALE_CONFIG
 } from '../constants/meta-constants';
 
-const BUILD_TIME = new Date().toISOString();
+const BUILD_TIME = process.env.NEXT_PUBLIC_BUILD_DATE ?? new Date().toISOString();
 
 export class SchemaGenerator {
   private readonly baseUrl: string;

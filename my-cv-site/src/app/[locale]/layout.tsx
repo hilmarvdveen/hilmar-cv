@@ -42,7 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata } = seoEngine.createHomepageSEO(locale as Locale);
 
   return {
-    ...metadata,
+    metadataBase: metadata.metadataBase,
+    title: metadata.title,
+    description: metadata.description,
     icons: {
       icon: [
         { url: `/favicon.ico?${FAVICON_VERSION}`, sizes: "any" },

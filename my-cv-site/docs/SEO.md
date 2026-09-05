@@ -150,3 +150,17 @@ every instance of one deploy reports the same date. The search page
 indexes the static pages plus the eight blog posts and the twelve
 engagements, built on the server and handed to the client as extra
 entries so the post bodies never reach the browser bundle.
+
+## Card whitelist, experience structured data and the 404 (5 September 2026, evening)
+
+`/api/og` renders a page title only when it is a title the site itself
+publishes: `knownSocialCardTitles(locale)` collects the engine pages,
+the posts, the engagement pages ("{headline} | {company}"), the
+experience and search titles and the legal titles, all normalised by
+`socialCardTitle`. Any other title falls back to the default card, so
+a crafted URL cannot put a claim under the logo and the name. The
+twelve engagement pages emit WebPage and BreadcrumbList JSON-LD and the
+hub a ProfilePage whose Person lists every engagement as an occupation
+(`src/lib/seo/experienceSchema.ts`). The catch-all route sets noindex
+and no canonical, so a 404 no longer points search engines at the
+homepage. The schema generator and the engine share the build date.

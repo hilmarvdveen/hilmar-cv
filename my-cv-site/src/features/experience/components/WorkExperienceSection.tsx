@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
-import { Check, MapPin, Globe, Languages } from "lucide-react";
+import { ArrowRight, Check, MapPin, Globe, Languages } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { workHistory, type WorkEntry } from "@/data/workHistory";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -11,7 +12,6 @@ import { formatMonthYear } from "@/lib/workPeriod";
 import { hasBrandColor } from "../brandColor";
 import { ExperienceQuickNav, type ExperienceChip } from "./ExperienceQuickNav";
 
-type BodyParagraph = { paragraph: string };
 
 const SECTION_HEADING_ID = "work-experience-heading";
 const MID_CTA_HEADING_ID = "work-experience-mid-cta-heading";
@@ -35,8 +35,6 @@ export const WorkExperienceSection = () => {
     const location = t(`${id}.location`);
     const role = t(`${id}.role`);
     const summary = t(`${id}.summary`);
-    const bodyParagraphs =
-      (t.raw(`${id}.body`) as BodyParagraph[] | undefined) ?? [];
     const delivered = (t.raw(`${id}.delivered`) as string[] | undefined) ?? [];
 
     return (
@@ -99,26 +97,28 @@ export const WorkExperienceSection = () => {
           </p>
 
           {delivered.length > 0 && (
-            <ul aria-label={t("deliveredTitle")} className="mt-4 space-y-2">
-              {delivered.map((item) => (
-                <li key={item} className="flex gap-2 text-[15px] leading-relaxed text-gray-700">
-                  <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <h4 className="mt-5 text-[13px] font-bold uppercase tracking-widest text-primary">
+                {t("deliveredTitle")}
+              </h4>
+              <ul aria-label={t("deliveredTitle")} className="mt-2 space-y-2">
+                {delivered.map((item) => (
+                  <li key={item} className="flex gap-2 text-[15px] leading-relaxed text-gray-700">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
 
-          <details className="group mt-4">
-            <summary className="cursor-pointer list-none rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
-              {t("readMore")}
-            </summary>
-            <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-gray-700">
-              {bodyParagraphs.map((item, index) =>
-                item?.paragraph ? <p key={index}>{item.paragraph}</p> : null
-              )}
-            </div>
-          </details>
+          <Link
+            href={`/experience/${id}`}
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-bgLight px-4 py-3 text-[15px] font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          >
+            <span>{t("readMore")}</span>
+            <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+          </Link>
 
           {entry.tech.length > 0 && (
             <ul
@@ -147,7 +147,7 @@ export const WorkExperienceSection = () => {
     <>
       <ExperienceQuickNav chips={chips} label={sectionTitle} />
       <Section background="light" aria-labelledby={SECTION_HEADING_ID}>
-        <Container>
+        <Container width="narrow">
           <SectionTitle id={SECTION_HEADING_ID} title={sectionTitle} />
         </Container>
         <Container width="narrow">

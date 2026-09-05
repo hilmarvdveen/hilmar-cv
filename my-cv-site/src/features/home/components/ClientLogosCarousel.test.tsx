@@ -30,16 +30,16 @@ describe("ClientLogosCarousel", () => {
 
   it("links every client to its engagement on the experience page", () => {
     const { container } = render(<ClientLogosCarousel />);
-    const links = container.querySelectorAll('a[href^="/experience#experience-"]');
+    const links = container.querySelectorAll('a[href^="/experience/"]');
     expect(links.length).toBe(12);
     expect(
-      container.querySelector('a[href="/experience#experience-postcode-loterij"]')
+      container.querySelector('a[href="/experience/postcode-loterij"]')
     ).toBeTruthy();
     expect(
-      container.querySelector('a[href="/experience#experience-belastingdienst"]')
+      container.querySelector('a[href="/experience/belastingdienst"]')
     ).toBeTruthy();
-    expect(container.querySelector('a[href="/experience#experience-bol"]')).toBeTruthy();
-    expect(container.querySelector('a[href="/experience#experience-athlon"]')).toBeTruthy();
+    expect(container.querySelector('a[href="/experience/bol"]')).toBeTruthy();
+    expect(container.querySelector('a[href="/experience/athlon"]')).toBeTruthy();
   });
 
   it("renders the bol.com logo asset", () => {
