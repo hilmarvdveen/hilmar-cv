@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { WorkExperienceSection } from "./WorkExperienceSection";
+import { WorkExperienceSection, FULL_CARD_COUNT } from "./WorkExperienceSection";
 import { workHistory } from "@/data/workHistory";
 
 type TranslateFunction = ((
@@ -63,11 +63,11 @@ describe("WorkExperienceSection", () => {
     expect(screen.getAllByText(/\.summary$/)).toHaveLength(workHistory.length);
   });
 
-  it("renders the technologies as a named list on every entry", () => {
+  it("renders the technologies as a named list on every full card", () => {
     render(<WorkExperienceSection />);
     expect(
       screen.getAllByRole("list", { name: "technologies" })
-    ).toHaveLength(workHistory.length);
+    ).toHaveLength(FULL_CARD_COUNT);
   });
 
   it("renders a compact navy call-to-action band after the second card, without changing the article count", () => {

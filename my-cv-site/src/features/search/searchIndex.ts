@@ -1,6 +1,9 @@
 export type SearchLocale = "en" | "nl";
 
+export type SearchKind = "page" | "engagement" | "post";
+
 export type SearchEntry = {
+  kind?: SearchKind;
   href: string;
   title: Record<SearchLocale, string>;
   description: Record<SearchLocale, string>;
@@ -10,6 +13,7 @@ export type SearchEntry = {
 export const SEARCH_INDEX: SearchEntry[] = [
   {
     href: "/",
+    kind: "page",
     title: { en: "Home", nl: "Home" },
     description: {
       en: "Senior frontend engineer, React and Angular, freelance via Hilmar ICT Services for the Randstad and remote.",
@@ -19,6 +23,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/about",
+    kind: "page",
     title: { en: "About", nl: "Over mij" },
     description: {
       en: "Experience, strengths and background.",
@@ -28,6 +33,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/experience",
+    kind: "page",
     title: { en: "Work history", nl: "Werkervaring" },
     description: {
       en: "Every engagement since 2016, including bol.com, with role, stack and results.",
@@ -37,6 +43,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/services",
+    kind: "page",
     title: { en: "Services", nl: "Diensten" },
     description: {
       en: "Frontend, fullstack, design systems and consulting services.",
@@ -46,6 +53,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/services/frontend",
+    kind: "page",
     title: { en: "Frontend development", nl: "Frontend-ontwikkeling" },
     description: {
       en: "React, Angular and Next.js frontend development.",
@@ -55,6 +63,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/services/fullstack",
+    kind: "page",
     title: { en: "Fullstack development", nl: "Fullstack-ontwikkeling" },
     description: {
       en: "End-to-end fullstack web application development.",
@@ -64,6 +73,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/services/design-systems",
+    kind: "page",
     title: { en: "Design systems", nl: "Design systems" },
     description: {
       en: "Scalable, accessible component libraries and design systems.",
@@ -73,6 +83,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/services/consulting",
+    kind: "page",
     title: { en: "Consulting", nl: "Consultancy" },
     description: {
       en: "Frontend architecture and technical consulting.",
@@ -82,6 +93,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/projects",
+    kind: "page",
     title: { en: "Projects", nl: "Projecten" },
     description: {
       en: "Selected work and case studies.",
@@ -91,6 +103,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/faq",
+    kind: "page",
     title: { en: "FAQ", nl: "Veelgestelde vragen" },
     description: {
       en: "Answers about services, pricing and collaboration.",
@@ -117,6 +130,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/book",
+    kind: "page",
     title: { en: "Book a consultation", nl: "Plan een gesprek" },
     description: {
       en: "Schedule a consultation slot.",
@@ -126,6 +140,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   },
   {
     href: "/contact",
+    kind: "page",
     title: { en: "Contact", nl: "Contact" },
     description: {
       en: "Get in touch by email or phone.",

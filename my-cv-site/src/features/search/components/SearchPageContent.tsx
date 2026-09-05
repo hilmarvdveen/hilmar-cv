@@ -8,7 +8,14 @@ import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
-import { searchEntries, type SearchEntry, type SearchLocale } from "../searchIndex";
+import {
+  searchEntries,
+  type SearchEntry,
+  type SearchKind,
+  type SearchLocale,
+} from "../searchIndex";
+
+const GROUP_ORDER: SearchKind[] = ["page", "engagement", "post"];
 
 type SearchPageContentProps = {
   locale: SearchLocale;
@@ -63,22 +70,38 @@ export function SearchPageContent({
             </div>
           </div>
         ) : (
-          <ul className="space-y-4">
-            {results.map((entry) => (
-              <li key={entry.href}>
-                <Link href={entry.href} className="block">
-                  <Card className="transition-colors hover:border-emerald-300 hover:bg-emerald-50">
-                    <span className="block font-semibold text-textMain">
-                      {entry.title[locale]}
-                    </span>
-                    <span className="block text-sm text-gray-600">
-                      {entry.description[locale]}
-                    </span>
-                  </Card>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-10">
+            {GROUP_ORDER.map((kind) => {
+              const group = results.filter((entry) => (entry.kind ?? "page") === kind);
+              if (group.length === 0) return null;
+              return (
+                <section key={kind} aria-labelledby={`search-group-${kind}`}>
+                  <h2
+                    id={`search-group-${kind}`}
+                    className="mb-3 text-[13px] font-bold uppercase tracking-widest text-primary"
+                  >
+                    {t(`groups.${kind}`)}
+                  </h2>
+                  <ul className="space-y-4">
+                    {group.map((entry) => (
+                      <li key={entry.href}>
+                        <Link href={entry.href} className="block">
+                          <Card className="transition-colors hover:border-emerald-300 hover:bg-emerald-50">
+                            <span className="block font-semibold text-textMain">
+                              {entry.title[locale]}
+                            </span>
+                            <span className="block text-sm text-gray-600">
+                              {entry.description[locale]}
+                            </span>
+                          </Card>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              );
+            })}
+          </div>
         )}
       </Container>
     </Section>

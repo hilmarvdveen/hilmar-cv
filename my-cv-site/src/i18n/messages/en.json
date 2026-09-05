@@ -912,7 +912,8 @@
         },
         "period": "{from} to {to}",
         "deliveredTitle": "What it changed",
-        "readMore": "Read the full engagement"
+        "readMore": "Read the full engagement",
+        "earlierTitle": "Earlier engagements"
     },
     "projects": {
         "hero": {
@@ -2130,7 +2131,12 @@
         "placeholder": "Page, engagement or article",
         "resultsCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
         "empty": "No results found. Try another word, or book a call and ask.",
-        "emptyAction": "Book a 30-minute call"
+        "emptyAction": "Book a 30-minute call",
+        "groups": {
+            "page": "Pages",
+            "engagement": "Engagements",
+            "post": "Articles"
+        }
     },
     "legal": {
         "lastUpdated": "Last updated"

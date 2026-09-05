@@ -4,6 +4,7 @@ import { H2, P, Lead, UL, OL, LI, Strong, Quote, Divider } from "./prose";
 import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
 import { FlowDiagram } from "./FlowDiagram";
+import { Contents } from "./Contents";
 import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
@@ -70,6 +71,24 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
+      <Contents
+        label={copy.contentsLabel[locale]}
+        items={[
+          copy.whyTitle[locale],
+          copy.overkillTitle[locale],
+          copy.shapeTitle[locale],
+          copy.domainTitle[locale],
+          copy.portsTitle[locale],
+          copy.adaptersTitle[locale],
+          copy.compositionTitle[locale],
+          copy.fakesTitle[locale],
+          copy.databaseTestTitle[locale],
+          copy.boundariesTitle[locale],
+          copy.mazeTitle[locale],
+          copy.migrationTitle[locale],
+          copy.closingTitle[locale],
+        ]}
+      />
 
       <H2>{copy.whyTitle[locale]}</H2>
       <P>{copy.why1[locale]}</P>
@@ -624,6 +643,7 @@ public sealed class MembershipRepositoryTests : IAsyncLifetime
 }`;
 
 const COPY = {
+  contentsLabel: { en: "In this article", nl: "In dit artikel" },
   lead: {
     en: "Hexagonal architecture has one job. It keeps the rules that make you money independent of the framework, the database and the channel that happens to call them.",
     nl: "Hexagonale architectuur heeft één taak. Die houdt de regels waarmee je geld verdient los van het framework, de database en het kanaal dat ze toevallig aanroept.",

@@ -875,7 +875,8 @@
         },
         "period": "{from} tot {to}",
         "deliveredTitle": "Wat het opleverde",
-        "readMore": "Lees de hele opdracht"
+        "readMore": "Lees de hele opdracht",
+        "earlierTitle": "Eerdere opdrachten"
     },
     "projects": {
         "hero": {
@@ -2063,7 +2064,12 @@
         "placeholder": "Pagina, opdracht of artikel",
         "resultsCount": "{count, plural, =0 {Geen resultaten} one {# resultaat} other {# resultaten}}",
         "empty": "Geen resultaten gevonden. Probeer een ander woord, of plan een gesprek en vraag het.",
-        "emptyAction": "Plan een gesprek van 30 minuten"
+        "emptyAction": "Plan een gesprek van 30 minuten",
+        "groups": {
+            "page": "Pagina's",
+            "engagement": "Opdrachten",
+            "post": "Artikelen"
+        }
     },
     "legal": {
         "lastUpdated": "Bijgewerkt op"

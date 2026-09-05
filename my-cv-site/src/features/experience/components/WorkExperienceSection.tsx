@@ -14,8 +14,10 @@ import { ExperienceQuickNav, type ExperienceChip } from "./ExperienceQuickNav";
 
 
 const SECTION_HEADING_ID = "work-experience-heading";
+const EARLIER_HEADING_ID = "work-experience-earlier-heading";
 const MID_CTA_HEADING_ID = "work-experience-mid-cta-heading";
-const ENTRIES_BEFORE_MID_CTA = 2;
+export const FULL_CARD_COUNT = 4;
+const ENTRIES_BEFORE_MID_CTA = FULL_CARD_COUNT;
 
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
@@ -28,6 +30,47 @@ export const WorkExperienceSection = () => {
     id: entry.id,
     company: t(`${entry.id}.company`),
   }));
+
+  const renderCompactEntry = (entry: WorkEntry) => {
+    const id = entry.id;
+    const company = t(`${id}.company`);
+    const period = t("period", {
+      from: formatMonthYear(entry.from, locale),
+      to: formatMonthYear(entry.to, locale),
+    });
+
+    return (
+      <article key={id} id={`experience-${id}`} className="scroll-mt-16">
+        <Card className="transition-shadow hover:shadow-md">
+          <div className="flex items-start gap-4">
+            <div className="relative mt-1 h-8 w-24 shrink-0">
+              <Image
+                src={`/logos/${entry.logo}`}
+                alt={commonT("images.companyLogoAlt", { company: entry.company })}
+                fill
+                sizes="96px"
+                className="object-contain object-left"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-lg font-semibold text-textMain">{company}</h3>
+              <p className="text-sm text-gray-500">
+                {period} · {t(`${id}.role`)}
+              </p>
+              <p className="mt-2 text-[15px] leading-relaxed text-gray-700">{t(`${id}.summary`)}</p>
+              <Link
+                href={`/experience/${id}`}
+                className="mt-3 inline-flex items-center gap-1 rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              >
+                {t("readMore")}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </Card>
+      </article>
+    );
+  };
 
   const renderEntry = (entry: WorkEntry) => {
     const id = entry.id;
@@ -181,10 +224,11 @@ export const WorkExperienceSection = () => {
       )}
 
       {remainingEntries.length > 0 && (
-        <Section background="light">
+        <Section background="light" aria-labelledby={EARLIER_HEADING_ID}>
           <Container width="narrow">
-            <div className="grid grid-cols-1 gap-8">
-              {remainingEntries.map((entry) => renderEntry(entry))}
+            <SectionTitle id={EARLIER_HEADING_ID} title={t("earlierTitle")} size="compact" />
+            <div className="grid grid-cols-1 gap-4">
+              {remainingEntries.map((entry) => renderCompactEntry(entry))}
             </div>
           </Container>
         </Section>

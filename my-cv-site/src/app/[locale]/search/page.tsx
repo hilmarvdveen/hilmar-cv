@@ -36,6 +36,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
   const searchLocale: SearchLocale = locale === "nl" ? "nl" : "en";
 
   const blogEntries: SearchEntry[] = BLOG_POSTS.map((post) => ({
+    kind: "post",
     href: `/blog/${post.slug}`,
     title: post.title,
     description: post.description,
@@ -45,6 +46,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
     const summary = work(`${entry.id}.summary`);
     const role = work(`${entry.id}.role`);
     return {
+      kind: "engagement" as const,
       href: `/experience/${entry.id}`,
       title: { en: entry.company, nl: entry.company },
       description: { en: `${role}. ${summary}`, nl: `${role}. ${summary}` },

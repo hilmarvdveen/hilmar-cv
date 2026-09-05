@@ -130,3 +130,14 @@ engagement links under the technology, and an "Andere opdrachten" row
 with every other company as a pill. The hub carries the breadcrumb
 too. WhatsApp sits under the experience close band as well, with its
 own placement label.
+
+## Four full cards, eight compact rows (5 September 2026, night)
+
+The hub shows the four engagements that sell (the first four entries in
+`workHistory`, `FULL_CARD_COUNT`) as full cards, the booking band, and
+then the eight earlier engagements under "Eerdere opdrachten" as
+compact rows: mark, company, period and role, the summary and the link
+to the page. The quick-nav chips still target every card's anchor.
+The sales editor's argument: twelve identical cards made the page a
+third longer than it needs to be and gave the four that sell no
+precedence.

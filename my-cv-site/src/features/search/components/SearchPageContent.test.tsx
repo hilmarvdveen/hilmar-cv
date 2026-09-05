@@ -37,3 +37,27 @@ describe("SearchPageContent", () => {
     expect(screen.getByText("resultsCount")).toBeInTheDocument();
   });
 });
+
+describe("SearchPageContent groups", () => {
+  it("groups results by kind with a heading per group and skips empty groups", () => {
+    render(
+      <SearchPageContent
+        locale="en"
+        initialQuery="frontend"
+        extraEntries={[
+          {
+            kind: "engagement",
+            href: "/experience/bol",
+            title: { en: "bol.com", nl: "bol.com" },
+            description: { en: "Frontend specialist in Loyalty", nl: "Frontendspecialist in Loyalty" },
+            keywords: ["bol"],
+          },
+        ]}
+      />
+    );
+    expect(screen.getByRole("heading", { level: 2, name: "groups.page" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "groups.engagement" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 2, name: "groups.post" })).toBeNull();
+    expect(screen.getByText("bol.com")).toBeInTheDocument();
+  });
+});

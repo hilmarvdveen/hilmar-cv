@@ -4,6 +4,7 @@ import { H2, P, Lead, UL, OL, LI, Strong, Quote, Divider } from "./prose";
 import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
 import { FlowDiagram } from "./FlowDiagram";
+import { Contents } from "./Contents";
 import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
@@ -70,6 +71,24 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
+      <Contents
+        label={copy.contentsLabel[locale]}
+        items={[
+          copy.whyTitle[locale],
+          copy.overkillTitle[locale],
+          copy.shapeTitle[locale],
+          copy.domainTitle[locale],
+          copy.portsTitle[locale],
+          copy.resultTitle[locale],
+          copy.adaptersTitle[locale],
+          copy.compositionTitle[locale],
+          copy.testTitle[locale],
+          copy.archTitle[locale],
+          copy.boundariesTitle[locale],
+          copy.migrationTitle[locale],
+          copy.closingTitle[locale],
+        ]}
+      />
 
       <H2>{copy.whyTitle[locale]}</H2>
       <P>{copy.why1[locale]}</P>
@@ -711,6 +730,7 @@ class DependencyRuleTest {
 }`;
 
 const COPY = {
+  contentsLabel: { en: "In this article", nl: "In dit artikel" },
   lead: {
     en: "Hexagonal architecture has one job in a Java codebase. It keeps the rules that decide what your organisation allows, owes or refuses out of reach of Spring and Hibernate.",
     nl: "Hexagonale architectuur heeft één taak in een Java-codebase. Die houdt de regels die bepalen wat je organisatie toestaat, verschuldigd is of weigert buiten bereik van Spring en Hibernate.",
