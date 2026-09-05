@@ -930,7 +930,7 @@
                 "outcome": "Up to 24% GMV on winning variants",
                 "client": "bol.com",
                 "title": "Loyalty and Digital onto a new platform, with no outage for customers",
-                "body": "bol.com moved its Select loyalty and Kobo Plus pages off a legacy Java storefront onto a new server-rendered React platform, and my engagement there was extended three times. I read the old Java to work out exactly what each page did and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and ran the traffic cut-over in reversible steps. Employees first, then a percentage of customers, then everyone, with no customer-facing outage. I built the whole Digital app from an empty folder to production, with server rendering, routing, CI/CD and the cloud deployment. With the designer and the business team I shipped nine A/B experiments, built in code and configured in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
+                "body": "bol.com moved its Select and Kobo Plus pages off a legacy Java storefront onto a server-rendered React platform, page by page and without an outage for customers. I built the pages from a reverse-engineered specification, settled the GraphQL contract with the backend engineers and ran the cut-over of the live account pages in reversible steps. Nine A/B experiments followed on the same pages. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
                 "roleLabel": "Senior frontend, Loyalty and Digital",
                 "href": "/experience/bol"
             },
@@ -938,7 +938,7 @@
                 "outcome": "Months to days",
                 "client": "Belastingdienst",
                 "title": "A tax form that content editors build themselves",
-                "body": "A new income-tax form used to take months of engineering and constant back-and-forth with the development team. I built a greenfield low-code visual forms editor with drag-and-drop, conditional logic, validation and translations, so content editors and designers could build, verify and demo a form themselves. That brought a new form down to a few days. Alongside it I designed a JSON-configurable Angular component architecture for the entrepreneur portal. I also drove the shared Stencil web components that other developers reuse across Angular, React and Vue, which took a new page from one to two weeks to one to two days. Accessibility to WCAG 2.1 AA, with Cypress and Playwright in the pipeline.",
+                "body": "A new income-tax form used to take months of engineering. I built a low-code visual forms editor in which content editors and designers assemble, check and demo a form themselves, on a data-driven Angular architecture that also took a new portal page from weeks to days. Accessibility stayed at WCAG 2.1 AA, verified in the pipeline.",
                 "roleLabel": "Senior Frontend Developer, forms editor and design system",
                 "href": "/experience/belastingdienst"
             },
@@ -946,7 +946,7 @@
                 "outcome": "Weeks to days",
                 "client": "Nationale Postcode Loterij",
                 "title": "Campaign sites out of a JSON-driven design system",
-                "body": "Campaign sites for the European lottery labels took weeks to put together. I built a greenfield JSON-driven international design system in an Nx monorepo, with Storyblok as the headless CMS, Next.js server rendering and WCAG 2.1 AA accessibility. Campaign time-to-market across the labels went from weeks to a few days. Serverless APIs on AWS sat behind it, with Playwright and Cypress covering the flows.",
+                "body": "Campaign sites for the European lottery labels took weeks to set up. I built a JSON-driven design system in an Nx monorepo, with Storyblok as the headless CMS, server rendering in Next.js and WCAG 2.1 AA built into the components. A new campaign now goes live in days, and a new label comes down to a theme.",
                 "roleLabel": "Senior Frontend Developer, design system",
                 "href": "/experience/postcode-loterij"
             },
@@ -954,7 +954,7 @@
                 "outcome": "Angular 1.6 to Angular 12",
                 "client": "Athlon",
                 "title": "A legacy application moved onto a modern stack",
-                "body": "Athlon's application ran on Angular 1.6. I led the migration to a modern Angular 12 stack: a component library, dynamic dashboards, a headless CMS, WCAG 2.1 AA accessibility, and CI/CD with Azure DevOps, Docker and Kubernetes. I coached the frontend team through it, junior and senior developers alike, on Angular practice. I reviewed their code and worked through the improvements with them.",
+                "body": "Athlon's self-service application ran on Angular 1.6. I led the migration to Angular 12 with a component library, dynamic dashboards and WCAG 2.1 AA, and coached the frontend team, junior and senior, through code reviews along the way.",
                 "roleLabel": "Senior Frontend Developer, migration and coaching",
                 "href": "/experience/athlon"
             }

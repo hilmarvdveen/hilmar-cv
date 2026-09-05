@@ -79,12 +79,14 @@ describe("ProjectShowcase", () => {
     }
   });
 
-  it("links each case to its role label and href", () => {
+  it("shows the client and role line and links each case to its engagement page", () => {
     render(<ProjectShowcase />);
-    for (const projectCase of cases) {
-      const link = screen.getByRole("link", { name: projectCase.roleLabel });
-      expect(link).toHaveAttribute("href", projectCase.href);
-    }
+    const links = screen.getAllByRole("link", { name: "readMore" });
+    expect(links).toHaveLength(cases.length);
+    cases.forEach((projectCase, index) => {
+      expect(links[index]).toHaveAttribute("href", projectCase.href);
+      expect(screen.getByText(`${projectCase.client} · ${projectCase.roleLabel}`)).toBeInTheDocument();
+    });
   });
 
   it("renders the client logo only when the case matches a work history entry", () => {

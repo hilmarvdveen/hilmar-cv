@@ -893,7 +893,7 @@
                 "outcome": "Tot 24% GMV op winnende varianten",
                 "client": "bol.com",
                 "title": "Loyalty en Digital naar een nieuw platform, zonder onderbreking voor klanten",
-                "body": "bol.com haalde de pagina's van Select en Kobo Plus weg bij een verouderde Java-winkel en zette ze op een nieuw server-rendered React-platform. Mijn opdracht daar werd drie keer verlengd. Ik las de oude Java om precies te achterhalen wat elke pagina deed en bouwde de pagina's opnieuw in React. Het GraphQL-contract stemde ik af met de backend-engineers en de cut-over van het verkeer voerde ik uit in omkeerbare stappen. Eerst medewerkers, dan een percentage klanten, dan iedereen, zonder onderbreking voor klanten. De hele Digital-app bouwde ik van een lege map naar productie, met server rendering, routing, CI/CD en de uitrol in de cloud. Samen met de ontwerper en het businessteam leverde ik negen A/B-experimenten op, gebouwd in code en ingericht in de experimenteertool. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden.",
+                "body": "bol.com haalde de pagina's van Select en Kobo Plus weg bij een verouderde Java-winkel en zette ze pagina voor pagina op een server-rendered React-platform, zonder onderbreking voor klanten. Ik bouwde de pagina's vanuit een reverse-engineered specificatie, stemde het GraphQL-contract af met de backend-engineers en voerde de cut-over van de live accountpagina's uit in omkeerbare stappen. Op diezelfde pagina's volgden negen A/B-experimenten. Winnende varianten leverden GMV-stijgingen op tot 24% (grofweg 5% tot 24% over de winnaars). Niet elk experiment won, dus het totale effect was positief maar bescheiden.",
                 "roleLabel": "Senior frontend, Loyalty en Digital",
                 "href": "/experience/bol"
             },
@@ -901,7 +901,7 @@
                 "outcome": "Van maanden naar dagen",
                 "client": "Belastingdienst",
                 "title": "Een belastingformulier dat redacteuren zelf bouwen",
-                "body": "Een nieuw inkomstenbelastingformulier kostte maanden engineering en veel heen en weer met het ontwikkelteam. Ik bouwde een nieuwe low-code visuele formulierenbouwer met slepen en neerzetten, conditionele logica, validatie en meertaligheid, waarmee contentredacteuren en ontwerpers zelf een formulier konden samenstellen, controleren en demonstreren. Daarmee ging een nieuw formulier naar een paar dagen. Daarnaast ontwierp ik een JSON-configureerbare Angular-componentarchitectuur voor het ondernemersportaal. Ook trok ik de gedeelde Stencil-webcomponenten die andere ontwikkelaars hergebruiken in Angular, React en Vue, waardoor een nieuwe pagina van één tot twee weken naar één tot twee dagen ging. Toegankelijkheid volgens WCAG 2.1 AA, met Cypress en Playwright in de pijplijn.",
+                "body": "Een nieuw inkomstenbelastingformulier kostte maanden engineering. Ik bouwde een low-code visuele formulierenbouwer waarin redacteuren en ontwerpers zelf een formulier samenstellen, controleren en demonstreren, op een datagedreven Angular-architectuur die ook een nieuwe portaalpagina van weken naar dagen bracht. De toegankelijkheid bleef op WCAG 2.1 AA, geborgd in de pipeline.",
                 "roleLabel": "Senior Frontend Developer, formulierenbouwer en design system",
                 "href": "/experience/belastingdienst"
             },
@@ -909,7 +909,7 @@
                 "outcome": "Van weken naar dagen",
                 "client": "Nationale Postcode Loterij",
                 "title": "Campagnesites uit een JSON-gedreven designsysteem",
-                "body": "Campagnesites voor de Europese loterijlabels kostten weken om op te zetten. Ik bouwde een nieuw JSON-gedreven internationaal designsysteem in een Nx-monorepo, met Storyblok als headless CMS, server rendering in Next.js en toegankelijkheid volgens WCAG 2.1 AA. De doorlooptijd van een campagne ging bij alle labels van weken naar een paar dagen. Daarachter zaten serverless API's op AWS, met Playwright en Cypress op de flows.",
+                "body": "Campagnesites voor de Europese loterijlabels kostten weken om op te zetten. Ik bouwde een JSON-gedreven design system in een Nx-monorepo, met Storyblok als headless CMS, server rendering in Next.js en WCAG 2.1 AA in de componenten. Een nieuwe campagne staat nu in dagen live, en een nieuw label komt neer op een thema.",
                 "roleLabel": "Senior Frontend Developer, design system",
                 "href": "/experience/postcode-loterij"
             },
@@ -917,7 +917,7 @@
                 "outcome": "Angular 1.6 naar Angular 12",
                 "client": "Athlon",
                 "title": "Een verouderde applicatie naar een moderne stack",
-                "body": "De applicatie van Athlon draaide op Angular 1.6. Ik leidde de migratie naar een moderne Angular 12-stack: een componentenbibliotheek, dynamische dashboards, een headless CMS, toegankelijkheid volgens WCAG 2.1 AA en CI/CD met Azure DevOps, Docker en Kubernetes. Ik begeleidde het frontendteam daarin, zowel junior als senior developers, in de praktijk van Angular. Ik deed hun code reviews en liep de verbeteringen met ze door.",
+                "body": "De selfserviceapplicatie van Athlon draaide op Angular 1.6. Ik leidde de migratie naar Angular 12 met een componentenbibliotheek, dynamische dashboards en WCAG 2.1 AA, en begeleidde het frontendteam, junior en senior, onderweg via code reviews.",
                 "roleLabel": "Senior Frontend Developer, migratie en begeleiding",
                 "href": "/experience/athlon"
             }
