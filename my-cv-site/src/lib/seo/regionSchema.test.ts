@@ -10,22 +10,21 @@ const shared = {
 };
 
 describe("regionPageSchema", () => {
-  it("describes the page, the trail, the service area and the person", () => {
+  it("describes the page, the service area and the person, and leaves the trail to the breadcrumb component", () => {
     const parsed = JSON.parse(regionPageSchema({ ...shared, locale: "nl", city: { id: "amsterdam", name: "Amsterdam" } }));
-    expect(parsed.map((block: { "@type": string }) => block["@type"])).toEqual(["WebPage", "BreadcrumbList", "Service", "Person"]);
+    expect(parsed.map((block: { "@type": string }) => block["@type"])).toEqual(["WebPage", "Service", "Person"]);
     expect(parsed[0].url).toBe("https://www.hilmarvanderveen.com/nl/freelance-frontend-developer/amsterdam");
     expect(parsed[0].inLanguage).toBe("nl-NL");
-    expect(parsed[1].itemListElement.map((item: { name: string }) => item.name)).toEqual(["Home", "Werkregio", "Amsterdam"]);
-    expect(parsed[2].areaServed).toEqual({
+    expect(parsed[1].areaServed).toEqual({
       "@type": "City",
       name: "Amsterdam",
       containedInPlace: { "@type": "Country", name: "Netherlands" },
     });
-    expect(parsed[2].offers.priceRange).toBe("€95-€125");
-    expect(parsed[2].offers.price).toBeUndefined();
-    expect(parsed[2].provider.address.addressLocality).toBe("Zandvoort");
-    expect(parsed[2].availableChannel.serviceUrl).toBe("https://www.hilmarvanderveen.com/nl/book");
-    expect(parsed[3].workLocation.name).toBe("Amsterdam");
+    expect(parsed[1].offers.priceRange).toBe("€95-€125");
+    expect(parsed[1].offers.price).toBeUndefined();
+    expect(parsed[1].provider.address.addressLocality).toBe("Zandvoort");
+    expect(parsed[1].availableChannel.serviceUrl).toBe("https://www.hilmarvanderveen.com/nl/book");
+    expect(parsed[2].workLocation.name).toBe("Amsterdam");
     const serialized = JSON.stringify(parsed);
     expect(serialized).not.toContain("LocalBusiness");
     expect(serialized).not.toContain("FAQPage");

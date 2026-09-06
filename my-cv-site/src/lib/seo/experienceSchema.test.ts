@@ -10,22 +10,15 @@ describe("experienceDetailSchema", () => {
         company: "bol.com",
         headline: "Loyalty en Digital naar een nieuw platform",
         summary: "Samenvatting.",
-        hubTitle: "Werkervaring",
         from: "2025-07",
         to: "2026-10",
       })
     );
-    expect(schemas).toHaveLength(2);
+    expect(schemas).toHaveLength(1);
     expect(schemas[0]["@type"]).toBe("WebPage");
     expect(schemas[0].url).toBe("https://www.hilmarvanderveen.com/nl/experience/bol");
     expect(schemas[0].inLanguage).toBe("nl-NL");
     expect(schemas[0].about.memberOf.name).toBe("bol.com");
-    expect(schemas[1]["@type"]).toBe("BreadcrumbList");
-    expect(schemas[1].itemListElement.map((item: { name: string }) => item.name)).toEqual([
-      "Home",
-      "Werkervaring",
-      "bol.com",
-    ]);
   });
 });
 

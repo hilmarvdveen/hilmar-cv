@@ -8,7 +8,6 @@ type ExperienceDetailSchemaInput = {
   company: string;
   headline: string;
   summary: string;
-  hubTitle: string;
   from: string;
   to: string;
 };
@@ -60,14 +59,7 @@ export function experienceDetailSchema(input: ExperienceDetailSchemaInput): stri
     },
     mainEntity: person(),
   };
-  return JSON.stringify([
-    webPage,
-    breadcrumbList([
-      { name: homeLabel, url: base },
-      { name: input.hubTitle, url: `${base}/experience` },
-      { name: input.company, url },
-    ]),
-  ]);
+  return JSON.stringify([webPage]);
 }
 
 export function experienceHubSchema(input: ExperienceHubSchemaInput): string {

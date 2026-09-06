@@ -86,16 +86,7 @@ export function regionPageSchema(input: RegionPageSchemaInput): string {
   const hubUrl = `${base}${input.hubPath}`;
   const url = `${hubUrl}/${input.city.id}`;
   const city = cityNode(input.city);
-  return JSON.stringify([
-    webPage(url, input),
-    breadcrumbs([
-      { name: input.homeLabel, url: base },
-      { name: input.hubLabel, url: hubUrl },
-      { name: input.city.name, url },
-    ]),
-    service(input.locale, city),
-    person(city),
-  ]);
+  return JSON.stringify([webPage(url, input), service(input.locale, city), person(city)]);
 }
 
 export function regionHubSchema(input: RegionHubSchemaInput): string {

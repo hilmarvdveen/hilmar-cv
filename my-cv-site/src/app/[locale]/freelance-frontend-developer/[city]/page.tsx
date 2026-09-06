@@ -8,7 +8,6 @@ import { Link } from "@/i18n/navigation";
 import { RegionPage } from "@/features/regions";
 import { workHistory } from "@/data/workHistory";
 import {
-  REGION_IDS,
   REGION_PATH,
   otherRegions,
   regionById,
@@ -24,10 +23,6 @@ import { regionPageSchema } from "@/lib/seo/regionSchema";
 type Props = {
   params: Promise<{ locale: string; city: string }>;
 };
-
-export function generateStaticParams() {
-  return REGION_IDS.map((city) => ({ city }));
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, city } = await params;

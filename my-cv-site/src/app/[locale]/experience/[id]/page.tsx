@@ -53,7 +53,6 @@ export default async function ExperienceDetailPage({ params }: Props) {
     company,
     headline: work(`${id}.headline`),
     summary: work(`${id}.summary`),
-    hubTitle: page("title"),
     from: entry.from,
     to: entry.to,
   });
