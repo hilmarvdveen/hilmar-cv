@@ -7,7 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
 import { formatMonthYear } from "@/lib/workPeriod";
-import { clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { experienceDetailSchema } from "@/lib/seo/experienceSchema";
 
 type Props = {
@@ -21,14 +21,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const index = findEntryIndex(id);
   if (index < 0) return {};
   const work = await getTranslations({ locale, namespace: "work" });
-  const title = `${work(`${id}.headline`)} | ${work(`${id}.company`)}`;
+  const cardTitle = `${work(`${id}.headline`)} | ${work(`${id}.company`)}`;
+  const title = brandedTitle(work(`${id}.company`));
   const description = clampDescription(work(`${id}.summary`));
 
   return {
     title,
     description,
     alternates: localizedAlternates(`experience/${id}`, locale),
-    ...localizedOpenGraph(`experience/${id}`, locale, title, description),
+    ...localizedOpenGraph(`experience/${id}`, locale, cardTitle, description),
   };
 }
 

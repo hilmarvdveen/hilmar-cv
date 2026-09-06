@@ -177,3 +177,16 @@ life of the serverless instance. Each request times out after three
 seconds. When anything fails the card renders in the system sans and
 the next request tries again. The image route tests mock the loader so
 the suite never touches the network.
+
+## The head sweep before a push (6 September 2026)
+
+`pnpm check:seo http://localhost:3123` walks every URL in the sitemap on a
+production build and reports a page when its canonical is not the
+production URL for that path, its hreflang set is not nl-NL, en-US and
+x-default, og:image, twitter:image or og:title is missing, the title runs
+past 60 characters or ends in an ellipsis, the description falls outside 50
+to 160 characters, a robots meta says noindex, the structured data does not
+parse, more than one WebSite entity is present, or a dash sits in the title
+or description. Lighthouse on the same build reports SEO 92 with the
+canonical as the one failing audit, because it points at the production
+host. On the live host the same audit passes and SEO is 100.

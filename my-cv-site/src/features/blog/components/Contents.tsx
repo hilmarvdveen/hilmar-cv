@@ -12,7 +12,7 @@ export function Contents({ label, items }: ContentsProps) {
       <ol className="mt-3 grid gap-x-8 gap-y-1.5 text-[15px] sm:grid-cols-2">
         {items.map((item, index) => (
           <li key={item} className="flex gap-2">
-            <span className="w-5 shrink-0 text-gray-400">{index + 1}.</span>
+            <span className="w-5 shrink-0 text-gray-500">{index + 1}.</span>
             <a
               href={`#${slugify(item)}`}
               className="rounded-sm text-gray-800 underline-offset-4 hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"

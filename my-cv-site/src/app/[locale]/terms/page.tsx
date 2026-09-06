@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
 import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { legalPageSchema } from "@/lib/seo/legalSchema";
 
 const SLUG = "terms" as const;
 
@@ -24,5 +25,18 @@ export default async function TermsPage({ params }: Props) {
   setRequestLocale(locale);
   const doc = getLegalDoc(SLUG, locale);
   const t = await getTranslations({ locale, namespace: "legal" });
-  return <LegalDocument doc={doc} lastUpdatedLabel={t("lastUpdated")} />;
+  const breadcrumb = await getTranslations({ locale, namespace: "breadcrumb" });
+  const structuredData = legalPageSchema({
+    locale: locale === "en" ? "en" : "nl",
+    slug: SLUG,
+    title: doc.title,
+    description: clampDescription(doc.intro ?? doc.title),
+    homeLabel: breadcrumb("home"),
+  });
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
+      <LegalDocument doc={doc} lastUpdatedLabel={t("lastUpdated")} />
+    </>
+  );
 }
