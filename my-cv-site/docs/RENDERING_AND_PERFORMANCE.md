@@ -217,3 +217,18 @@ the CSP (static pages need the nonce gone), recorded in the root guide.
 Note for the build: after a component changes from client to server,
 run `pnpm build` on a clean `.next`, otherwise the client manifest keeps
 the old reference and the page throws at render.
+
+## Production after the deploy of 6 September 2026
+
+Lighthouse mobile against the live host: home 96, the Java post 98,
+projects 96, accessibility and SEO 100 everywhere, best practices 100.
+TTFB 10 to 20 milliseconds and LCP 1.4 to 2.5 seconds, so the 0.9 to
+1.8 second server time measured on 1 September is gone. Every page is
+still rendered per request (`X-Vercel-Cache: MISS`), which is what the
+per-request nonce needs. The one page type that scored 99 and 100 did so
+for the wrong reason: the city routes had `generateStaticParams`, were
+prerendered, and shipped scripts with a build-time nonce that the
+per-request CSP header rejected. No script ran on them. The static params
+are removed and `pnpm check:nonce <url>` compares every script nonce with
+the header nonce across the sitemap, so a prerendered route cannot pass
+the gate again.
