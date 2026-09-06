@@ -1,30 +1,31 @@
 import { describe, it, expect } from "vitest";
-import { flowNode, flowEdge } from "./flow";
+import { flowNode, flowEdge, TONE_STYLE } from "./flow";
 
 describe("flow helpers", () => {
-  it("builds a node with left/right handles by default", () => {
-    const node = flowNode("a", "Alpha", { x: 1, y: 2 });
-    expect(node.id).toBe("a");
-    expect(node.position).toEqual({ x: 1, y: 2 });
-    expect(node.sourcePosition).toBe("right");
-    expect(node.targetPosition).toBe("left");
+  it("builds a left-to-right slate node of the default width", () => {
+    const node = flowNode("a", "Alpha", { x: 10, y: 20 });
+    expect(node).toEqual({
+      id: "a",
+      label: "Alpha",
+      subtitle: undefined,
+      position: { x: 10, y: 20 },
+      width: 170,
+      tone: "slate",
+      direction: "LR",
+    });
   });
 
-  it("builds a node with top/bottom handles and a subtitle when requested", () => {
-    const node = flowNode("b", "Beta", { x: 0, y: 0 }, { direction: "TB", tone: "emerald", subtitle: "note", width: 200 });
-    expect(node.sourcePosition).toBe("bottom");
-    expect(node.targetPosition).toBe("top");
-    expect(node.style?.width).toBe(200);
+  it("builds a top-to-bottom node with a subtitle, a tone and a width when asked", () => {
+    const node = flowNode("b", "Beta", { x: 0, y: 0 }, { direction: "TB", subtitle: "second", tone: "emerald", width: 240 });
+    expect(node.direction).toBe("TB");
+    expect(node.subtitle).toBe("second");
+    expect(node.width).toBe(240);
+    expect(TONE_STYLE[node.tone].border).toBe("#6ee7b7");
   });
 
-  it("builds edges with defaults and with options", () => {
-    const plain = flowEdge("a", "b");
-    expect(plain.id).toBe("a->b");
-    expect(plain.animated).toBe(false);
-
-    const fancy = flowEdge("a", "b", { label: "go", dashed: true, animated: true });
-    expect(fancy.label).toBe("go");
-    expect(fancy.animated).toBe(true);
-    expect((fancy.style as { strokeDasharray?: string }).strokeDasharray).toBe("6 4");
+  it("builds edges with defaults and treats animated edges as dashed", () => {
+    expect(flowEdge("a", "b")).toEqual({ id: "a->b", source: "a", target: "b", label: undefined, dashed: false });
+    expect(flowEdge("a", "b", { label: "go", dashed: true })).toMatchObject({ label: "go", dashed: true });
+    expect(flowEdge("a", "b", { animated: true }).dashed).toBe(true);
   });
 });

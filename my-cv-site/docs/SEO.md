@@ -190,3 +190,10 @@ parse, more than one WebSite entity is present, or a dash sits in the title
 or description. Lighthouse on the same build reports SEO 92 with the
 canonical as the one failing audit, because it points at the production
 host. On the live host the same audit passes and SEO is 100.
+
+`pnpm check:sitemap http://localhost:3123` crawls every internal link from
+both homepages and reports a linked page that the sitemap lacks, a sitemap
+URL no page links to, a duplicate, a trailing slash, an upper-case
+character, a URL off the production origin or without a locale prefix.
+On 6 September 2026: 74 URLs, 37 per language, 16 blog URLs, 24
+engagement pages, and the two sets match exactly.

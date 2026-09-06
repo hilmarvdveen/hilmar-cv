@@ -10,16 +10,22 @@ describe("FlowDiagram", () => {
   ];
   const edges = [flowEdge("a", "b", { label: "go", dashed: true, animated: true })];
 
-  it("renders an accessible canvas with a caption", () => {
+  it("renders the diagram as an image with a caption, drawn on the server", () => {
     render(<FlowDiagram nodes={nodes} edges={edges} ariaLabel="example flow" caption="figure 1" />);
-    expect(screen.getByLabelText("example flow")).toBeInTheDocument();
+    const drawing = screen.getByRole("img", { name: "example flow" });
+    expect(drawing.tagName).toBe("svg");
     expect(screen.getByText("figure 1")).toBeInTheDocument();
+    expect(screen.getByText("Alpha")).toBeInTheDocument();
+    expect(screen.getByText("start")).toBeInTheDocument();
+    expect(screen.getByText("go")).toBeInTheDocument();
+    expect(drawing.querySelector("path[stroke-dasharray]")).not.toBeNull();
   });
 
-  it("renders without a caption", () => {
-    const { container } = render(
-      <FlowDiagram nodes={[flowNode("x", "X", { x: 0, y: 0 })]} edges={[]} ariaLabel="solo" />
-    );
-    expect(container.querySelector(".react-flow")).toBeTruthy();
+  it("renders without a caption and without edges", () => {
+    render(<FlowDiagram nodes={[flowNode("x", "X", { x: 0, y: 0 })]} edges={[]} ariaLabel="solo" height={200} />);
+    const drawing = screen.getByRole("img", { name: "solo" });
+    expect(drawing).toHaveStyle({ maxHeight: "200px" });
+    expect(drawing.querySelectorAll("rect")).toHaveLength(1);
+    expect(screen.queryByRole("figure")).not.toBeNull();
   });
 });

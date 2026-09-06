@@ -182,3 +182,38 @@ The Lighthouse command needs `CHROME_PATH` on Windows. Read the scores from
 `categories`, the metrics from `audits.first-contentful-paint` and friends,
 and the top items from `audits.unused-javascript`. Run it against the
 production build, never the dev server.
+
+## Re-measured on 6 September 2026
+
+Lighthouse 13.4 mobile on the local production build, one run per page.
+Accessibility 100 on every page. SEO 92 locally with the canonical as
+the one failing audit, 100 on the live host. Performance 90 on the
+homepage, 91 on projects, 90 on the bol.com page, 89 on the FAQ, 83 on
+the frontend service page, 79 on the English home in a run with 480ms
+of blocking time (the same page scored 90 in Dutch, so that is lab
+variance, not the page). Where the trace succeeded the observed first
+paint and the largest paint coincide at about 0.6s unthrottled. The
+simulation spreads them to 1.4s and 3.5s because the largest paint is
+the hero heading and its dependency chain in the simulator includes
+the script evaluation that ran before the paint. The font is not the
+blocker: it is preloaded, `display: swap`, one 48KB latin file that
+lands before the paint. The stylesheet is inlined in the document.
+
+One change moved a number: the blog diagrams were drawn by a client
+library (about 53KB of script plus its stylesheet, rendered after
+hydration). They are now drawn on the server as SVG from the same node
+and edge data (`src/lib/flowLayout.ts` computes the boxes, the bezier
+edges, the label boxes and the view box, `FlowDiagram` renders them,
+the node text sits in `foreignObject` so it wraps). Scripts on a post
+went from 242KB to 184KB, the Java post from 80 to 89 with blocking
+time from 440ms to 190ms, and the diagrams are in the HTML for search
+engines and for the first paint. The library is removed.
+
+What remains is the documented ceiling: every page is dynamic because
+of the per-request nonce, so the HTML cannot be served from the edge
+cache, and the React runtime has to be evaluated before the simulator
+counts the heading as painted. The one lever left is the decision on
+the CSP (static pages need the nonce gone), recorded in the root guide.
+Note for the build: after a component changes from client to server,
+run `pnpm build` on a clean `.next`, otherwise the client manifest keeps
+the old reference and the page throws at render.

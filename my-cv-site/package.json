@@ -20,13 +20,13 @@
     "test:coverage": "vitest run --coverage",
     "check:locales": "node scripts/crawl-locales.mjs",
     "check:structure": "node scripts/audit-structure.mjs",
-    "check:seo": "node scripts/check-seo.mjs"
+    "check:seo": "node scripts/check-seo.mjs",
+    "check:sitemap": "node scripts/check-sitemap.mjs"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "@xyflow/react": "^12.11.6",
     "d3": "^7.9.0",
     "lucide-react": "^0.577.0",
     "next": "^16.3.4",
