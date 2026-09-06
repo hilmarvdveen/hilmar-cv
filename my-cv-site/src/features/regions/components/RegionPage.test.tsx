@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { RegionPage } from "./RegionPage";
-import { REGIONS, regionEngagements, regionNearbyEngagements, regionSectorEngagements, otherRegions } from "@/data/regions";
+import { ALL_REGIONS, regionEngagements, regionNearbyEngagements, regionSectorEngagements, otherRegions } from "@/data/regions";
 import { BLOG_POSTS } from "@/features/blog";
 
 const travel = ["Half an hour by train", "One or two days on site"];
@@ -46,7 +46,7 @@ vi.mock("next/image", () => ({
 }));
 
 const renderRegion = (id: string) => {
-  const region = REGIONS.find((candidate) => candidate.id === id)!;
+  const region = ALL_REGIONS.find((candidate) => candidate.id === id)!;
   const posts = region.postSlugs.flatMap((slug) => BLOG_POSTS.filter((post) => post.slug === slug));
   render(
     <RegionPage

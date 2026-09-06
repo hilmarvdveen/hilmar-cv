@@ -2349,7 +2349,7 @@
             "heroTitle": "Hire a freelance frontend developer in the Randstad",
             "heroDescription": "From Zandvoort I work for clients in Amsterdam, Utrecht, Rotterdam and The Hague. One or two days a week on site, the rest remote.",
             "baseTitle": "Home base and rhythm",
-            "baseBody": "Hilmar ICT Services is based in Zandvoort. Amsterdam is half an hour by train, the rest of the Randstad a little over an hour. One or two days a week on site works well, with refinement and review on fixed days. The other days I work remote, in Dutch or in English.",
+            "baseBody": "Hilmar ICT Services is based in Zandvoort. Amsterdam is half an hour by train, The Hague a little over three quarters of an hour, and Utrecht and Rotterdam a little over an hour. One or two days a week on site works well, with refinement and review on fixed days. The other days I work remote, in Dutch or in English.",
             "citiesTitle": "Four cities with a page of their own",
             "cityLink": "Working in {city}",
             "restTitle": "The rest of the map",
@@ -2511,7 +2511,7 @@
             "engagementsLead": "The public sector is where I built the forms platform of the Belastingdienst, in Apeldoorn. In Zoetermeer, fifteen kilometres from The Hague, I worked on site at Ortec.",
             "travel": [
                 "At Ortec in Zoetermeer I worked on site.",
-                "Zandvoort to Den Haag Centraal is a little over an hour by train, with one change.",
+                "Zandvoort to Den Haag Centraal is 48 to 54 minutes by train, with one change.",
                 "One or two days a week on site works well, with refinement and review on fixed days."
             ],
             "shapes": [

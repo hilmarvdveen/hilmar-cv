@@ -6,6 +6,7 @@ export type Region = {
   id: RegionId;
   city: string;
   cityEnglish: string;
+  published: boolean;
   engagementIds: string[];
   nearbyEngagementIds: string[];
   sectorEngagementIds: string[];
@@ -26,11 +27,12 @@ const cityTerms = (city: string, dutchCity: string) => [
   `frontend ontwikkelaar ${dutchCity}`,
 ];
 
-export const REGIONS: Region[] = [
+export const ALL_REGIONS: Region[] = [
   {
     id: "amsterdam",
     city: "Amsterdam",
     cityEnglish: "Amsterdam",
+    published: true,
     engagementIds: ["conclusion", "randstad", "postcode-loterij", "omniplan"],
     nearbyEngagementIds: ["transdev", "athlon", "niped"],
     sectorEngagementIds: [],
@@ -46,6 +48,7 @@ export const REGIONS: Region[] = [
     id: "utrecht",
     city: "Utrecht",
     cityEnglish: "Utrecht",
+    published: true,
     engagementIds: ["bol", "bluefield"],
     nearbyEngagementIds: [],
     sectorEngagementIds: [],
@@ -61,6 +64,7 @@ export const REGIONS: Region[] = [
     id: "rotterdam",
     city: "Rotterdam",
     cityEnglish: "Rotterdam",
+    published: true,
     engagementIds: ["opinity"],
     nearbyEngagementIds: [],
     sectorEngagementIds: [],
@@ -76,6 +80,7 @@ export const REGIONS: Region[] = [
     id: "den-haag",
     city: "Den Haag",
     cityEnglish: "The Hague",
+    published: false,
     engagementIds: [],
     nearbyEngagementIds: ["ortec"],
     sectorEngagementIds: ["belastingdienst"],
@@ -84,6 +89,10 @@ export const REGIONS: Region[] = [
     searchTerms: [...cityTerms("the hague", "den haag"), "freelance frontend developer den haag"],
   },
 ];
+
+export const REGIONS: Region[] = ALL_REGIONS.filter((region) => region.published);
+
+export const SCHEDULED_REGIONS: Region[] = ALL_REGIONS.filter((region) => !region.published);
 
 export const REGION_IDS = REGIONS.map((region) => region.id);
 
