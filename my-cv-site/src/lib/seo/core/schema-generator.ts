@@ -77,15 +77,23 @@ export class SchemaGenerator {
     return `${BUSINESS_PROFILE.NAME}, freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} for React, Next.js, Angular and TypeScript. Legacy to modern without interruption, design systems and GraphQL contracts, across the Randstad and remote.`;
   }
 
-  private webSiteId(locale: Locale): string {
-    return `${this.baseUrl}/${locale}#website`;
+  private webSiteId(): string {
+    return `${this.baseUrl}/#website`;
+  }
+
+  private personId(): string {
+    return `${this.baseUrl}/#person`;
+  }
+
+  private organizationId(): string {
+    return `${this.baseUrl}/#organization`;
   }
 
   private generateWebSiteSchema(locale: Locale): WebSiteSchema {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.WEBSITE,
-      '@id': this.webSiteId(locale),
+      '@id': this.webSiteId(),
       name: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
       description: this.siteDescription(),
       url: `${this.baseUrl}/${locale}`,
@@ -112,6 +120,7 @@ export class SchemaGenerator {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.ORGANIZATION,
+      '@id': this.organizationId(),
       name: BUSINESS_PROFILE.COMPANY,
       legalName: BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME,
       identifier: {
@@ -158,6 +167,7 @@ export class SchemaGenerator {
     return {
       '@context': 'https://schema.org',
       '@type': SCHEMA_TYPES.PERSON,
+      '@id': this.personId(),
       name: BUSINESS_PROFILE.NAME,
       givenName: nameParts[0],
       familyName: nameParts.slice(1).join(' '),
@@ -353,7 +363,7 @@ export class SchemaGenerator {
       url: canonicalUrl,
       isPartOf: {
         '@type': SCHEMA_TYPES.WEBSITE,
-        '@id': this.webSiteId(config.locale)
+        '@id': this.webSiteId()
       },
       author: {
         '@type': SCHEMA_TYPES.PERSON,

@@ -35,6 +35,7 @@ const breadcrumbList = (items: Array<{ name: string; url: string }>) => ({
 
 const person = () => ({
   "@type": "Person",
+  "@id": `${siteBase()}/#person`,
   name: BUSINESS_PROFILE.NAME,
   url: siteBase(),
 });
