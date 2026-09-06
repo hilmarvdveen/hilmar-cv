@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FAQClientContent } from "./FAQClientContent";
 import { FAQ_CATEGORY_IDS } from "../categories";
