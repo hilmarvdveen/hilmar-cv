@@ -40,7 +40,6 @@ export default async function ExperienceDetailPage({ params }: Props) {
   const entry = workHistory[index];
   setRequestLocale(locale);
   const work = await getTranslations({ locale, namespace: "work" });
-  const page = await getTranslations({ locale, namespace: "experiencePage" });
   const home = await getTranslations({ locale, namespace: "home" });
   const company = work(`${id}.company`);
   const period = work("period", {
