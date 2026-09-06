@@ -197,3 +197,25 @@ URL no page links to, a duplicate, a trailing slash, an upper-case
 character, a URL off the production origin or without a locale prefix.
 On 6 September 2026: 74 URLs, 37 per language, 16 blog URLs, 24
 engagement pages, and the two sets match exactly.
+
+## Region pages (6 September 2026)
+
+A hub at `/{locale}/freelance-frontend-developer` and a page per city at
+`/{locale}/freelance-frontend-developer/{amsterdam, utrecht, rotterdam,
+den-haag}`, built from `Hilmar/review-board/06-region-pages.md`. The
+path is identical in both locales so `localizedAlternates()` pairs them
+without a second code path, and the Den Haag slug stays `den-haag` in
+English. Every per-city claim derives from `src/data/regions.ts` (the
+engagement ids in the city, the nearby ids with their own city named, the
+sector ids, the published post slugs), never from a typed number.
+Unknown cities answer 404 through `generateStaticParams` plus
+`notFound()`. The five titles are the only titles on the site without
+the owner suffix, so the city term sits inside the first 45 characters.
+Structured data per page: `WebPage`, `BreadcrumbList`, `Service` with the
+city as `areaServed` and the Zandvoort address on the provider, and
+`Person` with `workLocation`. No `LocalBusiness` (no office in the city),
+no `FAQPage` (rich result gone), no `ProfessionalService` (deprecated).
+The sitemap holds 84 URLs, the search index has the city terms, the
+social card titles come from the `regions` namespace, and the entrances
+are the footer link, the homepage location fact, the map popup and the
+location row of every engagement page.
