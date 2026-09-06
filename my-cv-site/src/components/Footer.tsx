@@ -132,7 +132,7 @@ export const Footer = () => {
                   <li key={service.name}>
                     <Link
                       href={service.href}
-                      className="group flex items-center space-x-3 text-gray-400 hover:text-emerald-400 transition-colors duration-200"
+                      className="group flex min-h-6 items-center space-x-3 text-gray-400 hover:text-emerald-400 transition-colors duration-200"
                     >
                       <Icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                       <span>{service.name}</span>
@@ -171,7 +171,7 @@ export const Footer = () => {
             <div className="space-y-4 mb-8">
               <a
                 href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
-                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
+                className="flex min-h-6 items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4" />
                 <span>{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
@@ -179,7 +179,7 @@ export const Footer = () => {
 
               <a
                 href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
-                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
+                className="flex min-h-6 items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Phone className="w-4 h-4" />
                 <span>{BUSINESS_PROFILE.CONTACT.PHONE_DISPLAY}</span>
@@ -190,7 +190,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-placement="footer-whatsapp"
-                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
+                className="flex min-h-6 items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>{commonTranslations("whatsapp")}</span>

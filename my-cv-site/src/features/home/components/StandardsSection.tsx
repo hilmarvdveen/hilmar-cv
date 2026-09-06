@@ -41,7 +41,7 @@ export const StandardsSection = () => {
         <p className="mt-6 text-center text-sm text-gray-600">
           <Link
             href={TESTING_POST_HREF}
-            className="rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
           >
             {t("link")}
           </Link>

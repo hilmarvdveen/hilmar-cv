@@ -32,7 +32,7 @@ export const ExperienceClose = () => {
             target="_blank"
             rel="noopener noreferrer"
             data-placement="experience-close-whatsapp"
-            className="inline-flex items-center gap-2 rounded-md text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+            className="inline-flex min-h-6 items-center gap-2 rounded-md text-sm text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             {common("whatsapp")}

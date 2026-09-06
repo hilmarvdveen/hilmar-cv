@@ -156,7 +156,7 @@ export const NetherlandsMap = () => {
                       {regionForCity(selectedCity.name) ? (
                         <Link
                           href={regionPath(regionForCity(selectedCity.name))}
-                          className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                          className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                           data-placement="map-city"
                         >
                           {selectedCity.name}

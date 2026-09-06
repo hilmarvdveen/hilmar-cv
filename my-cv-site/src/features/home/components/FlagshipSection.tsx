@@ -56,7 +56,7 @@ export const FlagshipSection = () => {
         <div className="mt-8">
           <Link
             href="/experience/bol"
-            className="text-primary font-semibold underline underline-offset-4"
+            className="inline-flex min-h-6 items-center text-primary font-semibold underline underline-offset-4"
           >
             {t("linkLabel")}
             <ArrowRight className="w-4 h-4 inline" aria-hidden="true" />

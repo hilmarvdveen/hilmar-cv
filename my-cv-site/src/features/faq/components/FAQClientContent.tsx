@@ -164,7 +164,7 @@ export function FAQClientContent() {
               </Button>
               <Link
                 href="/contact"
-                className="text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
+                className="inline-flex min-h-6 items-center text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
               >
                 {t("cta.contact")}
               </Link>

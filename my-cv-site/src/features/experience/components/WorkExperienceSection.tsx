@@ -60,7 +60,7 @@ export const WorkExperienceSection = () => {
               <p className="mt-2 text-base leading-relaxed text-gray-700">{t(`${id}.summary`)}</p>
               <Link
                 href={`/experience/${id}`}
-                className="mt-3 inline-flex items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
               >
                 {t("readMore")}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />

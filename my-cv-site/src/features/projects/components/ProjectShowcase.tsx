@@ -79,7 +79,7 @@ export const ProjectShowcase = () => {
                   <div className="mt-4 flex items-end justify-between gap-4">
                     <Link
                       href={projectCase.href}
-                      className="inline-flex items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                      className="inline-flex min-h-6 items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                     >
                       {work("readMore")}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />

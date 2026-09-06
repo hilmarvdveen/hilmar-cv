@@ -28,7 +28,7 @@ type RegionPageProps = {
 };
 
 const linkClass =
-  "inline-flex items-center gap-1 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 export const RegionPage = ({ region, locale, engagements, nearby, sector, posts, siblings, totalEngagements }: RegionPageProps) => {
   const t = useTranslations("regions");
@@ -210,7 +210,7 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
             {home("close.button")}
           </Button>
           <p className="mt-6 text-sm text-slate-300">
-            <Link href="/contact" className="underline underline-offset-4 hover:text-white">
+            <Link href="/contact" className="inline-flex min-h-6 items-center underline underline-offset-4 hover:text-white">
               {home("close.alternative")}
             </Link>
           </p>

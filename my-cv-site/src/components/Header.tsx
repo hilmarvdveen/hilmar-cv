@@ -299,7 +299,7 @@ export const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
               data-placement="drawer-whatsapp"
-              className="mt-3 inline-flex items-center gap-2 rounded-md text-sm font-medium text-gray-700 underline-offset-4 hover:text-gray-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="mt-3 inline-flex min-h-6 items-center gap-2 rounded-md text-sm font-medium text-gray-700 underline-offset-4 hover:text-gray-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
             >
               <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
               {t("whatsapp")}

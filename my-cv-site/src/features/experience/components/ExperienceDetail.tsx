@@ -23,7 +23,7 @@ const TECHNOLOGY_HEADING_ID = "experience-technology-heading";
 const FACTS_HEADING_ID = "experience-facts-heading";
 
 const neighbourLinkClass =
-  "inline-flex items-center gap-2 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-2 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 export const ExperienceDetail = ({ entry, previous, next, others = [] }: ExperienceDetailProps) => {
   const t = useTranslations("work");
@@ -88,7 +88,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
                     {fact.href ? (
                       <Link
                         href={fact.href}
-                        className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                         data-placement="experience-detail-location"
                       >
                         {fact.value}

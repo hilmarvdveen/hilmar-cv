@@ -57,7 +57,7 @@ export const HiringSection = () => {
                 </p>
                 <Link
                   href={shape.href}
-                  className="mt-auto inline-flex items-center gap-1.5 text-primary font-semibold text-sm"
+                  className="mt-auto inline-flex min-h-6 items-center gap-1.5 text-primary font-semibold text-sm"
                   data-placement="hiring-shape"
                 >
                   {shape.linkLabel}
@@ -96,7 +96,7 @@ export const HiringSection = () => {
                     {fact.href ? (
                       <Link
                         href={fact.href}
-                        className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                         data-placement="hiring-location"
                       >
                         {fact.value}
@@ -130,7 +130,7 @@ export const HiringSection = () => {
             ))}
             <Link
               href="/faq"
-              className="text-primary font-semibold underline underline-offset-4 text-sm"
+              className="inline-flex min-h-6 items-center text-primary font-semibold underline underline-offset-4 text-sm"
             >
               {faq.linkLabel}
             </Link>

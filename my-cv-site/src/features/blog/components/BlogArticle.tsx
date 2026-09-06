@@ -26,7 +26,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
                 <Link
                   href="/"
                   locale={locale}
-                  className="flex items-center gap-1 hover:text-gray-700"
+                  className="flex min-h-6 min-w-6 items-center justify-center gap-1 hover:text-gray-700"
                   aria-label={labels.homeLabel}
                 >
                   <Home className="h-4 w-4" />
@@ -37,7 +37,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
                 <Link
                   href="/blog"
                   locale={locale}
-                  className="font-medium text-gray-600 hover:text-emerald-700"
+                  className="inline-flex min-h-6 items-center font-medium text-gray-600 hover:text-emerald-700"
                 >
                   {labels.eyebrow}
                 </Link>
@@ -100,7 +100,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
             <Link
               href="/blog"
               locale={locale}
-              className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white"
+              className="mt-8 inline-flex min-h-6 items-center gap-2 text-sm font-medium text-slate-300 hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
               {labels.backToList}
