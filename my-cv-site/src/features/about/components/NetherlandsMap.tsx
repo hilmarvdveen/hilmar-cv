@@ -13,6 +13,8 @@ import {
   type CityLocation,
 } from "../netherlandsMapData";
 import { useNetherlandsMapDrawing } from "../hooks/useNetherlandsMapDrawing";
+import { regionForCity, regionPath } from "@/data/regions";
+import { Link } from "@/i18n/navigation";
 
 const FIRST_YEAR = 2016;
 
@@ -151,7 +153,17 @@ export const NetherlandsMap = () => {
                   )}
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-gray-900 text-sm md:text-base truncate">
-                      {selectedCity.name}
+                      {regionForCity(selectedCity.name) ? (
+                        <Link
+                          href={regionPath(regionForCity(selectedCity.name))}
+                          className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                          data-placement="map-city"
+                        >
+                          {selectedCity.name}
+                        </Link>
+                      ) : (
+                        selectedCity.name
+                      )}
                     </h3>
                     <p className="text-xs md:text-sm text-gray-600">
                       {selectedCity.isHome

@@ -31,6 +31,7 @@ const SEGMENT_LABEL_KEYS: Record<string, string> = {
   terms: "terms",
   cookies: "cookies",
   disclaimer: "disclaimer",
+  "freelance-frontend-developer": "regions",
 };
 
 const dehyphenate = (segment: string) =>

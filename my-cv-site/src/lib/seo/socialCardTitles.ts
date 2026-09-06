@@ -2,6 +2,7 @@ import englishMessages from "@/i18n/messages/en.json";
 import dutchMessages from "@/i18n/messages/nl.json";
 import { LEGAL_CONTENT } from "@/features/legal/legalContent";
 import { BLOG_POSTS } from "@/features/blog";
+import { REGION_IDS } from "@/data/regions";
 import { SEOFactory } from "./factory";
 import { socialCardTitle } from "./socialCard";
 import type { Locale } from "./types/seo-types";
@@ -13,6 +14,7 @@ const messagesFor = (locale: Locale) =>
     work: Record<string, WorkEntryMessages | string>;
     experiencePage: { title: string };
     search: { title: string };
+    regions: Record<string, { title?: string } | string>;
   };
 
 const metadataTitle = (title: unknown): string => (typeof title === "string" ? title : "");
@@ -61,13 +63,21 @@ function pageTitles(locale: Locale): string[] {
   return [messages.experiencePage.title, messages.search.title, ...engagements, ...legal];
 }
 
+function regionTitles(locale: Locale): string[] {
+  const regions = messagesFor(locale).regions;
+  return ["hub", ...REGION_IDS].flatMap((id) => {
+    const entry = regions[id];
+    return typeof entry === "object" && entry !== null && entry.title ? [entry.title] : [];
+  });
+}
+
 const cache = new Map<Locale, Set<string>>();
 
 export function knownSocialCardTitles(locale: Locale): Set<string> {
   const cached = cache.get(locale);
   if (cached) return cached;
   const titles = new Set(
-    [...engineTitles(locale), ...blogTitles(locale), ...pageTitles(locale)]
+    [...engineTitles(locale), ...blogTitles(locale), ...pageTitles(locale), ...regionTitles(locale)]
       .map((title) => socialCardTitle(title))
       .filter((title) => title.length > 0)
   );

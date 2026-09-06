@@ -31,4 +31,9 @@ describe("searchEntries with extra entries", () => {
     expect(searchEntries("kobo plus", "nl", extra).map((entry) => entry.href)).toContain("/experience#experience-bol");
     expect(searchEntries("kobo plus", "nl").map((entry) => entry.href)).not.toContain("/experience#experience-bol");
   });
+
+  it("finds a region page by its city in both languages", () => {
+    expect(searchEntries("rotterdam", "nl").map((entry) => entry.href)).toContain("/freelance-frontend-developer/rotterdam");
+    expect(searchEntries("the hague", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/den-haag");
+  });
 });

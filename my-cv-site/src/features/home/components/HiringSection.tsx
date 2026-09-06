@@ -11,6 +11,7 @@ type HiringFact = {
   value: string;
   detail: string;
   highlight: boolean;
+  href?: string;
 };
 
 type HiringFaqItem = {
@@ -92,7 +93,17 @@ export const HiringSection = () => {
                         aria-hidden="true"
                       />
                     )}
-                    {fact.value}
+                    {fact.href ? (
+                      <Link
+                        href={fact.href}
+                        className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        data-placement="hiring-location"
+                      >
+                        {fact.value}
+                      </Link>
+                    ) : (
+                      fact.value
+                    )}
                   </p>
                   {fact.detail && (
                     <p className="text-[13.5px] text-gray-600 mt-0.5">

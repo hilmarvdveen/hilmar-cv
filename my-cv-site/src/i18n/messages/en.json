@@ -248,6 +248,7 @@
                 },
                 {
                     "label": "Location",
+                    "href": "/freelance-frontend-developer",
                     "value": "the Randstad, hybrid or remote",
                     "detail": "1 to 2 days on site works well",
                     "highlight": false
@@ -2142,7 +2143,8 @@
         "cookies": "Cookie policy",
         "disclaimer": "Disclaimer",
         "search": "Search",
-        "experience": "Work history"
+        "experience": "Work history",
+        "regions": "Where I work"
     },
     "search": {
         "title": "Search",
@@ -2284,6 +2286,7 @@
         "quickLinks": {
             "title": "Quick links",
             "items": {
+                "regions": "Where I work",
                 "about": "About me",
                 "experience": "Work history",
                 "projects": "Projects",
@@ -2338,5 +2341,206 @@
         },
         "breadcrumbLabel": "Breadcrumb",
         "homeLabel": "Home"
+    },
+    "regions": {
+        "hub": {
+            "title": "Hire a freelance frontend developer in the Randstad",
+            "description": "Where I work: Amsterdam, Utrecht, Rotterdam and The Hague, hybrid or remote. Twelve engagements since 2016. Available from 1 October 2026.",
+            "heroTitle": "Hire a freelance frontend developer in the Randstad",
+            "heroDescription": "From Zandvoort I work for clients in Amsterdam, Utrecht, Rotterdam and The Hague. One or two days a week on site, the rest remote.",
+            "baseTitle": "Home base and rhythm",
+            "baseBody": "Hilmar ICT Services is based in Zandvoort. Amsterdam is half an hour by train, the rest of the Randstad a little over an hour. One or two days a week on site works well, with refinement and review on fixed days. The other days I work remote, in Dutch or in English.",
+            "citiesTitle": "Four cities with a page of their own",
+            "cityLink": "Working in {city}",
+            "restTitle": "The rest of the map",
+            "restBody": "The engagements outside those four cities, each with its own page under work history.",
+            "remoteTitle": "Remote",
+            "remoteBody": "At Athlon I worked fully remote on an Angular migration from 2020 to 2022. At bol.com and the Belastingdienst it was hybrid, with fixed office days. Both work as long as refinement and review happen at fixed moments and the team talks in the code reviews.",
+            "closeTitle": "Tell me which city your team is in",
+            "closeBody": "Thirty minutes is enough to see whether it fits, on site or remote."
+        },
+        "shared": {
+            "eyebrow": "Where I work",
+            "pitchTitle": "What I do, in one sentence",
+            "engagementsTitle": "Engagements in {city}",
+            "nearbyTitle": "Nearby",
+            "sectorTitle": "The same sector, elsewhere in the country",
+            "travelTitle": "On site in {city}",
+            "shapesTitle": "What I take on here",
+            "readingTitle": "Reading from this work",
+            "readPost": "Read the article",
+            "factsTitle": "The practical facts",
+            "questionsTitle": "Questions about working in {city}",
+            "othersTitle": "Other cities",
+            "hubLink": "All regions"
+        },
+        "amsterdam": {
+            "name": "Amsterdam",
+            "title": "Freelance frontend developer in Amsterdam",
+            "description": "Senior frontend developer, freelance. {count} engagements in Amsterdam, among them Nationale Postcode Loterij. Available from 1 October 2026.",
+            "heroTitle": "Freelance frontend developer in Amsterdam",
+            "heroDescription": "{count} of my {total} engagements since 2016 were in Amsterdam. From Zandvoort that is a thirty-minute direct train.",
+            "hubLine": "{count} engagements, from a design system for Nationale Postcode Loterij to one component set for Randstad and Yacht.",
+            "engagementsLead": "{count} engagements in Amsterdam, from a campaign system for Nationale Postcode Loterij to a component set for Randstad and Yacht.",
+            "travel": [
+                "Zandvoort to Amsterdam Centraal is half an hour, direct by train.",
+                "At Conclusion, Randstad and Omniplan I worked on site in Amsterdam, at Nationale Postcode Loterij hybrid.",
+                "One or two days a week on site works well, with refinement and review on fixed days."
+            ],
+            "shapes": [
+                {
+                    "title": "A design system that puts campaigns live in days",
+                    "body": "At Nationale Postcode Loterij a new campaign site went from weeks to a few days, with a JSON-driven design system that marketing operates itself."
+                },
+                {
+                    "title": "One component set for two brands",
+                    "body": "Randstad and Yacht received one set of accessible components in their rebranding that carries the new brand identity on both sites."
+                },
+                {
+                    "title": "A platform external parties connect to safely",
+                    "body": "At Omniplan external organisations could connect to the platform safely, without the systems being welded together."
+                }
+            ],
+            "readingLead": "On component libraries, folder structure and tests, the work that kept coming back in Amsterdam.",
+            "questions": [
+                {
+                    "question": "How many days a week would you be in our Amsterdam office?",
+                    "answer": "One or two days on site works well, the rest remote. Which days, we align in the call with refinement and review."
+                },
+                {
+                    "question": "Can you start before 1 October?",
+                    "answer": "Available from 1 October 2026, earlier by arrangement."
+                },
+                {
+                    "question": "Do you also work for clients outside Amsterdam?",
+                    "answer": "Yes. Utrecht, Rotterdam and The Hague have pages of their own, and remote I work from Zandvoort for the whole country."
+                }
+            ],
+            "closeTitle": "Is your team in Amsterdam?",
+            "closeBody": "On site or remote, and after thirty minutes you know whether this fits your platform."
+        },
+        "utrecht": {
+            "name": "Utrecht",
+            "title": "Freelance frontend developer in Utrecht",
+            "description": "Senior frontend developer, freelance. In Utrecht at bol.com and Bluefield Smart Access. React, GraphQL and .NET. Available from 1 October 2026.",
+            "heroTitle": "Freelance frontend developer in Utrecht",
+            "heroDescription": "I work at bol.com in Utrecht right now, hybrid, and at Bluefield Smart Access before that.",
+            "hubLine": "{count} engagements, with bol.com as the current one.",
+            "engagementsLead": "{count} engagements in Utrecht: the current work at bol.com and Bluefield Smart Access before it.",
+            "travel": [
+                "At bol.com I work hybrid, with fixed days in Utrecht and the rest remote. At Bluefield Smart Access I worked on site.",
+                "Zandvoort to Utrecht Centraal is a little over an hour by train, with one change.",
+                "One or two days a week on site works well, with refinement and review on fixed days."
+            ],
+            "shapes": [
+                {
+                    "title": "Customer pages from legacy to React, without interruption",
+                    "body": "At bol.com I moved the pages where customers manage their subscriptions, software and games from an ageing Java storefront to a React platform, without interruption for customers."
+                },
+                {
+                    "title": "Backend work where capacity is tight",
+                    "body": "Where the backend team was full, I wrote the backend logic in Kotlin myself, with the GraphQL schema as the contract between both sides."
+                },
+                {
+                    "title": "Complex processes in one view",
+                    "body": "At Bluefield Smart Access administrators saw complex processes and network faults in one view, in React with a .NET backend."
+                }
+            ],
+            "readingLead": "On routing and server-side rendering, hexagonal architecture in Kotlin and what an SEO score really says, the work that came back in Utrecht.",
+            "questions": [
+                {
+                    "question": "Would you take on the backend in Utrecht as well?",
+                    "answer": "At bol.com I wrote backend logic in Kotlin where capacity was tight. Where the team wants it, I take that work on."
+                },
+                {
+                    "question": "How does hybrid work with you?",
+                    "answer": "Fixed office days for refinement and review, the rest remote. At bol.com it has worked that way since July 2025."
+                },
+                {
+                    "question": "From when are you available?",
+                    "answer": "From 1 October 2026, earlier by arrangement."
+                }
+            ],
+            "closeTitle": "Is your team in Utrecht?",
+            "closeBody": "Thirty minutes, and you know which page comes first."
+        },
+        "rotterdam": {
+            "name": "Rotterdam",
+            "title": "Freelance frontend developer in Rotterdam",
+            "description": "Senior frontend developer, freelance. At Opinity in Rotterdam I built the frontend and the backend of a trip registration. Available from 1 October 2026.",
+            "heroTitle": "Freelance frontend developer in Rotterdam",
+            "heroDescription": "At Opinity in Rotterdam I built the frontend and the backend of a business-critical trip registration in four months, on site.",
+            "hubLine": "One engagement, on site: frontend and backend in four months at Opinity.",
+            "engagementsLead": "At Opinity, on site in Rotterdam.",
+            "travel": [
+                "At Opinity I worked on site in Rotterdam.",
+                "Zandvoort to Rotterdam Centraal is a little over an hour by train, with one change.",
+                "One or two days a week on site works well, with refinement and review on fixed days."
+            ],
+            "shapes": [
+                {
+                    "title": "Frontend and backend in one engagement",
+                    "body": "At Opinity I built the frontend in Angular and the backend in ASP.NET Core in one engagement, so a team in Rotterdam can hand me the API side as well."
+                }
+            ],
+            "readingLead": "On hexagonal architecture in C# and .NET, tests, and a React architecture that is still pleasant to work on after year two.",
+            "questions": [
+                {
+                    "question": "Have you worked in Rotterdam before?",
+                    "answer": "Yes, at Opinity, on site. In four months I built the frontend and the backend of a business-critical trip registration."
+                },
+                {
+                    "question": "Do you come to the office?",
+                    "answer": "One or two days a week on site works well, the rest remote. Zandvoort to Rotterdam is a little over an hour by train."
+                },
+                {
+                    "question": "Which stack fits a team on .NET?",
+                    "answer": "Angular or React at the front and ASP.NET Core at the back, as at Opinity. What newer .NET versions change is in the articles on this page."
+                }
+            ],
+            "closeTitle": "Is your team in Rotterdam?",
+            "closeBody": "Thirty minutes, and you know whether the frontend and the backend fit in one pair of hands."
+        },
+        "den-haag": {
+            "name": "The Hague",
+            "title": "Freelance frontend developer in The Hague",
+            "description": "Senior frontend developer, freelance. Government forms platform at the Belastingdienst, Angular and .NET at Ortec in Zoetermeer. Available from 1 October 2026.",
+            "heroTitle": "Freelance frontend developer in The Hague",
+            "heroDescription": "At the Belastingdienst in Apeldoorn I built the forms platform that took a new tax form from months to a few days. At Ortec in Zoetermeer, next to The Hague, I worked on site.",
+            "hubLine": "Public sector at the Belastingdienst, on site at Ortec in Zoetermeer.",
+            "engagementsLead": "The public sector is where I built the forms platform of the Belastingdienst, in Apeldoorn. In Zoetermeer, fifteen kilometres from The Hague, I worked on site at Ortec.",
+            "travel": [
+                "At Ortec in Zoetermeer I worked on site.",
+                "Zandvoort to Den Haag Centraal is a little over an hour by train, with one change.",
+                "One or two days a week on site works well, with refinement and review on fixed days."
+            ],
+            "shapes": [
+                {
+                    "title": "A forms platform editors build with themselves",
+                    "body": "At the Belastingdienst I built a visual forms editor with which editors and designers compose and check a tax form themselves, at WCAG 2.1 AA."
+                },
+                {
+                    "title": "A portal that puts trips and loads live on one screen",
+                    "body": "At Ortec, FedEx staff follow trips, loads and delivery locations live on one screen, in Angular with a .NET backend."
+                }
+            ],
+            "readingLead": "On hexagonal architecture in Java and C#, and a folder structure a team still understands in year two.",
+            "questions": [
+                {
+                    "question": "Do you know the public sector?",
+                    "answer": "At the Belastingdienst I built the forms platform and worked on the design system several teams use. The engagement was extended four times."
+                },
+                {
+                    "question": "Do you work on site in The Hague?",
+                    "answer": "One or two days a week on site works well, the rest remote. At Ortec in Zoetermeer I worked on site."
+                },
+                {
+                    "question": "Which accessibility standard do you work to?",
+                    "answer": "WCAG 2.1 AA on the engagements from 2020 to 2024 and 2.2 AA at bol.com, built in during the work."
+                }
+            ],
+            "closeTitle": "Is your team in The Hague?",
+            "closeBody": "Thirty minutes, and you know whether this fits your platform, on site in The Hague or remote."
+        }
     }
 }

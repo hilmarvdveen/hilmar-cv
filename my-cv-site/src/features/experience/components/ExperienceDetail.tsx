@@ -1,4 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
+import { regionForCity, regionPath } from "@/data/regions";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
@@ -39,7 +40,11 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
         to: formatMonthYear(entry.to, locale),
       }),
     },
-    { label: page("detail.locationLabel"), value: t(`${entry.id}.location`) },
+    {
+      label: page("detail.locationLabel"),
+      value: t(`${entry.id}.location`),
+      href: regionForCity(entry.location) ? regionPath(regionForCity(entry.location)) : undefined,
+    },
     { label: page("detail.modeLabel"), value: t(entry.mode) },
     { label: page("detail.languageLabel"), value: t(entry.language) },
     { label: page("detail.roleLabel"), value: t(`${entry.id}.role`) },
@@ -79,7 +84,19 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="text-gray-500">{fact.label}</dt>
-                  <dd className="font-medium text-textMain">{fact.value}</dd>
+                  <dd className="font-medium text-textMain">
+                    {fact.href ? (
+                      <Link
+                        href={fact.href}
+                        className="rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        data-placement="experience-detail-location"
+                      >
+                        {fact.value}
+                      </Link>
+                    ) : (
+                      fact.value
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>

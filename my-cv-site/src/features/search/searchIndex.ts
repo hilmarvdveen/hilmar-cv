@@ -1,3 +1,4 @@
+import { REGIONS, regionPath } from "@/data/regions";
 export type SearchLocale = "en" | "nl";
 
 export type SearchKind = "page" | "engagement" | "post";
@@ -10,7 +11,7 @@ export type SearchEntry = {
   keywords: string[];
 };
 
-export const SEARCH_INDEX: SearchEntry[] = [
+const STATIC_ENTRIES: SearchEntry[] = [
   {
     href: "/",
     kind: "page",
@@ -151,6 +152,34 @@ export const SEARCH_INDEX: SearchEntry[] = [
     keywords: ["contact", "email", "phone", "telefoon", "whatsapp", "bellen"],
   },
 ];
+
+const REGION_ENTRIES: SearchEntry[] = [
+  {
+    href: regionPath(),
+    kind: "page",
+    title: { en: "Where I work", nl: "Werkregio" },
+    description: {
+      en: "Amsterdam, Utrecht, Rotterdam and The Hague, hybrid or remote from Zandvoort.",
+      nl: "Amsterdam, Utrecht, Rotterdam en Den Haag, hybride of remote vanuit Zandvoort.",
+    },
+    keywords: ["randstad", "regio", "region", "werkregio", "op locatie", "on site", "hybride", "hybrid", "remote"],
+  },
+  ...REGIONS.map((region) => ({
+    href: regionPath(region),
+    kind: "page" as const,
+    title: {
+      en: `Freelance frontend developer in ${region.cityEnglish}`,
+      nl: `Freelance frontend developer ${region.city}`,
+    },
+    description: {
+      en: `Engagements, on-site rhythm and reading for teams in ${region.cityEnglish}.`,
+      nl: `Opdrachten, werkritme op locatie en leesvoer voor teams in ${region.city}.`,
+    },
+    keywords: [region.city.toLowerCase(), region.cityEnglish.toLowerCase(), ...region.searchTerms],
+  })),
+];
+
+export const SEARCH_INDEX: SearchEntry[] = [...STATIC_ENTRIES, ...REGION_ENTRIES];
 
 export function searchEntries(
   query: string,

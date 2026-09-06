@@ -2,6 +2,7 @@
 import { SEOFactory } from '@/lib/seo';
 import { BLOG_POSTS } from '@/features/blog';
 import { workHistory } from '@/data/workHistory';
+import { REGIONS, REGION_PATH } from '@/data/regions';
 
 export async function GET() {
   const experienceDetailPages = workHistory.map((entry) => ({
@@ -23,8 +24,18 @@ export async function GET() {
     priority: 0.8,
   };
 
+  const regionPages = [
+    { path: REGION_PATH, changeFrequency: 'monthly', priority: 0.8 },
+    ...REGIONS.map((region) => ({
+      path: `${REGION_PATH}/${region.id}`,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    })),
+  ];
+
   const sitemapData = SEOFactory.generateSitemapData([
     experiencePage,
+    ...regionPages,
     ...experienceDetailPages,
     ...blogPostPages,
   ]);

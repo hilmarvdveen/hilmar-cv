@@ -41,7 +41,7 @@ export const ServicesHero = () => {
         </>
       }
       aside={
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2">
           {SERVICE_CARDS.map(({ id, Icon, href }) => (
             <Link
               key={id}
