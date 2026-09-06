@@ -23,7 +23,14 @@ export const DeliveryMethodSection = () => {
           subtitle={t("subtitle")}
           onDark
         />
-        <RampDevice lockup="wide" tone="onNavy" showReturn className="hidden lg:block w-full h-auto mb-2" />
+        <figure className="hidden lg:block mb-3">
+          <RampDevice lockup="wide" tone="onNavy" showReturn className="w-full h-auto" />
+          <figcaption className="mt-1 flex justify-between gap-4 text-[12px] text-slate-400">
+            <span>{t("device.lane")}</span>
+            <span className="text-emerald-300">{t("device.ramp")}</span>
+            <span>{t("device.rollback")}</span>
+          </figcaption>
+        </figure>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {steps.map((step, index) => (
             <div

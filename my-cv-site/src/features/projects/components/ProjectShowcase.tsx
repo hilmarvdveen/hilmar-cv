@@ -85,7 +85,12 @@ export const ProjectShowcase = () => {
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                     {workEntry && CASE_SCHEMATICS[workEntry.id] && (
-                      <CaseSchematic schematic={CASE_SCHEMATICS[workEntry.id]} className="hidden shrink-0 sm:block" />
+                      <figure className="hidden shrink-0 flex-col items-end gap-1 sm:flex">
+                        <CaseSchematic schematic={CASE_SCHEMATICS[workEntry.id]} />
+                        <figcaption className="text-[11px] text-gray-500">
+                          {t(`schematics.${CASE_SCHEMATICS[workEntry.id]}`)}
+                        </figcaption>
+                      </figure>
                     )}
                   </div>
                 </Card>

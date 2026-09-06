@@ -1,6 +1,10 @@
 {
     "home": {
         "hero": {
+    "device": {
+        "lane": "Het oude systeem blijft live",
+        "ramp": "Verkeer gaat stap voor stap over"
+    },
             "badge": "Beschikbaar vanaf 1 oktober 2026 · de Randstad, hybride of remote",
             "heading": "Senior frontend engineer voor de hele keten. Van legacy‑specificatie tot live cut-over.",
             "description": "Ruim tien jaar senior in React en Angular, nu bij bol.com. Ik bouw de pagina's die klanten zien, van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en zet ze in omkeerbare stappen live op echt verkeer.",
@@ -117,6 +121,11 @@
             ]
         },
         "method": {
+    "device": {
+        "lane": "Het oude systeem draait door",
+        "ramp": "Elke stap zet een groep bezoekers over",
+        "rollback": "Terug in één stap"
+    },
             "title": "Zo blijft de cut-over naar live verkeer voorspelbaar",
             "subtitle": "De hele keten tot aan dat moment blijft in één paar handen. Vijf stappen.",
             "steps": [
@@ -880,6 +889,12 @@
         "earlierTitle": "Eerdere opdrachten"
     },
     "projects": {
+    "schematics": {
+        "ramp": "Cut-over in omkeerbare stappen",
+        "formBuilder": "Redacteuren bouwen het formulier zelf",
+        "sourceToPages": "Eén bron, elke campagnesite",
+        "versionToVersion": "Van de oude naar de nieuwe versie"
+    },
         "hero": {
             "badge": "Praktijkvoorbeelden",
             "title": "Vier opdrachten, en wat de opdrachtgever daarna kon meten",

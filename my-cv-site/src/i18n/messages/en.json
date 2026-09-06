@@ -1,6 +1,10 @@
 {
     "home": {
         "hero": {
+    "device": {
+        "lane": "The old system stays live",
+        "ramp": "Traffic moves over one step at a time"
+    },
             "badge": "Available from 1 October 2026 · the Randstad, hybrid or remote",
             "heading": "Senior frontend, owned end to end. From legacy spec to live cut-over.",
             "description": "Ten-plus years senior in React and Angular, currently at bol.com. I build the pages customers see, from specification to production, shape the GraphQL contract with the backend team, and ramp them onto live traffic in reversible steps.",
@@ -117,6 +121,11 @@
             ]
         },
         "method": {
+    "device": {
+        "lane": "The old system keeps running",
+        "ramp": "Each step moves a group of visitors over",
+        "rollback": "Back in one step"
+    },
             "title": "How the switch to live traffic stays predictable",
             "subtitle": "The whole chain up to that moment stays in one pair of hands. Five steps.",
             "steps": [
@@ -917,6 +926,12 @@
         "earlierTitle": "Earlier engagements"
     },
     "projects": {
+    "schematics": {
+        "ramp": "Cut-over in reversible steps",
+        "formBuilder": "Editors build the form themselves",
+        "sourceToPages": "One source, every campaign site",
+        "versionToVersion": "From the old version to the new one"
+    },
         "hero": {
             "badge": "Case studies",
             "title": "Four engagements, and what the client could measure afterwards",

@@ -80,12 +80,13 @@ export const HeroSection = () => {
               <p className="text-[15px] font-bold text-white">{t("name")}</p>
               <p className="text-[13px] text-slate-400">{t("role")}</p>
             </div>
-            <RampDevice
-              tone="onNavy"
-              width={340}
-              height={170}
-              className="hidden md:block mt-6 w-full max-w-[340px] h-auto"
-            />
+            <figure className="hidden md:block mt-6 w-full max-w-[340px]">
+              <RampDevice tone="onNavy" width={340} height={170} className="w-full h-auto" />
+              <figcaption className="mt-1 flex justify-between gap-3 text-[11px] leading-snug text-slate-400">
+                <span>{t("device.lane")}</span>
+                <span className="text-right text-emerald-300">{t("device.ramp")}</span>
+              </figcaption>
+            </figure>
           </div>
         </div>
 

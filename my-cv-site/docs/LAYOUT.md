@@ -338,6 +338,10 @@ renders it or one of three sibling drawings per project case.
 - Every instance is decorative: `aria-hidden`, no role, nothing the
   page does not also say in text. Tests count svg elements on the
   render container.
+- Every placement carries a caption as real text next to the drawing
+  (Hilmar's rule of 6 September 2026: a diagram is self-explanatory by
+  animation or by text). The svg stays `aria-hidden`, the caption is
+  what a reader and a screen reader get.
 - The return arrow (the rollback) is opt-in through `showReturn` and
   appears only where copy explains it in the same breath. Standing
   alone it reads as a climb that ends in a fall.

@@ -7,14 +7,16 @@ export const SOCIAL_CARD_SIZE = { width: 1200, height: 630 };
 
 export type SocialCardLocale = "en" | "nl";
 
-const CARD_COPY: Record<SocialCardLocale, { role: string; reach: string }> = {
+const CARD_COPY: Record<SocialCardLocale, { role: string; reach: string; motif: string }> = {
   en: {
     role: "Senior frontend engineer",
     reach: "React · Angular · TypeScript · Randstad and remote",
+    motif: "From legacy to live, one step at a time",
   },
   nl: {
     role: "Senior frontend engineer",
     reach: "React · Angular · TypeScript · Randstad en remote",
+    motif: "Van legacy naar live, stap voor stap",
   },
 };
 
@@ -30,6 +32,7 @@ export async function renderSocialCard(locale: SocialCardLocale, title?: string,
   const [titleHeading, titleDetail] = (title ?? "").split(" | ").map((part) => part.trim());
   const heading = titleHeading && titleHeading.length > 0 ? titleHeading : copy.role;
   const subline = titleHeading && titleHeading.length > 0 ? titleDetail || copy.role : copy.reach;
+  const footer = subline === copy.reach ? undefined : copy.reach;
 
   return new ImageResponse(
     (
@@ -67,7 +70,14 @@ export async function renderSocialCard(locale: SocialCardLocale, title?: string,
           </div>
           <div style={{ fontSize: 30, color: "#6ee7b7" }}>{subline}</div>
         </div>
-        <div style={{ fontSize: 26, color: "#cbd5e1" }}>{copy.reach}</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 40 }}>
+          {footer && (
+            <div style={{ fontSize: 26, color: "#cbd5e1", flexShrink: 0, whiteSpace: "nowrap" }}>{footer}</div>
+          )}
+          <div style={{ fontSize: 22, color: "#6ee7b7", flexShrink: 0, whiteSpace: "nowrap", marginLeft: "auto" }}>
+            {copy.motif}
+          </div>
+        </div>
       </div>
     ),
     { ...SOCIAL_CARD_SIZE, headers, fonts: fonts.length > 0 ? fonts : undefined }
