@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Users, BookOpen, Target, Settings, Brain, Zap, Shield, TrendingUp, Award, BarChart3, Search } from "lucide-react";
 import { ServiceDetailPage } from "@/features/services";
 import type {
@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TechnicalConsultingPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "services.consulting" });
   const tServices = await getTranslations({ locale, namespace: "services" });
   const seoData = SEOFactory.consultingService(locale as Locale);

@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCallToActionBar } from "@/components/StickyCallToActionBar";
 import { AnalyticsConsent, GoogleTagManager, SiteEvents } from "@/features/analytics";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
 import "@/app/globals.css";
 import { Metadata, Viewport } from "next";
@@ -89,7 +89,6 @@ export const viewport: Viewport = {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   if (![`en`, `nl`].includes(locale)) notFound();
-  setRequestLocale(locale);
 
   const [messages, common] = await Promise.all([
     getMessages({ locale }),

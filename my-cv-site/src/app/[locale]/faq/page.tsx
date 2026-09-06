@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Clock, Shield, Globe, HelpCircle } from "lucide-react";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale, FAQItem } from "@/lib/seo";
@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FAQPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "faq" });
   const faqItems = await loadFaqItems(locale);
   const seoData = SEOFactory.faq(locale as Locale, faqItems);

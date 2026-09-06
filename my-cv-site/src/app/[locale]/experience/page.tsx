@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { workHistory } from "@/data/workHistory";
 import { WorkExperienceSection, ExperienceClose } from "@/features/experience";
 import { PageHero } from "@/components/PageHero";
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ExperiencePage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "experiencePage" });
   const tHome = await getTranslations({ locale, namespace: "home" });
   const work = await getTranslations({ locale, namespace: "work" });

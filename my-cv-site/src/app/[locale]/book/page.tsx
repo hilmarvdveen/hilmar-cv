@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { BookingForm, BookingFormProvider } from "@/features/booking";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -18,7 +18,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BookPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "booking" });
   const seoData = SEOFactory.booking(locale as Locale);
   const facts = t.raw("hero.facts") as string[];

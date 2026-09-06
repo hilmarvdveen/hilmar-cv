@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import { ContactHero, ContactChannels, ContactForm } from "@/features/contact";
 import { Section } from "@/components/Section";
 import { SEOFactory } from "@/lib/seo";
@@ -17,7 +16,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const seoData = SEOFactory.contact(locale as Locale);
 
   return (

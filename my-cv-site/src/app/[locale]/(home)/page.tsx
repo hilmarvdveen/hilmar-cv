@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 
 import {
   HeroSection,
@@ -31,7 +30,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const seoData = SEOFactory.homepage(locale as Locale);
 

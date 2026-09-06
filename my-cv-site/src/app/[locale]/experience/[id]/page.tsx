@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { workHistory } from "@/data/workHistory";
 import { ExperienceDetail, ExperienceClose } from "@/features/experience";
 import { PageHero } from "@/components/PageHero";
@@ -38,7 +38,6 @@ export default async function ExperienceDetailPage({ params }: Props) {
   const index = findEntryIndex(id);
   if (index < 0) notFound();
   const entry = workHistory[index];
-  setRequestLocale(locale);
   const work = await getTranslations({ locale, namespace: "work" });
   const home = await getTranslations({ locale, namespace: "home" });
   const company = work(`${id}.company`);

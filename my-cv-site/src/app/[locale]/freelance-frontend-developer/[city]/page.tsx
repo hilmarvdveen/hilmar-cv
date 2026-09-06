@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
@@ -45,7 +45,6 @@ export default async function RegionCityPage({ params }: Props) {
   const { locale, city } = await params;
   const region = regionById(city);
   if (!region) notFound();
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "regions" });
   const home = await getTranslations({ locale, namespace: "home" });
   const breadcrumb = await getTranslations({ locale, namespace: "breadcrumb" });

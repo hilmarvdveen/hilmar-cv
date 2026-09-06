@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
 import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { legalPageSchema } from "@/lib/seo/legalSchema";
@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TermsPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const doc = getLegalDoc(SLUG, locale);
   const t = await getTranslations({ locale, namespace: "legal" });
   const breadcrumb = await getTranslations({ locale, namespace: "breadcrumb" });

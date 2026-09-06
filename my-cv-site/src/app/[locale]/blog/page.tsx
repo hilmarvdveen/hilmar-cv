@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
 import { BlogIndex, BLOG_POSTS } from "@/features/blog";
@@ -17,7 +17,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const seoData = SEOFactory.blog(locale as Locale);
   const t = await getTranslations({ locale, namespace: "blog" });

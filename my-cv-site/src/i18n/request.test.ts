@@ -1,57 +1,66 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 import en from "./messages/en.json";
 import nl from "./messages/nl.json";
+
+const rootLocale = vi.fn<() => Promise<string | undefined>>();
+const notFound = vi.fn(() => {
+  throw new Error("NEXT_NOT_FOUND");
+});
 
 vi.mock("next-intl/server", () => ({
   getRequestConfig: (create: unknown) => create,
 }));
 
-import requestConfig, { resolveLocale } from "./request";
+vi.mock("next/root-params", () => ({
+  locale: () => rootLocale(),
+}));
 
-type RequestConfigFactory = (params: {
-  locale?: string;
-  requestLocale: Promise<string | undefined>;
-}) => Promise<{ locale: string; messages: unknown }>;
+vi.mock("next/navigation", () => ({
+  notFound: () => notFound(),
+}));
+
+import requestConfig from "./request";
+
+type RequestConfigFactory = (params: { locale?: string }) => Promise<{ locale: string; messages: unknown }>;
 
 const createConfig = requestConfig as unknown as RequestConfigFactory;
 
-describe("resolveLocale", () => {
-  it("keeps a supported locale", () => {
-    expect(resolveLocale("en")).toBe("en");
-    expect(resolveLocale("nl")).toBe("nl");
-  });
-
-  it("falls back to Dutch for an unknown or missing value", () => {
-    expect(resolveLocale("de")).toBe("nl");
-    expect(resolveLocale(undefined)).toBe("nl");
-  });
-});
-
 describe("request config", () => {
-  it("serves English messages for an English request segment", async () => {
-    const config = await createConfig({ requestLocale: Promise.resolve("en") });
+  beforeEach(() => {
+    rootLocale.mockReset();
+    notFound.mockClear();
+  });
+
+  it("serves English messages when the root locale segment is English", async () => {
+    rootLocale.mockResolvedValue("en");
+    const config = await createConfig({});
     expect(config.locale).toBe("en");
     expect(config.messages).toEqual(en);
   });
 
-  it("serves Dutch messages for a Dutch request segment", async () => {
-    const config = await createConfig({ requestLocale: Promise.resolve("nl") });
+  it("serves Dutch messages when the root locale segment is Dutch", async () => {
+    rootLocale.mockResolvedValue("nl");
+    const config = await createConfig({});
     expect(config.locale).toBe("nl");
     expect(config.messages).toEqual(nl);
   });
 
-  it("prefers an explicit locale over the request segment", async () => {
-    const config = await createConfig({
-      locale: "en",
-      requestLocale: Promise.resolve("nl"),
-    });
+  it("prefers an explicit locale over the root segment", async () => {
+    rootLocale.mockResolvedValue("nl");
+    const config = await createConfig({ locale: "en" });
     expect(config.locale).toBe("en");
     expect(config.messages).toEqual(en);
+    expect(rootLocale).not.toHaveBeenCalled();
   });
 
-  it("falls back to Dutch for an unknown segment", async () => {
-    const config = await createConfig({ requestLocale: Promise.resolve("fr") });
-    expect(config.locale).toBe("nl");
-    expect(config.messages).toEqual(nl);
+  it("answers an unknown segment with a not-found", async () => {
+    rootLocale.mockResolvedValue("fr");
+    await expect(createConfig({})).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(notFound).toHaveBeenCalledTimes(1);
+  });
+
+  it("answers a missing segment with a not-found, also when the root params API is unavailable", async () => {
+    rootLocale.mockRejectedValue(new Error("no root params here"));
+    await expect(createConfig({})).rejects.toThrow("NEXT_NOT_FOUND");
   });
 });

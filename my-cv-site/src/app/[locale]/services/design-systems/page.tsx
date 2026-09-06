@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Palette, Grid, BookOpen, Code, Zap, Layers, RefreshCw, Users, Globe, Target } from "lucide-react";
 import { ServiceDetailPage } from "@/features/services";
 import type {
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DesignSystemsPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "services.designSystems" });
   const tServices = await getTranslations({ locale, namespace: "services" });
   const seoData = SEOFactory.designSystemsService(locale as Locale);

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import { ServicesHero } from "@/features/services";
 import { Section } from "@/components/Section";
@@ -24,7 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations("services");
 
   const seoData = SEOFactory.services(locale as Locale);

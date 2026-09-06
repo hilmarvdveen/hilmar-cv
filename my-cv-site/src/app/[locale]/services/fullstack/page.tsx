@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Zap, Layers, Shield, Database, Workflow, Cloud, GitBranch, Server, Globe } from "lucide-react";
 import { ServiceDetailPage } from "@/features/services";
 import type {
@@ -27,7 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FullStackSolutionsPage({ params }: Props) {
   const { locale } = await params;
-  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "services.fullstack" });
   const tServices = await getTranslations({ locale, namespace: "services" });
   const seoData = SEOFactory.fullstackService(locale as Locale);

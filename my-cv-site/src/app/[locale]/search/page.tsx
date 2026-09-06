@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { SearchPageContent, type SearchEntry, type SearchLocale } from "@/features/search";
 import { BLOG_POSTS } from "@/features/blog";
 import { workHistory } from "@/data/workHistory";
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SearchPage({ params, searchParams }: Props) {
   const { locale } = await params;
   const rawQuery = (await searchParams)["q"];
-  setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "search" });
   const work = await getTranslations({ locale, namespace: "work" });
