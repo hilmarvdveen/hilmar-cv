@@ -10,9 +10,12 @@ export type BlogCategory =
 
 export type LocalizedText = Record<Locale, string>;
 
+export type BlogTrack = "frontend" | "backend" | "fullstack";
+
 export type BlogPostMeta = {
   slug: string;
   category: BlogCategory;
+  track?: BlogTrack;
   publishedDate: string;
   updatedDate?: string;
   readingTimeMin: number;
@@ -23,6 +26,7 @@ export type BlogPostMeta = {
 };
 
 export type BlogPost = BlogPostMeta & {
+  track: BlogTrack;
   Body: ComponentType<{ locale: Locale }>;
 };
 
@@ -37,6 +41,8 @@ export type BlogLabels = {
   readArticle: string;
   backToList: string;
   category: Record<BlogCategory, string>;
+  track: Record<BlogTrack, string>;
+  group: Record<BlogTrack, string>;
   ctaTitle: string;
   ctaText: string;
   ctaButton: string;

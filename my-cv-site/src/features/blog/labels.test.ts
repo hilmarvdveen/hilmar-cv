@@ -9,6 +9,8 @@ describe("buildBlogLabels", () => {
     expect(labels.minRead).toBe("t:minRead");
     expect(labels.category.architecture).toBe("t:category.architecture");
     expect(labels.category.fundamentals).toBe("t:category.fundamentals");
+    expect(labels.track.backend).toBe("t:track.backend");
+    expect(labels.group.fullstack).toBe("t:group.fullstack");
     expect(labels.ctaButton).toBe("t:cta.button");
     expect(labels.writtenBy).toBe("t:writtenBy");
     expect(labels.breadcrumbLabel).toBe("t:breadcrumbLabel");

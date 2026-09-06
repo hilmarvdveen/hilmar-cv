@@ -9,14 +9,14 @@ import { meta as hexagonalKotlinMeta, Body as HexagonalKotlinBody } from "./comp
 import { meta as hexagonalJavaMeta, Body as HexagonalJavaBody } from "./components/HexagonalJavaPost";
 
 const POSTS: BlogPost[] = [
-  { ...folderStructureMeta, Body: FolderStructureBody },
-  { ...architectureMeta, Body: ArchitectureBody },
-  { ...unitTestingMeta, Body: UnitTestingBody },
-  { ...seoMeta, Body: SeoBody },
-  { ...routingMeta, Body: RoutingBody },
-  { ...hexagonalCSharpMeta, Body: HexagonalCSharpBody },
-  { ...hexagonalKotlinMeta, Body: HexagonalKotlinBody },
-  { ...hexagonalJavaMeta, Body: HexagonalJavaBody },
+  { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
+  { ...architectureMeta, track: "frontend", Body: ArchitectureBody },
+  { ...unitTestingMeta, track: "frontend", Body: UnitTestingBody },
+  { ...seoMeta, track: "frontend", Body: SeoBody },
+  { ...routingMeta, track: "frontend", Body: RoutingBody },
+  { ...hexagonalCSharpMeta, track: "backend", Body: HexagonalCSharpBody },
+  { ...hexagonalKotlinMeta, track: "backend", Body: HexagonalKotlinBody },
+  { ...hexagonalJavaMeta, track: "backend", Body: HexagonalJavaBody },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((first, second) =>

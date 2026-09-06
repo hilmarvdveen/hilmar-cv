@@ -5,8 +5,9 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
+import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
-import type { BlogPost, BlogLabels } from "../types";
+import type { BlogPost, BlogLabels, BlogTrack } from "../types";
 import { formatDate } from "../format";
 
 type BlogIndexProps = {
@@ -22,7 +23,10 @@ type PostCardProps = {
   featured: boolean;
 };
 
+const TRACK_ORDER: BlogTrack[] = ["frontend", "fullstack", "backend"];
+
 function PostCard({ post, locale, labels, featured }: PostCardProps) {
+  const Heading = featured ? "h2" : "h3";
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -30,16 +34,21 @@ function PostCard({ post, locale, labels, featured }: PostCardProps) {
       className={`group block ${featured ? "sm:col-span-2" : ""}`}
     >
       <Card className="flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
-        <span className="self-start rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
-          {labels.category[post.category]}
-        </span>
-        <h2
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
+            {labels.category[post.category]}
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-gray-600">
+            {labels.track[post.track]}
+          </span>
+        </div>
+        <Heading
           className={`mt-4 font-bold text-textMain group-hover:text-emerald-700 ${
             featured ? "text-subsection-title" : "text-lg"
           }`}
         >
           {post.title[locale]}
-        </h2>
+        </Heading>
         <p className="mt-2 flex-1 text-gray-600">{post.excerpt[locale]}</p>
 
         <div className="mt-5 flex items-center gap-4 text-xs text-gray-500">
@@ -64,6 +73,10 @@ function PostCard({ post, locale, labels, featured }: PostCardProps) {
 
 export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
   const [featuredPost, ...otherPosts] = posts;
+  const groups = TRACK_ORDER.map((track) => ({
+    track,
+    posts: otherPosts.filter((post) => post.track === track),
+  })).filter((group) => group.posts.length > 0);
 
   return (
     <div className="bg-bgLight">
@@ -73,16 +86,31 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
         description={labels.indexSubtitle}
       />
 
-      <Section padding="default">
+      <Section background="light" padding="default">
         <Container width="narrow">
           <div className="grid gap-6 sm:grid-cols-2">
             <PostCard post={featuredPost} locale={locale} labels={labels} featured />
-            {otherPosts.map((post) => (
-              <PostCard key={post.slug} post={post} locale={locale} labels={labels} featured={false} />
-            ))}
           </div>
         </Container>
       </Section>
+
+      {groups.map((group, position) => (
+        <Section
+          key={group.track}
+          background={position % 2 === 0 ? "white" : "light"}
+          padding="default"
+          aria-labelledby={`blog-group-${group.track}`}
+        >
+          <Container width="narrow">
+            <SectionTitle id={`blog-group-${group.track}`} title={labels.group[group.track]} />
+            <div className="grid gap-6 sm:grid-cols-2">
+              {group.posts.map((post) => (
+                <PostCard key={post.slug} post={post} locale={locale} labels={labels} featured={false} />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ))}
 
       <Section background="navy" padding="default" aria-labelledby="blog-index-cta-heading">
         <Container width="prose">

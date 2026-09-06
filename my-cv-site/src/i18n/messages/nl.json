@@ -2319,7 +2319,7 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Engineering, tot in de details",
-            "subtitle": "Praktische artikelen met voorbeelden over React-architectuur, testen, SEO en routing, en over hexagonale backends in C#, Kotlin en Java."
+            "subtitle": "Artikelen met voorbeelden in drie groepen: frontend (React, Angular, testen, SEO), fullstack (het contract met de backend) en backend (C#, Kotlin, Java)."
         },
         "minRead": "min lezen",
         "publishedOn": "Gepubliceerd",
@@ -2333,6 +2333,16 @@
             "seo": "SEO",
             "routing": "Routing",
             "fundamentals": "Basis"
+        },
+        "track": {
+          "frontend": "Frontend",
+          "fullstack": "Fullstack",
+          "backend": "Backend"
+        },
+        "group": {
+          "frontend": "Frontend: React, Angular en de browser",
+          "fullstack": "Fullstack: het contract tussen frontend en backend",
+          "backend": "Backend: C#, Kotlin en Java"
         },
         "cta": {
             "title": "Loopt jullie team hier ook tegenaan?",

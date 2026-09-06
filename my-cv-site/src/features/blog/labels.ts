@@ -18,6 +18,16 @@ export function buildBlogLabels(t: (key: string) => string): BlogLabels {
       routing: t("category.routing"),
       fundamentals: t("category.fundamentals"),
     },
+    track: {
+      frontend: t("track.frontend"),
+      fullstack: t("track.fullstack"),
+      backend: t("track.backend"),
+    },
+    group: {
+      frontend: t("group.frontend"),
+      fullstack: t("group.fullstack"),
+      backend: t("group.backend"),
+    },
     ctaTitle: t("cta.title"),
     ctaText: t("cta.text"),
     ctaButton: t("cta.button"),

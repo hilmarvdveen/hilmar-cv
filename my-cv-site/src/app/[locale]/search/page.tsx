@@ -39,7 +39,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
     href: `/blog/${post.slug}`,
     title: post.title,
     description: post.description,
-    keywords: [...post.keywords, "blog"],
+    keywords: [...post.keywords, "blog", post.track],
   }));
   const engagementEntries: SearchEntry[] = workHistory.map((entry) => {
     const summary = work(`${entry.id}.summary`);
