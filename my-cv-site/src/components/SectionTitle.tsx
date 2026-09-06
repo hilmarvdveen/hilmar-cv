@@ -1,19 +1,10 @@
-import { twMerge } from "tailwind-merge";
-
-export type SectionTitleSize = "display" | "default" | "compact";
-
-const SIZES: Record<SectionTitleSize, string> = {
-  display: "text-3xl sm:text-4xl md:text-5xl",
-  default: "text-3xl md:text-4xl",
-  compact: "text-[26px] leading-[1.15] sm:text-3xl md:text-4xl",
-};
+import { mergeClasses } from "@/lib/mergeClasses";
 
 type SectionTitleProps = {
   title: string;
   eyebrow?: string;
   subtitle?: string;
   align?: "left" | "center";
-  size?: SectionTitleSize;
   onDark?: boolean;
   id?: string;
   className?: string;
@@ -24,13 +15,12 @@ export const SectionTitle = ({
   eyebrow,
   subtitle,
   align = "left",
-  size = "default",
   onDark = false,
   id,
   className,
 }: SectionTitleProps) => (
   <div
-    className={twMerge(
+    className={mergeClasses(
       "mb-10 max-w-3xl",
       align === "center" && "text-center mx-auto",
       className
@@ -38,8 +28,8 @@ export const SectionTitle = ({
   >
     {eyebrow && (
       <p
-        className={twMerge(
-          "mb-3 text-[13px] font-bold uppercase tracking-widest",
+        className={mergeClasses(
+          "mb-3 text-xs font-bold uppercase tracking-widest",
           onDark ? "text-emerald-300" : "text-primary"
         )}
       >
@@ -48,17 +38,13 @@ export const SectionTitle = ({
     )}
     <h2
       id={id}
-      className={twMerge(
-        SIZES[size],
-        "font-extrabold tracking-tight text-balance",
-        onDark ? "text-white" : "text-textMain"
-      )}
+      className={mergeClasses("text-section-title text-balance", onDark ? "text-white" : "text-textMain")}
     >
       {title}
     </h2>
     {subtitle && (
       <p
-        className={twMerge(
+        className={mergeClasses(
           "mt-3 text-lg leading-relaxed",
           onDark ? "text-slate-300" : "text-gray-600"
         )}

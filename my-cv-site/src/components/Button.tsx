@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation";
-import { twMerge } from "tailwind-merge";
+import { mergeClasses } from "@/lib/mergeClasses";
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
@@ -21,8 +21,8 @@ const BASE =
 
 const SIZES: Record<ButtonSize, string> = {
   sm: "px-3.5 py-2 text-sm",
-  md: "px-5 py-2.5 text-[15px]",
-  lg: "px-6 py-3 text-base",
+  md: "px-5 py-2.5 text-base",
+  lg: "px-6 py-3 text-lg",
 };
 
 const VARIANTS: Record<ButtonVariant, string> = {
@@ -47,7 +47,7 @@ export function buttonClassName({
   size?: ButtonSize;
   className?: string;
 }): string {
-  return twMerge(BASE, SIZES[size], VARIANTS[variant], className);
+  return mergeClasses(BASE, SIZES[size], VARIANTS[variant], className);
 }
 
 type StyleProps = {

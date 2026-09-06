@@ -36,14 +36,14 @@ export const PageHero = ({
   const heroContent = (
     <>
       {badge && (
-        <p className="mb-4 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest text-emerald-300">
+        <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-300">
           {BadgeIcon && <BadgeIcon className="h-4 w-4" aria-hidden="true" />}
           {badge}
         </p>
       )}
       <h1
         id={headingId}
-        className="text-[1.75rem] leading-[1.15] sm:text-5xl font-extrabold tracking-tight text-white text-balance"
+        className="text-display text-white text-balance"
       >
         {title}{" "}
         {titleAccent && (

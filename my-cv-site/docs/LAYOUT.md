@@ -350,3 +350,10 @@ renders it or one of three sibling drawings per project case.
   enumeration the reader reads and does not click. Three is the
   ceiling. `SectionTitle` takes an `eyebrow`, the element that
   separates sections.
+
+## Type sizes
+
+Every size, weight, leading and tracking on the site follows
+`docs/TYPOGRAPHY.md` since 6 September 2026. The hero scale and the other
+measurements in this document stay, the type classes they mention are the
+role tokens from that file, and `pnpm check:type-scale` guards them.

@@ -48,27 +48,8 @@ describe("SectionTitle", () => {
     expect(screen.getByText("Labelled")).toHaveAttribute("id", "section-heading");
   });
 
-  it("uses the default size unless another is given", () => {
-    render(<SectionTitle title="Default size" />);
-    expect(screen.getByText("Default size")).toHaveClass("text-3xl", "md:text-4xl");
-  });
-
-  it("applies the display size for the flagship heading", () => {
-    render(<SectionTitle title="Display size" size="display" />);
-    expect(screen.getByText("Display size")).toHaveClass(
-      "text-3xl",
-      "sm:text-4xl",
-      "md:text-5xl"
-    );
-  });
-
-  it("applies the compact size for headings that carry the whole message", () => {
-    render(<SectionTitle title="Compact size" size="compact" />);
-    expect(screen.getByText("Compact size")).toHaveClass(
-      "text-[26px]",
-      "leading-[1.15]",
-      "sm:text-3xl",
-      "md:text-4xl"
-    );
+  it("renders every section title on the one section-title role", () => {
+    render(<SectionTitle title="One role" />);
+    expect(screen.getByText("One role")).toHaveClass("text-section-title");
   });
 });

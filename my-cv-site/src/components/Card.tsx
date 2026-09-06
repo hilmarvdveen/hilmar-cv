@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { mergeClasses } from "@/lib/mergeClasses";
 
 export type CardVariant = "default" | "tinted" | "quiet";
 
@@ -17,7 +17,7 @@ type CardProps = {
 
 export const Card = ({ variant = "default", className, children }: CardProps) => (
   <div
-    className={twMerge(
+    className={mergeClasses(
       "rounded-xl border shadow-sm p-7",
       VARIANTS[variant],
       className
