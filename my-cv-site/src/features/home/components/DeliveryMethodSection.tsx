@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -8,6 +9,8 @@ type MethodStep = {
   title: string;
   body: string;
 };
+
+const CUT_OVER_POST_HREF = "/blog/reversible-cut-over-legacy-to-new";
 
 export const DeliveryMethodSection = () => {
   const t = useTranslations("home.method");
@@ -49,6 +52,11 @@ export const DeliveryMethodSection = () => {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-center text-sm text-slate-300">
+          <Link href={CUT_OVER_POST_HREF} className="inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy">
+            {t("link")}
+          </Link>
+        </p>
       </Container>
       </div>
     </Section>

@@ -9,7 +9,12 @@ vi.mock("next-intl", () => {
   t.raw = (key: string) => {
     if (key === "value.blocks") {
       return [
-        { title: "Block one", body: "Body one", evidence: "Evidence one" },
+        {
+          title: "Block one",
+          body: "Body one",
+          evidence: "Evidence one",
+          article: { href: "/blog/rxjs-versus-signals-in-angular", label: "Article one" },
+        },
         { title: "Block two", body: "Body two", evidence: "Evidence two" },
       ];
     }
@@ -124,4 +129,13 @@ describe("AboutPageContent", () => {
       screen.getByRole("heading", { level: 2, name: "cta.title" })
     ).toBeInTheDocument();
   });
+  it("links the article a value block names and leaves the other blocks without one", () => {
+    render(<AboutPageContent />);
+    expect(screen.getByRole("link", { name: "Article one" })).toHaveAttribute(
+      "href",
+      "/blog/rxjs-versus-signals-in-angular"
+    );
+    expect(screen.queryByRole("link", { name: /Article two/ })).not.toBeInTheDocument();
+  });
+
 });

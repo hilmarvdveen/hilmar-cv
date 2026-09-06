@@ -41,6 +41,14 @@ vi.mock("next-intl", () => {
   };
 });
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  ),
+}));
+
 describe("DeliveryMethodSection", () => {
   it("renders the section heading and subtitle", () => {
     render(<DeliveryMethodSection />);
@@ -83,4 +91,12 @@ describe("DeliveryMethodSection", () => {
 
     expect(screen.getAllByText(/^\d{2}$/)).toHaveLength(steps.length);
   });
+  it("links the cut-over article under the steps", () => {
+    render(<DeliveryMethodSection />);
+    expect(screen.getByRole("link", { name: "link" })).toHaveAttribute(
+      "href",
+      "/blog/reversible-cut-over-legacy-to-new"
+    );
+  });
+
 });

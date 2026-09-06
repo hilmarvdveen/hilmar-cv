@@ -38,7 +38,7 @@ export const ALL_REGIONS: Region[] = [
     sectorEngagementIds: [],
     postSlugs: [
       "react-folder-structure",
-      "modern-react-architecture-vite-router-vitest-storybook",
+      "react-router-remix-routes-loaders-actions-folder-structure",
       "unit-testing-react-the-right-way",
     ],
     coordinates: [4.8952, 52.3702],
@@ -53,9 +53,9 @@ export const ALL_REGIONS: Region[] = [
     nearbyEngagementIds: [],
     sectorEngagementIds: [],
     postSlugs: [
+      "reversible-cut-over-legacy-to-new",
+      "graphql-as-a-contract-between-frontend-and-backend",
       "react-router-remix-routes-loaders-actions-folder-structure",
-      "hexagonal-architecture-kotlin",
-      "100-percent-seo-score-and-what-actually-ranks",
     ],
     coordinates: [5.1214, 52.0907],
     searchTerms: cityTerms("utrecht", "utrecht"),
@@ -71,7 +71,7 @@ export const ALL_REGIONS: Region[] = [
     postSlugs: [
       "hexagonal-architecture-csharp-dotnet",
       "unit-testing-react-the-right-way",
-      "modern-react-architecture-vite-router-vitest-storybook",
+      "react-router-remix-routes-loaders-actions-folder-structure",
     ],
     coordinates: [4.47917, 51.9225],
     searchTerms: cityTerms("rotterdam", "rotterdam"),

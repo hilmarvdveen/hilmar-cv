@@ -6,6 +6,14 @@ import type { ServiceDetailPageProps, ServiceTitledItem } from "./ServiceDetailP
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 vi.mock("next/navigation", () => ({ usePathname: () => "/en/services/frontend" }));
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  ),
+}));
+
 vi.mock("next/link", () => ({
   default: ({ children, href }: { children: ReactNode; href: string }) => (
     <a href={href}>{children}</a>
@@ -263,4 +271,19 @@ describe("ServiceDetailPage", () => {
     const script = container.querySelector('script[type="application/ld+json"]');
     expect(script?.innerHTML).toBe(baseProps.structuredData);
   });
+  it("renders no article link unless the benefits name one", () => {
+    render(<ServiceDetailPage {...baseProps} />);
+    expect(screen.queryByRole("link", { name: "Read the article" })).not.toBeInTheDocument();
+  });
+
+  it("links the article the benefits name under the benefit cards", () => {
+    render(
+      <ServiceDetailPage
+        {...baseProps}
+        benefits={{ ...baseProps.benefits, article: { href: "/blog/example", label: "Read the article" } }}
+      />
+    );
+    expect(screen.getByRole("link", { name: "Read the article" })).toHaveAttribute("href", "/blog/example");
+  });
+
 });

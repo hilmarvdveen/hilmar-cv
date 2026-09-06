@@ -1,4 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import {
   Accessibility,
@@ -23,6 +24,7 @@ type ValueBlock = {
   title: string;
   body: string;
   evidence: string;
+  article?: { href: string; label: string };
 };
 
 type StandardsCard = {
@@ -115,6 +117,13 @@ export function AboutPageContent() {
                   <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
                   {block.evidence}
                 </p>
+                {block.article && (
+                  <p className="mt-4 text-sm">
+                    <Link href={block.article.href} className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                      {block.article.label}
+                    </Link>
+                  </p>
+                )}
               </Card>
             ))}
           </div>

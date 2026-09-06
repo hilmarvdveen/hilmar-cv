@@ -7,6 +7,9 @@ import { meta as routingMeta, Body as RoutingBody } from "./components/RoutingPo
 import { meta as hexagonalCSharpMeta, Body as HexagonalCSharpBody } from "./components/HexagonalCSharpPost";
 import { meta as hexagonalKotlinMeta, Body as HexagonalKotlinBody } from "./components/HexagonalKotlinPost";
 import { meta as hexagonalJavaMeta, Body as HexagonalJavaBody } from "./components/HexagonalJavaPost";
+import { meta as cutOverMeta, Body as CutOverBody } from "./components/CutOverPost";
+import { meta as graphQLContractMeta, Body as GraphQLContractBody } from "./components/GraphQLContractPost";
+import { meta as rxjsSignalsMeta, Body as RxjsSignalsBody } from "./components/RxjsSignalsPost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -17,6 +20,9 @@ const POSTS: BlogPost[] = [
   { ...hexagonalCSharpMeta, track: "backend", Body: HexagonalCSharpBody },
   { ...hexagonalKotlinMeta, track: "backend", Body: HexagonalKotlinBody },
   { ...hexagonalJavaMeta, track: "backend", Body: HexagonalJavaBody },
+  { ...cutOverMeta, track: "fullstack", Body: CutOverBody },
+  { ...graphQLContractMeta, track: "fullstack", Body: GraphQLContractBody },
+  { ...rxjsSignalsMeta, track: "frontend", Body: RxjsSignalsBody },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((first, second) =>

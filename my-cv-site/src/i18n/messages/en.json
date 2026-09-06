@@ -128,6 +128,7 @@
     },
             "title": "How the switch to live traffic stays predictable",
             "subtitle": "The whole chain up to that moment stays in one pair of hands. Five steps.",
+            "link": "How such a cut-over runs step by step, in an article",
             "steps": [
                 {
                     "title": "Read the legacy first",
@@ -1162,6 +1163,7 @@
             "benefits": {
                 "title": "What you get",
                 "description": "Pages that go live in small, reversible steps and are still workable a year later.",
+                "articleLabel": "GraphQL as a contract, in an article",
                 "items": [
                     {
                         "title": "A contract with the backend",
@@ -1862,7 +1864,8 @@
                 {
                     "title": "Your developers learn something while I am there",
                     "body": "At the Belastingdienst a senior developer knew JavaScript and Vue but not Angular. I took him through RxJS and streams, the part he found hardest, and through the proper use of services. At Athlon I coached junior and senior developers on Angular practice, reviewed their code and worked through the improvements with them. At bol.com I reviewed work across team boundaries and called people in to talk a change through.",
-                    "evidence": "Belastingdienst 2023 to 2024, Athlon 2020 to 2022, bol.com 2025 to 2026"
+                    "evidence": "Belastingdienst 2023 to 2024, Athlon 2020 to 2022, bol.com 2025 to 2026",
+                    "article": { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals or RxJS in Angular, in an article" }
                 },
                 {
                     "title": "Design flaws come up while the work is still open",
@@ -2456,7 +2459,7 @@
                     "body": "At Bluefield Smart Access administrators saw complex processes and network faults in one view, in React with a .NET backend."
                 }
             ],
-            "readingLead": "On routing and server-side rendering, hexagonal architecture in Kotlin and what an SEO score really says, the work that came back in Utrecht.",
+            "readingLead": "On moving live traffic off a legacy system, GraphQL as a contract with the backend and routing with server-side rendering, the work that came back in Utrecht.",
             "questions": [
                 {
                     "question": "Would you take on the backend in Utrecht as well?",

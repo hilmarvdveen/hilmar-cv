@@ -19,6 +19,8 @@ const HERO_ICON = Code;
 const BENEFIT_ICONS = [Smartphone, Zap, Eye, Search, Users, BarChart3];
 const PROCESS_ICONS = [Search, Palette, Code, Zap];
 
+const GRAPHQL_POST_HREF = "/blog/graphql-as-a-contract-between-frontend-and-backend";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const seoData = SEOFactory.frontendService(locale as Locale);
@@ -70,6 +72,7 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
+        article: { href: GRAPHQL_POST_HREF, label: t("benefits.articleLabel") },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],

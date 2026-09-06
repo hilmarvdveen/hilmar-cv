@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import { Link } from "@/i18n/navigation";
 import { CheckCircle } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageHero } from "@/components/PageHero";
@@ -66,6 +67,7 @@ export type ServiceDetailPageProps = {
     title: string;
     description: string;
     items: ServiceTitledItem[];
+    article?: { href: string; label: string };
   };
   technologies?: {
     title: string;
@@ -226,6 +228,13 @@ export const ServiceDetailPage = ({
               <TitledItemCard key={item.title} {...item} />
             ))}
           </div>
+          {benefits.article && (
+            <p className="mt-6 text-center text-sm text-gray-600">
+              <Link href={benefits.article.href} className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                {benefits.article.label}
+              </Link>
+            </p>
+          )}
         </Container>
       </Section>
 
