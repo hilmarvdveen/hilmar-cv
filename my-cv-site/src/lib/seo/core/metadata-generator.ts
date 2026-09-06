@@ -65,7 +65,6 @@ export class MetadataGenerator {
       manifest: '/manifest.json',
       applicationName: BUSINESS_PROFILE.NAME,
       generator: 'Next.js',
-      referrer: 'origin-when-cross-origin',
       
       ...(config.publishedTime && {
         other: {
