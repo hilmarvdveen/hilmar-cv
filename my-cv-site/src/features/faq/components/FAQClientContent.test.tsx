@@ -54,4 +54,15 @@ describe("FAQClientContent", () => {
       screen.queryByRole("button", { name: "cta.call" })
     ).not.toBeInTheDocument();
   });
+
+  it("keeps every answer in the document and only hides a closed one", () => {
+    render(<FAQClientContent />);
+    const [question] = screen.getAllByRole("button", { name: "What?" });
+    const [answer] = screen.getAllByText("Because.");
+    expect(answer).toBeVisible();
+    fireEvent.click(question);
+    expect(question).toHaveAttribute("aria-expanded", "false");
+    expect(answer).toBeInTheDocument();
+    expect(answer).not.toBeVisible();
+  });
 });

@@ -35,25 +35,20 @@ export const SEOUtils = {
 
   generateRobotsTxt: () => {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || BUSINESS_PROFILE.CONTACT.WEBSITE;
-    const blockedCrawlers = [
-      'GPTBot',
-      'ChatGPT-User',
-      'Claude-Web',
-      'ClaudeBot',
-      'anthropic-ai',
-      'Google-Extended',
+    const trainingCrawlers = ['GPTBot', 'ClaudeBot', 'Applebot-Extended', 'CCBot'];
+    const harvesters = [
       'Bytespider',
-      'cohere-ai',
-      'PerplexityBot',
-      'Applebot-Extended',
       'Diffbot',
-      'CCBot',
       'Scrapy',
       'magpie-crawler',
       'omgili',
       'omgilibot',
-      'Node/simplecrawler'
+      'Node/simplecrawler',
+      'Claude-Web',
+      'anthropic-ai',
+      'cohere-ai'
     ];
+    const blockedCrawlers = [...harvesters, ...trainingCrawlers];
     const blockedGroups = blockedCrawlers
       .map((agent) => `User-agent: ${agent}\nDisallow: /`)
       .join('\n\n');

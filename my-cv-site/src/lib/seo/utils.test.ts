@@ -56,10 +56,16 @@ describe("SEOUtils.createMetaTags", () => {
 
 describe("SEOUtils.generateRobotsTxt", () => {
   const txt = SEOUtils.generateRobotsTxt();
-  it("blocks the API and disallows AI crawlers", () => {
+  it("blocks the API, the harvesters and the training crawlers", () => {
     expect(txt).toContain("Disallow: /api/");
     expect(txt).toContain("User-agent: GPTBot");
     expect(txt).toContain("User-agent: ClaudeBot");
+    expect(txt).toContain("User-agent: Bytespider");
+  });
+  it("lets the answer engines that cite the site read it", () => {
+    expect(txt).not.toContain("PerplexityBot");
+    expect(txt).not.toContain("ChatGPT-User");
+    expect(txt).not.toContain("Google-Extended");
   });
   it("declares exactly one sitemap location, the real route", () => {
     const sitemapLines = txt.split("\n").filter((line) => line.startsWith("Sitemap:"));

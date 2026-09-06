@@ -130,13 +130,11 @@ export function FAQClientContent() {
                         )}
                       </button>
 
-                      {isOpen && (
-                        <div className="px-6 pb-5">
-                          <p className="whitespace-pre-line leading-relaxed text-gray-600">
-                            {faq.answer}
-                          </p>
-                        </div>
-                      )}
+                      <div className="px-6 pb-5" hidden={!isOpen}>
+                        <p className="whitespace-pre-line leading-relaxed text-gray-600">
+                          {faq.answer}
+                        </p>
+                      </div>
                     </Card>
                   );
                 })}

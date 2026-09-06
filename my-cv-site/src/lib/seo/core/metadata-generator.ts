@@ -117,7 +117,7 @@ export class MetadataGenerator {
     const directives = [
       config.noIndex ? ROBOTS_DIRECTIVES.NOINDEX : ROBOTS_DIRECTIVES.INDEX,
       config.noFollow ? ROBOTS_DIRECTIVES.NOFOLLOW : ROBOTS_DIRECTIVES.FOLLOW,
-      ROBOTS_DIRECTIVES.MAX_SNIPPET.MEDIUM,
+      ROBOTS_DIRECTIVES.MAX_SNIPPET.UNLIMITED,
       ROBOTS_DIRECTIVES.MAX_IMAGE_PREVIEW.LARGE,
       ROBOTS_DIRECTIVES.MAX_VIDEO_PREVIEW.UNLIMITED
     ];
@@ -181,13 +181,6 @@ export class MetadataGenerator {
       'article:section': this.getCategoryForPageType(config.pageType),
       
 
-      'DC.title': config.title,
-      'DC.creator': BUSINESS_PROFILE.NAME,
-      'DC.subject': this.getCategoryForPageType(config.pageType),
-      'DC.publisher': BUSINESS_PROFILE.COMPANY,
-      'DC.language': config.locale,
-      'DC.coverage': `${BUSINESS_PROFILE.LOCATION.CITY}, ${BUSINESS_PROFILE.LOCATION.COUNTRY}`,
-      'DC.rights': `© ${new Date().getFullYear()} ${BUSINESS_PROFILE.NAME}`,
     };
   }
 
