@@ -65,6 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     manifest: "/manifest.json",
     applicationName: BUSINESS_PROFILE.NAME,
     appleWebApp: {
+      capable: false,
       title: BUSINESS_PROFILE.NAME,
       statusBarStyle: "default",
     },

@@ -181,10 +181,6 @@ export class MetadataGenerator {
       'article:publisher': BUSINESS_PROFILE.COMPANY,
       'article:section': this.getCategoryForPageType(config.pageType),
       
-      'generator': 'Next.js',
-      'referrer': 'origin-when-cross-origin',
-      
-      'apple-mobile-web-app-title': BUSINESS_PROFILE.NAME,
 
       'DC.title': config.title,
       'DC.creator': BUSINESS_PROFILE.NAME,
