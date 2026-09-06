@@ -63,18 +63,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     manifest: "/manifest.json",
+    applicationName: BUSINESS_PROFILE.NAME,
+    appleWebApp: {
+      title: BUSINESS_PROFILE.NAME,
+      statusBarStyle: "default",
+    },
     verification: {
       google: process.env.GOOGLE_SITE_VERIFICATION,
-    },
-    other: {
-      "theme-color": "#059669",
-      "msapplication-TileColor": "#059669",
-      "apple-mobile-web-app-title": "Hilmar vdV",
-      "application-name": BUSINESS_PROFILE.NAME,
-      "apple-mobile-web-app-capable": "yes",
-      "apple-mobile-web-app-status-bar-style": "default",
-      "mobile-web-app-capable": "yes",
-      "msapplication-TileImage": `/android-chrome-192x192.png?${FAVICON_VERSION}`,
     },
   };
 }
@@ -83,7 +78,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#059669",
+  themeColor: "#12314e",
 };
 
 export default async function LocaleLayout({ children, params }: Props) {

@@ -1,14 +1,13 @@
 {
-    "name": "Hilmar van der Veen - Senior Frontend Developer",
-    "short_name": "Hilmar vdV",
-    "description": "Senior Fullstack Developer specializing in React, Angular and C# .Net development",
-    "start_url": "/",
-    "display": "standalone",
+    "name": "Hilmar van der Veen",
+    "short_name": "Hilmar",
+    "description": "Freelance senior frontend engineer, React and Angular, in the Randstad and remote.",
+    "start_url": "/nl",
+    "display": "browser",
     "background_color": "#ffffff",
-    "theme_color": "#059669",
-    "orientation": "portrait-primary",
+    "theme_color": "#12314e",
     "scope": "/",
-    "lang": "en",
+    "lang": "nl",
     "dir": "ltr",
     "icons": [
         {
@@ -40,25 +39,6 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable any"
-        },
-        {
-            "src": "/favicon.ico?v2024-01-15",
-            "sizes": "32x32",
-            "type": "image/x-icon",
-            "purpose": "any"
-        }
-    ],
-    "categories": [
-        "business",
-        "developer",
-        "productivity"
-    ],
-    "screenshots": [
-        {
-            "src": "/images/social-card.jpg",
-            "sizes": "1200x630",
-            "type": "image/jpeg",
-            "platform": "wide"
         }
     ]
 }

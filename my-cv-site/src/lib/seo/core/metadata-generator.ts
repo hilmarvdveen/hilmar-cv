@@ -62,8 +62,8 @@ export class MetadataGenerator {
         google: process.env.GOOGLE_SITE_VERIFICATION,
       },
       
-      manifest: '/site.webmanifest',
-      applicationName: `${BUSINESS_PROFILE.NAME} | ${BUSINESS_PROFILE.TITLE}`,
+      manifest: '/manifest.json',
+      applicationName: BUSINESS_PROFILE.NAME,
       generator: 'Next.js',
       referrer: 'origin-when-cross-origin',
       

@@ -7,5 +7,10 @@ export const routing = defineRouting({
   
   localePrefix: 'always',
   
-  localeDetection: true
+  localeDetection: true,
+
+  localeCookie: {
+    secure: true,
+    sameSite: 'lax'
+  }
 }); 
