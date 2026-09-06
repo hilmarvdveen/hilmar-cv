@@ -11,19 +11,19 @@ export const meta: BlogPostMeta = {
   slug: "hexagonal-architecture-java",
   category: "architecture",
   publishedDate: "2026-09-03",
-  updatedDate: "2026-09-05",
+  updatedDate: "2026-09-06",
   readingTimeMin: 17,
   title: {
     en: "Hexagonal architecture in Java: ports and adapters",
     nl: "Hexagonale architectuur in Java: ports en adapters",
   },
   description: {
-    en: "Ports and adapters in Java 21: a domain without Spring or JPA, a sealed use-case result, JPA and REST adapters, and an ArchUnit rule that fails the build.",
-    nl: "Ports en adapters in Java 21: een domein zonder Spring of JPA, een sealed resultaat, JPA- en REST-adapters en een ArchUnit-regel die de build laat falen.",
+    en: "Ports and adapters in Java 25: a domain without Spring or JPA, a sealed use-case result, JPA and REST adapters, and an ArchUnit rule that fails the build.",
+    nl: "Ports en adapters in Java 25: een domein zonder Spring of JPA, een sealed resultaat, JPA- en REST-adapters en een ArchUnit-regel die de build laat falen.",
   },
   excerpt: {
-    en: "Hexagonal architecture keeps your business rules out of reach of Spring, Hibernate and the database schema. Here is that shape in Java 21, with records, a sealed result, ArchUnit and a way out of a Java 8 monolith.",
-    nl: "Hexagonale architectuur houdt je bedrijfsregels buiten bereik van Spring, Hibernate en het databaseschema. Zo ziet die vorm eruit in Java 21, met records, een sealed resultaat, ArchUnit en een weg uit een Java 8-monoliet.",
+    en: "Hexagonal architecture keeps your business rules out of reach of Spring, Hibernate and the database schema. Here is that shape in Java 25, with records, a sealed result and ArchUnit. It ends with a way out of a Java 8 monolith.",
+    nl: "Hexagonale architectuur houdt je bedrijfsregels buiten bereik van Spring, Hibernate en het databaseschema. Zo ziet die vorm eruit in Java 25, met records, een sealed resultaat en ArchUnit. Aan het eind staat een weg uit een Java 8-monoliet.",
   },
   keywords: [
     "hexagonal architecture java",
@@ -32,7 +32,7 @@ export const meta: BlogPostMeta = {
     "archunit dependency rule",
     "jpa adapter domain model",
     "java records domain model",
-    "clean architecture java 21",
+    "clean architecture java 25",
   ],
 };
 
@@ -70,6 +70,7 @@ export function Body({ locale }: { locale: Locale }) {
       <Lead>{copy.lead[locale]}</Lead>
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
+      <P>{copy.versionNote[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
       <Contents
         label={copy.contentsLabel[locale]}
@@ -209,7 +210,7 @@ const DOMAIN_POM = `<project xmlns="http://maven.apache.org/POM/4.0.0">
   <artifactId>forms-domain</artifactId>
 
   <properties>
-    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.release>25</maven.compiler.release>
   </properties>
 
 </project>`;
@@ -743,6 +744,10 @@ const COPY = {
     en: "At the Belastingdienst, the Dutch tax administration, I built a low-code visual forms editor. When it had to ship I extended the Java backend endpoints myself, so the work of the editors was stored and the state of every form could be rebuilt from the backend. The stack was Java 8, Maven and MySQL.",
     nl: "Bij de Belastingdienst bouwde ik een low-code formulierenbouwer met een visuele editor. Toen die live moest, breidde ik zelf de endpoints van de Java-backend uit, zodat het werk van de redacteuren werd opgeslagen en de staat van elk formulier vanuit de backend te herbouwen was. De stack was Java 8, Maven en MySQL.",
   },
+  versionNote: {
+    en: "The samples below target Java 25, the long-term support release current on 6 September 2026. Records, sealed types and pattern matching for switch are all final in that release, so no sample here relies on a preview feature.",
+    nl: "De voorbeelden hieronder zijn geschreven voor Java 25, de long-term-supportversie die op 6 september 2026 actueel is. Records, sealed types en pattern matching in een switch zijn daarin allemaal definitief, dus draait geen enkel voorbeeld op een previewfunctie.",
+  },
   quote: {
     en: "The moment a domain class imports jakarta.persistence, the table layout has taken a decision that belonged to the rules.",
     nl: "Zodra een domeinklasse jakarta.persistence importeert, heeft de tabelindeling een beslissing genomen die bij de regels hoorde.",
@@ -951,8 +956,8 @@ const COPY = {
   },
   mappingLabel: { en: "The cost of mapping.", nl: "De prijs van mappen." },
   mappingBody: {
-    en: "Yes, you type the fields twice. That is the price of the boundary, and the mapper is the cheapest documentation of a contract you will write. Past a few aggregates, MapStruct generates it while compiling.",
-    nl: "Ja, je typt de velden twee keer. Dat is de prijs van de grens, en de mapper is de goedkoopste documentatie van een contract die je schrijft. Voorbij een paar aggregates genereert MapStruct het tijdens het compileren.",
+    en: "Yes, you type the fields twice. That is the price of the boundary, and the mapper is the cheapest documentation of a contract you will write. Past a few aggregates, MapStruct generates it while compiling, and since Java 23 that only happens when the build sets the annotation processor path itself.",
+    nl: "Ja, je typt de velden twee keer. Dat is de prijs van de grens, en de mapper is de goedkoopste documentatie van een contract die je schrijft. Voorbij een paar aggregates genereert MapStruct het tijdens het compileren, en sinds Java 23 gebeurt dat alleen als de build het pad naar de annotation processor zelf instelt.",
   },
   interfacesLabel: { en: "Interfaces with one implementation.", nl: "Interfaces met één implementatie." },
   interfacesBody: {
@@ -968,8 +973,8 @@ const COPY = {
     nl: "Niemand krijgt budget voor een herbouw, en erom vragen is de snelste manier om nee te horen. Het strangler-patroon werkt op een Java-backend zoals een omkeerbare cut-over op een frontend werkt.",
   },
   step1: {
-    en: "Bring the runtime to Java 17 or 21 first. That upgrade is usually smaller than people fear, and until it lands the same shape works with final classes.",
-    nl: "Breng eerst de runtime naar Java 17 of 21. Die upgrade is meestal kleiner dan mensen vrezen, en tot het zover is werkt dezelfde vorm met final classes.",
+    en: "Bring the runtime to a supported long-term release first, Java 21 or Java 25. That upgrade is usually smaller than people fear, and until it lands the same shape works with final classes.",
+    nl: "Breng de runtime eerst naar een long-term-supportversie die nog ondersteund wordt, Java 21 of Java 25. Die upgrade is meestal kleiner dan mensen vrezen, en tot het zover is werkt dezelfde vorm met final classes.",
   },
   step2: {
     en: "Add a domain module with no dependencies. Move one aggregate into it and let the compiler tell you what came along with it.",

@@ -11,15 +11,15 @@ export const meta: BlogPostMeta = {
   slug: "hexagonal-architecture-kotlin",
   category: "architecture",
   publishedDate: "2026-09-02",
-  updatedDate: "2026-09-05",
+  updatedDate: "2026-09-06",
   readingTimeMin: 19,
   title: {
     en: "Hexagonal architecture in Kotlin: ports and adapters",
     nl: "Hexagonale architectuur in Kotlin: ports en adapters",
   },
   description: {
-    en: "Ports and adapters in Kotlin and Spring Boot 3: a domain with no framework imports, sealed results, JPA and GraphQL adapters, fakes and Testcontainers.",
-    nl: "Ports en adapters in Kotlin en Spring Boot 3: een domein zonder frameworkimports, sealed results, JPA- en GraphQL-adapters, fakes en Testcontainers.",
+    en: "Ports and adapters in Kotlin and Spring Boot 4: a domain with no framework imports, sealed results, JPA and GraphQL adapters, fakes and Testcontainers.",
+    nl: "Ports en adapters in Kotlin en Spring Boot 4: een domein zonder frameworkimports, sealed results, JPA- en GraphQL-adapters, fakes en Testcontainers.",
   },
   excerpt: {
     en: "A back end that serves a fast-moving frontend gets asked for a new shape every sprint. Hexagonal architecture keeps the rules underneath still while the surface keeps moving.",
@@ -71,6 +71,7 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
+      <P>{copy.versions[locale]}</P>
       <Contents
         label={copy.contentsLabel[locale]}
         items={[
@@ -199,7 +200,7 @@ export function Body({ locale }: { locale: Locale }) {
 }
 
 const DOMAIN_BUILD = `plugins {
-    kotlin("jvm") version "2.0.20"
+    kotlin("jvm") version "2.4.10"
 }
 
 dependencies {
@@ -208,7 +209,7 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }`;
 
 const DOMAIN_CODE = `package subscriptions.domain
@@ -595,9 +596,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
-import org.testcontainers.containers.PostgreSQLContainer
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection
+import org.testcontainers.postgresql.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
@@ -631,16 +631,9 @@ class JpaSubscriptionRepositoryTest(
 
     companion object {
         @Container
+        @ServiceConnection
         @JvmStatic
-        val database = PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:16-alpine"))
-
-        @DynamicPropertySource
-        @JvmStatic
-        fun datasource(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", database::getJdbcUrl)
-            registry.add("spring.datasource.username", database::getUsername)
-            registry.add("spring.datasource.password", database::getPassword)
-        }
+        val database = PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
     }
 }`;
 
@@ -661,6 +654,10 @@ const COPY = {
   quote: {
     en: "A resolver should answer the question the frontend asked. It should not be the only place where the answer gets decided.",
     nl: "Een resolver hoort de vraag te beantwoorden die de frontend stelde. Hij hoort niet de enige plek te zijn waar dat antwoord wordt bepaald.",
+  },
+  versions: {
+    en: "The samples target Kotlin 2.4 and Spring Boot 4.1, the versions current on 6 September 2026. Spring Boot 4.1 manages Kotlin 2.3.21 by default, so a module that wants a newer compiler pins the version in its own plugin block, the way the build file below does.",
+    nl: "De voorbeelden zijn geschreven voor Kotlin 2.4 en Spring Boot 4.1, de versies die op 6 september 2026 actueel zijn. Spring Boot 4.1 beheert standaard Kotlin 2.3.21, dus een module die een nieuwere compiler wil, zet de versie zelf in zijn eigen pluginblok, zoals het buildbestand verderop doet.",
   },
   whyTitle: {
     en: "A frontend that changes weekly needs a domain that does not",
@@ -730,8 +727,8 @@ const COPY = {
     nl: "De domeinmodule compileert zonder Spring op het classpath",
   },
   domain1: {
-    en: "Start with the build file, because that is the agreement you defend in every review. The domain module gets the Kotlin plugin and the standard library. No Spring, no Jackson, no persistence annotations.",
-    nl: "Begin bij het buildbestand, want dat is de afspraak die je in elke review verdedigt. De domeinmodule krijgt de Kotlin-plugin en de standaardbibliotheek. Geen Spring, geen Jackson, geen persistentie-annotaties.",
+    en: "Start with the build file, because that is the agreement you defend in every review. The domain module gets the Kotlin plugin and the standard library. No Spring, no Jackson, no persistence annotations. The toolchain is JDK 25, the current long-term support release, and Spring Boot 4.1 accepts anything from 17 up to 26.",
+    nl: "Begin bij het buildbestand, want dat is de afspraak die je in elke review verdedigt. De domeinmodule krijgt de Kotlin-plugin en de standaardbibliotheek. Geen Spring, geen Jackson, geen persistentie-annotaties. De toolchain is JDK 25, de release met langetermijnondersteuning, en Spring Boot 4.1 accepteert alles van 17 tot en met 26.",
   },
   domain2: {
     en: "Now the rules. A subscription is active, paused or cancelled, and each state carries different data. Kotlin writes that down as a sealed hierarchy, so a paused subscription without a resume date cannot be constructed at all.",
@@ -838,8 +835,8 @@ const COPY = {
     nl: "De use-casetests zeggen niets over persistentie. Een verkeerd kolomtype, een ontbrekende statuswaarde of een null die de mapping stilletjes tot een opgezegd abonnement maakt, komt langs elke fake en sneuvelt in productie. Daarom krijgt de adapter een test tegen de engine waarop hij echt gaat draaien.",
   },
   container2: {
-    en: "Testcontainers starts the PostgreSQL version the platform runs and hands Spring the connection details at startup. The container class is written with a self-referential generic, so in Kotlin you instantiate it with Nothing as the type argument.",
-    nl: "Testcontainers start de PostgreSQL-versie die het platform draait en geeft Spring bij het opstarten de connectiegegevens door. De containerklasse is met een zelfverwijzend generiek type geschreven, dus in Kotlin instantieer je hem met Nothing als typeargument.",
+    en: "Testcontainers starts the PostgreSQL version the platform runs. The ServiceConnection annotation hands the details of that running container to the application context, so the test registers no data source properties of its own. Testcontainers 2 gives every module its own artifact and its own package, so the PostgreSQL container comes from testcontainers-postgresql and is constructed without a type argument.",
+    nl: "Testcontainers start de PostgreSQL-versie die het platform draait. De annotatie ServiceConnection geeft de gegevens van die draaiende container door aan de applicatiecontext, zodat de test zelf geen datasource-properties hoeft te registreren. Testcontainers 2 geeft elke module een eigen artifact en een eigen package, dus de PostgreSQL-container komt uit testcontainers-postgresql en wordt zonder typeargument aangemaakt.",
   },
   container3: {
     en: "Some tests only cost time. A data class needs no test for copy. A bean definition needs none either, because the application refuses to start when a bean is missing. And the resolver needs no test that repeats a mapping table you can read in ten seconds.",

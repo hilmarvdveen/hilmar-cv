@@ -11,19 +11,19 @@ export const meta: BlogPostMeta = {
   slug: "hexagonal-architecture-csharp-dotnet",
   category: "architecture",
   publishedDate: "2026-09-01",
-  updatedDate: "2026-09-03",
+  updatedDate: "2026-09-06",
   readingTimeMin: 20,
   title: {
     en: "Hexagonal architecture in C#: ports and adapters",
     nl: "Hexagonale architectuur in C#: ports en adapters",
   },
   description: {
-    en: "Ports and adapters in C# 12 and .NET 8: a domain with no framework references, EF Core and minimal API adapters, fakes for tests, and a migration path.",
-    nl: "Ports en adapters in C# 12 en .NET 8: een domein zonder frameworkverwijzingen, adapters voor EF Core en minimal API, fakes en een migratiepad.",
+    en: "Ports and adapters in C# 14 and .NET 10: a domain with no framework references, EF Core and minimal API adapters, fakes for tests, and a migration path.",
+    nl: "Ports en adapters in C# 14 en .NET 10: een domein zonder frameworkverwijzingen, adapters voor EF Core en minimal API, fakes en een migratiepad.",
   },
   excerpt: {
-    en: "Hexagonal architecture keeps your business rules independent of the framework, the database and the delivery channel. Here is what that looks like in C# 12 and .NET 8, and when the extra layer is not worth it.",
-    nl: "Hexagonale architectuur houdt je bedrijfsregels los van het framework, de database en het afleverkanaal. Zo ziet dat eruit in C# 12 en .NET 8, en zo weet je wanneer die extra laag het niet waard is.",
+    en: "Hexagonal architecture keeps your business rules independent of the framework, the database and the delivery channel. Here is what that looks like in C# 14 and .NET 10, and when the extra layer is not worth it.",
+    nl: "Hexagonale architectuur houdt je bedrijfsregels los van het framework, de database en het afleverkanaal. Zo ziet dat eruit in C# 14 en .NET 10, en zo weet je wanneer die extra laag het niet waard is.",
   },
   keywords: [
     "hexagonal architecture c#",
@@ -69,6 +69,7 @@ export function Body({ locale }: { locale: Locale }) {
     <>
       <Lead>{copy.lead[locale]}</Lead>
       <P>{copy.intro1[locale]}</P>
+      <P>{copy.versions[locale]}</P>
       <P>{copy.intro2[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
       <Contents
@@ -204,8 +205,7 @@ export function Body({ locale }: { locale: Locale }) {
 const DOMAIN_PROJECT = `<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <LangVersion>12.0</LangVersion>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -652,6 +652,10 @@ const COPY = {
     en: "Most .NET applications start clean. A controller calls a service, the service calls a DbContext, and on day one everything reads well. Two years later the same service also reads an HttpContext, writes a log line, opens a transaction and shapes a response. The business rule is in there somewhere. Nobody can find it without starting the framework.",
     nl: "De meeste .NET-applicaties beginnen netjes. Een controller roept een service aan, de service roept een DbContext aan, en op dag één leest alles prettig. Twee jaar later leest diezelfde service ook een HttpContext, schrijft een logregel, opent een transactie en vormt een response. De bedrijfsregel zit er ergens tussen. Niemand vindt hem terug zonder het framework te starten.",
   },
+  versions: {
+    en: "The samples in this article target .NET 10 and C# 14, the versions current on 6 September 2026. That release carries long-term support until November 2028, so code you start on it today has a long runway. The syntax stays plain on purpose, because primary constructors and collection expressions carry these examples and a newer language feature would add nothing to them.",
+    nl: "De voorbeelden in dit artikel zijn geschreven voor .NET 10 en C# 14, de versies die op 6 september 2026 actueel zijn. Die release heeft langetermijnondersteuning tot november 2028, dus code die je er vandaag op begint, gaat lang mee. De syntaxis blijft bewust eenvoudig, want primary constructors en collection expressions dragen deze voorbeelden en een nieuwere taalfunctie voegt er niets aan toe.",
+  },
   intro2: {
     en: "I am a frontend engineer who reads and writes the back end when the work asks for it. At Omniplan I migrated a legacy AngularJS and .NET application to Angular 9 over a .NET Core back end with REST and gRPC, including a modular authorisation and membership service. Two delivery channels over one set of rules is exactly the situation ports and adapters were invented for.",
     nl: "Ik ben een frontend engineer die de backend leest en schrijft als het werk daarom vraagt. Bij Omniplan migreerde ik een legacy AngularJS- en .NET-applicatie naar Angular 9 op een .NET Core-backend met REST en gRPC, inclusief een modulaire autorisatie- en membershipservice. Twee afleverkanalen op één set regels is precies de situatie waarvoor ports en adapters zijn bedacht.",
@@ -728,8 +732,8 @@ const COPY = {
     nl: "Het domeinproject compileert zonder één frameworkpakket",
   },
   domain1: {
-    en: "Start with the project file, because it is the agreement you will defend in every code review. No PackageReference, no ProjectReference, nothing.",
-    nl: "Begin bij het projectbestand, want dat is de afspraak die je in elke code review verdedigt. Geen PackageReference, geen ProjectReference, niets.",
+    en: "Start with the project file, because it is the agreement you will defend in every code review. No PackageReference, no ProjectReference, nothing. There is no LangVersion element either, because the SDK already selects the language version that ships with it.",
+    nl: "Begin bij het projectbestand, want dat is de afspraak die je in elke code review verdedigt. Geen PackageReference, geen ProjectReference, niets. Er staat ook geen LangVersion in, want de SDK kiest zelf de taalversie die erbij hoort.",
   },
   domain2: {
     en: "Now the rules. A membership knows when it may be renewed and what a renewal does to its end date. That knowledge belongs in the entity, not in a service class that a controller happens to call.",
@@ -744,8 +748,8 @@ const COPY = {
     nl: "Een port is een interface die van binnenuit is geschreven",
   },
   ports1: {
-    en: "The application layer holds use cases and the ports they need. The names come from the vocabulary of the domain, never from the technology behind them. A port called IMembershipRepository is fine. A port called ISqlServerMembershipRepository has already leaked. IClock is a deliberate choice here. .NET 8 ships TimeProvider and injecting that is a fine alternative, but a named port keeps the intent visible in the constructor signature.",
-    nl: "De applicatielaag bevat use cases en de ports die zij nodig hebben. De namen komen uit het vocabulaire van het domein, nooit uit de techniek erachter. Een port die IMembershipRepository heet is prima. Een port die ISqlServerMembershipRepository heet, lekt al. IClock is hier een bewuste keuze. .NET 8 levert TimeProvider en die injecteren is een prima alternatief, maar een port met een eigen naam houdt de bedoeling zichtbaar in de constructorsignatuur.",
+    en: "The application layer holds use cases and the ports they need. The names come from the vocabulary of the domain, never from the technology behind them. A port called IMembershipRepository is fine. A port called ISqlServerMembershipRepository has already leaked. IClock is a deliberate choice here. TimeProvider has been part of the base library since .NET 8, and injecting that abstraction is a fine alternative. The sample runs on .NET 10, where both options are available. A port with a name of its own keeps the intent visible in the constructor signature.",
+    nl: "De applicatielaag bevat use cases en de ports die zij nodig hebben. De namen komen uit het vocabulaire van het domein, nooit uit de techniek erachter. Een port die IMembershipRepository heet is prima. Een port die ISqlServerMembershipRepository heet, lekt al. IClock is hier een bewuste keuze. TimeProvider zit sinds .NET 8 in de standaardbibliotheek en die injecteren is een prima alternatief. Het voorbeeld draait op .NET 10, waar beide opties beschikbaar zijn. Een port met een eigen naam houdt de bedoeling zichtbaar in de constructorsignatuur.",
   },
   ports2: {
     en: "The use case does the conducting. It loads, it lets the domain decide, it calls outward, it commits. It carries no rule of its own beyond the order of the steps.",
@@ -900,8 +904,8 @@ const COPY = {
     nl: "Voer ports in, use case voor use case",
   },
   migration1: {
-    en: "You do not need permission for a rewrite, and you should not ask for one either. The same reversible steps that move a legacy page onto a new frontend stack work on a .NET service. Pick the use case that hurts most and take five steps.",
-    nl: "Je hebt geen toestemming voor een herbouw nodig, en je moet er ook niet om vragen. Dezelfde omkeerbare stappen waarmee je een legacy pagina naar een nieuwe frontendstack verhuist, werken op een .NET-service. Kies de use case die het meest pijn doet en zet vijf stappen.",
+    en: "You do not need permission for a rewrite, and you should not ask for one either. The same reversible steps that move a legacy page onto a new frontend stack work on a .NET service. Pick the use case that hurts most and take five steps. Keep the framework upgrade out of this sequence. A solution that still targets .NET 8 needs one anyway, because that release leaves support on 10 November 2026, and it lands far more calmly in a commit of its own.",
+    nl: "Je hebt geen toestemming voor een herbouw nodig, en je moet er ook niet om vragen. Dezelfde omkeerbare stappen waarmee je een legacy pagina naar een nieuwe frontendstack verhuist, werken op een .NET-service. Kies de use case die het meest pijn doet en zet vijf stappen. Houd de frameworkupgrade buiten deze reeks. Een solution die nog op .NET 8 draait heeft er sowieso een nodig, want die versie valt op 10 november 2026 uit de ondersteuning, en los in een eigen commit verloopt dat een stuk rustiger.",
   },
   step1: {
     en: "Add a domain project to the existing solution with no package references. Move one entity into it and let the compiler tell you what came along.",
