@@ -122,7 +122,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold text-white mb-6">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-white mb-6">
               {t("services.title")}
             </h2>
             <ul className="space-y-4">
@@ -145,7 +145,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold text-white mb-6">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-white mb-6">
               {t("quickLinks.title")}
             </h2>
             <ul className="space-y-4">
@@ -164,7 +164,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold text-white mb-6">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-white mb-6">
               {t("contact.title")}
             </h2>
 

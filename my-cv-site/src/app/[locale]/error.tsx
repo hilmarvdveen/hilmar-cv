@@ -19,7 +19,7 @@ export default function Error({
 
   return (
     <section className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900">{t("error.title")}</h1>
+      <h1 className="text-display text-textMain">{t("error.title")}</h1>
       <p className="mt-3 max-w-md text-gray-600">{t("error.description")}</p>
       <Button
         onClick={reset}

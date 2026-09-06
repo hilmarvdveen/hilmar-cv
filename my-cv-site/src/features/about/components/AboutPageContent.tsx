@@ -108,7 +108,7 @@ export function AboutPageContent() {
             {blocks.map((block) => (
               <Card key={block.title}>
                 <h3 className="mb-2 text-lg font-bold text-textMain">{block.title}</h3>
-                <p className="mb-4 text-[14.5px] leading-relaxed text-gray-600">
+                <p className="mb-4 text-base leading-relaxed text-gray-600">
                   {block.body}
                 </p>
                 <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700">
@@ -131,7 +131,7 @@ export function AboutPageContent() {
                 <Card key={card.title} variant="tinted">
                   <CardIcon className="mb-3 h-6 w-6 text-primary" aria-hidden="true" />
                   <h3 className="mb-2 text-lg font-bold text-textMain">{card.title}</h3>
-                  <p className="text-[14.5px] leading-relaxed text-gray-600">{card.body}</p>
+                  <p className="text-base leading-relaxed text-gray-600">{card.body}</p>
                 </Card>
               );
             })}
@@ -142,7 +142,7 @@ export function AboutPageContent() {
       <Section background="light">
         <NetherlandsMap />
         <Container>
-          <p className="mt-6 text-center text-[15px] leading-relaxed text-gray-700">
+          <p className="mt-6 text-center text-base leading-relaxed text-gray-700">
             {t("map.contactLine")}
           </p>
           <div className="mt-4 flex justify-center">
@@ -157,7 +157,7 @@ export function AboutPageContent() {
         <Container width="narrow" className="text-center">
           <h2
             id="about-cta-heading"
-            className="mb-4 text-3xl font-extrabold tracking-tight text-balance text-white md:text-4xl"
+            className="mb-4 text-section-title text-balance text-white"
           >
             {t("cta.title")}
           </h2>

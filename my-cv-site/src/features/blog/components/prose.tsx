@@ -21,7 +21,7 @@ export function H2({ children, id }: HeadingProps) {
   return (
     <h2
       id={headingId(id, children)}
-      className="scroll-mt-28 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mt-14 mb-4"
+      className="scroll-mt-28 text-section-title text-textMain mt-14 mb-4"
     >
       {children}
     </h2>
@@ -32,7 +32,7 @@ export function H3({ children, id }: HeadingProps) {
   return (
     <h3
       id={headingId(id, children)}
-      className="scroll-mt-28 text-xl font-bold text-gray-900 mt-10 mb-3"
+      className="scroll-mt-28 text-subsection-title text-textMain mt-10 mb-3"
     >
       {children}
     </h3>
@@ -44,15 +44,15 @@ export function Lead({ children }: { children: ReactNode }) {
 }
 
 export function P({ children }: { children: ReactNode }) {
-  return <p className="text-[1.0625rem] leading-relaxed text-gray-700 mb-5">{children}</p>;
+  return <p className="text-lg leading-prose text-gray-700 mb-5">{children}</p>;
 }
 
 export function UL({ children }: { children: ReactNode }) {
-  return <ul className="mb-6 list-disc space-y-2 pl-6 text-[1.0625rem] text-gray-700">{children}</ul>;
+  return <ul className="mb-6 list-disc space-y-2 pl-6 text-lg text-gray-700">{children}</ul>;
 }
 
 export function OL({ children }: { children: ReactNode }) {
-  return <ol className="mb-6 list-decimal space-y-2 pl-6 text-[1.0625rem] text-gray-700">{children}</ol>;
+  return <ol className="mb-6 list-decimal space-y-2 pl-6 text-lg text-gray-700">{children}</ol>;
 }
 
 export function LI({ children }: { children: ReactNode }) {
@@ -65,7 +65,7 @@ export function Strong({ children }: { children: ReactNode }) {
 
 export function InlineCode({ children }: { children: ReactNode }) {
   return (
-    <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[0.85em] text-pink-700">
+    <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-code-inline text-primary">
       {children}
     </code>
   );
@@ -76,7 +76,7 @@ export function A({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a
       href={href}
-      className="font-medium text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-800"
+      className="font-medium text-primary underline decoration-emerald-300 underline-offset-2 hover:text-emerald-900"
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       {children}
@@ -90,7 +90,7 @@ export function Divider() {
 
 export function Quote({ children }: { children: ReactNode }) {
   return (
-    <blockquote className="my-8 border-l-4 border-blue-500 bg-blue-50/60 py-3 pl-5 pr-4 text-lg italic text-gray-700">
+    <blockquote className="my-8 border-l-4 border-primary bg-emerald-50/60 py-3 pl-5 pr-4 text-lg italic text-gray-700">
       {children}
     </blockquote>
   );

@@ -312,7 +312,7 @@ export const BookingForm = () => {
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
             <CalendarCheck className="h-7 w-7 text-emerald-700" aria-hidden="true" />
           </div>
-          <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-textMain">
+          <h2 className="mt-5 text-section-title text-textMain">
             {t("success.title")}
           </h2>
           <p className="mt-3 leading-relaxed text-gray-600">
@@ -412,7 +412,7 @@ export const BookingForm = () => {
                 }`}
               >
                 <span className="sr-only">{formatLongDate(day, locale)}</span>
-                <span aria-hidden="true" className="text-[11px] font-semibold uppercase leading-none">
+                <span aria-hidden="true" className="text-xs font-semibold uppercase leading-none">
                   {label.weekday}
                 </span>
                 <span aria-hidden="true" className="mt-1 text-lg font-bold leading-none">
@@ -420,7 +420,7 @@ export const BookingForm = () => {
                 </span>
                 <span
                   aria-hidden="true"
-                  className={`mt-1 text-[11px] leading-none ${selected ? "text-emerald-100" : "text-gray-600"}`}
+                  className={`mt-1 text-xs leading-none ${selected ? "text-emerald-100" : "text-gray-600"}`}
                 >
                   {label.month}
                 </span>
@@ -671,7 +671,7 @@ export const BookingForm = () => {
               ref={headingRef}
               id={STEP_HEADING_ID}
               tabIndex={-1}
-              className="mt-1 scroll-mt-4 text-2xl font-extrabold tracking-tight text-textMain outline-none sm:text-3xl"
+              className="mt-1 scroll-mt-4 text-section-title text-textMain outline-none"
             >
               {t(`flow.steps.${STEP_KEYS[step]}`)}
             </h2>
@@ -731,7 +731,7 @@ export const BookingForm = () => {
       >
         <div className="mx-auto flex max-w-7xl items-center gap-3">
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
               {t("summary.when")}
             </p>
             <p className="truncate text-sm font-semibold text-textMain">{selectionText}</p>

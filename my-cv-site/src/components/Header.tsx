@@ -155,7 +155,7 @@ export const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`relative rounded-md px-3 py-2 text-[15px] font-medium whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                    className={`relative rounded-md px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       isActive
                         ? "text-textMain"
                         : "text-gray-600 hover:text-textMain"

@@ -23,7 +23,7 @@ const TECHNOLOGY_HEADING_ID = "experience-technology-heading";
 const FACTS_HEADING_ID = "experience-facts-heading";
 
 const neighbourLinkClass =
-  "inline-flex items-center gap-2 rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex items-center gap-2 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 export const ExperienceDetail = ({ entry, previous, next, others = [] }: ExperienceDetailProps) => {
   const t = useTranslations("work");
@@ -61,12 +61,12 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
           <div>
             {delivered.length > 0 && (
               <>
-                <h2 id={DELIVERED_HEADING_ID} className="text-2xl font-bold text-textMain">
+                <h2 id={DELIVERED_HEADING_ID} className="text-subsection-title text-textMain">
                   {t("deliveredTitle")}
                 </h2>
                 <ul aria-labelledby={DELIVERED_HEADING_ID} className="mt-4 space-y-2">
                   {delivered.map((item) => (
-                    <li key={item} className="flex gap-2 text-[16px] leading-relaxed text-gray-700">
+                    <li key={item} className="flex gap-2 text-base leading-relaxed text-gray-700">
                       <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
                       <span>{item}</span>
                     </li>
@@ -77,7 +77,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
           </div>
 
           <div className="rounded-xl border border-gray-200 bg-bgLight p-5">
-            <h2 id={FACTS_HEADING_ID} className="text-[13px] font-bold uppercase tracking-widest text-primary">
+            <h2 id={FACTS_HEADING_ID} className="text-xs font-bold uppercase tracking-widest text-primary">
               {page("detail.factsTitle")}
             </h2>
             <dl aria-labelledby={FACTS_HEADING_ID} className="mt-3 space-y-3 text-sm">
@@ -103,10 +103,10 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
           </div>
         </div>
 
-        <h2 id={STORY_HEADING_ID} className="mt-12 text-2xl font-bold text-textMain">
+        <h2 id={STORY_HEADING_ID} className="mt-12 text-subsection-title text-textMain">
           {page("detail.storyTitle")}
         </h2>
-        <div className="mt-4 space-y-4 text-[17px] leading-relaxed text-gray-700">
+        <div className="mt-4 space-y-4 text-lg leading-relaxed text-gray-700">
           {bodyParagraphs.map((item, index) =>
             item?.paragraph ? (
               <div key={index} className="space-y-4">
@@ -121,7 +121,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
 
         {entry.tech.length > 0 && (
           <>
-            <h2 id={TECHNOLOGY_HEADING_ID} className="mt-12 text-2xl font-bold text-textMain">
+            <h2 id={TECHNOLOGY_HEADING_ID} className="mt-12 text-subsection-title text-textMain">
               {page("detail.technologyTitle")}
             </h2>
             <ul aria-labelledby={TECHNOLOGY_HEADING_ID} className="mt-4 flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
 
         {others.length > 0 && (
           <>
-            <h2 id={OTHERS_HEADING_ID} className="mt-10 text-[13px] font-bold uppercase tracking-widest text-primary">
+            <h2 id={OTHERS_HEADING_ID} className="mt-10 text-xs font-bold uppercase tracking-widest text-primary">
               {page("detail.others")}
             </h2>
             <ul aria-labelledby={OTHERS_HEADING_ID} className="mt-3 flex flex-wrap gap-2">

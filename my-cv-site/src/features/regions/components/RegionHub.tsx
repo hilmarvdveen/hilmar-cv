@@ -16,7 +16,7 @@ type RegionHubProps = {
 };
 
 const linkClass =
-  "inline-flex items-center gap-1 rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps) => {
   const t = useTranslations("regions");
@@ -27,7 +27,7 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
     <>
       <Section background="white" aria-labelledby="region-base-heading">
         <Container width="narrow">
-          <SectionTitle id="region-base-heading" title={t("hub.baseTitle")} size="compact" />
+          <SectionTitle id="region-base-heading" title={t("hub.baseTitle")} />
           <Card variant="quiet">
             <p className="text-lg leading-relaxed text-textMain">{t("hub.baseBody")}</p>
           </Card>
@@ -40,8 +40,8 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {regions.map((region) => (
               <Card key={region.id} className="flex h-full flex-col">
-                <h3 className="text-xl font-bold text-textMain">{t(`${region.id}.name`)}</h3>
-                <p className="mt-2 flex-1 text-[15px] leading-relaxed text-gray-600">
+                <h3 className="text-lg font-bold text-textMain">{t(`${region.id}.name`)}</h3>
+                <p className="mt-2 flex-1 text-base leading-relaxed text-gray-600">
                   {t(`${region.id}.hubLine`, { count: engagementCounts[region.id] ?? 0 })}
                 </p>
                 <Link href={regionPath(region)} className={`${linkClass} mt-4 self-start`} data-placement="region-hub-city">
@@ -56,11 +56,11 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
 
       <Section background="white" aria-labelledby="region-rest-heading">
         <Container width="narrow">
-          <SectionTitle id="region-rest-heading" title={t("hub.restTitle")} subtitle={t("hub.restBody")} size="compact" />
+          <SectionTitle id="region-rest-heading" title={t("hub.restTitle")} subtitle={t("hub.restBody")} />
           <ul className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
             {outside.map((entry) => (
               <li key={entry.id} className="flex flex-col gap-1 p-4 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-[15px] text-gray-700">
+                <span className="text-base text-gray-700">
                   <span className="font-semibold text-textMain">{work(`${entry.id}.company`)}</span>
                   {" · "}
                   {work(`${entry.id}.location`)}
@@ -77,16 +77,16 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
 
       <Section background="light" aria-labelledby="region-remote-heading">
         <Container width="narrow">
-          <SectionTitle id="region-remote-heading" title={t("hub.remoteTitle")} size="compact" />
+          <SectionTitle id="region-remote-heading" title={t("hub.remoteTitle")} />
           <Card>
-            <p className="text-[15px] leading-relaxed text-gray-700">{t("hub.remoteBody")}</p>
+            <p className="text-base leading-relaxed text-gray-700">{t("hub.remoteBody")}</p>
           </Card>
         </Container>
       </Section>
 
       <Section background="navy" aria-labelledby="region-hub-close-heading">
         <Container width="narrow" className="text-center">
-          <h2 id="region-hub-close-heading" className="mb-4 text-3xl font-extrabold tracking-tight text-balance text-white md:text-4xl">
+          <h2 id="region-hub-close-heading" className="mb-4 text-section-title text-balance text-white">
             {t("hub.closeTitle")}
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">{t("hub.closeBody")}</p>

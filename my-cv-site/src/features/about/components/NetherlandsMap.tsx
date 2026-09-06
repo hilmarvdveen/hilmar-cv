@@ -68,7 +68,7 @@ export const NetherlandsMap = () => {
   return (
     <section className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8">
       <div className="text-center mb-6 md:mb-8">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
+        <h2 className="text-section-title text-textMain mb-3 md:mb-4">
           {t("companiesWorked")}
         </h2>
         <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">

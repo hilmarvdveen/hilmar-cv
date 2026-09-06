@@ -38,12 +38,12 @@ export default async function BookPage({ params }: Props) {
         aria-labelledby="book-heading"
       >
         <Container>
-          <p className="hidden text-[13px] font-bold uppercase tracking-widest text-emerald-300 sm:block">
+          <p className="hidden text-xs font-bold uppercase tracking-widest text-emerald-300 sm:block">
             {t("hero.badge")}
           </p>
           <h1
             id="book-heading"
-            className="text-lg font-extrabold tracking-tight text-white text-balance sm:mt-3 sm:text-4xl lg:text-5xl"
+            className="text-lg font-extrabold tracking-tight text-white text-balance sm:mt-3 sm:text-display"
           >
             {t("hero.title")}
           </h1>

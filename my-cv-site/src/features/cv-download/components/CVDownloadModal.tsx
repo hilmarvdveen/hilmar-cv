@@ -136,7 +136,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
                 <Download className="w-6 h-6 text-emerald-700" aria-hidden="true" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-gray-900">{t("title")}</h2>
+                <h2 className="text-subsection-title text-textMain">{t("title")}</h2>
                 <p className="text-sm text-gray-600">{t("subtitle")}</p>
               </div>
             </div>

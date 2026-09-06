@@ -35,7 +35,7 @@ function PostCard({ post, locale, labels, featured }: PostCardProps) {
         </span>
         <h2
           className={`mt-4 font-bold text-textMain group-hover:text-emerald-700 ${
-            featured ? "text-2xl sm:text-3xl" : "text-xl"
+            featured ? "text-subsection-title" : "text-lg"
           }`}
         >
           {post.title[locale]}
@@ -86,7 +86,7 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
 
       <Section background="navy" padding="default" aria-labelledby="blog-index-cta-heading">
         <Container width="prose">
-          <h2 id="blog-index-cta-heading" className="text-2xl font-bold text-white">
+          <h2 id="blog-index-cta-heading" className="text-section-title text-white">
             {labels.ctaTitle}
           </h2>
           <p className="mt-2 max-w-xl text-slate-300">{labels.ctaText}</p>

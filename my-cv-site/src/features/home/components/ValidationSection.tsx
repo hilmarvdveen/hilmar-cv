@@ -21,10 +21,10 @@ export const ValidationSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {panels.map((panel, index) => (
             <Card key={index} variant="quiet">
-              <h3 className="text-[15px] font-bold text-primary mb-2">
+              <h3 className="text-base font-bold text-primary mb-2">
                 {panel.title}
               </h3>
-              <p className="text-[14.5px] leading-relaxed text-gray-600">
+              <p className="text-base leading-relaxed text-gray-600">
                 {panel.body}
               </p>
               <p className="mt-2 text-xs uppercase tracking-wide text-gray-500">

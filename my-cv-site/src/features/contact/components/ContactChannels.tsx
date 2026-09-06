@@ -61,7 +61,7 @@ export const ContactChannels = () => {
                 <Icon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
                 <span className="min-w-0">
                   <span className="block text-sm font-semibold">{channel.label}</span>
-                  <span className="block break-words text-[13px] text-gray-700 sm:text-sm">{value}</span>
+                  <span className="block break-words text-sm text-gray-700 sm:text-sm">{value}</span>
                   <span className="mt-1 block text-xs text-gray-500">{channel.hint}</span>
                 </span>
               </a>

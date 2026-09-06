@@ -14,7 +14,7 @@ export function CodeBlock({ code, lang, filename }: CodeBlockProps) {
         <div className="flex items-center justify-between border-b border-gray-800 px-4 py-2">
           <span className="font-mono text-xs text-gray-400">{filename ?? ""}</span>
           {lang && (
-            <span className="rounded bg-gray-800 px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-wide text-gray-400">
+            <span className="rounded bg-gray-800 px-2 py-0.5 font-mono text-xs uppercase tracking-wide text-gray-400">
               {lang}
             </span>
           )}

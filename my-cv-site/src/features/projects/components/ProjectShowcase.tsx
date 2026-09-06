@@ -56,7 +56,7 @@ export const ProjectShowcase = () => {
               return (
                 <Card key={projectCase.title}>
                   <div className="flex items-start justify-between gap-6">
-                    <p className="text-3xl font-extrabold text-emerald-700">{projectCase.outcome}</p>
+                    <p className="text-figure text-emerald-700 text-balance">{projectCase.outcome}</p>
                     {workEntry && (
                       <span className="relative hidden h-10 w-32 shrink-0 sm:block">
                         <Image
@@ -73,7 +73,7 @@ export const ProjectShowcase = () => {
                   <p className="mt-1 text-sm text-gray-500">
                     {projectCase.client} · {projectCase.roleLabel}
                   </p>
-                  <p className="mt-4 max-w-[68ch] text-[15px] leading-relaxed text-gray-600">
+                  <p className="mt-4 max-w-[68ch] text-base leading-relaxed text-gray-600">
                     {projectCase.body}
                   </p>
                   <div className="mt-4 flex items-end justify-between gap-4">
@@ -87,7 +87,7 @@ export const ProjectShowcase = () => {
                     {workEntry && CASE_SCHEMATICS[workEntry.id] && (
                       <figure className="hidden shrink-0 flex-col items-end gap-1 sm:flex">
                         <CaseSchematic schematic={CASE_SCHEMATICS[workEntry.id]} />
-                        <figcaption className="text-[11px] text-gray-500">
+                        <figcaption className="text-xs text-gray-500">
                           {t(`schematics.${CASE_SCHEMATICS[workEntry.id]}`)}
                         </figcaption>
                       </figure>
@@ -104,7 +104,7 @@ export const ProjectShowcase = () => {
         <Container width="narrow" className="text-center">
           <h2
             id="projects-cta-heading"
-            className="mb-4 text-3xl font-extrabold tracking-tight text-balance text-white md:text-4xl"
+            className="mb-4 text-section-title text-balance text-white"
           >
             {t("cta.title")}
           </h2>

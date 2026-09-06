@@ -52,7 +52,7 @@ export const HiringSection = () => {
                 <h3 className="text-base font-bold text-textMain mb-2">
                   {shape.title}
                 </h3>
-                <p className="text-[14.5px] leading-relaxed text-gray-600 mb-3">
+                <p className="text-base leading-relaxed text-gray-600 mb-3">
                   {shape.description}
                 </p>
                 <Link
@@ -106,7 +106,7 @@ export const HiringSection = () => {
                     )}
                   </p>
                   {fact.detail && (
-                    <p className="text-[13.5px] text-gray-600 mt-0.5">
+                    <p className="text-sm text-gray-600 mt-0.5">
                       {fact.detail}
                     </p>
                   )}
@@ -120,7 +120,7 @@ export const HiringSection = () => {
             </h3>
             {faq.items.map((item) => (
               <Card key={item.question} className="p-5 mb-3">
-                <p className="text-[14.5px] font-bold text-textMain mb-1">
+                <p className="text-base font-bold text-textMain mb-1">
                   {item.question}
                 </p>
                 <p className="text-sm leading-relaxed text-gray-600">

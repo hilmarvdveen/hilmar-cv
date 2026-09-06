@@ -35,7 +35,7 @@ export const HeroSection = () => {
 
             <h1
               id="hero-heading"
-              className="order-2 text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-4 sm:mb-5 tracking-tight text-balance sm:order-3"
+              className="order-2 text-display text-white mb-4 sm:mb-5 text-balance sm:order-3"
             >
               {t("heading")}
             </h1>
@@ -45,7 +45,7 @@ export const HeroSection = () => {
                 href="/book"
                 variant="primary"
                 size="lg"
-                className="w-full px-4 text-[15px] sm:w-auto sm:px-8 sm:text-base"
+                className="w-full px-4 text-base sm:w-auto sm:px-8 sm:text-base"
                 data-placement="hero"
               >
                 <Calendar className="hidden w-5 h-5 sm:block group-hover:scale-110 transition-transform duration-200" aria-hidden="true" />
@@ -61,7 +61,7 @@ export const HeroSection = () => {
 
             <p className="order-5 text-sm text-slate-300 sm:order-6">{t("ctaNote")}</p>
 
-            <p className="order-6 text-[13px] text-slate-400 sm:order-7">{t("credentials")}</p>
+            <p className="order-6 text-sm text-slate-400 sm:order-7">{t("credentials")}</p>
           </div>
 
           <div className="order-first flex items-center gap-4 md:order-none md:flex-col">
@@ -77,12 +77,12 @@ export const HeroSection = () => {
               <figcaption className="sr-only">{t("name")}</figcaption>
             </figure>
             <div className="text-left md:text-center">
-              <p className="text-[15px] font-bold text-white">{t("name")}</p>
-              <p className="text-[13px] text-slate-400">{t("role")}</p>
+              <p className="text-base font-bold text-white">{t("name")}</p>
+              <p className="text-sm text-slate-400">{t("role")}</p>
             </div>
             <figure className="hidden md:block mt-6 w-full max-w-[340px]">
               <RampDevice tone="onNavy" width={340} height={170} className="w-full h-auto" />
-              <figcaption className="mt-1 flex justify-between gap-3 text-[11px] leading-snug text-slate-400">
+              <figcaption className="mt-1 flex justify-between gap-3 text-xs leading-snug text-slate-400">
                 <span>{t("device.lane")}</span>
                 <span className="text-right text-emerald-300">{t("device.ramp")}</span>
               </figcaption>
@@ -94,7 +94,7 @@ export const HeroSection = () => {
           {chips.map((chip) => (
             <li
               key={chip}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5 sm:text-[13.5px]"
+              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5 sm:text-sm"
             >
               <Check className="h-3.5 w-3.5 text-emerald-300 sm:h-4 sm:w-4" aria-hidden="true" />
               {chip}

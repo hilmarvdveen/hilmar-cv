@@ -110,12 +110,12 @@ describe("FlagshipSection", () => {
     expect(heading).toHaveAttribute("id", "flagship-heading");
   });
 
-  it("renders the flagship heading at display size", () => {
+  it("renders the flagship heading on the section-title role", () => {
     render(<FlagshipSection />);
     const heading = screen.getByRole("heading", {
       name: flagshipMessages.title,
     });
-    expect(heading).toHaveClass("text-3xl", "sm:text-4xl", "md:text-5xl");
+    expect(heading).toHaveClass("text-section-title");
   });
 
   it("gives the flagship cards the tinted surface", () => {

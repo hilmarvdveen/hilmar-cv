@@ -253,7 +253,7 @@ export const ServiceDetailPage = ({
                     {group.items.map((item) => (
                       <li
                         key={item.name}
-                        className="rounded-full bg-bgLight px-3 py-1 text-[13px] font-medium text-textMain ring-1 ring-gray-200"
+                        className="rounded-full bg-bgLight px-3 py-1 text-sm font-medium text-textMain ring-1 ring-gray-200"
                       >
                         {item.name}
                       </li>

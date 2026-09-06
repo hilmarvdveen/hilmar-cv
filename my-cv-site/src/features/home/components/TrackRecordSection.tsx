@@ -30,13 +30,13 @@ export const TrackRecordSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {cards.map((card) => (
             <Card key={card.headline} className="flex h-full flex-col">
-              <p className="text-[13px] font-semibold text-gray-500 mb-2">
+              <p className="text-sm font-semibold text-gray-500 mb-2">
                 {card.meta}
               </p>
               <h3 className="text-xl font-extrabold text-brand-navy leading-snug mb-3">
                 {card.headline}
               </h3>
-              <p className="text-[15px] leading-relaxed text-gray-600 mb-4">
+              <p className="text-base leading-relaxed text-gray-600 mb-4">
                 {card.body}
               </p>
               <div className="mt-auto flex flex-wrap gap-2">

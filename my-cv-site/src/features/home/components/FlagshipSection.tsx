@@ -26,7 +26,6 @@ export const FlagshipSection = () => {
             eyebrow={t("eyebrow")}
             title={t("title")}
             subtitle={t("intro")}
-            size="display"
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -35,7 +34,7 @@ export const FlagshipSection = () => {
               <h3 className="text-base font-bold text-brand-navy mb-2">
                 {card.title}
               </h3>
-              <p className="text-[15px] leading-relaxed text-gray-600">
+              <p className="text-base leading-relaxed text-gray-600">
                 {card.body}
               </p>
             </Card>

@@ -30,7 +30,7 @@ export const ResultsStrip = () => {
                 key={item.value}
                 className="border-l-[3px] border-primary pl-6 lg:grid lg:grid-rows-[5rem_2.5rem_1fr]"
               >
-                <p className="text-3xl xl:text-4xl font-extrabold leading-[1.1] text-primary tracking-tight text-balance">
+                <p className="text-figure text-primary text-balance">
                   {item.value}
                 </p>
                 <p className="mt-2 text-sm font-semibold text-textMain">

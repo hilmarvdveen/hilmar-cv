@@ -40,10 +40,10 @@ export const RegionEngagementCard = ({ entry, showCity = false }: RegionEngageme
           <p className="text-sm text-gray-500">{meta}</p>
         </div>
       </div>
-      <p className="mt-3 flex-1 text-[15px] leading-relaxed text-gray-700">{work(`${entry.id}.summary`)}</p>
+      <p className="mt-3 flex-1 text-base leading-relaxed text-gray-700">{work(`${entry.id}.summary`)}</p>
       <Link
         href={`/experience/${entry.id}`}
-        className="mt-3 inline-flex items-center gap-1 self-start rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+        className="mt-3 inline-flex items-center gap-1 self-start rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
       >
         {work("readMore")}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -78,7 +78,7 @@ export function SearchPageContent({
                 <section key={kind} aria-labelledby={`search-group-${kind}`}>
                   <h2
                     id={`search-group-${kind}`}
-                    className="mb-3 text-[13px] font-bold uppercase tracking-widest text-primary"
+                    className="mb-3 text-xs font-bold uppercase tracking-widest text-primary"
                   >
                     {t(`groups.${kind}`)}
                   </h2>

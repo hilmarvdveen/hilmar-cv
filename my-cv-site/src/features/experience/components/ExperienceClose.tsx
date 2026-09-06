@@ -16,7 +16,7 @@ export const ExperienceClose = () => {
       <Container width="narrow" className="text-center">
         <h2
           id={HEADING_ID}
-          className="mb-4 text-3xl font-extrabold tracking-tight text-balance text-white md:text-4xl"
+          className="mb-4 text-section-title text-balance text-white"
         >
           {t("close.title")}
         </h2>

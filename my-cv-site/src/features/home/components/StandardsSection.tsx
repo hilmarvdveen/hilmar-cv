@@ -31,7 +31,7 @@ export const StandardsSection = () => {
                 <h3 className="text-lg font-bold text-textMain mb-2">
                   {column.title}
                 </h3>
-                <p className="text-[14.5px] leading-relaxed text-gray-600">
+                <p className="text-base leading-relaxed text-gray-600">
                   {column.body}
                 </p>
               </Card>

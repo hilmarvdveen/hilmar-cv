@@ -21,7 +21,7 @@ export const CloseSection = () => {
         <div data-track-section="close">
           <h2
             id="close-heading"
-            className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 text-balance"
+            className="text-section-title text-white mb-4 text-balance"
           >
             {t("title")}
           </h2>

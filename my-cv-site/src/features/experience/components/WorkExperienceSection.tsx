@@ -57,10 +57,10 @@ export const WorkExperienceSection = () => {
               <p className="text-sm text-gray-500">
                 {period} · {t(`${id}.role`)}
               </p>
-              <p className="mt-2 text-[15px] leading-relaxed text-gray-700">{t(`${id}.summary`)}</p>
+              <p className="mt-2 text-base leading-relaxed text-gray-700">{t(`${id}.summary`)}</p>
               <Link
                 href={`/experience/${id}`}
-                className="mt-3 inline-flex items-center gap-1 rounded-md text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                className="mt-3 inline-flex items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
               >
                 {t("readMore")}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -135,18 +135,18 @@ export const WorkExperienceSection = () => {
             <span className="font-semibold">{t("role")}:</span> {role}
           </p>
 
-          <p className="mt-2 text-[15px] font-medium leading-relaxed text-textMain">
+          <p className="mt-2 text-base font-medium leading-relaxed text-textMain">
             {summary}
           </p>
 
           {delivered.length > 0 && (
             <>
-              <h4 className="mt-5 text-[13px] font-bold uppercase tracking-widest text-primary">
+              <h4 className="mt-5 text-xs font-bold uppercase tracking-widest text-primary">
                 {t("deliveredTitle")}
               </h4>
               <ul aria-label={t("deliveredTitle")} className="mt-2 space-y-2">
                 {delivered.map((item) => (
-                  <li key={item} className="flex gap-2 text-[15px] leading-relaxed text-gray-700">
+                  <li key={item} className="flex gap-2 text-base leading-relaxed text-gray-700">
                     <Check className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
                     <span>{item}</span>
                   </li>
@@ -157,7 +157,7 @@ export const WorkExperienceSection = () => {
 
           <Link
             href={`/experience/${id}`}
-            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-bgLight px-4 py-3 text-[15px] font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
           >
             <span>{t("readMore")}</span>
             <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -226,7 +226,7 @@ export const WorkExperienceSection = () => {
       {remainingEntries.length > 0 && (
         <Section background="light" aria-labelledby={EARLIER_HEADING_ID}>
           <Container width="narrow">
-            <SectionTitle id={EARLIER_HEADING_ID} title={t("earlierTitle")} size="compact" />
+            <SectionTitle id={EARLIER_HEADING_ID} title={t("earlierTitle")} />
             <div className="grid grid-cols-1 gap-4">
               {remainingEntries.map((entry) => renderCompactEntry(entry))}
             </div>

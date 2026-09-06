@@ -59,7 +59,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
             {labels.category[post.category]}
           </span>
 
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-textMain sm:text-4xl">
+          <h1 className="mt-4 text-display text-textMain">
             {post.title[locale]}
           </h1>
           <p className="mt-4 text-lg text-gray-600">{post.description[locale]}</p>
@@ -87,7 +87,7 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
 
       <Section background="navy" padding="default" aria-labelledby="blog-cta-heading">
         <Container width="prose">
-          <h2 id="blog-cta-heading" className="text-2xl font-bold text-white">
+          <h2 id="blog-cta-heading" className="text-section-title text-white">
             {labels.ctaTitle}
           </h2>
           <p className="mt-2 max-w-xl text-slate-300">{labels.ctaText}</p>
