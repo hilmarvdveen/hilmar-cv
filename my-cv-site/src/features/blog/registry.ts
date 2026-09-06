@@ -10,6 +10,8 @@ import { meta as hexagonalJavaMeta, Body as HexagonalJavaBody } from "./componen
 import { meta as cutOverMeta, Body as CutOverBody } from "./components/CutOverPost";
 import { meta as graphQLContractMeta, Body as GraphQLContractBody } from "./components/GraphQLContractPost";
 import { meta as rxjsSignalsMeta, Body as RxjsSignalsBody } from "./components/RxjsSignalsPost";
+import { meta as csharpApiMeta, Body as CsharpApiBody } from "./components/CsharpApiPost";
+import { meta as accessibilityMeta, Body as AccessibilityBody } from "./components/AccessibilityPost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -23,6 +25,8 @@ const POSTS: BlogPost[] = [
   { ...cutOverMeta, track: "fullstack", Body: CutOverBody },
   { ...graphQLContractMeta, track: "fullstack", Body: GraphQLContractBody },
   { ...rxjsSignalsMeta, track: "frontend", Body: RxjsSignalsBody },
+  { ...csharpApiMeta, track: "backend", Body: CsharpApiBody },
+  { ...accessibilityMeta, track: "frontend", Body: AccessibilityBody },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((first, second) =>

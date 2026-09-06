@@ -1283,6 +1283,7 @@
                 }
             },
             "benefits": {
+                "articleLabel": "Een API in ASP.NET Core, in een artikel",
                 "title": "Wat je krijgt",
                 "description": "Een applicatie waarin de datalaag en de interface op elkaar zijn ontworpen, niet achteraf aan elkaar geknoopt.",
                 "items": [
@@ -1502,6 +1503,7 @@
                 ]
             },
             "benefits": {
+                "articleLabel": "WCAG 2.2 AA in het component, in een artikel",
                 "items": [
                     {
                         "title": "Pagina's in dagen",

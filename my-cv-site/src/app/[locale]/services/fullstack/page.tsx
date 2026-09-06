@@ -19,6 +19,8 @@ const HERO_ICON = Zap;
 const BENEFIT_ICONS = [Layers, Shield, Database, Workflow, Cloud, GitBranch];
 const PROCESS_ICONS = [Layers, Server, Globe, Cloud];
 
+const CSHARP_API_POST_HREF = "/blog/building-an-api-in-csharp";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const seoData = SEOFactory.fullstackService(locale as Locale);
@@ -70,6 +72,7 @@ export default async function FullStackSolutionsPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
+        article: { href: CSHARP_API_POST_HREF, label: t("benefits.articleLabel") },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],

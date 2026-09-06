@@ -1320,6 +1320,7 @@
                 }
             },
             "benefits": {
+                "articleLabel": "An API in ASP.NET Core, in an article",
                 "title": "What you get",
                 "description": "An application where the data layer and the interface were designed against each other, not stitched together at the end.",
                 "items": [
@@ -1539,6 +1540,7 @@
                 ]
             },
             "benefits": {
+                "articleLabel": "WCAG 2.2 AA inside the component, in an article",
                 "items": [
                     {
                         "title": "Pages in days",

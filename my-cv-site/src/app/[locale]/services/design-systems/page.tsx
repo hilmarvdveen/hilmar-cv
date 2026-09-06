@@ -20,6 +20,8 @@ const DELIVERABLE_ICONS = [Palette, Grid, BookOpen, Code];
 const BENEFIT_ICONS = [Zap, Layers, RefreshCw, Users, Globe, BookOpen];
 const PROCESS_ICONS = [Target, Grid, Code, Users];
 
+const ACCESSIBILITY_POST_HREF = "/blog/wcag-aa-in-the-component";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const seoData = SEOFactory.designSystemsService(locale as Locale);
@@ -83,6 +85,7 @@ export default async function DesignSystemsPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
+        article: { href: ACCESSIBILITY_POST_HREF, label: t("benefits.articleLabel") },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],
