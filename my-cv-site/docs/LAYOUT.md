@@ -360,3 +360,39 @@ Every size, weight, leading and tracking on the site follows
 `docs/TYPOGRAPHY.md` since 6 September 2026. The hero scale and the other
 measurements in this document stay, the type classes they mention are the
 role tokens from that file, and `pnpm check:type-scale` guards them.
+
+## Touch affordance (7 September 2026)
+
+From the designer persona’s audit of 1,084 targets at 390 wide
+(`Hilmar/review-board/2026-09-07-review-P5-touch-affordance.md`). A phone
+has no hover and no cursor, so every interactive element has to read as
+tappable from its resting state.
+
+- **Fill plus border means control.** Read-only pills (stack tiers, service
+  technologies, hero fact chips) are fill-only or bare. Bordered pills are
+  interactive: the contact interest toggles (`border-gray-500`, `aria-pressed`)
+  and the engagement page’s other-engagement chips (`border-gray-300`,
+  `text-primary`).
+- **Resting boundaries meet 3:1** where the boundary identifies the control:
+  booking day and time buttons and contact toggles on `gray-500`, cards that
+  are links and the hub action row on `gray-300`.
+- **Links on navy carry a resting underline** (breadcrumbs, the method article
+  link, the hero facts link). Emerald on navy is emphasis, not a link.
+- **Whole-card links end with a glyph**: the blog cards’ read line, the logo
+  tiles’ chevron, the contact channel cards’ chevron, the FAQ category tiles’
+  arrow.
+- **Disclosures show a chevron** that rotates when open (FAQ, city pages).
+- **Every `button` shows the pointer cursor** through the base rule in
+  `globals.css`, because Tailwind v4 dropped that preflight rule. Every
+  `Button` variant has an `active:` colour.
+- **Primary actions are 44px or taller**: the header and sticky booking
+  buttons use `size="md"`.
+- **Dialogs are dialogs**: the CV modal carries `role="dialog"`, `aria-modal`,
+  a labelled heading, focus on open, `Escape` to close, focus back on the
+  trigger, and a body scroll lock. The closed mobile drawer is `inert` and
+  the open one is a named `nav`.
+- **The map cities** carry a transparent 24px hit circle with a role, a name
+  and keyboard activation behind each 10px dot.
+
+Two card patterns remain (whole card as link, and a line inside the card as
+link). Unifying them is a decision for Hilmar (reconciliation file, item 8).
