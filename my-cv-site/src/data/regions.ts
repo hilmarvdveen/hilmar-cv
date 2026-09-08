@@ -37,8 +37,8 @@ export const ALL_REGIONS: Region[] = [
     nearbyEngagementIds: ["transdev", "athlon", "niped"],
     sectorEngagementIds: [],
     postSlugs: [
+      "wcag-aa-in-the-component",
       "react-folder-structure",
-      "react-router-remix-routes-loaders-actions-folder-structure",
       "unit-testing-react-the-right-way",
     ],
     coordinates: [4.8952, 52.3702],
@@ -69,9 +69,9 @@ export const ALL_REGIONS: Region[] = [
     nearbyEngagementIds: [],
     sectorEngagementIds: [],
     postSlugs: [
+      "building-an-api-in-csharp",
       "hexagonal-architecture-csharp-dotnet",
       "unit-testing-react-the-right-way",
-      "react-router-remix-routes-loaders-actions-folder-structure",
     ],
     coordinates: [4.47917, 51.9225],
     searchTerms: cityTerms("rotterdam", "rotterdam"),
@@ -84,7 +84,11 @@ export const ALL_REGIONS: Region[] = [
     engagementIds: [],
     nearbyEngagementIds: ["ortec"],
     sectorEngagementIds: ["belastingdienst"],
-    postSlugs: ["hexagonal-architecture-java", "react-folder-structure", "hexagonal-architecture-csharp-dotnet"],
+    postSlugs: [
+      "hexagonal-architecture-java",
+      "building-an-api-in-csharp",
+      "hexagonal-architecture-csharp-dotnet",
+    ],
     coordinates: [4.3007, 52.0705],
     searchTerms: [...cityTerms("the hague", "den haag"), "freelance frontend developer den haag"],
   },
