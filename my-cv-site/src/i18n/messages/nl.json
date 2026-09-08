@@ -21,7 +21,8 @@
             "name": "Hilmar van der Veen",
             "role": "Senior Frontend Engineer",
             "readerLine": "De pagina's waar jullie omzet vandaan komt zijn toe aan vernieuwing en mogen niet uit de lucht gaan.",
-            "ctaNote": "Reactie binnen één werkdag. Vrijblijvend."
+            "ctaNote": "Direct in je agenda. Vrijblijvend.",
+            "factsLink": "Tarief, beschikbaarheid en KVK"
         },
         "results": {
             "title": "Wat deze opdrachten opleverden",
@@ -82,7 +83,7 @@
                 "GCP + Kubernetes",
                 "Sentry + RudderStack"
             ],
-            "linkLabel": "Bekijk de volledige werkhistorie"
+            "linkLabel": "Lees de hele opdracht bij bol.com"
         },
         "trackRecord": {
             "title": "Drie live systemen, vervangen terwijl ze doordraaiden",
@@ -90,7 +91,7 @@
             "cards": [
                 {
                     "meta": "Belastingdienst · 2023 tot 2024",
-                    "headline": "Een nieuw aangifteformulier, van maanden naar een paar dagen",
+                    "headline": "Een nieuw belastingformulier, van maanden naar een paar dagen",
                     "body": "Een low-code visuele formulierenbouwer met drag-and-drop, conditionele logica en validatie, zodat contentteams zelf een formulier bouwen en demonstreren. Plus een Stencil design system, hergebruikt in Angular, React en Vue, dat de bouwtijd van een nieuwe pagina terugbracht van één à twee weken naar één à twee dagen.",
                     "tags": [
                         "Angular",
@@ -127,12 +128,12 @@
         "rollback": "Terug in één stap"
     },
             "title": "Zo blijft de cut-over naar live verkeer voorspelbaar",
-            "subtitle": "De hele keten tot aan dat moment blijft in één paar handen. Vijf stappen.",
+            "subtitle": "De hele keten tot aan dat moment blijft in één hand. Vijf stappen.",
             "link": "Hoe zo’n cut-over stap voor stap verloopt, in een artikel",
             "steps": [
                 {
                     "title": "Eerst het legacy-systeem lezen",
-                    "body": "Het oude systeem reverse-engineeren, ongedocumenteerde Java inbegrepen, en de lezing toetsen bij de engineers die het beheren, zodat de herbouw overeenkomt met wat vandaag draait en geen gedrag verdwijnt waar jullie klanten op rekenen."
+                    "body": "Het oude systeem reverse-engineeren, ongedocumenteerde Java inbegrepen. Die lezing toets ik bij de engineers die het beheren, zodat de herbouw doet wat vandaag draait en er geen gedrag verdwijnt waar jullie klanten op rekenen."
                 },
                 {
                     "title": "Het contract vormgeven",
@@ -173,10 +174,11 @@
         },
         "validation": {
             "title": "Waarom opdrachtgevers verlengen",
+            "historyLink": "Bekijk alle twaalf opdrachten",
             "panels": [
                 {
                     "title": "Drie verlengingen",
-                    "body": "bol.com verlengt contractors op geleverde waarde. De opdracht liep door twee teams, Loyalty en daarna Digital.",
+                    "body": "De opdracht begon bij Loyalty met de Select-puntenpagina en liep door bij Digital, met een nieuwe app en de cut-over van de legacy-stack.",
                     "attribution": "bol.com, teams Loyalty en Digital, juli 2025 tot oktober 2026"
                 },
                 {
@@ -275,7 +277,7 @@
                 {
                     "label": "Tarief",
                     "value": "€95 tot €125 per uur",
-                    "detail": "Afhankelijk van projecttype en werk, scope stemmen we af in het gesprek.",
+                    "detail": "Afhankelijk van projecttype en werk. De scope stemmen we af in het gesprek.",
                     "highlight": false
                 }
             ],
@@ -292,7 +294,7 @@
                     },
                     {
                         "question": "Werk je samen met ons backendteam?",
-                        "answer": "Daar word ik precies voor ingehuurd. Ik heb tot zes teams gecoördineerd in één gedeelde monorepo."
+                        "answer": "Daar word ik precies voor ingehuurd. Bij bol.com stemde ik routinematig met twee teams af en bij een grotere feature met maximaal zes tegelijk."
                     },
                     {
                         "question": "Hoe zit de contractvorm in elkaar?",
@@ -310,7 +312,7 @@
                 "subtitle": "Zeg welke past, dan bepalen we de scope in het gesprek.",
                 "items": [
                     {
-                        "title": "Een pagina voor klanten, van specificatie tot live",
+                        "title": "Een klantpagina van specificatie tot live overnemen",
                         "description": "Jullie hebben een pagina of een flow die klanten gebruiken en die geld oplevert. Ik neem die als geheel op me en draag hem over met tests, Storybook en documentatie.",
                         "href": "/services/frontend",
                         "linkLabel": "Hoe ik een pagina van begin tot eind bouw"
@@ -387,7 +389,7 @@
         "clientLogos": {
             "title": "Opgeleverd voor",
             "subtitle": "Overheid, enterprise en e-commerce.",
-            "invite": "Klik op een logo voor wat ik daar heb opgeleverd."
+            "invite": "Kies een logo om te zien wat ik daar opleverde."
         }
     },
     "experiencePage": {
@@ -406,7 +408,7 @@
             "others": "Andere opdrachten"
         },
         "title": "Werkervaring",
-        "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Wil je er één uitgediept hebben, dan is dertig minuten de kortste weg.",
+        "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Elke opdracht heeft een eigen pagina met het hele verhaal.",
         "metaDescription": "Twaalf opdrachten sinds 2016, met bol.com, en per opdracht wat het opleverde, mijn rol en de stack. Senior frontend engineer, React en Angular, freelance.",
         "cta": {
             "title": "Herken je hier iets in?",
@@ -422,7 +424,7 @@
     "work": {
         "sectionTitle": "Twaalf opdrachten sinds 2016",
         "role": "Rol",
-        "technologies": "Technieken",
+        "technologies": "Technologie",
         "workMode": {
             "remote": "Remote",
             "onSite": "Op locatie",
@@ -453,7 +455,7 @@
             "java8": "Java 8",
             "maven": "Maven",
             "git": "Git",
-            "npm": "NPM",
+            "npm": "npm",
             "jenkins": "Jenkins",
             "tekton": "Tekton",
             "argocd": "Argo CD",
@@ -474,37 +476,37 @@
             "Azure": "Azure",
             "MSSQL": "MSSQL",
             "TailwindCSS": "Tailwind CSS",
-            "NextJS": "NextJS",
+            "NextJS": "Next.js",
             "RxJS": "RxJS",
             "BEM": "BEM",
             "SCSS": "SCSS",
             "SVG": "SVG",
             "AWSLambda": "AWS Lambda",
-            "GitLabCI": "GitLabCI",
+            "GitLabCI": "GitLab CI",
             "Prettier": "Prettier",
             "HeadlessCMS": "Headless CMS",
-            "ReactQuery": "ReactQuery",
+            "ReactQuery": "React Query",
             "Zustand": "Zustand",
             "Jest": "Jest",
             "GitHub": "GitHub",
             "ComponentDesign": "Component Design",
-            "Gitlab": "Gitlab",
+            "Gitlab": "GitLab",
             "Bitbucket": "Bitbucket",
             "DotNetCore": ".Net Core",
             "AzureAppServices": "Azure App Services",
             "AzureCloud": "Azure Cloud",
             "EntityFramework": "Entity Framework",
             "Microservices": "Microservices",
-            "RestAPI": "RestAPI",
-            "ConfigurationDrivenUI": "Configuration Driven UI",
-            "DataDrivenUI": "Data Driven UI",
+            "RestAPI": "REST API",
+            "ConfigurationDrivenUI": "Configuration-driven UI",
+            "DataDrivenUI": "Data-driven UI",
             "Kubernetes": "Kubernetes",
             "xUnit": "xUnit",
             "AzureDevOps": "Azure DevOps",
             "AngularMaterial": "Angular Material",
             "AzureCosmosDB": "Azure Cosmos DB",
             "SQLServer": "SQL Server",
-            "ReactRouter": "ReactRouter",
+            "ReactRouter": "React Router",
             "Scrum": "Scrum",
             "SourceTree": "SourceTree",
             "NHibernate": "NHibernate",
@@ -561,7 +563,7 @@
                     "heading": "Marketing zonder deploy"
                 },
                 {
-                    "paragraph": "In Digital bouwde ik de app voor software en games van een lege map tot productie in de Nx-monorepo. Daar hoorden server-rendering, routing, CI/CD, Google Cloud en Kubernetes bij, plus het beveiligingsprofiel en de allowlist voor authenticatie. Daarna voerde ik de overgang van de live accountpagina's uit via de routinglaag van het platform, die een ander team beheert. Eerst kregen medewerkers de nieuwe pagina's te zien, daarna een percentage van de klanten, per bezoeker gehasht zodat niemand tussen de oude en de nieuwe pagina heen en weer sprong. Elke stap was in één handeling terug te draaien. Tijdens het opschalen vond en verhielp ik een fout in de volgorde waarin routes werden gematcht. Klanten gingen over zonder onderbreking van de dienstverlening.",
+                    "paragraph": "In Digital bouwde ik de app voor software en games van een lege map tot productie in de Nx-monorepo. Daar hoorden server-rendering, routing, CI/CD, Google Cloud en Kubernetes bij, plus het beveiligingsprofiel en de allowlist voor authenticatie. Daarna voerde ik de cut-over van de live accountpagina's uit via de routinglaag van het platform, die een ander team beheert. Eerst kregen medewerkers de nieuwe pagina's te zien, daarna een percentage van de klanten, per bezoeker gehasht zodat niemand tussen de oude en de nieuwe pagina heen en weer sprong. Elke stap was in één handeling terug te draaien. Tijdens het opschalen vond en verhielp ik een fout in de volgorde waarin routes werden gematcht. Klanten gingen over zonder onderbreking van de dienstverlening.",
                     "heading": "De Digital-app en de cut-over"
                 },
                 {
@@ -581,11 +583,11 @@
                     "heading": "Wat er blijft"
                 }
             ],
-            "summary": "Ik verhuisde de pagina's waar klanten van bol.com hun abonnementen, software en games beheren van een verouderde Java-webshop naar een modern React-platform. Die pagina's zijn er onderweg niet uit gegaan.",
+            "summary": "Ik verhuisde de pagina's waar bol.com-klanten abonnementen, software en games beheren van een verouderde Java-webshop naar React, zonder dat ze eruit gingen.",
             "delivered": [
                 "Klanten beheren abonnementen, software en games op het nieuwe React-platform, pagina voor pagina uit de oude Java-webshop gehaald",
                 "Marketing past de Kobo Plus-acquisitiepagina aan zonder engineering-deploy, via het headless CMS en een paginaregister",
-                "De live accountpagina's gingen over zonder onderbreking voor klanten, per percentage opgeschaald en in één stap terug te draaien",
+                "De live accountpagina's gingen per percentage over, met elke stap in één handeling terug te draaien",
                 "Productbeslissingen rusten op betrouwbare cijfers: negen experimenten gebouwd en ingericht, funnels hersteld, Sentry end-to-end"
             ],
             "headline": "Loyalty en Digital naar een nieuw platform, zonder onderbreking"
@@ -619,7 +621,7 @@
                     "heading": "Wat er blijft"
                 }
             ],
-            "summary": "Bij de Belastingdienst ging een nieuw belastingformulier van maanden engineeringwerk naar een paar dagen. Redacteuren en ontwerpers bouwden, controleerden en demonstreerden het formulier zelf.",
+            "summary": "Een nieuw belastingformulier ging van maanden engineeringwerk naar een paar dagen, doordat redacteuren en ontwerpers het zelf bouwen, controleren en demonstreren.",
             "delivered": [
                 "Redacteuren bouwen, controleren en demonstreren een nieuw belastingformulier zelf in de visuele formulierenbouwer, in dagen waar het maanden kostte",
                 "Een nieuwe portaalpagina kost één tot twee dagen waar het één tot twee weken was, dankzij een datagedreven Angular-architectuur",
@@ -638,7 +640,7 @@
                 },
                 {
                     "paragraph": "Ik bouwde een internationaal design system in een Nx-monorepo, waarin een campagnepagina uit JSON wordt samengesteld. De componenten zijn React met Next.js en renderen op de server, de content komt uit het headless CMS Storyblok, en toegankelijkheid volgens WCAG 2.1 AA zit in de componenten zelf. Een tweede laag draagt het merk, zodat kleuren, knoppen en animaties per label wisselen terwijl de logica van een component gelijk blijft. De campagnesite 'Geniet van het Goede' was de eerste toepassing, daarna volgde de VIP-Kaartencampagne van VriendenLoterij op dezelfde componenten.",
-                    "heading": "Eén componentenset, een thema per label"
+                    "heading": "Eén design system, een thema per label"
                 },
                 {
                     "paragraph": "Dat gold over de Europese labels heen. Serverloze API's op AWS leveren de dynamische content en GitLab-pijplijnen en Docker zetten een campagne live. Playwright en Cypress houden de bestaande campagnes in de gaten terwijl er nieuwe bij komen.",
@@ -649,14 +651,14 @@
                     "heading": "Wat er blijft"
                 }
             ],
-            "summary": "Een nieuwe campagnesite ging van weken naar een paar dagen, doordat elk merk uit dezelfde componentenset put en de content in het CMS staat.",
+            "summary": "Een nieuwe campagnesite ging van weken naar een paar dagen, doordat elk merk uit hetzelfde design system put en de content in het CMS staat.",
             "delivered": [
-                "Een nieuwe campagnesite staat in dagen live waar het weken kostte, opgebouwd uit JSON op één componentenset",
+                "Een nieuwe campagnesite staat in dagen live waar het weken kostte, opgebouwd uit JSON op één design system",
                 "Een nieuw label komt neer op een thema: kleuren, knoppen en animaties wisselen per merk, de logica blijft",
                 "Marketing beheert campagnecontent in Storyblok, toegankelijk volgens WCAG 2.1 AA vanaf de eerste dag",
                 "Bestaande campagnes blijven veilig terwijl nieuwe live gaan, bewaakt door Playwright en Cypress in GitLab-pipelines"
             ],
-            "headline": "Een campagnesite in dagen, uit één componentenset"
+            "headline": "Een campagnesite in dagen, uit één design system"
         },
         "athlon": {
             "company": "Athlon",
@@ -712,11 +714,11 @@
             ],
             "summary": "Randstad en Yacht kregen bij hun rebranding één set toegankelijke componenten die de nieuwe merkidentiteit op beide sites draagt.",
             "delivered": [
-                "Randstad en Yacht dragen het nieuwe merk op beide sites vanuit één toegankelijke componentenset",
+                "Randstad en Yacht dragen het nieuwe merk op beide sites vanuit één toegankelijke componentenbibliotheek",
                 "Dezelfde structuur op elk platform, in vanilla JavaScript, Angular en React met SCSS en BEM",
                 "Collega's werken componentgedreven in Angular na coaching als UI coach"
             ],
-            "headline": "Eén toegankelijke componentenset voor twee merken"
+            "headline": "Eén toegankelijke componentenbibliotheek voor twee merken"
         },
         "opinity": {
             "company": "Opinity",
@@ -735,7 +737,7 @@
             ],
             "summary": "Chauffeurs en managers registreren en controleren vrachtgegevens in één applicatie, opgeleverd binnen de gestelde vier maanden.",
             "delivered": [
-                "Chauffeurs registreren ritten en vracht onderweg en managers controleren dezelfde invoer, live binnen vier maanden",
+                "Chauffeurs registreren ritten en vracht onderweg en managers controleren dezelfde invoer",
                 "Fouten komen boven op het moment dat iemand ze maakt, met validatie in de interface en in de API",
                 "Eén persoon droeg frontend en backend, Angular op ASP.NET Core met rolgebaseerde toegang"
             ],
@@ -802,7 +804,7 @@
                     "paragraph": "Bij Bluefield Smart Access werkte ik voor de klanten van Bluefield, onder wie Ziggo en Tommy Hilfiger. De rode draad was steeds dezelfde. Er was veel data, en de mensen die ermee werkten zagen niet waar hun aandacht nodig was."
                 },
                 {
-                    "paragraph": "Voor het cyclusdashboard haalde ik de gegevens uit een Neo4J-graphdatabase en bracht ik elke cyclus als tegel in beeld, met een status in kleur. Vanaf een tegel opent een gebruiker de diagnose of start hij een herstelactie. De frontend is React met een Redux-architectuur, de backend een .NET Web API."
+                    "paragraph": "Voor het cyclusdashboard haalde ik de gegevens uit een Neo4J-graafdatabase en bracht ik elke cyclus als tegel in beeld, met een status in kleur. Vanaf een tegel opent een gebruiker de diagnose of start hij een herstelactie. De frontend is React met een Redux-architectuur, de backend een .NET Web API."
                 },
                 {
                     "paragraph": "Voor Ziggo bouwde ik een WPF-applicatie voor netwerkbeheerders en een kaartweergave in React waarop storingen verschijnen zodra ze optreden, met foutieve netwerknodes gemarkeerd. De communicatie met de C#-microservices liep via een Angular-laag, met RabbitMQ en MassTransit voor het berichtenverkeer. Voor Tommy Hilfiger bouwde ik een applicatie waarin medewerkers via een kalender een parkeerplaats reserveren en een toegangsticket krijgen. Alles draaide in een Docker-pijplijn."
@@ -845,7 +847,7 @@
             "role": "Fullstack Software Developer / Migratiespecialist (VueJS & .NET)",
             "body": [
                 {
-                    "paragraph": "De leeromgeving CLASS draaide op ASP.NET Web Forms en voldeed niet meer aan wat gebruikers en toegankelijkheidseisen vroegen. Mijn opdracht bestond uit twee delen. De bestaande applicatie in beheer houden, en de voorkant stap voor stap naar VueJS brengen."
+                    "paragraph": "De leeromgeving CLASS draaide op ASP.NET Web Forms en voldeed niet meer aan wat gebruikers en toegankelijkheidseisen vroegen. Mijn opdracht bestond uit twee delen. De bestaande applicatie in beheer houden, en de frontend stap voor stap naar VueJS brengen."
                 },
                 {
                     "paragraph": "Ik bouwde een modulaire Vue-frontend met herbruikbare UI-elementen, met aandacht voor semantiek en toegankelijkheid, en verbeterde de validatie en de foutafhandeling. De frontend praat via REST-WebAPI's met de backend, waar CQRS en NHibernate de gegevensstroom verzorgen. De backendlogica dekte ik af met xUnit, en de codekwaliteit bewaakten we met SonarQube."
@@ -854,9 +856,9 @@
                     "paragraph": "Ik was het aanspreekpunt voor klantmeldingen onder de SLA, deed de analyses naar de oorzaak, legde de bevindingen vast en zette de verbeteringen in gang. In het Scrumteam leverde ik input bij planningen, demo's en sprintreviews."
                 }
             ],
-            "summary": "De leeromgeving CLASS kreeg stap voor stap een moderne, toegankelijke voorkant terwijl de bestaande omgeving in beheer bleef.",
+            "summary": "De leeromgeving CLASS kreeg stap voor stap een moderne, toegankelijke frontend terwijl de bestaande omgeving in beheer bleef.",
             "delivered": [
-                "Cursisten kregen stap voor stap een moderne, toegankelijke voorkant in Vue, terwijl het bestaande platform in beheer bleef",
+                "Cursisten kregen stap voor stap een moderne, toegankelijke frontend in Vue, terwijl het bestaande platform in beheer bleef",
                 "Meldingen van de klant onder de SLA gingen van analyse naar verbetering met één aanspreekpunt",
                 "Backendlogica op REST WebAPI's met CQRS en NHibernate, gedekt met xUnit"
             ],
@@ -887,7 +889,7 @@
         },
         "period": "{from} tot {to}",
         "deliveredTitle": "Wat het opleverde",
-        "readMore": "Lees de hele opdracht",
+        "readMore": "Lees de hele opdracht bij {company}",
         "earlierTitle": "Eerdere opdrachten"
     },
     "projects": {
@@ -899,34 +901,31 @@
     },
         "hero": {
             "badge": "Praktijkvoorbeelden",
-            "title": "Vier opdrachten, en wat de opdrachtgever daarna kon meten",
+            "title": "Vier opdrachten, en wat er voor de opdrachtgever veranderde",
             "description": "Bij elke kaart staat de opdrachtgever, wat er voor hen veranderde en wat ik daarvoor bouwde. Het volledige verhaal van elke opdracht staat op de pagina Werkervaring."
         },
         "showcase": {
-            "title": "bol.com, Belastingdienst, Postcode Loterij en Athlon",
+            "title": "bol.com, Belastingdienst, Nationale Postcode Loterij en Athlon",
             "subtitle": "Eerst de uitkomst, daarna het werk dat ertoe leidde."
         },
         "cases": [
             {
                 "outcome": "Tot 24% GMV op winnende varianten",
                 "client": "bol.com",
-                "title": "Loyalty en Digital naar een nieuw platform, zonder onderbreking voor klanten",
-                "body": "bol.com haalde de pagina's van Select en Kobo Plus weg bij een verouderde Java-winkel en zette ze pagina voor pagina op een server-rendered React-platform, zonder onderbreking voor klanten. Ik bouwde de pagina's vanuit een reverse-engineered specificatie, stemde het GraphQL-contract af met de backend-engineers en voerde de cut-over van de live accountpagina's uit in omkeerbare stappen. Op diezelfde pagina's volgden negen A/B-experimenten. Winnende varianten leverden GMV-stijgingen op tot 24% (grofweg 5% tot 24% over de winnaars). Niet elk experiment won, dus het totale effect was positief maar bescheiden.",
+                "body": "bol.com haalde de pagina's van Select en Kobo Plus weg bij een verouderde Java-webshop en zette ze pagina voor pagina op een server-rendered React-platform, zonder onderbreking voor klanten. Ik bouwde de pagina's vanuit een reverse-engineered specificatie, stemde het GraphQL-contract af met de backend-engineers en voerde de cut-over van de live accountpagina's uit in omkeerbare stappen. Op diezelfde pagina's volgden negen A/B-experimenten. Winnende varianten leverden GMV-stijgingen op tot 24% (grofweg 5% tot 24% over de winnaars). Niet elk experiment won, dus het totale effect was positief maar bescheiden.",
                 "roleLabel": "Senior frontend, Loyalty en Digital",
                 "href": "/experience/bol"
             },
             {
                 "outcome": "Van maanden naar dagen",
                 "client": "Belastingdienst",
-                "title": "Een belastingformulier dat redacteuren zelf bouwen",
-                "body": "Een nieuw inkomstenbelastingformulier kostte maanden engineering. Ik bouwde een low-code visuele formulierenbouwer waarin redacteuren en ontwerpers zelf een formulier samenstellen, controleren en demonstreren, op een datagedreven Angular-architectuur die ook een nieuwe portaalpagina van weken naar dagen bracht. De toegankelijkheid bleef op WCAG 2.1 AA, geborgd in de pipeline.",
+                "body": "Een nieuw belastingformulier kostte maanden engineering. Ik bouwde een low-code visuele formulierenbouwer waarin redacteuren en ontwerpers zelf een formulier samenstellen, controleren en demonstreren, op een datagedreven Angular-architectuur die ook een nieuwe portaalpagina van weken naar dagen bracht. De toegankelijkheid bleef op WCAG 2.1 AA, geborgd in de pipeline.",
                 "roleLabel": "Senior Frontend Developer, formulierenbouwer en design system",
                 "href": "/experience/belastingdienst"
             },
             {
                 "outcome": "Van weken naar dagen",
                 "client": "Nationale Postcode Loterij",
-                "title": "Campagnesites uit een JSON-gedreven designsysteem",
                 "body": "Campagnesites voor de Europese loterijlabels kostten weken om op te zetten. Ik bouwde een JSON-gedreven design system in een Nx-monorepo, met Storyblok als headless CMS, server rendering in Next.js en WCAG 2.1 AA in de componenten. Een nieuwe campagne staat nu in dagen live, en een nieuw label komt neer op een thema.",
                 "roleLabel": "Senior Frontend Developer, design system",
                 "href": "/experience/postcode-loterij"
@@ -934,7 +933,6 @@
             {
                 "outcome": "Angular 1.6 naar Angular 12",
                 "client": "Athlon",
-                "title": "Een verouderde applicatie naar een moderne stack",
                 "body": "De selfserviceapplicatie van Athlon draaide op Angular 1.6. Ik leidde de migratie naar Angular 12 met een componentenbibliotheek, dynamische dashboards en WCAG 2.1 AA, en begeleidde het frontendteam, junior en senior, onderweg via code reviews.",
                 "roleLabel": "Senior Frontend Developer, migratie en begeleiding",
                 "href": "/experience/athlon"
@@ -979,7 +977,6 @@
             "startPlaceholder": "Bijvoorbeeld 1 oktober 2026"
         },
         "cta": {
-            "description": "Liever meteen praten? Kies een moment dat jou uitkomt, dan lopen we het systeem in dertig minuten door.",
             "button": "Plan een gesprek van 30 minuten"
         },
         "direct": {
@@ -1142,7 +1139,7 @@
                     },
                     {
                         "title": "Experimenten die je kunt draaien",
-                        "description": "Bij bol.com bouwde en configureerde ik negen A/B-experimenten met de designer en het business team."
+                        "description": "Bij bol.com bouwde en configureerde ik negen A/B-experimenten met de ontwerper en het businessteam."
                     },
                     {
                         "title": "Content aanpasbaar zonder deploy",
@@ -1235,11 +1232,11 @@
                 "description": "Vertel welke pagina moet verhuizen en waar hij op vastzit. Na dertig minuten weet je hoe die verhuizing in omkeerbare stappen zou lopen.",
                 "bookConsultation": "Plan een gesprek van 30 minuten",
                 "viewAllServices": "Bekijk alle diensten",
-                "action": "Bespreek de pagina"
+                "action": "Stuur een bericht over de pagina"
             },
             "engagement": {
                 "title": "Hoe de opdracht loopt",
-                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Vier dingen die je krijgt, en de voorwaarden waaronder dat loopt.",
+                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Dit zijn de vier dingen die je aan het eind in handen hebt.",
                 "deliverables": [
                     {
                         "title": "De vernieuwde pagina in productie",
@@ -1285,7 +1282,7 @@
             "benefits": {
                 "articleLabel": "Een API in ASP.NET Core, in een artikel",
                 "title": "Wat je krijgt",
-                "description": "Een applicatie waarin de datalaag en de interface op elkaar zijn ontworpen, niet achteraf aan elkaar geknoopt.",
+                "description": "Een applicatie waarin de datalaag en de interface samen zijn ontworpen.",
                 "items": [
                     {
                         "title": "Geen overdracht bij de API-grens",
@@ -1297,7 +1294,7 @@
                     },
                     {
                         "title": "Inloggen, rollen en rechten",
-                        "description": "Authenticatie, rollen en rechten worden met de data ontworpen, niet achteraf toegevoegd."
+                        "description": "Authenticatie, rollen en rechten worden met de data mee ontworpen."
                     },
                     {
                         "title": "Uitgeleverd op jouw cloud",
@@ -1433,11 +1430,11 @@
                 "description": "Beschrijf de applicatie en hoe de backend er nu voor staat. Na dertig minuten weet je in welke volgorde ik het zou bouwen.",
                 "bookConsultation": "Plan een gesprek van 30 minuten",
                 "viewAllServices": "Bekijk alle diensten",
-                "action": "Bespreek de bouw"
+                "action": "Stuur een bericht over de bouw"
             },
             "engagement": {
                 "title": "Hoe de opdracht loopt",
-                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Vier dingen die je krijgt, en de voorwaarden waaronder dat loopt.",
+                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Dit zijn de vier dingen die je aan het eind in handen hebt.",
                 "deliverables": [
                     {
                         "title": "De applicatie in productie",
@@ -1523,7 +1520,7 @@
                     },
                     {
                         "title": "Content-mensen sturen mee",
-                        "description": "Het systeem bij de Postcode Loterij was JSON-gestuurd met een headless CMS, dus een campagnepagina wordt geconfigureerd en niet geprogrammeerd."
+                        "description": "Het systeem bij de Nationale Postcode Loterij was JSON-gestuurd met een headless CMS, dus een campagnepagina wordt geconfigureerd en niet geprogrammeerd."
                     },
                     {
                         "title": "Adoptie hoort erbij",
@@ -1531,7 +1528,7 @@
                     }
                 ],
                 "title": "Wat er verandert voor je teams",
-                "description": "Een bibliotheek is alleen waard wat de teams er echt mee doen, dus de adoptie hoort bij het werk."
+                "description": "Een bibliotheek levert pas iets op als de teams hem echt gebruiken, dus ik bouw de adoptie mee."
             },
             "technologies": {
                 "title": "Technologieën en tools",
@@ -1612,11 +1609,11 @@
                 "description": "Vertel hoeveel producten een merk delen en op welke frameworks ze draaien. Na dertig minuten weet je welke componenten als eerste gedeeld kunnen worden.",
                 "bookConsultation": "Plan een gesprek van 30 minuten",
                 "viewAllServices": "Bekijk alle diensten",
-                "action": "Breng de migratie in kaart"
+                "action": "Stuur een bericht over het design system"
             },
             "engagement": {
                 "title": "Hoe de opdracht loopt",
-                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Vier dingen die je krijgt, en de voorwaarden waaronder dat loopt.",
+                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Dit zijn de vier dingen die je aan het eind in handen hebt.",
                 "deliverables": [
                     {
                         "title": "Een versiepakket met componenten",
@@ -1705,7 +1702,7 @@
                     },
                     {
                         "title": "Beveiliging in de praktijk",
-                        "description": "Certified Secure-trainingen over secure development, full-stack kwetsbaarheden, Kubernetes-netwerkbeveiliging en persoonsgegevens onder de AVG."
+                        "description": "Een review kijkt ook naar wat een pagina met persoonsgegevens doet en waar invoer de applicatie in komt. Het Certified Secure-curriculum zit daaronder."
                     }
                 ],
                 "title": "Wat het team overhoudt",
@@ -1762,11 +1759,11 @@
                 "description": "Vertel over de codebase, het framework en waar de tijd heen gaat. Na dertig minuten weet je welk deel ik als eerste zou aanpakken.",
                 "bookConsultation": "Plan een gesprek van 30 minuten",
                 "viewAllServices": "Bekijk alle diensten",
-                "action": "Bespreek de teamsituatie"
+                "action": "Stuur een bericht over het team"
             },
             "engagement": {
                 "title": "Hoe de opdracht loopt",
-                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Vier dingen die je krijgt, en de voorwaarden waaronder dat loopt.",
+                "description": "Freelance, via Hilmar ICT Services, met een opdrachtovereenkomst per opdracht. Dit zijn de vier dingen die je aan het eind in handen hebt.",
                 "deliverables": [
                     {
                         "title": "De schriftelijke review",
@@ -1846,7 +1843,8 @@
             "blog": "Blog",
             "projects": "Projecten",
             "contact": "Contact",
-            "faq": "FAQ",
+            "faq": "Veelgestelde vragen",
+            "about": "Over mij",
             "services": "Diensten",
             "experience": "Werkervaring",
             "book": "Plan een gesprek",
@@ -1854,7 +1852,8 @@
             "closeMenu": "Menu sluiten",
             "language": "Taal",
             "availability": "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
-            "search": "Zoeken"
+            "search": "Zoeken",
+            "menuLabel": "Hoofdmenu"
         },
         "consent": {
             "text": "Deze site gebruikt cookies voor anonieme bezoekstatistieken. Je keuze wordt onthouden.",
@@ -2012,7 +2011,7 @@
                     },
                     {
                         "question": "Werk je met experimenten en meten?",
-                        "answer": "Ja, als de pagina commercieel is. Bij bol.com bouwde ik negen A/B-experimenten in code en configureerde ik ze in de experimenteertool, samen met de designer en het business team. Ik heb ook tracking hersteld die placeholder-identifiers meestuurde, want een funnel is alleen waard wat de data zegt."
+                        "answer": "Ja, als de pagina commercieel is. Bij bol.com bouwde ik negen A/B-experimenten in code en configureerde ik ze in de experimenteertool, samen met de ontwerper en het businessteam. Ik heb ook tracking hersteld die placeholder-identifiers meestuurde, want een funnel is niet meer waard dan de data die eronder zit."
                     },
                     {
                         "question": "Hoe ga je om met performance?",
@@ -2025,7 +2024,7 @@
                 "questions": [
                     {
                         "question": "Werk je op locatie of remote?",
-                        "answer": "Hybride, met één tot twee dagen per week op locatie in de Randstad, en volledig remote kan ook. Amsterdam, Utrecht, Rotterdam en Den Haag liggen op dezelfde voorwaarden binnen bereik. Ik woon in Zandvoort en werk in de Nederlandse tijdzone."
+                        "answer": "Hybride, met één tot twee dagen per week op locatie, en volledig remote kan ook. Ik woon in Zandvoort en werk in de Nederlandse tijdzone."
                     },
                     {
                         "question": "Kun je binnen ons bestaande team werken?",
@@ -2037,7 +2036,7 @@
                     },
                     {
                         "question": "Hoe zit het met de Wet DBA?",
-                        "answer": "Ik werk als zelfstandige via Hilmar ICT Services (KVK 97564303), met een opdrachtovereenkomst per opdracht. Daarin staan de opdracht, de scope en de op te leveren resultaten. Ik bepaal zelf hoe ik het werk uitvoer en factureer maandelijks op gewerkte uren. Er is geen dienstverband, en geen detacherings- of bureauconstructie. De tekst van de overeenkomst stemmen we voor de start af, en jullie eigen juristen lezen die met je mee."
+                        "answer": "In de overeenkomst staan de opdracht, de scope en de op te leveren resultaten. Ik bepaal zelf hoe ik het werk uitvoer. Er is geen dienstverband, en geen detacherings- of bureauconstructie. De tekst stemmen we voor de start af, en jullie eigen juristen lezen die met je mee."
                     },
                     {
                         "question": "Hoe ga je om met vertrouwelijkheid en intellectueel eigendom?",
@@ -2072,7 +2071,7 @@
         "projects": "Projecten",
         "about": "Over mij",
         "contact": "Contact",
-        "book": "Afspraak boeken",
+        "book": "Plan een gesprek",
         "faq": "Veelgestelde vragen",
         "terms": "Gebruiksvoorwaarden",
         "privacy": "Privacy",
@@ -2081,7 +2080,7 @@
         "disclaimer": "Disclaimer",
         "search": "Zoeken",
         "experience": "Werkervaring",
-        "regions": "Werkregio"
+        "regions": "Werkregio's"
     },
     "search": {
         "title": "Zoeken",
@@ -2235,7 +2234,7 @@
                 },
                 {
                     "title": "Ontwerpfouten komen boven tafel terwijl het werk nog loopt",
-                    "body": "Ik praat met de product owner en de ontwerper terwijl het werk nog openligt. Ontwerpfouten en betere opties komen zo boven tafel als er nog makkelijk iets aan te doen is. Bij bol.com werd dat overleg met de ontwerper en het businessteam negen A/B-experimenten, die ik in code bouwde en in de experimenttool inrichtte.",
+                    "body": "Ik praat met de product owner en de ontwerper terwijl het werk nog openligt. Ontwerpfouten en betere opties komen zo boven tafel als er nog makkelijk iets aan te doen is. Bij bol.com werd dat overleg met de ontwerper en het businessteam negen A/B-experimenten, die ik in code bouwde en in de experimenteertool inrichtte.",
                     "evidence": "bol.com, Loyalty en Digital, 2025 tot 2026"
                 },
                 {
@@ -2254,7 +2253,7 @@
                 },
                 {
                     "title": "Toegankelijkheid en privacy",
-                    "body": "Toegankelijkheid volgens WCAG 2.1 AA hoort bij het werk zelf en niet bij een fase aan het eind, en 2.2 AA in de meest recente opdrachten. AVG-training over persoonsgegevens en kennis van de EU AI Act horen erbij."
+                    "body": "Toegankelijkheid hoort bij het bouwen zelf en niet bij een fase aan het eind. WCAG 2.1 AA op de opdrachten van 2020 tot 2024, en 2.2 AA bij bol.com. AVG-training over persoonsgegevens en kennis van de EU AI Act horen erbij."
                 },
                 {
                     "title": "Verificatie en overdracht",
@@ -2277,7 +2276,7 @@
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React en Angular, in de Randstad en remote.",
             "location": "Zandvoort NL • de Randstad, hybride of remote",
-            "availability": "Beschikbaar vanaf 1 oktober 2026"
+            "availability": "Beschikbaar vanaf 1 oktober 2026, eerder in overleg"
         },
         "services": {
             "title": "Diensten",
@@ -2330,14 +2329,16 @@
         "publishedOn": "Gepubliceerd",
         "updatedOn": "Bijgewerkt",
         "writtenBy": "Hilmar van der Veen",
-        "readArticle": "Lees artikel",
+        "readArticle": "Lees het artikel",
         "backToList": "Terug naar alle artikelen",
         "category": {
             "architecture": "Architectuur",
             "testing": "Testen",
             "seo": "SEO",
             "routing": "Routing",
-            "fundamentals": "Basis"
+            "fundamentals": "Basis",
+            "accessibility": "Toegankelijkheid",
+            "api": "API's"
         },
         "track": {
           "frontend": "Frontend",
@@ -2360,15 +2361,15 @@
     "regions": {
         "hub": {
             "title": "Frontend developer inhuren in de Randstad",
-            "description": "Waar ik werk: Amsterdam, Utrecht, Rotterdam en Den Haag, hybride of remote. Twaalf opdrachten sinds 2016. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Waar ik werk: {cities}, hybride of remote. Twaalf opdrachten sinds 2016. Beschikbaar vanaf 1 oktober 2026.",
             "heroTitle": "Frontend developer inhuren in de Randstad",
-            "heroDescription": "Vanuit Zandvoort werk ik voor opdrachtgevers in Amsterdam, Utrecht, Rotterdam en Den Haag. Een à twee dagen per week op locatie, de rest remote.",
+            "heroDescription": "Vanuit Zandvoort werk ik voor opdrachtgevers in {cities}. Een à twee dagen per week op locatie, de rest remote.",
             "baseTitle": "Thuisbasis en ritme",
             "baseBody": "Hilmar ICT Services zit in Zandvoort. Amsterdam is een halfuur met de trein, Den Haag ruim drie kwartier en Utrecht en Rotterdam ruim een uur. Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen. De overige dagen werk ik remote, in het Nederlands of het Engels.",
-            "citiesTitle": "Vier steden met een eigen pagina",
+            "citiesTitle": "{count, plural, =3 {Drie steden met een eigen pagina} =4 {Vier steden met een eigen pagina} other {# steden met een eigen pagina}}",
             "cityLink": "Werken in {city}",
             "restTitle": "De rest van de kaart",
-            "restBody": "De opdrachten buiten die vier steden, elk met een eigen pagina onder werkervaring.",
+            "restBody": "De opdrachten buiten die {count, plural, =3 {drie} =4 {vier} other {#}} steden, elk met een eigen pagina onder werkervaring.",
             "remoteTitle": "Remote",
             "remoteBody": "Bij Athlon werkte ik van 2020 tot 2022 volledig remote aan een Angular-migratie. Bij bol.com en de Belastingdienst was het hybride, met vaste dagen op kantoor. Beide vormen werken zolang refinement en review op vaste momenten gebeuren en het team elkaar in de code reviews spreekt.",
             "closeTitle": "Vertel in welke stad je team zit",
@@ -2395,8 +2396,8 @@
             "description": "Senior frontend developer, freelance. {count} opdrachten in Amsterdam, waaronder de Nationale Postcode Loterij. Beschikbaar vanaf 1 oktober 2026.",
             "heroTitle": "Freelance frontend developer in Amsterdam",
             "heroDescription": "{count} van mijn {total} opdrachten sinds 2016 waren in Amsterdam. Van Zandvoort ben ik er in een halfuur, direct met de trein.",
-            "hubLine": "{count} opdrachten, van een design system voor de Nationale Postcode Loterij tot één componentenset voor Randstad en Yacht.",
-            "engagementsLead": "{count} opdrachten in Amsterdam, van een campagnesysteem voor de Nationale Postcode Loterij tot een componentenset voor Randstad en Yacht.",
+            "hubLine": "{count} opdrachten, van een design system voor de Nationale Postcode Loterij tot één componentenbibliotheek voor Randstad en Yacht.",
+            "engagementsLead": "{count} opdrachten in Amsterdam, van een campagnesysteem voor de Nationale Postcode Loterij tot een componentenbibliotheek voor Randstad en Yacht.",
             "travel": [
                 "Zandvoort naar Amsterdam Centraal is een halfuur, direct met de trein.",
                 "Bij Conclusion, Randstad en Omniplan werkte ik op locatie in Amsterdam, bij de Nationale Postcode Loterij hybride.",
@@ -2405,15 +2406,15 @@
             "shapes": [
                 {
                     "title": "Een design system dat campagnes in dagen live zet",
-                    "body": "Bij de Nationale Postcode Loterij ging een nieuwe campagnesite van weken naar een paar dagen, met een JSON-gedreven design system dat marketing zelf bedient."
+                    "body": "Ik zet een componentenset neer waaruit marketing zelf een campagnepagina samenstelt, zodat een nieuwe campagne in dagen live staat."
                 },
                 {
-                    "title": "Eén componentenset voor twee merken",
-                    "body": "Randstad en Yacht kregen bij hun rebranding één set toegankelijke componenten die de nieuwe merkidentiteit op beide sites draagt."
+                    "title": "Eén componentenbibliotheek voor twee merken",
+                    "body": "Twee merken op één componentenbibliotheek, met de merkidentiteit als thema erbovenop. Toegankelijk vanaf het component."
                 },
                 {
                     "title": "Een platform waar externe partijen veilig op aansluiten",
-                    "body": "Bij Omniplan konden externe organisaties veilig op het platform aansluiten, zonder dat de systemen aan elkaar vast kwamen te zitten."
+                    "body": "Externe partijen sluiten aan via een afgesproken koppelvlak, zodat de systemen los van elkaar blijven staan."
                 }
             ],
             "readingLead": "Over toegankelijkheid in het component, mappenstructuur en tests, het werk dat in Amsterdam steeds terugkwam.",
@@ -2428,7 +2429,7 @@
                 },
                 {
                     "question": "Werk je ook voor opdrachtgevers buiten Amsterdam?",
-                    "answer": "Ja. Utrecht, Rotterdam en Den Haag hebben een eigen pagina, en remote werk ik vanuit Zandvoort voor het hele land."
+                    "answer": "Ja. De andere steden met een eigen pagina staan onderaan deze pagina, en remote werk ik vanuit Zandvoort voor het hele land."
                 }
             ],
             "closeTitle": "Zit je team in Amsterdam?",
@@ -2450,7 +2451,7 @@
             "shapes": [
                 {
                     "title": "Klantpagina's van legacy naar React, zonder onderbreking",
-                    "body": "Bij bol.com verhuisde ik de pagina's waar klanten hun abonnementen, software en games beheren van een verouderde Java-webshop naar een React-platform, zonder onderbreking voor klanten."
+                    "body": "Ik neem een klantpagina in zijn geheel over, lees eerst het oude systeem en zet hem live achter een schakelaar die per percentage opschaalt."
                 },
                 {
                     "title": "Backendwerk waar de capaciteit krap is",
@@ -2458,7 +2459,7 @@
                 },
                 {
                     "title": "Complexe processen in één beeld",
-                    "body": "Bij Bluefield Smart Access zagen beheerders complexe processen en netwerkstoringen in één beeld, in React met een .NET-backend."
+                    "body": "Een beheerdersscherm dat een complex proces in één beeld vat, in React op een .NET-backend."
                 }
             ],
             "readingLead": "Over live verkeer van een legacysysteem halen, GraphQL als contract met de backend en routing met server-side rendering, het werk dat in Utrecht terugkwam.",
@@ -2495,7 +2496,7 @@
             "shapes": [
                 {
                     "title": "Frontend en backend in één opdracht",
-                    "body": "Bij Opinity bouwde ik de frontend in Angular en de backend in ASP.NET Core in één opdracht, dus een team in Rotterdam kan mij ook de API-kant geven."
+                    "body": "Frontend en API in één paar handen, dus je hoeft de bouw niet over twee partijen te verdelen. Zo liep het bij Opinity ook."
                 }
             ],
             "readingLead": "Over een API in ASP.NET Core, hexagonale architectuur in C# en .NET, en tests, het werk dat in Rotterdam terugkwam.",

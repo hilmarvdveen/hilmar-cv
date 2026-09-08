@@ -21,7 +21,8 @@
             "name": "Hilmar van der Veen",
             "role": "Senior Frontend Engineer",
             "readerLine": "The pages your revenue comes from need rebuilding, and they cannot go offline while it happens.",
-            "ctaNote": "Reply within one business day. No obligation."
+            "ctaNote": "Straight into your calendar. No obligation.",
+            "factsLink": "Rate, availability and KVK"
         },
         "results": {
             "title": "What these engagements delivered",
@@ -38,7 +39,7 @@
                 },
                 {
                     "value": "months to days",
-                    "label": "A new tax form ready in days",
+                    "label": "A new income-tax form ready in days",
                     "detail": "at the Belastingdienst, where content editors now build the form themselves"
                 },
                 {
@@ -82,7 +83,7 @@
                 "GCP + Kubernetes",
                 "Sentry + RudderStack"
             ],
-            "linkLabel": "See the full work history"
+            "linkLabel": "Read the full engagement at bol.com"
         },
         "trackRecord": {
             "title": "Three live systems, replaced while they kept running",
@@ -90,7 +91,7 @@
             "cards": [
                 {
                     "meta": "Belastingdienst · 2023 to 2024",
-                    "headline": "A new income tax form, from months to a few days",
+                    "headline": "A new income-tax form, from months to a few days",
                     "body": "A low-code visual forms editor with drag and drop, conditional logic and validation, so content teams build and demo a form themselves. Plus a Stencil design system reused across Angular, React and Vue that cut new-page build time from one to two weeks down to one to two days.",
                     "tags": [
                         "Angular",
@@ -128,11 +129,11 @@
     },
             "title": "How the switch to live traffic stays predictable",
             "subtitle": "The whole chain up to that moment stays in one pair of hands. Five steps.",
-            "link": "How such a cut-over runs step by step, in an article",
+            "link": "How a cut-over runs, step by step, in an article",
             "steps": [
                 {
                     "title": "Read the legacy first",
-                    "body": "Reverse-engineer the old system, undocumented Java included, and check the reading with the engineers who own it, so the rebuild matches what runs today and no behaviour your customers rely on goes missing."
+                    "body": "Reverse-engineer the old system, undocumented Java included. I check that reading with the engineers who own it, so the rebuild matches what runs today and no behaviour your customers rely on goes missing."
                 },
                 {
                     "title": "Shape the contract",
@@ -165,7 +166,7 @@
                 },
                 {
                     "title": "Verification and handover",
-                    "body": "Co-located tests: behaviour gets a unit test with Vitest and Testing Library over GraphQL mocks, every visible scenario a Storybook story, and the flows money runs through a Playwright check. Written handover documentation, so a team with most of its weight in backend maintains the work on its own after the engagement."
+                    "body": "Tests next to the code: behaviour gets a unit test with Vitest and Testing Library over GraphQL mocks, every visible scenario a Storybook story, and the flows money runs through a Playwright check. Written handover documentation, so a team with most of its weight in backend maintains the work on its own after the engagement."
                 }
             ],
             "link": "How I test, in an article",
@@ -173,10 +174,11 @@
         },
         "validation": {
             "title": "Why clients extend",
+            "historyLink": "See all twelve engagements",
             "panels": [
                 {
                     "title": "Three extensions",
-                    "body": "bol.com extends contractors on delivered value. The engagement has run across two teams, Loyalty and then Digital.",
+                    "body": "The engagement started in Loyalty with the Select points page and carried on in Digital, with a new app and the cut-over off the legacy stack.",
                     "attribution": "bol.com, Loyalty and Digital teams, July 2025 to October 2026"
                 },
                 {
@@ -250,7 +252,7 @@
                 {
                     "label": "Location",
                     "href": "/freelance-frontend-developer",
-                    "value": "the Randstad, hybrid or remote",
+                    "value": "The Randstad, hybrid or remote",
                     "detail": "1 to 2 days on site works well",
                     "highlight": false
                 },
@@ -275,7 +277,7 @@
                 {
                     "label": "Rate",
                     "value": "€95 to €125 per hour",
-                    "detail": "Depending on project type and work, scope is set in the call.",
+                    "detail": "Depending on project type and work. We set the scope in the call.",
                     "highlight": false
                 }
             ],
@@ -291,8 +293,8 @@
                         "answer": "Tests, Storybook, accessibility and documentation are part of the work. I hand over to internal colleagues, with the documentation to carry it on."
                     },
                     {
-                        "question": "Can you work with our backend team?",
-                        "answer": "That is exactly what I get hired for. I have coordinated up to six teams in one shared monorepo."
+                        "question": "Do you work with our backend team?",
+                        "answer": "That is exactly what I get hired for. At bol.com I aligned with two teams routinely, and with up to six at once on a larger feature."
                     },
                     {
                         "question": "How does the contract work?",
@@ -350,7 +352,7 @@
         "clientLogos": {
             "title": "Delivered for",
             "subtitle": "Government, enterprise and e-commerce.",
-            "invite": "Click a logo to see what I delivered there."
+            "invite": "Pick a logo to see what I delivered there."
         },
         "map": {
             "period": "{from} to {to}",
@@ -400,6 +402,7 @@
             "projects": "Projects",
             "contact": "Contact",
             "faq": "FAQ",
+            "about": "About me",
             "services": "Services",
             "experience": "Work history",
             "book": "Book a call",
@@ -407,7 +410,8 @@
             "closeMenu": "Close menu",
             "language": "Language",
             "availability": "Available from 1 October 2026, earlier by arrangement",
-            "search": "Search"
+            "search": "Search",
+            "menuLabel": "Main menu"
         },
         "consent": {
             "text": "This site uses cookies for anonymous visit statistics. Your choice is remembered.",
@@ -443,7 +447,7 @@
             "others": "Other engagements"
         },
         "title": "Work history",
-        "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. If you want one of them in depth, thirty minutes is the shortest way there.",
+        "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. Each engagement has its own page with the whole story.",
         "metaDescription": "Twelve engagements since 2016, bol.com included, each with what it delivered, my role and the stack. Senior frontend engineer, React and Angular, freelance.",
         "cta": {
             "title": "Recognise one of these?",
@@ -459,7 +463,7 @@
     "work": {
         "sectionTitle": "Twelve engagements since 2016",
         "role": "Role",
-        "technologies": "Technologies",
+        "technologies": "Technology",
         "workMode": {
             "remote": "Remote",
             "onSite": "On site",
@@ -490,7 +494,7 @@
             "java8": "Java 8",
             "maven": "Maven",
             "git": "Git",
-            "npm": "NPM",
+            "npm": "npm",
             "jenkins": "Jenkins",
             "tekton": "Tekton",
             "argocd": "Argo CD",
@@ -511,37 +515,37 @@
             "Azure": "Azure",
             "MSSQL": "MSSQL",
             "TailwindCSS": "Tailwind CSS",
-            "NextJS": "NextJS",
+            "NextJS": "Next.js",
             "RxJS": "RxJS",
             "BEM": "BEM",
             "SCSS": "SCSS",
             "SVG": "SVG",
             "AWSLambda": "AWS Lambda",
-            "GitLabCI": "GitLabCI",
+            "GitLabCI": "GitLab CI",
             "Prettier": "Prettier",
             "HeadlessCMS": "Headless CMS",
-            "ReactQuery": "ReactQuery",
+            "ReactQuery": "React Query",
             "Zustand": "Zustand",
             "Jest": "Jest",
             "GitHub": "GitHub",
             "ComponentDesign": "Component Design",
-            "Gitlab": "Gitlab",
+            "Gitlab": "GitLab",
             "Bitbucket": "Bitbucket",
             "DotNetCore": ".Net Core",
             "AzureAppServices": "Azure App Services",
             "AzureCloud": "Azure Cloud",
             "EntityFramework": "Entity Framework",
             "Microservices": "Microservices",
-            "RestAPI": "RestAPI",
-            "ConfigurationDrivenUI": "Configuration Driven UI",
-            "DataDrivenUI": "Data Driven UI",
+            "RestAPI": "REST API",
+            "ConfigurationDrivenUI": "Configuration-driven UI",
+            "DataDrivenUI": "Data-driven UI",
             "Kubernetes": "Kubernetes",
             "xUnit": "xUnit",
             "AzureDevOps": "Azure DevOps",
             "AngularMaterial": "Angular Material",
             "AzureCosmosDB": "Azure Cosmos DB",
             "SQLServer": "SQL Server",
-            "ReactRouter": "ReactRouter",
+            "ReactRouter": "React Router",
             "Scrum": "Scrum",
             "SourceTree": "SourceTree",
             "NHibernate": "NHibernate",
@@ -618,14 +622,14 @@
                     "heading": "What stays behind"
                 }
             ],
-            "summary": "I moved the pages where bol.com customers manage their subscriptions, their software and their games off a legacy Java webshop onto a modern React platform. Those pages did not go offline along the way.",
+            "summary": "I moved the pages where bol.com customers manage subscriptions, software and games off a legacy Java storefront onto React, without taking them offline.",
             "delivered": [
-                "Customers manage subscriptions, software and games on the new React platform, moved page by page from the legacy Java shop",
+                "Customers manage subscriptions, software and games on the new React platform, moved page by page from the legacy Java storefront",
                 "Marketing changes the Kobo Plus acquisition page without an engineering deploy, through the headless CMS and a page registry",
-                "The live account pages moved without a customer-facing outage, ramped by percentage and reversible in one move",
+                "The live account pages moved a percentage at a time, every step reversible in one move",
                 "Product decisions rest on trustworthy numbers: nine experiments built and configured, funnels repaired, Sentry end to end"
             ],
-            "headline": "Loyalty and Digital on a new platform, without interruption"
+            "headline": "Loyalty and Digital on a new platform, with no customer-facing outage"
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -656,14 +660,14 @@
                     "heading": "What stays behind"
                 }
             ],
-            "summary": "At the Belastingdienst a new income-tax form went from months of engineering work to a few days. Content editors and designers built, checked and demoed it themselves.",
+            "summary": "A new income-tax form went from months of engineering to a few days, because content editors and designers build, check and demo it themselves.",
             "delivered": [
                 "Editors build, check and demo a new tax form themselves in the visual forms editor, in days where it took months",
                 "A new portal page takes one to two days where it took one to two weeks, from a data-driven Angular architecture",
                 "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
                 "Teams adopt the Bold design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
             ],
-            "headline": "From months to days for a new tax form"
+            "headline": "From months to days for a new income-tax form"
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -675,7 +679,7 @@
                 },
                 {
                     "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The first campaign site proved the approach, and the VriendenLoterij VIP-Kaarten campaign followed on the same components.",
-                    "heading": "One component set, a theme per label"
+                    "heading": "One design system, a theme per label"
                 },
                 {
                     "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, and GitLab pipelines and Docker put a campaign live. Playwright and Cypress keep watch over the existing campaigns while new ones arrive.",
@@ -686,14 +690,14 @@
                     "heading": "What stays behind"
                 }
             ],
-            "summary": "A new campaign site went from weeks to a few days, because every brand draws on the same set of components and the content lives in the CMS.",
+            "summary": "A new campaign site went from weeks to a few days, because every brand draws on the same design system and the content lives in the CMS.",
             "delivered": [
-                "A new campaign site is live in days where it took weeks, assembled from JSON on one component set",
+                "A new campaign site is live in days where it took weeks, assembled from JSON on one design system",
                 "A new label comes down to a theme: colours, buttons and animations change per brand, the logic stays",
                 "Marketing manages campaign content in Storyblok, accessible to WCAG 2.1 AA from the first day",
                 "Existing campaigns stay safe while new ones ship, guarded by Playwright and Cypress in GitLab pipelines"
             ],
-            "headline": "A campaign site in days, from one component set"
+            "headline": "A campaign site in days, from one design system"
         },
         "athlon": {
             "company": "Athlon",
@@ -738,7 +742,7 @@
             "role": "Frontend Developer / UI Coach",
             "body": [
                 {
-                    "paragraph": "Randstad and Yacht renewed their brand, and the existing sites had to follow. I rebuilt the front-end components for that in vanilla JavaScript, Angular and React, with SCSS and the BEM method so the structure stays the same across platforms. I also built the styling components for the Hippo Bloomreach headless CMS."
+                    "paragraph": "Randstad and Yacht renewed their brand, and the existing sites had to follow. I rebuilt the frontend components for that in vanilla JavaScript, Angular and React, with SCSS and the BEM method so the structure stays the same across platforms. I also built the styling components for the Hippo Bloomreach headless CMS."
                 },
                 {
                     "paragraph": "Pages and flows I aligned with the UX designers and the business, and design choices that did not hold up in code I raised while I was building them. Every visual and functional element was tested for accessibility and for behaviour across screen sizes."
@@ -749,11 +753,11 @@
             ],
             "summary": "During the rebranding, Randstad and Yacht got one set of accessible components that carries the new brand identity on both sites.",
             "delivered": [
-                "Randstad and Yacht carry the new brand on both sites from one accessible component set",
+                "Randstad and Yacht carry the new brand on both sites from one accessible component library",
                 "The same structure on every platform, in vanilla JavaScript, Angular and React with SCSS and BEM",
                 "Colleagues work component-driven in Angular after coaching as UI coach"
             ],
-            "headline": "One accessible component set for two brands"
+            "headline": "One accessible component library for two brands"
         },
         "opinity": {
             "company": "Opinity",
@@ -761,7 +765,7 @@
             "role": "Senior Fullstack Developer (Angular & .NET Core)",
             "body": [
                 {
-                    "paragraph": "Opinity needed a business-critical record of trips and freight, and there were four months to deliver it. I took on the front end and the backend both to make that work, and made the architectural calls as I went."
+                    "paragraph": "Opinity needed a business-critical record of trips and freight, and there were four months to deliver it. I took on the frontend and the backend both to make that work, and made the architectural calls as I went."
                 },
                 {
                     "paragraph": "The application is Angular at the front and ASP.NET Core behind it, with authentication and role-based access. Drivers enter the truck number, the pickup and delivery location, the weight on departure and on arrival, and the number of packages loaded and unloaded. Managers see those same entries and verify them. Validation sits in the interface and in the API, so a mistake surfaces at the moment someone makes it."
@@ -772,9 +776,9 @@
             ],
             "summary": "Drivers and managers record and check freight data in one application, delivered inside the four-month deadline.",
             "delivered": [
-                "Drivers record trips and freight on the road and managers verify the same entries, live inside four months",
+                "Drivers record trips and freight on the road and managers verify the same entries",
                 "Mistakes surface the moment someone makes them, with validation in the interface and in the API",
-                "One person carried front end and backend, Angular on ASP.NET Core with role-based access"
+                "One person carried frontend and backend, Angular on ASP.NET Core with role-based access"
             ],
             "headline": "Freight registration live inside four months"
         },
@@ -784,13 +788,13 @@
             "role": "Senior Fullstack Developer (Angular & .NET Core)",
             "body": [
                 {
-                    "paragraph": "The platform ran on AngularJS with a .NET backend of the same age. Omniplan wanted to work with outside organisations, and that asks for access you can grant per party. The existing setup did not allow it, so the front end and the backend were rebuilt together."
+                    "paragraph": "The platform ran on AngularJS with a .NET backend of the same age. Omniplan wanted to work with outside organisations, and that asks for access you can grant per party. The existing setup did not allow it, so the frontend and the backend were rebuilt together."
                 },
                 {
-                    "paragraph": "I migrated the front end to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity and JWT, which gives an outside organisation exactly the rights that belong to its role. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on MSSQL was laid out again."
+                    "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity and JWT, which gives an outside organisation exactly the rights that belong to its role. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on MSSQL was laid out again."
                 },
                 {
-                    "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new front-end code. Connecting a new partner became a matter of configuration."
+                    "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new frontend code. Connecting a new partner became a matter of configuration."
                 },
                 {
                     "paragraph": "I left a platform behind in which authorisation is a separate, reusable service. New integrations connect to it while the rest of the system stays as it is."
@@ -813,13 +817,13 @@
                     "paragraph": "Ortec builds planning software for logistics. FedEx wanted that planning visible to the people who run and follow the routes. The data sat spread across .NET Core microservices and kept changing, and that stream had to come together on one screen."
                 },
                 {
-                    "paragraph": "I built the Angular front end of the portal. It carries interactive route and geo visualisations, data tables with sorting and filtering, and forms that point out straight away what does not fit. Updates arrive through observables, so a change in the planning appears on screen without anyone refreshing. Screen behaviour comes from configuration, which lets the same components serve several views. The front end is set up as micro-frontends on top of the .NET Core microservices, so parts can be released on their own."
+                    "paragraph": "I built the Angular frontend of the portal. It carries interactive route and geo visualisations, data tables with sorting and filtering, and forms that point out straight away what does not fit. Updates arrive through observables, so a change in the planning appears on screen without anyone refreshing. Screen behaviour comes from configuration, which lets the same components serve several views. The frontend is set up as micro-frontends on top of the .NET Core microservices, so parts can be released on their own."
                 },
                 {
                     "paragraph": "Deployment ran through Docker to Azure inside a CI/CD pipeline, so a change reached the users without manual steps."
                 },
                 {
-                    "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the front end and the microservices in step while both sides changed. What stayed behind is a portal that takes new integrations and new views without a rebuild."
+                    "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the frontend and the microservices in step while both sides changed. What stayed behind is a portal that takes new integrations and new views without a rebuild."
                 }
             ],
             "summary": "FedEx staff follow routes, loads and delivery locations live on one screen in the portal.",
@@ -839,7 +843,7 @@
                     "paragraph": "At Bluefield Smart Access I worked for the clients Bluefield served, among them Ziggo and Tommy Hilfiger. The thread through all of it was the same. There was a lot of data, and the people working with it could not see where their attention was needed."
                 },
                 {
-                    "paragraph": "For the cycle dashboard I pulled the data out of a Neo4J graph database and put every cycle on screen as a tile with a status in colour. From a tile a user opens the diagnostics or starts a recovery action. The front end is React with a Redux architecture, the backend a .NET Web API."
+                    "paragraph": "For the cycle dashboard I pulled the data out of a Neo4J graph database and put every cycle on screen as a tile with a status in colour. From a tile a user opens the diagnostics or starts a recovery action. The frontend is React with a Redux architecture, the backend a .NET Web API."
                 },
                 {
                     "paragraph": "For Ziggo I built a WPF application for network administrators and a map view in React on which incidents appear as they happen, with faulty network nodes marked. It reached the C# microservices through an Angular layer, with RabbitMQ and MassTransit carrying the messages. For Tommy Hilfiger I built an application in which employees reserve a parking spot in a calendar and get an access ticket. All of it ran in a Docker pipeline."
@@ -882,18 +886,18 @@
             "role": "Fullstack Software Developer / Migration Specialist (VueJS & .NET)",
             "body": [
                 {
-                    "paragraph": "The CLASS learning platform ran on ASP.NET Web Forms and no longer met what its users and the accessibility rules asked of it. My assignment had two halves. Keep the existing application in service, and take the front end to VueJS step by step."
+                    "paragraph": "The CLASS learning platform ran on ASP.NET Web Forms and no longer met what its users and the accessibility rules asked of it. My assignment had two halves. Keep the existing application in service, and take the frontend to VueJS step by step."
                 },
                 {
-                    "paragraph": "I built a modular Vue front end with reusable UI elements, with attention to semantics and accessibility, and improved the validation and the error handling. The front end talks to the backend over REST WebAPIs, where CQRS and NHibernate carry the data flow. I covered the backend logic with xUnit, and we watched code quality with SonarQube."
+                    "paragraph": "I built a modular Vue frontend with reusable UI elements, with attention to semantics and accessibility, and improved the validation and the error handling. The frontend talks to the backend over REST WebAPIs, where CQRS and NHibernate carry the data flow. I covered the backend logic with xUnit, and we watched code quality with SonarQube."
                 },
                 {
                     "paragraph": "I was the point of contact for client reports under the SLA, ran the analyses into the cause, wrote the findings down and set the improvements in motion. In the Scrum team I contributed to planning sessions, demos and sprint reviews."
                 }
             ],
-            "summary": "The CLASS learning platform moved to a modern, accessible front end step by step while the existing environment stayed in service.",
+            "summary": "The CLASS learning platform moved to a modern, accessible frontend step by step while the existing environment stayed in service.",
             "delivered": [
-                "Learners got a modern, accessible front end in Vue, step by step, while the existing platform stayed in service",
+                "Learners got a modern, accessible frontend in Vue, step by step, while the existing platform stayed in service",
                 "Client reports under the SLA went from analysis to improvement with one point of contact",
                 "Backend logic on REST WebAPIs with CQRS and NHibernate, covered with xUnit"
             ],
@@ -924,7 +928,7 @@
         },
         "period": "{from} to {to}",
         "deliveredTitle": "What it changed",
-        "readMore": "Read the full engagement",
+        "readMore": "Read the full engagement at {company}",
         "earlierTitle": "Earlier engagements"
     },
     "projects": {
@@ -936,18 +940,17 @@
     },
         "hero": {
             "badge": "Case studies",
-            "title": "Four engagements, and what the client could measure afterwards",
+            "title": "Four engagements, and what changed for the client",
             "description": "Each card names the client, what changed for them, and what I built to get there. The full story of every engagement sits on the work history page."
         },
         "showcase": {
-            "title": "bol.com, Belastingdienst, Postcode Loterij and Athlon",
+            "title": "bol.com, Belastingdienst, Nationale Postcode Loterij and Athlon",
             "subtitle": "The outcome first, then the work that produced it."
         },
         "cases": [
             {
                 "outcome": "Up to 24% GMV on winning variants",
                 "client": "bol.com",
-                "title": "Loyalty and Digital onto a new platform, with no outage for customers",
                 "body": "bol.com moved its Select and Kobo Plus pages off a legacy Java storefront onto a server-rendered React platform, page by page and without an outage for customers. I built the pages from a reverse-engineered specification, settled the GraphQL contract with the backend engineers and ran the cut-over of the live account pages in reversible steps. Nine A/B experiments followed on the same pages. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest.",
                 "roleLabel": "Senior frontend, Loyalty and Digital",
                 "href": "/experience/bol"
@@ -955,7 +958,6 @@
             {
                 "outcome": "Months to days",
                 "client": "Belastingdienst",
-                "title": "A tax form that content editors build themselves",
                 "body": "A new income-tax form used to take months of engineering. I built a low-code visual forms editor in which content editors and designers assemble, check and demo a form themselves, on a data-driven Angular architecture that also took a new portal page from weeks to days. Accessibility stayed at WCAG 2.1 AA, verified in the pipeline.",
                 "roleLabel": "Senior Frontend Developer, forms editor and design system",
                 "href": "/experience/belastingdienst"
@@ -963,7 +965,6 @@
             {
                 "outcome": "Weeks to days",
                 "client": "Nationale Postcode Loterij",
-                "title": "Campaign sites out of a JSON-driven design system",
                 "body": "Campaign sites for the European lottery labels took weeks to set up. I built a JSON-driven design system in an Nx monorepo, with Storyblok as the headless CMS, server rendering in Next.js and WCAG 2.1 AA built into the components. A new campaign now goes live in days, and a new label comes down to a theme.",
                 "roleLabel": "Senior Frontend Developer, design system",
                 "href": "/experience/postcode-loterij"
@@ -971,7 +972,6 @@
             {
                 "outcome": "Angular 1.6 to Angular 12",
                 "client": "Athlon",
-                "title": "A legacy application moved onto a modern stack",
                 "body": "Athlon's self-service application ran on Angular 1.6. I led the migration to Angular 12 with a component library, dynamic dashboards and WCAG 2.1 AA, and coached the frontend team, junior and senior, through code reviews along the way.",
                 "roleLabel": "Senior Frontend Developer, migration and coaching",
                 "href": "/experience/athlon"
@@ -1016,7 +1016,6 @@
             "startPlaceholder": "For example 1 October 2026"
         },
         "cta": {
-            "description": "Rather talk it through? Pick a moment that suits you and we go through the system in thirty minutes.",
             "button": "Book a 30-minute call"
         },
         "direct": {
@@ -1028,7 +1027,7 @@
                 },
                 {
                     "label": "Call",
-                    "hint": "Weekdays, and I call back when I miss you"
+                    "hint": "Weekdays, and I call back if I miss your call"
                 },
                 {
                     "label": "WhatsApp",
@@ -1065,7 +1064,7 @@
     "services": {
         "hero": {
             "badge": "Freelance senior frontend engineer",
-            "title": "The pages where the money comes in, rebuilt without interruption",
+            "title": "The pages where the money comes in, rebuilt with no outage",
             "description": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards. The four services below are the shapes that work usually takes."
         },
         "main": {
@@ -1075,8 +1074,8 @@
                 "frontend": {
                     "outcome": "The page stays open while it is rebuilt.",
                     "title": "Frontend Development",
-                    "shortDescription": "A page that customers buy through is stuck on a stack you can no longer change quickly. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, page by page, while customers kept using them.",
-                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live without a stop. The old behaviour comes first. I read the existing system to work out exactly what a page does, then rebuild it. It ships behind a switch that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team.",
+                    "shortDescription": "A page that customers buy through is stuck on a stack you can no longer change quickly. At bol.com I moved the Kobo Plus and Select pages off the legacy Java storefront onto React, page by page, while customers kept using them.",
+                    "fullDescription": "I rebuild the pages customers use in React or Angular and put them live with no outage. The old behaviour comes first. I read the existing system to work out exactly what a page does, then rebuild it. It ships behind a switch that ramps by percentage and can be turned back in one step. On those same pages I built and configured nine A/B experiments with the designer and the business team.",
                     "technologies": {
                         "title": "Technologies and tools"
                     },
@@ -1149,8 +1148,8 @@
             "hero": {
                 "badge": "Frontend Development",
                 "title": "Pages that earn,",
-                "titleAccent": "rebuilt without interruption",
-                "description": "A page customers buy through is stuck on a platform you can no longer change quickly, and every release feels risky. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, one page at a time. I ran the traffic cut-over myself. Employees first, then a percentage of customers, ramping to everyone, reversible at every step.",
+                "titleAccent": "rebuilt with no outage",
+                "description": "A page customers buy through is stuck on a platform you can no longer change quickly, and every release feels risky. At bol.com I moved the Kobo Plus and Select pages off the legacy Java storefront onto React, one page at a time. I ran the traffic cut-over myself. Employees first, then a percentage of customers, ramping to everyone, reversible at every step.",
                 "features": [
                     "Live behind a switch, ramped by percentage",
                     "WCAG 2.2 AA as the default"
@@ -1272,11 +1271,11 @@
                 "description": "Tell me which page has to move and what it is stuck on. After thirty minutes you know how that move would run in reversible steps.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
-                "action": "Discuss the page"
+                "action": "Send a message about the page"
             },
             "engagement": {
                 "title": "How the engagement works",
-                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. Four things you get, and the terms they run on.",
+                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. These are the four things you hold at the end.",
                 "deliverables": [
                     {
                         "title": "The rebuilt page in production",
@@ -1322,7 +1321,7 @@
             "benefits": {
                 "articleLabel": "An API in ASP.NET Core, in an article",
                 "title": "What you get",
-                "description": "An application where the data layer and the interface were designed against each other, not stitched together at the end.",
+                "description": "An application where the data layer and the interface were designed together.",
                 "items": [
                     {
                         "title": "No handoff at the API boundary",
@@ -1334,7 +1333,7 @@
                     },
                     {
                         "title": "Login, roles and permissions",
-                        "description": "Authentication, roles and permissions are designed with the data, not bolted on at the end."
+                        "description": "Authentication, roles and permissions are designed along with the data."
                     },
                     {
                         "title": "Shipped on your cloud",
@@ -1470,11 +1469,11 @@
                 "description": "Describe the application and where the backend stands today. After thirty minutes you know the order I would build it in.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
-                "action": "Discuss the build"
+                "action": "Send a message about the build"
             },
             "engagement": {
                 "title": "How the engagement works",
-                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. Four things you get, and the terms they run on.",
+                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. These are the four things you hold at the end.",
                 "deliverables": [
                     {
                         "title": "The application in production",
@@ -1540,7 +1539,7 @@
                 ]
             },
             "benefits": {
-                "articleLabel": "WCAG 2.2 AA inside the component, in an article",
+                "articleLabel": "WCAG 2.2 AA in the component, in an article",
                 "items": [
                     {
                         "title": "Pages in days",
@@ -1560,7 +1559,7 @@
                     },
                     {
                         "title": "Content people can steer it",
-                        "description": "The Postcode Loterij system was JSON-driven with a headless CMS, so a campaign page is configured and not coded."
+                        "description": "The Nationale Postcode Loterij system was JSON-driven with a headless CMS, so a campaign page is configured and not coded."
                     },
                     {
                         "title": "Adoption is part of it",
@@ -1568,7 +1567,7 @@
                     }
                 ],
                 "title": "What changes for your teams",
-                "description": "A library is only worth what the teams actually use, so adoption is part of the work."
+                "description": "A library pays off only once the teams actually use it, so I build the adoption with them."
             },
             "technologies": {
                 "title": "Technologies and tools",
@@ -1649,11 +1648,11 @@
                 "description": "Tell me how many products share a brand and which frameworks they run on. After thirty minutes you know which components could be shared first.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
-                "action": "Scope the migration"
+                "action": "Send a message about the design system"
             },
             "engagement": {
                 "title": "How the engagement works",
-                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. Four things you get, and the terms they run on.",
+                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. These are the four things you hold at the end.",
                 "deliverables": [
                     {
                         "title": "A versioned component package",
@@ -1742,7 +1741,7 @@
                     },
                     {
                         "title": "Security in practice",
-                        "description": "Certified Secure training on secure development, full-stack vulnerabilities, Kubernetes network security and personal data under the GDPR."
+                        "description": "A review also looks at what a page does with personal data and where input enters the application. The Certified Secure curriculum sits underneath that."
                     }
                 ],
                 "title": "What the team keeps",
@@ -1799,11 +1798,11 @@
                 "description": "Tell me about the codebase, the framework and where the time goes. After thirty minutes you know which part I would take on first.",
                 "bookConsultation": "Book a 30-minute call",
                 "viewAllServices": "See all services",
-                "action": "Scope the team work"
+                "action": "Send a message about the team"
             },
             "engagement": {
                 "title": "How the engagement works",
-                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. Four things you get, and the terms they run on.",
+                "description": "Freelance, through Hilmar ICT Services, on an assignment contract per engagement. These are the four things you hold at the end.",
                 "deliverables": [
                     {
                         "title": "The written review",
@@ -1890,7 +1889,7 @@
                 },
                 {
                     "title": "Accessibility and privacy",
-                    "body": "Accessibility to WCAG 2.1 AA is part of the work and not a phase at the end, and 2.2 AA on the most recent engagements. GDPR training on personal data and EU AI Act literacy come with it."
+                    "body": "Accessibility belongs to the building and not to a phase at the end. WCAG 2.1 AA on the 2020 to 2024 engagements, and 2.2 AA at bol.com. GDPR training on personal data and EU AI Act literacy come with it."
                 },
                 {
                     "title": "Verification and handover",
@@ -1998,7 +1997,7 @@
                 "questions": [
                     {
                         "question": "What does the frontend work look like in practice?",
-                        "answer": "I rebuild pages customers use, in React or Angular, and put them live without a stop. At bol.com I moved the Kobo Plus and Select pages off the legacy Java webshop onto React, page by page, and ran the traffic cut-over. Employees first, then a percentage of customers, ramping to everyone, reversible at every step."
+                        "answer": "I rebuild pages customers use, in React or Angular, and put them live with no outage. At bol.com I moved the Kobo Plus and Select pages off the legacy Java storefront onto React, page by page, and ran the traffic cut-over. Employees first, then a percentage of customers, ramping to everyone, reversible at every step."
                     },
                     {
                         "question": "Do you also build the backend?",
@@ -2080,7 +2079,7 @@
                     },
                     {
                         "question": "Do you work with experiments and measurement?",
-                        "answer": "Yes, when the page is commercial. At bol.com I built nine A/B experiments in code and configured them in the experimentation tool, with the designer and the business team. I also repaired tracking that carried placeholder identifiers, because a funnel is only worth what its data says."
+                        "answer": "Yes, when the page is commercial. At bol.com I built nine A/B experiments in code and configured them in the experimentation tool, with the designer and the business team. I also repaired tracking that carried placeholder identifiers, because a funnel is worth no more than the data underneath it."
                     },
                     {
                         "question": "How do you handle performance?",
@@ -2093,7 +2092,7 @@
                 "questions": [
                     {
                         "question": "Do you work on site or remote?",
-                        "answer": "Hybrid, with one to two days a week on site in the Randstad, and fully remote works too. Amsterdam, Utrecht, Rotterdam and Den Haag are within reach on the same terms. I am based in Zandvoort and work in the Dutch timezone."
+                        "answer": "Hybrid, with one to two days a week on site, and fully remote works too. I am based in Zandvoort and work in the Dutch timezone."
                     },
                     {
                         "question": "Can you work inside our existing team?",
@@ -2105,7 +2104,7 @@
                     },
                     {
                         "question": "How do the Dutch DBA rules apply to this?",
-                        "answer": "I work as an independent contractor through Hilmar ICT Services (KVK 97564303), on an assignment contract per engagement. That contract names the assignment, the scope and the deliverables. I decide myself how the work is carried out, and I invoice monthly on hours worked. There is no employment relationship, and no agency or secondment construction. We settle the wording of the contract before the start, and your own legal people read it with you."
+                        "answer": "The contract names the assignment, the scope and the deliverables. I decide myself how the work is carried out. There is no employment relationship, and no agency or secondment construction. We settle the wording before the start, and your own legal people read it with you."
                     },
                     {
                         "question": "How do you handle confidentiality and intellectual property?",
@@ -2277,7 +2276,7 @@
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React and Angular, in the Randstad and remote.",
             "location": "Zandvoort NL • the Randstad, hybrid or remote",
-            "availability": "Available from 1 October 2026"
+            "availability": "Available from 1 October 2026, earlier by arrangement"
         },
         "services": {
             "title": "Services",
@@ -2330,14 +2329,16 @@
         "publishedOn": "Published",
         "updatedOn": "Updated",
         "writtenBy": "Hilmar van der Veen",
-        "readArticle": "Read article",
+        "readArticle": "Read the article",
         "backToList": "Back to all articles",
         "category": {
             "architecture": "Architecture",
             "testing": "Testing",
             "seo": "SEO",
             "routing": "Routing",
-            "fundamentals": "Fundamentals"
+            "fundamentals": "Fundamentals",
+            "accessibility": "Accessibility",
+            "api": "APIs"
         },
         "track": {
           "frontend": "Frontend",
@@ -2351,7 +2352,7 @@
         },
         "cta": {
             "title": "Does your team run into this too?",
-            "text": "I work on exactly these questions as a freelance senior frontend engineer. Tell me what is going on at your end and you hear whether I am the right person for it.",
+            "text": "I work on exactly these questions as a freelance senior frontend engineer. Tell me what is going on at your end and I will tell you whether I am the right person for it.",
             "button": "Book a 30-minute call"
         },
         "breadcrumbLabel": "Breadcrumb",
@@ -2360,15 +2361,15 @@
     "regions": {
         "hub": {
             "title": "Hire a freelance frontend developer in the Randstad",
-            "description": "Where I work: Amsterdam, Utrecht, Rotterdam and The Hague, hybrid or remote. Twelve engagements since 2016. Available from 1 October 2026.",
+            "description": "Where I work: {cities}, hybrid or remote. Twelve engagements since 2016. Available from 1 October 2026.",
             "heroTitle": "Hire a freelance frontend developer in the Randstad",
-            "heroDescription": "From Zandvoort I work for clients in Amsterdam, Utrecht, Rotterdam and The Hague. One or two days a week on site, the rest remote.",
+            "heroDescription": "From Zandvoort I work for clients in {cities}. One or two days a week on site, the rest remote.",
             "baseTitle": "Home base and rhythm",
             "baseBody": "Hilmar ICT Services is based in Zandvoort. Amsterdam is half an hour by train, The Hague a little over three quarters of an hour, and Utrecht and Rotterdam a little over an hour. One or two days a week on site works well, with refinement and review on fixed days. The other days I work remote, in Dutch or in English.",
-            "citiesTitle": "Four cities with a page of their own",
+            "citiesTitle": "{count, plural, =3 {Three cities with a page of their own} =4 {Four cities with a page of their own} other {# cities with a page of their own}}",
             "cityLink": "Working in {city}",
             "restTitle": "The rest of the map",
-            "restBody": "The engagements outside those four cities, each with its own page under work history.",
+            "restBody": "The engagements outside those {count, plural, =3 {three} =4 {four} other {#}} cities, each with its own page under work history.",
             "remoteTitle": "Remote",
             "remoteBody": "At Athlon I worked fully remote on an Angular migration from 2020 to 2022. At bol.com and the Belastingdienst it was hybrid, with fixed office days. Both work as long as refinement and review happen at fixed moments and the team talks in the code reviews.",
             "closeTitle": "Tell me which city your team is in",
@@ -2395,8 +2396,8 @@
             "description": "Senior frontend developer, freelance. {count} engagements in Amsterdam, among them Nationale Postcode Loterij. Available from 1 October 2026.",
             "heroTitle": "Freelance frontend developer in Amsterdam",
             "heroDescription": "{count} of my {total} engagements since 2016 were in Amsterdam. From Zandvoort that is a thirty-minute direct train.",
-            "hubLine": "{count} engagements, from a design system for Nationale Postcode Loterij to one component set for Randstad and Yacht.",
-            "engagementsLead": "{count} engagements in Amsterdam, from a campaign system for Nationale Postcode Loterij to a component set for Randstad and Yacht.",
+            "hubLine": "{count} engagements, from a design system for Nationale Postcode Loterij to one component library for Randstad and Yacht.",
+            "engagementsLead": "{count} engagements in Amsterdam, from a campaign system for Nationale Postcode Loterij to a component library for Randstad and Yacht.",
             "travel": [
                 "Zandvoort to Amsterdam Centraal is half an hour, direct by train.",
                 "At Conclusion, Randstad and Omniplan I worked on site in Amsterdam, at Nationale Postcode Loterij hybrid.",
@@ -2405,15 +2406,15 @@
             "shapes": [
                 {
                     "title": "A design system that puts campaigns live in days",
-                    "body": "At Nationale Postcode Loterij a new campaign site went from weeks to a few days, with a JSON-driven design system that marketing operates itself."
+                    "body": "I put down a component set marketing assembles a campaign page from itself, so a new campaign goes live in days."
                 },
                 {
-                    "title": "One component set for two brands",
-                    "body": "Randstad and Yacht received one set of accessible components in their rebranding that carries the new brand identity on both sites."
+                    "title": "One component library for two brands",
+                    "body": "Two brands on one component library, with the brand identity as a theme on top. Accessible from the component up."
                 },
                 {
                     "title": "A platform external parties connect to safely",
-                    "body": "At Omniplan external organisations could connect to the platform safely, without the systems being welded together."
+                    "body": "External parties connect through an agreed interface, so the systems stay independent of each other."
                 }
             ],
             "readingLead": "On accessibility inside the component, folder structure and tests, the work that kept coming back in Amsterdam.",
@@ -2428,7 +2429,7 @@
                 },
                 {
                     "question": "Do you also work for clients outside Amsterdam?",
-                    "answer": "Yes. Utrecht, Rotterdam and The Hague have pages of their own, and remote I work from Zandvoort for the whole country."
+                    "answer": "Yes. The other cities with a page of their own are listed at the foot of this page, and remote I work from Zandvoort for the whole country."
                 }
             ],
             "closeTitle": "Is your team in Amsterdam?",
@@ -2449,8 +2450,8 @@
             ],
             "shapes": [
                 {
-                    "title": "Customer pages from legacy to React, without interruption",
-                    "body": "At bol.com I moved the pages where customers manage their subscriptions, software and games from an ageing Java storefront to a React platform, without interruption for customers."
+                    "title": "Customer pages from legacy to React, with no outage",
+                    "body": "I take a customer page on as a whole, read the old system first, and put it live behind a switch that ramps by percentage."
                 },
                 {
                     "title": "Backend work where capacity is tight",
@@ -2458,7 +2459,7 @@
                 },
                 {
                     "title": "Complex processes in one view",
-                    "body": "At Bluefield Smart Access administrators saw complex processes and network faults in one view, in React with a .NET backend."
+                    "body": "An operator screen that holds a complex process in one view, in React on a .NET backend."
                 }
             ],
             "readingLead": "On moving live traffic off a legacy system, GraphQL as a contract with the backend and routing with server-side rendering, the work that came back in Utrecht.",
@@ -2495,7 +2496,7 @@
             "shapes": [
                 {
                     "title": "Frontend and backend in one engagement",
-                    "body": "At Opinity I built the frontend in Angular and the backend in ASP.NET Core in one engagement, so a team in Rotterdam can hand me the API side as well."
+                    "body": "Frontend and API in one pair of hands, so you do not have to split the build over two parties. That is how it ran at Opinity too."
                 }
             ],
             "readingLead": "On an API in ASP.NET Core, hexagonal architecture in C# and .NET, and tests, the work that came back in Rotterdam.",
