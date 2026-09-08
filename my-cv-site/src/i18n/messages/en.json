@@ -1887,7 +1887,10 @@
             "company": "company",
             "companies": "companies"
           },
-          "tapLocation": "Select a city to see the work there"
+          "tapLocation": "Select a city or a province to see the work there",
+          "provinceSummary": "{companies, plural, one {# company} other {# companies}} in {cities, plural, one {# city} other {# cities}}",
+          "provinceAriaLabel": "{province}, province where I worked",
+          "provinceCities": "Cities in this province"
         },
         "hiring": {
           "eyebrow": "Practical",

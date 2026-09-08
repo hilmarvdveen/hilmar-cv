@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NetherlandsMap } from "./NetherlandsMap";
-import { MAP_VIEWBOX } from "../netherlandsMapData";
+import { MAP_COLORS, MAP_VIEWBOX } from "../netherlandsMapData";
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
@@ -27,6 +27,34 @@ const netherlandsOutline = {
           ],
         ],
       },
+    },
+  ],
+};
+
+const provinceBox = (west: number, south: number, east: number, north: number) => [
+  [
+    [west, south],
+    [east, south],
+    [east, north],
+    [west, north],
+    [west, south],
+  ],
+];
+
+const twoProvinces = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      id: "noord-holland",
+      properties: { statnaam: "Noord-Holland" },
+      geometry: { type: "Polygon", coordinates: provinceBox(4.5, 52.2, 5.3, 53.0) },
+    },
+    {
+      type: "Feature",
+      id: "limburg",
+      properties: { statnaam: "Limburg" },
+      geometry: { type: "Polygon", coordinates: provinceBox(5.7, 50.8, 6.2, 51.8) },
     },
   ],
 };
@@ -208,5 +236,120 @@ describe("NetherlandsMap city hit targets", () => {
     expect(await screen.findByText("Bluefield Smart Access")).toBeInTheDocument();
     fireEvent.click(getChip("Amsterdam"));
     expect(await screen.findByText("Nationale Postcode Loterij")).toBeInTheDocument();
+  });
+});
+
+describe("NetherlandsMap provinces", () => {
+  beforeEach(() => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve(twoProvinces),
+      })
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const mapPaths = () =>
+    Array.from(screen.getByLabelText("mapAriaLabel").querySelectorAll<SVGPathElement>("path"));
+
+  const provinceButtons = () => screen.getAllByRole("button", { name: "provinceAriaLabel" });
+
+  const findProvinceButton = () =>
+    waitFor(() => {
+      const [province] = provinceButtons();
+      if (!province) throw new Error("no province drawn yet");
+      return province;
+    });
+
+  const panelCityButton = (name: string) => {
+    const buttons = screen
+      .getAllByRole("button", { name })
+      .filter((element) => element.tagName.toLowerCase() === "button");
+    return buttons[buttons.length - 1];
+  };
+
+  it("draws the province worked in as a named button and the other as a plain shape", async () => {
+    render(<NetherlandsMap />);
+    await waitFor(() => expect(mapPaths()).toHaveLength(2));
+    const provinces = provinceButtons();
+    expect(provinces).toHaveLength(1);
+    expect(provinces[0]).toHaveAttribute("tabindex", "0");
+    const plain = mapPaths().find((path) => path !== provinces[0])!;
+    expect(plain).not.toHaveAttribute("role");
+    expect(plain).not.toHaveAttribute("tabindex");
+    expect(plain.style.cursor).toBe("default");
+  });
+
+  it("shows the province, its counts and every engagement in it when it is clicked", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.click(await findProvinceButton());
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Noord-Holland" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("provinceSummary")).toBeInTheDocument();
+    expect(screen.getByText("provinceCities")).toBeInTheDocument();
+    for (const company of [
+      "Conclusion",
+      "Randstad",
+      "Nationale Postcode Loterij",
+      "Omniplan",
+      "Transdev",
+      "Niped",
+    ]) {
+      expect(screen.getByText(company)).toBeInTheDocument();
+    }
+  });
+
+  it("selects the province when Enter is pressed on it", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.keyDown(await findProvinceButton(), { key: "Enter" });
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Noord-Holland" })
+    ).toBeInTheDocument();
+  });
+
+  it("selects the province when Space is pressed on it", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.keyDown(await findProvinceButton(), { key: " " });
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Noord-Holland" })
+    ).toBeInTheDocument();
+  });
+
+  it("ignores keys other than Enter and Space on a province", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.keyDown(await findProvinceButton(), { key: "Tab" });
+    expect(screen.queryByRole("heading", { level: 3, name: "Noord-Holland" })).toBeNull();
+  });
+
+  it("opens the city from inside the province panel", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.click(await findProvinceButton());
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Noord-Holland" })
+    ).toBeInTheDocument();
+    fireEvent.click(panelCityButton("Amsterdam"));
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Amsterdam" })
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 3, name: "Noord-Holland" })).toBeNull();
+  });
+
+  it("paints the selected province and hands the fill back when a city is chosen", async () => {
+    render(<NetherlandsMap />);
+    fireEvent.click(await findProvinceButton());
+    await waitFor(() =>
+      expect(provinceButtons()[0]).toHaveAttribute("fill", MAP_COLORS.primary)
+    );
+    fireEvent.click(getChip("Amsterdam"));
+    await waitFor(() =>
+      expect(provinceButtons()[0]).toHaveAttribute("fill", MAP_COLORS.primaryLight)
+    );
   });
 });

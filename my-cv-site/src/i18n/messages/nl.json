@@ -2251,7 +2251,10 @@
             "company": "bedrijf",
             "companies": "bedrijven"
           },
-          "tapLocation": "Kies een stad om te zien wat ik daar deed"
+          "tapLocation": "Kies een stad of een provincie om te zien wat ik daar deed",
+          "provinceSummary": "{companies, plural, one {# bedrijf} other {# bedrijven}} in {cities, plural, one {# stad} other {# steden}}",
+          "provinceAriaLabel": "{province}, provincie waar ik werkte",
+          "provinceCities": "Steden in deze provincie"
         },
         "hiring": {
           "eyebrow": "Praktisch",

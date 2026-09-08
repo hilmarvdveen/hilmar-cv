@@ -10,16 +10,9 @@ export const MAP_COLORS = {
   home: "#047857",
 };
 
-export const highlightedRegions = [
-  "Noord-Holland",
-  "Utrecht",
-  "Zuid-Holland",
-  "Gelderland",
-  "Flevoland",
-];
-
 export type CityLocation = {
   name: string;
+  province: string;
   coordinates: [number, number];
   companies: string[];
   isHome?: boolean;
@@ -28,40 +21,74 @@ export type CityLocation = {
 export const workCities: CityLocation[] = [
   {
     name: HOME_CITY_NAME,
+    province: "Noord-Holland",
     coordinates: [4.5386, 52.3749],
     companies: ["Home Base"],
     isHome: true,
   },
   {
     name: "Amsterdam",
+    province: "Noord-Holland",
     coordinates: [4.8952, 52.3702],
     companies: ["Conclusion", "Randstad", "Nationale Postcode Loterij", "Omniplan"],
   },
   {
     name: "Apeldoorn",
+    province: "Gelderland",
     coordinates: [5.9699, 52.2112],
     companies: ["Belastingdienst"],
   },
   {
     name: "Hilversum",
+    province: "Noord-Holland",
     coordinates: [5.1606, 52.2292],
     companies: ["Transdev"],
   },
-  { name: "Hoorn", coordinates: [5.0594, 52.6425], companies: ["Niped"] },
-  { name: "Utrecht", coordinates: [5.1214, 52.0907], companies: ["Bluefield Smart Access", "bol.com"] },
-  { name: "Zoetermeer", coordinates: [4.4933, 52.0607], companies: ["Ortec"] },
-  { name: "Almere", coordinates: [5.2141, 52.3508], companies: ["Athlon"] },
+  {
+    name: "Hoorn",
+    province: "Noord-Holland",
+    coordinates: [5.0594, 52.6425],
+    companies: ["Niped"],
+  },
+  {
+    name: "Utrecht",
+    province: "Utrecht",
+    coordinates: [5.1214, 52.0907],
+    companies: ["Bluefield Smart Access", "bol.com"],
+  },
+  {
+    name: "Zoetermeer",
+    province: "Zuid-Holland",
+    coordinates: [4.4933, 52.0607],
+    companies: ["Ortec"],
+  },
+  {
+    name: "Almere",
+    province: "Flevoland",
+    coordinates: [5.2141, 52.3508],
+    companies: ["Athlon"],
+  },
   {
     name: "Rotterdam",
+    province: "Zuid-Holland",
     coordinates: [4.47917, 51.9225],
     companies: ["Opinity"],
   },
 ];
 
-export const workCityCount = workCities.filter((city) => !city.isHome).length;
+const engagementCities = workCities.filter((city) => !city.isHome);
+
+export const workCitiesInProvince = (province: string) =>
+  engagementCities.filter((city) => city.province === province);
+
+export const highlightedRegions = Array.from(
+  new Set(engagementCities.map((city) => city.province))
+);
+
+export const workCityCount = engagementCities.length;
 
 export const highlightedRegionCount = highlightedRegions.length;
 
 export const workCompanyCount = new Set(
-  workCities.filter((city) => !city.isHome).flatMap((city) => city.companies)
+  engagementCities.flatMap((city) => city.companies)
 ).size;

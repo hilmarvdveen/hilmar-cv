@@ -13,6 +13,7 @@ export type MapDrawingLabels = {
   company: string;
   companies: string;
   home: string;
+  province: (province: string) => string;
 };
 
 type MapDrawingOptions = {
@@ -20,7 +21,9 @@ type MapDrawingOptions = {
   tooltipRef: RefObject<HTMLDivElement | null>;
   containerRef: RefObject<HTMLDivElement | null>;
   selectedCity: CityLocation | null;
+  selectedProvince: string | null;
   onSelectCity: (city: CityLocation) => void;
+  onSelectProvince: (province: string) => void;
   labels: MapDrawingLabels;
 };
 
@@ -29,10 +32,18 @@ const MAP_PADDING = 12;
 const HIT_TARGET_RADIUS = 12;
 const MOBILE_BREAKPOINT = 768;
 
-const regionFill = (feature: ProvinceFeature, hovered: boolean) => {
-  const highlighted = highlightedRegions.includes(feature.properties.statnaam);
-  if (hovered) return highlighted ? MAP_COLORS.primary : "#e5e7eb";
-  return highlighted ? MAP_COLORS.primaryLight : MAP_COLORS.secondary;
+const isWorkedProvince = (feature: ProvinceFeature) =>
+  highlightedRegions.includes(feature.properties.statnaam);
+
+const regionFill = (
+  feature: ProvinceFeature,
+  hovered: boolean,
+  selectedProvince: string | null
+) => {
+  if (feature.properties.statnaam === selectedProvince) return MAP_COLORS.primary;
+  const worked = isWorkedProvince(feature);
+  if (hovered) return worked ? MAP_COLORS.primary : "#e5e7eb";
+  return worked ? MAP_COLORS.primaryLight : MAP_COLORS.secondary;
 };
 
 export function useNetherlandsMapDrawing({
@@ -40,7 +51,9 @@ export function useNetherlandsMapDrawing({
   tooltipRef,
   containerRef,
   selectedCity,
+  selectedProvince,
   onSelectCity,
+  onSelectProvince,
   labels,
 }: MapDrawingOptions) {
   useEffect(() => {
@@ -98,26 +111,41 @@ export function useNetherlandsMapDrawing({
       const renderedWidth = svgRef.current?.getBoundingClientRect().width || MAP_VIEWBOX.width;
       const unitsPerPixel = MAP_VIEWBOX.width / renderedWidth;
 
-      svg
+      const provincePaths = svg
         .selectAll<SVGPathElement, ProvinceFeature>("path")
         .data(geoData.features)
         .join("path")
         .attr("d", (feature) => pathGenerator(feature) ?? "")
-        .attr("fill", (feature) => regionFill(feature, false))
+        .attr("fill", (feature) => regionFill(feature, false, selectedProvince))
         .attr("stroke", "#ffffff")
         .attr("stroke-width", 1)
-        .style("cursor", "pointer")
+        .style("cursor", (feature) => (isWorkedProvince(feature) ? "pointer" : "default"))
         .style("transition", "all 0.2s ease")
         .on("mouseenter touchstart", (event, feature) => {
-          d3.select(event.currentTarget).attr("fill", regionFill(feature, true));
+          d3.select(event.currentTarget).attr("fill", regionFill(feature, true, selectedProvince));
           if (!isMobile) {
             showTooltip(event, `<div class="font-medium">${feature.properties.statnaam}</div>`);
           }
         })
         .on("mouseleave touchend", (event, feature) => {
-          d3.select(event.currentTarget).attr("fill", regionFill(feature, false));
+          d3.select(event.currentTarget).attr("fill", regionFill(feature, false, selectedProvince));
           if (!isMobile) {
             hideTooltip();
+          }
+        });
+
+      provincePaths
+        .filter((feature) => isWorkedProvince(feature))
+        .attr("role", "button")
+        .attr("tabindex", 0)
+        .attr("aria-label", (feature) => labels.province(feature.properties.statnaam))
+        .on("click", (event, feature) => {
+          onSelectProvince(feature.properties.statnaam);
+        })
+        .on("keydown", (event, feature) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onSelectProvince(feature.properties.statnaam);
           }
         });
 
@@ -226,5 +254,14 @@ export function useNetherlandsMapDrawing({
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [svgRef, tooltipRef, containerRef, labels, selectedCity, onSelectCity]);
+  }, [
+    svgRef,
+    tooltipRef,
+    containerRef,
+    labels,
+    selectedCity,
+    selectedProvince,
+    onSelectCity,
+    onSelectProvince,
+  ]);
 }
