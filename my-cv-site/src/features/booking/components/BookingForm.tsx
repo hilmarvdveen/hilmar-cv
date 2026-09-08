@@ -408,7 +408,7 @@ export const BookingForm = () => {
                 className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:h-[68px] ${
                   selected
                     ? "border-emerald-700 bg-emerald-700 text-white"
-                    : "border-gray-200 bg-white text-textMain hover:border-emerald-600"
+                    : "border-gray-500 bg-white text-textMain hover:border-emerald-600"
                 }`}
               >
                 <span className="sr-only">{formatLongDate(day, locale)}</span>
@@ -508,7 +508,7 @@ export const BookingForm = () => {
                     className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       selected
                         ? "border-emerald-700 bg-emerald-700 text-white"
-                        : "border-gray-200 bg-white text-textMain hover:border-emerald-600 hover:text-emerald-800"
+                        : "border-gray-500 bg-white text-textMain hover:border-emerald-600 hover:text-emerald-800"
                     }`}
                   >
                     {selected && <Check className="h-4 w-4" aria-hidden="true" />}

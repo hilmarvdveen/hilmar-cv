@@ -630,8 +630,8 @@ const COPY = {
     nl: "Het patroon dat het vaakst sneuvelt is een kleine tekstlink die alleen staat. Een teruglink boven een formulier. Een wijziglink naast een samenvattingsregel. Padding op de link met een negatieve marge van dezelfde maat vergroot het doel en laat de opmaak staan.",
   },
   target3: {
-    en: "Every standalone text link on this site got that treatment. Three advisories from that pass are still open, each written down with the reason it was left. The resting borders of the day and time buttons in the booking flow, the credentials line under the hero, and the focus ring on the links inside the mobile drawer.",
-    nl: "Elke losstaande tekstlink op deze site kreeg die behandeling. Drie adviespunten uit die ronde staan nog open, elk met de reden waarom ze bleven staan. De rustranden van de dag- en tijdknoppen in het boekingsproces, de regel met bedrijfsgegevens onder de hero, en de focusring op de links binnen het mobiele menu.",
+    en: "Every standalone text link on this site got that treatment. Two of the three advisories from that pass have since been applied: the resting borders of the day and time buttons in the booking flow now meet 3:1, and the links inside the mobile drawer share the focus ring. The one that stays open is the credentials line under the hero, which meets AA and not AAA, and that is a choice, written down with its reason.",
+    nl: "Elke losstaande tekstlink op deze site kreeg die behandeling. Twee van de drie adviespunten uit die ronde zijn inmiddels toegepast: de rustranden van de dag- en tijdknoppen in het boekingsproces halen nu 3:1, en de links binnen het mobiele menu delen de focusring. Wat openstaat is de regel met bedrijfsgegevens onder de hero, die AA haalt en geen AAA, en dat is een keuze, opgeschreven met de reden.",
   },
   target4: {
     en: "Two neighbours belong here. 2.5.7 asks that a drag interaction have a single pointer alternative, so a sortable list needs move up and move down controls and a slider needs the arrow keys. And a control that acts on the press event gives nobody a way to abort.",

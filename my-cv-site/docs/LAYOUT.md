@@ -297,13 +297,14 @@ on header links, the hamburger, the language switcher, and the day and time
 buttons in the booking flow. Links on the navy hero use `ring-emerald-300`
 because `emerald-600` disappears against navy.
 
-Advisories that were logged and deliberately not applied:
+Advisories that were logged at the time, and what became of them:
 
-- Resting borders of day and time buttons are `gray-200` (1.24:1). They are
-  decorative, the selected state carries the meaning.
+- Resting borders of day and time buttons were `gray-200` (1.24:1). Raised to
+  `gray-500` (4.83:1) on 7 September 2026, matching the input borders, because
+  the border is what identifies each button as a control (WCAG 1.4.11).
 - The credentials line under the hero uses `slate-400`, which meets AA but
-  not AAA.
-- Inner links in the mobile drawer do not yet share the focus ring.
+  not AAA. Left as is, by choice.
+- Inner links in the mobile drawer share the focus ring since 1 September 2026.
 
 ## Wide diagrams on phones (5 September 2026)
 
