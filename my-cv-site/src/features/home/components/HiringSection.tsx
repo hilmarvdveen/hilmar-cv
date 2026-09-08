@@ -84,7 +84,11 @@ export const HiringSection = () => {
           <p className="text-sm text-gray-600 mb-6 max-w-2xl">{t("shapes.subtitle")}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {shapes.map((shape) => (
-              <Card key={shape.title} variant="quiet" className="flex h-full flex-col">
+              <Card
+                key={shape.title}
+                variant="quiet"
+                className="relative flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+              >
                 <h3 className="text-base font-bold text-textMain mb-2">
                   {shape.title}
                 </h3>
@@ -93,7 +97,7 @@ export const HiringSection = () => {
                 </p>
                 <Link
                   href={shape.href}
-                  className="mt-auto inline-flex min-h-6 items-center gap-1.5 text-primary font-semibold text-sm"
+                  className="mt-auto inline-flex min-h-6 items-center gap-1.5 text-primary font-semibold text-sm after:absolute after:inset-0 after:content-['']"
                   data-placement="hiring-shape"
                 >
                   {shape.linkLabel}

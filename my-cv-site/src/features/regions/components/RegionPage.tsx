@@ -133,10 +133,16 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
             <SectionTitle id="region-reading-heading" title={t("shared.readingTitle")} subtitle={t(`${region.id}.readingLead`)} />
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {posts.map((post) => (
-                <Card key={post.slug} className="flex h-full flex-col">
+                <Card
+                  key={post.slug}
+                  className="relative flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                >
                   <h3 className="text-lg font-bold text-textMain">{post.title[locale]}</h3>
                   <p className="mt-2 flex-1 text-base leading-relaxed text-gray-600">{post.description[locale]}</p>
-                  <Link href={`/blog/${post.slug}`} className={`${linkClass} mt-4 self-start text-base`}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className={`${linkClass} mt-4 self-start text-base after:absolute after:inset-0 after:content-['']`}
+                  >
                     {t("shared.readPost")}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>

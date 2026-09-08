@@ -19,6 +19,8 @@ const DELIVERABLE_ICONS = [BookOpen, Target, Settings, Users];
 const BENEFIT_ICONS = [Brain, Zap, Shield, TrendingUp, Award, BarChart3];
 const PROCESS_ICONS = [Search, Target, Settings, TrendingUp];
 
+const RXJS_POST_HREF = "/blog/rxjs-versus-signals-in-angular";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const seoData = SEOFactory.consultingService(locale as Locale);
@@ -81,6 +83,7 @@ export default async function TechnicalConsultingPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
+        article: { href: RXJS_POST_HREF, label: t("benefits.articleLabel"), placement: "service-consulting-article" },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],

@@ -143,6 +143,15 @@ describe("HiringSection", () => {
     }
   });
 
+  it("stretches every engagement-shape link over its whole card without changing its accessible name", () => {
+    render(<HiringSection />);
+    for (const shape of shapes) {
+      const link = screen.getByRole("link", { name: shape.linkLabel });
+      expect(link).toHaveClass("after:absolute", "after:inset-0");
+      expect(link).toHaveAccessibleName(shape.linkLabel);
+    }
+  });
+
   it("renders the pitch row as a labelled blockquote with examples", () => {
     render(<HiringSection />);
     expect(screen.getByText("pitch.label")).toBeInTheDocument();

@@ -40,6 +40,6 @@ describe("searchEntries with extra entries", () => {
   it("finds a region page by its city in both languages", () => {
     expect(searchEntries("rotterdam", "nl").map((entry) => entry.href)).toContain("/freelance-frontend-developer/rotterdam");
     expect(searchEntries("utrecht", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/utrecht");
-    expect(searchEntries("the hague", "en").map((entry) => entry.href)).not.toContain("/freelance-frontend-developer/den-haag");
+    expect(searchEntries("the hague", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/den-haag");
   });
 });

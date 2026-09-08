@@ -25,7 +25,7 @@ const STATIC_ENTRIES: SearchEntry[] = [
   {
     href: "/about",
     kind: "page",
-    title: { en: "About", nl: "Over mij" },
+    title: { en: "About me", nl: "Over mij" },
     description: {
       en: "What changes for your team and your platform when I join, with the engagement behind each change.",
       nl: "Wat er verandert voor je team en je platform als ik meedoe, met de opdracht achter elke verandering.",
@@ -95,7 +95,7 @@ const STATIC_ENTRIES: SearchEntry[] = [
   {
     href: "/projects",
     kind: "page",
-    title: { en: "Projects", nl: "Projecten" },
+    title: { en: "Results", nl: "Resultaten" },
     description: {
       en: "Four engagements and what the client could measure afterwards.",
       nl: "Vier opdrachten, en wat de opdrachtgever daarna kon meten.",

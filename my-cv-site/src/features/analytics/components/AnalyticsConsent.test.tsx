@@ -28,13 +28,13 @@ describe("AnalyticsConsent", () => {
     );
   });
 
-  it("keeps the accept button off the site's one action colour", () => {
+  it("gives the accept button the action colour, the visual primary Hilmar chose on 7 September 2026", () => {
     render(<AnalyticsConsent labels={labels} />);
     const accept = screen.getByRole("button", { name: "Accept" });
-    expect(accept).not.toHaveClass("bg-emerald-700");
+    expect(accept).toHaveClass("bg-emerald-700");
   });
 
-  it("gives the decline button the same outline weight as accept, not a filled colour", () => {
+  it("keeps the decline button as an outline beside the filled accept", () => {
     render(<AnalyticsConsent labels={labels} />);
     const decline = screen.getByRole("button", { name: "Decline" });
     expect(decline).not.toHaveClass("bg-gray-100");

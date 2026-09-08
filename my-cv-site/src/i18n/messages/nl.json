@@ -409,6 +409,7 @@
         },
         "title": "Werkervaring",
         "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Elke opdracht heeft een eigen pagina met het hele verhaal.",
+        "resultsLink": "De vier opdrachten met het resultaat voorop",
         "metaDescription": "Twaalf opdrachten sinds 2016, met bol.com, en per opdracht wat het opleverde, mijn rol en de stack. Senior frontend engineer, React en Angular, freelance.",
         "cta": {
             "title": "Herken je hier iets in?",
@@ -601,7 +602,7 @@
                     "paragraph": "De Belastingdienst publiceert aangiftepagina's en formulieren waar ondernemers in het hele land mee uit de voeten moeten kunnen. Een nieuwe pagina in het ondernemersportaal kostte één tot twee weken frontendwerk. Een nieuw belastingformulier kostte maanden, met een doorlopende stroom vragen tussen de redactie en het ontwikkelteam. Mijn opdracht was dat sneller te maken zonder in te leveren op toegankelijkheid en consistentie. De opdracht is vier keer verlengd."
                 },
                 {
-                    "paragraph": "Voor het ondernemersportaal ontwierp ik een datagedreven Angular-architectuur waarin pagina's uit backendconfiguratie worden opgebouwd. Generieke componenten halen hun logica en hun weergave uit injectable services en configuratiebestanden, zodat de btw-pagina, de loonheffingspagina en de vliegbelastingpagina dezelfde bouwstenen delen. Conditionele zichtbaarheid, meertalige labels en validatieregels komen uit JSON-schema's. Ik bouwde de filterset met dropdowns, zoekvelden en verwijderbare chips. Een wrapper sorteert kleine tabellen in de browser volgens kolomtype en de sorteerregels van het Bold design system.",
+                    "paragraph": "Voor het ondernemersportaal ontwierp ik een datagedreven Angular-architectuur waarin pagina's uit backendconfiguratie worden opgebouwd. Generieke componenten halen hun logica en hun weergave uit injectable services en configuratiebestanden, zodat de btw-pagina, de loonheffingspagina en de vliegbelastingpagina dezelfde bouwstenen delen. Conditionele zichtbaarheid, meertalige labels en validatieregels komen uit JSON-schema's. Ik bouwde de filterset met dropdowns, zoekvelden en verwijderbare chips. Een wrapper sorteert kleine tabellen in de browser volgens kolomtype en de sorteerregels van het BOLD design system.",
                     "heading": "Pagina's uit configuratie"
                 },
                 {
@@ -613,7 +614,7 @@
                     "heading": "Van weken naar dagen"
                 },
                 {
-                    "paragraph": "Het Bold design system, gebouwd met Stencil Web Components, levert pas iets op als andere teams het ook echt gebruiken. Ik werkte hands-on mee met ontwikkelaars uit meerdere teams aan hun implementatie. Ik schreef wrappers en documentatie zodat de componenten zich in Angular, React en Vue voorspelbaar gedragen. Bij Product Owners ging ik langs om ze vlot te trekken en hun uitrol te versnellen. Daarnaast begeleidde ik een senior ontwikkelaar die JavaScript en Vue kende, maar geen Angular. Ik nam hem bij de hand door RxJS en streams, voor hem het lastigste onderdeel, en door het juiste gebruik van services.",
+                    "paragraph": "Het BOLD design system, gebouwd met Stencil Web Components, levert pas iets op als andere teams het ook echt gebruiken. Ik werkte hands-on mee met ontwikkelaars uit meerdere teams aan hun implementatie. Ik schreef wrappers en documentatie zodat de componenten zich in Angular, React en Vue voorspelbaar gedragen. Bij Product Owners ging ik langs om ze vlot te trekken en hun uitrol te versnellen. Daarnaast begeleidde ik een senior ontwikkelaar die JavaScript en Vue kende, maar geen Angular. Ik nam hem bij de hand door RxJS en streams, voor hem het lastigste onderdeel, en door het juiste gebruik van services.",
                     "heading": "Het design system in de teams"
                 },
                 {
@@ -626,7 +627,7 @@
                 "Redacteuren bouwen, controleren en demonstreren een nieuw belastingformulier zelf in de visuele formulierenbouwer, in dagen waar het maanden kostte",
                 "Een nieuwe portaalpagina kost één tot twee dagen waar het één tot twee weken was, dankzij een datagedreven Angular-architectuur",
                 "WCAG 2.1 AA bleef op beide overeind, geborgd met geautomatiseerde tests in de pipeline",
-                "Teams nemen het Bold design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen"
+                "Teams nemen het BOLD design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen"
             ],
             "headline": "Van maanden naar dagen voor een nieuw belastingformulier"
         },
@@ -900,7 +901,7 @@
         "versionToVersion": "Van de oude naar de nieuwe versie"
     },
         "hero": {
-            "badge": "Praktijkvoorbeelden",
+            "badge": "Resultaten",
             "title": "Vier opdrachten, en wat er voor de opdrachtgever veranderde",
             "description": "Bij elke kaart staat de opdrachtgever, wat er voor hen veranderde en wat ik daarvoor bouwde. Het volledige verhaal van elke opdracht staat op de pagina Werkervaring."
         },
@@ -1706,7 +1707,8 @@
                     }
                 ],
                 "title": "Wat het team overhoudt",
-                "description": "Het doel is een team dat mij elke week minder nodig heeft."
+                "description": "Het doel is een team dat mij elke week minder nodig heeft.",
+                "articleLabel": "Signals of RxJS in Angular, in een artikel"
             },
             "process": {
                 "title": "Hoe een adviesopdracht verloopt",
@@ -1841,7 +1843,7 @@
         "nav": {
             "home": "Home",
             "blog": "Blog",
-            "projects": "Projecten",
+            "projects": "Resultaten",
             "contact": "Contact",
             "faq": "Veelgestelde vragen",
             "about": "Over mij",
@@ -2068,7 +2070,7 @@
         "fullstack": "Full-Stack Development",
         "designSystems": "Design Systems",
         "consulting": "Technical Consulting",
-        "projects": "Projecten",
+        "projects": "Resultaten",
         "about": "Over mij",
         "contact": "Contact",
         "book": "Plan een gesprek",
@@ -2293,7 +2295,7 @@
                 "regions": "Werkregio's",
                 "about": "Over mij",
                 "experience": "Werkervaring",
-                "projects": "Projecten",
+                "projects": "Resultaten",
                 "blog": "Blog",
                 "faq": "Veelgestelde vragen",
                 "contact": "Contact",

@@ -399,7 +399,7 @@
         "nav": {
             "home": "Home",
             "blog": "Blog",
-            "projects": "Projects",
+            "projects": "Results",
             "contact": "Contact",
             "faq": "FAQ",
             "about": "About me",
@@ -448,6 +448,7 @@
         },
         "title": "Work history",
         "description": "Every engagement since 2016, the current one at bol.com included. Each entry says what it delivered, what my role was and which stack it ran on. Each engagement has its own page with the whole story.",
+        "resultsLink": "The four engagements with the outcome first",
         "metaDescription": "Twelve engagements since 2016, bol.com included, each with what it delivered, my role and the stack. Senior frontend engineer, React and Angular, freelance.",
         "cta": {
             "title": "Recognise one of these?",
@@ -640,7 +641,7 @@
                     "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency. The engagement was extended four times."
                 },
                 {
-                    "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the Bold design system.",
+                    "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the BOLD design system.",
                     "heading": "Pages from configuration"
                 },
                 {
@@ -652,7 +653,7 @@
                     "heading": "From weeks to days"
                 },
                 {
-                    "paragraph": "The Bold design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services.",
+                    "paragraph": "The BOLD design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services.",
                     "heading": "The design system in the teams"
                 },
                 {
@@ -665,7 +666,7 @@
                 "Editors build, check and demo a new tax form themselves in the visual forms editor, in days where it took months",
                 "A new portal page takes one to two days where it took one to two weeks, from a data-driven Angular architecture",
                 "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
-                "Teams adopt the Bold design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
+                "Teams adopt the BOLD design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
             ],
             "headline": "From months to days for a new income-tax form"
         },
@@ -678,7 +679,7 @@
                     "paragraph": "The lotteries live on campaigns. Every campaign got its own site, and every site was built up again from the start. That took weeks, and the result differed per brand. There was nothing to build on yet, so the design system started from zero."
                 },
                 {
-                    "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The first campaign site proved the approach, and the VriendenLoterij VIP-Kaarten campaign followed on the same components.",
+                    "paragraph": "I built an international design system in an Nx monorepo, where a campaign page is assembled from JSON. The components are React with Next.js and render on the server, the content comes from the Storyblok headless CMS, and accessibility to WCAG 2.1 AA sits inside the components themselves. A second layer carries the brand, so colours, buttons and animations change per label while the logic of a component stays the same. The campaign site 'Geniet van het Goede' was the first application, and the VriendenLoterij VIP-Kaarten campaign followed on the same components.",
                     "heading": "One design system, a theme per label"
                 },
                 {
@@ -939,7 +940,7 @@
         "versionToVersion": "From the old version to the new one"
     },
         "hero": {
-            "badge": "Case studies",
+            "badge": "Results",
             "title": "Four engagements, and what changed for the client",
             "description": "Each card names the client, what changed for them, and what I built to get there. The full story of every engagement sits on the work history page."
         },
@@ -1745,7 +1746,8 @@
                     }
                 ],
                 "title": "What the team keeps",
-                "description": "The point is a team that needs me less every week."
+                "description": "The point is a team that needs me less every week.",
+                "articleLabel": "Signals or RxJS in Angular, in an article"
             },
             "process": {
                 "title": "How an advisory engagement runs",
@@ -2136,8 +2138,8 @@
         "fullstack": "Full-Stack Development",
         "designSystems": "Design Systems",
         "consulting": "Technical Consulting",
-        "projects": "Projects",
-        "about": "About",
+        "projects": "Results",
+        "about": "About me",
         "contact": "Contact",
         "book": "Book a call",
         "faq": "FAQ",
@@ -2293,7 +2295,7 @@
                 "regions": "Where I work",
                 "about": "About me",
                 "experience": "Work history",
-                "projects": "Projects",
+                "projects": "Results",
                 "blog": "Blog",
                 "faq": "FAQ",
                 "contact": "Contact",

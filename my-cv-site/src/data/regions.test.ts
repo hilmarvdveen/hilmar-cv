@@ -18,9 +18,9 @@ import {
 } from "./regions";
 
 describe("regions", () => {
-  it("publishes three cities now and holds Den Haag for the week after", () => {
-    expect(REGIONS.map((region) => region.id)).toEqual(["amsterdam", "utrecht", "rotterdam"]);
-    expect(SCHEDULED_REGIONS.map((region) => region.id)).toEqual(["den-haag"]);
+  it("publishes all four cities and holds none", () => {
+    expect(REGIONS.map((region) => region.id)).toEqual(["amsterdam", "utrecht", "rotterdam", "den-haag"]);
+    expect(SCHEDULED_REGIONS).toEqual([]);
     expect(ALL_REGIONS).toHaveLength(4);
   });
 
@@ -67,13 +67,13 @@ describe("regions", () => {
   it("finds regions by id and by city, and lists the rest of the map", () => {
     expect(regionById("utrecht")?.city).toBe("Utrecht");
     expect(regionById("leiden")).toBeUndefined();
-    expect(regionById("den-haag")).toBeUndefined();
+    expect(regionById("den-haag")?.id).toBe("den-haag");
     expect(isRegionId("rotterdam")).toBe(true);
     expect(isRegionId("leiden")).toBe(false);
-    expect(isRegionId("den-haag")).toBe(false);
+    expect(isRegionId("den-haag")).toBe(true);
     expect(regionForCity("Amsterdam")?.id).toBe("amsterdam");
     expect(regionForCity("Den Haag")).toBeUndefined();
-    expect(otherRegions(REGIONS[0]).map((region) => region.id)).toEqual(["utrecht", "rotterdam"]);
+    expect(otherRegions(REGIONS[0]).map((region) => region.id)).toEqual(["utrecht", "rotterdam", "den-haag"]);
     const outside = engagementsOutsideRegions();
     expect(outside.map((entry) => entry.id)).toEqual(
       workHistory.filter((entry) => !["conclusion", "randstad", "postcode-loterij", "omniplan", "bol", "bluefield", "opinity"].includes(entry.id)).map((entry) => entry.id)

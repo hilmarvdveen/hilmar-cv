@@ -85,6 +85,13 @@ describe("WorkExperienceSection", () => {
     const link = screen.getByRole("link", { name: "cta.button" });
     expect(link).toHaveAttribute("href", "/book");
   });
+
+  it("offers the results page under the heading, with its placement label", () => {
+    render(<WorkExperienceSection />);
+    const link = screen.getByRole("link", { name: "resultsLink" });
+    expect(link).toHaveAttribute("href", "/projects");
+    expect(link).toHaveAttribute("data-placement", "experience-results");
+  });
 });
 
 describe("WorkExperienceSection: scannable cards", () => {
@@ -96,6 +103,16 @@ describe("WorkExperienceSection: scannable cards", () => {
     const links = screen.getAllByRole("link", { name: /^readMore:/ });
     expect(links).toHaveLength(workHistory.length);
     expect(links[0]).toHaveAttribute("href", `/experience/${workHistory[0].id}`);
+    expect(links[0]).toHaveAccessibleName("readMore:bol.com");
+  });
+
+  it("stretches every engagement link over its whole card without changing the link's accessible name", () => {
+    render(<WorkExperienceSection />);
+    const links = screen.getAllByRole("link", { name: /^readMore:/ });
+    expect(links).toHaveLength(workHistory.length);
+    for (const link of links) {
+      expect(link).toHaveClass("after:absolute", "after:inset-0");
+    }
     expect(links[0]).toHaveAccessibleName("readMore:bol.com");
   });
 });

@@ -121,10 +121,11 @@ describe("Header", () => {
     expect(within(drawerNav).queryByText("nav.book")).not.toBeInTheDocument();
   });
 
-  it("does not list about or FAQ in the desktop row", () => {
+  it("does not list projects or FAQ in the desktop row, and lists about", () => {
     render(<Header />);
     const desktopRow = screen.getAllByText("nav.services")[0].closest("div")!;
-    expect(within(desktopRow).queryByText("nav.about")).not.toBeInTheDocument();
+    expect(within(desktopRow).queryByText("nav.projects")).not.toBeInTheDocument();
+    expect(within(desktopRow).getByText("nav.about")).toBeInTheDocument();
     expect(within(desktopRow).queryByText("nav.faq")).not.toBeInTheDocument();
   });
 

@@ -41,7 +41,7 @@ export const WorkExperienceSection = () => {
 
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
-        <Card className="transition-shadow hover:shadow-md">
+        <Card className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
           <div className="flex items-start gap-4">
             <div className="relative mt-1 h-8 w-24 shrink-0">
               <Image
@@ -60,7 +60,7 @@ export const WorkExperienceSection = () => {
               <p className="mt-2 text-base leading-relaxed text-gray-700">{t(`${id}.summary`)}</p>
               <Link
                 href={`/experience/${id}`}
-                className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']"
               >
                 {t("readMore", { company })}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -82,7 +82,7 @@ export const WorkExperienceSection = () => {
 
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
-        <Card className="transition-shadow hover:shadow-md">
+        <Card className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
           <div className="mb-4 flex items-center">
             <div
               className="relative mr-4 h-10 w-32 rounded"
@@ -157,7 +157,7 @@ export const WorkExperienceSection = () => {
 
           <Link
             href={`/experience/${id}`}
-            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']"
           >
             <span>{t("readMore", { company })}</span>
             <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -192,6 +192,16 @@ export const WorkExperienceSection = () => {
       <Section background="light" aria-labelledby={SECTION_HEADING_ID}>
         <Container width="narrow">
           <SectionTitle id={SECTION_HEADING_ID} title={sectionTitle} />
+          <p className="-mt-6 mb-10">
+            <Link
+              href="/projects"
+              data-placement="experience-results"
+              className="inline-flex min-h-6 items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {experiencePageT("resultsLink")}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </p>
         </Container>
         <Container width="narrow">
           <div className="grid grid-cols-1 gap-8">

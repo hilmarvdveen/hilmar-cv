@@ -93,6 +93,16 @@ describe("RegionPage", () => {
     expect(screen.getByRole("link", { name: "close.alternative" })).toHaveAttribute("href", "/contact");
   });
 
+  it("stretches every reading-list link over its whole card without changing its accessible name", () => {
+    const region = renderRegion("amsterdam");
+    const links = screen.getAllByRole("link", { name: "shared.readPost" });
+    expect(links).toHaveLength(region.postSlugs.length);
+    for (const link of links) {
+      expect(link).toHaveClass("after:absolute", "after:inset-0");
+    }
+    expect(links[0]).toHaveAccessibleName("shared.readPost");
+  });
+
   it("collapses a single engagement shape to one sentence and shows the sector row for Den Haag", () => {
     renderRegion("rotterdam");
     expect(screen.getByText("Body one")).toBeInTheDocument();

@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import {
   Home,
   FolderOpen,
+  TrendingUp,
   Mail,
   ChevronDown,
   Menu,
@@ -97,7 +98,7 @@ export const Header = () => {
       {
         href: "/projects",
         label: t("nav.projects"),
-        icon: FolderOpen,
+        icon: TrendingUp,
       },
       {
         href: "/blog",
@@ -138,7 +139,7 @@ export const Header = () => {
     (item) =>
       item.href !== "/" &&
       item.href !== "/book" &&
-      item.href !== "/about" &&
+      item.href !== "/projects" &&
       item.href !== "/faq"
   );
 

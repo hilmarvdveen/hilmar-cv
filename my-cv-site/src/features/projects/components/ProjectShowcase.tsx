@@ -53,7 +53,10 @@ export const ProjectShowcase = () => {
             {cases.map((projectCase) => {
               const workEntry = findWorkEntry(projectCase.href);
               return (
-                <Card key={projectCase.href}>
+                <Card
+                  key={projectCase.href}
+                  className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                >
                   <div className="flex items-start justify-between gap-6">
                     <p className="text-figure text-emerald-700 text-balance">{projectCase.outcome}</p>
                     {workEntry && (
@@ -82,9 +85,9 @@ export const ProjectShowcase = () => {
                   <div className="mt-4 flex items-end justify-between gap-4">
                     <Link
                       href={projectCase.href}
-                      className="inline-flex min-h-6 items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                      className="inline-flex min-h-6 items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']"
                     >
-                      {work("readMore")}
+                      {work("readMore", { company: workEntry ? work(`${workEntry.id}.company`) : projectCase.client })}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                     {workEntry && CASE_SCHEMATICS[workEntry.id] && (

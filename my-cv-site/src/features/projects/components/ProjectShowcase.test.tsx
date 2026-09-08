@@ -105,6 +105,16 @@ describe("ProjectShowcase", () => {
     expect(screen.queryByRole("img", { name: "Example Co" })).toBeNull();
   });
 
+  it("stretches every case link over its whole card without changing the link's accessible name", () => {
+    render(<ProjectShowcase />);
+    const links = screen.getAllByRole("link", { name: "readMore" });
+    expect(links).toHaveLength(cases.length);
+    for (const link of links) {
+      expect(link).toHaveClass("after:absolute", "after:inset-0");
+    }
+    expect(links[0]).toHaveAccessibleName("readMore");
+  });
+
   it("renders the closing call to action", () => {
     render(<ProjectShowcase />);
     expect(

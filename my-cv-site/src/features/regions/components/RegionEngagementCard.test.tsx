@@ -46,4 +46,11 @@ describe("RegionEngagementCard", () => {
     render(<RegionEngagementCard entry={opinity} showCity />);
     expect(screen.getByText(/^opinity\.location · period/)).toBeInTheDocument();
   });
+
+  it("stretches the engagement link over the whole card without changing its accessible name", () => {
+    render(<RegionEngagementCard entry={opinity} />);
+    const link = screen.getByRole("link", { name: "readMore:opinity.company" });
+    expect(link).toHaveClass("after:absolute", "after:inset-0");
+    expect(link).toHaveAccessibleName("readMore:opinity.company");
+  });
 });

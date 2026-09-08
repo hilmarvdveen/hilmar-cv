@@ -63,7 +63,7 @@ export function AnalyticsConsent({ labels }: AnalyticsConsentProps) {
           <Button type="button" variant="outline" size="sm" onClick={() => chooseConsent(false)}>
             {labels.decline}
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => chooseConsent(true)}>
+          <Button type="button" variant="primary" size="sm" onClick={() => chooseConsent(true)}>
             {labels.accept}
           </Button>
         </div>

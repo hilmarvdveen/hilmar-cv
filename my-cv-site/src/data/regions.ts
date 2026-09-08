@@ -55,6 +55,7 @@ export const ALL_REGIONS: Region[] = [
     postSlugs: [
       "reversible-cut-over-legacy-to-new",
       "graphql-as-a-contract-between-frontend-and-backend",
+      "building-an-api-in-kotlin",
       "react-router-remix-routes-loaders-actions-folder-structure",
     ],
     coordinates: [5.1214, 52.0907],
@@ -80,12 +81,13 @@ export const ALL_REGIONS: Region[] = [
     id: "den-haag",
     city: "Den Haag",
     cityEnglish: "The Hague",
-    published: false,
+    published: true,
     engagementIds: [],
     nearbyEngagementIds: ["ortec"],
     sectorEngagementIds: ["belastingdienst"],
     postSlugs: [
       "hexagonal-architecture-java",
+      "building-an-api-in-java",
       "building-an-api-in-csharp",
       "hexagonal-architecture-csharp-dotnet",
     ],
