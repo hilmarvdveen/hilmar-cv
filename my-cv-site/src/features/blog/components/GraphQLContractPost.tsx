@@ -83,6 +83,7 @@ export function Body({ locale }: { locale: Locale }) {
       <Lead>{copy.lead[locale]}</Lead>
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
+      <P>{copy.intro3[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
       <Contents
         label={copy.contentsLabel[locale]}
@@ -445,8 +446,12 @@ const COPY = {
     nl: "Het verschil zie je terug in de code. Een frontend die het schema als kraan behandelt, krijgt een laag die alles omvormt, controles voor velden die er wel of niet zijn, en state die iets herbouwt wat de backend allang wist. Steeds beslist de pagina iets over data die niet van haar is.",
   },
   intro2: {
-    en: "At bol.com I moved pages off a legacy Java storefront onto React. The schema there belongs to the backend teams, and my part was the pages plus the conversation about the fields they needed. The samples below are TypeScript with gql.tada and urql on React 19, checked on 6 September 2026, on a generic subscription schema with a plan and a payment method.",
-    nl: "Bij bol.com verhuisde ik pagina's van een Java-winkel naar React. Het schema is daar van de backendteams, en mijn deel waren de pagina's en het gesprek over de velden die ze nodig hadden. De voorbeelden hieronder zijn TypeScript met gql.tada en urql op React 19, gecontroleerd op 6 september 2026, op een algemeen abonnementsschema met een pakket en een betaalmethode.",
+    en: "At bol.com I moved pages off a legacy Java storefront onto React. The schema there belongs to the backend teams, and my part was the pages plus the conversation about the fields they needed.",
+    nl: "Bij bol.com verhuisde ik pagina's van een Java-winkel naar React. Het schema is daar van de backendteams, en mijn deel waren de pagina's en het gesprek over de velden die ze nodig hadden.",
+  },
+  intro3: {
+    en: "The samples below are TypeScript with gql.tada and urql on React 19, checked on 6 September 2026, on a generic subscription schema with a plan and a payment method.",
+    nl: "De voorbeelden hieronder zijn TypeScript met gql.tada en urql op React 19, gecontroleerd op 6 september 2026, op een algemeen abonnementsschema met een pakket en een betaalmethode.",
   },
   quote: {
     en: "A field that arrives in the wrong shape never stays one function. It becomes a function, then a test, then a second copy of both in the next component.",

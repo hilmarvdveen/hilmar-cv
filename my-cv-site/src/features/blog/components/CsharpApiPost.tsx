@@ -9,7 +9,7 @@ import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
   slug: "building-an-api-in-csharp",
-  category: "architecture",
+  category: "api",
   track: "backend",
   publishedDate: "2026-09-06",
   readingTimeMin: 18,

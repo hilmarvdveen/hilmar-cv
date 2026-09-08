@@ -22,8 +22,8 @@ export const meta: BlogPostMeta = {
     nl: "Ports en adapters in C# 14 en .NET 10: een domein zonder frameworkverwijzingen, adapters voor EF Core en minimal API, fakes en een migratiepad.",
   },
   excerpt: {
-    en: "Hexagonal architecture keeps your business rules independent of the framework, the database and the delivery channel. Here is what that looks like in C# 14 and .NET 10, and when the extra layer is not worth it.",
-    nl: "Hexagonale architectuur houdt je bedrijfsregels los van het framework, de database en het afleverkanaal. Zo ziet dat eruit in C# 14 en .NET 10, en zo weet je wanneer die extra laag het niet waard is.",
+    en: "Two years in, the service that started clean also reads an HttpContext, opens a transaction and shapes a response. This is where the business rule lives in C# 14 and .NET 10, and when the extra layer is not worth it.",
+    nl: "Twee jaar later leest diezelfde nette service ook een HttpContext, opent een transactie en vormt een response. Dit is de plek waar de bedrijfsregel dan woont, in C# 14 en .NET 10, en zo weet je wanneer die extra laag het niet waard is.",
   },
   keywords: [
     "hexagonal architecture c#",
@@ -812,8 +812,8 @@ const COPY = {
     nl: "De fakes zijn herbruikbaar in de hele suite en ze dragen hun eigen assertions. Charges vertelt je wat er werkelijk aan de betaaldienst is gevraagd. Commits vertelt je dat de transactie precies één keer is afgesloten, en dat soort fout blijft maanden verborgen.",
   },
   fakes3: {
-    en: "Both tests run without a database, without a web server and without a network. That is why a suite of them stays usable as the application grows, and it is why a developer runs them before every push instead of once a day.",
-    nl: "Beide tests draaien zonder database, zonder webserver en zonder netwerk. Daardoor blijft een suite ervan bruikbaar naarmate de applicatie groeit, en daarom draait een developer ze voor elke push in plaats van één keer per dag.",
+    en: "Both tests run without a database, without a web server and without a network. That is why a suite of them stays usable as the application grows, and it is why a developer runs them before every push, not once a day.",
+    nl: "Beide tests draaien zonder database, zonder webserver en zonder netwerk. Daardoor blijft een suite ervan bruikbaar naarmate de applicatie groeit, en daarom draait een developer ze voor elke push, niet één keer per dag.",
   },
   databaseTestTitle: {
     en: "Test the EF Core adapter against a real database engine",

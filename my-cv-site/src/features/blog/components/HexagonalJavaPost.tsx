@@ -22,8 +22,8 @@ export const meta: BlogPostMeta = {
     nl: "Ports en adapters in Java 25: een domein zonder Spring of JPA, een sealed resultaat, JPA- en REST-adapters en een ArchUnit-regel die de build laat falen.",
   },
   excerpt: {
-    en: "Hexagonal architecture keeps your business rules out of reach of Spring, Hibernate and the database schema. Here is that shape in Java 25, with records, a sealed result and ArchUnit. It ends with a way out of a Java 8 monolith.",
-    nl: "Hexagonale architectuur houdt je bedrijfsregels buiten bereik van Spring, Hibernate en het databaseschema. Zo ziet die vorm eruit in Java 25, met records, een sealed resultaat en ArchUnit. Aan het eind staat een weg uit een Java 8-monoliet.",
+    en: "A form that collects a declaration outlives the framework that renders it, and usually the team that wrote it. Here is the shape that keeps its rules out of reach of Spring and Hibernate, in Java 25, with records, a sealed result and ArchUnit.",
+    nl: "Een formulier waarmee iemand aangifte doet, gaat langer mee dan het framework dat het tekent en meestal ook dan het team dat het schreef. Zo houd je de regels eronder buiten bereik van Spring en Hibernate, in Java 25, met records, een sealed resultaat en ArchUnit.",
   },
   keywords: [
     "hexagonal architecture java",
@@ -828,8 +828,8 @@ const COPY = {
     nl: "Het aggregate erboven bevat de regels. Het beantwoordt welke redenen een versie tegenhouden, en hoe de definitie eruitziet zodra die versie is gepubliceerd.",
   },
   domain4: {
-    en: "Publishing returns a new definition, so nobody applies a rule halfway. The reasons are collected instead of thrown one at a time, because an editor who forgot two things deserves to hear both.",
-    nl: "Publiceren geeft een nieuwe definitie terug, dus niemand past een regel half toe. De redenen worden verzameld in plaats van één voor één gegooid, want een redacteur die twee dingen vergat, mag ze allebei horen.",
+    en: "Publishing returns a new definition, so nobody applies a rule halfway. The reasons are collected, not thrown one at a time, because an editor who forgot two things deserves to hear both.",
+    nl: "Publiceren geeft een nieuwe definitie terug, dus niemand past een regel half toe. De redenen worden verzameld, niet één voor één gegooid, want een redacteur die twee dingen vergat, mag ze allebei horen.",
   },
   portsTitle: {
     en: "A port is an interface the inside writes for itself",
@@ -872,7 +872,7 @@ const COPY = {
     nl: "Aan de andere kant wonen de JPA-entiteiten in de persistence-package, en dat zijn niet de domeinrecords. Een entiteit legt verantwoording af aan Hibernate met een constructor zonder argumenten en muteerbare velden. Eén klasse die beide taken doet, is hoe een Java-hexagon instort.",
   },
   adapters3: {
-    en: "Two details there are deliberate. The classes are package-private, so nothing outside this package can even name an entity. The version row carries a deterministic identifier, so a merge updates the row instead of inserting a copy of it.",
+    en: "Two details there are deliberate. The classes are package-private, so nothing outside this package can even name an entity. The version row carries a deterministic identifier, so a merge updates the row and never puts a copy beside it.",
     nl: "Twee details daarin zijn bewust. De klassen zijn package-private, dus buiten deze package kan niemand een entiteit zelfs maar noemen. De versierij draagt een voorspelbare identifier, zodat een merge de rij bijwerkt en er geen kopie naast zet.",
   },
   adapters4: {
@@ -928,8 +928,8 @@ const COPY = {
     nl: "Een architectuurregel die niemand afdwingt, is een suggestie met een plaatje erbij. Iemand met een deadline zet er één import bij, de review telt veertig bestanden, en een jaar later heeft het domein een Spring-context nodig om te starten.",
   },
   arch2: {
-    en: "The rule then arrives as a red build instead of a comment in a review. Separate Maven modules give a stronger version of the same guarantee, because the import will not resolve at all.",
-    nl: "De regel komt dan binnen als een rode build in plaats van als een opmerking in een review. Aparte Maven-modules geven een sterkere variant van dezelfde garantie, want dan lost de import helemaal niet op.",
+    en: "The rule then arrives as a red build, not as a comment in a review. Separate Maven modules give a stronger version of the same guarantee, because the import will not resolve at all.",
+    nl: "De regel komt dan binnen als een rode build, niet als een opmerking in een review. Aparte Maven-modules geven een sterkere variant van dezelfde garantie, want dan lost de import helemaal niet op.",
   },
   boundariesTitle: {
     en: "Five boundaries decide whether this holds up",

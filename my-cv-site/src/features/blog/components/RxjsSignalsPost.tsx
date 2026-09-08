@@ -762,7 +762,7 @@ const COPY = {
   },
   closingTitle: {
     en: "What to take away",
-    nl: "Wat je hiervan meeneemt",
+    nl: "Wat je meeneemt",
   },
   closing1: {
     en: "Signals are the value the template reads. RxJS is the timing, the ordering and the cancellation around how that value arrived. The seam between them is two functions and it costs nothing to cross, which is exactly why the question is asked per value and not per application.",

@@ -18,8 +18,8 @@ export const meta: BlogPostMeta = {
     nl: "Moderne React-architectuur: Vite, Router, Vitest, Storybook",
   },
   description: {
-    en: "A practical 2026 baseline for React apps: build fast with Vite, load data with React Router, test with Vitest and develop components in Storybook, wired together.",
-    nl: "Een praktische 2026-basis voor React-apps: snel bouwen met Vite, data laden via React Router, testen met Vitest en componenten bouwen in Storybook, als één geheel.",
+    en: "A 2026 baseline for React apps: build with Vite, load data with React Router, test with Vitest and build components in Storybook, wired as one whole.",
+    nl: "Een 2026-basis voor React-apps: bouwen met Vite, data laden via React Router, testen met Vitest en componenten bouwen in Storybook, als één geheel.",
   },
   excerpt: {
     en: "Vite, React Router, Vitest and Storybook each own one concern and hand off to the next. Here is how they fit into one architecture, with config, routes, a loader and a story.",
@@ -107,6 +107,7 @@ export function Body({ locale }: { locale: Locale }) {
       <Lead>{copy.lead[locale]}</Lead>
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
+      <P>{copy.versionNote[locale]}</P>
 
       <FlowDiagram
         nodes={stackNodes}
@@ -405,6 +406,10 @@ const COPY = {
     en: "This article shows how these tools fit together, not as separate choices but as one architecture for a React app that is still pleasant to work on after year two.",
     nl: "In dit artikel laat ik zien hoe deze tools op elkaar aansluiten. Niet als losse keuzes, maar als één architectuur voor een React-app die ook na jaar twee nog prettig blijft om aan te werken.",
   },
+  versionNote: {
+    en: "The versions in this article, Vite 8 and React Router 8, were checked on 7 September 2026.",
+    nl: "De versies in dit artikel, Vite 8 en React Router 8, zijn gecontroleerd op 7 september 2026.",
+  },
   stackAria: {
     en: "Diagram of the stack: Vite bundles React, which runs React Router, verified by Vitest and documented by Storybook",
     nl: "Diagram van de stack: Vite bundelt React, dat React Router draait, geverifieerd door Vitest en gedocumenteerd door Storybook",
@@ -419,8 +424,8 @@ const COPY = {
   },
   viteTitle: { en: "Vite: build and develop", nl: "Vite: bouwen en ontwikkelen" },
   vite1: {
-    en: "In many modern React projects, Vite has become the default choice, mainly for its fast developer experience. In development it serves your source on demand over native ES modules, so the dev server starts quickly and hot-module replacement stays fast, even when the app grows. In modern Vite versions the toolchain uses Rolldown and Oxc to bring development and production closer together.",
-    nl: "In veel moderne React-projecten is Vite de standaardkeuze geworden, vooral door de snelle developer experience. In development serveert Vite je broncode on demand via native ES modules, zodat de dev-server snel start en hot-module-replacement snel blijft, ook wanneer de app groeit. In moderne Vite-versies gebruikt de toolchain Rolldown en Oxc om development en productie dichter bij elkaar te brengen.",
+    en: "In many modern React projects, Vite has become the default choice, mainly for its fast developer experience. In development it serves your source on demand over native ES modules, so the dev server starts quickly and hot-module replacement stays fast, even when the app grows. In Vite 8 the toolchain uses Rolldown and Oxc to bring development and production closer together.",
+    nl: "In veel moderne React-projecten is Vite de standaardkeuze geworden, vooral door de snelle developer experience. In development serveert Vite je broncode on demand via native ES modules, zodat de dev-server snel start en hot-module-replacement snel blijft, ook wanneer de app groeit. In Vite 8 gebruikt de toolchain Rolldown en Oxc om development en productie dichter bij elkaar te brengen.",
   },
   viteB1S: { en: "Instant startup.", nl: "Directe start." },
   viteB1: {
@@ -439,8 +444,8 @@ const COPY = {
   },
   routerTitle: { en: "React Router: routes and data", nl: "React Router: routes en data" },
   router1: {
-    en: "Modern React Router became a framework layer in v7 through the merge with Remix. In 2026, v8 is the current major, a non-breaking upgrade with higher baselines: Node 22+, Vite 7+, React 19+ and ESM-only. The data APIs from v7 are the foundation: loaders, actions, route objects and automatic revalidation.",
-    nl: "Moderne React Router werd in v7 ook een frameworklaag, door de samenvoeging met Remix. In 2026 is v8 de actuele major, een non-breaking upgrade met hogere baselines: Node 22+, Vite 7+, React 19+ en ESM-only. De data-API’s uit v7 blijven de basis: loaders, actions, route objects en automatische revalidatie.",
+    en: "Modern React Router became a framework layer in v7 through the merge with Remix. React Router 8 is the current major, a non-breaking upgrade with higher baselines: Node 22+, React 19+ and ESM-only. The data APIs from v7 are the foundation: loaders, actions, route objects and automatic revalidation.",
+    nl: "Moderne React Router werd in v7 ook een frameworklaag, door de samenvoeging met Remix. React Router 8 is de actuele major, een non-breaking upgrade met hogere baselines: Node 22+, React 19+ en ESM-only. De data-API’s uit v7 blijven de basis: loaders, actions, route objects en automatische revalidatie.",
   },
   router2: {
     en: "React Router has three modes: Declarative, Data and Framework. This article uses Data Mode with createBrowserRouter: loaders, actions and pending states without the full build integration. The same concepts exist in Framework Mode, which adds the Vite plugin, route types and code splitting.",

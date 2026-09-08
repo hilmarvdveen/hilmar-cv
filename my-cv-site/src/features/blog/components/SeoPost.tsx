@@ -21,8 +21,8 @@ export const meta: BlogPostMeta = {
     nl: "Hoe je de Lighthouse SEO-basis goed zet met Next.js-metadata, robots en sitemaps, en daarna verder gaat met structured data, hreflang en Core Web Vitals.",
   },
   excerpt: {
-    en: "A 100% Lighthouse SEO score is a technical baseline, not a ranking guarantee. Here is how to pass it in Next.js, then go further with structured data, hreflang and Core Web Vitals.",
-    nl: "Een 100% Lighthouse SEO-score is een technische basis, geen rankinggarantie. Zo haal je hem in Next.js, en ga je daarna verder met structured data, hreflang en Core Web Vitals.",
+    en: "A 100% Lighthouse SEO score is a technical baseline, not a ranking guarantee. This is what the score checks, what it never looks at, and which of the two decides whether a page is found.",
+    nl: "Een 100% Lighthouse SEO-score is een technische basis, geen rankinggarantie. Dit is wat de score controleert, waar hij nooit naar kijkt, en welke van de twee bepaalt of een pagina gevonden wordt.",
   },
   keywords: [
     "lighthouse seo score",
@@ -356,8 +356,8 @@ const COPY = {
     nl: "Vertel crawlers welke delen ze mogen bezoeken en waar je sitemap staat. Een robots.txt die alles toestaat en naar je sitemap verwijst, is genoeg voor de meeste sites. In Next.js genereert app/robots.ts dit bestand.",
   },
   crawl2: {
-    en: "The sitemap lists every canonical URL and declares its language alternates, so Google groups the nl and en versions instead of treating them as duplicates. Each language URL gets its own <url> entry that lists all alternates, including itself. Add a <lastmod> only when it reflects a real, significant update. Google trusts it only if it is consistently accurate.",
-    nl: "De sitemap somt elke canonieke URL op en declareert de taalalternatieven, zodat Google de nl- en en-versies groepeert in plaats van ze als duplicaten te zien. Elke taal-URL krijgt een eigen <url>-entry die alle alternatieven opsomt, inclusief zichzelf. Voeg een <lastmod> alleen toe als die een echte, belangrijke wijziging weergeeft. Google vertrouwt die alleen als hij consistent klopt.",
+    en: "The sitemap lists every canonical URL and declares its language alternates, so Google groups the nl and en versions and does not treat them as duplicates. Each language URL gets its own <url> entry that lists all alternates, including itself. Add a <lastmod> only when it reflects a real, significant update. Google trusts it only if it is consistently accurate.",
+    nl: "De sitemap somt elke canonieke URL op en declareert de taalalternatieven, zodat Google de nl- en en-versies groepeert en ze niet als duplicaten ziet. Elke taal-URL krijgt een eigen <url>-entry die alle alternatieven opsomt, inclusief zichzelf. Voeg een <lastmod> alleen toe als die een echte, belangrijke wijziging weergeeft. Google vertrouwt die alleen als hij consistent klopt.",
   },
   sdTitle: { en: "Structured data: give Google extra context", nl: "Structured data: geef Google extra context" },
   sd1: {

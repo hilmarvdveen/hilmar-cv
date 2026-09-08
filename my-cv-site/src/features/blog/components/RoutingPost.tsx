@@ -92,6 +92,7 @@ export function Body({ locale }: { locale: Locale }) {
     <>
       <Lead>{copy.lead[locale]}</Lead>
       <P>{copy.intro[locale]}</P>
+      <P>{copy.versionNote[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
 
       <H2>{copy.historyTitle[locale]}</H2>
@@ -365,6 +366,10 @@ const COPY = {
   intro: {
     en: "It also manages which data a route needs (loaders), how mutations run (actions), and how you handle errors. That makes your route structure a central part of your app. We build it up step by step, into a folder structure you can copy.",
     nl: "Hij beheert ook welke data een route nodig heeft (loaders), hoe mutaties verlopen (actions) en hoe je fouten afhandelt. Daardoor wordt je route-structuur een centraal onderdeel van je app. We bouwen het stap voor stap op, tot een mappenstructuur die je zo kunt overnemen.",
+  },
+  versionNote: {
+    en: "The version in this article, React Router 8, was checked on 7 September 2026.",
+    nl: "De versie in dit artikel, React Router 8, is gecontroleerd op 7 september 2026.",
   },
   quote: {
     en: "The URL is the source of truth: it decides which route is active, which data is needed and what the user sees.",

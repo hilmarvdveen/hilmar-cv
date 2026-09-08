@@ -719,8 +719,8 @@ const COPY = {
     nl: "De interfaces zelf, geschreven in het vocabulaire van de business. SubscriptionRepository is een port. PostgresSubscriptionDao is een adapter die zijn naam in een port heeft laten lekken.",
   },
   shape3: {
-    en: "Gradle enforces the direction for you. The application module depends on the domain module, the infrastructure module depends on both, and the domain module depends on nothing. A wrong import then breaks the build instead of surviving a code review.",
-    nl: "Gradle dwingt de richting voor je af. De applicatiemodule hangt af van de domeinmodule, de infrastructuurmodule van allebei, en de domeinmodule van niets. Een verkeerde import laat dan de build sneuvelen in plaats van een code review te overleven.",
+    en: "Gradle enforces the direction for you. The application module depends on the domain module, the infrastructure module depends on both, and the domain module depends on nothing. A wrong import then breaks the build, where a code review might have let it through.",
+    nl: "Gradle dwingt de richting voor je af. De applicatiemodule hangt af van de domeinmodule, de infrastructuurmodule van allebei, en de domeinmodule van niets. Een verkeerde import laat dan de build sneuvelen, waar een code review hem nog door had kunnen laten.",
   },
   domainTitle: {
     en: "The domain module compiles without Spring on the classpath",
@@ -735,8 +735,8 @@ const COPY = {
     nl: "Dan de regels. Een abonnement is actief, gepauzeerd of opgezegd, en elke toestand draagt andere gegevens. Kotlin schrijft dat op als een sealed hiërarchie, zodat een gepauzeerd abonnement zonder hervatdatum niet eens te maken is.",
   },
   domain3: {
-    en: "The pause rule returns an outcome instead of throwing. Four rejections are named types, so the compiler lists them for whoever has to answer them later. A refused pause is not an exception, it is a normal Tuesday, and the type system says so.",
-    nl: "De pauzeregel geeft een uitkomst terug in plaats van een exceptie te gooien. Vier afwijzingen zijn benoemde types, dus de compiler somt ze op voor wie ze later moet beantwoorden. Een geweigerde pauze is geen uitzondering, het is een gewone dinsdag, en het typesysteem zegt dat ook.",
+    en: "The pause rule returns an outcome, it never throws. Four rejections are named types, so the compiler lists them for whoever has to answer them later. A refused pause is not an exception, it is a normal Tuesday, and the type system says so.",
+    nl: "De pauzeregel geeft een uitkomst terug, hij gooit geen exceptie. Vier afwijzingen zijn benoemde types, dus de compiler somt ze op voor wie ze later moet beantwoorden. Een geweigerde pauze is geen uitzondering, het is een gewone dinsdag, en het typesysteem zegt dat ook.",
   },
   valueClassLabel: { en: "A value class per identifier.", nl: "Een value class per identifier." },
   valueClassBody: {

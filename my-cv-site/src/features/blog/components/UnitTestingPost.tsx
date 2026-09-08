@@ -351,8 +351,8 @@ const COPY = {
     nl: "Een gedragstest leest als een user story: render, handel, assert op het zichtbare resultaat. Maak per test één user met userEvent.setup().",
   },
   query3: {
-    en: "Notice what this test does not do: it never inspects state, never checks that a specific hook ran, never counts renders. Rewrite Counter with useReducer instead of useState and the test still passes, because the behaviour did not change.",
-    nl: "Let op wat deze test níét doet: hij inspecteert nooit state, controleert nooit of een specifieke hook draaide, telt nooit renders. Herschrijf Counter met useReducer in plaats van useState en de test slaagt nog steeds, want het gedrag veranderde niet.",
+    en: "Notice what this test does not do: it never inspects state, never checks that a specific hook ran, never counts renders. Rewrite Counter with useReducer, not useState, and the test still passes, because the behaviour did not change.",
+    nl: "Let op wat deze test níét doet: hij inspecteert nooit state, controleert nooit of een specifieke hook draaide, telt nooit renders. Herschrijf Counter met useReducer, niet met useState, en de test slaagt nog steeds, want het gedrag veranderde niet.",
   },
   setupTitle: { en: "Set up Vitest and Testing Library", nl: "Stel Vitest en Testing Library in" },
   setup1: {
@@ -444,8 +444,8 @@ const COPY = {
     nl: "Overleeft de test een gedrag-behoudende refactor (bijv. useState → useReducer)?",
   },
   ck2: {
-    en: "Are you querying by role/label rather than test ids or class names?",
-    nl: "Zoek je op rol/label in plaats van test-ids of classnamen?",
+    en: "Do you query by role or label, never by test id or class name?",
+    nl: "Zoek je op rol of label, nooit op test-id of classnaam?",
   },
   ck3: {
     en: "Is the only mock at a true boundary (network, time, randomness)?",
@@ -456,8 +456,8 @@ const COPY = {
     nl: "Is pure logica geëxtraheerd en direct getest, los van de DOM?",
   },
   ck5: {
-    en: "Does async use findBy*/waitFor instead of fixed timeouts?",
-    nl: "Gebruikt async findBy*/waitFor in plaats van vaste timeouts?",
+    en: "Does async use findBy* or waitFor, never a fixed timeout?",
+    nl: "Gebruikt async findBy* of waitFor, nooit een vaste timeout?",
   },
   outro1: {
     en: "Good React tests give you confidence without making refactors harder than they should be. Test visible behaviour, not the internal structure of your component. Put pure logic in separate functions and test it directly. Render components with their real children, and mock only real boundaries like network, time and randomness.",

@@ -18,8 +18,8 @@ export const meta: BlogPostMeta = {
     nl: "React-mappenstructuur die meeschaalt: feature-first",
   },
   description: {
-    en: "How to organize a React project so it stays easy to navigate as it grows: feature folders, clear shared boundaries, small barrels, path aliases and colocated tests.",
-    nl: "Hoe je een React-project organiseert zodat het overzichtelijk blijft als het groeit: featuremappen, duidelijke grenzen, kleine barrels, path-aliassen en tests naast de code.",
+    en: "How to organise a React project so it stays easy to navigate as it grows: feature folders, clear boundaries, path aliases and tests next to the code.",
+    nl: "Hoe je een React-project indeelt zodat het overzichtelijk blijft als het groeit: featuremappen, duidelijke grenzen, path-aliassen en tests naast de code.",
   },
   excerpt: {
     en: "Folder layout decides how fast you find, change and delete code. A practical move from type-based folders to a feature-first structure that scales.",
@@ -292,8 +292,8 @@ const COPY = {
   },
   featureTitle: { en: "Feature-first: group files by product area", nl: "Feature-first: groepeer bestanden per productgebied" },
   feature1: {
-    en: "Change the way you group files. Group by feature (a slice of the product) instead of by file type. Everything checkout needs (components, hooks, data access, types) lives in features/checkout/. The folder name is a domain term a product manager would recognize.",
-    nl: "Verander hoe je bestanden groepeert. Groepeer per feature (een stuk van het product) in plaats van per bestandstype. Alles wat checkout nodig heeft (componenten, hooks, datatoegang, types) leeft in features/checkout/. De mapnaam is een domeinterm die een productmanager zou herkennen.",
+    en: "Change the way you group files. Group by feature (a slice of the product), not by file type. Everything checkout needs (components, hooks, data access, types) lives in features/checkout/. The folder name is a domain term a product manager would recognise.",
+    nl: "Verander hoe je bestanden groepeert. Groepeer per feature (een stuk van het product), niet per bestandstype. Alles wat checkout nodig heeft (componenten, hooks, datatoegang, types) leeft in features/checkout/. De mapnaam is een domeinterm die een productmanager zou herkennen.",
   },
   feature2: {
     en: "Cross-cutting building blocks that several features reuse, such as a Button, a Modal, a useDebounce hook or money math, stay in a small set of shared folders. The important part is deciding what belongs to one feature and what is truly shared.",

@@ -608,7 +608,7 @@ const COPY = {
   },
   closeTitle: {
     en: "What to take away",
-    nl: "Wat je hiervan meeneemt",
+    nl: "Wat je meeneemt",
   },
   close1: {
     en: "The method is deliberately boring. Read, write down, confirm, build behind a switch, employees, a small share, more, everyone, then clean up. Each step answers one question and leaves the way back intact.",

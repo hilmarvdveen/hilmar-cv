@@ -5,7 +5,7 @@ import { Body, meta } from "./AccessibilityPost";
 describe("AccessibilityPost", () => {
   it("has bilingual metadata within the title and description limits", () => {
     expect(meta.slug).toBe("wcag-aa-in-the-component");
-    expect(meta.category).toBe("fundamentals");
+    expect(meta.category).toBe("accessibility");
     expect(meta.track).toBe("frontend");
     expect(meta.publishedDate).toBe("2026-09-06");
     expect(meta.readingTimeMin).toBe(16);

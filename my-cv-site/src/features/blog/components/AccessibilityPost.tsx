@@ -9,7 +9,7 @@ import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
   slug: "wcag-aa-in-the-component",
-  category: "fundamentals",
+  category: "accessibility",
   track: "frontend",
   publishedDate: "2026-09-06",
   readingTimeMin: 16,
@@ -719,7 +719,7 @@ const COPY = {
   },
   closeTitle: {
     en: "What to take away",
-    nl: "Wat je hiervan meeneemt",
+    nl: "Wat je meeneemt",
   },
   close1: {
     en: "Six questions, asked while the component is on your screen. Does it have a name, and is that name the visible label. Does the markup say what it is. Does every state appear in an attribute. Can focus reach it, be seen on it and leave it. Does everything a pointer does have a keyboard path. Does every colour that carries meaning meet the ratio.",

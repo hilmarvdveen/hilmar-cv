@@ -5,7 +5,7 @@ import { Body, meta } from "./CsharpApiPost";
 describe("CsharpApiPost", () => {
   it("has bilingual metadata within the title and description limits", () => {
     expect(meta.slug).toBe("building-an-api-in-csharp");
-    expect(meta.category).toBe("architecture");
+    expect(meta.category).toBe("api");
     expect(meta.track).toBe("backend");
     expect(meta.publishedDate).toBe("2026-09-06");
     expect(meta.readingTimeMin).toBe(18);
