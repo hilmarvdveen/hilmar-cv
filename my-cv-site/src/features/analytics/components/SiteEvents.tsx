@@ -25,6 +25,10 @@ export function SiteEvents() {
       }
       if (href.endsWith("/contact")) {
         pushSiteEvent("contact_click", { placement, path: pathname });
+        return;
+      }
+      if (anchor.hasAttribute("data-placement")) {
+        pushSiteEvent("link_click", { placement, destination: href, path: pathname });
       }
     };
 

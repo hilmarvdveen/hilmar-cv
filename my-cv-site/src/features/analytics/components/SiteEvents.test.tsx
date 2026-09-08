@@ -95,7 +95,29 @@ describe("SiteEvents", () => {
     });
   });
 
-  it("ignores a click on a link that is neither a booking nor a contact link", () => {
+  it("pushes link_click with the placement, destination and path for any other labelled link", () => {
+    const anchor = appendAnchor("https://wa.me/31681049847", "footer-whatsapp");
+    render(<SiteEvents />);
+    fireEvent.click(anchor);
+    expect(pushSiteEvent).toHaveBeenCalledWith("link_click", {
+      placement: "footer-whatsapp",
+      destination: "https://wa.me/31681049847",
+      path: "/en",
+    });
+  });
+
+  it("pushes only contact_click for a labelled contact link, never link_click as well", () => {
+    const anchor = appendAnchor("/en/contact", "about-close-contact");
+    render(<SiteEvents />);
+    fireEvent.click(anchor);
+    expect(pushSiteEvent).toHaveBeenCalledTimes(1);
+    expect(pushSiteEvent).toHaveBeenCalledWith("contact_click", {
+      placement: "about-close-contact",
+      path: "/en",
+    });
+  });
+
+  it("ignores a click on an unlabelled link that is neither a booking nor a contact link", () => {
     const anchor = appendAnchor("/about");
     render(<SiteEvents />);
     fireEvent.click(anchor);

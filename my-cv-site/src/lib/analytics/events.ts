@@ -1,6 +1,7 @@
 export type SiteEventName =
   | "cta_click"
   | "contact_click"
+  | "link_click"
   | "section_view"
   | "consent_choice"
   | "cv_download"

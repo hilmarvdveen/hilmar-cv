@@ -164,6 +164,7 @@ inside the message provider, emits these events for every page on the site:
 |---|---|---|
 | `cta_click` | a click reaches an anchor whose `href` ends with `/book` | `placement`, `path` |
 | `contact_click` | a click reaches an anchor whose `href` ends with `/contact` | `placement`, `path` |
+| `link_click` | a click reaches any other anchor that carries `data-placement` (WhatsApp, email, phone, LinkedIn, articles, city and engagement links), since 8 September 2026 | `placement`, `destination`, `path` |
 | `section_view` | an element carrying `data-track-section` first enters the viewport | `section` |
 | `consent_choice` | the visitor accepts or declines the cookie banner | `choice` ("accept" or "decline") |
 | `cv_download` | the CV document opens from the download modal | `language` |
