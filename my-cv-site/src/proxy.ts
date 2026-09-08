@@ -17,7 +17,7 @@ export default async function proxy(request: NextRequest) {
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https:;
     font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self' https://www.google-analytics.com https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live;
+    connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.g.doubleclick.net https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live;
     frame-src 'self';
     object-src 'none';
     base-uri 'self';

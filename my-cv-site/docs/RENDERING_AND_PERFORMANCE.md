@@ -149,6 +149,13 @@ reports the field numbers once the site is deployed.
    visit loads no third-party JavaScript at all. GA4 lives inside the
    container, and the booking funnel events arrive as `dataLayer` pushes.
    `NEXT_PUBLIC_GA_MEASUREMENT_ID` is no longer read anywhere.
+   The content security policy lets the GA4 tag inside the container
+   report: `connect-src` allows `https://*.google-analytics.com`,
+   `https://*.analytics.google.com`, `https://www.googletagmanager.com`
+   and `https://*.g.doubleclick.net`, the hosts Google names in its CSP
+   guide for GA4 through Tag Manager (added 7 September 2026, after the
+   property showed no data because the beacons to the regional collection
+   host were blocked). `src/proxy.test.ts` asserts the hosts.
 3. **Static HTML at the edge.** The only way to remove the per-request
    function and the `no-store` cache header is to drop the per-request
    nonce. Without a nonce, an App Router site needs `'unsafe-inline'` in
