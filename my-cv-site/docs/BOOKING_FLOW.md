@@ -300,7 +300,7 @@ higher, keeping the date. The regression test seeds a stale step 3 draft
 into local storage and expects the time grid.
 
 The consent banner writes its measured height into `--consent-height`
-on the root element while it is visible, and `main` reserves that space
+on the root element while it is visible, and the footer reserves that space
 as bottom padding. On a short page (the booking failure state on a
 phone) the recovery buttons therefore never sit behind the banner. The
 banner still stacks above the sticky booking bar through

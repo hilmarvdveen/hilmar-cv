@@ -319,7 +319,9 @@ as before. The page body never scrolls sideways.
 
 Two fixed elements can sit at the bottom: the sticky booking bar (sets
 `--bottom-bar-offset`, the consent banner stacks above it) and the
-consent banner (sets `--consent-height`, `main` pads its bottom by it).
+consent banner (sets `--consent-height`, the footer pads its bottom by it, so
+the reserved strip is navy under the legal bar and never a pale band between
+the last section and the footer, which is what padding on `main` produced).
 Anything new that is fixed to the bottom follows the same pattern:
 measure, publish a custom property, and let the page reserve the space.
 

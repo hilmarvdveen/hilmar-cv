@@ -119,7 +119,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider locale={locale} messages={clientMessages}>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 pt-[var(--header-height)] pb-[var(--consent-height,0px)]">{children}</main>
+            <main className="flex-1 pt-[var(--header-height)]">{children}</main>
             <Footer />
           </div>
           <StickyCallToActionBar />
