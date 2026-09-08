@@ -12,6 +12,8 @@ import { meta as graphQLContractMeta, Body as GraphQLContractBody } from "./comp
 import { meta as rxjsSignalsMeta, Body as RxjsSignalsBody } from "./components/RxjsSignalsPost";
 import { meta as csharpApiMeta, Body as CsharpApiBody } from "./components/CsharpApiPost";
 import { meta as accessibilityMeta, Body as AccessibilityBody } from "./components/AccessibilityPost";
+import { meta as javaApiMeta, Body as JavaApiBody } from "./components/JavaApiPost";
+import { meta as kotlinApiMeta, Body as KotlinApiBody } from "./components/KotlinApiPost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -27,10 +29,14 @@ const POSTS: BlogPost[] = [
   { ...rxjsSignalsMeta, track: "frontend", Body: RxjsSignalsBody },
   { ...csharpApiMeta, track: "backend", Body: CsharpApiBody },
   { ...accessibilityMeta, track: "frontend", Body: AccessibilityBody },
+  { ...javaApiMeta, track: "backend", Body: JavaApiBody },
+  { ...kotlinApiMeta, track: "backend", Body: KotlinApiBody },
 ];
 
-export const BLOG_POSTS: BlogPost[] = [...POSTS].sort((first, second) =>
-  second.publishedDate.localeCompare(first.publishedDate)
+const featuredFirst = (first: BlogPost, second: BlogPost) => Number(second.featured ?? false) - Number(first.featured ?? false);
+
+export const BLOG_POSTS: BlogPost[] = [...POSTS].sort(
+  (first, second) => featuredFirst(first, second) || second.publishedDate.localeCompare(first.publishedDate)
 );
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

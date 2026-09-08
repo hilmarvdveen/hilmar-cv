@@ -11,6 +11,7 @@ export const meta: BlogPostMeta = {
   slug: "reversible-cut-over-legacy-to-new",
   category: "architecture",
   track: "fullstack",
+  featured: true,
   publishedDate: "2026-09-06",
   readingTimeMin: 13,
   title: {

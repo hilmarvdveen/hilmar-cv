@@ -1,8 +1,9 @@
 import type { Locale } from "@/lib/seo";
 import type { BlogPostMeta } from "../types";
-import { H2, P, Lead, UL, OL, LI, Strong, Quote, Divider } from "./prose";
+import { H2, P, A, Lead, UL, OL, LI, Strong, Quote, Divider } from "./prose";
 import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
+import { FileTree, type FileNode } from "./FileTree";
 import { FlowDiagram } from "./FlowDiagram";
 import { Contents } from "./Contents";
 import { flowNode, flowEdge } from "../flow";
@@ -12,7 +13,7 @@ export const meta: BlogPostMeta = {
   category: "api",
   track: "backend",
   publishedDate: "2026-09-06",
-  readingTimeMin: 18,
+  readingTimeMin: 22,
   title: {
     en: "An API in ASP.NET Core: minimal endpoints or controllers",
     nl: "Een API in ASP.NET Core: minimal endpoints of controllers",
@@ -72,6 +73,47 @@ function buildProjectDiagram(locale: Locale) {
   return { nodes, edges };
 }
 
+function buildSolutionTree(locale: Locale): FileNode[] {
+  const copy = COPY;
+  return [
+    {
+      name: "workshops",
+      children: [
+        { name: "Workshops.sln" },
+        {
+          name: "Workshops.Domain",
+          comment: copy.treeDomain[locale],
+          children: [
+            { name: "Workshops.Domain.csproj" },
+            { name: "Workshop.cs", comment: copy.treeWorkshop[locale] },
+            { name: "RegistrationService.cs", comment: copy.treeService[locale] },
+          ],
+        },
+        {
+          name: "Workshops.Api",
+          comment: copy.treeApi[locale],
+          children: [
+            { name: "Workshops.Api.csproj" },
+            { name: "Program.cs", comment: copy.treeProgram[locale] },
+            { name: "RegisterRequest.cs" },
+            { name: "RegistrationResponse.cs" },
+            { name: "RegistrationEndpoints.cs", comment: copy.treeEndpoints[locale] },
+            { name: "RegistrationEndpoints.Register.cs", comment: copy.treePartial[locale] },
+          ],
+        },
+        {
+          name: "Workshops.Api.Tests",
+          comment: copy.treeTests[locale],
+          children: [
+            { name: "Workshops.Api.Tests.csproj" },
+            { name: "RegistrationEndpointTests.cs" },
+          ],
+        },
+      ],
+    },
+  ];
+}
+
 export function Body({ locale }: { locale: Locale }) {
   const copy = COPY;
   const requestFlow = buildRequestDiagram(locale);
@@ -87,6 +129,7 @@ export function Body({ locale }: { locale: Locale }) {
         label={copy.contentsLabel[locale]}
         items={[
           copy.choiceTitle[locale],
+          copy.setupTitle[locale],
           copy.minimalTitle[locale],
           copy.controllerTitle[locale],
           copy.pickTitle[locale],
@@ -95,6 +138,8 @@ export function Body({ locale }: { locale: Locale }) {
           copy.typedTitle[locale],
           copy.problemTitle[locale],
           copy.openApiTitle[locale],
+          copy.programTitle[locale],
+          copy.runTitle[locale],
           copy.testingTitle[locale],
           copy.boundaryTitle[locale],
           copy.closeTitle[locale],
@@ -105,6 +150,13 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.choice1[locale]}</P>
       <P>{copy.choice2[locale]}</P>
       <P>{copy.choice3[locale]}</P>
+
+      <H2>{copy.setupTitle[locale]}</H2>
+      <P>{copy.setup1[locale]}</P>
+      <CodeBlock lang="bash" filename="workshops" code={CREATE_PROJECTS_CODE} />
+      <P>{copy.setup2[locale]}</P>
+      <P>{copy.setup3[locale]}</P>
+      <FileTree tree={buildSolutionTree(locale)} caption={copy.treeCaption[locale]} />
 
       <H2>{copy.minimalTitle[locale]}</H2>
       <P>{copy.minimal1[locale]}</P>
@@ -180,8 +232,34 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.openApi1[locale]}</P>
       <P>{copy.openApi2[locale]}</P>
       <CodeBlock lang="csharp" filename="Workshops.Api/Program.cs" code={OPEN_API_CODE} />
+      <P>{copy.openApiPackage[locale]}</P>
       <P>{copy.openApi3[locale]}</P>
       <P>{copy.openApi4[locale]}</P>
+
+      <H2>{copy.programTitle[locale]}</H2>
+      <P>{copy.program1[locale]}</P>
+      <CodeBlock lang="csharp" filename="Workshops.Api/Program.cs" code={FULL_PROGRAM_CODE} />
+      <P>{copy.program2[locale]}</P>
+      <CodeBlock lang="csharp" filename="Workshops.Api/RegistrationResponse.cs" code={RESPONSE_RECORD_CODE} />
+      <P>{copy.program3[locale]}</P>
+
+      <H2>{copy.runTitle[locale]}</H2>
+      <P>{copy.run1[locale]}</P>
+      <CodeBlock lang="bash" filename="workshops" code={RUN_CODE} />
+      <CodeBlock lang="text" filename="dotnet run" code={RUN_OUTPUT_CODE} />
+      <P>{copy.run2[locale]}</P>
+      <P>{copy.run3[locale]}</P>
+      <CodeBlock lang="bash" filename="POST /registrations" code={CALL_CREATE_CODE} />
+      <P>{copy.run4[locale]}</P>
+      <CodeBlock lang="bash" filename="GET /registrations/{registrationId}" code={CALL_READ_CODE} />
+      <P>{copy.run5[locale]}</P>
+      <CodeBlock lang="bash" filename="GET /registrations?workshopId={workshopId}" code={CALL_LIST_CODE} />
+      <P>{copy.run6[locale]}</P>
+      <CodeBlock lang="bash" filename="DELETE /registrations/{registrationId}" code={CALL_DELETE_CODE} />
+      <P>{copy.run7[locale]}</P>
+      <CodeBlock lang="bash" filename="POST /registrations" code={CALL_INVALID_CODE} />
+      <P>{copy.run8[locale]}</P>
+      <CodeBlock lang="bash" filename="POST /registrations" code={CALL_FULL_CODE} />
 
       <H2>{copy.testingTitle[locale]}</H2>
       <P>{copy.testing1[locale]}</P>
@@ -189,6 +267,10 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.testing3[locale]}</P>
       <CodeBlock lang="csharp" filename="Workshops.Api.Tests/RegistrationEndpointTests.cs" code={INTEGRATION_TEST_CODE} />
       <P>{copy.testing4[locale]}</P>
+      <P>{copy.testing5[locale]}</P>
+      <CodeBlock lang="bash" filename="workshops" code={TEST_RUN_CODE} />
+      <CodeBlock lang="text" filename="dotnet test" code={TEST_OUTPUT_CODE} />
+      <P>{copy.testing6[locale]}</P>
 
       <H2>{copy.boundaryTitle[locale]}</H2>
       <P>{copy.boundary1[locale]}</P>
@@ -210,10 +292,34 @@ export function Body({ locale }: { locale: Locale }) {
       <H2>{copy.closeTitle[locale]}</H2>
       <P>{copy.close1[locale]}</P>
       <P>{copy.close2[locale]}</P>
-      <P>{copy.close3[locale]}</P>
+      <P>
+        {copy.close3[locale]}
+        <A href={`/${locale}/blog/building-an-api-in-java`}>{copy.javaArticleLink[locale]}</A>
+        {copy.close3Between[locale]}
+        <A href={`/${locale}/blog/building-an-api-in-kotlin`}>{copy.kotlinArticleLink[locale]}</A>
+        {copy.close3After[locale]}
+      </P>
     </>
   );
 }
+
+const CREATE_PROJECTS_CODE = `mkdir workshops
+cd workshops
+
+dotnet new sln --name Workshops
+dotnet new classlib --output Workshops.Domain
+dotnet new web --output Workshops.Api
+dotnet new xunit --output Workshops.Api.Tests
+
+dotnet sln add Workshops.Domain/Workshops.Domain.csproj
+dotnet sln add Workshops.Api/Workshops.Api.csproj
+dotnet sln add Workshops.Api.Tests/Workshops.Api.Tests.csproj
+
+dotnet add Workshops.Api/Workshops.Api.csproj reference Workshops.Domain/Workshops.Domain.csproj
+dotnet add Workshops.Api.Tests/Workshops.Api.Tests.csproj reference Workshops.Api/Workshops.Api.csproj
+
+dotnet add Workshops.Api/Workshops.Api.csproj package Microsoft.AspNetCore.OpenApi
+dotnet add Workshops.Api.Tests/Workshops.Api.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing`;
 
 const DOMAIN_TYPES_CODE = `namespace Workshops.Domain;
 
@@ -448,6 +554,153 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }`;
 
+const FULL_PROGRAM_CODE = `using Workshops.Api;
+using Workshops.Domain;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton(new RegistrationService(WorkshopCatalogue.All, TimeProvider.System));
+builder.Services.AddValidation();
+builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails(options =>
+    options.CustomizeProblemDetails = context =>
+    {
+        context.ProblemDetails.Instance = context.HttpContext.Request.Path;
+        context.ProblemDetails.Extensions["traceIdentifier"] = context.HttpContext.TraceIdentifier;
+    });
+
+WebApplication app = builder.Build();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+
+app.MapOpenApi();
+app.MapRegistrations();
+
+app.Run();
+
+public partial class Program;`;
+
+const RESPONSE_RECORD_CODE = `using Workshops.Domain;
+
+namespace Workshops.Api;
+
+public sealed record RegistrationResponse(
+    Guid Id,
+    Guid WorkshopId,
+    string AttendeeName,
+    string AttendeeEmail,
+    DateTimeOffset RegisteredAt)
+{
+    public static RegistrationResponse From(Registration registration) =>
+        new(registration.Id,
+            registration.WorkshopId,
+            registration.AttendeeName,
+            registration.AttendeeEmail,
+            registration.RegisteredAt);
+}`;
+
+const RUN_CODE = `dotnet run --project Workshops.Api`;
+
+const RUN_OUTPUT_CODE = `Building...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5185
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development`;
+
+const CALL_CREATE_CODE = `curl -i -X POST http://localhost:5185/registrations \\
+  -H "content-type: application/json" \\
+  -d '{"workshopId":"11111111-1111-1111-1111-111111111111","attendeeName":"Sanne de Wit","attendeeEmail":"sanne@example.com"}'
+
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+Location: /registrations/0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5
+
+{
+  "id": "0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5",
+  "workshopId": "11111111-1111-1111-1111-111111111111",
+  "attendeeName": "Sanne de Wit",
+  "attendeeEmail": "sanne@example.com",
+  "registeredAt": "2026-09-06T09:12:04.7351290+00:00"
+}`;
+
+const CALL_READ_CODE = `curl -i http://localhost:5185/registrations/0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  "id": "0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5",
+  "workshopId": "11111111-1111-1111-1111-111111111111",
+  "attendeeName": "Sanne de Wit",
+  "attendeeEmail": "sanne@example.com",
+  "registeredAt": "2026-09-06T09:12:04.7351290+00:00"
+}`;
+
+const CALL_LIST_CODE = `curl -i "http://localhost:5185/registrations?workshopId=11111111-1111-1111-1111-111111111111"
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+  {
+    "id": "0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5",
+    "workshopId": "11111111-1111-1111-1111-111111111111",
+    "attendeeName": "Sanne de Wit",
+    "attendeeEmail": "sanne@example.com",
+    "registeredAt": "2026-09-06T09:12:04.7351290+00:00"
+  },
+  {
+    "id": "0199c1e2-91c4-7a52-b6d8-3f7e5a1c04b2",
+    "workshopId": "11111111-1111-1111-1111-111111111111",
+    "attendeeName": "Tarik Yildiz",
+    "attendeeEmail": "tarik@example.com",
+    "registeredAt": "2026-09-06T09:14:38.2046180+00:00"
+  }
+]`;
+
+const CALL_DELETE_CODE = `curl -i -X DELETE http://localhost:5185/registrations/0199c1e2-64b7-7e3d-9f10-2c8a4d6b91f5
+
+HTTP/1.1 204 No Content`;
+
+const CALL_INVALID_CODE = `curl -i -X POST http://localhost:5185/registrations \\
+  -H "content-type: application/json" \\
+  -d '{"workshopId":"11111111-1111-1111-1111-111111111111","attendeeName":"","attendeeEmail":"sanne"}'
+
+HTTP/1.1 400 Bad Request
+Content-Type: application/problem+json
+
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "errors": {
+    "AttendeeName": [
+      "The AttendeeName field is required."
+    ],
+    "AttendeeEmail": [
+      "The AttendeeEmail field is not a valid e-mail address."
+    ]
+  }
+}`;
+
+const CALL_FULL_CODE = `curl -i -X POST http://localhost:5185/registrations \\
+  -H "content-type: application/json" \\
+  -d '{"workshopId":"22222222-2222-2222-2222-222222222222","attendeeName":"Noor Bakker","attendeeEmail":"noor@example.com"}'
+
+HTTP/1.1 409 Conflict
+Content-Type: application/problem+json
+
+{
+  "type": "https://workshops.example/problems/workshop-full",
+  "title": "The workshop is full.",
+  "status": 409,
+  "detail": "Every place in this workshop is taken.",
+  "workshopId": "22222222-2222-2222-2222-222222222222"
+}`;
+
 const INTEGRATION_TEST_CODE = `using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -528,6 +781,10 @@ public sealed class RegistrationEndpointTests : IDisposable
         attendeeEmail = "attendee@example.com",
     };
 }`;
+
+const TEST_RUN_CODE = `dotnet test`;
+
+const TEST_OUTPUT_CODE = `Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3 - Workshops.Api.Tests.dll (net10.0)`;
 
 const REGISTRATION_SERVICE_CODE = `namespace Workshops.Domain;
 
@@ -619,6 +876,10 @@ const API_PROJECT_CODE = `<Project Sdk="Microsoft.NET.Sdk.Web">
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\\Workshops.Domain\\Workshops.Domain.csproj" />
   </ItemGroup>
 
@@ -662,6 +923,34 @@ const COPY = {
     en: "They also mix. One project can serve controllers for the part that leans on model binding and filters, and map a group of minimal endpoints beside it. The router treats both the same way, because since ASP.NET Core moved to endpoint routing they are both endpoints.",
     nl: "Ze gaan ook samen. Eén project kan controllers bedienen voor het deel dat op model binding en filters leunt, en er een groep minimal endpoints naast zetten. De router behandelt allebei hetzelfde, want sinds ASP.NET Core op endpoint routing werkt, zijn het allebei endpoints.",
   },
+  setupTitle: {
+    en: "The project, from an empty folder",
+    nl: "Het project, vanuit een lege map",
+  },
+  setup1: {
+    en: "The .NET 10 SDK is the only thing to install, and dotnet --version answers with a 10.0 number once it is there. The commands below make three projects, hold them in one solution, point two references in one direction and add the two packages that are not in the shared framework.",
+    nl: "De .NET 10-SDK is het enige dat je installeert, en dotnet --version antwoordt met een 10.0-nummer zodra die er staat. De commando's hieronder maken drie projecten, zetten ze in één solution, laten twee verwijzingen dezelfde kant op wijzen en voegen de twee pakketten toe die niet in het gedeelde framework zitten.",
+  },
+  setup2: {
+    en: "The class library template writes a Class1.cs that can go, and the web template writes a Program.cs that the next section replaces. Each dotnet add package writes the version your SDK resolves into the project file, so a patch release can make that number higher than the one printed at the end of this article.",
+    nl: "Het classlib-sjabloon schrijft een Class1.cs die weg mag, en het web-sjabloon schrijft een Program.cs die de volgende paragraaf vervangt. Elke dotnet add package zet de versie die jouw SDK oplevert in het projectbestand, dus een patchrelease kan dat nummer hoger maken dan het nummer dat aan het eind van dit artikel staat.",
+  },
+  setup3: {
+    en: "Nothing in there runs yet, and the shape is already set. Every code block below names its file at the top, and those paths match this tree.",
+    nl: "Er draait nog niets, en de vorm ligt er al. Elk codeblok hieronder noemt bovenaan zijn bestand, en die paden passen op deze boom.",
+  },
+  treeCaption: {
+    en: "Three projects. The domain carries the rule, the API maps it onto HTTP, and the test project calls that API over HTTP.",
+    nl: "Drie projecten. Het domein draagt de regel, de API zet die op HTTP, en het testproject roept die API over HTTP aan.",
+  },
+  treeDomain: { en: "references nothing", nl: "verwijst nergens naar" },
+  treeWorkshop: { en: "the four domain types", nl: "de vier domeintypes" },
+  treeService: { en: "the rule and the store", nl: "de regel en de opslag" },
+  treeApi: { en: "the only project that knows HTTP", nl: "het enige project dat HTTP kent" },
+  treeProgram: { en: "services and the pipeline", nl: "services en de pijplijn" },
+  treeEndpoints: { en: "the four routes", nl: "de vier routes" },
+  treePartial: { en: "the same partial class", nl: "dezelfde partial class" },
+  treeTests: { en: "runs the API in memory", nl: "draait de API in het geheugen" },
   minimalTitle: {
     en: "A minimal API that does one thing",
     nl: "Een minimal API die één ding doet",
@@ -862,6 +1151,10 @@ const COPY = {
     en: "Swashbuckle was removed from that template. It was not deprecated and it still works if you want it. A UI is an opt-in decision now, and it is one line.",
     nl: "Swashbuckle is uit dat sjabloon gehaald. Het is niet afgeschaft en het werkt nog steeds als je het wilt. Een UI is nu een bewuste keuze, en het is één regel.",
   },
+  openApiPackage: {
+    en: "The UI on that last line lives in a package, added with dotnet add package Scalar.AspNetCore. It follows its own release schedule, so let the command write the version it picks. The document itself asks for nothing beyond the package the project already carries.",
+    nl: "De UI op die laatste regel zit in een pakket, dat je toevoegt met dotnet add package Scalar.AspNetCore. Het volgt zijn eigen releaseschema, dus laat het commando de versie schrijven die het kiest. Het document zelf vraagt niets meer dan het pakket dat het project al heeft.",
+  },
   openApi3: {
     en: "Scalar and Swagger UI both read the document from that address, so the choice between them is a matter of taste. Keeping the page behind a development check is worth doing, because a rendered console is a larger piece of surface than a JSON document.",
     nl: "Scalar en Swagger UI lezen allebei het document op dat adres, dus de keuze daartussen is een kwestie van smaak. De pagina achter een controle op de ontwikkelomgeving houden is verstandig, want een uitgetekende console is een groter stuk oppervlak dan een JSON-document.",
@@ -869,6 +1162,58 @@ const COPY = {
   openApi4: {
     en: "At Ortec I settled the REST contracts with the backend teams on OpenAPI 3.0, and that is the part of this section that matters most. The document is not documentation you generate at the end. It is what two teams agree on while both sides are still changing, and a generated document keeps that agreement honest, because it cannot drift away from the code that produced it.",
     nl: "Bij Ortec legde ik de REST-contracten met de backendteams vast op OpenAPI 3.0, en dat is het deel van deze paragraaf dat er het meest toe doet. Het document is geen documentatie die je aan het eind genereert. Het is waar twee teams het over eens worden terwijl beide kanten nog veranderen, en een gegenereerd document houdt die afspraak zuiver, want het kan niet weglopen van de code die het heeft opgeleverd.",
+  },
+  programTitle: {
+    en: "Program.cs from top to bottom",
+    nl: "Program.cs van boven naar beneden",
+  },
+  program1: {
+    en: "Every fragment above added its lines to one file. Here it is whole, with the service registrations first, the pipeline after Build and the routes last. The only line left out is the UI, because that one needs the package from the previous section.",
+    nl: "Elk fragment hierboven voegde zijn regels toe aan één bestand. Hier staat het compleet, met eerst de serviceregistraties, dan de pijplijn na Build en als laatste de routes. De enige regel die ontbreekt, is de UI, want die heeft het pakket uit de vorige paragraaf nodig.",
+  },
+  program2: {
+    en: "The two records that closed the first version of this file are gone from it. RegisterRequest moved out in the validation section, and RegistrationResponse makes the same move, so both sit in the Workshops.Api namespace beside the handlers that use them.",
+    nl: "De twee records die de eerste versie van dit bestand afsloten, staan er niet meer in. RegisterRequest verhuisde al in de paragraaf over validatie, en RegistrationResponse doet hetzelfde, zodat ze allebei in de namespace Workshops.Api staan bij de handlers die ze gebruiken.",
+  },
+  program3: {
+    en: "The controller from the second section is not part of this project. Mapping it beside the group gives POST /registrations two endpoints, and the router cannot pick one of them, so the choice between the two styles is one you make once.",
+    nl: "De controller uit de tweede paragraaf hoort niet bij dit project. Wie hem naast de groep op de route zet, geeft POST /registrations twee endpoints, en de router kan er dan geen kiezen. De keuze tussen de twee stijlen maak je dus één keer.",
+  },
+  runTitle: {
+    en: "Running it, and what a client gets back",
+    nl: "Draaien, en wat een client terugkrijgt",
+  },
+  run1: {
+    en: "One command starts it. The port comes from Properties/launchSettings.json, written by the web template, so the number below is not the number on your machine.",
+    nl: "Eén commando start hem. De poort komt uit Properties/launchSettings.json, geschreven door het web-sjabloon, dus het nummer hieronder is niet het nummer op jouw machine.",
+  },
+  run2: {
+    en: "Six calls cover the whole API. Each block holds the call and the answer that came back, with the headers that carry meaning and a body laid out over several lines, because the server sends it as one. On Windows PowerShell, write curl.exe, because plain curl there is a name for Invoke-WebRequest, which takes different arguments.",
+    nl: "Zes aanroepen dekken de hele API. Elk blok bevat de aanroep en het antwoord dat terugkwam, met de headers die iets betekenen en een body over meer regels, want de server stuurt hem als één regel. Gebruik op Windows PowerShell curl.exe, want kaal curl is daar een naam voor Invoke-WebRequest, die andere argumenten aanneemt.",
+  },
+  run3: {
+    en: "The catalogue holds two workshops. This call registers an attendee for the one with twelve places. The identifier in the Location header is a version 7 GUID the service made, so yours reads differently.",
+    nl: "De catalogus bevat twee workshops. Deze aanroep schrijft een deelnemer in voor die met twaalf plaatsen. De identificatie in de Location-header is een version 7-GUID die de service maakte, dus die van jou ziet er anders uit.",
+  },
+  run4: {
+    en: "That address is a route of its own, and it answers with the same body.",
+    nl: "Dat adres is zelf een route, en het antwoordt met dezelfde body.",
+  },
+  run5: {
+    en: "The list route reads its workshop from the query string. Register a second attendee for the same workshop and the list answers with both, in the order the registrations came in.",
+    nl: "De lijstroute leest haar workshop uit de querystring. Schrijf een tweede deelnemer in voor dezelfde workshop en de lijst antwoordt met allebei, in de volgorde waarin de inschrijvingen binnenkwamen.",
+  },
+  run6: {
+    en: "A cancel answers with no body at all. The same call a second time answers 404, because Cancel reports whether it removed anything.",
+    nl: "Een annulering antwoordt zonder body. Dezelfde aanroep een tweede keer antwoordt 404, want Cancel meldt of er iets is verwijderd.",
+  },
+  run7: {
+    en: "Then the two failures a client has to handle. A body with an empty name and an address without an at sign never reaches the handler.",
+    nl: "Dan de twee fouten waar een client mee om moet gaan. Een body met een lege naam en een adres zonder apenstaartje bereikt de handler nooit.",
+  },
+  run8: {
+    en: "The second one is the domain rule. The other workshop has two places. Fill them with two calls like the first, and the third comes back as a conflict that names the workshop.",
+    nl: "De tweede is de domeinregel. De andere workshop heeft twee plaatsen. Vul ze met twee aanroepen als de eerste, en de derde komt terug als een conflict dat de workshop benoemt.",
   },
   testingTitle: {
     en: "Testing an endpoint with WebApplicationFactory",
@@ -889,6 +1234,14 @@ const COPY = {
   testing4: {
     en: "The first test walks the path a client walks, the Location header included, because a 201 with an address nobody can follow is a 201 that lied. The second reads the errors dictionary by property name, which is the contract a form in the browser depends on. The third proves the domain rule through the endpoint, in the shape the client sees.",
     nl: "De eerste test loopt het pad dat een client loopt, inclusief de Location-header, want een 201 met een adres dat niemand kan volgen is een 201 die loog. De tweede leest de foutenlijst op propertynaam, en dat is het contract waar een formulier in de browser op leunt. De derde bewijst de domeinregel via het endpoint, in de vorm die de client ziet.",
+  },
+  testing5: {
+    en: "One command builds the solution and runs every test project in it.",
+    nl: "Eén commando bouwt de solution en draait elk testproject erin.",
+  },
+  testing6: {
+    en: "A run that fails prints the name of the test above that line, with the assertion that did not hold. That is the reason the three names read as sentences.",
+    nl: "Een run die faalt, drukt boven die regel de naam van de test af, met de assertie die niet klopte. Daarom lezen de drie namen als zinnen.",
   },
   boundaryTitle: {
     en: "Where the endpoint stops and the domain starts",
@@ -935,8 +1288,24 @@ const COPY = {
     nl: "Kies minimal endpoints voor een nieuwe API met een handvol routes. Houd controllers waar de conventies en de filters al dragend zijn. Steek de tijd die je overhoudt in de grens uit de vorige paragraaf, want die is later duur om te verplaatsen.",
   },
   close3: {
-    en: "I build frontends most weeks and I write the endpoints behind them when a build needs it. At the Belastingdienst the forms platform had to ship, so I extended the Java backend endpoints the editor called. Java and Kotlin answer these same four routes in their own way, and that is where the series goes next.",
-    nl: "Ik bouw de meeste weken frontends en ik schrijf de endpoints erachter als de bouw daarom vraagt. Bij de Belastingdienst moest het formulierenplatform live, dus breidde ik de endpoints van de Java-backend uit die de editor aanriep. Java en Kotlin beantwoorden diezelfde vier routes op hun eigen manier, en daar gaat de reeks hierna heen.",
+    en: "I build frontends most weeks and I write the endpoints behind them when a build needs it. At the Belastingdienst the forms platform had to ship, so I extended the Java backend endpoints the editor called. The two articles that answer these same four routes in another language are ",
+    nl: "Ik bouw de meeste weken frontends en ik schrijf de endpoints erachter als de bouw daarom vraagt. Bij de Belastingdienst moest het formulierenplatform live, dus breidde ik de endpoints van de Java-backend uit die de editor aanriep. De twee artikelen die diezelfde vier routes in een andere taal beantwoorden, zijn ",
+  },
+  javaArticleLink: {
+    en: "Spring Boot on Java",
+    nl: "Spring Boot op Java",
+  },
+  close3Between: {
+    en: " and ",
+    nl: " en ",
+  },
+  kotlinArticleLink: {
+    en: "Kotlin on Spring Boot and Ktor",
+    nl: "Kotlin op Spring Boot en Ktor",
+  },
+  close3After: {
+    en: ". Set one of them next to this one and the routes line up, so what is left to look at is the language and the framework.",
+    nl: ". Zet er een naast dit artikel en de routes vallen samen, zodat alleen de taal en het framework overblijven om naar te kijken.",
   },
   nodeRequest: { en: "HTTP request", nl: "HTTP-request" },
   nodeBinding: { en: "Binding", nl: "Binding" },

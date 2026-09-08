@@ -8,7 +8,7 @@ describe("CsharpApiPost", () => {
     expect(meta.category).toBe("api");
     expect(meta.track).toBe("backend");
     expect(meta.publishedDate).toBe("2026-09-06");
-    expect(meta.readingTimeMin).toBe(18);
+    expect(meta.readingTimeMin).toBe(22);
     expect(meta.title.en.length).toBeLessThan(60);
     expect(meta.title.nl.length).toBeLessThan(60);
     expect(meta.description.en.length).toBeLessThan(160);
@@ -26,11 +26,11 @@ describe("CsharpApiPost", () => {
   it("renders the English body with every section, both diagrams and the contents list", () => {
     render(<Body locale="en" />);
 
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(15);
     expect(screen.getAllByRole("img")).toHaveLength(2);
 
     const contents = screen.getByRole("navigation", { name: "In this article" });
-    expect(within(contents).getAllByRole("listitem")).toHaveLength(12);
+    expect(within(contents).getAllByRole("listitem")).toHaveLength(15);
     expect(
       within(contents).getByRole("link", { name: "The choice, stated plainly" })
     ).toBeInTheDocument();
@@ -101,11 +101,11 @@ describe("CsharpApiPost", () => {
   it("renders the Dutch body with every section, both diagrams and the contents list", () => {
     render(<Body locale="nl" />);
 
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(15);
     expect(screen.getAllByRole("img")).toHaveLength(2);
 
     const contents = screen.getByRole("navigation", { name: "In dit artikel" });
-    expect(within(contents).getAllByRole("listitem")).toHaveLength(12);
+    expect(within(contents).getAllByRole("listitem")).toHaveLength(15);
     expect(
       within(contents).getByRole("link", { name: "De keuze, eenvoudig gesteld" })
     ).toBeInTheDocument();
@@ -133,6 +133,69 @@ describe("CsharpApiPost", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(/voor \.NET 10 en C# 14, gecontroleerd op 6 september 2026/)
+    ).toBeInTheDocument();
+  });
+
+  it("carries the commands from an empty folder to a running API", () => {
+    render(<Body locale="en" />);
+
+    expect(screen.getByText(/dotnet new sln --name Workshops/)).toBeInTheDocument();
+    expect(screen.getByText(/dotnet new xunit --output Workshops\.Api\.Tests/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/package Microsoft\.AspNetCore\.OpenApi/)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/dotnet run --project Workshops\.Api/)).toBeInTheDocument();
+    expect(screen.getByText(/Passed! - Failed: 0, Passed: 3/)).toBeInTheDocument();
+
+    expect(screen.getByText("Workshops.sln")).toBeInTheDocument();
+    expect(screen.getByText("Workshops.Api.Tests")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "The project, from an empty folder" })
+    ).toBeInTheDocument();
+  });
+
+  it("shows one call per route and both failures as the client sees them", () => {
+    render(<Body locale="en" />);
+
+    expect(screen.getByText(/HTTP\/1\.1 201 Created/)).toBeInTheDocument();
+    expect(screen.getByText(/HTTP\/1\.1 204 No Content/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/"title": "One or more validation errors occurred\."/)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/HTTP\/1\.1 409 Conflict/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Running it, and what a client gets back" })
+    ).toBeInTheDocument();
+  });
+
+  it("links the two articles that answer the same four routes", () => {
+    render(<Body locale="en" />);
+
+    expect(screen.getByRole("link", { name: "Spring Boot on Java" })).toHaveAttribute(
+      "href",
+      "/en/blog/building-an-api-in-java"
+    );
+    expect(
+      screen.getByRole("link", { name: "Kotlin on Spring Boot and Ktor" })
+    ).toHaveAttribute("href", "/en/blog/building-an-api-in-kotlin");
+  });
+
+  it("links those articles from the Dutch page under the Dutch prefix", () => {
+    render(<Body locale="nl" />);
+
+    expect(screen.getByRole("link", { name: "Spring Boot op Java" })).toHaveAttribute(
+      "href",
+      "/nl/blog/building-an-api-in-java"
+    );
+    expect(screen.getByRole("link", { name: "Kotlin op Spring Boot en Ktor" })).toHaveAttribute(
+      "href",
+      "/nl/blog/building-an-api-in-kotlin"
+    );
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Het project, vanuit een lege map" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Draaien, en wat een client terugkrijgt" })
     ).toBeInTheDocument();
   });
 

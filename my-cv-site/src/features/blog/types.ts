@@ -18,6 +18,7 @@ export type BlogPostMeta = {
   slug: string;
   category: BlogCategory;
   track?: BlogTrack;
+  featured?: boolean;
   publishedDate: string;
   updatedDate?: string;
   readingTimeMin: number;

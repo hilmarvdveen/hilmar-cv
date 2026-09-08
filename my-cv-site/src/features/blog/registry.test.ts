@@ -4,13 +4,14 @@ import { BLOG_POSTS, getPostBySlug } from "./registry";
 const slugs = BLOG_POSTS.map((post) => post.slug);
 
 describe("blog registry", () => {
-  it("exposes posts with unique slugs, sorted newest-first", () => {
+  it("exposes posts with unique slugs, the unfeatured ones sorted newest-first", () => {
     expect(BLOG_POSTS.length).toBeGreaterThan(0);
     expect(new Set(slugs).size).toBe(slugs.length);
 
-    for (let index = 1; index < BLOG_POSTS.length; index++) {
+    const unfeatured = BLOG_POSTS.filter((post) => !post.featured);
+    for (let index = 1; index < unfeatured.length; index++) {
       expect(
-        BLOG_POSTS[index - 1].publishedDate.localeCompare(BLOG_POSTS[index].publishedDate)
+        unfeatured[index - 1].publishedDate.localeCompare(unfeatured[index].publishedDate)
       ).toBeGreaterThanOrEqual(0);
     }
   });
@@ -31,4 +32,9 @@ describe("blog registry", () => {
       expect(post.keywords.length).toBeGreaterThan(0);
     }
   });
+  it("features the cut-over post ahead of the newest ones", () => {
+    expect(BLOG_POSTS[0].slug).toBe("reversible-cut-over-legacy-to-new");
+    expect(BLOG_POSTS[0].featured).toBe(true);
+  });
+
 });
