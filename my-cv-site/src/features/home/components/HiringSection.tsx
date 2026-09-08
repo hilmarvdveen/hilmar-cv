@@ -43,6 +43,42 @@ export const HiringSection = () => {
       <Container>
         <SectionTitle title={t("title")} id="hiring-heading" />
 
+        <Card className="mb-10 flex h-full flex-col justify-center lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
+            {facts.map((fact) => (
+              <div key={fact.label}>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
+                  {fact.label}
+                </p>
+                <p className="text-base font-bold text-textMain">
+                  {fact.highlight && (
+                    <span
+                      className="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-2"
+                      aria-hidden="true"
+                    />
+                  )}
+                  {fact.href ? (
+                    <Link
+                      href={fact.href}
+                      className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                      data-placement="hiring-location"
+                    >
+                      {fact.value}
+                    </Link>
+                  ) : (
+                    fact.value
+                  )}
+                </p>
+                {fact.detail && (
+                  <p className="text-sm text-gray-600 mt-0.5">
+                    {fact.detail}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </Card>
+
         <div className="mb-10">
           <p className="text-lg font-bold text-textMain mb-2">{t("shapes.title")}</p>
           <p className="text-sm text-gray-600 mb-6 max-w-2xl">{t("shapes.subtitle")}</p>
@@ -78,63 +114,26 @@ export const HiringSection = () => {
           <p className="text-sm text-gray-600">{t("pitch.examples")}</p>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="flex h-full flex-col justify-center lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
-              {facts.map((fact) => (
-                <div key={fact.label}>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
-                    {fact.label}
-                  </p>
-                  <p className="text-base font-bold text-textMain">
-                    {fact.highlight && (
-                      <span
-                        className="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    {fact.href ? (
-                      <Link
-                        href={fact.href}
-                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                        data-placement="hiring-location"
-                      >
-                        {fact.value}
-                      </Link>
-                    ) : (
-                      fact.value
-                    )}
-                  </p>
-                  {fact.detail && (
-                    <p className="text-sm text-gray-600 mt-0.5">
-                      {fact.detail}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </Card>
-          <div>
-            <h3 className="text-lg font-bold text-textMain mb-4">
-              {faq.title}
-            </h3>
-            {faq.items.map((item) => (
-              <Card key={item.question} className="p-5 mb-3">
-                <p className="text-base font-bold text-textMain mb-1">
-                  {item.question}
-                </p>
-                <p className="text-sm leading-relaxed text-gray-600">
-                  {item.answer}
-                </p>
-              </Card>
-            ))}
-            <Link
-              href="/faq"
-              className="inline-flex min-h-6 items-center text-primary font-semibold underline underline-offset-4 text-sm"
-            >
-              {faq.linkLabel}
-            </Link>
-          </div>
+        <div>
+          <h3 className="text-lg font-bold text-textMain mb-4">
+            {faq.title}
+          </h3>
+          {faq.items.map((item) => (
+            <Card key={item.question} className="p-5 mb-3">
+              <p className="text-base font-bold text-textMain mb-1">
+                {item.question}
+              </p>
+              <p className="text-sm leading-relaxed text-gray-600">
+                {item.answer}
+              </p>
+            </Card>
+          ))}
+          <Link
+            href="/faq"
+            className="inline-flex min-h-6 items-center text-primary font-semibold underline underline-offset-4 text-sm"
+          >
+            {faq.linkLabel}
+          </Link>
         </div>
       </Container>
     </Section>

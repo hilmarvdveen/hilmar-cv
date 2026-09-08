@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
@@ -30,6 +31,15 @@ export const ValidationSection = () => {
               <p className="mt-2 text-xs uppercase tracking-wide text-gray-500">
                 {panel.attribution}
               </p>
+              {index === panels.length - 1 && (
+                <Link
+                  href="/experience"
+                  data-placement="validation-history"
+                  className="mt-4 inline-flex min-h-6 items-center text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                >
+                  {t("historyLink")}
+                </Link>
+              )}
             </Card>
           ))}
         </div>

@@ -21,7 +21,7 @@ export const HeroSection = () => {
       <Container>
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
           <div className="md:col-span-2 flex flex-col">
-            <p className="order-1 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 mb-4 sm:px-4 sm:py-2 sm:text-sm sm:mb-6">
+            <p className="order-1 inline-flex w-fit items-center gap-2 text-xs font-semibold text-emerald-300 mb-4 sm:text-sm sm:mb-6">
               <span
                 className="h-2 w-2 rounded-full bg-emerald-400"
                 aria-hidden="true"
@@ -94,13 +94,21 @@ export const HeroSection = () => {
           {chips.map((chip) => (
             <li
               key={chip}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5 sm:text-sm"
+              className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold text-slate-200 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5 sm:text-sm"
             >
               <Check className="h-3.5 w-3.5 text-emerald-300 sm:h-4 sm:w-4" aria-hidden="true" />
               {chip}
             </li>
           ))}
         </ul>
+
+        <a
+          href="#hiring-heading"
+          data-placement="hero-facts"
+          className="mt-4 inline-flex min-h-6 w-fit items-center text-sm text-slate-300 underline underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 sm:mt-6"
+        >
+          {t("factsLink")}
+        </a>
       </Container>
     </Section>
   );

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
@@ -50,7 +51,7 @@ const ClientCard = ({ name, id, logo, markHeight, priority }: ClientCardProps) =
       href={`/experience/${id}`}
       title={commonT("images.viewExperience", { company: name })}
       aria-label={commonT("images.viewExperience", { company: name })}
-      className="group flex h-[4.5rem] items-center justify-center rounded-lg bg-white p-3 ring-1 ring-gray-200 transition-colors hover:ring-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+      className="group relative flex h-[4.5rem] items-center justify-center rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-300 transition-colors hover:ring-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
     >
       <span className={`relative w-full ${markHeight}`}>
         <Image
@@ -62,6 +63,10 @@ const ClientCard = ({ name, id, logo, markHeight, priority }: ClientCardProps) =
           loading={priority ? "eager" : "lazy"}
         />
       </span>
+      <ChevronRight
+        className="absolute bottom-1.5 right-1.5 h-3.5 w-3.5 text-emerald-600"
+        aria-hidden="true"
+      />
     </Link>
   );
 };

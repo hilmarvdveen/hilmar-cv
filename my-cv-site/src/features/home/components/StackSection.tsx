@@ -38,8 +38,8 @@ export const StackSection = () => {
                     key={item}
                     className={
                       tier.emphasis
-                        ? "text-sm font-semibold rounded-md px-3.5 py-1.5 border text-brand-navy bg-emerald-50 border-emerald-200"
-                        : "text-sm font-semibold rounded-md px-3.5 py-1.5 border text-gray-700 bg-gray-100 border-gray-200"
+                        ? "text-sm font-semibold rounded-md px-3.5 py-1.5 text-brand-navy bg-emerald-50"
+                        : "text-sm font-semibold rounded-md px-3.5 py-1.5 text-gray-700 bg-gray-100"
                     }
                   >
                     {item}

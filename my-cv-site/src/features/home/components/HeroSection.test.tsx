@@ -74,4 +74,28 @@ describe("HeroSection", () => {
     render(<HeroSection />);
     expect(screen.getByAltText("imageAlt")).toHaveClass("h-12", "w-12");
   });
+
+  it("renders the availability line without a button-like pill", () => {
+    render(<HeroSection />);
+    const badge = screen.getByText("badge");
+    expect(badge.className).not.toContain("border");
+    expect(badge.className).not.toContain("bg-emerald-500/10");
+    expect(badge.className).not.toContain("rounded-full");
+    expect(badge.className).toContain("text-emerald-300");
+  });
+
+  it("renders the fact chips without a border or fill so they read as a checked list", () => {
+    render(<HeroSection />);
+    const chip = screen.getByText("10+ years senior since 2016").closest("li");
+    expect(chip).not.toBeNull();
+    expect(chip?.className).not.toContain("border-white/10");
+    expect(chip?.className).not.toContain("bg-white/5");
+  });
+
+  it("links the recruiter facts under the chip row to the hiring section", () => {
+    render(<HeroSection />);
+    const link = screen.getByRole("link", { name: "factsLink" });
+    expect(link).toHaveAttribute("href", "#hiring-heading");
+    expect(link).toHaveAttribute("data-placement", "hero-facts");
+  });
 });

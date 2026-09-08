@@ -72,4 +72,13 @@ describe("StackSection", () => {
     expect(section).toHaveAttribute("aria-labelledby", "stack-heading");
     expect(heading).toHaveAttribute("id", "stack-heading");
   });
+
+  it("renders the pills as fill-only, without a border, so they read as read-only tags", () => {
+    render(<StackSection />);
+    const emphasisPill = screen.getByText("React 19 + React Compiler");
+    expect(emphasisPill.className).not.toContain("border");
+
+    const otherPill = screen.getByText("Kotlin / JVM");
+    expect(otherPill.className).not.toContain("border");
+  });
 });

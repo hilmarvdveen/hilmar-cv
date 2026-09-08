@@ -55,4 +55,20 @@ describe("ClientLogosCarousel", () => {
     expect(screen.queryByText("indicator2")).not.toBeInTheDocument();
     expect(screen.queryByText("indicator3")).not.toBeInTheDocument();
   });
+
+  it("gives every tile a visible resting frame so it reads as a tile", () => {
+    const { container } = render(<ClientLogosCarousel />);
+    const links = container.querySelectorAll('a[href^="/experience/"]');
+    expect(links.length).toBe(12);
+    links.forEach((link) => {
+      expect(link.className).toContain("ring-gray-300");
+      expect(link.className).toContain("shadow-sm");
+    });
+  });
+
+  it("gives every tile a persistent chevron, hidden from assistive technology", () => {
+    const { container } = render(<ClientLogosCarousel />);
+    const chevrons = container.querySelectorAll('svg[aria-hidden="true"]');
+    expect(chevrons).toHaveLength(12);
+  });
 });

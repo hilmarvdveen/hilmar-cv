@@ -33,8 +33,8 @@ vi.mock("next-intl", () => {
 });
 
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
-    <a href={href} className={className}>
+  Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
       {children}
     </a>
   ),
@@ -72,9 +72,8 @@ describe("StandardsSection", () => {
 
   it("links to the testing article under the columns", () => {
     render(<StandardsSection />);
-    expect(screen.getByRole("link", { name: "link" })).toHaveAttribute(
-      "href",
-      "/blog/unit-testing-react-the-right-way"
-    );
+    const link = screen.getByRole("link", { name: "link" });
+    expect(link).toHaveAttribute("href", "/blog/unit-testing-react-the-right-way");
+    expect(link).toHaveAttribute("data-placement", "home-standards-article");
   });
 });

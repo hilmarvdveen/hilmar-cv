@@ -42,8 +42,8 @@ vi.mock("next-intl", () => {
 });
 
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
-    <a href={href} className={className}>
+  Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
       {children}
     </a>
   ),
@@ -93,10 +93,15 @@ describe("DeliveryMethodSection", () => {
   });
   it("links the cut-over article under the steps", () => {
     render(<DeliveryMethodSection />);
-    expect(screen.getByRole("link", { name: "link" })).toHaveAttribute(
-      "href",
-      "/blog/reversible-cut-over-legacy-to-new"
-    );
+    const link = screen.getByRole("link", { name: "link" });
+    expect(link).toHaveAttribute("href", "/blog/reversible-cut-over-legacy-to-new");
+    expect(link).toHaveAttribute("data-placement", "home-method-article");
   });
 
+  it("gives the article link a resting underline instead of hover-only", () => {
+    render(<DeliveryMethodSection />);
+    const link = screen.getByRole("link", { name: "link" });
+    expect(link.className).toContain("underline");
+    expect(link.className).not.toContain("hover:underline");
+  });
 });

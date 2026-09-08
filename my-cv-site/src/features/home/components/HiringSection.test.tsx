@@ -11,7 +11,7 @@ const facts = [
   },
   {
     label: "Location",
-    value: "Utrecht, hybrid or remote",
+    value: "The Randstad, hybrid or remote",
     detail: "1 to 2 days on site is fine",
     highlight: false,
   },
@@ -148,5 +148,17 @@ describe("HiringSection", () => {
     expect(screen.getByText("pitch.label")).toBeInTheDocument();
     expect(screen.getByText("pitch.sentence").tagName).toBe("BLOCKQUOTE");
     expect(screen.getByText("pitch.examples")).toBeInTheDocument();
+  });
+
+  it("renders the facts card before the engagement shapes, so the one-screen heading holds", () => {
+    render(<HiringSection />);
+    const factsLabel = screen.getByText(facts[0].label);
+    const firstShapeHeading = screen.getByRole("heading", {
+      level: 3,
+      name: shapes[0].title,
+    });
+    expect(
+      factsLabel.compareDocumentPosition(firstShapeHeading) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 });

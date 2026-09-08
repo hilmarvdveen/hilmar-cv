@@ -53,7 +53,11 @@ export const DeliveryMethodSection = () => {
           ))}
         </div>
         <p className="mt-8 text-center text-sm text-slate-300">
-          <Link href={CUT_OVER_POST_HREF} className="inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline-offset-4 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy">
+          <Link
+            href={CUT_OVER_POST_HREF}
+            data-placement="home-method-article"
+            className="inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+          >
             {t("link")}
           </Link>
         </p>

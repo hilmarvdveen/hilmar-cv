@@ -31,6 +31,14 @@ vi.mock("next-intl", () => {
   return { useTranslations: () => t };
 });
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
+}));
+
 describe("ValidationSection", () => {
   it("renders the section title and all panels", () => {
     render(<ValidationSection />);
@@ -57,5 +65,21 @@ describe("ValidationSection", () => {
     const { container } = render(<ValidationSection />);
     const headings = container.querySelectorAll("h3");
     expect(headings).toHaveLength(3);
+  });
+
+  it("links the twelve-engagements panel to the full work history", () => {
+    render(<ValidationSection />);
+    const link = screen.getByRole("link", { name: "historyLink" });
+    expect(link).toHaveAttribute("href", "/experience");
+    expect(link).toHaveAttribute("data-placement", "validation-history");
+  });
+
+  it("places the history link inside the twelve-engagements panel, after its other panels", () => {
+    render(<ValidationSection />);
+    const link = screen.getByRole("link", { name: "historyLink" });
+    const lastPanelHeading = screen.getByText(panels[panels.length - 1].title);
+    expect(
+      lastPanelHeading.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
   });
 });
