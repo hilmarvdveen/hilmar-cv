@@ -427,3 +427,16 @@ then shrunk to the card. Rules now:
   facts in one `dl` card with the CV, LinkedIn and rate links beneath it,
   and a close with one button and the contact link in plain text. Every
   practical fact appears once on the page.
+
+## A sticky element needs a column of its own (8 September 2026)
+
+Hilmar's screenshot showed the three engagement-shape cards drawn over the
+practical facts card on the homepage. The facts card still carried
+`lg:sticky` from the time it was the side column of a two-column grid.
+Since 7 September it leads the hiring section at full width, so its
+containing block runs to the end of the section, and once it stuck, every
+block after it scrolled underneath (the quiet cards are transparent, so
+their text showed through). Rule: `sticky` only on an element that sits in
+a column of its own, whose containing block is that column. A full-width
+block in a single-column flow is never sticky. The map's detail panel on
+/about follows the rule: it is sticky inside its own grid column from md.

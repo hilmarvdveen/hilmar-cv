@@ -43,7 +43,7 @@ export const HiringSection = () => {
       <Container>
         <SectionTitle title={t("title")} id="hiring-heading" />
 
-        <Card className="mb-10 flex h-full flex-col justify-center lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
+        <Card className="mb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
             {facts.map((fact) => (
               <div key={fact.label}>
