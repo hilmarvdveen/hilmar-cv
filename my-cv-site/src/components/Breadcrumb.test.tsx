@@ -7,8 +7,10 @@ const state = vi.hoisted(() => ({ path: "/" }));
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 vi.mock("next/navigation", () => ({ usePathname: () => state.path }));
 vi.mock("next/link", () => ({
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  default: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
   ),
 }));
 
@@ -53,6 +55,14 @@ describe("Breadcrumb", () => {
     state.path = "/en/services/some-unknown-segment";
     render(<Breadcrumb />);
     expect(screen.getByText("Some unknown segment")).toBeInTheDocument();
+  });
+
+  it("underlines a breadcrumb link at rest, not only on hover", () => {
+    state.path = "/en/services/frontend";
+    render(<Breadcrumb />);
+    expect(screen.getByRole("link", { name: "home" }).className).toContain(
+      "underline"
+    );
   });
 });
 

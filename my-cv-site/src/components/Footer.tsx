@@ -85,7 +85,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-brand-navy pb-[var(--consent-height,0px)] text-gray-300">
+    <footer className="border-t border-white/10 bg-brand-navy pb-[var(--consent-height,0px)] text-gray-300">
       <Container className="py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           <div className="lg:col-span-1">

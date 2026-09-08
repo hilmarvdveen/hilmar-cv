@@ -63,4 +63,9 @@ describe("Footer", () => {
     expect(screen.queryByText("bottom.location.netherlands")).toBeNull();
     expect(screen.queryByText("bottom.location.euBased")).toBeNull();
   });
+
+  it("carries a hairline top border separating it from the close band above", () => {
+    render(<Footer />);
+    expect(screen.getByRole("contentinfo").className).toContain("border-white/10");
+  });
 });

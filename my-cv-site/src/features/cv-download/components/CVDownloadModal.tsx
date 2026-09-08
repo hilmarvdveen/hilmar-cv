@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { X, Download, Mail, MessageSquare, User } from "lucide-react";
 import { Button } from "@/components/Button";
@@ -37,6 +37,37 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
   const [cvLanguage, setCvLanguage] = useState<CvLanguage>(locale === "nl" ? "nl" : "en");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const headingId = useId();
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    previouslyFocusedElementRef.current = document.activeElement as HTMLElement | null;
+    headingRef.current?.focus();
+    return () => {
+      previouslyFocusedElementRef.current?.focus();
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -117,10 +148,15 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={onClose} />
 
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 transform transition-all">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={headingId}
+          className="relative bg-white rounded-xl shadow-xl max-w-md w-full mx-4 transform transition-all"
+        >
           <button
             type="button"
             onClick={onClose}
@@ -136,7 +172,14 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
                 <Download className="w-6 h-6 text-emerald-700" aria-hidden="true" />
               </div>
               <div>
-                <h2 className="text-subsection-title text-textMain">{t("title")}</h2>
+                <h2
+                  id={headingId}
+                  ref={headingRef}
+                  tabIndex={-1}
+                  className="text-subsection-title text-textMain"
+                >
+                  {t("title")}
+                </h2>
                 <p className="text-sm text-gray-600">{t("subtitle")}</p>
               </div>
             </div>

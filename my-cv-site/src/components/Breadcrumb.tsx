@@ -122,7 +122,7 @@ export const Breadcrumb = ({ currentLabel }: BreadcrumbProps = {}) => {
               ) : (
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-6 items-center rounded-sm text-slate-300 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+                  className="inline-flex min-h-6 items-center rounded-sm text-slate-300 underline underline-offset-4 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
                 >
                   {item.label}
                 </Link>

@@ -46,4 +46,14 @@ describe("Button", () => {
     expect(buttonClassName({ size: "sm" })).toContain("px-3.5 py-2");
     expect(buttonClassName({ className: "w-full" })).toContain("w-full");
   });
+
+  it("applies a pressed-state class for every variant", () => {
+    expect(buttonClassName({ variant: "primary" })).toContain("active:bg-emerald-900");
+    expect(buttonClassName({ variant: "outline" })).toContain("active:bg-emerald-800");
+    expect(buttonClassName({ variant: "outline" })).toContain("active:text-white");
+    expect(buttonClassName({ variant: "outlineOnDark" })).toContain("active:bg-emerald-800");
+    expect(buttonClassName({ variant: "outlineOnDark" })).toContain("active:text-white");
+    expect(buttonClassName({ variant: "white" })).toContain("active:bg-emerald-100");
+    expect(buttonClassName({ variant: "neutral" })).toContain("active:bg-gray-300");
+  });
 });

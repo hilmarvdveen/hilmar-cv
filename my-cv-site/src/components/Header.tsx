@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useMemo, useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import {
@@ -16,6 +17,8 @@ import {
   BookOpen,
   Search,
   MessageCircle,
+  User,
+  HelpCircle,
 } from "lucide-react";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import Image from "next/image";
@@ -31,6 +34,7 @@ export const Header = () => {
   const t = useTranslations("common");
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const currentLocale = useLocale();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -76,6 +80,11 @@ export const Header = () => {
         icon: Home,
       },
       {
+        href: "/about",
+        label: t("nav.about"),
+        icon: User,
+      },
+      {
         href: "/services",
         label: t("nav.services"),
         icon: Briefcase,
@@ -96,6 +105,11 @@ export const Header = () => {
         icon: BookOpen,
       },
       {
+        href: "/faq",
+        label: t("nav.faq"),
+        icon: HelpCircle,
+      },
+      {
         href: "/book",
         label: t("nav.book"),
         icon: Calendar,
@@ -110,7 +124,8 @@ export const Header = () => {
   );
 
   const changeLanguage = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    const query = Object.fromEntries(searchParams);
+    router.replace({ pathname, query }, { locale: newLocale });
     setIsLanguageOpen(false);
     setIsMobileMenuOpen(false);
   };
@@ -120,8 +135,14 @@ export const Header = () => {
   );
 
   const desktopNavItems = navItems.filter(
-    (item) => item.href !== "/" && item.href !== "/book"
+    (item) =>
+      item.href !== "/" &&
+      item.href !== "/book" &&
+      item.href !== "/about" &&
+      item.href !== "/faq"
   );
+
+  const drawerNavItems = navItems.filter((item) => item.href !== "/book");
 
   return (
     <>
@@ -155,6 +176,7 @@ export const Header = () => {
                   <Link
                     key={item.href}
                     href={item.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={`relative rounded-md px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                       isActive
                         ? "text-textMain"
@@ -180,7 +202,7 @@ export const Header = () => {
               <Button
                 href="/book"
                 variant="primary"
-                size="sm"
+                size="md"
                 className="ml-6 whitespace-nowrap"
                 data-placement="header"
               >
@@ -228,7 +250,7 @@ export const Header = () => {
               <Button
                 href="/book"
                 variant="primary"
-                size="sm"
+                size="md"
                 className="px-3 whitespace-nowrap"
                 data-placement="header-drawer"
               >
@@ -261,6 +283,7 @@ export const Header = () => {
         />
 
         <div
+          inert={!isMobileMenuOpen}
           className={`
           fixed top-0 right-0 h-dvh w-80 max-w-[85vw] overflow-y-auto overscroll-contain bg-white z-[70] lg:hidden
           transform transition-transform duration-300 ease-in-out shadow-2xl
@@ -306,8 +329,8 @@ export const Header = () => {
             </a>
           </div>
 
-          <div className="px-6 py-4 space-y-1">
-            {navItems.map((item) => {
+          <nav aria-label={t("nav.menuLabel")} className="px-6 py-4 space-y-1">
+            {drawerNavItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
 
@@ -316,6 +339,7 @@ export const Header = () => {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
                   className={`flex items-center space-x-3 px-4 py-4 text-base font-medium rounded-lg transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-inset ${
                     isActive
                       ? "text-primary bg-emerald-50"
@@ -327,7 +351,7 @@ export const Header = () => {
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
           <div className="px-6 pb-4">
             <Link

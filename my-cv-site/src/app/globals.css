@@ -94,6 +94,13 @@ textarea {
   appearance: none;
 }
 
+button:not(:disabled),
+[role="button"],
+summary,
+label[for] {
+  cursor: pointer;
+}
+
 .custom-element {
   display: block;
 }

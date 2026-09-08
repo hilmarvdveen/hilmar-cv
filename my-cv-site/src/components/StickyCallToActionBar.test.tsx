@@ -73,6 +73,14 @@ describe("StickyCallToActionBar", () => {
     );
   });
 
+  it("renders the booking action at the medium primary button size", () => {
+    renderWithHero();
+    triggerLastObserver(false);
+    expect(screen.getByRole("link", { name: "nav.book" }).className).toContain(
+      "py-2.5"
+    );
+  });
+
   it("hides again once the hero comes back into view", () => {
     renderWithHero();
     triggerLastObserver(false);

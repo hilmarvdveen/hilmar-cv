@@ -209,4 +209,46 @@ describe("CVDownloadModal", () => {
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(onClose).toHaveBeenCalled());
   });
+
+  it("exposes dialog semantics with the heading as its accessible name", () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    const dialog = screen.getByRole("dialog", { name: "title" });
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+  });
+
+  it("moves focus to the heading when it opens", () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    expect(document.activeElement).toBe(screen.getByRole("heading", { name: "title" }));
+  });
+
+  it("closes on Escape", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await user.keyboard("{Escape}");
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("does not close on a key other than Escape", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await user.keyboard("{Tab}");
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("locks page scroll while open and restores it once closed", () => {
+    const { unmount } = render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    expect(document.body.style.overflow).toBe("hidden");
+    unmount();
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("returns focus to the element that opened it, once closed", () => {
+    const trigger = document.createElement("button");
+    document.body.appendChild(trigger);
+    trigger.focus();
+    const { unmount } = render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    unmount();
+    expect(document.activeElement).toBe(trigger);
+    document.body.removeChild(trigger);
+  });
 });
