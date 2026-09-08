@@ -194,6 +194,7 @@ export default async function ServicesPage({ params }: Props) {
                   variant="outline"
                   size="sm"
                   className="mt-8"
+                  aria-label={`${t("main.learnMore")}: ${service.title}`}
                 >
                   <span>{t("main.learnMore")}</span>
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -7,8 +7,17 @@ import type { ServiceDetailPageProps, ServiceTitledItem } from "./ServiceDetailP
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 vi.mock("next/navigation", () => ({ usePathname: () => "/en/services/frontend" }));
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({ children, href, className }: { children: React.ReactNode; href: string; className?: string }) => (
-    <a href={href} className={className}>
+  Link: ({
+    children,
+    href,
+    className,
+    ...rest
+  }: {
+    children: React.ReactNode;
+    href: string;
+    className?: string;
+  } & Record<string, unknown>) => (
+    <a href={href} className={className} {...rest}>
       {children}
     </a>
   ),
@@ -271,19 +280,63 @@ describe("ServiceDetailPage", () => {
     const script = container.querySelector('script[type="application/ld+json"]');
     expect(script?.innerHTML).toBe(baseProps.structuredData);
   });
-  it("renders no article link unless the benefits name one", () => {
+  it("renders no article link unless the benefits or deliverables name one", () => {
     render(<ServiceDetailPage {...baseProps} />);
     expect(screen.queryByRole("link", { name: "Read the article" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Read the accessibility article" })).not.toBeInTheDocument();
   });
 
-  it("links the article the benefits name under the benefit cards", () => {
+  it("links the article the benefits name under the benefit cards, carrying its placement", () => {
     render(
       <ServiceDetailPage
         {...baseProps}
-        benefits={{ ...baseProps.benefits, article: { href: "/blog/example", label: "Read the article" } }}
+        benefits={{
+          ...baseProps.benefits,
+          article: {
+            href: "/blog/example",
+            label: "Read the article",
+            placement: "service-frontend-article",
+          },
+        }}
       />
     );
-    expect(screen.getByRole("link", { name: "Read the article" })).toHaveAttribute("href", "/blog/example");
+    const link = screen.getByRole("link", { name: "Read the article" });
+    expect(link).toHaveAttribute("href", "/blog/example");
+    expect(link).toHaveAttribute("data-placement", "service-frontend-article");
   });
 
+  it("renders no deliverables article link when the deliverables name none", () => {
+    render(
+      <ServiceDetailPage
+        {...baseProps}
+        deliverables={{
+          title: "Complete package",
+          description: "Everything a design system engagement ships.",
+          items: deliverablesItems,
+        }}
+      />
+    );
+    expect(screen.queryByRole("link", { name: "Read the accessibility article" })).not.toBeInTheDocument();
+  });
+
+  it("links the article the deliverables name under the deliverables grid, carrying its placement", () => {
+    render(
+      <ServiceDetailPage
+        {...baseProps}
+        deliverables={{
+          title: "Complete package",
+          description: "Everything a design system engagement ships.",
+          items: deliverablesItems,
+          article: {
+            href: "/blog/wcag-aa-in-the-component",
+            label: "Read the accessibility article",
+            placement: "service-design-systems-article",
+          },
+        }}
+      />
+    );
+    const link = screen.getByRole("link", { name: "Read the accessibility article" });
+    expect(link).toHaveAttribute("href", "/blog/wcag-aa-in-the-component");
+    expect(link).toHaveAttribute("data-placement", "service-design-systems-article");
+  });
 });

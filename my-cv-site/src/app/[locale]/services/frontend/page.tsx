@@ -72,7 +72,11 @@ export default async function FrontendDevelopmentPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
-        article: { href: GRAPHQL_POST_HREF, label: t("benefits.articleLabel") },
+        article: {
+          href: GRAPHQL_POST_HREF,
+          label: t("benefits.articleLabel"),
+          placement: "service-frontend-article",
+        },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],

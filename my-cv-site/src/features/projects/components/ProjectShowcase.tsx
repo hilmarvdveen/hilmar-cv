@@ -13,7 +13,6 @@ import { CaseSchematic, type CaseSchematicKind } from "@/components/CaseSchemati
 type ProjectCase = {
   outcome: string;
   client: string;
-  title: string;
   body: string;
   roleLabel: string;
   href: string;
@@ -54,7 +53,7 @@ export const ProjectShowcase = () => {
             {cases.map((projectCase) => {
               const workEntry = findWorkEntry(projectCase.href);
               return (
-                <Card key={projectCase.title}>
+                <Card key={projectCase.href}>
                   <div className="flex items-start justify-between gap-6">
                     <p className="text-figure text-emerald-700 text-balance">{projectCase.outcome}</p>
                     {workEntry && (
@@ -69,7 +68,11 @@ export const ProjectShowcase = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="mt-3 text-xl font-bold text-textMain">{projectCase.title}</h3>
+                  {workEntry && (
+                    <h3 className="mt-3 text-xl font-bold text-textMain">
+                      {work(`${workEntry.id}.headline`)}
+                    </h3>
+                  )}
                   <p className="mt-1 text-sm text-gray-500">
                     {projectCase.client} · {projectCase.roleLabel}
                   </p>

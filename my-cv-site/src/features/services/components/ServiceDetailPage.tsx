@@ -39,6 +39,12 @@ export type ServiceEngagementDeliverable = {
   description: string;
 };
 
+export type ServiceArticleLink = {
+  href: string;
+  label: string;
+  placement: string;
+};
+
 export type ServiceDetailPageProps = {
   structuredData: string;
   hero: {
@@ -62,12 +68,13 @@ export type ServiceDetailPageProps = {
     title: string;
     description: string;
     items: ServiceTitledItem[];
+    article?: ServiceArticleLink;
   };
   benefits: {
     title: string;
     description: string;
     items: ServiceTitledItem[];
-    article?: { href: string; label: string };
+    article?: ServiceArticleLink;
   };
   technologies?: {
     title: string;
@@ -98,6 +105,18 @@ const TitledItemCard = ({ title, description, Icon }: ServiceTitledItem) => (
     <h3 className="mt-4 text-lg font-bold text-textMain">{title}</h3>
     <p className="mt-2 text-gray-600">{description}</p>
   </Card>
+);
+
+const ArticleLink = ({ article }: { article: ServiceArticleLink }) => (
+  <p className="mt-6 text-center text-sm text-gray-600">
+    <Link
+      href={article.href}
+      data-placement={article.placement}
+      className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+    >
+      {article.label}
+    </Link>
+  </p>
 );
 
 export const ServiceDetailPage = ({
@@ -212,6 +231,7 @@ export const ServiceDetailPage = ({
                 <TitledItemCard key={item.title} {...item} />
               ))}
             </div>
+            {deliverables.article && <ArticleLink article={deliverables.article} />}
           </Container>
         </Section>
       )}
@@ -228,13 +248,7 @@ export const ServiceDetailPage = ({
               <TitledItemCard key={item.title} {...item} />
             ))}
           </div>
-          {benefits.article && (
-            <p className="mt-6 text-center text-sm text-gray-600">
-              <Link href={benefits.article.href} className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
-                {benefits.article.label}
-              </Link>
-            </p>
-          )}
+          {benefits.article && <ArticleLink article={benefits.article} />}
         </Container>
       </Section>
 
@@ -262,7 +276,7 @@ export const ServiceDetailPage = ({
                     {group.items.map((item) => (
                       <li
                         key={item.name}
-                        className="rounded-full bg-bgLight px-3 py-1 text-sm font-medium text-textMain ring-1 ring-gray-200"
+                        className="rounded-full bg-bgLight px-3 py-1 text-sm font-medium text-textMain"
                       >
                         {item.name}
                       </li>

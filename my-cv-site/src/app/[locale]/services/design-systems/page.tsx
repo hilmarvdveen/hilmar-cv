@@ -77,6 +77,11 @@ export default async function DesignSystemsPage({ params }: Props) {
       deliverables={{
         title: t("deliverables.title"),
         description: t("deliverables.description"),
+        article: {
+          href: ACCESSIBILITY_POST_HREF,
+          label: t("benefits.articleLabel"),
+          placement: "service-design-systems-article",
+        },
         items: deliverableItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: DELIVERABLE_ICONS[index] ?? DELIVERABLE_ICONS[0],
@@ -85,7 +90,6 @@ export default async function DesignSystemsPage({ params }: Props) {
       benefits={{
         title: t("benefits.title"),
         description: t("benefits.description"),
-        article: { href: ACCESSIBILITY_POST_HREF, label: t("benefits.articleLabel") },
         items: benefitItems.map<ServiceTitledItem>((item, index) => ({
           ...item,
           Icon: BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0],

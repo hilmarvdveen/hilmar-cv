@@ -6,7 +6,6 @@ const cases = [
   {
     outcome: "Months to days",
     client: "Belastingdienst",
-    title: "Forms editor rebuild",
     body: "Rebuilt the forms editor on a modern stack.",
     roleLabel: "See the Belastingdienst case",
     href: "/experience/belastingdienst",
@@ -14,7 +13,6 @@ const cases = [
   {
     outcome: "Zero downtime",
     client: "bol.com",
-    title: "Traffic cut-over",
     body: "Moved live traffic to the rebuilt page without an outage.",
     roleLabel: "See the bol.com case",
     href: "/experience/bol",
@@ -22,7 +20,6 @@ const cases = [
   {
     outcome: "No data yet",
     client: "Example Co",
-    title: "A case without a work history entry",
     body: "This case intentionally links outside the experience anchors.",
     roleLabel: "See the example case",
     href: "/contact",
@@ -68,15 +65,27 @@ describe("ProjectShowcase", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders every case outcome, title and body", () => {
+  it("renders every case outcome and body", () => {
     render(<ProjectShowcase />);
     for (const projectCase of cases) {
       expect(screen.getByText(projectCase.outcome)).toBeInTheDocument();
-      expect(
-        screen.getByRole("heading", { level: 3, name: projectCase.title })
-      ).toBeInTheDocument();
       expect(screen.getByText(projectCase.body)).toBeInTheDocument();
     }
+  });
+
+  it("renders the matching engagement headline for a case with a work history entry", () => {
+    render(<ProjectShowcase />);
+    expect(
+      screen.getByRole("heading", { level: 3, name: "belastingdienst.headline" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "bol.headline" })
+    ).toBeInTheDocument();
+  });
+
+  it("renders no headline heading for a case without a work history entry", () => {
+    render(<ProjectShowcase />);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(2);
   });
 
   it("shows the client and role line and links each case to its engagement page", () => {
