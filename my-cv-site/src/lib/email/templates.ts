@@ -324,3 +324,74 @@ ${renderContactBookingBlock(copy.bookingIntro, copy.bookingLabel, bookingUrl)}
     html: renderLayout(bodyHtml, copy.footer),
   };
 }
+
+export type BookingWatchStep = {
+  step: string;
+  ok: boolean;
+  detail: string;
+};
+
+export type BookingWatchEmailInput = {
+  steps: BookingWatchStep[];
+  expiry: {
+    level: "unknown" | "expired" | "urgent" | "soon" | "fine";
+    daysLeft: number | null;
+    expiresOn: string | null;
+  };
+};
+
+const WATCH_SUBJECT: Record<BookingWatchEmailInput["expiry"]["level"], (daysLeft: number | null) => string> = {
+  unknown: () => "Boekingen: zet de vervaldatum van het Azure-geheim in Vercel",
+  expired: () => "Boekingen: het Azure-geheim is verlopen, boeken werkt niet",
+  urgent: (daysLeft) => `Boekingen: het Azure-geheim verloopt over ${daysLeft} dagen`,
+  soon: (daysLeft) => `Boekingen: het Azure-geheim verloopt over ${daysLeft} dagen`,
+  fine: () => "Boekingen: de agendakoppeling is in orde",
+};
+
+const WATCH_EXPIRY_LINE: Record<BookingWatchEmailInput["expiry"]["level"], (input: BookingWatchEmailInput["expiry"]) => string> = {
+  unknown: () =>
+    "De vervaldatum van het geheim is niet bekend. Zet <strong>MS_CLIENT_SECRET_EXPIRES_ON</strong> in Vercel op de datum die Azure toont (JJJJ-MM-DD), dan waarschuwt deze controle dertig en zeven dagen van tevoren.",
+  expired: (expiry) => `Het geheim is verlopen op <strong>${expiry.expiresOn}</strong>. Zolang er geen nieuw geheim staat, kan niemand een gesprek boeken.`,
+  urgent: (expiry) => `Het geheim verloopt op <strong>${expiry.expiresOn}</strong>, over ${expiry.daysLeft} dagen. Maak deze week een nieuw geheim aan.`,
+  soon: (expiry) => `Het geheim verloopt op <strong>${expiry.expiresOn}</strong>, over ${expiry.daysLeft} dagen.`,
+  fine: (expiry) => `Het geheim is geldig tot <strong>${expiry.expiresOn}</strong>, nog ${expiry.daysLeft} dagen.`,
+};
+
+const WATCH_STEP_NAME: Record<string, string> = {
+  environment: "Omgevingsvariabelen",
+  token: "Toegangstoken",
+  mailbox: "Mailbox",
+  calendar: "Agenda",
+};
+
+export function renderBookingWatchEmail(input: BookingWatchEmailInput): RenderedEmail {
+  const failedStep = input.steps.find((step) => !step.ok);
+  const subject = failedStep
+    ? `Boekingen: de agendakoppeling werkt niet (${WATCH_STEP_NAME[failedStep.step] ?? failedStep.step})`
+    : WATCH_SUBJECT[input.expiry.level](input.expiry.daysLeft);
+  const intro = failedStep
+    ? "De wekelijkse controle van de boekingskoppeling is mislukt. Zolang dit zo is, ziet een bezoeker op de boekingspagina geen tijden en komt er geen afspraak in de agenda."
+    : "De wekelijkse controle van de boekingskoppeling is gedaan. De koppeling werkt, dit bericht gaat over de vervaldatum van het geheim.";
+  const rows = input.steps
+    .map((step) =>
+      renderDetailRow(
+        WATCH_STEP_NAME[step.step] ?? escapeHtml(step.step),
+        `<span style="color:${step.ok ? BRAND_EMERALD : "#b91c1c"};font-weight:700;">${step.ok ? "In orde" : "Mislukt"}</span> ${escapeHtml(step.detail)}`
+      )
+    )
+    .join("");
+  const bodyHtml = `<p style="margin:0 0 14px;">${intro}</p>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">${rows}</table>
+<p style="margin:0 0 14px;">${WATCH_EXPIRY_LINE[input.expiry.level](input.expiry)}</p>
+<p style="margin:0 0 6px;font-weight:700;">Zo vernieuw je het geheim</p>
+<ol style="margin:0 0 18px;padding-left:20px;">
+<li>Azure Portal, App registrations, de app van de site, Certificates &amp; secrets, New client secret. Kopieer de waarde meteen, die is later niet meer te zien.</li>
+<li>Vercel, Settings, Environment Variables: zet de nieuwe waarde in <strong>MS_CLIENT_SECRET</strong> en de vervaldatum uit Azure in <strong>MS_CLIENT_SECRET_EXPIRES_ON</strong> (JJJJ-MM-DD). Redeploy.</li>
+<li>Controleer met de health-endpoint (docs/MICROSOFT_GRAPH.md) of elke stap weer in orde is.</li>
+</ol>
+<p style="margin:0;">Deze controle draait elke maandagochtend.</p>`;
+  return {
+    subject,
+    html: renderLayout(bodyHtml, "Wekelijkse controle van de boekingskoppeling."),
+  };
+}

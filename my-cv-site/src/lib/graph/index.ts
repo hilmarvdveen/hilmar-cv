@@ -6,6 +6,12 @@ export {
 } from "./client";
 export { sendMail, type SendMailOptions } from "./mail";
 export {
+  runGraphHealthChecks,
+  describeGraphError,
+  type GraphHealthReport,
+  type HealthStep,
+} from "./health";
+export {
   generateTimeSlots,
   isSlotAvailable,
   createCalendarEvent,

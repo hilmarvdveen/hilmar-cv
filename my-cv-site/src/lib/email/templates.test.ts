@@ -6,6 +6,7 @@ import {
   renderBookingCalendarEvent,
   renderBookingReminderEmail,
   renderContactConfirmationEmail,
+  renderBookingWatchEmail,
   type BookingEmailInput,
   type BookingReminderEmailInput,
 } from "./templates";
@@ -319,5 +320,43 @@ describe("renderContactConfirmationEmail", () => {
     });
     expect(html).not.toContain("<script>alert(1)</script>");
     expect(html).toContain("&lt;script&gt;");
+  });
+});
+
+describe("renderBookingWatchEmail", () => {
+  const healthySteps = [
+    { step: "environment", ok: true, detail: "all four Microsoft Graph variables are set" },
+    { step: "token", ok: true, detail: "client-credentials token acquired" },
+    { step: "mailbox", ok: true, detail: "mailbox owner@example.com is reachable" },
+    { step: "calendar", ok: true, detail: "calendar readable" },
+  ];
+
+  it("names the failed stage in the subject and escapes its detail", () => {
+    const email = renderBookingWatchEmail({
+      steps: [healthySteps[0], healthySteps[1], { step: "mailbox", ok: false, detail: "status 403 <forbidden>" }],
+      expiry: { level: "fine", daysLeft: 200, expiresOn: "2027-03-27" },
+    });
+    expect(email.subject).toBe("Boekingen: de agendakoppeling werkt niet (Mailbox)");
+    expect(email.html).toContain("status 403 &lt;forbidden&gt;");
+    expect(email.html).toContain("Mislukt");
+    expect(email.html).toContain("ziet een bezoeker op de boekingspagina geen tijden");
+  });
+
+  it("warns with the number of days when the secret expires soon", () => {
+    const email = renderBookingWatchEmail({
+      steps: healthySteps,
+      expiry: { level: "urgent", daysLeft: 5, expiresOn: "2026-09-13" },
+    });
+    expect(email.subject).toBe("Boekingen: het Azure-geheim verloopt over 5 dagen");
+    expect(email.html).toContain("2026-09-13");
+    expect(email.html).toContain("Maak deze week een nieuw geheim aan");
+    expect(email.html).toContain("MS_CLIENT_SECRET_EXPIRES_ON");
+  });
+
+  it("asks for the date when the expiry is unknown, and reports a fine secret and an expired one", () => {
+    expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "unknown", daysLeft: null, expiresOn: null } }).subject).toContain("vervaldatum");
+    expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "soon", daysLeft: 20, expiresOn: "2026-09-28" } }).subject).toContain("over 20 dagen");
+    expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "fine", daysLeft: 200, expiresOn: "2027-03-27" } }).subject).toContain("in orde");
+    expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "expired", daysLeft: -3, expiresOn: "2026-09-05" } }).html).toContain("kan niemand een gesprek boeken");
   });
 });

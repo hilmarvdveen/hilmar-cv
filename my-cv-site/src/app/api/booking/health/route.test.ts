@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { NextRequest } from "next/server";
 import { GET } from "./route";
 
-vi.mock("@/lib/graph", () => ({
+vi.mock("@/lib/graph/client", () => ({
   getGraphCredentials: vi.fn(),
   getAccessToken: vi.fn(),
   getGraphClient: vi.fn(),
@@ -12,7 +12,7 @@ import {
   getGraphCredentials,
   getAccessToken,
   getGraphClient,
-} from "@/lib/graph";
+} from "@/lib/graph/client";
 
 const DIAGNOSTICS_TOKEN = "test-diagnostics-token";
 

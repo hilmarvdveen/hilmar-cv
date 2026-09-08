@@ -256,6 +256,40 @@ stdin, never as a command-line argument), and this work is pushed and
 deployed. Locally committed code with no push and no variable set means the
 cron entry in `vercel.json` is inert.
 
+## Weekly watch (cron)
+
+`GET /api/booking/watch` runs every Monday at 07:30 UTC through the second
+cron entry in `vercel.json`, gated by the same `CRON_SECRET` bearer header
+as the reminders. It runs the four health stages of `runGraphHealthChecks`
+(`src/lib/graph/health.ts`, shared with the health endpoint) and reads
+`MS_CLIENT_SECRET_EXPIRES_ON`, the expiry date of the Azure client secret
+in the form `YYYY-MM-DD`, copied from Certificates & secrets in the app
+registration.
+
+What it does with the outcome:
+
+- Every stage passes and the secret is valid for more than thirty days:
+  silence, a 200 with `{ healthy: true, alerted: false }`.
+- The secret expires within thirty days, or the variable is empty: one
+  Dutch email to the mailbox itself with the date, the days left and the
+  three steps to renew (Azure, Vercel, the health check). A 200.
+- A stage fails while the token still works (mailbox or calendar
+  permission): the same email with the failed stage and its hint, and a
+  500 so the run shows as failed in the Vercel cron overview.
+- The token itself fails (an expired or wrong secret): no email can be
+  sent through Graph, so the route logs the stages and answers 500. The
+  thirty and seven day warnings exist precisely so this case never
+  arrives unannounced.
+
+The email is rendered by `renderBookingWatchEmail` in `src/lib/email`, the
+expiry arithmetic by `describeSecretExpiry` in `src/lib/booking/watch.ts`
+(expired, urgent inside seven days, soon inside thirty, fine, unknown).
+Test by hand:
+
+```bash
+curl -H "Authorization: Bearer <CRON_SECRET>" https://www.hilmarvanderveen.com/api/booking/watch
+```
+
 ## Best Practices
 
 ### 1. Error Handling
