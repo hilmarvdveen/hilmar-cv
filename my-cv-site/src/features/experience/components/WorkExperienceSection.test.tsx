@@ -12,6 +12,7 @@ vi.mock("next-intl", () => {
   const t = ((key: string, values?: Record<string, string>) => {
     if (key === "period" && values) return `${values.from} to ${values.to}`;
     if (key === "bol.company") return "bol.com";
+    if (values) return `${key}:${Object.values(values).join(",")}`;
     return key;
   }) as TranslateFunction;
   t.raw = (key: string) => {
@@ -92,8 +93,9 @@ describe("WorkExperienceSection: scannable cards", () => {
     const lists = screen.getAllByRole("list", { name: "deliveredTitle" });
     expect(lists.length).toBeGreaterThan(1);
     expect(within(lists[0]).getAllByRole("listitem")).toHaveLength(2);
-    const links = screen.getAllByRole("link", { name: "readMore" });
+    const links = screen.getAllByRole("link", { name: /^readMore:/ });
     expect(links).toHaveLength(workHistory.length);
     expect(links[0]).toHaveAttribute("href", `/experience/${workHistory[0].id}`);
+    expect(links[0]).toHaveAccessibleName("readMore:bol.com");
   });
 });

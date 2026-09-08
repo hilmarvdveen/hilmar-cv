@@ -36,7 +36,7 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
 
       <Section background="light" aria-labelledby="region-cities-heading">
         <Container>
-          <SectionTitle id="region-cities-heading" title={t("hub.citiesTitle")} />
+          <SectionTitle id="region-cities-heading" title={t("hub.citiesTitle", { count: regions.length })} />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {regions.map((region) => (
               <Card key={region.id} className="flex h-full flex-col">
@@ -56,21 +56,34 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
 
       <Section background="white" aria-labelledby="region-rest-heading">
         <Container width="narrow">
-          <SectionTitle id="region-rest-heading" title={t("hub.restTitle")} subtitle={t("hub.restBody")} />
+          <SectionTitle
+            id="region-rest-heading"
+            title={t("hub.restTitle")}
+            subtitle={t("hub.restBody", { count: regions.length })}
+          />
           <ul className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
-            {outside.map((entry) => (
-              <li key={entry.id} className="flex flex-col gap-1 p-4 sm:flex-row sm:items-center sm:justify-between">
-                <span className="text-base text-gray-700">
-                  <span className="font-semibold text-textMain">{work(`${entry.id}.company`)}</span>
-                  {" · "}
-                  {work(`${entry.id}.location`)}
-                </span>
-                <Link href={`/experience/${entry.id}`} className={linkClass}>
-                  {work("readMore")}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
+            {outside.map((entry) => {
+              const company = work(`${entry.id}.company`);
+              return (
+                <li
+                  key={entry.id}
+                  className="flex flex-col gap-1 p-4 sm:flex-row sm:items-start sm:justify-between"
+                >
+                  <div>
+                    <p className="text-base text-gray-700">
+                      <span className="font-semibold text-textMain">{company}</span>
+                      {" · "}
+                      {work(`${entry.id}.location`)}
+                    </p>
+                    <p className="text-sm text-gray-600">{work(`${entry.id}.summary`)}</p>
+                  </div>
+                  <Link href={`/experience/${entry.id}`} className={linkClass}>
+                    {work("readMore", { company })}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </Container>
       </Section>

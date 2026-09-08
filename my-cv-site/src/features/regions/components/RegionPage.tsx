@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
@@ -170,7 +170,13 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
           <div className="space-y-3">
             {questions.map((item) => (
               <details key={item.question} className="group rounded-xl border border-gray-200 bg-white p-5">
-                <summary className="cursor-pointer list-none text-base font-semibold text-textMain">{item.question}</summary>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-base font-semibold text-textMain">
+                  <span>{item.question}</span>
+                  <ChevronDown
+                    className="h-5 w-5 shrink-0 text-gray-600 transition-transform group-open:rotate-180"
+                    aria-hidden="true"
+                  />
+                </summary>
                 <p className="mt-3 text-base leading-relaxed text-gray-600">{item.answer}</p>
               </details>
             ))}

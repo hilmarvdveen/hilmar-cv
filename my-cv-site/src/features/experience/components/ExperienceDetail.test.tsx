@@ -58,7 +58,10 @@ describe("ExperienceDetail", () => {
       "href",
       `/experience/${third.id}`
     );
-    expect(screen.getByRole("link", { name: "detail.back" })).toHaveAttribute("href", "/experience");
+    expect(screen.getByRole("link", { name: "detail.back" })).toHaveAttribute(
+      "href",
+      `/experience#experience-${second.id}`
+    );
   });
 
   it("lists the other engagements as links to their pages", () => {
@@ -68,6 +71,22 @@ describe("ExperienceDetail", () => {
     expect(links).toHaveLength(2);
     expect(links[0]).toHaveAttribute("href", `/experience/${first.id}`);
     expect(links[1]).toHaveTextContent(`${third.id}.company`);
+  });
+
+  it("excludes the previous and next engagements from the other-engagements row", () => {
+    render(
+      <ExperienceDetail
+        entry={second}
+        previous={first}
+        next={third}
+        others={workHistory.filter((entry) => entry.id !== second.id)}
+      />
+    );
+    const others = screen.getByRole("list", { name: "detail.others" });
+    const links = within(others).getAllByRole("link");
+    expect(links.map((link) => link.getAttribute("href"))).not.toContain(`/experience/${first.id}`);
+    expect(links.map((link) => link.getAttribute("href"))).not.toContain(`/experience/${third.id}`);
+    expect(links).toHaveLength(workHistory.length - 3);
   });
 
   it("omits the neighbours at the ends and the lists when an entry has none", () => {

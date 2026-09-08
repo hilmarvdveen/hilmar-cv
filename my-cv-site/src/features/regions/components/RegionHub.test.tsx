@@ -26,12 +26,18 @@ describe("RegionHub", () => {
     render(<RegionHub regions={REGIONS} engagementCounts={{ amsterdam: 4, utrecht: 2, rotterdam: 1, "den-haag": 0 }} outside={outside} />);
     expect(screen.getByRole("heading", { level: 2, name: "hub.baseTitle" })).toBeInTheDocument();
     expect(screen.getByText("hub.baseBody")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: `hub.citiesTitle:${REGIONS.length}` })
+    ).toBeInTheDocument();
     const cityLinks = screen.getAllByRole("link", { name: /^hub\.cityLink:/ });
     expect(cityLinks.map((link) => link.getAttribute("href"))).toEqual(REGIONS.map((region) => `/freelance-frontend-developer/${region.id}`));
     expect(screen.getByText("amsterdam.hubLine:4")).toBeInTheDocument();
-    const outsideLinks = screen.getAllByRole("link", { name: "readMore" });
+    expect(screen.getByText(`hub.restBody:${REGIONS.length}`)).toBeInTheDocument();
+    const outsideLinks = screen.getAllByRole("link", { name: /^readMore:/ });
     expect(outsideLinks).toHaveLength(outside.length);
     expect(outsideLinks[0]).toHaveAttribute("href", `/experience/${outside[0].id}`);
+    expect(outsideLinks[0]).toHaveAccessibleName(`readMore:${outside[0].id}.company`);
+    expect(screen.getByText(`${outside[0].id}.summary`)).toBeInTheDocument();
     expect(screen.getByText("hub.remoteBody")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "close.button" })).toHaveAttribute("data-placement", "region-hub-close");
   });

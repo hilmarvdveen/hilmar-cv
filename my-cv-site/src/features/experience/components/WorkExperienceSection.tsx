@@ -62,7 +62,7 @@ export const WorkExperienceSection = () => {
                 href={`/experience/${id}`}
                 className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
               >
-                {t("readMore")}
+                {t("readMore", { company })}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -157,9 +157,9 @@ export const WorkExperienceSection = () => {
 
           <Link
             href={`/experience/${id}`}
-            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
           >
-            <span>{t("readMore")}</span>
+            <span>{t("readMore", { company })}</span>
             <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
           </Link>
 

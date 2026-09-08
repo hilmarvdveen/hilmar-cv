@@ -15,6 +15,7 @@ export const RegionEngagementCard = ({ entry, showCity = false }: RegionEngageme
   const work = useTranslations("work");
   const common = useTranslations("common");
   const locale = useLocale();
+  const company = work(`${entry.id}.company`);
   const period = work("period", {
     from: formatMonthYear(entry.from, locale),
     to: formatMonthYear(entry.to, locale),
@@ -36,7 +37,7 @@ export const RegionEngagementCard = ({ entry, showCity = false }: RegionEngageme
           />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="text-lg font-semibold text-textMain">{work(`${entry.id}.company`)}</h3>
+          <h3 className="text-lg font-semibold text-textMain">{company}</h3>
           <p className="text-sm text-gray-500">{meta}</p>
         </div>
       </div>
@@ -45,7 +46,7 @@ export const RegionEngagementCard = ({ entry, showCity = false }: RegionEngageme
         href={`/experience/${entry.id}`}
         className="mt-3 inline-flex min-h-6 items-center gap-1 self-start rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
       >
-        {work("readMore")}
+        {work("readMore", { company })}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
     </Card>

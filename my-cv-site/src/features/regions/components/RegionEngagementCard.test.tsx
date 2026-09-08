@@ -35,7 +35,10 @@ describe("RegionEngagementCard", () => {
     expect(screen.getByRole("heading", { level: 3, name: "opinity.company" })).toBeInTheDocument();
     expect(screen.getByText(/period:.*opinity\.role/)).toBeInTheDocument();
     expect(screen.getByText("opinity.summary")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "readMore" })).toHaveAttribute("href", "/experience/opinity");
+    expect(screen.getByRole("link", { name: "readMore:opinity.company" })).toHaveAttribute(
+      "href",
+      "/experience/opinity"
+    );
     expect(screen.getByRole("img", { name: "images.companyLogoAlt:Opinity" })).toBeInTheDocument();
   });
 

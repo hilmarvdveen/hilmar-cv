@@ -22,6 +22,12 @@ describe("ExperienceQuickNav", () => {
     expect(screen.queryAllByRole("img")).toHaveLength(0);
   });
 
+  it("marks the first chip as current before any scroll or click", () => {
+    render(<ExperienceQuickNav chips={chips} label="Work experience" />);
+    const active = screen.getByRole("link", { current: "location" });
+    expect(active).toHaveTextContent("Alpha Company");
+  });
+
   it("marks the clicked chip as current and leaves the others unmarked", () => {
     render(<ExperienceQuickNav chips={chips} label="Work experience" />);
     const links = screen.getAllByRole("link");

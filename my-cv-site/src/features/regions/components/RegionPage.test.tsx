@@ -70,7 +70,7 @@ describe("RegionPage", () => {
     expect(screen.getByText("hiring.pitch.sentence")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "shared.engagementsTitle:amsterdam.name" })).toBeInTheDocument();
     expect(screen.getByText("amsterdam.engagementsLead:4,12")).toBeInTheDocument();
-    const engagementLinks = screen.getAllByRole("link", { name: "readMore" });
+    const engagementLinks = screen.getAllByRole("link", { name: /^readMore:/ });
     expect(engagementLinks.map((link) => link.getAttribute("href"))).toEqual([
       ...region.engagementIds.map((id) => `/experience/${id}`),
       ...region.nearbyEngagementIds.map((id) => `/experience/${id}`),
@@ -82,7 +82,11 @@ describe("RegionPage", () => {
       region.postSlugs.map((slug) => `/blog/${slug}`)
     );
     expect(screen.getByText("From 1 October 2026")).toBeInTheDocument();
-    expect(screen.getByText("How often on site?")).toBeInTheDocument();
+    const question = screen.getByText("How often on site?");
+    expect(question).toBeInTheDocument();
+    const summary = question.closest("summary");
+    const chevron = summary?.querySelector("svg");
+    expect(chevron).toHaveAttribute("aria-hidden", "true");
     expect(screen.getByRole("link", { name: "utrecht.name" })).toHaveAttribute("href", "/freelance-frontend-developer/utrecht");
     expect(screen.getByRole("link", { name: "shared.hubLink" })).toHaveAttribute("href", "/freelance-frontend-developer");
     expect(screen.getByRole("link", { name: "close.button" })).toHaveAttribute("data-placement", "region-amsterdam-close");

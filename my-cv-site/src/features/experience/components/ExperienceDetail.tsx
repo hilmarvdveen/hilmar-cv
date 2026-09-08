@@ -32,6 +32,9 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
   const bodyParagraphs =
     (t.raw(`${entry.id}.body`) as BodyParagraph[] | undefined) ?? [];
   const delivered = (t.raw(`${entry.id}.delivered`) as string[] | undefined) ?? [];
+  const otherEntries = others.filter(
+    (other) => other.id !== previous?.id && other.id !== next?.id
+  );
   const facts = [
     {
       label: page("detail.periodLabel"),
@@ -151,7 +154,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
           ) : (
             <span />
           )}
-          <Link href="/experience" className={neighbourLinkClass}>
+          <Link href={`/experience#experience-${entry.id}`} className={neighbourLinkClass}>
             {page("detail.back")}
           </Link>
           {next ? (
@@ -166,17 +169,17 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
           )}
         </nav>
 
-        {others.length > 0 && (
+        {otherEntries.length > 0 && (
           <>
             <h2 id={OTHERS_HEADING_ID} className="mt-10 text-xs font-bold uppercase tracking-widest text-primary">
               {page("detail.others")}
             </h2>
             <ul aria-labelledby={OTHERS_HEADING_ID} className="mt-3 flex flex-wrap gap-2">
-              {others.map((other) => (
+              {otherEntries.map((other) => (
                 <li key={other.id}>
                   <Link
                     href={`/experience/${other.id}`}
-                    className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-textMain transition-colors hover:border-emerald-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:border-emerald-600 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                   >
                     {t(`${other.id}.company`)}
                   </Link>

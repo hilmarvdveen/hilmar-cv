@@ -29,8 +29,8 @@ export const ExperienceQuickNav = ({ chips, label }: ExperienceQuickNavProps) =>
           ref={listRef}
           className="quick-nav-fade flex gap-2 overflow-x-auto overscroll-x-contain py-2 pr-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {chips.map((chip) => {
-            const active = activeId === chip.id;
+          {chips.map((chip, index) => {
+            const active = activeId === chip.id || (activeId === "" && index === 0);
             return (
               <li key={chip.id} ref={registerChip(chip.id)}>
                 <a

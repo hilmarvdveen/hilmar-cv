@@ -12,11 +12,15 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+const formatCityList = (locale: string, names: string[]): string =>
+  new Intl.ListFormat(locale, { type: "conjunction" }).format(names);
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "regions" });
   const title = t("hub.title");
-  const description = t("hub.description");
+  const cities = formatCityList(locale, REGIONS.map((region) => t(`${region.id}.name`)));
+  const description = t("hub.description", { cities });
   return {
     title,
     description,
@@ -30,11 +34,12 @@ export default async function RegionHubPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "regions" });
   const home = await getTranslations({ locale, namespace: "home" });
   const breadcrumb = await getTranslations({ locale, namespace: "breadcrumb" });
+  const cities = formatCityList(locale, REGIONS.map((region) => t(`${region.id}.name`)));
   const engagementCounts = Object.fromEntries(REGIONS.map((region) => [region.id, regionEngagements(region).length]));
   const structuredData = regionHubSchema({
     locale: locale === "en" ? "en" : "nl",
     title: t("hub.title"),
-    description: t("hub.description"),
+    description: t("hub.description", { cities }),
     homeLabel: breadcrumb("home"),
     hubLabel: breadcrumb("regions"),
     hubPath: regionPath(),
@@ -46,7 +51,7 @@ export default async function RegionHubPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
       <PageHero
         title={t("hub.heroTitle")}
-        description={t("hub.heroDescription")}
+        description={t("hub.heroDescription", { cities })}
         badge={t("shared.eyebrow")}
         breadcrumb={<Breadcrumb />}
         actions={
