@@ -62,8 +62,8 @@ function buildPartialResponse(locale: Locale) {
     flowNode("response", copy.nodeResponse[locale], { x: 0, y: 120 }, { tone: "slate", subtitle: copy.nodeResponseSub[locale], width: 220 }),
     flowNode("data", "data", { x: 310, y: 0 }, { tone: "emerald", subtitle: copy.nodeDataSub[locale], width: 200 }),
     flowNode("errors", "errors", { x: 310, y: 240 }, { tone: "amber", subtitle: copy.nodeErrorsSub[locale], width: 200 }),
-    flowNode("render", copy.nodeRender[locale], { x: 600, y: 0 }, { tone: "blue", subtitle: copy.nodeRenderSub[locale], width: 240 }),
-    flowNode("tracker", copy.nodeTracker[locale], { x: 600, y: 240 }, { tone: "violet", subtitle: copy.nodeTrackerSub[locale], width: 240 }),
+    flowNode("render", copy.nodeRender[locale], { x: 680, y: 0 }, { tone: "blue", subtitle: copy.nodeRenderSub[locale], width: 240 }),
+    flowNode("tracker", copy.nodeTracker[locale], { x: 680, y: 240 }, { tone: "violet", subtitle: copy.nodeTrackerSub[locale], width: 240 }),
   ];
   const edges = [
     flowEdge("response", "data"),
