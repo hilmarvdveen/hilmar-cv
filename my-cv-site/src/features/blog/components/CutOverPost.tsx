@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   track: "fullstack",
   publishedDate: "2026-09-06",
-  readingTimeMin: 12,
+  readingTimeMin: 13,
   title: {
     en: "Moving live traffic off a legacy system, one step at a time",
     nl: "Live verkeer van een legacysysteem halen, stap voor stap",

@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   category: "fundamentals",
   track: "frontend",
   publishedDate: "2026-09-06",
-  readingTimeMin: 12,
+  readingTimeMin: 16,
   title: {
     en: "WCAG 2.2 AA in the component, not in an audit at the end",
     nl: "WCAG 2.2 AA in het component, niet in een audit achteraf",

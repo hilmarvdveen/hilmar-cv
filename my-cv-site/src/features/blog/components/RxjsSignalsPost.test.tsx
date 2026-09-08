@@ -16,7 +16,7 @@ describe("RxjsSignalsPost", () => {
     expect(meta.track).toBe("frontend");
     expect(meta.category).toBe("architecture");
     expect(meta.publishedDate).toBe("2026-09-06");
-    expect(meta.readingTimeMin).toBe(14);
+    expect(meta.readingTimeMin).toBe(18);
   });
 
   it("names the current Angular release in both locales", () => {

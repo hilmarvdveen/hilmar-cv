@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   track: "backend",
   publishedDate: "2026-09-06",
-  readingTimeMin: 15,
+  readingTimeMin: 18,
   title: {
     en: "An API in ASP.NET Core: minimal endpoints or controllers",
     nl: "Een API in ASP.NET Core: minimal endpoints of controllers",

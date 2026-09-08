@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   track: "fullstack",
   publishedDate: "2026-09-06",
-  readingTimeMin: 13,
+  readingTimeMin: 15,
   title: {
     en: "Treating GraphQL as a contract, not a data tap",
     nl: "GraphQL als contract, niet als datakraan",

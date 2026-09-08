@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   category: "architecture",
   track: "frontend",
   publishedDate: "2026-09-06",
-  readingTimeMin: 14,
+  readingTimeMin: 18,
   title: {
     en: "Signals or RxJS in Angular: when each one wins",
     nl: "Signals of RxJS in Angular: wanneer je wat kiest",

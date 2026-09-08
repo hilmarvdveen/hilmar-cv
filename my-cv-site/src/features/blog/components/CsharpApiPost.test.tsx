@@ -8,7 +8,7 @@ describe("CsharpApiPost", () => {
     expect(meta.category).toBe("architecture");
     expect(meta.track).toBe("backend");
     expect(meta.publishedDate).toBe("2026-09-06");
-    expect(meta.readingTimeMin).toBe(15);
+    expect(meta.readingTimeMin).toBe(18);
     expect(meta.title.en.length).toBeLessThan(60);
     expect(meta.title.nl.length).toBeLessThan(60);
     expect(meta.description.en.length).toBeLessThan(160);
