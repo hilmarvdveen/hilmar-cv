@@ -31,8 +31,17 @@ vi.mock("next-intl", () => {
 });
 
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  Link: ({
+    children,
+    href,
+    ...rest
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
   ),
 }));
 
@@ -131,10 +140,9 @@ describe("AboutPageContent", () => {
   });
   it("links the article a value block names and leaves the other blocks without one", () => {
     render(<AboutPageContent />);
-    expect(screen.getByRole("link", { name: "Article one" })).toHaveAttribute(
-      "href",
-      "/blog/rxjs-versus-signals-in-angular"
-    );
+    const articleLink = screen.getByRole("link", { name: "Article one" });
+    expect(articleLink).toHaveAttribute("href", "/blog/rxjs-versus-signals-in-angular");
+    expect(articleLink).toHaveAttribute("data-placement", "about-mentoring-article");
     expect(screen.queryByRole("link", { name: /Article two/ })).not.toBeInTheDocument();
   });
 

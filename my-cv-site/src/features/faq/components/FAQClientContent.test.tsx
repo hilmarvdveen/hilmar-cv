@@ -39,6 +39,14 @@ describe("FAQClientContent", () => {
     expect(firstToggle).toHaveAttribute("aria-expanded", "true");
   });
 
+  it("renders each category tile as a jump link to its section", () => {
+    render(<FAQClientContent />);
+    for (const id of FAQ_CATEGORY_IDS) {
+      const link = screen.getByRole("link", { name: `categories.${id}.title` });
+      expect(link).toHaveAttribute("href", `#${id}`);
+    }
+  });
+
   it("renders the closing call-to-action as one primary booking button and a plain contact link", () => {
     render(<FAQClientContent />);
     const bookLink = screen.getByRole("link", { name: "cta.book" });

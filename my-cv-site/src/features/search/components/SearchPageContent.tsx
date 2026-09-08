@@ -87,7 +87,7 @@ export function SearchPageContent({
                       <li key={entry.href}>
                         <Link href={entry.href} className="block">
                           <Card className="transition-colors hover:border-emerald-300 hover:bg-emerald-50">
-                            <span className="block font-semibold text-textMain">
+                            <span className="block font-semibold text-primary hover:underline">
                               {entry.title[locale]}
                             </span>
                             <span className="block text-sm text-gray-600">

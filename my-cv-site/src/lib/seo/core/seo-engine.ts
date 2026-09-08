@@ -276,11 +276,11 @@ export class SEOEngine {
       pageType: 'blog',
       locale,
       title: locale === 'nl'
-        ? 'Blog | React, Next.js en frontend-architectuur'
-        : 'Blog | React, Next.js and frontend architecture',
+        ? 'Blog | Frontend, fullstack en backend engineering'
+        : 'Blog | Frontend, fullstack and backend engineering',
       description: locale === 'nl'
-        ? `Artikelen over React-architectuur, mappenstructuur, unit testing, routing en SEO, geschreven vanuit tien jaar productiewerk.`
-        : `Articles on React architecture, folder structure, unit testing, routing and SEO, written from ten years of production work.`,
+        ? `Artikelen uit tien jaar productiewerk: React en Angular, de cut-over en het GraphQL-contract, en API's in C#, Kotlin en Java.`
+        : `Articles from ten years of production work: React and Angular, the cut-over and the GraphQL contract, and APIs in C#, Kotlin and Java.`,
       keywords: [
         ...BLOG_CONTENT.SEO_FOCUS.SECONDARY,
         ...BLOG_CONTENT.SEO_FOCUS.TECHNICAL,

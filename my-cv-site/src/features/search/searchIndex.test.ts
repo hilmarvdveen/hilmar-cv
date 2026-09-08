@@ -15,6 +15,11 @@ describe("searchEntries", () => {
   it("returns nothing for a non-matching query", () => {
     expect(searchEntries("zzz-no-match", "en")).toEqual([]);
   });
+
+  it("finds the blog index page by keyword in both languages", () => {
+    expect(searchEntries("blog", "en").some((entry) => entry.href === "/blog")).toBe(true);
+    expect(searchEntries("artikelen", "nl").some((entry) => entry.href === "/blog")).toBe(true);
+  });
 });
 
 describe("searchEntries with extra entries", () => {

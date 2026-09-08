@@ -4,6 +4,11 @@ import { SearchPageContent, type SearchEntry, type SearchLocale } from "@/featur
 import { BLOG_POSTS } from "@/features/blog";
 import { workHistory } from "@/data/workHistory";
 import { PageHero } from "@/components/PageHero";
+import { Section } from "@/components/Section";
+import { Container } from "@/components/Container";
+import { SectionTitle } from "@/components/SectionTitle";
+import { Button } from "@/components/Button";
+import { Link } from "@/i18n/navigation";
 import { localizedAlternates, localizedOpenGraph, brandedTitle } from "@/lib/seo";
 
 type Props = {
@@ -31,6 +36,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
   const t = await getTranslations({ locale, namespace: "search" });
   const work = await getTranslations({ locale, namespace: "work" });
+  const faq = await getTranslations({ locale, namespace: "faq" });
   const initialQuery = Array.isArray(rawQuery) ? (rawQuery[0] ?? "") : (rawQuery ?? "");
   const searchLocale: SearchLocale = locale === "nl" ? "nl" : "en";
 
@@ -61,6 +67,28 @@ export default async function SearchPage({ params, searchParams }: Props) {
         initialQuery={initialQuery}
         extraEntries={[...engagementEntries, ...blogEntries]}
       />
+      <Section background="navy" aria-labelledby="search-close-heading">
+        <Container width="narrow" className="text-center">
+          <SectionTitle
+            id="search-close-heading"
+            title={faq("cta.title")}
+            subtitle={faq("cta.description")}
+            align="center"
+            onDark
+          />
+          <div className="flex flex-col items-center gap-4">
+            <Button href="/book" variant="white" size="lg" data-placement="search-close">
+              {faq("cta.book")}
+            </Button>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-6 items-center text-sm text-slate-400 underline underline-offset-4 transition-colors hover:text-white"
+            >
+              {faq("cta.contact")}
+            </Link>
+          </div>
+        </Container>
+      </Section>
     </>
   );
 }

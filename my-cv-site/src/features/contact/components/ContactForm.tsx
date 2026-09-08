@@ -118,7 +118,7 @@ export default function ContactForm() {
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                     selectedTags.includes(tag)
                       ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-800 hover:border-emerald-700"
-                      : "bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50"
+                      : "bg-white border-gray-500 text-gray-800 hover:border-emerald-300 hover:bg-emerald-50"
                   }`}
                   aria-pressed={selectedTags.includes(tag)}
                 >

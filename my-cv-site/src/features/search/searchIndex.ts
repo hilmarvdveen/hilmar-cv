@@ -103,6 +103,16 @@ const STATIC_ENTRIES: SearchEntry[] = [
     keywords: ["projects", "projecten", "portfolio", "work", "cases"],
   },
   {
+    href: "/blog",
+    kind: "page",
+    title: { en: "Blog", nl: "Blog" },
+    description: {
+      en: "Articles on frontend, the contract with the backend, and APIs in C#, Kotlin and Java.",
+      nl: "Artikelen over frontend, het contract met de backend, en API's in C#, Kotlin en Java.",
+    },
+    keywords: ["blog", "artikelen", "articles", "frontend", "fullstack", "backend"],
+  },
+  {
     href: "/faq",
     kind: "page",
     title: { en: "FAQ", nl: "Veelgestelde vragen" },

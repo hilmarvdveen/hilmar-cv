@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LegalDocument, getLegalDoc } from "@/features/legal";
-import { brandedTitle, clampDescription, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { brandedTitle, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { legalPageSchema } from "@/lib/seo/legalSchema";
 
 const SLUG = "privacy" as const;
@@ -11,7 +11,7 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const doc = getLegalDoc(SLUG, locale);
-  const description = clampDescription(doc.intro ?? doc.title);
+  const description = doc.metaDescription;
   return {
     title: brandedTitle(doc.title),
     description,
@@ -29,7 +29,7 @@ export default async function PrivacyPage({ params }: Props) {
     locale: locale === "en" ? "en" : "nl",
     slug: SLUG,
     title: doc.title,
-    description: clampDescription(doc.intro ?? doc.title),
+    description: doc.metaDescription,
     homeLabel: breadcrumb("home"),
   });
   return (

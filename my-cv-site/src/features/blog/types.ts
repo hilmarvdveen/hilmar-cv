@@ -6,7 +6,9 @@ export type BlogCategory =
   | "testing"
   | "seo"
   | "routing"
-  | "fundamentals";
+  | "fundamentals"
+  | "accessibility"
+  | "api";
 
 export type LocalizedText = Record<Locale, string>;
 

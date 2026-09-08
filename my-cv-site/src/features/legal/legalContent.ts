@@ -9,6 +9,7 @@ export type LegalSection = {
 export type LegalDoc = {
   title: string;
   lastUpdated: string;
+  metaDescription: string;
   intro?: string;
   sections: LegalSection[];
 };
@@ -37,6 +38,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     en: {
       title: "Privacy policy",
       lastUpdated: UPDATED_EN,
+      metaDescription: "What hilmarvanderveen.com processes, why, for how long, and the rights you have.",
       intro: `This Privacy Policy explains how ${CONTROLLER} ("I", "me") processes your personal data when you use ${SITE}. I act as the data controller. You can reach me at ${EMAIL}.`,
       sections: [
         {
@@ -104,6 +106,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     nl: {
       title: "Privacyverklaring",
       lastUpdated: UPDATED_NL,
+      metaDescription: "Welke gegevens hilmarvanderveen.com verwerkt, waarom, hoe lang, en welke rechten je hebt.",
       intro: `Deze privacyverklaring legt uit hoe ${CONTROLLER} ("ik") jouw persoonsgegevens verwerkt wanneer je ${SITE} gebruikt. Ik ben de verwerkingsverantwoordelijke. Je kunt mij bereiken via ${EMAIL}.`,
       sections: [
         {
@@ -174,6 +177,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     en: {
       title: "Cookie policy",
       lastUpdated: UPDATED_EN,
+      metaDescription: "Which cookies and local storage hilmarvanderveen.com uses, what they do, and the choice you have.",
       intro: `This Cookie Policy explains how ${SITE} uses cookies and similar technologies, in line with the Dutch Telecommunications Act (art. 11.7a) and the GDPR/AVG.`,
       sections: [
         {
@@ -212,6 +216,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     nl: {
       title: "Cookiebeleid",
       lastUpdated: UPDATED_NL,
+      metaDescription: "Welke cookies en local storage hilmarvanderveen.com gebruikt, wat ze doen, en de keuze die je hebt.",
       intro: `Dit cookiebeleid legt uit hoe ${SITE} cookies en vergelijkbare technieken gebruikt, conform de Telecommunicatiewet (art. 11.7a) en de AVG.`,
       sections: [
         {
@@ -253,6 +258,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     en: {
       title: "Terms of use",
       lastUpdated: UPDATED_EN,
+      metaDescription: "The rules for using hilmarvanderveen.com, intellectual property, liability, and which law applies.",
       intro: `These terms govern your use of the website ${SITE}. By using the site you agree to them. They cover the website only. Any paid work is governed by a separate written agreement.`,
       sections: [
         {
@@ -302,6 +308,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     nl: {
       title: "Gebruiksvoorwaarden",
       lastUpdated: UPDATED_NL,
+      metaDescription: "De regels voor het gebruik van hilmarvanderveen.com, intellectueel eigendom, aansprakelijkheid, en het toepasselijke recht.",
       intro: `Deze voorwaarden gelden voor je gebruik van de website ${SITE}. Door de site te gebruiken ga je ermee akkoord. Ze gaan alleen over de website. Betaald werk valt onder een aparte schriftelijke overeenkomst.`,
       sections: [
         {
@@ -354,6 +361,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     en: {
       title: "Disclaimer",
       lastUpdated: UPDATED_EN,
+      metaDescription: "Why content on hilmarvanderveen.com is general information, its accuracy, and where liability ends.",
       intro: `The information on ${SITE} is provided by ${CONTROLLER} for general information purposes.`,
       sections: [
         {
@@ -389,6 +397,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
     nl: {
       title: "Disclaimer",
       lastUpdated: UPDATED_NL,
+      metaDescription: "Waarom de inhoud op hilmarvanderveen.com algemene informatie is, de juistheid ervan, en waar de aansprakelijkheid eindigt.",
       intro: `De informatie op ${SITE} wordt door ${CONTROLLER} verstrekt voor algemene informatiedoeleinden.`,
       sections: [
         {

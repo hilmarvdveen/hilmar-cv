@@ -82,8 +82,9 @@ export function FAQClientContent() {
                     className="mb-3 h-8 w-8 text-emerald-700 transition-transform duration-300 group-hover:scale-110"
                     aria-hidden="true"
                   />
-                  <span className="text-sm font-medium text-gray-700 transition-colors duration-300 group-hover:text-emerald-700">
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
                     {category.title}
+                    <ChevronDown className="h-4 w-4 shrink-0" aria-hidden="true" />
                   </span>
                 </a>
               );
@@ -112,7 +113,7 @@ export function FAQClientContent() {
                         type="button"
                         onClick={() => toggleItem(globalIndex)}
                         aria-expanded={isOpen}
-                        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-bgLight"
+                        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-bgLight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                       >
                         <span className="pr-4 text-lg font-medium text-textMain">
                           {faq.question}
@@ -124,7 +125,7 @@ export function FAQClientContent() {
                           />
                         ) : (
                           <ChevronDown
-                            className="h-5 w-5 flex-shrink-0 text-gray-400"
+                            className="h-5 w-5 flex-shrink-0 text-gray-600"
                             aria-hidden="true"
                           />
                         )}

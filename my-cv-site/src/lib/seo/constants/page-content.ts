@@ -95,8 +95,21 @@ export const BOOKING_CONTENT = {
 export const BLOG_CONTENT = {
   SEO_FOCUS: {
     PRIMARY: 'Frontend engineering blog',
-    SECONDARY: ['React architecture', 'React folder structure', 'Unit testing React'],
-    TECHNICAL: ['React Router loaders and actions', 'SEO for Next.js', 'Vitest and Storybook'],
+    SECONDARY: [
+      'React architecture',
+      'React folder structure',
+      'Unit testing React',
+      'GraphQL contract between frontend and backend',
+      'Reversible cut-over from legacy'
+    ],
+    TECHNICAL: [
+      'React Router loaders and actions',
+      'SEO for Next.js',
+      'Vitest and Storybook',
+      'ASP.NET Core minimal endpoints',
+      'Hexagonal architecture in Kotlin and Java',
+      'WCAG 2.2 AA in components'
+    ],
     LOCAL: ['Dutch frontend engineer blog', 'Randstad frontend community']
   }
 } as const;

@@ -119,6 +119,7 @@ export function useNetherlandsMapDrawing({
 
       const cityRadius = isMobile ? 8 : 6;
       const cityHoverRadius = isMobile ? 12 : 8;
+      const cityHitTargetRadius = 12;
 
       const drawCities = (
         selector: string,
@@ -127,6 +128,39 @@ export function useNetherlandsMapDrawing({
         fill: string,
         onClick: (event: MouseEvent) => void
       ) => {
+        svg
+          .selectAll(`${selector}-hit-target`)
+          .data(cities)
+          .join("circle")
+          .attr("class", `${className}-hit-target`)
+          .attr("cx", (city) => projection(city.coordinates)?.[0] || 0)
+          .attr("cy", (city) => projection(city.coordinates)?.[1] || 0)
+          .attr("r", cityHitTargetRadius)
+          .attr("fill", "transparent")
+          .attr("role", "button")
+          .attr("tabindex", 0)
+          .attr("aria-label", (city) => city.name)
+          .style("cursor", "pointer")
+          .on("mouseenter touchstart", (event, city) => {
+            if (!isMobile) {
+              showTooltip(event, cityTooltip(city));
+            }
+          })
+          .on("mouseleave touchend", () => {
+            if (!isMobile) {
+              hideTooltip();
+            }
+          })
+          .on("click touchend", (event, city) => {
+            onSelectCity(city);
+          })
+          .on("keydown", (event, city) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              onSelectCity(city);
+            }
+          });
+
         svg
           .selectAll(selector)
           .data(cities)

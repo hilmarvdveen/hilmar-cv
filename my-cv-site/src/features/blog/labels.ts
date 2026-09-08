@@ -17,6 +17,8 @@ export function buildBlogLabels(t: (key: string) => string): BlogLabels {
       seo: t("category.seo"),
       routing: t("category.routing"),
       fundamentals: t("category.fundamentals"),
+      accessibility: t("category.accessibility"),
+      api: t("category.api"),
     },
     track: {
       frontend: t("track.frontend"),
