@@ -71,6 +71,7 @@ export const ALL_REGIONS: Region[] = [
     sectorEngagementIds: [],
     postSlugs: [
       "building-an-api-in-csharp",
+      "dockerising-dotnet-java-kotlin-apis",
       "hexagonal-architecture-csharp-dotnet",
       "unit-testing-react-the-right-way",
     ],
