@@ -7,7 +7,7 @@ export const CLIENT_MESSAGE_KEYS = [
   "cvModal",
   "faq",
   "breadcrumb",
-  "home.map",
+  "about.map",
   "search",
 ] as const;
 

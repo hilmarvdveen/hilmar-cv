@@ -1,5 +1,7 @@
 export const HOME_CITY_NAME = "Zandvoort";
 
+export const MAP_VIEWBOX = { width: 440, height: 500 };
+
 export const MAP_COLORS = {
   primary: "#12314e",
   primaryLight: "#dde4ea",
@@ -14,8 +16,6 @@ export const highlightedRegions = [
   "Zuid-Holland",
   "Gelderland",
   "Flevoland",
-  "Noord-Brabant",
-  "Fryslân",
 ];
 
 export type CityLocation = {
@@ -35,7 +35,7 @@ export const workCities: CityLocation[] = [
   {
     name: "Amsterdam",
     coordinates: [4.8952, 52.3702],
-    companies: ["Conclusion", "Randstad", "Postcode Loterij", "Omniplan"],
+    companies: ["Conclusion", "Randstad", "Nationale Postcode Loterij", "Omniplan"],
   },
   {
     name: "Apeldoorn",
@@ -48,7 +48,7 @@ export const workCities: CityLocation[] = [
     companies: ["Transdev"],
   },
   { name: "Hoorn", coordinates: [5.0594, 52.6425], companies: ["Niped"] },
-  { name: "Utrecht", coordinates: [5.1214, 52.0907], companies: ["Bluefield", "bol.com"] },
+  { name: "Utrecht", coordinates: [5.1214, 52.0907], companies: ["Bluefield Smart Access", "bol.com"] },
   { name: "Zoetermeer", coordinates: [4.4933, 52.0607], companies: ["Ortec"] },
   { name: "Almere", coordinates: [5.2141, 52.3508], companies: ["Athlon"] },
   {
@@ -58,7 +58,7 @@ export const workCities: CityLocation[] = [
   },
 ];
 
-export const workCityCount = workCities.length;
+export const workCityCount = workCities.filter((city) => !city.isHome).length;
 
 export const highlightedRegionCount = highlightedRegions.length;
 

@@ -353,43 +353,6 @@
             "title": "Delivered for",
             "subtitle": "Government, enterprise and e-commerce.",
             "invite": "Pick a logo to see what I delivered there."
-        },
-        "map": {
-            "period": "{from} to {to}",
-            "companiesWorked": "Where the work happened",
-            "workedIn": "The work took me to",
-            "workMode": {
-                "remote": "Remote",
-                "onSite": "On site",
-                "hybrid": "Hybrid"
-            },
-            "stats": {
-                "companies": "companies",
-                "across": "across",
-                "cities": "cities",
-                "in": "in",
-                "provinces": "provinces",
-                "companiesLabel": "Companies",
-                "citiesLabel": "Cities",
-                "provincesLabel": "Provinces"
-            },
-            "mapAriaLabel": "Interactive map of the Netherlands showing work locations",
-            "legend": {
-                "home": "Home base",
-                "city": "Work cities",
-                "highlighted": "Provinces worked in",
-                "company": "company",
-                "companies": "companies"
-            },
-            "tapLocation": "Select a city to see the work there",
-            "highlights": {
-                "title": "Where and how I worked",
-                "basedIn": "Based in",
-                "workedAcross": "Worked across",
-                "provinces": "provinces",
-                "experience": "Remote, hybrid and on site",
-                "years": "years in frontend, senior since 2016"
-            }
         }
     },
     "common": {
@@ -1842,70 +1805,136 @@
     },
     "about": {
         "hero": {
-            "badge": "Freelance senior frontend engineer",
+            "badge": "About me",
             "title": "What changes when I join your team",
-            "description": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards. E-commerce, enterprise and government teams in the Netherlands bring me in when a page that carries revenue has to move to a new platform and stay open while it does.",
-            "location": "{city}, Netherlands",
-            "education": "BSc Physics and Astronomy, University of Amsterdam",
-            "linkedin": "LinkedIn",
+            "lead": "I rebuild the pages a business earns its money on without taking them offline, and I leave behind a team that ships faster afterwards.",
+            "role": "Freelance senior frontend engineer",
+            "factsLink": "Availability, KVK and working arrangement",
             "cv": "Download CV"
         },
         "value": {
             "title": "Five changes, and where they happened",
-            "subtitle": "Each block names the engagement where it happened.",
+            "subtitle": "If one of them is yours, that is the conversation we will have.",
+            "eyebrow": "What I bring",
+            "link": {
+              "href": "/experience",
+              "label": "All twelve engagements, written out"
+            },
+            "device": "Grey stays live, green moves over in steps.",
             "blocks": [
                 {
-                    "title": "The page that brings in money stays open while it is replaced",
-                    "body": "Replacing a live page is a rollout question before it is a code question. At bol.com I moved three live account pages onto the new platform behind a rollout switch. Employees first, then a percentage of customers, then everyone, with one step back available the whole time. At Athlon I led the move of a legacy Angular 1.6 application onto Angular 12, component library and dashboards included.",
+                    "title": "The page that earns the money stays live, no customer-facing outage",
+                    "body": "Replacing a live page is a rollout question before it is a code question. At bol.com I moved three account pages onto the new platform behind a switch: employees first, then a percentage of customers, then everyone. The step back stayed available the whole way. At Athlon I led the migration of an Angular 1.6 application onto Angular 12, with a component library and dashboards.",
                     "evidence": "bol.com 2025 to 2026, Athlon 2020 to 2022"
                 },
                 {
-                    "title": "The team ships faster after I leave",
-                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor so content editors and designers could build and verify a tax form themselves. A new income-tax form went from months of engineering to a few days. A new page on the shared design system went from one to two weeks to one to two days. That design system came into use across several teams because I built its adoption with their developers, hands-on. At the Nationale Postcode Loterij a JSON-driven design system took a campaign site from weeks to a few days. At bol.com marketing swaps content and imagery on the Kobo Plus acquisition page without an engineering release.",
-                    "evidence": "Belastingdienst 2023 to 2024, Nationale Postcode Loterij 2022 to 2023, bol.com 2025 to 2026"
+                    "title": "Your team ships faster, and keeps it up",
+                    "body": "Speed afterwards comes from a platform other people can read and change. At the Belastingdienst I built a visual forms editor, so content editors and designers could assemble a tax form themselves. A new income-tax form went from months of engineering to a few days. A new page on BOLD, the shared design system, went from one to two weeks to one to two days. That design system came into use across several teams because I built its adoption with their developers. At the Nationale Postcode Loterij a campaign site went from weeks to a few days.",
+                    "evidence": "Belastingdienst 2023 to 2024, Nationale Postcode Loterij 2022 to 2023"
                 },
                 {
                     "title": "Your developers learn something while I am there",
-                    "body": "At the Belastingdienst a senior developer knew JavaScript and Vue but not Angular. I took him through RxJS and streams, the part he found hardest, and through the proper use of services. At Athlon I coached junior and senior developers on Angular practice, reviewed their code and worked through the improvements with them. At bol.com I reviewed work across team boundaries and called people in to talk a change through.",
+                    "body": "At the Belastingdienst a senior developer knew JavaScript and Vue but not Angular. I took him through RxJS and streams, the part he found hardest, and through the proper use of services. At Athlon I coached junior and senior developers on Angular, reviewed their code and worked through the improvements with them. At bol.com I reviewed work across team boundaries and called people in to talk a change through.",
                     "evidence": "Belastingdienst 2023 to 2024, Athlon 2020 to 2022, bol.com 2025 to 2026",
                     "article": { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals or RxJS in Angular, in an article" }
                 },
                 {
                     "title": "Design flaws come up while the work is still open",
-                    "body": "I talk to the product owner and the designer while the work is still open. Flaws and better options come up while they are still cheap to act on. At bol.com that conversation with the designer and the business team became nine A/B experiments, which I built in code and configured in the experimentation tool.",
-                    "evidence": "bol.com, Loyalty and Digital, 2025 to 2026"
+                    "body": "I talk to the product owner and the designer while the work is still open. Flaws and better options surface at the point where they are still easy to act on. At bol.com that conversation with the designer and the business team became nine A/B experiments, which I built in code and configured in the experimentation tool.",
+                    "evidence": "bol.com 2025 to 2026"
                 },
                 {
-                    "title": "If it has to be finished, I take it on",
-                    "body": "Ownership shows in what someone picks up when the work does not fit the job title. At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the legacy Java to extract the specification and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight. The Belastingdienst extended the engagement four times, bol.com three times.",
-                    "evidence": "Belastingdienst 2023 to 2024, bol.com 2025 to 2026"
+                    "title": "Work that falls between roles still gets finished",
+                    "body": "At the Belastingdienst the forms platform had to ship, so I took the backend endpoints as well. At bol.com I read the code of the legacy Java storefront to extract the specification and rebuilt the pages in React. I shaped the GraphQL contract with the backend engineers and wrote backend logic in Kotlin when capacity was tight.",
+                    "evidence": "Belastingdienst 2023 to 2024, extended four times · bol.com 2025 to 2026, extended three times"
                 }
             ]
         },
         "standards": {
-            "title": "What I never leave out",
+            "title": "What is down on paper",
+            "eyebrow": "The record",
+            "subtitle": "For whoever wants to check: the certificates, the standard per engagement and the training, by name.",
             "cards": [
                 {
-                    "title": "Security",
-                    "body": "At Certified Secure I completed the full engineer security curriculum, live and hands-on. It runs from essential security through web and server security specialist, plus secure development, full-stack security and Kubernetes network security, with training on the GDPR and the EU AI Act."
+                    "title": "Certified Secure",
+                    "body": "At bol.com I completed Certified Secure's full engineer security curriculum, live and hands-on. The certificates: Essential Security, Essential Specialties, Security Specialist, Web Security Specialist and Server Security Specialist. On top of that the Secure Development, Full-Stack Security and Kubernetes network security trainings."
                 },
                 {
-                    "title": "Accessibility and privacy",
-                    "body": "Accessibility belongs to the building and not to a phase at the end. WCAG 2.1 AA on the 2020 to 2024 engagements, and 2.2 AA at bol.com. GDPR training on personal data and EU AI Act literacy come with it."
+                    "title": "WCAG per engagement",
+                    "body": "Athlon, the Nationale Postcode Loterij and the Belastingdienst shipped on WCAG 2.1 AA, bol.com on 2.2 AA. Keyboard, focus, contrast and screen reader come with every component that goes live."
                 },
                 {
-                    "title": "Verification and handover",
-                    "body": "Components ship with unit and component tests in Vitest and Testing Library, end-to-end checks in Playwright, and a Storybook story per scenario, so the next developer can see every state. What I build I hand over in writing, so a team can keep it running without me."
+                    "title": "Privacy and AI",
+                    "body": "The same series included the Protecting PII training, on personal data under the GDPR, and the training on the EU AI Act and AI literacy. What a form or an account asks in personal data, I look at through that lens."
                 }
             ]
         },
         "map": {
-            "contactLine": "The Randstad, one to two days on site, or fully remote."
+          "eyebrow": "Across the country",
+          "title": "Where the work happened, and where it can happen next",
+          "subtitle": "The work took me to {companies} companies in {cities} cities and {provinces} provinces.",
+          "period": "{from} to {to}",
+          "workMode": {
+            "remote": "Remote",
+            "onSite": "On site",
+            "hybrid": "Hybrid"
+          },
+          "mapAriaLabel": "Interactive map of the Netherlands showing work locations",
+          "legend": {
+            "home": "Home base",
+            "city": "Work cities",
+            "highlighted": "Provinces worked in",
+            "company": "company",
+            "companies": "companies"
+          },
+          "tapLocation": "Select a city to see the work there"
+        },
+        "hiring": {
+          "eyebrow": "Practical",
+          "title": "What you need to hire me",
+          "intro": "I am Hilmar van der Veen. Since 2016 I have worked on the front end of large web platforms, currently at bol.com and before that at the Belastingdienst, the Nationale Postcode Loterij and Athlon. React and Angular are the daily work, with TypeScript, GraphQL and accessibility around them.",
+          "facts": [
+            {
+              "label": "Available",
+              "value": "From 1 October 2026",
+              "detail": "Earlier by arrangement"
+            },
+            {
+              "label": "Working arrangement",
+              "value": "The Randstad, hybrid or remote",
+              "detail": "One to two days on site works well"
+            },
+            {
+              "label": "Company",
+              "value": "{company}",
+              "detail": "KVK {kvk}, {city}"
+            },
+            {
+              "label": "Contract",
+              "value": "Freelance, ZZP",
+              "detail": "32 to 40 hours a week, six months or longer"
+            },
+            {
+              "label": "Languages",
+              "value": "Dutch and English",
+              "detail": "Native and fluent"
+            },
+            {
+              "label": "Education",
+              "value": "BSc Physics and Astronomy",
+              "detail": "University of Amsterdam"
+            }
+          ],
+          "cv": "Download CV",
+          "linkedin": "LinkedIn",
+          "rateLink": "Rate, in the FAQ"
         },
         "cta": {
             "title": "See whether I fit your team",
-            "description": "Freelance through Hilmar ICT Services, KVK 97564303, from 1 October 2026 and earlier by arrangement. 32 to 40 hours a week, six months or longer, in Dutch or English. Thirty minutes on a call is enough to know whether it fits.",
-            "button": "Book a 30-minute call"
+            "description": "Tell me where you are now and which page is next in line. I will say what I would do, what I would leave alone and where I see the risk. Thirty minutes is enough for that.",
+            "button": "Book a 30-minute call",
+            "alternativeLead": "Writing works too.",
+            "alternativeLink": "To the contact form"
         }
     },
     "cvModal": {

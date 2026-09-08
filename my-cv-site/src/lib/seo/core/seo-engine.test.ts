@@ -1,8 +1,15 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { SEOEngine } from "./seo-engine";
-import type { SEOPageConfig } from "../types/seo-types";
+import type { JsonLdSchema, SEOPageConfig } from "../types/seo-types";
 
 afterEach(() => vi.unstubAllEnvs());
+
+function secondBreadcrumbName(jsonLd: JsonLdSchema[]): string {
+  const crumbs = jsonLd.find(
+    (schema) => (schema as { "@type": string })["@type"] === "BreadcrumbList"
+  ) as { itemListElement: Array<{ name: string }> };
+  return crumbs.itemListElement[1].name;
+}
 
 function baseConfig(overrides: Partial<SEOPageConfig> = {}): SEOPageConfig {
   return {
@@ -80,6 +87,26 @@ describe("SEOEngine.generateSitemapData with dynamic pages", () => {
     expect(match?.priority).toBe(0.7);
     expect(match?.changeFrequency).toBe("monthly");
     expect(entries.some((entry) => entry.url.endsWith("/blog"))).toBe(true);
+  });
+});
+
+describe("SEOEngine breadcrumb labels match the visible breadcrumb", () => {
+  it("names the About page breadcrumb in both locales", () => {
+    const engine = new SEOEngine();
+    expect(secondBreadcrumbName(engine.createAboutSEO("nl").jsonLd)).toBe("Over mij");
+    expect(secondBreadcrumbName(engine.createAboutSEO("en").jsonLd)).toBe("About me");
+  });
+
+  it("names the Projects page breadcrumb in both locales", () => {
+    const engine = new SEOEngine();
+    expect(secondBreadcrumbName(engine.createProjectsSEO("nl").jsonLd)).toBe("Resultaten");
+    expect(secondBreadcrumbName(engine.createProjectsSEO("en").jsonLd)).toBe("Results");
+  });
+
+  it("names the Book page breadcrumb in both locales", () => {
+    const engine = new SEOEngine();
+    expect(secondBreadcrumbName(engine.createBookingSEO("nl").jsonLd)).toBe("Plan een gesprek");
+    expect(secondBreadcrumbName(engine.createBookingSEO("en").jsonLd)).toBe("Book a call");
   });
 });
 

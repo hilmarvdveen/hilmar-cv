@@ -1,16 +1,9 @@
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-import {
-  Accessibility,
-  Briefcase,
-  Check,
-  ClipboardCheck,
-  GraduationCap,
-  MapPin,
-  Shield,
-} from "lucide-react";
+import { Accessibility, ArrowDown, ArrowRight, ExternalLink, Lock, Shield } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/PageHero";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
@@ -18,67 +11,56 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
 import { CvDownloadTrigger } from "@/features/home";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import {
+  highlightedRegionCount,
+  workCityCount,
+  workCompanyCount,
+} from "../netherlandsMapData";
+import { AboutValueList } from "./AboutValueList";
+import { AboutHiringFacts } from "./AboutHiringFacts";
 import { NetherlandsMap } from "./NetherlandsMap";
-
-type ValueBlock = {
-  title: string;
-  body: string;
-  evidence: string;
-  article?: { href: string; label: string };
-};
 
 type StandardsCard = {
   title: string;
   body: string;
 };
 
-const standardsCardIcons = [Shield, Accessibility, ClipboardCheck];
+const standardsCardIcons = [Shield, Accessibility, Lock];
+
+const TEXT_LINK_CLASS =
+  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+
+const ON_NAVY_LINK_CLASS =
+  "inline-flex min-h-6 items-center text-white underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy";
 
 export function AboutPageContent() {
   const t = useTranslations("about");
   const locale = useLocale();
-  const blocks = t.raw("value.blocks") as ValueBlock[];
   const standardsCards = t.raw("standards.cards") as StandardsCard[];
 
   return (
     <>
       <PageHero
+        breadcrumb={<Breadcrumb />}
         badge={t("hero.badge")}
         title={t("hero.title")}
-        description={t("hero.description")}
+        description={t("hero.lead")}
+        asideWidth="rail"
+        asideLeadsOnMobile
         aside={
-          <div>
-            <figure className="mx-auto w-fit overflow-hidden rounded-full ring-2 ring-white/15 md:mx-0 md:ring-4">
-              <Image
-                src="/images/profile.jpg"
-                alt={BUSINESS_PROFILE.NAME}
-                width={200}
-                height={200}
-                className="h-50 w-50 object-cover"
-                priority
-              />
-            </figure>
-            <ul className="mt-6 space-y-3 text-sm text-slate-300">
-              <li className="flex items-center gap-3">
-                <MapPin className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
-                <span>
-                  {t("hero.location", {
-                    city: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
-                  })}
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <GraduationCap className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
-                <span>{t("hero.education")}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Briefcase className="h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
-                <span>
-                  {BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME}, KVK{" "}
-                  {BUSINESS_PROFILE.REGISTRATION.KVK}
-                </span>
-              </li>
-            </ul>
+          <div className="flex items-center gap-3 md:flex-col md:gap-4 md:text-center">
+            <Image
+              src="/images/profile.jpg"
+              alt=""
+              width={200}
+              height={200}
+              priority
+              className="h-16 w-16 rounded-full object-cover ring-2 ring-white/15 md:h-50 md:w-50 md:ring-4"
+            />
+            <div>
+              <p className="text-lg font-bold text-white">{BUSINESS_PROFILE.NAME}</p>
+              <p className="text-sm text-slate-300">{t("hero.role")}</p>
+            </div>
           </div>
         }
         actions={
@@ -86,58 +68,48 @@ export function AboutPageContent() {
             <Button href="/book" variant="primary" data-placement="about-hero">
               {t("cta.button")}
             </Button>
-            <Button
-              href={BUSINESS_PROFILE.SOCIAL.LINKEDIN}
-              variant="outlineOnDark"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("hero.linkedin")}
-            </Button>
             <CvDownloadTrigger label={t("hero.cv")} locale={locale} />
+            <a
+              href="#about-hiring"
+              data-placement="about-hero-facts"
+              className="inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-emerald-300 underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+            >
+              {t("hero.factsLink")}
+              <ArrowDown className="h-4 w-4" aria-hidden="true" />
+            </a>
           </>
         }
       />
 
       <Section background="light" aria-labelledby="about-value-heading">
-        <Container>
+        <Container width="narrow">
           <SectionTitle
             id="about-value-heading"
+            eyebrow={t("value.eyebrow")}
             title={t("value.title")}
             subtitle={t("value.subtitle")}
           />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {blocks.map((block) => (
-              <Card key={block.title}>
-                <h3 className="mb-2 text-lg font-bold text-textMain">{block.title}</h3>
-                <p className="mb-4 text-base leading-relaxed text-gray-600">
-                  {block.body}
-                </p>
-                <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700">
-                  <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  {block.evidence}
-                </p>
-                {block.article && (
-                  <p className="mt-4 text-sm">
-                    <Link
-                      href={block.article.href}
-                      data-placement="about-mentoring-article"
-                      className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                    >
-                      {block.article.label}
-                    </Link>
-                  </p>
-                )}
-              </Card>
-            ))}
-          </div>
+          <AboutValueList />
+          <Link
+            href={t("value.link.href")}
+            data-placement="about-experience"
+            className={`mt-10 ${TEXT_LINK_CLASS}`}
+          >
+            {t("value.link.label")}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </Container>
       </Section>
 
       <Section background="white" aria-labelledby="about-standards-heading">
         <Container>
-          <SectionTitle id="about-standards-heading" title={t("standards.title")} />
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <SectionTitle
+            id="about-standards-heading"
+            eyebrow={t("standards.eyebrow")}
+            title={t("standards.title")}
+            subtitle={t("standards.subtitle")}
+          />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {standardsCards.map((card, index) => {
               const CardIcon = standardsCardIcons[index];
               return (
@@ -152,34 +124,84 @@ export function AboutPageContent() {
         </Container>
       </Section>
 
-      <Section background="light">
-        <NetherlandsMap />
-        <Container>
-          <p className="mt-6 text-center text-base leading-relaxed text-gray-700">
-            {t("map.contactLine")}
+      <Section background="light" aria-labelledby="about-map-heading">
+        <Container width="narrow">
+          <SectionTitle
+            id="about-map-heading"
+            eyebrow={t("map.eyebrow")}
+            title={t("map.title")}
+            subtitle={t("map.subtitle", {
+              companies: workCompanyCount,
+              cities: workCityCount,
+              provinces: highlightedRegionCount,
+            })}
+          />
+          <NetherlandsMap />
+        </Container>
+      </Section>
+
+      <Section background="white" id="about-hiring" aria-labelledby="about-hiring-heading">
+        <Container width="narrow">
+          <SectionTitle
+            id="about-hiring-heading"
+            eyebrow={t("hiring.eyebrow")}
+            title={t("hiring.title")}
+          />
+          <p className="mb-8 max-w-3xl text-lg leading-relaxed text-gray-700">
+            {t("hiring.intro")}
           </p>
-          <div className="mt-4 flex justify-center">
-            <Button href="/book" variant="outline" data-placement="about-map">
-              {t("cta.button")}
-            </Button>
+          <AboutHiringFacts />
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+            <CvDownloadTrigger
+              label={t("hiring.cv")}
+              locale={locale}
+              placement="about-hiring-cv"
+              className={TEXT_LINK_CLASS}
+            />
+            <a
+              href={BUSINESS_PROFILE.SOCIAL.LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-placement="about-hiring-linkedin"
+              className={TEXT_LINK_CLASS}
+            >
+              {t("hiring.linkedin")}
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <Link
+              href="/faq"
+              data-placement="about-hiring-rate"
+              className={TEXT_LINK_CLASS}
+            >
+              {t("hiring.rateLink")}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </Container>
       </Section>
 
       <Section background="navy" aria-labelledby="about-cta-heading">
         <Container width="narrow" className="text-center">
-          <h2
+          <SectionTitle
             id="about-cta-heading"
-            className="mb-4 text-section-title text-balance text-white"
-          >
-            {t("cta.title")}
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
-            {t("cta.description")}
-          </p>
+            align="center"
+            onDark
+            title={t("cta.title")}
+            subtitle={t("cta.description")}
+          />
           <Button href="/book" variant="white" size="lg" data-placement="about-close">
             {t("cta.button")}
           </Button>
+          <p className="mt-4 text-sm text-slate-300">
+            {t("cta.alternativeLead")}{" "}
+            <Link
+              href="/contact"
+              data-placement="about-close-contact"
+              className={ON_NAVY_LINK_CLASS}
+            >
+              {t("cta.alternativeLink")}
+            </Link>
+          </p>
         </Container>
       </Section>
     </>

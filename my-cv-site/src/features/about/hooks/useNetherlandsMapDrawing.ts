@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import { ProvinceFeature, ProvinceGeoJSON } from "@/models/Geo.model";
 import {
   MAP_COLORS,
+  MAP_VIEWBOX,
   highlightedRegions,
   workCities,
   type CityLocation,
@@ -24,8 +25,8 @@ type MapDrawingOptions = {
 };
 
 const PROVINCES_URL = "/data/geo-provinces.json";
-const MAP_CENTER: [number, number] = [5.4, 52.2];
-const MAX_MAP_WIDTH = 500;
+const MAP_PADDING = 12;
+const HIT_TARGET_RADIUS = 12;
 const MOBILE_BREAKPOINT = 768;
 
 const regionFill = (feature: ProvinceFeature, hovered: boolean) => {
@@ -51,15 +52,7 @@ export function useNetherlandsMapDrawing({
     svg.selectAll("*").remove();
 
     const containerWidth = container.offsetWidth;
-    const mapWidth = Math.min(containerWidth - 32, MAX_MAP_WIDTH);
-    const mapHeight = mapWidth * 0.85;
-
-    const projection = d3
-      .geoMercator()
-      .center(MAP_CENTER)
-      .scale(mapWidth * 11)
-      .translate([mapWidth / 2, mapHeight / 2]);
-
+    const projection = d3.geoMercator();
     const pathGenerator = d3.geoPath().projection(projection);
 
     const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
@@ -93,6 +86,17 @@ export function useNetherlandsMapDrawing({
     const drawMap = async () => {
       const geoData = await d3.json<ProvinceGeoJSON>(PROVINCES_URL);
       if (!geoData) return;
+      if (geoData.features.length > 0) {
+        projection.fitExtent(
+          [
+            [MAP_PADDING, MAP_PADDING],
+            [MAP_VIEWBOX.width - MAP_PADDING, MAP_VIEWBOX.height - MAP_PADDING],
+          ],
+          geoData
+        );
+      }
+      const renderedWidth = svgRef.current?.getBoundingClientRect().width || MAP_VIEWBOX.width;
+      const unitsPerPixel = MAP_VIEWBOX.width / renderedWidth;
 
       svg
         .selectAll<SVGPathElement, ProvinceFeature>("path")
@@ -119,7 +123,7 @@ export function useNetherlandsMapDrawing({
 
       const cityRadius = isMobile ? 8 : 6;
       const cityHoverRadius = isMobile ? 12 : 8;
-      const cityHitTargetRadius = 12;
+      const cityHitTargetRadius = Math.max(HIT_TARGET_RADIUS, HIT_TARGET_RADIUS * unitsPerPixel);
 
       const drawCities = (
         selector: string,

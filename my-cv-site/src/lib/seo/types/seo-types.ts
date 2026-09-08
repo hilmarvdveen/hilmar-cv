@@ -20,6 +20,7 @@ export type SchemaType =
   | 'ProfessionalService'
   | 'WebSite'
   | 'WebPage'
+  | 'ProfilePage'
   | 'Article'
   | 'BlogPosting'
   | 'FAQPage'

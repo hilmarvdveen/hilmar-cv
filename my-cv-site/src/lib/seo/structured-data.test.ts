@@ -95,11 +95,12 @@ describe("structured data (JSON-LD) per page", () => {
           }
         });
 
-        it("includes the core entity types (WebSite, Organization, Person, WebPage)", () => {
+        it("includes the core entity types (WebSite, Organization, Person, a WebPage or ProfilePage)", () => {
           const types = typeSet(JSON.parse(raw));
-          for (const schemaType of ["WebSite", "Organization", "Person", "WebPage"]) {
+          for (const schemaType of ["WebSite", "Organization", "Person"]) {
             expect(types.has(schemaType)).toBe(true);
           }
+          expect(types.has("WebPage") || types.has("ProfilePage")).toBe(true);
         });
 
         it("has no leaked 'undefined', and valid URLs / sameAs", () => {
@@ -123,7 +124,9 @@ describe("structured data (JSON-LD) per page", () => {
 
         it("self/canonical URLs use the www host", () => {
           const schemas = JSON.parse(raw) as Array<Record<string, unknown>>;
-          const webpage = schemas.find((schema) => hasType(schema, "WebPage"));
+          const webpage = schemas.find(
+            (schema) => hasType(schema, "WebPage") || hasType(schema, "ProfilePage")
+          );
           expect(webpage?.url).toBeTruthy();
           expect(new URL(String(webpage!.url)).host).toBe(CANONICAL_HOST);
         });
@@ -272,6 +275,22 @@ describe("structured data (JSON-LD) per page", () => {
       const schemas = JSON.parse(SEOFactory.services(locale).structuredData) as Array<
         Record<string, unknown>
       >;
+      expect(schemas.filter((schema) => hasType(schema, "BreadcrumbList"))).toHaveLength(1);
+    }
+  });
+
+  it("the about page is a ProfilePage whose mainEntity references the Person by @id, with exactly one WebSite and one BreadcrumbList", () => {
+    for (const locale of LOCALES) {
+      const schemas = JSON.parse(SEOFactory.about(locale).structuredData) as Array<
+        Record<string, unknown>
+      >;
+      const person = schemas.find((schema) => hasType(schema, "Person"));
+      const profilePage = schemas.find((schema) => hasType(schema, "ProfilePage")) as
+        | { mainEntity?: { "@id"?: string } }
+        | undefined;
+      expect(profilePage).toBeTruthy();
+      expect(profilePage!.mainEntity).toEqual({ "@id": person!["@id"] });
+      expect(schemas.filter((schema) => hasType(schema, "WebSite"))).toHaveLength(1);
       expect(schemas.filter((schema) => hasType(schema, "BreadcrumbList"))).toHaveLength(1);
     }
   });

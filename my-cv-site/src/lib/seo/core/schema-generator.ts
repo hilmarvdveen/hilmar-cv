@@ -36,7 +36,11 @@ export class SchemaGenerator {
     schemas.push(this.generateWebSiteSchema(config.locale));
     schemas.push(this.generateOrganizationSchema(config.locale));
     schemas.push(this.generatePersonSchema(config.locale));
-    schemas.push(this.generateWebPageSchema(config));
+    schemas.push(
+      config.pageType === 'about'
+        ? this.generateProfilePageSchema(config)
+        : this.generateWebPageSchema(config)
+    );
 
     switch (config.pageType) {
       case 'homepage':
@@ -378,6 +382,14 @@ export class SchemaGenerator {
       datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
       dateModified: config.lastModified?.toISOString() || BUILD_TIME,
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale]
+    };
+  }
+
+  private generateProfilePageSchema(config: SEOPageConfig): JsonLdSchema {
+    return {
+      ...this.generateWebPageSchema(config),
+      '@type': SCHEMA_TYPES.PROFILE_PAGE,
+      mainEntity: { '@id': this.personId() }
     };
   }
 

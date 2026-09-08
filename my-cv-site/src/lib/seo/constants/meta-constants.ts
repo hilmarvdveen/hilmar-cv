@@ -185,6 +185,7 @@ export const SCHEMA_TYPES = {
   PROFESSIONAL_SERVICE: 'ProfessionalService',
   WEBSITE: 'WebSite',
   WEBPAGE: 'WebPage',
+  PROFILE_PAGE: 'ProfilePage',
   ARTICLE: 'Article',
   BLOG_POSTING: 'BlogPosting',
   FAQ_PAGE: 'FAQPage',

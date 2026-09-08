@@ -214,7 +214,7 @@ export const workHistory: WorkEntry[] = [
   },
   {
     id: "postcode-loterij",
-    company: "Postcode Loterij",
+    company: "Nationale Postcode Loterij",
     logo: "nationale-postcode-loterij-mark.png",
     from: "2022-07",
     to: "2023-01",
@@ -405,7 +405,7 @@ export const workHistory: WorkEntry[] = [
   },
   {
     id: "bluefield",
-    company: "Bluefield",
+    company: "Bluefield Smart Access",
     logo: "bluefield.png",
     from: "2018-03",
     to: "2019-04",

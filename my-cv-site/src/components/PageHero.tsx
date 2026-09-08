@@ -4,6 +4,13 @@ import { Container, type ContainerWidth } from "@/components/Container";
 
 const DEFAULT_TITLE_ID = "page-hero-title";
 
+export type PageHeroAsideWidth = "half" | "rail";
+
+const ASIDE_GRIDS: Record<PageHeroAsideWidth, string> = {
+  half: "grid gap-12 md:grid-cols-2 lg:gap-16 items-center",
+  rail: "grid gap-12 md:grid-cols-[1fr_320px] lg:gap-16 items-start",
+};
+
 type PageHeroProps = {
   width?: ContainerWidth;
   title: string;
@@ -16,6 +23,8 @@ type PageHeroProps = {
   children?: ReactNode;
   actions?: ReactNode;
   aside?: ReactNode;
+  asideWidth?: PageHeroAsideWidth;
+  asideLeadsOnMobile?: boolean;
 };
 
 export const PageHero = ({
@@ -30,6 +39,8 @@ export const PageHero = ({
   children,
   actions,
   aside,
+  asideWidth = "half",
+  asideLeadsOnMobile = false,
 }: PageHeroProps) => {
   const headingId = titleId ?? DEFAULT_TITLE_ID;
 
@@ -67,9 +78,11 @@ export const PageHero = ({
       <Container width={width}>
         {breadcrumb}
         {aside ? (
-          <div className="grid gap-12 md:grid-cols-2 lg:gap-16 items-center">
+          <div className={ASIDE_GRIDS[asideWidth]}>
             <div>{heroContent}</div>
-            <div>{aside}</div>
+            <div className={asideLeadsOnMobile ? "order-first md:order-none" : undefined}>
+              {aside}
+            </div>
           </div>
         ) : (
           <div className="max-w-4xl">{heroContent}</div>

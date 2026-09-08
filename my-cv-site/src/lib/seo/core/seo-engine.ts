@@ -32,15 +32,27 @@ import {
 
 const SITE_LAST_MODIFIED = process.env.NEXT_PUBLIC_BUILD_DATE ?? new Date().toISOString();
 const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
-const DUTCH_BREADCRUMB_LABELS: Record<string, string> = {
-  About: 'Over mij',
-  Services: 'Diensten',
-  Projects: 'Projecten',
-  Contact: 'Contact',
-  FAQ: 'Veelgestelde vragen',
-  Book: 'Afspraak boeken',
-  Blog: 'Blog',
-  Privacy: 'Privacy'
+const BREADCRUMB_SEGMENT_LABELS: Record<Locale, Record<string, string>> = {
+  nl: {
+    About: 'Over mij',
+    Services: 'Diensten',
+    Projects: 'Resultaten',
+    Contact: 'Contact',
+    FAQ: 'Veelgestelde vragen',
+    Book: 'Plan een gesprek',
+    Blog: 'Blog',
+    Privacy: 'Privacy'
+  },
+  en: {
+    About: 'About me',
+    Services: 'Services',
+    Projects: 'Results',
+    Contact: 'Contact',
+    FAQ: 'FAQ',
+    Book: 'Book a call',
+    Blog: 'Blog',
+    Privacy: 'Privacy'
+  }
 };
 
 export class SEOEngine {
@@ -110,8 +122,8 @@ export class SEOEngine {
         ? `Over ${BUSINESS_PROFILE.NAME}, senior frontend developer`
         : `About ${BUSINESS_PROFILE.NAME}, senior frontend developer`,
       description: locale === 'nl'
-        ? `Senior frontend developer sinds 2016 bij bol.com, de Belastingdienst, Postcode Loterij en Athlon. React, Next.js en Angular, van specificatie tot cut-over.`
-        : `Senior frontend developer since 2016 at bol.com, the Belastingdienst, Postcode Loterij and Athlon. React, Next.js and Angular, from specification to cut-over.`,
+        ? `Senior frontend developer sinds 2016 bij bol.com, de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular, van specificatie tot cut-over.`
+        : `Senior frontend developer since 2016 at bol.com, the Belastingdienst, the Nationale Postcode Loterij and Athlon. React and Angular, specification to cut-over.`,
       keywords: [
         ...ABOUT_CONTENT.SEO_FOCUS.SECONDARY,
         ...ABOUT_CONTENT.SEO_FOCUS.EXPERTISE,
@@ -166,8 +178,8 @@ export class SEOEngine {
         ? 'Cases | bol.com, Belastingdienst, Postcode Loterij, Athlon'
         : 'Case studies | bol.com, Belastingdienst, Athlon and more',
       description: locale === 'nl'
-        ? `Opgeleverd: legacy Java naar SSR React bij bol.com, een low-code formulierenplatform bij de Belastingdienst, design systems bij Postcode Loterij en Athlon.`
-        : `Delivered: legacy Java to SSR React at bol.com, a low-code forms platform at the Belastingdienst, design systems at Postcode Loterij and Athlon.`,
+        ? `Opgeleverd: legacy Java naar SSR React bij bol.com, een formulierenplatform bij de Belastingdienst, design systems bij de Nationale Postcode Loterij en Athlon.`
+        : `Delivered: legacy Java to SSR React at bol.com, a forms platform at the Belastingdienst, design systems at the Nationale Postcode Loterij and Athlon.`,
       keywords: [
         ...PROJECTS_CONTENT.SEO_FOCUS.SECONDARY,
         ...PROJECTS_CONTENT.SEO_FOCUS.CLIENT_FOCUS,
@@ -426,8 +438,8 @@ export class SEOEngine {
         ? 'Design system developer | Storybook, tokens | Randstad'
         : 'Design system developer | Storybook, tokens | Randstad',
       description: locale === 'nl'
-        ? `Design systems die teams zelf onderhouden: React- of Angular-componenten, design tokens, Storybook, documentatie. Bij de Belastingdienst en Postcode Loterij.`
-        : `Design systems teams maintain themselves: React or Angular components, design tokens, Storybook and docs. Built at the Belastingdienst and Postcode Loterij.`,
+        ? `Design systems die teams zelf onderhouden: componenten, design tokens, Storybook, documentatie. Bij de Belastingdienst en de Nationale Postcode Loterij.`
+        : `Design systems teams maintain themselves: components, design tokens, Storybook and docs. Built at the Belastingdienst and the Nationale Postcode Loterij.`,
       keywords: [
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.SECONDARY,
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.TECHNICAL,
@@ -486,7 +498,7 @@ export class SEOEngine {
     pathSegments.forEach((segment, index) => {
       currentPath += `/${segment.toLowerCase().replace(/\s+/g, '-')}`;
       breadcrumbs.push({
-        name: locale === 'nl' ? DUTCH_BREADCRUMB_LABELS[segment] ?? segment : segment,
+        name: BREADCRUMB_SEGMENT_LABELS[locale][segment] ?? segment,
         url: currentPath,
         position: index + 2
       });

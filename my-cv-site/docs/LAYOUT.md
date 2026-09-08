@@ -396,3 +396,34 @@ tappable from its resting state.
 
 Two card patterns remain (whole card as link, and a line inside the card as
 link). Unifying them is a decision for Hilmar (reconciliation file, item 8).
+
+## The about page and the map (8 September 2026)
+
+Hilmar's phone screenshot showed the Netherlands map at about half the
+width of its card. The drawing hook scaled and centred the projection in
+container pixels while the svg kept a fixed 500 by 425 viewBox, so on a
+398px card the land was drawn at 73 percent of the box and the box was
+then shrunk to the card. Rules now:
+
+- The map svg carries a portrait viewBox of 440 by 500 units
+  (`MAP_VIEWBOX` in `netherlandsMapData.ts`) and the projection is fitted
+  to the province data with `fitExtent` and a 12 unit margin, so the land
+  fills the box at every width. The svg is `w-full max-w-lg mx-auto`,
+  which keeps the desktop map at the height it had (about 580px) and lets
+  the phone map fill its card (land 333 by 394px at 430 wide, measured).
+- The city hit circles scale with the render: at least 12 units, and as
+  many units as it takes to stay 24px on screen where the svg renders
+  below its viewBox width. The nine city chips under the map are the
+  compliant control on phones, where the dots sit 15 to 26px apart.
+- The about page follows the designer's proposal of 7 September 2026
+  (`Hilmar/review-board/2026-09-07-about-redesign-P5.md`, merged with the
+  copy and consistency proposals P7 and P8): hero on `PageHero` with a
+  320px rail aside and the portrait lockup leading on phones, the five
+  changes as an ordered list sized by content (no cards, one hairline
+  between rows, the ramp glyph with its caption on row one), the record
+  in three tinted cards, the map section owned by the page (heading
+  through `SectionTitle`, the three counts once in the subtitle, chips
+  first on phones, the detail panel sticky on desktop), the practical
+  facts in one `dl` card with the CV, LinkedIn and rate links beneath it,
+  and a close with one button and the contact link in plain text. Every
+  practical fact appears once on the page.

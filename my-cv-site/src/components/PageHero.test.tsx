@@ -176,4 +176,58 @@ describe("PageHero", () => {
     render(<PageHero title="Title" description="Description text." />);
     expect(screen.queryByText("Booking summary")).toBeNull();
   });
+
+  it("lays the aside out as a half column by default", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        aside={<p>Booking summary</p>}
+      />
+    );
+    const asideCell = screen.getByText("Booking summary").parentElement;
+    expect(asideCell?.parentElement).toHaveClass("md:grid-cols-2");
+    expect(asideCell?.parentElement).toHaveClass("items-center");
+  });
+
+  it("lays the aside out as a narrow rail when asked", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        aside={<p>Booking summary</p>}
+        asideWidth="rail"
+      />
+    );
+    const asideCell = screen.getByText("Booking summary").parentElement;
+    expect(asideCell?.parentElement).toHaveClass("md:grid-cols-[1fr_320px]");
+    expect(asideCell?.parentElement).toHaveClass("items-start");
+  });
+
+  it("puts the aside first on phones when asked", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        aside={<p>Booking summary</p>}
+        asideLeadsOnMobile
+      />
+    );
+    const asideCell = screen.getByText("Booking summary").parentElement;
+    expect(asideCell).toHaveClass("order-first");
+    expect(asideCell).toHaveClass("md:order-none");
+  });
+
+  it("leaves the aside in source order on phones by default", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        aside={<p>Booking summary</p>}
+      />
+    );
+    expect(screen.getByText("Booking summary").parentElement).not.toHaveClass(
+      "order-first"
+    );
+  });
 });

@@ -172,9 +172,13 @@ inside the message provider, emits these events for every page on the site:
 `placement` comes from a `data-placement` attribute on the clicked anchor
 (`hero`, `sticky-bar`, `header`, `close`, `mid-cta`, `hiring-shape`,
 `experience-hero`, `experience-band`, `experience-close`, `faq-close`,
-`service-hero`, `service-close`, `about-hero`, `about-close`,
-`contact-hero`, `projects-close`), or `unlabelled` when the attribute is
-absent. `path` comes from `usePathname()` at the moment of the click.
+`service-hero`, `service-close`, `about-hero`, `about-hero-facts`,
+`about-experience`, `about-mentoring-article`, `about-hiring-cv`,
+`about-hiring-linkedin`, `about-hiring-rate`, `about-close`,
+`about-close-contact`, `map-city`, `contact-hero`, `projects-close`,
+`experience-results`), or `unlabelled` when the attribute is absent.
+`about-map`, the booking button under the map, was retired on 8 September
+2026 with the about page redesign, so its series ends on that date. `path` comes from `usePathname()` at the moment of the click.
 `section_view` fires once per page view per section: the observer
 unobserves a target after its first intersection, and a fresh set of seen
 sections is created whenever the pathname changes. `data-track-section` is

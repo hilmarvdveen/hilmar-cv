@@ -41,4 +41,18 @@ describe("CvDownloadTrigger", () => {
     await user.click(screen.getByRole("button", { name: "close" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
+
+  it("carries the placement and the styling a page gives it", () => {
+    render(
+      <CvDownloadTrigger
+        label="Download CV"
+        locale="nl"
+        placement="about-hiring-cv"
+        className="text-primary"
+      />
+    );
+    const trigger = screen.getByRole("button", { name: "Download CV" });
+    expect(trigger).toHaveAttribute("data-placement", "about-hiring-cv");
+    expect(trigger).toHaveClass("text-primary");
+  });
 });

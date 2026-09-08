@@ -349,43 +349,6 @@
             "button": "Plan een gesprek van 30 minuten",
             "buttonAlt": "Of stuur een bericht"
         },
-        "map": {
-            "period": "{from} tot {to}",
-            "companiesWorked": "Waar het werk gebeurde",
-            "workedIn": "Het werk bracht me bij",
-            "workMode": {
-                "remote": "Remote",
-                "onSite": "Op locatie",
-                "hybrid": "Hybride"
-            },
-            "stats": {
-                "companies": "bedrijven",
-                "across": "verdeeld over",
-                "cities": "steden",
-                "in": "in",
-                "provinces": "provincies",
-                "companiesLabel": "Bedrijven",
-                "citiesLabel": "Steden",
-                "provincesLabel": "Provincies"
-            },
-            "mapAriaLabel": "Interactieve kaart van Nederland met werklocaties",
-            "legend": {
-                "home": "Thuisbasis",
-                "city": "Werksteden",
-                "highlighted": "Provincies waar ik werkte",
-                "company": "bedrijf",
-                "companies": "bedrijven"
-            },
-            "tapLocation": "Kies een stad om te zien wat ik daar deed",
-            "highlights": {
-                "title": "Waar en hoe ik werkte",
-                "basedIn": "Gevestigd in",
-                "workedAcross": "Gewerkt in",
-                "provinces": "provincies",
-                "experience": "Remote, hybride en op locatie",
-                "years": "jaar in frontend, sinds 2016 als senior"
-            }
-        },
         "clientLogos": {
             "title": "Opgeleverd voor",
             "subtitle": "Overheid, enterprise en e-commerce.",
@@ -2206,70 +2169,136 @@
     },
     "about": {
         "hero": {
-            "badge": "Freelance senior frontend engineer",
+            "badge": "Over mij",
             "title": "Wat er verandert als ik bij je team kom",
-            "description": "Ik vernieuw de pagina's waar een bedrijf zijn geld mee verdient zonder dat ze eruit gaan, en ik laat een team achter dat daarna sneller levert. E-commerce, enterprise en overheid in Nederland halen mij erbij als een pagina waar omzet binnenkomt naar een nieuw platform moet en ondertussen gewoon open blijft.",
-            "location": "{city}, Nederland",
-            "education": "BSc Natuur- en Sterrenkunde, Universiteit van Amsterdam",
-            "linkedin": "LinkedIn",
+            "lead": "Ik vernieuw de pagina's waar een bedrijf zijn geld mee verdient zonder dat ze eruit gaan, en ik laat een team achter dat daarna sneller levert.",
+            "role": "Freelance senior frontend engineer",
+            "factsLink": "Beschikbaarheid, KVK en werkvorm",
             "cv": "CV downloaden"
         },
         "value": {
             "title": "Vijf veranderingen, en waar ze gebeurden",
-            "subtitle": "Bij elk blok staat de opdracht waar het gebeurde.",
+            "subtitle": "Herken je er één, dan weet je waar het gesprek over gaat.",
+            "eyebrow": "Wat ik meebreng",
+            "link": {
+              "href": "/experience",
+              "label": "Alle twaalf opdrachten, uitgeschreven"
+            },
+            "device": "Grijs blijft live, groen gaat in stappen over.",
             "blocks": [
                 {
-                    "title": "De pagina waar het geld binnenkomt blijft open tijdens de vervanging",
-                    "body": "Een live pagina vervangen is eerst een uitrolvraagstuk en pas daarna een codevraagstuk. Bij bol.com zette ik drie live accountpagina's op het nieuwe platform, achter een uitrolschakelaar. Eerst medewerkers, daarna een percentage klanten, daarna iedereen, en de hele tijd met één stap terug beschikbaar. Bij Athlon leidde ik de overstap van een verouderde Angular 1.6-applicatie naar Angular 12, inclusief componentenbibliotheek en dashboards.",
+                    "title": "De pagina waar het geld binnenkomt draait door zonder onderbreking",
+                    "body": "Een live pagina vervangen is eerst een uitrolvraagstuk en pas daarna een codevraagstuk. Bij bol.com zette ik drie accountpagina's op het nieuwe platform achter een schakelaar: eerst medewerkers, daarna een percentage klanten, daarna iedereen. De stap terug bleef het hele traject beschikbaar. Bij Athlon leidde ik de migratie van een Angular 1.6-applicatie naar Angular 12, met componentenbibliotheek en dashboards.",
                     "evidence": "bol.com 2025 tot 2026, Athlon 2020 tot 2022"
                 },
                 {
-                    "title": "Het team levert sneller nadat ik weg ben",
-                    "body": "Snelheid daarna komt van een platform dat anderen kunnen lezen en aanpassen. Bij de Belastingdienst bouwde ik een visuele formulierenbouwer waarmee contentredacteuren en ontwerpers zelf een belastingformulier konden samenstellen en controleren. Een nieuw inkomstenbelastingformulier ging van maanden engineering naar een paar dagen. Een nieuwe pagina op het gedeelde design system ging van één tot twee weken naar één tot twee dagen. Dat design system kwam bij meerdere teams in gebruik doordat ik met hun ontwikkelaars aan de implementatie meebouwde. Bij de Nationale Postcode Loterij ging een campagnesite dankzij een JSON-gedreven design system van weken naar een paar dagen. Bij bol.com wisselt marketing content en beeld op de Kobo Plus-acquisitiepagina zonder release van engineering.",
-                    "evidence": "Belastingdienst 2023 tot 2024, Nationale Postcode Loterij 2022 tot 2023, bol.com 2025 tot 2026"
+                    "title": "Je team levert sneller, en houdt dat vast",
+                    "body": "Snelheid daarna komt van een platform dat anderen kunnen lezen en aanpassen. Bij de Belastingdienst bouwde ik een visuele formulierenbouwer, waarmee contentredacteuren en ontwerpers zelf een belastingformulier samenstellen. Een nieuw inkomstenbelastingformulier ging van maanden engineering naar een paar dagen. Een nieuwe pagina op BOLD, het gedeelde design system, ging van één tot twee weken naar één tot twee dagen. Dat design system kwam bij meerdere teams in gebruik doordat ik met hun ontwikkelaars meebouwde. Bij de Nationale Postcode Loterij ging een campagnesite van weken naar een paar dagen.",
+                    "evidence": "Belastingdienst 2023 tot 2024, Nationale Postcode Loterij 2022 tot 2023"
                 },
                 {
                     "title": "Je ontwikkelaars leren er iets bij terwijl ik er ben",
-                    "body": "Bij de Belastingdienst kende een senior developer JavaScript en Vue, maar geen Angular. Ik nam hem mee door RxJS en streams, het onderdeel dat hij het lastigst vond, en door het juiste gebruik van services. Bij Athlon begeleidde ik junior en senior developers in de praktijk van Angular, deed ik hun code reviews en liep ik de verbeteringen met ze door. Bij bol.com reviewde ik werk over teamgrenzen heen en haalde ik mensen erbij om een wijziging samen door te praten.",
+                    "body": "Bij de Belastingdienst kende een senior developer JavaScript en Vue, maar geen Angular. Ik nam hem mee door RxJS en streams, het onderdeel dat hij het lastigst vond, en door het juiste gebruik van services. Bij Athlon begeleidde ik junior en senior developers op Angular, deed ik hun code reviews en liep ik de verbeteringen met ze door. Bij bol.com reviewde ik werk over teamgrenzen heen en haalde ik mensen erbij om een wijziging door te praten.",
                     "evidence": "Belastingdienst 2023 tot 2024, Athlon 2020 tot 2022, bol.com 2025 tot 2026",
                     "article": { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals of RxJS in Angular, in een artikel" }
                 },
                 {
                     "title": "Ontwerpfouten komen boven tafel terwijl het werk nog loopt",
-                    "body": "Ik praat met de product owner en de ontwerper terwijl het werk nog openligt. Ontwerpfouten en betere opties komen zo boven tafel als er nog makkelijk iets aan te doen is. Bij bol.com werd dat overleg met de ontwerper en het businessteam negen A/B-experimenten, die ik in code bouwde en in de experimenteertool inrichtte.",
-                    "evidence": "bol.com, Loyalty en Digital, 2025 tot 2026"
+                    "body": "Ik praat met de product owner en de ontwerper terwijl het werk nog openligt. Ontwerpfouten en betere opties komen zo naar voren op het moment dat er nog makkelijk iets aan te doen is. Bij bol.com werd dat overleg met de ontwerper en het businessteam negen A/B-experimenten, die ik in code bouwde en in de experimenteertool inrichtte.",
+                    "evidence": "bol.com 2025 tot 2026"
                 },
                 {
-                    "title": "Als het af moet, neem ik het op me",
-                    "body": "Eigenaarschap blijkt uit wat iemand oppakt als het werk niet netjes binnen de functietitel valt. Bij de Belastingdienst moest het formulierenplatform live, dus pakte ik de backend-endpoints er ook bij. Bij bol.com las ik de oude Java om de specificatie eruit te halen en bouwde ik de pagina's opnieuw in React. Het GraphQL-contract stemde ik af met de backend-engineers, en waar de capaciteit krap was schreef ik backendlogica in Kotlin. De Belastingdienst verlengde de opdracht vier keer, bol.com drie keer.",
-                    "evidence": "Belastingdienst 2023 tot 2024, bol.com 2025 tot 2026"
+                    "title": "Wat tussen de rollen in valt, komt toch af",
+                    "body": "Bij de Belastingdienst moest het formulierenplatform live, dus pakte ik de backend-endpoints er ook bij. Bij bol.com las ik de code van de Java-webshop om de specificatie eruit te halen en bouwde ik de pagina's opnieuw in React. Het GraphQL-contract stemde ik af met de backend-engineers, en waar de capaciteit krap was schreef ik backendlogica in Kotlin.",
+                    "evidence": "Belastingdienst 2023 tot 2024, vier keer verlengd · bol.com 2025 tot 2026, drie keer verlengd"
                 }
             ]
         },
         "standards": {
-            "title": "Wat ik nooit weglaat",
+            "title": "Wat er op papier staat",
+            "eyebrow": "Het dossier",
+            "subtitle": "Voor wie het wil nakijken: de certificaten, de norm per opdracht en de training, bij naam genoemd.",
             "cards": [
                 {
-                    "title": "Security",
-                    "body": "Bij Certified Secure volgde ik het volledige securitycurriculum voor engineers, live en hands-on. Dat loopt van essential security tot web- en serversecurityspecialist, plus secure development, full-stack security en Kubernetes-netwerksecurity, met training over de AVG en de EU AI Act."
+                    "title": "Certified Secure",
+                    "body": "Bij bol.com volgde ik het volledige securitycurriculum voor engineers van Certified Secure, live en hands-on. De certificaten: Essential Security, Essential Specialties, Security Specialist, Web Security Specialist en Server Security Specialist. Daarbij de trainingen Secure Development, Full-Stack Security en Kubernetes-netwerksecurity."
                 },
                 {
-                    "title": "Toegankelijkheid en privacy",
-                    "body": "Toegankelijkheid hoort bij het bouwen zelf en niet bij een fase aan het eind. WCAG 2.1 AA op de opdrachten van 2020 tot 2024, en 2.2 AA bij bol.com. AVG-training over persoonsgegevens en kennis van de EU AI Act horen erbij."
+                    "title": "WCAG per opdracht",
+                    "body": "Athlon, de Nationale Postcode Loterij en de Belastingdienst leverde ik op WCAG 2.1 AA, bol.com op 2.2 AA. Toetsenbord, focus, contrast en schermlezer horen bij elk component dat live gaat."
                 },
                 {
-                    "title": "Verificatie en overdracht",
-                    "body": "Componenten gaan live met unittests en componenttests in Vitest en Testing Library, end-to-endchecks in Playwright en een Storybook-story per scenario, zodat de volgende ontwikkelaar elke toestand kan zien. Wat ik bouw draag ik schriftelijk over, zodat een team het zonder mij draaiende houdt."
+                    "title": "Privacy en AI",
+                    "body": "Bij dezelfde reeks hoorden de training Protecting PII, over persoonsgegevens onder de AVG, en de training over de EU AI Act en AI-geletterdheid. Wat een formulier of een account aan persoonsgegevens vraagt, bekijk ik met die bril."
                 }
             ]
         },
         "map": {
-            "contactLine": "De Randstad, één tot twee dagen op locatie, of volledig remote."
+          "eyebrow": "In het land",
+          "title": "Waar het werk gebeurde, en waar het kan gebeuren",
+          "subtitle": "Het werk bracht me bij {companies} bedrijven in {cities} steden en {provinces} provincies.",
+          "period": "{from} tot {to}",
+          "workMode": {
+            "remote": "Remote",
+            "onSite": "Op locatie",
+            "hybrid": "Hybride"
+          },
+          "mapAriaLabel": "Interactieve kaart van Nederland met werklocaties",
+          "legend": {
+            "home": "Thuisbasis",
+            "city": "Werksteden",
+            "highlighted": "Provincies waar ik werkte",
+            "company": "bedrijf",
+            "companies": "bedrijven"
+          },
+          "tapLocation": "Kies een stad om te zien wat ik daar deed"
+        },
+        "hiring": {
+          "eyebrow": "Praktisch",
+          "title": "Wat je nodig hebt om me in te huren",
+          "intro": "Ik ben Hilmar van der Veen. Sinds 2016 werk ik aan de voorkant van grote webplatformen, nu bij bol.com en daarvoor bij onder meer de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular zijn het dagelijkse werk, met TypeScript, GraphQL en toegankelijkheid eromheen.",
+          "facts": [
+            {
+              "label": "Beschikbaar",
+              "value": "Vanaf 1 oktober 2026",
+              "detail": "Eerder in overleg"
+            },
+            {
+              "label": "Werkvorm",
+              "value": "De Randstad, hybride of remote",
+              "detail": "Eén tot twee dagen op locatie werkt goed"
+            },
+            {
+              "label": "Bedrijf",
+              "value": "{company}",
+              "detail": "KVK {kvk}, {city}"
+            },
+            {
+              "label": "Contractvorm",
+              "value": "Freelance, ZZP",
+              "detail": "32 tot 40 uur per week, zes maanden of langer"
+            },
+            {
+              "label": "Talen",
+              "value": "Nederlands en Engels",
+              "detail": "Moedertaal en vloeiend"
+            },
+            {
+              "label": "Opleiding",
+              "value": "BSc Natuur- en Sterrenkunde",
+              "detail": "Universiteit van Amsterdam"
+            }
+          ],
+          "cv": "CV downloaden",
+          "linkedin": "LinkedIn",
+          "rateLink": "Tarief, in de veelgestelde vragen"
         },
         "cta": {
             "title": "Kijk of ik bij je team pas",
-            "description": "Freelance via Hilmar ICT Services, KVK 97564303, vanaf 1 oktober 2026 en eerder in overleg. 32 tot 40 uur per week, zes maanden of langer, in het Nederlands of het Engels. Een gesprek van dertig minuten is genoeg om te weten of het past.",
-            "button": "Plan een gesprek van 30 minuten"
+            "description": "Vertel waar jullie staan en welke pagina er aan de beurt is. Ik zeg wat ik zou doen, wat ik zou laten en waar ik de risico's zie. Dertig minuten is daar genoeg voor.",
+            "button": "Plan een gesprek van 30 minuten",
+            "alternativeLead": "Schrijven mag ook.",
+            "alternativeLink": "Naar het contactformulier"
         }
     },
     "footer": {
