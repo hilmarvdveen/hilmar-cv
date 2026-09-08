@@ -1,3 +1,5 @@
+import { MINIMUM_NOTICE_MINUTES, lastSlotStartMinutes } from "./schedule";
+
 export const BOOKING_TIMEZONE = "Europe/Amsterdam";
 
 const INTL_LOCALES: Record<string, string> = {
@@ -77,4 +79,41 @@ export function formatSlotTime(iso: string): string {
     minute: "2-digit",
     timeZone: BOOKING_TIMEZONE,
   }).format(moment);
+}
+
+const bookingClockFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: BOOKING_TIMEZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+function bookingClockParts(instant: Date): Record<string, string> {
+  const parts: Record<string, string> = {};
+  for (const part of bookingClockFormatter.formatToParts(instant)) parts[part.type] = part.value;
+  return parts;
+}
+
+export function bookingDateKey(instant: Date): string {
+  const parts = bookingClockParts(instant);
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+export function bookingWallClockMinutes(instant: Date): number {
+  const parts = bookingClockParts(instant);
+  return Number(parts.hour) * 60 + Number(parts.minute);
+}
+
+export function firstBookableDay(now: Date): string {
+  const todayKey = bookingDateKey(now);
+  const today = fromDateKey(todayKey);
+  const todayStillHasTimes =
+    isWorkingDay(today) &&
+    bookingWallClockMinutes(now) + MINIMUM_NOTICE_MINUTES <= lastSlotStartMinutes();
+  if (todayStillHasTimes) return todayKey;
+  const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  return getUpcomingWorkingDays(tomorrow, 1)[0];
 }

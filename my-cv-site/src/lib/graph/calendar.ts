@@ -1,9 +1,7 @@
 import { Client } from "@microsoft/microsoft-graph-client";
+import { SLOT_MINUTES, SLOTS_PER_DAY, WORKDAY_START_HOUR } from "@/lib/booking/schedule";
 
 export const BOOKING_TIMEZONE = "Europe/Amsterdam";
-const SLOT_MINUTES = 30;
-const SLOTS_PER_DAY = 16;
-const WORKDAY_START_HOUR = 9;
 const REMINDER_MINUTES_BEFORE_START = 60;
 
 export type CalendarEvent = {

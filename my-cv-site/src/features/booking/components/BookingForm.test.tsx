@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BookingForm } from "./BookingForm";
 import { BookingFormProvider } from "../context/BookingFormContext";
-import { formatLongDate, getUpcomingWorkingDays } from "@/lib/booking";
+import { formatLongDate, firstBookableDay } from "@/lib/booking";
 
 const RAW_ARRAYS: Record<string, string[]> = {
   expectations: ["Thirty minutes, technical and concrete."],
@@ -18,7 +18,7 @@ vi.mock("next-intl", () => {
   return { useTranslations: () => t, useLocale: () => "en" };
 });
 
-const FIRST_DAY = getUpcomingWorkingDays(new Date(), 1)[0];
+const FIRST_DAY = firstBookableDay(new Date());
 const SLOT_ONE = `${FIRST_DAY}T07:00:00.000Z`;
 const SLOT_TWO = `${FIRST_DAY}T07:30:00.000Z`;
 

@@ -9,8 +9,12 @@ events the flow emits.
 
 Three steps, in this order:
 
-1. **Pick a moment.** The next ten working days as buttons, the first one
-   pre-selected so times are on screen without a click. Times render as a grid
+1. **Pick a moment.** Ten working days as buttons, starting at the first
+   day that can still be booked: today until 15:30 Amsterdam time (the
+   last slot at 16:30 minus the one-hour notice), otherwise the next
+   working day (since 8 September 2026, after a late-evening visit showed
+   an empty grid). The first one is pre-selected so times are on screen
+   without a click. Times render as a grid
    of buttons. "Pick another date" reveals a native date input for anything
    further out (up to 90 days).
 2. **Your details.** Name and email address (required), company and topic
@@ -203,7 +207,7 @@ above. State the expected effect before shipping, then compare.
 
 | # | Hypothesis | What changed | Metric | Expected |
 |---|---|---|---|---|
-| H1 | Showing times without a click raises step 1 completion | First working day is pre-selected on load | step 1 to step 2 conversion | up |
+| H1 | Showing times without a click raises step 1 completion | First bookable day is pre-selected on load (today is skipped after 15:30) | step 1 to step 2 conversion | up |
 | H2 | Two required fields instead of six raise details completion | Service, engagement type, budget, phone and description are gone | step 2 to step 3 conversion | up |
 | H3 | An always-enabled Next with scroll-and-focus lowers abandonment on errors | Disabled button replaced by direct feedback | `booking_validation_error` followed by `booking_step_view` of the next step, within the session | up |
 | H4 | A fixed-height time grid lowers mis-taps and back-and-forth | Skeleton, empty, failed and ready states share one box | `booking_day_selected` per session | down |

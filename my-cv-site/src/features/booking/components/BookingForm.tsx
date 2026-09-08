@@ -34,6 +34,8 @@ import {
   validateDetails,
   type DetailsErrors,
   type DetailsField,
+  firstBookableDay,
+  fromDateKey,
 } from "@/lib/booking";
 import {
   useBookingForm,
@@ -115,7 +117,10 @@ export const BookingForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const stickyBarRef = useRef<HTMLDivElement>(null);
 
-  const workingDays = useMemo(() => getUpcomingWorkingDays(new Date(), VISIBLE_DAYS), []);
+  const workingDays = useMemo(
+    () => getUpcomingWorkingDays(fromDateKey(firstBookableDay(new Date())), VISIBLE_DAYS),
+    []
+  );
   const todayKey = useMemo(() => toDateKey(new Date()), []);
   const furthestKey = useMemo(
     () => toDateKey(addDays(new Date(), FURTHEST_BOOKING_DAYS)),

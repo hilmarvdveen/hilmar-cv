@@ -9,6 +9,9 @@ import {
   formatLongDate,
   formatShortDate,
   formatSlotTime,
+  firstBookableDay,
+  bookingDateKey,
+  bookingWallClockMinutes,
 } from "./dates";
 
 describe("date keys", () => {
@@ -73,5 +76,31 @@ describe("formatting", () => {
     expect(formatSlotTime("2026-01-15T08:00:00.000Z")).toBe("09:00");
     expect(formatSlotTime("")).toBe("");
     expect(formatSlotTime("not a moment")).toBe("");
+  });
+});
+
+describe("firstBookableDay", () => {
+  it("keeps today while the last slot is still a full notice window away", () => {
+    expect(firstBookableDay(new Date("2026-09-08T13:30:00Z"))).toBe("2026-09-08");
+  });
+
+  it("moves to the next working day once the last slot falls inside the notice window", () => {
+    expect(firstBookableDay(new Date("2026-09-08T13:31:00Z"))).toBe("2026-09-09");
+  });
+
+  it("moves a Friday evening to Monday", () => {
+    expect(firstBookableDay(new Date("2026-09-11T16:00:00Z"))).toBe("2026-09-14");
+  });
+
+  it("moves a weekend to Monday", () => {
+    expect(firstBookableDay(new Date("2026-09-12T08:00:00Z"))).toBe("2026-09-14");
+    expect(firstBookableDay(new Date("2026-09-13T08:00:00Z"))).toBe("2026-09-14");
+  });
+
+  it("reads the day and the clock in Amsterdam time, not in UTC", () => {
+    const halfPastMidnightTuesday = new Date("2026-09-07T22:30:00Z");
+    expect(bookingDateKey(halfPastMidnightTuesday)).toBe("2026-09-08");
+    expect(bookingWallClockMinutes(halfPastMidnightTuesday)).toBe(30);
+    expect(firstBookableDay(halfPastMidnightTuesday)).toBe("2026-09-08");
   });
 });

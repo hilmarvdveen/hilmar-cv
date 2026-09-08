@@ -8,10 +8,11 @@ import {
   BOOKING_TIMEZONE,
 } from "@/lib/graph";
 import { serverErrorResponse, enforceRateLimit } from "@/lib/security";
+import { MINIMUM_NOTICE_MINUTES } from "@/lib/booking/schedule";
 
 export const runtime = "nodejs";
 
-const MINIMUM_NOTICE_MILLISECONDS = 60 * 60 * 1000;
+const MINIMUM_NOTICE_MILLISECONDS = MINIMUM_NOTICE_MINUTES * 60 * 1000;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
