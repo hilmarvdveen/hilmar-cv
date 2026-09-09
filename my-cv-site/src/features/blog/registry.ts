@@ -15,6 +15,7 @@ import { meta as accessibilityMeta, Body as AccessibilityBody } from "./componen
 import { meta as javaApiMeta, Body as JavaApiBody } from "./components/JavaApiPost";
 import { meta as kotlinApiMeta, Body as KotlinApiBody } from "./components/KotlinApiPost";
 import { meta as dockerApisMeta, Body as DockerApisBody } from "./components/DockerApisPost";
+import { meta as stateWithoutStoreMeta, Body as StateWithoutStoreBody } from "./components/StateWithoutStorePost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -33,6 +34,7 @@ const POSTS: BlogPost[] = [
   { ...javaApiMeta, track: "backend", Body: JavaApiBody },
   { ...kotlinApiMeta, track: "backend", Body: KotlinApiBody },
   { ...dockerApisMeta, track: "fullstack", Body: DockerApisBody },
+  { ...stateWithoutStoreMeta, track: "frontend", Body: StateWithoutStoreBody },
 ];
 
 const featuredFirst = (first: BlogPost, second: BlogPost) => Number(second.featured ?? false) - Number(first.featured ?? false);

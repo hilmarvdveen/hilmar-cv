@@ -4,15 +4,19 @@ import { Link } from "@/i18n/navigation";
 import { CaseSchematic } from "@/components/CaseSchematic";
 import { mergeClasses } from "@/lib/mergeClasses";
 
+type ValueArticle = { href: string; label: string };
+
 type ValueBlock = {
   title: string;
   body: string;
   evidence: string;
-  article?: { href: string; label: string };
+  articles?: ValueArticle[];
 };
 
+const ARTICLE_LIST_CLASS = "mt-3 flex flex-col items-start gap-1.5";
+
 const ARTICLE_LINK_CLASS =
-  "mt-3 inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 const blockNumber = (index: number) => String(index + 1).padStart(2, "0");
 
@@ -43,15 +47,20 @@ export const AboutValueList = () => {
               <Check className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               {block.evidence}
             </p>
-            {block.article && (
-              <Link
-                href={block.article.href}
-                data-placement="about-mentoring-article"
-                className={ARTICLE_LINK_CLASS}
-              >
-                {block.article.label}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+            {block.articles && (
+              <div className={ARTICLE_LIST_CLASS}>
+                {block.articles.map((article) => (
+                  <Link
+                    key={article.href}
+                    href={article.href}
+                    data-placement="about-mentoring-article"
+                    className={ARTICLE_LINK_CLASS}
+                  >
+                    {article.label}
+                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
             )}
             {index === 0 && (
               <figure className="mt-6 hidden sm:flex flex-col items-end">

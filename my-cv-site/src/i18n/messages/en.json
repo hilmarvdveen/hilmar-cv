@@ -1836,7 +1836,10 @@
                     "title": "Your developers learn something while I am there",
                     "body": "At the Belastingdienst a senior developer knew JavaScript and Vue but not Angular. I took him through RxJS and streams, the part he found hardest, and through the proper use of services. At Athlon I coached junior and senior developers on Angular, reviewed their code and worked through the improvements with them. At bol.com I reviewed work across team boundaries and called people in to talk a change through.",
                     "evidence": "Belastingdienst 2023 to 2024, Athlon 2020 to 2022, bol.com 2025 to 2026",
-                    "article": { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals or RxJS in Angular, in an article" }
+                    "articles": [
+                        { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals or RxJS in Angular, in an article" },
+                        { "href": "/blog/state-without-a-store-react-router-angular-graphql", "label": "What is left for a store when GraphQL brings the data, in an article" }
+                    ]
                 },
                 {
                     "title": "Design flaws come up while the work is still open",

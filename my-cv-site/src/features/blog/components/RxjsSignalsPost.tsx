@@ -648,8 +648,8 @@ const COPY = {
     nl: "De functie httpResource zit om HttpClient heen. Je geeft hem een functie die uit signals een verzoek samenstelt. Hij vraagt meteen op, hij vraagt opnieuw op zodra een afhankelijkheid verandert, en hij breekt het lopende verzoek daarbij af. Wat je terugkrijgt is een signal voor de waarde, een voor de laadstatus en een voor de fout.",
   },
   resource3: {
-    en: "The part people trip over is that a resource is documented as read only. Its value is derived from a request, so there is no setter waiting for your edit. That is a good constraint and it has a consequence. Every change to server state goes through HttpClient, which still returns an Observable in v22. Send the change, then reload the resource.",
-    nl: "Waar mensen over struikelen, is dat een resource gedocumenteerd staat als alleen-lezen. De waarde is afgeleid van een verzoek, dus er is geen setter die op jouw wijziging wacht. Dat is een goede beperking en die heeft een gevolg. Elke wijziging van serverstate gaat via HttpClient, die in v22 nog steeds een Observable teruggeeft. Stuur de wijziging en laad de resource daarna opnieuw.",
+    en: "The part people trip over is what the value of a resource is. It is a writable signal. Set it and the screen shows what you set, and the next request replaces it with what the server answered. A resource is the server's current answer, and a local write is a note on top of it until the next load, which is exactly what an optimistic update wants. A lasting change to server state still goes through HttpClient, which returns an Observable in v22. Send the change and reload the resource, or set the value first and let the reload confirm it. A component that should only read gets asReadonly().",
+    nl: "Waar mensen over struikelen, is wat de waarde van een resource is. Het is een schrijfbaar signal. Zet hem en het scherm toont wat je zette, en het volgende verzoek vervangt hem door wat de server antwoordde. Een resource is het huidige antwoord van de server, en een lokale schrijfactie is een notitie daarbovenop tot de volgende lading, en dat is precies wat een optimistische update wil. Een blijvende wijziging van serverstate gaat nog steeds via HttpClient, die in v22 een Observable teruggeeft. Stuur de wijziging en laad de resource opnieuw, of zet eerst de waarde en laat de herlading hem bevestigen. Een component dat alleen mag lezen, krijgt asReadonly().",
   },
   stableTitle: {
     en: "Check the version a snippet was written for",
@@ -664,8 +664,8 @@ const COPY = {
     nl: "linkedSignal, state die andere state volgt",
   },
   linked1: {
-    en: "The other half of that sample is linkedSignal, stable since v20, and it fills the gap a read-only resource leaves. You want a value that starts from loaded data, stays writable, and resets when the data it came from changes.",
-    nl: "De andere helft van dat voorbeeld is linkedSignal, stabiel sinds v20, en die vult het gat dat een alleen-lezen resource laat vallen. Je wilt een waarde die begint bij geladen gegevens, schrijfbaar blijft, en opnieuw begint zodra de gegevens waar hij vandaan komt veranderen.",
+    en: "The other half of that sample is linkedSignal, stable since v20, and it covers the value a resource cannot hold for you. You want something that starts from loaded data but is not that data, stays yours to edit, and resets when the data it came from changes.",
+    nl: "De andere helft van dat voorbeeld is linkedSignal, stabiel sinds v20, en die dekt de waarde die een resource niet voor je kan bewaren. Je wilt iets dat begint bij geladen gegevens maar die gegevens zelf niet is, schrijfbaar blijft, en opnieuw begint zodra de gegevens waar het vandaan komt veranderen.",
   },
   linked2: {
     en: "The everyday version of this is a select box. The status of a contract comes from the server, the user changes it in the form, and then the user opens a different contract. A computed cannot do it, because a computed is not writable. A signal plus an effect can do it, and that is the shape I keep flagging in review, because the effect writes state on a schedule the reader cannot see. A linkedSignal says the same thing in one declaration: here is my source, here is how I compute a value from it, and the previous value is available while I do.",

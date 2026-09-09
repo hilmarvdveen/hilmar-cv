@@ -8,10 +8,16 @@ const blocks = [
     title: "Block two",
     body: "Body two",
     evidence: "Evidence two",
-    article: {
-      href: "/blog/rxjs-versus-signals-in-angular",
-      label: "Article two",
-    },
+    articles: [
+      {
+        href: "/blog/rxjs-versus-signals-in-angular",
+        label: "Article two",
+      },
+      {
+        href: "/blog/state-without-a-store-react-router-angular-graphql",
+        label: "Article three",
+      },
+    ],
   },
   { title: "Block three", body: "Body three", evidence: "Evidence three" },
   { title: "Block four", body: "Body four", evidence: "Evidence four" },
@@ -70,16 +76,23 @@ describe("AboutValueList", () => {
     }
   });
 
-  it("links the article only from the block that names one", () => {
+  it("links every article of the block that names them, and no other block", () => {
     render(<AboutValueList />);
     const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(1);
+    expect(links).toHaveLength(2);
     expect(links[0]).toHaveAccessibleName("Article two");
     expect(links[0]).toHaveAttribute(
       "href",
       "/blog/rxjs-versus-signals-in-angular"
     );
-    expect(links[0]).toHaveAttribute("data-placement", "about-mentoring-article");
+    expect(links[1]).toHaveAccessibleName("Article three");
+    expect(links[1]).toHaveAttribute(
+      "href",
+      "/blog/state-without-a-store-react-router-angular-graphql"
+    );
+    for (const link of links) {
+      expect(link).toHaveAttribute("data-placement", "about-mentoring-article");
+    }
   });
 
   it("draws the ramp once, with its caption as text", () => {

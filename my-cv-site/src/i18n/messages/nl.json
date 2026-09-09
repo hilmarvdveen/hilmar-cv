@@ -2200,7 +2200,10 @@
                     "title": "Je ontwikkelaars leren er iets bij terwijl ik er ben",
                     "body": "Bij de Belastingdienst kende een senior developer JavaScript en Vue, maar geen Angular. Ik nam hem mee door RxJS en streams, het onderdeel dat hij het lastigst vond, en door het juiste gebruik van services. Bij Athlon begeleidde ik junior en senior developers op Angular, deed ik hun code reviews en liep ik de verbeteringen met ze door. Bij bol.com reviewde ik werk over teamgrenzen heen en haalde ik mensen erbij om een wijziging door te praten.",
                     "evidence": "Belastingdienst 2023 tot 2024, Athlon 2020 tot 2022, bol.com 2025 tot 2026",
-                    "article": { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals of RxJS in Angular, in een artikel" }
+                    "articles": [
+                        { "href": "/blog/rxjs-versus-signals-in-angular", "label": "Signals of RxJS in Angular, in een artikel" },
+                        { "href": "/blog/state-without-a-store-react-router-angular-graphql", "label": "Wat een store nog doet als GraphQL de data levert, in een artikel" }
+                    ]
                 },
                 {
                     "title": "Ontwerpfouten komen boven tafel terwijl het werk nog loopt",
