@@ -20,6 +20,14 @@ const tiers = [
   },
 ];
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
+}));
+
 vi.mock("next-intl", () => ({
   useTranslations: () => {
     const t = ((key: string) => key) as ((key: string) => string) & {
@@ -71,6 +79,16 @@ describe("StackSection", () => {
     const heading = screen.getByRole("heading", { name: "title" });
     expect(section).toHaveAttribute("aria-labelledby", "stack-heading");
     expect(heading).toHaveAttribute("id", "stack-heading");
+  });
+
+  it("offers the federation article as the one entrance from this section", () => {
+    render(<StackSection />);
+    const article = screen.getByRole("link", { name: "link" });
+    expect(article).toHaveAttribute(
+      "href",
+      "/blog/apollo-federation-in-production-by-building-one"
+    );
+    expect(article).toHaveAttribute("data-placement", "home-stack-article");
   });
 
   it("renders the pills as fill-only, without a border, so they read as read-only tags", () => {

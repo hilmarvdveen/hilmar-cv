@@ -17,6 +17,7 @@ import { meta as kotlinApiMeta, Body as KotlinApiBody } from "./components/Kotli
 import { meta as dockerApisMeta, Body as DockerApisBody } from "./components/DockerApisPost";
 import { meta as stateWithoutStoreMeta, Body as StateWithoutStoreBody } from "./components/StateWithoutStorePost";
 import { meta as sessionsAndJwtMeta, Body as SessionsAndJwtBody } from "./components/SessionsAndJwtPost";
+import { meta as federationMeta, Body as FederationBody } from "./components/FederationPost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -37,6 +38,7 @@ const POSTS: BlogPost[] = [
   { ...dockerApisMeta, track: "fullstack", Body: DockerApisBody },
   { ...stateWithoutStoreMeta, track: "frontend", Body: StateWithoutStoreBody },
   { ...sessionsAndJwtMeta, track: "fullstack", Body: SessionsAndJwtBody },
+  { ...federationMeta, track: "backend", Body: FederationBody },
 ];
 
 const featuredFirst = (first: BlogPost, second: BlogPost) => Number(second.featured ?? false) - Number(first.featured ?? false);

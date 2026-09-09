@@ -239,7 +239,8 @@
                     ]
                 }
             ],
-            "footnote": "The full list is on the services pages and in the downloadable CV."
+            "footnote": "The full list is on the services pages and in the downloadable CV.",
+            "link": "How one GraphQL schema covers five services, in an article"
         },
         "hiring": {
             "title": "Everything you need to contract me, on one screen",

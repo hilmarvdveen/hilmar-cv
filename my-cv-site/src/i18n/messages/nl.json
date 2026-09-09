@@ -239,7 +239,8 @@
                     ]
                 }
             ],
-            "footnote": "De volledige lijst staat op de dienstenpagina's en in het downloadbare CV."
+            "footnote": "De volledige lijst staat op de dienstenpagina's en in het downloadbare CV.",
+            "link": "Hoe één GraphQL-schema vijf services dekt, in een artikel"
         },
         "hiring": {
             "title": "Alles wat je nodig hebt om me in te huren, op één scherm",

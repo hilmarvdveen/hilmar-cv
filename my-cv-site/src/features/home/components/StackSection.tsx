@@ -1,7 +1,13 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { SectionTitle } from "@/components/SectionTitle";
+
+const FEDERATION_POST_HREF = "/blog/apollo-federation-in-production-by-building-one";
+
+const ARTICLE_LINK_CLASS =
+  "inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 type StackTier = {
   label: string;
@@ -50,6 +56,15 @@ export const StackSection = () => {
           ))}
         </div>
         <p className="text-sm text-gray-500 mt-8">{t("footnote")}</p>
+        <p className="mt-3 text-sm text-gray-600">
+          <Link
+            href={FEDERATION_POST_HREF}
+            data-placement="home-stack-article"
+            className={ARTICLE_LINK_CLASS}
+          >
+            {t("link")}
+          </Link>
+        </p>
       </Container>
     </Section>
   );
