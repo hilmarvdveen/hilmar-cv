@@ -6,6 +6,8 @@ describe("buildBlogLabels", () => {
     const labels = buildBlogLabels((key) => `t:${key}`);
     expect(labels.eyebrow).toBe("t:eyebrow");
     expect(labels.indexTitle).toBe("t:index.title");
+    expect(labels.repositoryNote).toBe("t:index.repository");
+    expect(labels.repositoryLinkLabel).toBe("t:index.repositoryLink");
     expect(labels.minRead).toBe("t:minRead");
     expect(labels.category.architecture).toBe("t:category.architecture");
     expect(labels.category.fundamentals).toBe("t:category.fundamentals");

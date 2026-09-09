@@ -71,12 +71,21 @@ export function InlineCode({ children }: { children: ReactNode }) {
   );
 }
 
-export function A({ href, children }: { href: string; children: ReactNode }) {
+export function A({
+  href,
+  placement,
+  children,
+}: {
+  href: string;
+  placement?: string;
+  children: ReactNode;
+}) {
   const external = /^https?:\/\//.test(href);
   return (
     <a
       href={href}
       className="font-medium text-primary underline decoration-emerald-300 underline-offset-2 hover:text-emerald-900"
+      {...(placement ? { "data-placement": placement } : {})}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       {children}

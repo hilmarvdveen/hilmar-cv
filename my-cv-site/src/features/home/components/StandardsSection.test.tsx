@@ -76,4 +76,14 @@ describe("StandardsSection", () => {
     expect(link).toHaveAttribute("href", "/blog/unit-testing-react-the-right-way");
     expect(link).toHaveAttribute("data-placement", "home-standards-article");
   });
+
+  it("links to the session article under the columns", () => {
+    render(<StandardsSection />);
+    const link = screen.getByRole("link", { name: "securityLink" });
+    expect(link).toHaveAttribute(
+      "href",
+      "/blog/sessions-and-jwt-one-design-built-seven-times"
+    );
+    expect(link).toHaveAttribute("data-placement", "home-standards-article");
+  });
 });

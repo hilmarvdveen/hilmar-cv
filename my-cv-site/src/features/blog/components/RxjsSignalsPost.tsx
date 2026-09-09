@@ -5,6 +5,7 @@ import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
 import { FlowDiagram } from "./FlowDiagram";
 import { Contents } from "./Contents";
+import { PostRepository } from "./PostRepository";
 import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
@@ -86,6 +87,7 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro2[locale]}</P>
       <P>{copy.versionNote[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
+      <PostRepository locale={locale} folders={["frontends/angular"]} />
       <Contents
         label={copy.contentsLabel[locale]}
         items={[

@@ -13,6 +13,8 @@ const labels: BlogLabels = {
   eyebrow: "Blog",
   indexTitle: "All articles",
   indexSubtitle: "Things I have written",
+  repositoryNote: "The backend and fullstack articles run on one public repository:",
+  repositoryLinkLabel: "hilmarvdveen/zappy-mart",
   minRead: "min read",
   publishedOn: "Published",
   updatedOn: "Updated",
@@ -100,6 +102,27 @@ describe("BlogIndex", () => {
     render(<BlogIndex posts={posts} locale="en" labels={labels} />);
     expect(screen.queryByRole("heading", { name: "Backend group" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "Frontend group" })).toBeInTheDocument();
+  });
+
+  it("points at the public repository once, from the hero", () => {
+    render(<BlogIndex posts={posts} locale="en" labels={labels} />);
+    const repositoryLinks = screen.getAllByRole("link", {
+      name: "hilmarvdveen/zappy-mart",
+    });
+    expect(repositoryLinks).toHaveLength(1);
+    expect(repositoryLinks[0]).toHaveAttribute(
+      "href",
+      "https://github.com/hilmarvdveen/zappy-mart"
+    );
+    expect(repositoryLinks[0]).toHaveAttribute(
+      "data-placement",
+      "blog-index-repository"
+    );
+    expect(repositoryLinks[0]).toHaveAttribute("target", "_blank");
+    expect(repositoryLinks[0]).toHaveAttribute("rel", "noopener noreferrer");
+    expect(
+      screen.getByText(/The backend and fullstack articles run on one public repository/)
+    ).toBeInTheDocument();
   });
 
   it("closes with the site's one booking call to action", () => {

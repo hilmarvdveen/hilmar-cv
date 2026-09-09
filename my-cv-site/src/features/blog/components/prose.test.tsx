@@ -30,6 +30,9 @@ describe("prose primitives", () => {
         </P>
         <A href="/internal">internal link</A>
         <A href="https://example.com">external link</A>
+        <A href="https://example.com/labelled" placement="post-repository">
+          labelled link
+        </A>
         <Quote>a quote</Quote>
         <Divider />
       </div>
@@ -40,6 +43,10 @@ describe("prose primitives", () => {
     expect(screen.getByText("Non String").closest("h2")?.id).toBe("");
     expect(screen.getByText("external link").getAttribute("target")).toBe("_blank");
     expect(screen.getByText("internal link").getAttribute("target")).toBeNull();
+    expect(screen.getByText("external link").getAttribute("data-placement")).toBeNull();
+    expect(screen.getByText("labelled link").getAttribute("data-placement")).toBe(
+      "post-repository"
+    );
     expect(screen.getByText("code()")).toBeInTheDocument();
   });
 });

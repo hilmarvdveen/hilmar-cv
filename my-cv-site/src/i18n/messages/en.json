@@ -170,6 +170,7 @@
                 }
             ],
             "link": "How I test, in an article",
+            "securityLink": "How I build a session, in an article",
             "subtitle": "The security review, the accessibility audit and the handover all arrive at some point. This part is already done when they do."
         },
         "validation": {
@@ -2360,7 +2361,9 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Engineering, in depth",
-            "subtitle": "Articles with examples in three groups: frontend (React, Angular, testing, SEO), fullstack (the contract with the backend) and backend (C#, Kotlin, Java)."
+            "subtitle": "Articles with examples in three groups: frontend (React, Angular, testing, SEO), fullstack (the contract with the backend) and backend (C#, Kotlin, Java).",
+            "repository": "The backend and fullstack articles run on one public repository:",
+            "repositoryLink": "hilmarvdveen/zappy-mart"
         },
         "minRead": "min read",
         "publishedOn": "Published",

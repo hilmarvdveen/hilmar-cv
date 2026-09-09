@@ -12,7 +12,14 @@ type StandardsColumn = {
 };
 
 const columnIcons = [Shield, Accessibility, ClipboardCheck];
-const TESTING_POST_HREF = "/blog/unit-testing-react-the-right-way";
+
+const ARTICLES = [
+  { href: "/blog/unit-testing-react-the-right-way", labelKey: "link" },
+  { href: "/blog/sessions-and-jwt-one-design-built-seven-times", labelKey: "securityLink" },
+];
+
+const ARTICLE_LINK_CLASS =
+  "inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
 export const StandardsSection = () => {
   const t = useTranslations("home.standards");
@@ -38,15 +45,19 @@ export const StandardsSection = () => {
             );
           })}
         </div>
-        <p className="mt-6 text-center text-sm text-gray-600">
-          <Link
-            href={TESTING_POST_HREF}
-            data-placement="home-standards-article"
-            className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-          >
-            {t("link")}
-          </Link>
-        </p>
+        <ul className="mt-6 flex flex-col items-center gap-2 text-sm text-gray-600">
+          {ARTICLES.map((article) => (
+            <li key={article.href}>
+              <Link
+                href={article.href}
+                data-placement="home-standards-article"
+                className={ARTICLE_LINK_CLASS}
+              >
+                {t(article.labelKey)}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Container>
     </Section>
   );

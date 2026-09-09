@@ -37,6 +37,8 @@ export type BlogLabels = {
   eyebrow: string;
   indexTitle: string;
   indexSubtitle: string;
+  repositoryNote: string;
+  repositoryLinkLabel: string;
   minRead: string;
   publishedOn: string;
   updatedOn: string;

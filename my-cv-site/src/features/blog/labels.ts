@@ -5,6 +5,8 @@ export function buildBlogLabels(t: (key: string) => string): BlogLabels {
     eyebrow: t("eyebrow"),
     indexTitle: t("index.title"),
     indexSubtitle: t("index.subtitle"),
+    repositoryNote: t("index.repository"),
+    repositoryLinkLabel: t("index.repositoryLink"),
     minRead: t("minRead"),
     publishedOn: t("publishedOn"),
     updatedOn: t("updatedOn"),

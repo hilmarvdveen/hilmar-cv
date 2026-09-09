@@ -170,6 +170,7 @@
                 }
             ],
             "link": "Hoe ik test, in een artikel",
+            "securityLink": "Hoe ik een sessie bouw, in een artikel",
             "subtitle": "De security-review, de toegankelijkheidsaudit en de overdracht komen er hoe dan ook. Dat werk is dan al gedaan."
         },
         "validation": {
@@ -2360,7 +2361,9 @@
         "eyebrow": "Blog",
         "index": {
             "title": "Engineering, tot in de details",
-            "subtitle": "Artikelen met voorbeelden in drie groepen: frontend (React, Angular, testen, SEO), fullstack (het contract met de backend) en backend (C#, Kotlin, Java)."
+            "subtitle": "Artikelen met voorbeelden in drie groepen: frontend (React, Angular, testen, SEO), fullstack (het contract met de backend) en backend (C#, Kotlin, Java).",
+            "repository": "De backend- en fullstack-artikelen draaien op één openbare repository:",
+            "repositoryLink": "hilmarvdveen/zappy-mart"
         },
         "minRead": "min lezen",
         "publishedOn": "Gepubliceerd",

@@ -5,6 +5,7 @@ import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
 import { FileTree, type FileNode } from "./FileTree";
 import { FlowDiagram } from "./FlowDiagram";
+import { PostRepository } from "./PostRepository";
 import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
@@ -94,6 +95,7 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro[locale]}</P>
       <P>{copy.versionNote[locale]}</P>
       <Quote>{copy.quote[locale]}</Quote>
+      <PostRepository locale={locale} folders={["frontends/react-router"]} />
 
       <H2>{copy.historyTitle[locale]}</H2>
       <P>{copy.history1[locale]}</P>

@@ -9,6 +9,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
 import type { BlogPost, BlogLabels, BlogTrack } from "../types";
 import { formatDate } from "../format";
+import { REPOSITORY_URL } from "../repository";
 
 type BlogIndexProps = {
   posts: BlogPost[];
@@ -24,6 +25,9 @@ type PostCardProps = {
 };
 
 const TRACK_ORDER: BlogTrack[] = ["frontend", "fullstack", "backend"];
+
+const REPOSITORY_LINK_CLASS =
+  "inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy";
 
 function PostCard({ post, locale, labels, featured }: PostCardProps) {
   const Heading = featured ? "h2" : "h3";
@@ -84,7 +88,20 @@ export function BlogIndex({ posts, locale, labels }: BlogIndexProps) {
         badge={labels.eyebrow}
         title={labels.indexTitle}
         description={labels.indexSubtitle}
-      />
+      >
+        <p className="text-sm text-slate-300">
+          {labels.repositoryNote}{" "}
+          <a
+            href={REPOSITORY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-placement="blog-index-repository"
+            className={REPOSITORY_LINK_CLASS}
+          >
+            {labels.repositoryLinkLabel}
+          </a>
+        </p>
+      </PageHero>
 
       <Section background="light" padding="default">
         <Container width="narrow">
