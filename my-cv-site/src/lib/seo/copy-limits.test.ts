@@ -2,6 +2,12 @@ import { describe, expect, it } from "vitest";
 import { SEOFactory } from "./factory";
 import type { Locale } from "./types/seo-types";
 import { META_LIMITS } from "./constants/meta-constants";
+import { brandedTitle } from "./alternates";
+import englishMessages from "@/i18n/messages/en.json";
+import dutchMessages from "@/i18n/messages/nl.json";
+
+const FIT_TITLE_LIMIT = 38;
+const DESCRIPTION_MINIMUM = 50;
 
 const pages = {
   homepage: (locale: Locale) => SEOFactory.homepage(locale),
@@ -37,6 +43,27 @@ describe("SEO copy stays inside the limits and the guardrails", () => {
       });
     }
   }
+
+  it("keeps the vacancy check title short enough for the brand suffix", () => {
+    for (const messages of [englishMessages, dutchMessages]) {
+      const title = messages.fit.meta.title;
+      const description = messages.fit.meta.description;
+      expect(title.length).toBeLessThanOrEqual(FIT_TITLE_LIMIT);
+      expect(brandedTitle(title).length).toBeLessThanOrEqual(META_LIMITS.TITLE.MAX);
+      expect(description.length).toBeGreaterThanOrEqual(DESCRIPTION_MINIMUM);
+      expect(description.length).toBeLessThanOrEqual(META_LIMITS.DESCRIPTION.MAX);
+      for (const pattern of bannedInCopy) {
+        expect(title).not.toMatch(pattern);
+        expect(description).not.toMatch(pattern);
+      }
+    }
+  });
+
+  it("keeps the rate out of the vacancy check copy", () => {
+    for (const messages of [englishMessages, dutchMessages]) {
+      expect(JSON.stringify(messages.fit)).not.toMatch(/€\s?\d/);
+    }
+  });
 
   it("gives every page a distinct title per locale", () => {
     for (const locale of ["nl", "en"] as Locale[]) {

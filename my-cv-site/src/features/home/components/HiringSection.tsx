@@ -77,6 +77,16 @@ export const HiringSection = () => {
               </div>
             ))}
           </div>
+          <p className="mt-6">
+            <Link
+              href="/fit"
+              className="inline-flex min-h-6 items-center gap-1.5 rounded-sm text-primary font-semibold text-sm underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              data-placement="hiring-fit"
+            >
+              {t("fitLink")}
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </p>
         </Card>
 
         <div className="mb-10">

@@ -243,6 +243,7 @@
             "link": "Hoe één GraphQL-schema vijf services dekt, in een artikel"
         },
         "hiring": {
+            "fitLink": "Check je vacature tegen mijn werkervaring",
             "title": "Alles wat je nodig hebt om me in te huren, op één scherm",
             "facts": [
                 {
@@ -506,7 +507,11 @@
             "Pnpm": "pnpm",
             "MSW": "MSW",
             "Urql": "urql",
-            "GqlTada": "gql.tada"
+            "GqlTada": "gql.tada",
+            "Terraform": "Terraform",
+            "Python": "Python",
+            "OpenIDConnect": "OpenID Connect",
+            "SpringBoot": "Spring Boot"
         },
         "bol": {
             "company": "bol.com",
@@ -963,6 +968,7 @@
             ]
         },
         "facts": {
+            "fitLink": "Heb je een vacature? Check hem tegen mijn werkervaring",
             "title": "De praktische gegevens",
             "items": [
                 {
@@ -2028,6 +2034,7 @@
         }
     },
     "breadcrumb": {
+        "fit": "Vacaturecheck",
         "label": "Kruimelpad",
         "home": "Home",
         "services": "Diensten",
@@ -2048,6 +2055,71 @@
         "search": "Zoeken",
         "experience": "Werkervaring",
         "regions": "Werkregio's"
+    },
+    "fit": {
+        "meta": {
+            "title": "Vacaturecheck op mijn werkervaring",
+            "description": "Plak een vacature en zie per eis wat mijn werkervaring bevat, met de opdracht die het laat zien. Daarna stel je er een vraag over."
+        },
+        "hero": {
+            "badge": "AI-assistent op mijn werkervaring",
+            "title": "Past deze vacature bij mijn werk?",
+            "description": "Plak de tekst van de vacature. Je ziet per eis wat mijn werkervaring bevat en welke opdracht dat laat zien. Daarna kun je er een vraag over stellen."
+        },
+        "disclosure": {
+            "title": "Hoe dit werkt",
+            "assistant": "Dit is een AI-assistent. Hij antwoordt uit mijn vastgelegde werkervaring en noemt bij elke regel de opdracht erbij.",
+            "processing": "De tekst van de vacature wordt gebruikt om het antwoord te schrijven en daarna niet bewaard."
+        },
+        "section": {
+            "title": "Plak de vacature",
+            "intro": "De hele tekst werkt, en alleen het stuk met de eisen werkt ook. De check duurt ongeveer een halve minuut."
+        },
+        "check": {
+            "form": {
+                "label": "Tekst van de vacature",
+                "hint": "Twintig tekens of meer. Het stuk met de eisen telt het zwaarst.",
+                "placeholder": "Plak de vacature hier",
+                "counter": "{characters} van {maximum} tekens",
+                "submit": "Check de vacature",
+                "checking": "Bezig met checken..."
+            },
+            "errors": {
+                "tooShort": "Plak iets meer van de vacature. Vanaf twintig tekens draait de check.",
+                "rateLimited": "Dat zijn veel checks in een minuut. Wacht een minuut, dan draait de volgende.",
+                "failed": "De check is nu even niet bereikbaar. Probeer het zo nog eens, of plan een gesprek, dan loop ik de vacature met je door."
+            },
+            "report": {
+                "title": "Wat de werkervaring laat zien",
+                "requirementsTitle": "Eis voor eis",
+                "technologiesTitle": "Jaren per technologie",
+                "verdicts": {
+                    "inRecord": "In de werkervaring",
+                    "partly": "Deels",
+                    "notInRecord": "Niet in de werkervaring"
+                },
+                "evidenceLabel": "Te zien bij",
+                "years": "{years, plural, one {# jaar} other {# jaar}}",
+                "empty": "De check las in deze tekst geen losse eisen. Plak het stuk met de eisen, dan volgt de lijst.",
+                "bookTitle": "Klopt dit met wat je zoekt?",
+                "bookText": "In dertig minuten lopen we de eisen samen door en hoor je waar ik het meeste toevoeg.",
+                "bookButton": "Plan een gesprek van 30 minuten"
+            },
+            "question": {
+                "title": "Stel een vraag over het resultaat",
+                "description": "Bijvoorbeeld hoeveel jaar React erin zit, of welke opdracht het dichtst bij deze rol ligt.",
+                "label": "Je vraag",
+                "placeholder": "Hoeveel jaar ervaring met GraphQL?",
+                "submit": "Stel de vraag",
+                "asking": "Bezig met antwoorden...",
+                "answerLabel": "Antwoord",
+                "errors": {
+                    "tooShort": "Schrijf de vraag iets voller. Vanaf vijf tekens werkt het.",
+                    "rateLimited": "Dat zijn veel vragen in een minuut. Wacht een minuut, dan draait de volgende.",
+                    "failed": "Het antwoord kwam er niet doorheen. Stel de vraag zo nog eens."
+                }
+            }
+        }
     },
     "search": {
         "title": "Zoeken",
@@ -2329,6 +2401,7 @@
         "quickLinks": {
             "title": "Snelle links",
             "items": {
+                "fit": "Vacaturecheck",
                 "regions": "Werkregio's",
                 "about": "Over mij",
                 "experience": "Werkervaring",

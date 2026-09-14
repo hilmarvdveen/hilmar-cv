@@ -3,6 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
+import { Link } from "@/i18n/navigation";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 type ContactFact = {
@@ -53,6 +54,15 @@ export const ContactHero = () => {
               </div>
             ))}
           </dl>
+          <p className="mt-6">
+            <Link
+              href="/fit"
+              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-emerald-300 underline underline-offset-4 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+              data-placement="contact-facts-fit"
+            >
+              {t("facts.fitLink")}
+            </Link>
+          </p>
         </div>
       }
     />

@@ -16,6 +16,11 @@ describe("knownSocialCardTitles", () => {
     expect([...english].some((title) => title.endsWith("| bol.com"))).toBe(true);
   });
 
+  it("knows the vacancy check title in both locales", () => {
+    expect(isKnownSocialCardTitle("nl", "Vacaturecheck op mijn werkervaring")).toBe(true);
+    expect(isKnownSocialCardTitle("en", "Vacancy check on my work history")).toBe(true);
+  });
+
   it("accepts a real page title with the brand suffix and refuses a made-up claim", () => {
     const servicesTitle = String(SEOFactory.services("en").metadata.title);
     expect(isKnownSocialCardTitle("en", servicesTitle)).toBe(true);

@@ -243,6 +243,7 @@
             "link": "How one GraphQL schema covers five services, in an article"
         },
         "hiring": {
+            "fitLink": "Check your vacancy against my work history",
             "title": "Everything you need to contract me, on one screen",
             "facts": [
                 {
@@ -545,7 +546,11 @@
             "Pnpm": "pnpm",
             "MSW": "MSW",
             "Urql": "urql",
-            "GqlTada": "gql.tada"
+            "GqlTada": "gql.tada",
+            "Terraform": "Terraform",
+            "Python": "Python",
+            "OpenIDConnect": "OpenID Connect",
+            "SpringBoot": "Spring Boot"
         },
         "bol": {
             "company": "bol.com",
@@ -1002,6 +1007,7 @@
             ]
         },
         "facts": {
+            "fitLink": "Got a vacancy? Check it against my work history",
             "title": "The practical details",
             "items": [
                 {
@@ -2168,6 +2174,7 @@
         }
     },
     "breadcrumb": {
+        "fit": "Vacancy check",
         "label": "Breadcrumb",
         "home": "Home",
         "services": "Services",
@@ -2188,6 +2195,71 @@
         "search": "Search",
         "experience": "Work history",
         "regions": "Where I work"
+    },
+    "fit": {
+        "meta": {
+            "title": "Vacancy check on my work history",
+            "description": "Paste a vacancy and see per requirement what my work history holds, with the engagement that shows it. Then ask a question about the result."
+        },
+        "hero": {
+            "badge": "AI assistant on my work history",
+            "title": "Does this vacancy fit my work?",
+            "description": "Paste the text of the vacancy. You get, per requirement, what my work history holds and which engagement shows it. After that you can ask a question about the result."
+        },
+        "disclosure": {
+            "title": "How this works",
+            "assistant": "This is an AI assistant. It answers from my recorded work history and names the engagement behind every line.",
+            "processing": "The vacancy text is used to write the answer and is not kept afterwards."
+        },
+        "section": {
+            "title": "Paste the vacancy",
+            "intro": "The whole text works, and so does the requirements section on its own. The check takes about half a minute."
+        },
+        "check": {
+            "form": {
+                "label": "Vacancy text",
+                "hint": "Twenty characters or more. The requirements section is the part that counts most.",
+                "placeholder": "Paste the vacancy here",
+                "counter": "{characters} of {maximum} characters",
+                "submit": "Check the vacancy",
+                "checking": "Checking..."
+            },
+            "errors": {
+                "tooShort": "Paste a bit more of the vacancy. The check runs from twenty characters.",
+                "rateLimited": "That is a lot of checks in one minute. Wait a minute and the next one runs.",
+                "failed": "The check is not reachable right now. Try again in a moment, or book a call and I will walk through the vacancy with you."
+            },
+            "report": {
+                "title": "What the work history shows",
+                "requirementsTitle": "Requirement by requirement",
+                "technologiesTitle": "Years per technology",
+                "verdicts": {
+                    "inRecord": "In the record",
+                    "partly": "Partly",
+                    "notInRecord": "Not in the record"
+                },
+                "evidenceLabel": "Shown at",
+                "years": "{years, plural, one {# year} other {# years}}",
+                "empty": "The check read no separate requirements in this text. Paste the requirements section and the list follows.",
+                "bookTitle": "Does this match what you need?",
+                "bookText": "In thirty minutes we walk through the requirements together and you hear where I add the most.",
+                "bookButton": "Book a 30-minute call"
+            },
+            "question": {
+                "title": "Ask a question about the result",
+                "description": "For example how many years of React there are, or which engagement sits closest to this role.",
+                "label": "Your question",
+                "placeholder": "How many years of experience with GraphQL?",
+                "submit": "Ask the question",
+                "asking": "Answering...",
+                "answerLabel": "Answer",
+                "errors": {
+                    "tooShort": "Write the question a little fuller. Five characters is enough to start.",
+                    "rateLimited": "That is a lot of questions in one minute. Wait a minute and the next one runs.",
+                    "failed": "The answer did not come through. Ask it again in a moment."
+                }
+            }
+        }
     },
     "search": {
         "title": "Search",
@@ -2329,6 +2401,7 @@
         "quickLinks": {
             "title": "Quick links",
             "items": {
+                "fit": "Vacancy check",
                 "regions": "Where I work",
                 "about": "About me",
                 "experience": "Work history",

@@ -9,6 +9,7 @@ export const CLIENT_MESSAGE_KEYS = [
   "breadcrumb",
   "about.map",
   "search",
+  "fit.check",
 ] as const;
 
 const readPath = (source: Messages, path: string[]): unknown =>

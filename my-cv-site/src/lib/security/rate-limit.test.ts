@@ -18,11 +18,18 @@ function buildRequest(headers: Record<string, string> = {}) {
 }
 
 describe("getClientIp", () => {
-  it("uses the first x-forwarded-for entry", () => {
-    expect(getClientIp(buildRequest({ "x-forwarded-for": "203.0.113.7, 70.41.3.18" }))).toBe("203.0.113.7");
+  it("prefers x-real-ip, which the platform sets from the connection", () => {
+    expect(
+      getClientIp(buildRequest({ "x-real-ip": "198.51.100.2", "x-forwarded-for": "10.0.0.9, 203.0.113.7" }))
+    ).toBe("198.51.100.2");
   });
-  it("falls back to x-real-ip, then a default", () => {
-    expect(getClientIp(buildRequest({ "x-real-ip": "198.51.100.2" }))).toBe("198.51.100.2");
+  it("uses the last x-forwarded-for hop, the one the platform appended", () => {
+    expect(getClientIp(buildRequest({ "x-forwarded-for": "203.0.113.7, 70.41.3.18" }))).toBe("70.41.3.18");
+  });
+  it("ignores a caller-supplied hop that leaves the platform hop empty", () => {
+    expect(getClientIp(buildRequest({ "x-forwarded-for": "203.0.113.7, " }))).toBe("203.0.113.7");
+  });
+  it("falls back to a default without either header", () => {
     expect(getClientIp(buildRequest({}))).toBe("127.0.0.1");
   });
 });
@@ -72,6 +79,17 @@ describe("enforceRateLimit", () => {
     expect(response!.headers.get("Retry-After")).toBeTruthy();
     expect(response!.headers.get("X-RateLimit-Limit")).toBe(String(RATE_LIMITS.email.limit));
     expect((await response!.json()).error).toMatch(/too many requests/i);
+  });
+
+  it("gives the fit check ten requests a minute per address", () => {
+    expect(RATE_LIMITS.fit).toEqual({ limit: 10, windowMs: 60_000 });
+    const now = 8_000_000;
+    const makeRequest = () => buildRequest({ "x-real-ip": "5.5.5.5" });
+    for (let index = 0; index < RATE_LIMITS.fit.limit; index++) {
+      expect(enforceRateLimit(makeRequest(), "fit", now)).toBeNull();
+    }
+    const response = enforceRateLimit(makeRequest(), "fit", now);
+    expect(response!.status).toBe(429);
   });
 
   it("tracks limits per IP independently", () => {

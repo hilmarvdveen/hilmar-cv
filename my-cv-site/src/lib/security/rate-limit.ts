@@ -5,6 +5,7 @@ export type RateLimitRule = { limit: number; windowMs: number };
 export const RATE_LIMITS = {
   email: { limit: 5, windowMs: 60_000 },
   read: { limit: 30, windowMs: 60_000 }, // 30 requests / minute / IP
+  fit: { limit: 10, windowMs: 60_000 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;
@@ -12,9 +13,15 @@ export type RateLimitName = keyof typeof RATE_LIMITS;
 const store = new Map<string, number[]>();
 
 export function getClientIp(request: NextRequest): string {
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
   const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]!.trim();
-  return request.headers.get("x-real-ip") ?? "127.0.0.1";
+  if (forwarded) {
+    const hops = forwarded.split(",").map((hop) => hop.trim()).filter((hop) => hop !== "");
+    const lastHop = hops[hops.length - 1];
+    if (lastHop) return lastHop;
+  }
+  return "127.0.0.1";
 }
 
 export type RateLimitResult = {

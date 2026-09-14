@@ -142,6 +142,28 @@ const STATIC_ENTRIES: SearchEntry[] = [
     ],
   },
   {
+    href: "/fit",
+    kind: "page",
+    title: { en: "Vacancy check", nl: "Vacaturecheck" },
+    description: {
+      en: "Paste a vacancy and see per requirement what my work history holds, with the engagement that shows it.",
+      nl: "Plak een vacature en zie per eis wat mijn werkervaring bevat, met de opdracht die het laat zien.",
+    },
+    keywords: [
+      "vacature",
+      "vacancy",
+      "fit",
+      "match",
+      "check",
+      "eisen",
+      "requirements",
+      "recruiter",
+      "ai",
+      "assistent",
+      "assistant",
+    ],
+  },
+  {
     href: "/book",
     kind: "page",
     title: { en: "Book a consultation", nl: "Plan een gesprek" },

@@ -219,3 +219,38 @@ The sitemap holds 84 URLs, the search index has the city terms, the
 social card titles come from the `regions` namespace, and the entrances
 are the footer link, the homepage location fact, the map popup and the
 location row of every engagement page.
+
+## Declared modification dates (9 September 2026)
+
+`dateModified` is emitted only where a page or a post declares a real
+change of its own, which supersedes the build-date rule in the 5 September
+note above. The schema generator no longer holds a build constant, the
+thirteen engine pages stopped declaring the deploy moment as their
+`lastModified`, and the region pages dropped `NEXT_PUBLIC_BUILD_DATE` from
+their WebPage entity. `datePublished` stays wherever a page declares it, so
+a post keeps its publication date and gains `dateModified` only when it
+carries an `updatedDate`.
+
+## The vacancy fit check (13 September 2026)
+
+`/{locale}/fit` is an indexable page outside the SEO engine, so it builds
+its head the way `/experience` and the legal pages do:
+`brandedTitle(t("meta.title"))`, `localizedAlternates("fit", locale)` and
+`localizedOpenGraph("fit", locale, title, description)`. The title lives
+in the `fit` namespace and stays at or under 38 characters, so the brand
+suffix fits inside 60, and the description stays between 50 and 160.
+`copy-limits.test.ts` asserts both in both locales and asserts that no
+rate appears anywhere in the namespace.
+
+Structured data comes from `src/lib/seo/fitSchema.ts`: one `WebPage` with
+`isPartOf` the site entity and `about` the person entity, plus a two-item
+`BreadcrumbList` with the visible labels. The shared `Breadcrumb`
+component renders nothing for a single path segment, so the list is built
+in the schema and the page shows no crumb bar.
+
+The title is whitelisted in `socialCardTitles.ts`, otherwise `/api/og`
+answers 404 for the card. The page carries no `robots` override and is in
+the sitemap at priority 0.7. The required inbound link is the footer quick
+link, and the two further entrances are a text link in the homepage hiring
+section and one in the contact page's facts card. The search index has an
+entry with the Dutch and English vacancy terms.

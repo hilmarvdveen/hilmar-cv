@@ -42,4 +42,9 @@ describe("searchEntries with extra entries", () => {
     expect(searchEntries("utrecht", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/utrecht");
     expect(searchEntries("the hague", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/den-haag");
   });
+
+  it("finds the vacancy check in both languages", () => {
+    expect(searchEntries("vacature", "nl").map((entry) => entry.href)).toContain("/fit");
+    expect(searchEntries("vacancy", "en").map((entry) => entry.href)).toContain("/fit");
+  });
 });

@@ -24,7 +24,8 @@
     "check:sitemap": "node scripts/check-sitemap.mjs",
     "check:nonce": "node scripts/check-nonce.mjs",
     "check:type-scale": "node scripts/check-type-scale.mjs",
-    "check:reading-times": "node scripts/check-reading-times.mjs"
+    "check:reading-times": "node scripts/check-reading-times.mjs",
+    "export:seed": "node scripts/export-seed.mjs"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",

@@ -14,6 +14,7 @@ const messagesFor = (locale: Locale) =>
     work: Record<string, WorkEntryMessages | string>;
     experiencePage: { title: string };
     search: { title: string };
+    fit: { meta: { title: string } };
     regions: Record<string, { title?: string } | string>;
   };
 
@@ -60,7 +61,13 @@ function pageTitles(locale: Locale): string[] {
     .filter((entry) => entry.headline && entry.company)
     .map((entry) => `${entry.headline} | ${entry.company}`);
   const legal = Object.values(LEGAL_CONTENT).map((document) => document[locale].title);
-  return [messages.experiencePage.title, messages.search.title, ...engagements, ...legal];
+  return [
+    messages.experiencePage.title,
+    messages.search.title,
+    messages.fit.meta.title,
+    ...engagements,
+    ...legal,
+  ];
 }
 
 function regionTitles(locale: Locale): string[] {

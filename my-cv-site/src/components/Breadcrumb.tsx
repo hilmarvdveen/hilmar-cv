@@ -28,6 +28,7 @@ const SEGMENT_LABEL_KEYS: Record<string, string> = {
   blog: "blog",
   experience: "experience",
   search: "search",
+  fit: "fit",
   terms: "terms",
   cookies: "cookies",
   disclaimer: "disclaimer",

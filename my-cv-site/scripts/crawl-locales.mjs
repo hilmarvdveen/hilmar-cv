@@ -18,6 +18,7 @@ const routes = [
   "/projects",
   "/experience",
   "/experience/bol",
+  "/fit",
   "/faq",
   "/book",
   "/contact",
@@ -32,7 +33,7 @@ const routes = [
 ];
 
 const namespaces =
-  "home|common|experiencePage|work|projects|contact|services|notFound|about|cvModal|faq|breadcrumb|booking|footer|blog|search|legal";
+  "home|common|experiencePage|work|projects|contact|services|notFound|about|cvModal|faq|breadcrumb|booking|footer|blog|search|legal|fit";
 const leakedKeyPattern = new RegExp(
   `(?<![\\w/.-])(?:${namespaces})\\.[a-zA-Z]+(?:\\.[a-zA-Z0-9\\[\\]]+)*(?![\\w/-])`,
   "g"

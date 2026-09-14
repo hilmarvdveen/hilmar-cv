@@ -24,6 +24,12 @@ export async function GET() {
     priority: 0.8,
   };
 
+  const fitPage = {
+    path: 'fit',
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  };
+
   const regionPages = [
     { path: REGION_PATH, changeFrequency: 'monthly', priority: 0.8 },
     ...REGIONS.map((region) => ({
@@ -35,6 +41,7 @@ export async function GET() {
 
   const sitemapData = SEOFactory.generateSitemapData([
     experiencePage,
+    fitPage,
     ...regionPages,
     ...experienceDetailPages,
     ...blogPostPages,
