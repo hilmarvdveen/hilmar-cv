@@ -1,5 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { act, render, screen } from "@testing-library/react";
+import { ANALYTICS_CONSENT_KEY, storeConsent } from "@/features/analytics/consentStore";
+import { STORAGE_EVENT } from "@/lib/analytics/consentChoice";
 import { StickyCallToActionBar } from "./StickyCallToActionBar";
 
 const state = vi.hoisted(() => ({ path: "/" }));
@@ -43,8 +45,15 @@ const triggerLastObserver = (isIntersecting: boolean) => {
 beforeEach(() => {
   state.path = "/";
   observed.observers = [];
+  localStorage.clear();
+  vi.stubEnv("NODE_ENV", "production");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-EXAMPLE");
   vi.stubGlobal("IntersectionObserver", StubIntersectionObserver);
   vi.stubGlobal("ResizeObserver", StubResizeObserver);
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
 });
 
 const hero = () => (
@@ -56,37 +65,41 @@ const hero = () => (
   </>
 );
 
-const renderWithHero = () => render(hero());
+const storeChoiceBeforeTheVisit = (granted: boolean) => {
+  localStorage.setItem(ANALYTICS_CONSENT_KEY, granted ? "granted" : "denied");
+};
+
+const renderWithHero = () => {
+  storeChoiceBeforeTheVisit(true);
+  return render(hero());
+};
+
+const bookingAction = () => screen.queryByRole("link", { name: "nav.book" });
 
 describe("StickyCallToActionBar", () => {
   it("stays hidden while the hero is still in view", () => {
     renderWithHero();
-    expect(screen.queryByRole("link", { name: "nav.book" })).not.toBeInTheDocument();
+    expect(bookingAction()).not.toBeInTheDocument();
   });
 
   it("shows the booking action once the hero scrolls out of view", () => {
     renderWithHero();
     triggerLastObserver(false);
-    expect(screen.getByRole("link", { name: "nav.book" })).toHaveAttribute(
-      "href",
-      "/book"
-    );
+    expect(screen.getByRole("link", { name: "nav.book" })).toHaveAttribute("href", "/book");
   });
 
   it("renders the booking action at the medium primary button size", () => {
     renderWithHero();
     triggerLastObserver(false);
-    expect(screen.getByRole("link", { name: "nav.book" }).className).toContain(
-      "py-2.5"
-    );
+    expect(screen.getByRole("link", { name: "nav.book" }).className).toContain("py-2.5");
   });
 
   it("hides again once the hero comes back into view", () => {
     renderWithHero();
     triggerLastObserver(false);
-    expect(screen.getByRole("link", { name: "nav.book" })).toBeInTheDocument();
+    expect(bookingAction()).toBeInTheDocument();
     triggerLastObserver(true);
-    expect(screen.queryByRole("link", { name: "nav.book" })).not.toBeInTheDocument();
+    expect(bookingAction()).not.toBeInTheDocument();
   });
 
   it("sets up no observer when the page has no hero to watch", () => {
@@ -103,19 +116,85 @@ describe("StickyCallToActionBar", () => {
     state.path = "/book";
     renderWithHero();
     expect(observed.observers).toHaveLength(0);
-    expect(screen.queryByRole("link", { name: "nav.book" })).not.toBeInTheDocument();
+    expect(bookingAction()).not.toBeInTheDocument();
   });
 
   it("resets to hidden when the route changes without a full remount", () => {
     const { rerender } = renderWithHero();
     triggerLastObserver(false);
-    expect(screen.getByRole("link", { name: "nav.book" })).toBeInTheDocument();
+    expect(bookingAction()).toBeInTheDocument();
 
     state.path = "/about";
     rerender(hero());
-    expect(screen.queryByRole("link", { name: "nav.book" })).not.toBeInTheDocument();
+    expect(bookingAction()).not.toBeInTheDocument();
 
     triggerLastObserver(false);
-    expect(screen.getByRole("link", { name: "nav.book" })).toBeInTheDocument();
+    expect(bookingAction()).toBeInTheDocument();
+  });
+
+  it("stays out of the page while the cookie banner still waits for an answer", () => {
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).not.toBeInTheDocument();
+  });
+
+  it("publishes no bottom bar offset while the cookie banner still waits", () => {
+    render(hero());
+    triggerLastObserver(false);
+    expect(document.documentElement.style.getPropertyValue("--bottom-bar-offset")).toBe("");
+  });
+
+  it("appears the moment the visitor accepts, without a reload", () => {
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).not.toBeInTheDocument();
+
+    act(() => storeConsent(true));
+
+    expect(bookingAction()).toBeInTheDocument();
+    expect(document.documentElement.style.getPropertyValue("--bottom-bar-offset")).toMatch(/px$/);
+  });
+
+  it("appears the moment the visitor declines, because the banner is gone either way", () => {
+    render(hero());
+    triggerLastObserver(false);
+
+    act(() => storeConsent(false));
+
+    expect(bookingAction()).toBeInTheDocument();
+  });
+
+  it("appears on a later visit that already carries a stored choice", () => {
+    storeChoiceBeforeTheVisit(false);
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).toBeInTheDocument();
+  });
+
+  it("mounts without a stored choice when the site has no tag manager id", () => {
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", undefined);
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).toBeInTheDocument();
+  });
+
+  it("mounts without a stored choice outside a production build, where no banner renders", () => {
+    vi.stubEnv("NODE_ENV", "development");
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).toBeInTheDocument();
+  });
+
+  it("follows a choice made in another tab", () => {
+    render(hero());
+    triggerLastObserver(false);
+    expect(bookingAction()).not.toBeInTheDocument();
+
+    storeChoiceBeforeTheVisit(true);
+    act(() => {
+      window.dispatchEvent(new Event(STORAGE_EVENT));
+    });
+
+    expect(bookingAction()).toBeInTheDocument();
   });
 });

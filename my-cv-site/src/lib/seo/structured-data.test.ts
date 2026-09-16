@@ -201,16 +201,15 @@ describe("structured data (JSON-LD) per page", () => {
     }
   });
 
-  it("schema dates are stable across calls (not new Date() per request)", () => {
-    const first = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
-      Record<string, unknown>
-    >;
-    const second = JSON.parse(SEOFactory.homepage("en").structuredData) as Array<
-      Record<string, unknown>
-    >;
-    const dm = (schema: Array<Record<string, unknown>>) =>
-      schema.find((x) => hasType(x, "WebPage"))?.dateModified;
-    expect(dm(first)).toBe(dm(second));
+  it("carries no datePublished and no dateModified on pages that declare neither", () => {
+    for (const locale of LOCALES) {
+      for (const [name, raw] of Object.entries(pagesFor(locale))) {
+        walk(JSON.parse(raw), (key) => {
+          expect(key, `${name} [${locale}]`).not.toBe("datePublished");
+          expect(key, `${name} [${locale}]`).not.toBe("dateModified");
+        });
+      }
+    }
   });
 
   it("Organization carries the legal identity (legalName + KvK number)", () => {

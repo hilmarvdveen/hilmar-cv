@@ -55,10 +55,10 @@ export function useExperienceScrollSpy(sectionIds: readonly string[]) {
 
   useEffect(() => {
     const hashId = window.location.hash.replace("#experience-", "");
-    if (sectionIds.includes(hashId)) {
-      lockRef.current = { id: hashId, expiresAt: Date.now() + LOCK_DURATION };
-      setActiveId(hashId);
-    }
+    if (!sectionIds.includes(hashId)) return;
+    lockRef.current = { id: hashId, expiresAt: Date.now() + LOCK_DURATION };
+    const hashFrame = requestAnimationFrame(() => setActiveId(hashId));
+    return () => cancelAnimationFrame(hashFrame);
   }, [sectionIds]);
 
   useEffect(() => {

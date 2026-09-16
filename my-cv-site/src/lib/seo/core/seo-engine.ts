@@ -31,7 +31,6 @@ import {
 } from '../constants/page-content';
 
 const SITE_LAST_MODIFIED = process.env.NEXT_PUBLIC_BUILD_DATE ?? new Date().toISOString();
-const SITE_LAST_MODIFIED_DATE = new Date(SITE_LAST_MODIFIED);
 const BREADCRUMB_SEGMENT_LABELS: Record<Locale, Record<string, string>> = {
   nl: {
     About: 'Over mij',
@@ -103,7 +102,6 @@ export class SEOEngine {
         'TypeScript GraphQL frontend developer'
       ],
       path: '',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateHomepageBreadcrumbs(locale)
     };
 
@@ -131,7 +129,6 @@ export class SEOEngine {
         'Frontend engineer Randstad'
       ],
       path: 'about',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['About'], locale)
     };
 
@@ -159,7 +156,6 @@ export class SEOEngine {
         'Frontend architecture consulting Netherlands'
       ],
       path: 'services',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Services'], locale)
     };
 
@@ -187,7 +183,6 @@ export class SEOEngine {
         'E-commerce and government frontend'
       ],
       path: 'projects',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Projects'], locale)
     };
 
@@ -215,7 +210,6 @@ export class SEOEngine {
         'Hybrid or remote frontend engineer'
       ],
       path: 'contact',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Contact'], locale)
     };
 
@@ -244,7 +238,6 @@ export class SEOEngine {
       ],
       path: 'faq',
       faqItems,
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['FAQ'], locale)
     };
 
@@ -272,7 +265,6 @@ export class SEOEngine {
         'Book a senior frontend engineer Randstad'
       ],
       path: 'book',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Book'], locale)
     };
 
@@ -300,7 +292,6 @@ export class SEOEngine {
         'Frontend best practices from production'
       ],
       path: 'blog',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Blog'], locale)
     };
 
@@ -334,7 +325,7 @@ export class SEOEngine {
       keywords: post.keywords,
       path: `blog/${post.slug}`,
       publishedTime: new Date(post.publishedDate),
-      lastModified: new Date(post.updatedDate ?? post.publishedDate),
+      ...(post.updatedDate && { lastModified: new Date(post.updatedDate) }),
       section: post.category,
       breadcrumbs: [
         { name: 'Home', url: localeBase, position: 1 },
@@ -365,7 +356,6 @@ export class SEOEngine {
         ...PRIVACY_CONTENT.SEO_FOCUS.PROFESSIONAL
       ],
       path: 'privacy',
-      lastModified: SITE_LAST_MODIFIED_DATE,
       breadcrumbs: this.generateBreadcrumbs(['Privacy'], locale)
     };
 
@@ -392,8 +382,7 @@ export class SEOEngine {
         ...FRONTEND_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
         'React developer Amsterdam Utrecht Rotterdam Den Haag'
       ],
-      path: 'services/frontend',
-      lastModified: SITE_LAST_MODIFIED_DATE
+      path: 'services/frontend'
     };
 
     return this.generatePageSEO(config);
@@ -419,8 +408,7 @@ export class SEOEngine {
         ...FULLSTACK_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
         'Full-stack engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
-      path: 'services/fullstack',
-      lastModified: SITE_LAST_MODIFIED_DATE
+      path: 'services/fullstack'
     };
 
     return this.generatePageSEO(config);
@@ -446,8 +434,7 @@ export class SEOEngine {
         ...DESIGN_SYSTEMS_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
         'Design system engineer Amsterdam Utrecht Rotterdam Den Haag'
       ],
-      path: 'services/design-systems',
-      lastModified: SITE_LAST_MODIFIED_DATE
+      path: 'services/design-systems'
     };
 
     return this.generatePageSEO(config);
@@ -473,8 +460,7 @@ export class SEOEngine {
         ...CONSULTING_SERVICE_CONTENT.SEO_FOCUS.SPECIALIZATIONS,
         'Frontend consulting Amsterdam Utrecht Rotterdam Den Haag'
       ],
-      path: 'services/consulting',
-      lastModified: SITE_LAST_MODIFIED_DATE
+      path: 'services/consulting'
     };
 
     return this.generatePageSEO(config);

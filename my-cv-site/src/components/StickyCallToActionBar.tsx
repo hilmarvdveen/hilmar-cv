@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/Button";
+import { useConsentBannerWaitingForAnswer } from "@/features/analytics/consentStore";
 import { usePathname } from "@/i18n/navigation";
 
 export const StickyCallToActionBar = () => {
   const t = useTranslations("common");
   const pathname = usePathname();
+  const consentBannerWaiting = useConsentBannerWaitingForAnswer();
   const [pastHero, setPastHero] = useState(false);
   const [observedPathname, setObservedPathname] = useState(pathname);
   const barRef = useRef<HTMLDivElement>(null);
@@ -16,6 +18,8 @@ export const StickyCallToActionBar = () => {
     setObservedPathname(pathname);
     setPastHero(false);
   }
+
+  const showBar = pathname !== "/book" && !consentBannerWaiting && pastHero;
 
   useEffect(() => {
     if (pathname === "/book") return;
@@ -47,9 +51,9 @@ export const StickyCallToActionBar = () => {
       observer.disconnect();
       document.documentElement.style.removeProperty("--bottom-bar-offset");
     };
-  }, [pastHero]);
+  }, [showBar]);
 
-  if (pathname === "/book" || !pastHero) return null;
+  if (!showBar) return null;
 
   return (
     <div

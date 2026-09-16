@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale } from "@/lib/seo";
-import { BlogArticle, getPostBySlug } from "@/features/blog";
+import { BlogArticle, getPostBySlug, BLOG_POSTS } from "@/features/blog";
 import { buildBlogLabels } from "@/features/blog/labels";
+import { findPostNeighbours } from "@/lib/postNeighbours";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -39,6 +40,7 @@ export default async function BlogPostPage({ params }: Props) {
   const seoData = SEOFactory.blogPost(loc, postSeoInput(post, loc));
   const t = await getTranslations({ locale, namespace: "blog" });
   const labels = buildBlogLabels(t);
+  const { previous, next } = findPostNeighbours(BLOG_POSTS, slug);
 
   return (
     <>
@@ -46,7 +48,13 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: seoData.structuredData }}
       />
-      <BlogArticle post={post} locale={loc} labels={labels} />
+      <BlogArticle
+        post={post}
+        locale={loc}
+        labels={labels}
+        previous={previous}
+        next={next}
+      />
     </>
   );
 }

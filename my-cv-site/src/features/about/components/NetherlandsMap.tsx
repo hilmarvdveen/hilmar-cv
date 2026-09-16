@@ -143,7 +143,7 @@ export const NetherlandsMap = () => {
           })}
         </div>
 
-        <div className="order-2 min-h-64 bg-white rounded-xl shadow-sm border p-4 md:p-6 md:col-start-2 md:row-start-1 md:row-span-2 md:sticky md:top-[calc(var(--header-height)+1rem)]">
+        <div className="order-2 min-h-0 md:min-h-64 bg-white rounded-xl shadow-sm border p-4 md:p-6 md:col-start-2 md:row-start-1 md:row-span-2 md:sticky md:top-[calc(var(--header-height)+1rem)]">
           {selectedCity && (
             <div>
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
@@ -210,8 +210,8 @@ export const NetherlandsMap = () => {
           )}
 
           {!selection && (
-            <div className="text-center text-gray-500 py-4 md:py-6">
-              <MapPin className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 opacity-50" />
+            <div className="text-center py-3 text-sm text-gray-600 md:py-6 md:text-gray-500">
+              <MapPin className="hidden md:block w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 opacity-50" />
               <p className="text-sm">{t("tapLocation")}</p>
             </div>
           )}

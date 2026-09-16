@@ -3,7 +3,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BookingForm } from "./BookingForm";
 import { BookingFormProvider } from "../context/BookingFormContext";
-import { formatLongDate, firstBookableDay } from "@/lib/booking";
+import {
+  formatLongDate,
+  firstBookableDay,
+  fromDateKey,
+  getUpcomingWorkingDays,
+} from "@/lib/booking";
 
 const RAW_ARRAYS: Record<string, string[]> = {
   expectations: ["Thirty minutes, technical and concrete."],
@@ -19,6 +24,7 @@ vi.mock("next-intl", () => {
 });
 
 const FIRST_DAY = firstBookableDay(new Date());
+const SECOND_DAY = getUpcomingWorkingDays(fromDateKey(FIRST_DAY), 2)[1];
 const SLOT_ONE = `${FIRST_DAY}T07:00:00.000Z`;
 const SLOT_TWO = `${FIRST_DAY}T07:30:00.000Z`;
 
@@ -96,6 +102,33 @@ describe("BookingForm: pick a moment", () => {
     expect(
       screen.getByRole("button", { name: formatLongDate(FIRST_DAY, "en"), pressed: true })
     ).toBeInTheDocument();
+  });
+
+  it("shows a day seen before straight from the cache, without a second request", async () => {
+    const fetchMock = installFetch();
+    const user = userEvent.setup();
+    renderForm();
+    await screen.findByRole("button", { name: "09:00" });
+
+    await user.click(
+      screen.getByRole("button", { name: formatLongDate(SECOND_DAY, "en") })
+    );
+    await screen.findByRole("button", {
+      name: formatLongDate(SECOND_DAY, "en"),
+      pressed: true,
+    });
+    await user.click(
+      screen.getByRole("button", { name: formatLongDate(FIRST_DAY, "en") })
+    );
+
+    expect(await screen.findByRole("button", { name: "09:00" })).toBeInTheDocument();
+    const slotRequests = fetchMock.mock.calls
+      .map(([url]) => String(url))
+      .filter((url) => url.startsWith("/api/booking/slots"));
+    expect(slotRequests).toEqual([
+      `/api/booking/slots?date=${FIRST_DAY}`,
+      `/api/booking/slots?date=${SECOND_DAY}`,
+    ]);
   });
 
   it("asks for a time and focuses the first one when Next is pressed too early", async () => {

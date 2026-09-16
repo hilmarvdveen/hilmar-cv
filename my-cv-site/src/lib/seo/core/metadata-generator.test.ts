@@ -101,4 +101,22 @@ describe("MetadataGenerator.generateMetadata", () => {
     expect(og.images[0].height).toBe(630);
     expect(tw.images[0]).toContain("https://www.hilmarvanderveen.com/api/og?locale=nl&title=");
   });
+
+  it("stops emitting the keywords, category and classification meta fields", () => {
+    const meta = gen.generateMetadata(buildConfiguration());
+    expect(meta.keywords).toBeUndefined();
+    expect(meta.category).toBeUndefined();
+    expect((meta as Record<string, unknown>).classification).toBeUndefined();
+  });
+
+  it("stops emitting ICBM, content-language and language, and keeps the geo tags", () => {
+    const meta = gen.generateMetadata(buildConfiguration({ locale: "en" }));
+    const other = meta.other as Record<string, string>;
+    expect(other.ICBM).toBeUndefined();
+    expect(other["content-language"]).toBeUndefined();
+    expect(other.language).toBeUndefined();
+    expect(other["geo.region"]).toBe("US");
+    expect(other["geo.placename"]).toBe("Zandvoort, Netherlands");
+    expect(other["geo.position"]).toBe("52.3731;4.5322");
+  });
 });

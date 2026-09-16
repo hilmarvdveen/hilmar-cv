@@ -1,15 +1,16 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { WorkExperienceSection, FULL_CARD_COUNT } from "./WorkExperienceSection";
+import { WorkExperienceSection, FULL_CARD_COUNT, PILL_VISIBLE_COUNT } from "./WorkExperienceSection";
 import { workHistory } from "@/data/workHistory";
+import { formatMonthYear } from "@/lib/workPeriod";
 
 type TranslateFunction = ((
   key: string,
-  values?: Record<string, string>
+  values?: Record<string, string | number>
 ) => string) & { raw: (key: string) => unknown };
 
 vi.mock("next-intl", () => {
-  const t = ((key: string, values?: Record<string, string>) => {
+  const t = ((key: string, values?: Record<string, string | number>) => {
     if (key === "period" && values) return `${values.from} to ${values.to}`;
     if (key === "bol.company") return "bol.com";
     if (values) return `${key}:${Object.values(values).join(",")}`;
@@ -114,5 +115,54 @@ describe("WorkExperienceSection: scannable cards", () => {
       expect(link).toHaveClass("after:absolute", "after:inset-0");
     }
     expect(links[0]).toHaveAccessibleName("readMore:bol.com");
+  });
+});
+
+describe("WorkExperienceSection: compact rows", () => {
+  it("keeps the company, period, role, summary and link for an earlier engagement after the mobile stacking fix", () => {
+    render(<WorkExperienceSection />);
+    const compactEntry = workHistory[FULL_CARD_COUNT];
+    const expectedPeriod = `${formatMonthYear(compactEntry.from, "en")} to ${formatMonthYear(compactEntry.to, "en")}`;
+
+    expect(
+      screen.getByRole("heading", { level: 3, name: `${compactEntry.id}.company` })
+    ).toBeInTheDocument();
+    expect(screen.getByText(`${expectedPeriod} · ${compactEntry.id}.role`)).toBeInTheDocument();
+    expect(screen.getByText(`${compactEntry.id}.summary`)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: `readMore:${compactEntry.id}.company` })
+    ).toHaveAttribute("href", `/experience/${compactEntry.id}`);
+  });
+});
+
+describe("WorkExperienceSection: technology pill overflow", () => {
+  it("renders at most the first eight technology pills per full card, plus one overflow pill when more exist", () => {
+    render(<WorkExperienceSection />);
+    const lists = screen.getAllByRole("list", { name: "technologies" });
+    expect(lists).toHaveLength(FULL_CARD_COUNT);
+
+    workHistory.slice(0, FULL_CARD_COUNT).forEach((entry, index) => {
+      const pills = within(lists[index]).getAllByRole("listitem");
+      const visibleCount = Math.min(entry.tech.length, PILL_VISIBLE_COUNT);
+      const expectedCount =
+        entry.tech.length > PILL_VISIBLE_COUNT ? visibleCount + 1 : visibleCount;
+      expect(pills).toHaveLength(expectedCount);
+    });
+  });
+
+  it("names the hidden technology count through the translated label, as plain text rather than a link", () => {
+    render(<WorkExperienceSection />);
+    const lists = screen.getAllByRole("list", { name: "technologies" });
+    const [bolEntry, belastingdienstEntry] = workHistory;
+
+    expect(
+      within(lists[0]).getByText(`morePills:${bolEntry.tech.length - PILL_VISIBLE_COUNT}`)
+    ).toBeInTheDocument();
+    expect(
+      within(lists[1]).getByText(
+        `morePills:${belastingdienstEntry.tech.length - PILL_VISIBLE_COUNT}`
+      )
+    ).toBeInTheDocument();
+    expect(within(lists[0]).queryAllByRole("link")).toHaveLength(0);
   });
 });

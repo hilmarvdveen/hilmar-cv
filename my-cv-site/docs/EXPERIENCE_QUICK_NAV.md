@@ -141,3 +141,19 @@ to the page. The quick-nav chips still target every card's anchor.
 The sales editor's argument: twelve identical cards made the page a
 third longer than it needs to be and gave the four that sell no
 precedence.
+
+## The hash highlight lands on a frame (9 September 2026)
+
+Rule 7 still holds: an inbound `#experience-<id>` link initialises both the
+highlight and the click lock. The mount effect now sets the lock straight
+away and hands the highlight to `requestAnimationFrame`, so React's
+`set-state-in-effect` rule has nothing to flag. Nothing moves on screen
+because of it. The spy already schedules its first `update()` on a frame, so
+both callbacks run in the same frame in the order the effects declared them,
+the highlight first and the spy second, and the spy keeps the locked chip
+until its card arrives. The frame is cancelled on cleanup. Do not replace it
+with a lazy `useState` initializer that reads `window.location.hash`: the
+fragment never reaches the server, so the server renders the first chip as
+current and a different first client render is a hydration mismatch. The
+deep-link path is covered in `ExperienceQuickNav.test.tsx`, which sets the
+hash before rendering and waits for the chip to carry `aria-current`.

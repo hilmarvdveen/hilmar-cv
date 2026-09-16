@@ -54,8 +54,17 @@ describe("POST /api/cv-download", () => {
   });
 
   it("returns 400 on missing fields", async () => {
-    const response = await POST(post({ ...valid(), purpose: "" }));
+    const response = await POST(post({ ...valid(), name: "" }));
     expect(response.status).toBe(400);
+  });
+
+  it("returns 400 on a purpose outside the allowed values", async () => {
+    const response = await POST(post({ ...valid(), purpose: "networking" }));
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({
+      error: 'Field "purpose" is not an allowed value.',
+    });
+    expect(sendMail).not.toHaveBeenCalled();
   });
 
   it("returns 400 on invalid email", async () => {
@@ -86,6 +95,29 @@ describe("POST /api/cv-download", () => {
     await POST(post({ ...valid(), locale: "nl", purpose: "recruitment" }));
     const ownerMail = sendMail.mock.calls.find((call) => call[2]?.isHtml !== true);
     expect(ownerMail![2].body).toContain("Werving/Vacature");
+  });
+
+  it("accepts an empty purpose and leaves the line out of the owner notification", async () => {
+    const response = await POST(post({ ...valid(), purpose: "" }));
+    expect(response.status).toBe(200);
+    const ownerMail = sendMail.mock.calls.find((call) => call[2]?.isHtml !== true);
+    expect(ownerMail![2].body).not.toContain("Purpose:");
+    expect(ownerMail![2].body).toContain("Email: jane@example.com");
+  });
+
+  it("accepts an absent purpose", async () => {
+    const { purpose, ...withoutPurpose } = valid();
+    expect(purpose).toBe("recruitment");
+    const response = await POST(post(withoutPurpose));
+    expect(response.status).toBe(200);
+    const ownerMail = sendMail.mock.calls.find((call) => call[2]?.isHtml !== true);
+    expect(ownerMail![2].body).not.toContain("Purpose:");
+  });
+
+  it("prints the purpose when the visitor picks one", async () => {
+    await POST(post({ ...valid(), purpose: "project_inquiry" }));
+    const ownerMail = sendMail.mock.calls.find((call) => call[2]?.isHtml !== true);
+    expect(ownerMail![2].body).toContain("Purpose: Project Inquiry");
   });
 
   it("escapes the user name in the HTML thank-you email", async () => {

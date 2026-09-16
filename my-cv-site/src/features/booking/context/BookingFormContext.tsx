@@ -7,6 +7,11 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import {
+  clearBookingDraft,
+  readBookingDraft,
+  writeBookingDraft,
+} from "@/lib/booking/draftStorage";
 
 export type BookingDetails = {
   date: string;
@@ -42,7 +47,6 @@ export const INITIAL_BOOKING_DETAILS: BookingDetails = {
   topic: "",
 };
 
-const STORAGE_KEY = "hilmar-booking-form-state";
 const STORAGE_TTL_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
 type StoredState = {
@@ -87,34 +91,24 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    try {
-      const restored = restoreBookingState(
-        localStorage.getItem(STORAGE_KEY),
-        Date.now()
-      );
+    readBookingDraft((raw) => {
+      const restored = restoreBookingState(raw, Date.now());
       if (restored) {
         setDetails(restored.details);
         setStep(restored.step);
       }
-    } catch (error) {
-      console.warn("Failed to load booking form state from localStorage:", error);
-    } finally {
       setIsInitialized(true);
-    }
+    });
   }, []);
 
   useEffect(() => {
     if (!isInitialized) return;
-    try {
-      if (status === "submitted") {
-        localStorage.removeItem(STORAGE_KEY);
-        return;
-      }
-      const stateToSave: StoredState = { details, step, timestamp: Date.now() };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
-    } catch (error) {
-      console.warn("Failed to save booking form state to localStorage:", error);
+    if (status === "submitted") {
+      clearBookingDraft();
+      return;
     }
+    const stateToSave: StoredState = { details, step, timestamp: Date.now() };
+    writeBookingDraft(JSON.stringify(stateToSave));
   }, [details, step, isInitialized, status]);
 
   const updateDetail = useCallback((field: keyof BookingDetails, value: string) => {
@@ -130,11 +124,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
     setStep(1);
     setStatus("idle");
     setSubmitError(null);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (error) {
-      console.warn("Failed to clear booking form state from localStorage:", error);
-    }
+    clearBookingDraft();
   }, []);
 
   const value: BookingFormContextValue = {

@@ -21,7 +21,7 @@ export const HeroSection = () => {
       <Container>
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
           <div className="md:col-span-2 flex flex-col">
-            <p className="order-1 inline-flex w-fit items-center gap-2 text-xs font-semibold text-emerald-300 mb-4 sm:text-sm sm:mb-6">
+            <p className="order-1 inline-flex w-fit items-center gap-2 text-sm font-semibold text-emerald-300 mb-4 sm:mb-6">
               <span
                 className="h-2 w-2 rounded-full bg-emerald-400"
                 aria-hidden="true"

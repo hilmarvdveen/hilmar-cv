@@ -14,11 +14,21 @@ vi.mock("@/lib/analytics/events", () => ({ pushSiteEvent }));
 const ENGLISH_CV = "/data/cv/hilmar_van_der_veen_cv_en.pdf";
 const DUTCH_CV = "/data/cv/hilmar_van_der_veen_cv_nl.pdf";
 
-async function fillValid(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByPlaceholderText("placeholders.name"), "Jane");
-  await user.type(screen.getByPlaceholderText("placeholders.email"), "jane@example.com");
-  await user.selectOptions(screen.getByRole("combobox"), "recruitment");
+const purposeSelect = () => screen.getByRole("combobox", { name: /fields\.purpose/ });
+
+const submitButton = () => screen.getByRole("button", { name: /buttons\.download/ });
+
+async function fillRequiredFields(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByRole("textbox", { name: /fields\.name/ }), "Jane");
+  await user.type(screen.getByRole("textbox", { name: /fields\.email/ }), "jane@example.com");
 }
+
+async function fillValid(user: ReturnType<typeof userEvent.setup>) {
+  await fillRequiredFields(user);
+  await user.selectOptions(purposeSelect(), screen.getByRole("option", { name: "purposes.recruitment" }));
+}
+
+const postedBody = () => JSON.parse((fetch as unknown as Mock).mock.calls[0][1].body);
 
 describe("CVDownloadModal", () => {
   let onClose: Mock;
@@ -57,40 +67,96 @@ describe("CVDownloadModal", () => {
   it("shows validation errors and does not submit when empty", async () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     expect(await screen.findByText("validation.nameRequired")).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
     expect(openSpy).not.toHaveBeenCalled();
   });
 
-  it("blocks an invalid email, then submits after it is corrected", async () => {
-    const { container } = render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
-    const email = screen.getByPlaceholderText("placeholders.email");
-    const form = container.querySelector("form")!;
+  it("clears a field's error once the visitor types in that field", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await user.click(submitButton());
+    expect(await screen.findByText("validation.nameRequired")).toBeInTheDocument();
 
-    fireEvent.change(screen.getByPlaceholderText("placeholders.name"), {
+    await user.type(screen.getByRole("textbox", { name: /fields\.name/ }), "J");
+
+    expect(screen.queryByText("validation.nameRequired")).not.toBeInTheDocument();
+    expect(screen.getByText("validation.emailRequired")).toBeInTheDocument();
+  });
+
+  it("blocks an invalid email, then submits after it is corrected", async () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    const email = screen.getByRole("textbox", { name: /fields\.email/ });
+
+    fireEvent.change(screen.getByRole("textbox", { name: /fields\.name/ }), {
       target: { value: "Jane" },
     });
-    fireEvent.change(email, { target: { value: "not-an-email" } });
-    fireEvent.change(screen.getByRole("combobox"), { target: { value: "recruitment" } });
-    fireEvent.submit(form);
+    fireEvent.change(email, { target: { value: "jane@example" } });
+    fireEvent.click(submitButton());
 
+    expect(await screen.findByText("validation.emailInvalid")).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
 
     fireEvent.change(email, { target: { value: "jane@example.com" } });
-    fireEvent.submit(form);
+    fireEvent.click(submitButton());
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+  });
+
+  it("offers only the two buyer reasons plus something else", () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    const optionNames = screen
+      .getAllByRole("option")
+      .map((option) => option.textContent);
+
+    expect(optionNames).toEqual([
+      "placeholders.purpose",
+      "purposes.recruitment",
+      "purposes.projectInquiry",
+      "purposes.other",
+    ]);
+  });
+
+  it("marks the reason as optional rather than required", () => {
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    expect(purposeSelect()).toHaveAccessibleName("fields.purpose (fields.optional)");
+  });
+
+  it("downloads and posts an empty reason when the visitor skips it", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillRequiredFields(user);
+    await user.click(submitButton());
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    expect(postedBody()).toMatchObject({ name: "Jane", purpose: "" });
+    await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("posts the buyer reason the visitor picks", async () => {
+    const user = userEvent.setup();
+    render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
+    await fillRequiredFields(user);
+    await user.selectOptions(
+      purposeSelect(),
+      screen.getByRole("option", { name: "purposes.projectInquiry" })
+    );
+    await user.click(submitButton());
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    expect(postedBody()).toMatchObject({ purpose: "project_inquiry" });
   });
 
   it("posts the lead with the chosen language, opens that CV and closes on success", async () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-    const body = JSON.parse((fetch as unknown as Mock).mock.calls[0][1].body);
+    const body = postedBody();
     expect(body).toMatchObject({
       name: "Jane",
       email: "jane@example.com",
@@ -109,7 +175,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(openSpy).toHaveBeenCalled());
     expect(pushSiteEvent).toHaveBeenCalledWith("cv_download", { language: "en" });
@@ -122,7 +188,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
     expect(pushSiteEvent).not.toHaveBeenCalled();
@@ -133,11 +199,10 @@ describe("CVDownloadModal", () => {
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await user.click(screen.getByRole("radio", { name: "language.nl" }));
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(DUTCH_CV, "_blank"));
-    const body = JSON.parse((fetch as unknown as Mock).mock.calls[0][1].body);
-    expect(body.cvLanguage).toBe("nl");
+    expect(postedBody().cvLanguage).toBe("nl");
   });
 
   it("still downloads even when the tracking API fails", async () => {
@@ -148,7 +213,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
     expect(onClose).toHaveBeenCalled();
@@ -164,7 +229,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(openSpy).toHaveBeenCalledWith(ENGLISH_CV, "_blank"));
   });
@@ -188,7 +253,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     expect(callOrder).toEqual(["open", "fetch"]);
     expect(onClose).not.toHaveBeenCalled();
@@ -204,7 +269,7 @@ describe("CVDownloadModal", () => {
     const user = userEvent.setup();
     render(<CVDownloadModal isOpen onClose={onClose} locale="en" />);
     await fillValid(user);
-    await user.click(screen.getByRole("button", { name: /buttons\.download/ }));
+    await user.click(submitButton());
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(onClose).toHaveBeenCalled());

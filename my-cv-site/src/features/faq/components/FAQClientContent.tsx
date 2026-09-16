@@ -69,17 +69,17 @@ export function FAQClientContent() {
             align="center"
           />
 
-          <div className="mb-16 grid gap-4 md:grid-cols-5">
+          <div className="mb-16 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4">
             {faqCategories.map((category) => {
               const Icon = category.icon;
               return (
                 <a
                   key={category.id}
                   href={`#${category.id}`}
-                  className="group flex flex-col items-center rounded-lg border border-gray-200 bg-white p-6 text-center transition-all duration-300 hover:border-emerald-300 hover:shadow-md"
+                  className="group flex min-h-11 items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 transition-all duration-300 hover:border-emerald-300 hover:shadow-md md:min-h-0 md:flex-col md:gap-0 md:p-6 md:text-center"
                 >
                   <Icon
-                    className="mb-3 h-8 w-8 text-emerald-700 transition-transform duration-300 group-hover:scale-110"
+                    className="h-8 w-8 shrink-0 text-emerald-700 transition-transform duration-300 group-hover:scale-110 md:mb-3"
                     aria-hidden="true"
                   />
                   <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">

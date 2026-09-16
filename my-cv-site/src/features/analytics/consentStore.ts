@@ -1,30 +1,38 @@
 import { useSyncExternalStore } from "react";
+import {
+  ANALYTICS_CONSENT_EVENT,
+  ANALYTICS_CONSENT_KEY,
+  announceConsentChoice,
+  consentBannerWaitsForAnswer,
+  consentChoiceOnServer,
+  readConsentChoice,
+  subscribeToConsentChoice,
+  type ConsentChoice,
+} from "@/lib/analytics/consentChoice";
+import { configuredTagManagerId } from "./tagManagerId";
 
-export const ANALYTICS_CONSENT_KEY = "analytics-consent";
-export const ANALYTICS_CONSENT_EVENT = "analytics-consent";
+export { ANALYTICS_CONSENT_EVENT, ANALYTICS_CONSENT_KEY, configuredTagManagerId };
+export type { ConsentChoice };
 
-export const readStoredConsent = (): boolean | null => {
+const browserStorage = () => {
   try {
-    const stored = localStorage.getItem(ANALYTICS_CONSENT_KEY);
-    if (stored === "granted") return true;
-    if (stored === "denied") return false;
-    return null;
+    return globalThis.localStorage;
   } catch {
-    return null;
+    return undefined;
   }
 };
 
+export const readStoredConsent = (): ConsentChoice => readConsentChoice(browserStorage());
+
 export const storeConsent = (granted: boolean) => {
   localStorage.setItem(ANALYTICS_CONSENT_KEY, granted ? "granted" : "denied");
-  window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: granted }));
+  announceConsentChoice(window, granted);
 };
 
-const subscribe = (onChange: () => void) => {
-  window.addEventListener(ANALYTICS_CONSENT_EVENT, onChange);
-  return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, onChange);
-};
-
-const serverSnapshot = () => null;
+const subscribe = (onChange: () => void) => subscribeToConsentChoice(window, onChange);
 
 export const useAnalyticsConsent = () =>
-  useSyncExternalStore(subscribe, readStoredConsent, serverSnapshot);
+  useSyncExternalStore(subscribe, readStoredConsent, consentChoiceOnServer);
+
+export const useConsentBannerWaitingForAnswer = () =>
+  consentBannerWaitsForAnswer(configuredTagManagerId(), useAnalyticsConsent());

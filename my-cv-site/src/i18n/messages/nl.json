@@ -561,7 +561,8 @@
                 "De live accountpagina's gingen per percentage over, met elke stap in één handeling terug te draaien",
                 "Productbeslissingen rusten op betrouwbare cijfers: negen experimenten gebouwd en ingericht, funnels hersteld, Sentry end-to-end"
             ],
-            "headline": "Loyalty en Digital naar een nieuw platform, zonder onderbreking"
+            "headline": "Loyalty en Digital naar een nieuw platform, zonder onderbreking",
+            "close": "Draait bij jullie ook een oude webshop die stap voor stap naar React moet, terwijl klanten blijven bestellen? Dan hoor ik graag welke pagina jullie als eerste zouden verplaatsen, wie hem het eerst te zien krijgt en hoe je die stap terugdraait."
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -599,7 +600,8 @@
                 "WCAG 2.1 AA bleef op beide overeind, geborgd met geautomatiseerde tests in de pipeline",
                 "Teams nemen het BOLD design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen"
             ],
-            "headline": "Van maanden naar dagen voor een nieuw belastingformulier"
+            "headline": "Van maanden naar dagen voor een nieuw belastingformulier",
+            "close": "Bij de Belastingdienst kwam de winst doordat redacteuren hun eigen formulieren gingen bouwen. Loopt bij jullie elke inhoudelijke wijziging nog via het ontwikkelteam, dan kijk ik graag met je mee waar dat vastloopt."
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -629,7 +631,8 @@
                 "Marketing beheert campagnecontent in Storyblok, toegankelijk volgens WCAG 2.1 AA vanaf de eerste dag",
                 "Bestaande campagnes blijven veilig terwijl nieuwe live gaan, bewaakt door Playwright en Cypress in GitLab-pipelines"
             ],
-            "headline": "Een campagnesite in dagen, uit één design system"
+            "headline": "Een campagnesite in dagen, uit één design system",
+            "close": "Bij meerdere merken begint elke campagne vaak weer bij nul. Dat heb ik bij de Nationale Postcode Loterij omgedraaid, en ik hoor graag hoeveel campagnes jullie per jaar live zetten."
         },
         "athlon": {
             "company": "Athlon",
@@ -666,7 +669,8 @@
                 "Elk nieuw scherm begint bij een geteste componentenbibliotheek, wat de herbouw betaalbaar hield",
                 "Het team schrijft betere Angular na coaching en code reviews, junior en senior"
             ],
-            "headline": "Selfservice vernieuwd op een actuele Angular-stack"
+            "headline": "Selfservice vernieuwd op een actuele Angular-stack",
+            "close": "De applicatie van Athlon draaide op een framework dat aan vervanging toe was, en tijdens de overstap bleef alles gewoon werken. Schuift zo'n migratie bij jullie steeds door, dan kijk ik graag met je naar de eerste stap."
         },
         "randstad": {
             "company": "Randstad",
@@ -689,7 +693,8 @@
                 "Dezelfde structuur op elk platform, in vanilla JavaScript, Angular en React met SCSS en BEM",
                 "Collega's werken componentgedreven in Angular na coaching als UI coach"
             ],
-            "headline": "Eén toegankelijke componentenbibliotheek voor twee merken"
+            "headline": "Eén toegankelijke componentenbibliotheek voor twee merken",
+            "close": "Staat er bij jullie een rebranding op de rol die meerdere sites tegelijk raakt? Sinds Randstad en Yacht weet ik hoe snel dat gaat zodra teams dezelfde bouwstenen delen, en ik denk graag met je mee over waar je begint."
         },
         "opinity": {
             "company": "Opinity",
@@ -712,7 +717,8 @@
                 "Fouten komen boven op het moment dat iemand ze maakt, met validatie in de interface en in de API",
                 "Eén persoon droeg frontend en backend, Angular op ASP.NET Core met rolgebaseerde toegang"
             ],
-            "headline": "Vrachtregistratie live binnen vier maanden"
+            "headline": "Vrachtregistratie live binnen vier maanden",
+            "close": "Een vaste opleverdatum verandert vooral de volgorde van je keuzes. Bij Opinity nam ik daarom de frontend en de backend allebei, en ik denk graag met je mee over wat er bij jullie echt af moet."
         },
         "omniplan": {
             "company": "Omniplan",
@@ -738,7 +744,8 @@
                 "Een nieuwe partner aansluiten werd een kwestie van configuratie, omdat schermen hun gedrag uit de backend halen",
                 "Het platform draait op Angular 9 en .NET Core met REST en gRPC, op Azure met Docker en Kubernetes"
             ],
-            "headline": "Externe organisaties veilig op het platform"
+            "headline": "Externe organisaties veilig op het platform",
+            "close": "Externe partijen toelaten zonder ze meer te laten zien dan nodig: dat was bij Omniplan de kern. Speelt die vraag bij jullie ook, dan haal ik hem graag met je uit elkaar."
         },
         "ortec": {
             "company": "Ortec",
@@ -764,7 +771,8 @@
                 "Nieuwe views en koppelingen komen erbij zonder herbouw, omdat schermgedrag uit configuratie komt",
                 "Onderdelen gaan zelfstandig live als micro-frontends op .NET Core-microservices, met contracten vastgelegd in OpenAPI"
             ],
-            "headline": "Live ritten en ladingen op één scherm voor FedEx"
+            "headline": "Live ritten en ladingen op één scherm voor FedEx",
+            "close": "Zit de informatie die je gebruikers nodig hebben verspreid over allerlei services? Bij Ortec kwam die stroom op één scherm samen, en ik hoor graag welk scherm bij jullie het meeste zou opleveren."
         },
         "bluefield": {
             "company": "Bluefield Smart Access",
@@ -787,7 +795,8 @@
                 "Netwerkbeheerders van Ziggo zien storingen op een kaart zodra ze ontstaan, met defecte knooppunten gemarkeerd",
                 "Medewerkers van Tommy Hilfiger reserveren een parkeerplek in een agenda en krijgen hun toegangsticket"
             ],
-            "headline": "Processen en netwerkstoringen in één beeld"
+            "headline": "Processen en netwerkstoringen in één beeld",
+            "close": "Veel data betekent nog niet dat iemand ziet waar hij moet ingrijpen. Dat verschil maakte ik bij Bluefield Smart Access zichtbaar, en ik kijk graag met je mee welk beeld jullie beheerders nu missen."
         },
         "niped": {
             "company": "Niped",
@@ -810,7 +819,8 @@
                 "De redactie beheert teksten en media zelf, met versiebeheer, in een WPF-applicatie op MVVM",
                 "Interfaces afgestemd met de backendontwikkelaars, codekwaliteit bewaakt met SonarQube, Prettier en ESLint"
             ],
-            "headline": "Gezondheidsinzicht voor gebruikers, content in handen van de redactie"
+            "headline": "Gezondheidsinzicht voor gebruikers, content in handen van de redactie",
+            "close": "Bij Niped ging het om twee dingen tegelijk: structuur in een gegroeide React-applicatie en een redactie die niet meer hoeft te wachten. Zit de rem bij jullie op het een of op het ander, dan hoor ik dat graag."
         },
         "conclusion": {
             "company": "Conclusion",
@@ -833,7 +843,8 @@
                 "Meldingen van de klant onder de SLA gingen van analyse naar verbetering met één aanspreekpunt",
                 "Backendlogica op REST WebAPI's met CQRS en NHibernate, gedekt met xUnit"
             ],
-            "headline": "Een leeromgeving gemoderniseerd terwijl ze in beheer bleef"
+            "headline": "Een leeromgeving gemoderniseerd terwijl ze in beheer bleef",
+            "close": "Verbouwen terwijl de deuren openblijven: dat was bij Conclusion het uitgangspunt. Welke stap bij jullie het veiligst als eerste kan, bespreek ik graag met je."
         },
         "transdev": {
             "company": "Transdev",
@@ -856,11 +867,13 @@
                 "Bellers zien hun positie en verwachte wachttijd via een wachtrijmodule",
                 "Latere kanalen sluiten aan op dezelfde beveiligde .NET Core-gateway over de Delphi-backend"
             ],
-            "headline": "Ritinformatie die reizigers zelf opzoeken"
+            "headline": "Ritinformatie die reizigers zelf opzoeken",
+            "close": "Een oud systeem dat nieuwe kanalen niet kunnen bereiken, hoeft niet als eerste vervangen te worden. Bij Transdev kwam er een veilige laag omheen, en ik leg graag uit wanneer die aanpak past en wanneer niet."
         },
         "period": "{from} tot {to}",
         "deliveredTitle": "Wat het opleverde",
         "readMore": "Lees de hele opdracht bij {company}",
+        "morePills": "+{count} meer op de pagina",
         "earlierTitle": "Eerdere opdrachten"
     },
     "projects": {
@@ -1779,7 +1792,8 @@
         "fields": {
             "name": "Volledige naam",
             "email": "E-mailadres",
-            "purpose": "Waarvoor je het gebruikt"
+            "purpose": "Waarvoor je het gebruikt",
+            "optional": "optioneel"
         },
         "placeholders": {
             "name": "Je naam",
@@ -1789,16 +1803,12 @@
         "purposes": {
             "recruitment": "Een rol die ik invul",
             "projectInquiry": "Een opdracht die ik in gedachten heb",
-            "businessPartnership": "Samenwerken",
-            "networking": "Netwerken",
-            "research": "Informatie",
             "other": "Iets anders"
         },
         "validation": {
             "nameRequired": "Vul je naam in.",
             "emailRequired": "Vul je e-mailadres in.",
-            "emailInvalid": "Controleer het e-mailadres, het lijkt onvolledig.",
-            "purposeRequired": "Kies een reden."
+            "emailInvalid": "Controleer het e-mailadres, het lijkt onvolledig."
         },
         "privacy": "Je gegevens blijven bij mij en gaan niet naar anderen.",
         "buttons": {
@@ -2490,7 +2500,12 @@
             "button": "Plan een gesprek van 30 minuten"
         },
         "breadcrumbLabel": "Kruimelpad",
-        "homeLabel": "Home"
+        "homeLabel": "Home",
+        "neighbours": {
+          "label": "Vorig en volgend artikel",
+          "previous": "Vorig artikel",
+          "next": "Volgend artikel"
+        }
     },
     "regions": {
         "hub": {

@@ -14,6 +14,7 @@ const RESULTS_HEADING_ID = "results-heading";
 export const ResultsStrip = () => {
   const t = useTranslations("home.results");
   const items = t.raw("items") as ResultItem[];
+  const caveat = t("caveat");
 
   return (
     <Section
@@ -24,9 +25,9 @@ export const ResultsStrip = () => {
       <Container>
         <div data-track-section="results-strip">
           <SectionTitle id={RESULTS_HEADING_ID} title={t("title")} align="center" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-            {items.map((item) => (
-              <div
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+            {items.map((item, itemIndex) => (
+              <li
                 key={item.value}
                 className="border-l-[3px] border-primary pl-6 lg:grid lg:grid-rows-[5rem_2.5rem_1fr]"
               >
@@ -37,14 +38,11 @@ export const ResultsStrip = () => {
                   {item.label}
                 </p>
                 <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-                  {item.detail}
+                  {itemIndex === 0 ? `${item.detail}. ${caveat}` : item.detail}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
-          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-gray-600">
-            {t("caveat")}
-          </p>
+          </ul>
         </div>
       </Container>
     </Section>

@@ -81,6 +81,18 @@ function scrollAndFocus(
   element.focus({ preventScroll: true });
 }
 
+async function fetchSlots(date: string): Promise<TimeSlot[] | null> {
+  try {
+    const response = await fetch(`/api/booking/slots?date=${date}`);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error ?? "Failed to load available slots");
+    return (data.slots ?? []) as TimeSlot[];
+  } catch (error) {
+    console.error("Error loading slots:", error);
+    return null;
+  }
+}
+
 function addDays(date: Date, days: number): Date {
   const next = new Date(date);
   next.setDate(next.getDate() + days);
@@ -104,7 +116,7 @@ export const BookingForm = () => {
   } = useBookingForm();
 
   const [slotsByDate, setSlotsByDate] = useState<Record<string, TimeSlot[]>>({});
-  const [slotsStatus, setSlotsStatus] = useState<SlotsStatus>("idle");
+  const [failedDate, setFailedDate] = useState("");
   const [showDateInput, setShowDateInput] = useState(false);
   const [timeError, setTimeError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<DetailsErrors>({});
@@ -126,34 +138,40 @@ export const BookingForm = () => {
     () => toDateKey(addDays(new Date(), FURTHEST_BOOKING_DAYS)),
     []
   );
-  const slots = useMemo(
-    () => slotsByDate[details.date] ?? [],
-    [slotsByDate, details.date]
-  );
+  const cachedSlots = slotsByDate[details.date];
+  const slots = useMemo(() => cachedSlots ?? [], [cachedSlots]);
+  const dateIsLoadable = details.date !== "" && details.date >= todayKey;
+  const slotsStatus: SlotsStatus = cachedSlots
+    ? "ready"
+    : !dateIsLoadable
+      ? "idle"
+      : failedDate === details.date
+        ? "failed"
+        : "loading";
   const dateInStrip = workingDays.includes(details.date);
   const dateInputVisible = showDateInput || (details.date !== "" && !dateInStrip);
 
-  const loadSlots = useCallback(async (date: string) => {
-    requestedDate.current = date;
-    setSlotsStatus("loading");
-    try {
-      const response = await fetch(`/api/booking/slots?date=${date}`);
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Failed to load available slots");
-      if (requestedDate.current !== date) return;
-      const loaded = (data.slots ?? []) as TimeSlot[];
-      setSlotsByDate((previous) => ({ ...previous, [date]: loaded }));
-      setSlotsStatus("ready");
-      if (loaded.length === 0) trackBookingEvent("booking_slots_empty", { date });
-    } catch (error) {
-      console.error("Error loading slots:", error);
-      if (requestedDate.current !== date) return;
-      setSlotsStatus("failed");
+  const applyLoadedSlots = useCallback((date: string, loaded: TimeSlot[] | null) => {
+    if (requestedDate.current !== date) return;
+    if (!loaded) {
+      setFailedDate(date);
       trackBookingEvent("booking_slots_failed", { date });
+      return;
     }
+    setSlotsByDate((previous) => ({ ...previous, [date]: loaded }));
+    if (loaded.length === 0) trackBookingEvent("booking_slots_empty", { date });
   }, []);
 
+  const loadSlots = useCallback(
+    (date: string) => {
+      requestedDate.current = date;
+      return fetchSlots(date).then((loaded) => applyLoadedSlots(date, loaded));
+    },
+    [applyLoadedSlots]
+  );
+
   const retryLoadingSlots = () => {
+    setFailedDate("");
     void loadSlots(details.date);
   };
 
@@ -165,13 +183,9 @@ export const BookingForm = () => {
   }, [details.date, todayKey, workingDays, updateDetail]);
 
   useEffect(() => {
-    if (!details.date || details.date < todayKey) return;
-    if (slotsByDate[details.date]) {
-      setSlotsStatus("ready");
-      return;
-    }
+    if (!dateIsLoadable || cachedSlots) return;
     void loadSlots(details.date);
-  }, [details.date, todayKey, slotsByDate, loadSlots]);
+  }, [details.date, dateIsLoadable, cachedSlots, loadSlots]);
 
   useEffect(() => {
     if (slotsStatus !== "ready" || !details.time) return;
@@ -212,8 +226,14 @@ export const BookingForm = () => {
     if (date === details.date) return;
     updateDetail("date", date);
     updateDetail("time", "");
+    setFailedDate("");
     setTimeError(false);
     trackBookingEvent("booking_day_selected", { date });
+  };
+
+  const startAnotherBooking = () => {
+    setFailedDate("");
+    resetBooking();
   };
 
   const selectSlot = (value: string) => {
@@ -338,7 +358,7 @@ export const BookingForm = () => {
             <Button href="/" variant="primary">
               {t("success.home")}
             </Button>
-            <Button variant="outline" onClick={resetBooking}>
+            <Button variant="outline" onClick={startAnotherBooking}>
               {t("success.another")}
             </Button>
           </div>
@@ -479,14 +499,14 @@ export const BookingForm = () => {
                     <Button
                       href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                       variant="primary"
-                      size="sm"
+                      size="md"
                     >
                       {t("errors.emailAction")}
                     </Button>
                     <Button
                       href={`tel:${BUSINESS_PROFILE.CONTACT.PHONE}`}
                       variant="outline"
-                      size="sm"
+                      size="md"
                     >
                       {t("errors.callAction")}
                     </Button>
@@ -704,7 +724,7 @@ export const BookingForm = () => {
                 type="button"
                 onClick={handleBack}
                 disabled={status === "submitting"}
-                className="-my-2 inline-flex items-center gap-1.5 rounded py-2 text-sm font-semibold text-gray-600 hover:text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-50"
+                className="-my-2 inline-flex min-h-11 items-center gap-1.5 rounded py-2 text-sm font-semibold text-gray-600 hover:text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-50"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 {t("navigation.back")}
@@ -744,7 +764,7 @@ export const BookingForm = () => {
           <Button
             type="submit"
             variant={step === 1 && !details.time ? "neutral" : "primary"}
-            size="sm"
+            size="md"
             disabled={status === "submitting"}
           >
             {primaryLabel}

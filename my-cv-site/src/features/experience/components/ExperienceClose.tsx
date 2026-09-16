@@ -7,7 +7,11 @@ import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 const HEADING_ID = "experience-close-heading";
 
-export const ExperienceClose = () => {
+type ExperienceCloseProps = {
+  description?: string;
+};
+
+export const ExperienceClose = ({ description }: ExperienceCloseProps) => {
   const t = useTranslations("experiencePage");
   const common = useTranslations("common");
 
@@ -21,7 +25,7 @@ export const ExperienceClose = () => {
           {t("close.title")}
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300">
-          {t("close.description")}
+          {description ?? t("close.description")}
         </p>
         <div className="flex flex-col items-center gap-4">
           <Button href="/book" variant="white" size="lg" data-placement="experience-close">

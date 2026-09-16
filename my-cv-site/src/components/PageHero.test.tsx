@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { PageHero } from "./PageHero";
 
 const DummyIcon = ({ className }: { className?: string }) => (
@@ -168,6 +168,49 @@ describe("PageHero", () => {
   it("omits the actions wrapper when none is given", () => {
     render(<PageHero title="Title" description="Description text." />);
     expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("renders both the children list and the action buttons when actionsFirstOnPhones is on", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        actionsFirstOnPhones
+        actions={
+          <>
+            <button type="button">Book a call</button>
+            <button type="button">Ask a question</button>
+          </>
+        }
+      >
+        <ul>
+          <li>Fact one</li>
+          <li>Fact two</li>
+        </ul>
+      </PageHero>
+    );
+    const list = screen.getByRole("list");
+    expect(within(list).getByText("Fact one")).toBeInTheDocument();
+    expect(within(list).getByText("Fact two")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Book a call" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ask a question" })).toBeInTheDocument();
+  });
+
+  it("renders both the children list and the action buttons when actionsFirstOnPhones is left off", () => {
+    render(
+      <PageHero
+        title="Title"
+        description="Description text."
+        actions={<button type="button">Book a call</button>}
+      >
+        <ul>
+          <li>Fact one</li>
+        </ul>
+      </PageHero>
+    );
+    const list = screen.getByRole("list");
+    expect(within(list).getByText("Fact one")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Book a call" })).toBeInTheDocument();
   });
 
   it("renders both columns when an aside is given", () => {

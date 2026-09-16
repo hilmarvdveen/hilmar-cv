@@ -52,7 +52,7 @@ export function SearchPageContent({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t("placeholder")}
-            className="w-full pl-11 pr-4 py-3 border-2 border-gray-500 rounded-xl text-gray-900 focus:border-emerald-500 focus:ring-0"
+            className="w-full pl-11 pr-4 py-3 border-2 border-gray-500 rounded-xl text-gray-900 focus:outline-none focus:border-emerald-600 focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
           />
         </div>
 

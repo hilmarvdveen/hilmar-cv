@@ -116,6 +116,14 @@ button and no picker.)
   header, and the two add up (see `LAYOUT.md`). With `scroll-mt-28` a step
   change landed the heading 177px down and left a phone 425px for four
   fields.
+- Since 9 September 2026 the booking buttons follow the site rule of 44px
+  for a primary action (see `LAYOUT.md`). The sticky bar's forward button
+  and the two recovery buttons in the failed state use the `md` size, and
+  the back link carries `min-h-11`. The bar grows from about 63 to about
+  70px, which the `--bottom-bar-offset` measurement absorbs, so the consent
+  banner still stacks above it. The UX run-through of that day measured the
+  forward button at 38px on step 1 and 36px on steps 2 and 3, the one
+  exception left on the site.
 
 ### Server rules that support the flow
 
@@ -314,3 +322,32 @@ as bottom padding. On a short page (the booking failure state on a
 phone) the recovery buttons therefore never sit behind the banner. The
 banner still stacks above the sticky booking bar through
 `--bottom-bar-offset`.
+
+## Slots status and the draft read (9 September 2026)
+
+The times panel has no status state any more. What the panel shows is
+derived during render from two pieces of state: the loaded times per date
+(`slotsByDate`) and the date whose request failed (`failedDate`). A date with
+loaded times reads as ready, a date the visitor cannot book yet reads as idle,
+a date that failed reads as failed, and every other bookable date reads as
+loading, because the effect starts a request for exactly those. Two gains come
+with it. Returning to a day already loaded shows its times in the same render
+instead of one frame later, and a fresh day shows the skeleton at once instead
+of keeping the previous day's status for a frame. The event handlers own the
+resets: picking another day, retrying and starting another booking all clear
+`failedDate`, so a failed day that comes back around shows the skeleton while
+it reloads. The fetch itself lives in `fetchSlots`, which returns the times or
+null, and the component applies that answer in the promise continuation. Keep
+it that way. React's `set-state-in-effect` rule counts a call to an async
+function as a synchronous update, so moving the state writes back into the
+loader would reintroduce the warning the whole shape exists to avoid.
+
+The draft restore keeps its effect. A lazy `useState` initializer cannot read
+local storage here, because the server renders step 1 with empty details and a
+different first client render is a hydration mismatch. Local storage access
+lives in `src/lib/booking/draftStorage.ts` instead, and `readBookingDraft`
+hands the stored string to a callback, which is where the provider sets the
+restored details and step. The read stays synchronous inside the effect on
+purpose. The form's own date effect runs first and fills in the first bookable
+day, and the restore has to land in the same flush to override it, otherwise
+the visitor's saved day arrives a frame late and the page fetches times twice.

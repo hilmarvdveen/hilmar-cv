@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCallToActionBar } from "@/components/StickyCallToActionBar";
-import { AnalyticsConsent, GoogleTagManager, SiteEvents } from "@/features/analytics";
+import { AnalyticsConsent, GoogleTagManager, SiteEvents, configuredTagManagerId } from "@/features/analytics";
 import { getMessages, getTranslations } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
 import "@/app/globals.css";
@@ -96,7 +96,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     decline: common("consent.decline"),
     accept: common("consent.accept"),
   };
-  const gtmId = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_GTM_ID : undefined;
+  const gtmId = configuredTagManagerId();
 
   return (
     <html

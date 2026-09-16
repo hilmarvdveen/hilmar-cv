@@ -1,19 +1,32 @@
 import { Link } from "@/i18n/navigation";
-import { Calendar, Clock, ArrowLeft, ArrowRight, User, Home, ChevronRight } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  ArrowLeft,
+  ArrowRight,
+  User,
+  Home,
+  ChevronRight,
+  RefreshCw,
+} from "lucide-react";
 import type { Locale } from "@/lib/seo";
 import { Section } from "@/components/Section";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import type { BlogPost, BlogLabels } from "../types";
 import { formatDate } from "../format";
+import { PostNeighbours } from "./PostNeighbours";
+import type { PostNeighbour } from "./PostNeighbours";
 
 type BlogArticleProps = {
   post: BlogPost;
   locale: Locale;
   labels: BlogLabels;
+  previous?: PostNeighbour;
+  next?: PostNeighbour;
 };
 
-export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
+export function BlogArticle({ post, locale, labels, previous, next }: BlogArticleProps) {
   const { Body } = post;
 
   return (
@@ -73,6 +86,12 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
               <Calendar className="h-4 w-4" aria-hidden="true" />
               {labels.publishedOn} {formatDate(post.publishedDate, locale)}
             </span>
+            {post.updatedDate && post.updatedDate !== post.publishedDate ? (
+              <span className="flex items-center gap-1.5">
+                <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                {labels.updatedOn} {formatDate(post.updatedDate, locale)}
+              </span>
+            ) : null}
             <span className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" aria-hidden="true" />
               {post.readingTimeMin} {labels.minRead}
@@ -84,6 +103,8 @@ export function BlogArticle({ post, locale, labels }: BlogArticleProps) {
       <Container width="prose" className="py-10">
         <Body locale={locale} />
       </Container>
+
+      <PostNeighbours locale={locale} previous={previous} next={next} />
 
       <Section background="navy" padding="default" aria-labelledby="blog-cta-heading">
         <Container width="prose">

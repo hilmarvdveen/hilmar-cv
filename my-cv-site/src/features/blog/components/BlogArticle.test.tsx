@@ -1,8 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { BlogArticle } from "./BlogArticle";
 import type { BlogPost, BlogLabels } from "../types";
 import type { Locale } from "@/lib/seo";
+
+vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) => (
@@ -78,5 +80,56 @@ describe("BlogArticle", () => {
     render(<BlogArticle post={post} locale="nl" labels={labels} />);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Titel NL");
     expect(screen.getByText("body-nl")).toBeInTheDocument();
+  });
+
+  it("puts the neighbouring articles between the body and the closing band", () => {
+    render(
+      <BlogArticle
+        post={post}
+        locale="en"
+        labels={labels}
+        previous={{ slug: "newer-post", title: { en: "Newer post", nl: "Nieuwer artikel" } }}
+        next={{ slug: "older-post", title: { en: "Older post", nl: "Ouder artikel" } }}
+      />
+    );
+
+    const navigation = screen.getByRole("navigation", { name: "neighbours.label" });
+    expect(
+      within(navigation).getByRole("link", { name: "neighbours.previous: Newer post" })
+    ).toHaveAttribute("href", "/blog/newer-post");
+    expect(
+      within(navigation).getByRole("link", { name: "neighbours.next: Older post" })
+    ).toHaveAttribute("href", "/blog/older-post");
+
+    const body = screen.getByText("body-en");
+    const closingBand = screen.getByText("Work together?");
+    expect(body.compareDocumentPosition(navigation)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(closingBand.compareDocumentPosition(navigation)).toBe(Node.DOCUMENT_POSITION_PRECEDING);
+  });
+
+  it("leaves the neighbour navigation out when the article has none", () => {
+    render(<BlogArticle post={post} locale="en" labels={labels} />);
+    expect(screen.queryByRole("navigation", { name: "neighbours.label" })).toBeNull();
+  });
+
+  it("shows the updated label and date when the post was updated after publishing", () => {
+    const updatedPost: BlogPost = { ...post, updatedDate: "2026-07-15" };
+    render(<BlogArticle post={updatedPost} locale="en" labels={labels} />);
+    expect(screen.getByText(/Published/)).toBeInTheDocument();
+    expect(screen.getByText(/June/)).toBeInTheDocument();
+    expect(screen.getByText(/Updated/)).toBeInTheDocument();
+    expect(screen.getByText(/July/)).toBeInTheDocument();
+  });
+
+  it("shows the published date alone when the post has no separate update", () => {
+    const noUpdateRender = render(<BlogArticle post={post} locale="en" labels={labels} />);
+    expect(screen.getByText(/Published/)).toBeInTheDocument();
+    expect(screen.queryByText(/Updated/)).toBeNull();
+    noUpdateRender.unmount();
+
+    const sameDatePost: BlogPost = { ...post, updatedDate: post.publishedDate };
+    render(<BlogArticle post={sameDatePost} locale="en" labels={labels} />);
+    expect(screen.getByText(/Published/)).toBeInTheDocument();
+    expect(screen.queryByText(/Updated/)).toBeNull();
   });
 });

@@ -15,7 +15,7 @@ export const runtime = "nodejs";
 type CVDownloadData = {
   name: string;
   email: string;
-  purpose: string;
+  purpose?: string;
   locale: string;
   cvLanguage?: string;
   timestamp: string;
@@ -23,14 +23,13 @@ type CVDownloadData = {
   formStartedAt?: number;
 }
 
-const purposeMap: Record<string, { en: string; nl: string }> = {
+const purposeLabels: Record<string, { en: string; nl: string }> = {
   recruitment: { en: "Recruitment/Job Opportunity", nl: "Werving/Vacature" },
   project_inquiry: { en: "Project Inquiry", nl: "Project Aanvraag" },
-  business_partnership: { en: "Business Partnership", nl: "Zakelijke Samenwerking" },
-  networking: { en: "Networking", nl: "Netwerken" },
-  research: { en: "Research/Information", nl: "Onderzoek/Informatie" },
   other: { en: "Other", nl: "Anders" },
 };
+
+const isKnownPurpose = (purpose: string): boolean => Object.hasOwn(purposeLabels, purpose);
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -50,10 +49,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const validation = validateFields({
       name: { value: data.name, required: true, maxLength: LIMITS.name },
       email: { value: data.email, required: true, email: true },
-      purpose: { value: data.purpose, required: true, maxLength: LIMITS.subjectLike },
+      purpose: { value: data.purpose, maxLength: LIMITS.subjectLike },
     });
     if (!validation.ok) {
       return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const purpose = typeof data.purpose === "string" ? data.purpose.trim() : "";
+    if (purpose && !isKnownPurpose(purpose)) {
+      return NextResponse.json({ error: 'Field "purpose" is not an allowed value.' }, { status: 400 });
     }
 
     const credentials = getGraphCredentials();
@@ -70,20 +74,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const email = data.email as string;
     const locale = data.locale === "nl" ? "nl" : "en";
     const cvLanguage = data.cvLanguage === "nl" ? "nl" : "en";
-    const purposeText = purposeMap[data.purpose as string]?.[locale] || (data.purpose as string);
+    const purposeText = purpose ? purposeLabels[purpose][locale] : "";
     const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
 
-    const notificationBody = `New CV Download Lead:
-
-Name: ${name}
-Email: ${email}
-Purpose: ${purposeText}
-Page language: ${locale.toUpperCase()}
-CV downloaded: ${cvLanguage.toUpperCase()}
-Timestamp: ${timestamp.toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" })}
-
----
-This lead was generated from the CV download modal on hilmarvanderveen.com`;
+    const notificationBody = [
+      "New CV Download Lead:",
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      ...(purposeText ? [`Purpose: ${purposeText}`] : []),
+      `Page language: ${locale.toUpperCase()}`,
+      `CV downloaded: ${cvLanguage.toUpperCase()}`,
+      `Timestamp: ${timestamp.toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" })}`,
+      "",
+      "---",
+      "This lead was generated from the CV download modal on hilmarvanderveen.com",
+    ].join("\n");
 
     await sendMail(client, smtpUser, {
       to: smtpUser,
@@ -140,7 +146,7 @@ Senior Frontend Developer</p>`;
       isHtml: true,
     });
 
-    console.log(`CV download tracked: ${email} - ${purposeText}`);
+    console.log(`CV download tracked: ${email}${purposeText ? ` (${purposeText})` : ""}`);
 
     return NextResponse.json(
       { success: true, message: "CV download tracked successfully" },

@@ -99,7 +99,7 @@ export default function ContactForm() {
         subtitle={t("form.description")}
       />
 
-      <Card>
+      <Card className="p-4 sm:p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <HoneypotField value={honeypot.value} onChange={honeypot.setValue} />
 
@@ -109,13 +109,13 @@ export default function ContactForm() {
             <label className="block text-sm font-semibold text-gray-900 mb-4">
               {t("form.interestsLabel")}
             </label>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {interestTags.map((tag) => (
                 <button
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                  className={`min-h-10 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
                     selectedTags.includes(tag)
                       ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-800 hover:border-emerald-700"
                       : "bg-white border-gray-500 text-gray-800 hover:border-emerald-300 hover:bg-emerald-50"

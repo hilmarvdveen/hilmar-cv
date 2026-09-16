@@ -11,6 +11,12 @@ function secondBreadcrumbName(jsonLd: JsonLdSchema[]): string {
   return crumbs.itemListElement[1].name;
 }
 
+function blogPosting(jsonLd: JsonLdSchema[]): Record<string, unknown> {
+  return jsonLd.find(
+    (schema) => (schema as { "@type": string })["@type"] === "BlogPosting"
+  ) as Record<string, unknown>;
+}
+
 function baseConfig(overrides: Partial<SEOPageConfig> = {}): SEOPageConfig {
   return {
     pageType: "blog-post",
@@ -64,6 +70,22 @@ describe("SEOEngine.createBlogPostSEO", () => {
       updatedDate: undefined,
     });
     expect(String(metadata.alternates?.canonical)).toContain("/en/blog/react-folder-structure");
+  });
+
+  it("carries the declared publication and revision dates on a revised post", () => {
+    const engine = new SEOEngine();
+    const posting = blogPosting(engine.createBlogPostSEO("en", post).jsonLd);
+    expect(posting.datePublished).toBe(new Date("2026-06-01").toISOString());
+    expect(posting.dateModified).toBe(new Date("2026-06-10").toISOString());
+  });
+
+  it("omits dateModified on a post that declares no revision", () => {
+    const engine = new SEOEngine();
+    const posting = blogPosting(
+      engine.createBlogPostSEO("en", { ...post, updatedDate: undefined }).jsonLd
+    );
+    expect(posting.datePublished).toBe(new Date("2026-06-01").toISOString());
+    expect(posting.dateModified).toBeUndefined();
   });
 });
 

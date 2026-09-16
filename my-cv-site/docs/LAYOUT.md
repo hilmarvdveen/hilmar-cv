@@ -75,6 +75,12 @@ The breadcrumb now lives inside the hero band on every page that has one,
 passed through `PageHero`'s `breadcrumb` slot instead of rendering as its
 own band above the hero.
 
+### `actionsFirstOnPhones` (9 September 2026)
+
+`PageHero` takes an optional `actionsFirstOnPhones` prop, off by default, that moves the actions block ahead of `children` below `sm` and returns to source order from `sm` up.
+Use it when a hero's `children` are long enough to push the primary button past the first phone screen.
+`ServiceDetailPage` sets it on its `PageHero` call for that reason, fixing U7 from the 9 September 2026 UX run-through.
+
 ## Gutters
 
 `Container` owns the horizontal padding: `px-4 sm:px-6`, which is 16px on
@@ -161,6 +167,12 @@ label box is always two lines tall, and the detail takes whatever is left.
 Tiles no longer depend on their neighbours' content height. The value carries
 the emerald figure treatment (`text-primary` instead of `text-brand-navy`) so
 the numbers read as numbers against the navy body copy around them.
+
+#### Caveat inside the first tile (9 September 2026)
+
+The GMV caveat now renders inside the first tile's detail text instead
+of its own paragraph under the grid. On phones the old paragraph sat
+562 pixels below its number. Guardrail 1 calls it the credibility device.
 
 ### Client logos: a static grid, not a carousel
 
@@ -270,6 +282,53 @@ above whichever bottom bar is currently showing, booking's or this one, and
 sits flush with the viewport bottom when neither is present. The property is
 removed whenever the bar is not rendered, so the banner does not carry a
 stale offset from a page that no longer has a bottom bar.
+
+#### The bar waits for the consent choice (9 September 2026)
+
+The UX run-through of 9 September 2026 measured what a first visitor on a
+390 pixel phone sees after one scroll: the fixed header at 65 px, the cookie
+banner at 117 px and this bar at 69 px. That is 251 px of 844, 30 percent of
+the screen, and 36 percent on the experience hub where the pinned chip bar
+adds another 57 px. Two buttons read "Plan een gesprek" at once, the header's
+and the bar's. The three elements stack correctly and never overlap. The sum
+was the problem (item U3).
+
+So the bar renders nothing until the visitor has answered the banner. It
+reads the same store `AnalyticsConsent` writes (`useAnalyticsConsent` in
+`src/features/analytics/consentStore.ts`) and mounts on the choice itself,
+accept or decline, without a reload. The header keeps its compact booking
+button while the banner is up, so the action stays reachable in the meantime.
+No copy changed.
+
+The read goes through `useSyncExternalStore`, whose `getServerSnapshot`
+returns "no choice yet". The server render and the first client render
+therefore agree that the bar is absent, which is what keeps hydration quiet
+on a page whose answer lives in local storage. After hydration the client
+snapshot reads the stored value, and the subscription listens to two things:
+the `storage` event for a choice made in another tab, and the
+`analytics-consent` `CustomEvent` the consent helper dispatches in the tab
+that made the choice. The pure parts of that store (the storage key, the two
+event names, the snapshot read from a storage-like object, the subscribe
+wiring on a window-like object and the dispatch) live in
+`src/lib/analytics/consentChoice.ts` with their own test, so the coverage
+gate sees them.
+
+While the banner is up the bar publishes no `--bottom-bar-offset`, so the
+banner sits flush with the viewport bottom, which is what the `0px` fallback
+in `bottom-[var(--bottom-bar-offset,0px)]` is for. The offset appears with
+the bar, and that is the same moment the banner disappears, so the two are
+never on screen together after this change. `--consent-height` is untouched.
+The banner still measures and publishes it while it is visible, and the
+footer still reserves that space as bottom padding.
+
+The booking page keeps its own sticky bar inside `BookingForm`, which does
+not read the consent state.
+
+The bar waits only where the banner actually shows: the layout renders
+`AnalyticsConsent` only in a production build with `NEXT_PUBLIC_GTM_ID` set,
+so `useConsentBannerWaitingForAnswer` mirrors that exact condition and reports
+no wait when the id is missing, which keeps the bar on screen as it always was
+in `pnpm dev` and in any deploy without the variable.
 
 ### Cookie banner buttons
 

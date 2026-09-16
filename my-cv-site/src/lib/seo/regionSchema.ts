@@ -36,7 +36,6 @@ const webPage = (url: string, input: SharedInput) => ({
   name: input.title,
   description: input.description,
   inLanguage: input.locale === "nl" ? "nl-NL" : "en-US",
-  dateModified: process.env.NEXT_PUBLIC_BUILD_DATE,
   isPartOf: { "@type": "WebSite", "@id": `${siteBase()}/#website`, name: BUSINESS_PROFILE.NAME },
 });
 

@@ -23,6 +23,7 @@ type PageHeroProps = {
   breadcrumb?: ReactNode;
   children?: ReactNode;
   actions?: ReactNode;
+  actionsFirstOnPhones?: boolean;
   aside?: ReactNode;
   asideWidth?: PageHeroAsideWidth;
   asideLeadsOnMobile?: boolean;
@@ -40,6 +41,7 @@ export const PageHero = ({
   breadcrumb,
   children,
   actions,
+  actionsFirstOnPhones = false,
   aside,
   asideWidth = "half",
   asideLeadsOnMobile = false,
@@ -66,11 +68,28 @@ export const PageHero = ({
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
         {description}
       </p>
-      {children && <div className="mt-6">{children}</div>}
-      {actions && (
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          {actions}
-        </div>
+      {actionsFirstOnPhones ? (
+        (children || actions) && (
+          <div className="mt-6 flex flex-col gap-8">
+            {children && (
+              <div className="order-last sm:order-none">{children}</div>
+            )}
+            {actions && (
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                {actions}
+              </div>
+            )}
+          </div>
+        )
+      ) : (
+        <>
+          {children && <div className="mt-6">{children}</div>}
+          {actions && (
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              {actions}
+            </div>
+          )}
+        </>
       )}
     </>
   );

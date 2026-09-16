@@ -27,6 +27,10 @@ type FormData = {
   purpose: string;
 };
 
+type RequiredField = "name" | "email";
+
+type FormErrors = Partial<Record<RequiredField, string>>;
+
 const INPUT_CLASS =
   "w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600";
 
@@ -36,7 +40,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
   const [formData, setFormData] = useState<FormData>({ email: "", name: "", purpose: "" });
   const [cvLanguage, setCvLanguage] = useState<CvLanguage>(locale === "nl" ? "nl" : "en");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const headingId = useId();
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -72,7 +76,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
   if (!isOpen) return null;
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: FormErrors = {};
 
     if (!formData.email.trim()) {
       newErrors.email = t("validation.emailRequired");
@@ -82,10 +86,6 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
 
     if (!formData.name.trim()) {
       newErrors.name = t("validation.nameRequired");
-    }
-
-    if (!formData.purpose.trim()) {
-      newErrors.purpose = t("validation.purposeRequired");
     }
 
     setErrors(newErrors);
@@ -139,11 +139,15 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
     }
   };
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
+  const handleRequiredFieldChange = (field: RequiredField, value: string) => {
     setFormData((previous) => ({ ...previous, [field]: value }));
     if (errors[field]) {
       setErrors((previous) => ({ ...previous, [field]: undefined }));
     }
+  };
+
+  const handlePurposeChange = (value: string) => {
+    setFormData((previous) => ({ ...previous, purpose: value }));
   };
 
   return (
@@ -233,7 +237,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
                     type="text"
                     autoComplete="name"
                     value={formData.name}
-                    onChange={(event) => handleInputChange("name", event.target.value)}
+                    onChange={(event) => handleRequiredFieldChange("name", event.target.value)}
                     className={`${INPUT_CLASS} ${errors.name ? "border-red-400" : "border-gray-500"}`}
                     placeholder={t("placeholders.name")}
                   />
@@ -253,7 +257,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
                     type="email"
                     autoComplete="email"
                     value={formData.email}
-                    onChange={(event) => handleInputChange("email", event.target.value)}
+                    onChange={(event) => handleRequiredFieldChange("email", event.target.value)}
                     className={`${INPUT_CLASS} ${errors.email ? "border-red-400" : "border-gray-500"}`}
                     placeholder={t("placeholders.email")}
                   />
@@ -263,26 +267,23 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
 
               <div>
                 <label htmlFor="cv-purpose" className="block text-sm font-medium text-gray-700 mb-1">
-                  {t("fields.purpose")} <span className="text-red-600">*</span>
+                  {t("fields.purpose")}{" "}
+                  <span className="font-normal text-gray-500">({t("fields.optional")})</span>
                 </label>
                 <div className="relative">
                   <MessageSquare className="absolute left-3 top-3 w-4 h-4 text-gray-500" aria-hidden="true" />
                   <select
                     id="cv-purpose"
                     value={formData.purpose}
-                    onChange={(event) => handleInputChange("purpose", event.target.value)}
-                    className={`${INPUT_CLASS} appearance-none bg-white ${errors.purpose ? "border-red-400" : "border-gray-500"}`}
+                    onChange={(event) => handlePurposeChange(event.target.value)}
+                    className={`${INPUT_CLASS} appearance-none bg-white border-gray-500`}
                   >
                     <option value="">{t("placeholders.purpose")}</option>
                     <option value="recruitment">{t("purposes.recruitment")}</option>
                     <option value="project_inquiry">{t("purposes.projectInquiry")}</option>
-                    <option value="business_partnership">{t("purposes.businessPartnership")}</option>
-                    <option value="networking">{t("purposes.networking")}</option>
-                    <option value="research">{t("purposes.research")}</option>
                     <option value="other">{t("purposes.other")}</option>
                   </select>
                 </div>
-                {errors.purpose && <p className="mt-1 text-xs text-red-600">{errors.purpose}</p>}
               </div>
             </div>
 
@@ -291,10 +292,10 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-6">
-              <Button type="button" variant="neutral" size="sm" onClick={onClose} className="flex-1">
+              <Button type="button" variant="neutral" size="md" onClick={onClose} className="flex-1">
                 {t("buttons.cancel")}
               </Button>
-              <Button type="submit" variant="primary" size="sm" disabled={isSubmitting} className="flex-1">
+              <Button type="submit" variant="primary" size="md" disabled={isSubmitting} className="flex-1">
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

@@ -21,8 +21,6 @@ import {
   LOCALE_CONFIG
 } from '../constants/meta-constants';
 
-const BUILD_TIME = process.env.NEXT_PUBLIC_BUILD_DATE ?? new Date().toISOString();
-
 export class SchemaGenerator {
   private readonly baseUrl: string;
   
@@ -356,6 +354,13 @@ export class SchemaGenerator {
     }));
   }
 
+  private declaredDates(config: SEOPageConfig): Record<string, string> {
+    return {
+      ...(config.publishedTime && { datePublished: config.publishedTime.toISOString() }),
+      ...(config.lastModified && { dateModified: config.lastModified.toISOString() })
+    };
+  }
+
   private generateWebPageSchema(config: SEOPageConfig): JsonLdSchema {
     const canonicalUrl = this.buildCanonicalUrl(config.path, config.locale);
 
@@ -379,8 +384,7 @@ export class SchemaGenerator {
         name: BUSINESS_PROFILE.COMPANY,
         url: `${this.baseUrl}/${config.locale}`
       },
-      datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
-      dateModified: config.lastModified?.toISOString() || BUILD_TIME,
+      ...this.declaredDates(config),
       inLanguage: LOCALE_CONFIG.HREFLANG[config.locale]
     };
   }
@@ -507,8 +511,7 @@ export class SchemaGenerator {
           height: 60
         }
       },
-      datePublished: config.publishedTime?.toISOString() || BUILD_TIME,
-      dateModified: config.lastModified?.toISOString() || BUILD_TIME,
+      ...this.declaredDates(config),
       image: `${this.baseUrl}/${config.locale}/opengraph-image`,
       articleSection: config.section || 'Technology',
       keywords: config.keywords?.join(', '),

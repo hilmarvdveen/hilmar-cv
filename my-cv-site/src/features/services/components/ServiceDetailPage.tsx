@@ -150,6 +150,7 @@ export const ServiceDetailPage = ({
         title={hero.title}
         titleAccent={hero.titleAccent}
         description={hero.description}
+        actionsFirstOnPhones
         actions={
           <>
             <Button href="/book" variant="primary" size="lg" data-placement="service-hero">
@@ -200,16 +201,12 @@ export const ServiceDetailPage = ({
             subtitle={engagement.description}
           />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {engagement.deliverables.map((deliverable, index) => (
-              <Card key={deliverable.title}>
-                <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-3 text-lg font-bold text-textMain">
-                  {deliverable.title}
-                </h3>
-                <p className="mt-2 text-gray-600">{deliverable.description}</p>
-              </Card>
+            {engagement.deliverables.map((deliverable) => (
+              <TitledItemCard
+                key={deliverable.title}
+                {...deliverable}
+                Icon={CheckCircle}
+              />
             ))}
           </div>
         </Container>

@@ -600,7 +600,8 @@
                 "The live account pages moved a percentage at a time, every step reversible in one move",
                 "Product decisions rest on trustworthy numbers: nine experiments built and configured, funnels repaired, Sentry end to end"
             ],
-            "headline": "Loyalty and Digital on a new platform, with no customer-facing outage"
+            "headline": "Loyalty and Digital on a new platform, with no customer-facing outage",
+            "close": "Is there an old storefront at your end that has to move to React page by page while customers keep ordering? Then I would like to hear which page you would move first, who gets to see it first and how you would take that step back."
         },
         "belastingdienst": {
             "company": "Belastingdienst",
@@ -638,7 +639,8 @@
                 "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
                 "Teams adopt the BOLD design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
             ],
-            "headline": "From months to days for a new income-tax form"
+            "headline": "From months to days for a new income-tax form",
+            "close": "At the Belastingdienst the gain came from letting the content editors build their own forms. If every content change at your end still runs through the development team, I am happy to look with you at where it gets stuck."
         },
         "postcode-loterij": {
             "company": "Nationale Postcode Loterij",
@@ -668,7 +670,8 @@
                 "Marketing manages campaign content in Storyblok, accessible to WCAG 2.1 AA from the first day",
                 "Existing campaigns stay safe while new ones ship, guarded by Playwright and Cypress in GitLab pipelines"
             ],
-            "headline": "A campaign site in days, from one design system"
+            "headline": "A campaign site in days, from one design system",
+            "close": "With several brands, every campaign tends to start from zero again. I turned that around at Nationale Postcode Loterij, and I would like to hear how many campaigns you put live in a year."
         },
         "athlon": {
             "company": "Athlon",
@@ -705,7 +708,8 @@
                 "Every new screen starts from a tested component library, which kept the rebuild affordable",
                 "The team writes better Angular after coaching and code reviews, junior and senior alike"
             ],
-            "headline": "Self-service renewed on a current Angular stack"
+            "headline": "Self-service renewed on a current Angular stack",
+            "close": "Athlon's application sat on a framework that was due for replacement, and everything kept working through the move. If a migration like that keeps sliding down your list, I am glad to look at the first step with you."
         },
         "randstad": {
             "company": "Randstad",
@@ -728,7 +732,8 @@
                 "The same structure on every platform, in vanilla JavaScript, Angular and React with SCSS and BEM",
                 "Colleagues work component-driven in Angular after coaching as UI coach"
             ],
-            "headline": "One accessible component library for two brands"
+            "headline": "One accessible component library for two brands",
+            "close": "Is a rebrand coming up that touches more than one site at once? Randstad and Yacht taught me how quickly that goes once teams share the same building blocks, and I am glad to think with you about where to start."
         },
         "opinity": {
             "company": "Opinity",
@@ -751,7 +756,8 @@
                 "Mistakes surface the moment someone makes them, with validation in the interface and in the API",
                 "One person carried frontend and backend, Angular on ASP.NET Core with role-based access"
             ],
-            "headline": "Freight registration live inside four months"
+            "headline": "Freight registration live inside four months",
+            "close": "A fixed delivery date mostly changes the order of your choices. At Opinity that is why I took on both the frontend and the backend, and I am glad to think with you about what really has to be finished."
         },
         "omniplan": {
             "company": "Omniplan",
@@ -777,7 +783,8 @@
                 "Connecting a new partner became a matter of configuration, because screens take their behaviour from the backend",
                 "The platform runs on Angular 9 and .NET Core with REST and gRPC, on Azure with Docker and Kubernetes"
             ],
-            "headline": "Outside organisations on the platform, securely"
+            "headline": "Outside organisations on the platform, securely",
+            "close": "Letting outside parties in without showing them more than they need: that was the heart of it at Omniplan. If that question is on your table too, I am happy to take it apart with you."
         },
         "ortec": {
             "company": "Ortec",
@@ -803,7 +810,8 @@
                 "New views and integrations arrive without a rebuild, because screen behaviour comes from configuration",
                 "Parts release on their own as micro-frontends on .NET Core microservices, with contracts settled on OpenAPI"
             ],
-            "headline": "Live routes and loads on one screen for FedEx"
+            "headline": "Live routes and loads on one screen for FedEx",
+            "close": "Is the information your users need spread across several services? At Ortec that stream came together on one screen, and I would like to hear which screen would give you the most."
         },
         "bluefield": {
             "company": "Bluefield Smart Access",
@@ -826,7 +834,8 @@
                 "Ziggo's network administrators see incidents on a map as they happen, faulty nodes marked",
                 "Tommy Hilfiger employees reserve a parking spot in a calendar and get their access ticket"
             ],
-            "headline": "Processes and network incidents in one view"
+            "headline": "Processes and network incidents in one view",
+            "close": "A lot of data does not yet mean someone can see where to step in. That is the difference I made visible at Bluefield Smart Access, and I am glad to look with you at the view your administrators are missing."
         },
         "niped": {
             "company": "Niped",
@@ -849,7 +858,8 @@
                 "Editors manage texts and media themselves, with version control, in a WPF application on MVVM",
                 "Interfaces settled with the backend developers, code quality kept with SonarQube, Prettier and ESLint"
             ],
-            "headline": "Health insight for users, content in the editors' hands"
+            "headline": "Health insight for users, content in the editors' hands",
+            "close": "At Niped two things ran together: structure in a React application that had grown, and editors who no longer had to wait. If one of the two is holding you up, I would like to hear which."
         },
         "conclusion": {
             "company": "Conclusion",
@@ -872,7 +882,8 @@
                 "Client reports under the SLA went from analysis to improvement with one point of contact",
                 "Backend logic on REST WebAPIs with CQRS and NHibernate, covered with xUnit"
             ],
-            "headline": "A learning platform modernised while it stayed in service"
+            "headline": "A learning platform modernised while it stayed in service",
+            "close": "Rebuilding while the doors stay open was the starting point at Conclusion. I am glad to talk through which step would be the safest one for you to take first."
         },
         "transdev": {
             "company": "Transdev",
@@ -895,11 +906,13 @@
                 "Callers see their position and expected waiting time through a queue module",
                 "Later channels connect to the same secure .NET Core gateway over the Delphi backend"
             ],
-            "headline": "Trip information travellers look up themselves"
+            "headline": "Trip information travellers look up themselves",
+            "close": "An old system that new channels cannot reach does not have to be replaced first. At Transdev a secure layer went around it, and I am glad to explain when that approach fits and when it does not."
         },
         "period": "{from} to {to}",
         "deliveredTitle": "What it changed",
         "readMore": "Read the full engagement at {company}",
+        "morePills": "+{count} more on the page",
         "earlierTitle": "Earlier engagements"
     },
     "projects": {
@@ -1964,7 +1977,8 @@
         "fields": {
             "name": "Full name",
             "email": "Email address",
-            "purpose": "Why you want it"
+            "purpose": "Why you want it",
+            "optional": "optional"
         },
         "placeholders": {
             "name": "Your name",
@@ -1974,16 +1988,12 @@
         "purposes": {
             "recruitment": "A role I am filling",
             "projectInquiry": "An engagement I have in mind",
-            "businessPartnership": "Working together",
-            "networking": "Networking",
-            "research": "Information",
             "other": "Something else"
         },
         "validation": {
             "nameRequired": "Enter your name.",
             "emailRequired": "Enter your email address.",
-            "emailInvalid": "Check the email address, it looks incomplete.",
-            "purposeRequired": "Pick a reason."
+            "emailInvalid": "Check the email address, it looks incomplete."
         },
         "privacy": "Your details stay with me and go nowhere else.",
         "buttons": {
@@ -2490,7 +2500,12 @@
             "button": "Book a 30-minute call"
         },
         "breadcrumbLabel": "Breadcrumb",
-        "homeLabel": "Home"
+        "homeLabel": "Home",
+        "neighbours": {
+          "label": "Previous and next article",
+          "previous": "Previous article",
+          "next": "Next article"
+        }
     },
     "regions": {
         "hub": {

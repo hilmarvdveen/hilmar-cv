@@ -155,13 +155,13 @@ describe("ServiceDetailPage", () => {
     ).toHaveAttribute("href", "/contact");
   });
 
-  it("numbers the engagement deliverables", () => {
+  it("renders the engagement deliverables as an unordered set, without step numbers", () => {
     render(<ServiceDetailPage {...baseProps} />);
     const engagementRegion = screen.getByRole("region", {
       name: baseProps.engagement.title,
     });
-    expect(within(engagementRegion).getByText("01")).toBeInTheDocument();
-    expect(within(engagementRegion).getByText("04")).toBeInTheDocument();
+    expect(within(engagementRegion).queryByText("01")).toBeNull();
+    expect(within(engagementRegion).queryByText("04")).toBeNull();
     for (const deliverable of baseProps.engagement.deliverables) {
       expect(screen.getByText(deliverable.title)).toBeInTheDocument();
       expect(screen.getByText(deliverable.description)).toBeInTheDocument();

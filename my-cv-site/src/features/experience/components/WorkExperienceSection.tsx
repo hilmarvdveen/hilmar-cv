@@ -18,6 +18,7 @@ const EARLIER_HEADING_ID = "work-experience-earlier-heading";
 const MID_CTA_HEADING_ID = "work-experience-mid-cta-heading";
 export const FULL_CARD_COUNT = 4;
 const ENTRIES_BEFORE_MID_CTA = FULL_CARD_COUNT;
+export const PILL_VISIBLE_COUNT = 8;
 
 export const WorkExperienceSection = () => {
   const t = useTranslations("work");
@@ -42,7 +43,7 @@ export const WorkExperienceSection = () => {
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
         <Card className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
             <div className="relative mt-1 h-8 w-24 shrink-0">
               <Image
                 src={`/logos/${entry.logo}`}
@@ -79,6 +80,8 @@ export const WorkExperienceSection = () => {
     const role = t(`${id}.role`);
     const summary = t(`${id}.summary`);
     const delivered = (t.raw(`${id}.delivered`) as string[] | undefined) ?? [];
+    const visibleTech = entry.tech.slice(0, PILL_VISIBLE_COUNT);
+    const hiddenTechCount = entry.tech.length - visibleTech.length;
 
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
@@ -168,7 +171,7 @@ export const WorkExperienceSection = () => {
               aria-label={t("technologies")}
               className="mt-4 flex flex-wrap gap-2"
             >
-              {entry.tech.map((tech) => (
+              {visibleTech.map((tech) => (
                 <li
                   key={tech}
                   className="rounded-md bg-bgLight px-2 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-gray-200"
@@ -176,6 +179,11 @@ export const WorkExperienceSection = () => {
                   {t(tech)}
                 </li>
               ))}
+              {hiddenTechCount > 0 && (
+                <li className="rounded-md bg-bgLight px-2 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-gray-200">
+                  {t("morePills", { count: hiddenTechCount })}
+                </li>
+              )}
             </ul>
           )}
         </Card>

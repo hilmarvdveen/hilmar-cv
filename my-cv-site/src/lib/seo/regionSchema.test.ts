@@ -1,5 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { regionHubSchema, regionPageSchema } from "./regionSchema";
+
+afterEach(() => vi.unstubAllEnvs());
 
 const shared = {
   title: "Freelance frontend developer in Amsterdam",
@@ -49,5 +51,19 @@ describe("regionHubSchema", () => {
     expect(parsed[0].inLanguage).toBe("en-US");
     expect(parsed[1].itemListElement).toHaveLength(2);
     expect(parsed[2].areaServed.map((city: { name: string }) => city.name)).toEqual(["Amsterdam", "The Hague"]);
+  });
+});
+
+describe("region schema dates", () => {
+  it("declares no dateModified, even when the environment carries a build date", () => {
+    vi.stubEnv("NEXT_PUBLIC_BUILD_DATE", "2026-09-08T10:00:00.000Z");
+    const page = JSON.parse(
+      regionPageSchema({ ...shared, locale: "nl", city: { id: "utrecht", name: "Utrecht" } })
+    );
+    const hub = JSON.parse(
+      regionHubSchema({ ...shared, locale: "nl", cities: [{ id: "utrecht", name: "Utrecht" }] })
+    );
+    expect(page[0].dateModified).toBeUndefined();
+    expect(hub[0].dateModified).toBeUndefined();
   });
 });

@@ -76,7 +76,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
         next={workHistory[index + 1]}
         others={workHistory.filter((other) => other.id !== id)}
       />
-      <ExperienceClose />
+      <ExperienceClose description={work(`${id}.close`)} />
     </>
   );
 }
