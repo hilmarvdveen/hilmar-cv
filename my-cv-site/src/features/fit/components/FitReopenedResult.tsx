@@ -5,17 +5,22 @@ import { useLocale } from "next-intl";
 import { Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { trackFitEvent, type FitReport as FitReportData } from "@/lib/fit";
 import { FitReport } from "./FitReport";
+import { FitQuestion } from "./FitQuestion";
+import { FitBooking } from "./FitBooking";
 
 export type FitReopenedResultLabels = {
-  title: string;
-  intro: string;
   loading: string;
+  ready: string;
   failed: string;
   download: string;
   downloading: string;
   downloadNote: string;
+  downloaded: string;
+  downloadFailed: string;
+  mailAction: string;
 };
 
 type FitReopenedResultProps = {
@@ -28,6 +33,9 @@ type StoredResult = {
   report: FitReportData;
 };
 
+type LoadState = "loading" | "ready" | "failed";
+type DownloadState = "idle" | "downloading" | "downloaded" | "failed";
+
 const documentFileName = (locale: string): string =>
   `cv-hilmar-van-der-veen-${locale === "en" ? "en" : "nl"}.pdf`;
 
@@ -36,17 +44,29 @@ const saveDocument = (blob: Blob, fileName: string) => {
   const anchor = document.createElement("a");
   anchor.href = objectUrl;
   anchor.download = fileName;
+  document.body.appendChild(anchor);
   anchor.click();
-  URL.revokeObjectURL(objectUrl);
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+};
+
+const statusLabelFor = (
+  loadState: LoadState,
+  downloadState: DownloadState,
+  labels: FitReopenedResultLabels
+): string => {
+  if (downloadState === "downloaded") return labels.downloaded;
+  if (downloadState === "failed") return labels.downloadFailed;
+  if (loadState === "loading") return labels.loading;
+  if (loadState === "failed") return labels.failed;
+  return labels.ready;
 };
 
 export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedResultProps) => {
   const locale = useLocale();
   const [report, setReport] = useState<FitReportData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasFailed, setHasFailed] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadFailed, setDownloadFailed] = useState(false);
+  const [loadState, setLoadState] = useState<LoadState>("loading");
+  const [downloadState, setDownloadState] = useState<DownloadState>("idle");
 
   useEffect(() => {
     let isMounted = true;
@@ -57,11 +77,12 @@ export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedR
         const response = await fetch(`/api/fit/result?${parameters.toString()}`);
         if (!response.ok) throw new Error(`The result answered ${response.status}`);
         const data = (await response.json()) as StoredResult;
-        if (isMounted) setReport(data.report);
+        if (isMounted) {
+          setReport(data.report);
+          setLoadState("ready");
+        }
       } catch {
-        if (isMounted) setHasFailed(true);
-      } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) setLoadState("failed");
       }
     };
 
@@ -72,9 +93,8 @@ export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedR
   }, [sessionId, resultKey]);
 
   const handleDownload = async () => {
-    if (isDownloading) return;
-    setIsDownloading(true);
-    setDownloadFailed(false);
+    if (downloadState === "downloading") return;
+    setDownloadState("downloading");
 
     try {
       const parameters = new URLSearchParams({ session: sessionId, key: resultKey, locale });
@@ -82,24 +102,20 @@ export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedR
       if (!response.ok) throw new Error(`The CV answered ${response.status}`);
       saveDocument(await response.blob(), documentFileName(locale));
       trackFitEvent("fit_cv_downloaded", { locale });
+      setDownloadState("downloaded");
     } catch {
-      setDownloadFailed(true);
-    } finally {
-      setIsDownloading(false);
+      setDownloadState("failed");
     }
   };
 
   return (
     <div>
-      <h2 className="text-subsection-title text-textMain">{labels.title}</h2>
-      <p className="mt-2 text-base leading-relaxed text-gray-700">{labels.intro}</p>
-
       <p role="status" aria-live="polite" className="sr-only">
-        {isLoading ? labels.loading : ""}
+        {statusLabelFor(loadState, downloadState, labels)}
       </p>
 
-      {isLoading && (
-        <p className="mt-6 flex items-center gap-3 text-base text-gray-700">
+      {loadState === "loading" && (
+        <p className="flex items-center gap-3 text-base text-gray-700">
           <Loader2
             className="h-5 w-5 animate-spin motion-reduce:animate-none"
             aria-hidden="true"
@@ -108,24 +124,24 @@ export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedR
         </p>
       )}
 
-      {hasFailed && (
-        <Card variant="tinted" className="mt-6">
+      {loadState === "failed" && (
+        <Card>
           <p className="text-base leading-relaxed text-gray-700">{labels.failed}</p>
         </Card>
       )}
 
       {report && (
         <>
-          <Card variant="tinted" className="mt-6">
+          <Card className="p-4 sm:p-7">
             <Button
               type="button"
               variant="primary"
-              size="lg"
+              size="md"
               onClick={handleDownload}
-              aria-disabled={isDownloading}
+              aria-disabled={downloadState === "downloading"}
               className="w-full sm:w-auto"
             >
-              {isDownloading ? (
+              {downloadState === "downloading" ? (
                 <>
                   <Loader2
                     className="h-5 w-5 animate-spin motion-reduce:animate-none"
@@ -141,13 +157,22 @@ export const FitReopenedResult = ({ sessionId, resultKey, labels }: FitReopenedR
               )}
             </Button>
             <p className="mt-3 text-sm leading-relaxed text-gray-600">{labels.downloadNote}</p>
-            {downloadFailed && (
-              <p role="alert" className="mt-3 text-sm font-semibold text-red-800">
-                {labels.failed}
+            {downloadState === "failed" && (
+              <p role="alert" className="mt-3 text-sm leading-relaxed text-red-800">
+                {labels.downloadFailed}{" "}
+                <a
+                  href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
+                  data-placement="fit-download-mail"
+                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                >
+                  {labels.mailAction}
+                </a>
               </p>
             )}
           </Card>
           <FitReport report={report} sessionId={sessionId} />
+          <FitQuestion sessionId={sessionId} />
+          <FitBooking cardVariant="default" />
         </>
       )}
     </div>

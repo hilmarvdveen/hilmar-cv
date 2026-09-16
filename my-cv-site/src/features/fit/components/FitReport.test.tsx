@@ -118,11 +118,36 @@ describe("FitReport", () => {
 
   it("keeps the summary and the technologies in the empty state", () => {
     renderReport({ requirements: [] });
-    expect(screen.getByText("report.empty")).toBeInTheDocument();
     expect(screen.getByText(report.summary)).toBeInTheDocument();
     expect(screen.getByText("report.technologiesTitle")).toBeInTheDocument();
     expect(screen.queryByText("report.requirementsTitle")).toBeNull();
     expect(screen.queryByText("report.counts")).toBeNull();
+  });
+
+  it("leaves the empty sentence out when the summary already says it", () => {
+    renderReport({ requirements: [] });
+    expect(screen.queryByText("report.empty")).toBeNull();
+  });
+
+  it("says nothing was read when neither a requirement nor a summary came back", () => {
+    renderReport({ requirements: [], summary: "" });
+    expect(screen.getByText("report.empty")).toBeInTheDocument();
+  });
+
+  it("names what waits below the report when the parent offers it", () => {
+    render(
+      <FitReport
+        report={report}
+        sessionId="session-id-value"
+        nextStepsNote="The CV and the call are below."
+      />
+    );
+    expect(screen.getByText("The CV and the call are below.")).toBeInTheDocument();
+  });
+
+  it("leaves the next step line out when the parent offers nothing below", () => {
+    renderReport();
+    expect(screen.queryByText("The CV and the call are below.")).toBeNull();
   });
 
   it("names the number of the stored result when there is one", () => {

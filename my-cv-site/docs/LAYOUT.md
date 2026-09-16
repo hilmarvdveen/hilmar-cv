@@ -43,7 +43,7 @@ scale so a new page never hand rolls its own hero markup:
 | Vertical padding | `py-16 sm:py-20`, or `py-12 sm:py-14` through the optional `padding="compact"` prop, which `PageHero` passes to `Section` |
 | Badge | optional uppercase eyebrow in `text-emerald-300`, with an optional icon |
 | Heading | `text-[1.75rem] leading-[1.15]` on phones (the shared `text-3xl` budget wrapped a 58-character title to four lines at 390), `sm:text-5xl` from `sm`, white, with an optional accent line |
-| Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background |
+| Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background, hidden below `sm` through the optional `descriptionHiddenOnPhones` prop |
 | Breadcrumb | optional, rendered at the top of the band through the `breadcrumb` slot |
 | Aside | optional second column for a summary or preview |
 | Container | `Container` (16px gutters on phones, 24px from `sm`) |
@@ -544,3 +544,28 @@ Two rules came out of the same pass and apply everywhere:
   document, which cost a keyboard visitor the whole wait plus the chrome to tab
   back. Use `aria-disabled` for busy, guard the handler, and let the error carry
   the reason.
+
+## A full-width primary inside a card (16 September 2026)
+
+`Card` is `p-7`, so at 390 a card in a narrow container is 358 wide and gives
+its content 302 pixels. A `w-full` `Button` is `whitespace-nowrap`, so a label
+that needs more than that does not wrap, it runs out of its own button. The
+designer measured both of them on /fit: "Plan een gesprek van 30 minuten"
+needed 337 pixels at `size="lg"` and ended 19 pixels past the padding, and the
+reopened download label overhung its button by 7. Both fit in English, so an
+English pass sees nothing.
+
+The rule: inside a card a full-width primary is `size="md"`, and where the
+label still does not fit, the card padding steps down to `p-4 sm:p-7`. The
+label is not the lever. It is copy, it carries the call, and it is the same
+label the rest of the site uses, which is the point of one CTA label.
+
+Measured after the change at 390: the booking label is 257 pixels of content in
+a 300 pixel button with 21.5 pixels of padding on both sides, and the download
+label is 284 in a 324 pixel button (the card at `p-4`) with 20 on both sides.
+`document.documentElement.scrollWidth` is 390 in every state of the page.
+
+The same measurement pass moved the /fit textarea from 665 to 503 at 390 by
+hiding the hero description below `sm`, which is the `descriptionHiddenOnPhones`
+prop in the hero table above and the /book precedent applied through the shared
+primitive.

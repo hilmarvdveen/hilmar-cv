@@ -35,6 +35,18 @@ describe("PageHero", () => {
     expect(screen.getByRole("region", { name: "Vacancy check" })).toHaveClass("py-12");
   });
 
+  it("keeps the description on phones unless the page asks for a title band", () => {
+    const { unmount } = render(
+      <PageHero title="Vacancy check" description="Paste a vacancy." />
+    );
+    expect(screen.getByText("Paste a vacancy.")).not.toHaveClass("hidden");
+    unmount();
+    render(
+      <PageHero descriptionHiddenOnPhones title="Vacancy check" description="Paste a vacancy." />
+    );
+    expect(screen.getByText("Paste a vacancy.")).toHaveClass("hidden", "sm:block");
+  });
+
   it("uses a custom title id in place of the default", () => {
     render(
       <PageHero

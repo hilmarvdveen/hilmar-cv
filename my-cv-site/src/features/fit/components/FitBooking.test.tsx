@@ -30,4 +30,11 @@ describe("FitBooking", () => {
     expect(booking).toHaveAttribute("href", "/book");
     expect(booking).toHaveAttribute("data-placement", "fit-report");
   });
+
+  it("takes the card fill from the band it closes", () => {
+    render(<FitBooking cardVariant="default" />);
+    expect(
+      screen.getByRole("heading", { level: 2, name: "report.bookTitle" }).parentElement
+    ).toHaveClass("bg-white");
+  });
 });

@@ -120,10 +120,27 @@ requester's email domain for the lead register. That last call is wrapped:
 a failure is logged as one sentence and never blocks the mail, because the
 mail is what the visitor is waiting for.
 
-The card then says to look in the mail and names the address it went to. The
-file itself is never attached. The link is the delivery, so a forwarded mail
-stays a working link and the agent builds the document only when somebody asks
-for it.
+The card is offered only when the report holds at least one requirement. A CV
+written to requirements the check could not read is not a document anybody
+wants, so an empty result goes from the summary straight to the booking card.
+
+The fields carry `required` for the semantics and the form carries `noValidate`,
+the pairing the contact form already uses, so the written sentences in
+`fit.cv.errors` are the ones the visitor reads instead of the browser bubble in
+the browser's own language. One line under the submit says where the name and
+the address go, with the privacy statement behind a link (`fit.cv.privacyNote`
+and `fit.cv.privacyLink`). The submit is the outline treatment, so the filled
+emerald below the report belongs to the call alone. When the request does not
+come through, the mail address sits behind a labelled link inside the same
+alert (`data-placement="fit-cv-mail"`).
+
+Once the request is away the card keeps its place and its fill and the form is
+replaced by the sent message inside it, focus moves to the sent heading, and
+the page's own live region carries the sent sentence, which also clears the
+sentence the check left there. The card then says to look in the mail and names
+the address it went to. The file itself is never attached. The link is the
+delivery, so a forwarded mail stays a working link and the agent builds the
+document only when somebody asks for it.
 
 Both mails live in `src/lib/email/templates.ts` next to the booking mails and
 share its layout: `renderFitLinkEmail` (bilingual, the visitor reads it) and
@@ -141,8 +158,13 @@ The page reads both parameters and asks `fitReopenState` what to render:
 | State | What renders |
 |---|---|
 | `none` | the page as it always was |
-| `valid` | the stored report above the form, with the CV download button |
+| `valid` | the result page: its own hero, the download button, the stored report, the question box, the booking card, and the vacancy form behind a disclosure at the end |
 | `invalid` | the page as new, with `result.invalid` above the form |
+
+The hero belongs to the state. In `valid` the band carries `result.title` and
+`result.intro` and drops the badge, because the visitor came from their own
+mail to fetch their own result and not to read what the check does. The page
+reads the state on the server, so the right hero is in the first response.
 
 `FitReopenedResult` is the client island of that state. It asks
 `GET /api/fit/result` for the stored report, and its button asks
@@ -150,6 +172,26 @@ The page reads both parameters and asks `fitReopenState` what to render:
 document as a download. The button carries a waiting state because the first
 call builds the document and takes about half a minute. Both routes verify the
 key before they call the agent, and both refuse a wrong key with 403.
+
+The band ends the way the done state ends, with the question box (the session
+lives thirty days and the question needs nothing but its id) and the booking
+card as the close. The vacancy form follows in its own section, inside a
+`details` disclosure labelled `result.newCheck`, so the page a mail link opens
+does not end on an empty textarea. That disclosure is the one place on this
+page where the form is not the first thing in its section.
+
+The live region names every step: the wait, the arrival (`result.ready`), a
+result that is gone (`result.failed`), a saved document (`result.downloaded`)
+and a build that did not come through (`result.downloadFailed`, with the mail
+address behind `data-placement="fit-download-mail"`). The download failure has
+a sentence of its own because the load failure says the result is gone, which
+is the one thing that is not true while the result stands on the screen. The
+document is saved through an anchor that is appended, clicked and removed, with
+the object URL revoked on the next task.
+
+Both cards in that band are `variant="default"`. The band is
+`background="light"`, so a tinted card would have the fill of its own
+background and a hairline would carry the one action on the band.
 
 The plain session number under the report stays what it always was. It is not a
 key: it opens nothing, and it exists so the privacy statement can offer
@@ -232,12 +274,16 @@ The order is fixed and every block sits in `FitCheck`, the one client island:
    and engagement names, and the number of the stored result at the end.
 5. The question box, `FitQuestion`.
 6. The CV card, `FitCvCard`, which asks for a name and an address and mails the
-   link to the CV written to this vacancy.
+   link to the CV written to this vacancy. It renders only when the report
+   holds a requirement, and the summary card then closes with
+   `report.nextSteps` naming what waits below, because on a phone the card
+   sits several screens under the verdicts.
 7. The booking card, `FitBooking`, the close of the page.
 
-A reopened link (see above) puts the stored result and its download button in
-its own band above the form, so the form stays where an organic visitor expects
-it.
+A reopened link (see above) has its own order: the hero says it is the
+visitor's result, the band carries the download button, the report, the
+question box and the booking card, and the vacancy form sits at the end behind
+the `result.newCheck` disclosure.
 
 The question box comes before the booking card on purpose. The booking card is
 the last thing a visitor meets and does the close band job, which is why this
@@ -264,10 +310,12 @@ has to be measured again.
 |---|---|
 | Idle | form, disclosure |
 | Checking | the button marked `aria-disabled` and still focusable, the form `aria-busy`, `form.checkingNote` under the button, the status line saying the check is running |
-| Done | the status line saying the result is below, focus moved to the result heading, the result, the question box (only with a session id), the booking card |
+| Done | the status line saying the result is below, focus moved to the result heading, the result, the question box (only with a session id), the CV card (only with a requirement), the booking card |
+| CV sent | the same card with the form replaced by the sent message, focus on the sent heading, the sent sentence in the page live region |
 | Too short | `errors.tooShort` as a plain alert tied to the field through `aria-describedby`, the finished report and the question box left standing |
 | Failed | a card with the message, the booking button (`fit-failed`) and the mail link (`fit-failed-mail`), below the submit so the button never moves under the visitor thumb, the finished report left standing |
-| Empty result | the summary and the technologies when the agent returned them, the `report.empty` sentence, and the booking card |
+| Empty result | the summary and the technologies when the agent returned them, `report.empty` only when there is no summary to say it, no CV card, and the booking card |
+| Reopened | the result hero, the download button, the report, the question box, the booking card, and the vacancy form behind the `result.newCheck` disclosure |
 
 Neither button ever carries the `disabled` attribute. A disabled button leaves
 the tab order and hands focus to the document, which is what happened on
@@ -332,7 +380,9 @@ reports its `cta_click` without extra code. The other placements on this page
 are `fit-hero` (the text link in the disclosure card), `fit-failed` and
 `fit-failed-mail` (the failure card), and `fit-evidence` and
 `fit-answer-evidence` (the engagement links in a report and in an answer). The
-three entrances carry `footer-fit`, `hiring-fit` and `contact-facts-fit`.
+three entrances carry `footer-fit`, `hiring-fit` and `contact-facts-fit`. The
+two mail links of the CV step carry `fit-cv-mail` (the request did not come
+through) and `fit-download-mail` (the build did not come through).
 
 The CV request button and the CV download button carry no placement label.
 `SiteEvents` reads `data-placement` from anchors only, and both of these are
@@ -401,6 +451,24 @@ record does show.
   months. The basis line now says how it counts and the engagement names sit
   beside each figure, but the match rule lives in the agent. A stored report
   still cannot be reopened or forwarded.
+
+- 16 September 2026, the designer round on the CV step and the reopened link
+  (`Hilmar/review-board/2026-09-16-fit-P5-designer-cv-step.md`). What was real:
+  handing over the address lost focus to the document and announced nothing,
+  the page a mail link opens sold the check instead of showing the result and
+  ended on an empty form, two Dutch labels inside a card ran past their own
+  button at 390, the browser bubble hid the written sentences, the download
+  failure said the result was gone while it stood on the screen, the action
+  card had the fill of its own band, the sent card took the fill of the close,
+  the card asked for a name and an address without saying where they go, the CV
+  was offered on an empty result, nothing pointed at the CV four screens below
+  the verdicts, the reopened page never announced the arrival, the failure
+  named a mail with no link behind it, two filled emerald buttons sat on one
+  phone screen, the saved document depended on a detached anchor, the empty
+  state could say the same thing twice, and the hero description spent 146
+  pixels of the first phone screen. All of those are fixed above. Left open:
+  telling two reopened results apart needs a title or a date from the agent, so
+  it is a contract question first.
 
 - 16 September 2026, the CV step. Two things were decided rather than found.
   The CV is not attached to the mail: the link is the delivery, so the document

@@ -12,13 +12,15 @@ vi.mock("@/lib/fit", async () => {
 });
 
 const LABELS = {
-  title: "Your result",
-  intro: "This is the result you ran",
   loading: "Getting the result",
+  ready: "Your result is below",
   failed: "The result is no longer there",
   download: "Download the CV",
   downloading: "Building the CV",
   downloadNote: "The first download builds the file",
+  downloaded: "The CV is in your downloads",
+  downloadFailed: "The CV did not come through",
+  mailAction: "Mail me the CV",
 };
 
 const REPORT = {
@@ -26,6 +28,8 @@ const REPORT = {
   requirements: [],
   technologies: [{ name: "React", years: 7, engagements: [] }],
 };
+
+const VISIBLE = { selector: "p:not(.sr-only)" };
 
 const renderView = () =>
   render(
@@ -54,7 +58,8 @@ beforeEach(() => {
 describe("FitReopenedResult", () => {
   it("asks the route for the stored result with the session and the key", async () => {
     renderView();
-    expect(screen.getByText(LABELS.loading, { selector: "p:not(.sr-only)" })).toBeInTheDocument();
+    expect(screen.getByText(LABELS.loading, VISIBLE)).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(LABELS.loading);
 
     await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
     expect(vi.mocked(fetch).mock.calls[0][0]).toBe(
@@ -62,30 +67,48 @@ describe("FitReopenedResult", () => {
     );
   });
 
-  it("offers the download once the report is there", async () => {
+  it("offers the download and announces the arrival once the report is there", async () => {
     renderView();
     await waitFor(() =>
       expect(screen.getByRole("button", { name: LABELS.download })).toBeInTheDocument()
     );
     expect(screen.getByText(LABELS.downloadNote)).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(LABELS.ready);
+  });
+
+  it("ends the band with the question box and the booking card", async () => {
+    renderView();
+    await waitFor(() => expect(screen.getByLabelText("question.label")).toBeInTheDocument());
+
+    const question = screen.getByRole("heading", { level: 3, name: "question.title" });
+    const booking = screen.getByRole("heading", { level: 2, name: "report.bookTitle" });
+    expect(
+      question.compareDocumentPosition(booking) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(screen.getByRole("link", { name: "report.bookButton" })).toHaveAttribute(
+      "data-placement",
+      "fit-report"
+    );
   });
 
   it("says the result is gone when the route refuses it", async () => {
     vi.mocked(fetch).mockResolvedValue({ ok: false, status: 404, json: async () => ({}) } as Response);
     renderView();
-    await waitFor(() => expect(screen.getByText(LABELS.failed)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(LABELS.failed, VISIBLE)).toBeInTheDocument());
+    expect(screen.getByRole("status")).toHaveTextContent(LABELS.failed);
     expect(screen.queryByRole("button", { name: LABELS.download })).not.toBeInTheDocument();
   });
 
   it("says the result is gone when the network throws", async () => {
     vi.mocked(fetch).mockRejectedValue(new Error("network"));
     renderView();
-    await waitFor(() => expect(screen.getByText(LABELS.failed)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(LABELS.failed, VISIBLE)).toBeInTheDocument());
   });
 
-  it("downloads the CV, names the file and reports the event", async () => {
+  it("saves the document through an attached anchor and reports the event", async () => {
     renderView();
     const download = await waitFor(() => screen.getByRole("button", { name: LABELS.download }));
+    const appendChild = vi.spyOn(document.body, "appendChild");
 
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
@@ -95,12 +118,21 @@ describe("FitReopenedResult", () => {
 
     await userEvent.setup().click(download);
 
-    await waitFor(() => expect(trackFitEvent).toHaveBeenCalledWith("fit_cv_downloaded", { locale: "en" }));
+    await waitFor(() =>
+      expect(trackFitEvent).toHaveBeenCalledWith("fit_cv_downloaded", { locale: "en" })
+    );
     expect(vi.mocked(fetch).mock.lastCall?.[0]).toBe(
       "/api/fit/cv?session=session-id-value&key=signature-value&locale=en"
     );
+    const anchors = appendChild.mock.calls
+      .map(([node]) => node as HTMLElement)
+      .filter((node) => node.tagName === "A");
+    expect(anchors[0]).toHaveAttribute("download", "cv-hilmar-van-der-veen-en.pdf");
+    expect(document.body.querySelector("a[download]")).toBeNull();
     expect(URL.createObjectURL).toHaveBeenCalled();
-    expect(URL.revokeObjectURL).toHaveBeenCalledWith("blob:cv");
+    await waitFor(() => expect(URL.revokeObjectURL).toHaveBeenCalledWith("blob:cv"));
+    expect(screen.getByRole("status")).toHaveTextContent(LABELS.downloaded);
+    appendChild.mockRestore();
   });
 
   it("ignores a second click while the CV is still being built", async () => {
@@ -118,14 +150,20 @@ describe("FitReopenedResult", () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
-  it("says it did not work when the CV call refuses", async () => {
+  it("says the download did not come through and keeps the result on the page", async () => {
     renderView();
     const download = await waitFor(() => screen.getByRole("button", { name: LABELS.download }));
 
     vi.mocked(fetch).mockResolvedValue({ ok: false, status: 429, json: async () => ({}) } as Response);
     await userEvent.setup().click(download);
 
-    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(LABELS.failed));
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(LABELS.downloadFailed));
+    expect(screen.getByRole("status")).toHaveTextContent(LABELS.downloadFailed);
+    expect(screen.getByText(REPORT.summary)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: LABELS.mailAction })).toHaveAttribute(
+      "data-placement",
+      "fit-download-mail"
+    );
     expect(trackFitEvent).not.toHaveBeenCalled();
   });
 });

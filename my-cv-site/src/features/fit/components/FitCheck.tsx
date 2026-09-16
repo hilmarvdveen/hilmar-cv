@@ -124,6 +124,8 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
     }
   };
 
+  const offersTailoredCv = sessionId !== "" && (report?.requirements.length ?? 0) > 0;
+
   return (
     <div>
       <FitVacancyForm
@@ -147,13 +149,14 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
 
       {report && !isChecking && (
         <>
-          <FitReport report={report} sessionId={sessionId} headingRef={resultHeadingRef} />
-          {sessionId && (
-            <>
-              <FitQuestion sessionId={sessionId} />
-              <FitCvCard sessionId={sessionId} />
-            </>
-          )}
+          <FitReport
+            report={report}
+            sessionId={sessionId}
+            headingRef={resultHeadingRef}
+            nextStepsNote={offersTailoredCv ? t("report.nextSteps") : undefined}
+          />
+          {sessionId && <FitQuestion sessionId={sessionId} />}
+          {offersTailoredCv && <FitCvCard sessionId={sessionId} onSent={setStatusMessage} />}
           <FitBooking />
         </>
       )}

@@ -113,16 +113,56 @@ describe("FitCheck", () => {
     });
   });
 
-  it("shows the report, then the question box, then the booking card", async () => {
+  it("shows the report, then the question box, then the CV card, then the booking card", async () => {
     renderCheck();
     await check();
     await waitFor(() => expect(screen.getByLabelText("question.label")).toBeInTheDocument());
 
     const result = screen.getByRole("region", { name: "report.title" });
     const question = screen.getByRole("heading", { level: 3, name: "question.title" });
+    const tailoredCv = screen.getByRole("heading", { level: 3, name: "title" });
     const booking = screen.getByRole("heading", { level: 2, name: "report.bookTitle" });
     expect(result.compareDocumentPosition(question) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(question.compareDocumentPosition(booking) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(
+      question.compareDocumentPosition(tailoredCv) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(
+      tailoredCv.compareDocumentPosition(booking) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(screen.getByText("report.nextSteps")).toBeInTheDocument();
+  });
+
+  it("offers no CV and promises nothing below when the check read no requirements", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          report: { ...REPORT, requirements: [] },
+          sessionId: "session-id-value",
+        }),
+      })
+    );
+    renderCheck();
+    await check();
+    await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
+    expect(screen.queryByLabelText("nameLabel")).toBeNull();
+    expect(screen.queryByText("report.nextSteps")).toBeNull();
+    expect(screen.getByRole("heading", { level: 2, name: "report.bookTitle" })).toBeInTheDocument();
+  });
+
+  it("hands the live region the sent sentence once the CV request is away", async () => {
+    renderCheck();
+    await check();
+    await waitFor(() => expect(screen.getByLabelText("nameLabel")).toBeInTheDocument());
+
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("nameLabel"), "Jane Doe");
+    await user.type(screen.getByLabelText("emailLabel"), "jane@example.com");
+    await user.click(screen.getByRole("button", { name: "submit" }));
+
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("sentText"));
   });
 
   it("announces the arrival and moves focus to the result heading", async () => {

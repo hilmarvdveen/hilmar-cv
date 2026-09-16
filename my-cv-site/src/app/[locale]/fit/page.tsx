@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { Sparkles } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
@@ -45,6 +45,7 @@ export default async function FitPage({ params, searchParams }: Props) {
   const breadcrumbLabels = await getTranslations({ locale, namespace: "breadcrumb" });
 
   const reopenState = fitReopenState(result, key, getFitLinkSecret());
+  const isReopened = reopenState === "valid";
   const turnstileSiteKey = getTurnstileSiteKey();
   const nonce = turnstileSiteKey ? ((await headers()).get("x-nonce") ?? undefined) : undefined;
 
@@ -56,6 +57,15 @@ export default async function FitPage({ params, searchParams }: Props) {
     pageLabel: breadcrumbLabels("fit"),
   });
 
+  const checkIsland = (
+    <FitCheck
+      heading={t("section.title")}
+      intro={t("section.intro")}
+      disclosure={<FitDisclosure />}
+      turnstileSiteKey={turnstileSiteKey ?? undefined}
+    />
+  );
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
@@ -65,27 +75,30 @@ export default async function FitPage({ params, searchParams }: Props) {
       <PageHero
         width="narrow"
         padding="compact"
-        badge={t("hero.badge")}
+        badge={isReopened ? undefined : t("hero.badge")}
         badgeIcon={Sparkles}
-        title={t("hero.title")}
-        description={t("hero.description")}
+        title={isReopened ? t("result.title") : t("hero.title")}
+        description={isReopened ? t("result.intro") : t("hero.description")}
+        descriptionHiddenOnPhones={!isReopened}
         breadcrumb={<Breadcrumb />}
       />
 
-      {reopenState === "valid" && (
+      {isReopened && (
         <Section padding="compact" background="light">
           <Container width="narrow">
             <FitReopenedResult
               sessionId={sanitizeSessionId(result)}
               resultKey={key as string}
               labels={{
-                title: t("result.title"),
-                intro: t("result.intro"),
                 loading: t("result.loading"),
+                ready: t("result.ready"),
                 failed: t("result.failed"),
                 download: t("result.download"),
                 downloading: t("result.downloading"),
                 downloadNote: t("result.downloadNote"),
+                downloaded: t("result.downloaded"),
+                downloadFailed: t("result.downloadFailed"),
+                mailAction: t("result.mailAction"),
               }}
             />
           </Container>
@@ -99,12 +112,20 @@ export default async function FitPage({ params, searchParams }: Props) {
               <p className="text-base leading-relaxed text-gray-700">{t("result.invalid")}</p>
             </Card>
           )}
-          <FitCheck
-            heading={t("section.title")}
-            intro={t("section.intro")}
-            disclosure={<FitDisclosure />}
-            turnstileSiteKey={turnstileSiteKey ?? undefined}
-          />
+          {isReopened ? (
+            <details className="group">
+              <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-sm py-1 text-base font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
+                {t("result.newCheck")}
+                <ChevronDown
+                  className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180"
+                  aria-hidden="true"
+                />
+              </summary>
+              <div className="mt-6">{checkIsland}</div>
+            </details>
+          ) : (
+            checkIsland
+          )}
         </Container>
       </Section>
     </>

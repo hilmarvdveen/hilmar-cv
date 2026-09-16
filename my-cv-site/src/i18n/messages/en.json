@@ -2235,12 +2235,15 @@
             "organisationLabel": "Organisation (optional)",
             "submit": "Mail me the CV for this vacancy",
             "sending": "Sending...",
+            "privacyNote": "Your name and email address go to my mailbox for this request. I see that you asked for the CV, nothing else.",
+            "privacyLink": "How I handle your data",
+            "mailAction": "Mail me the CV",
             "sentTitle": "Check your mail",
             "sentText": "The link is on its way to {email}. It opens this result again and carries the download button.",
             "errors": {
                 "name": "Fill in your name.",
                 "email": "Fill in an email address the link can go to.",
-                "failed": "The request did not come through. Try again in a moment, or mail me and I will send the CV myself.",
+                "failed": "The request did not come through. Try again in a moment.",
                 "rateLimited": "There is a queue right now. Wait a minute and the next one goes through."
             }
         },
@@ -2248,10 +2251,15 @@
             "title": "Your result and the CV that goes with it",
             "intro": "This is the result of the vacancy check you ran. The button builds the CV for that vacancy.",
             "loading": "Getting the result...",
+            "ready": "Your result is below.",
             "failed": "The result is no longer there. A result stays for thirty days. Run the check again and the CV comes with it.",
             "download": "Download the CV for this vacancy",
             "downloading": "Building the CV...",
             "downloadNote": "The first download builds the file, which takes about half a minute.",
+            "downloaded": "The CV is in your downloads.",
+            "downloadFailed": "The CV did not come through. Your result is still here, so try again in a moment.",
+            "mailAction": "Mail me the CV",
+            "newCheck": "Check another vacancy",
             "invalid": "This link does not work any more. A result stays for thirty days, and the link from the mail is the way in. Paste the vacancy below again and the result is back."
         },
         "check": {
@@ -2279,6 +2287,7 @@
             "report": {
                 "title": "What my work history shows",
                 "counts": "{inRecord} of {total} requirements are in my work history, {partly} partly, {notInRecord} not.",
+                "nextSteps": "Below this you find the CV written to this vacancy, and under that the button to book a call.",
                 "requirementsTitle": "Requirement by requirement",
                 "legend": {
                     "title": "What the labels mean",

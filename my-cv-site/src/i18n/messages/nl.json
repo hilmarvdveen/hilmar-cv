@@ -2095,12 +2095,15 @@
             "organisationLabel": "Organisatie (optioneel)",
             "submit": "Mail mij het CV op deze vacature",
             "sending": "Bezig met versturen...",
+            "privacyNote": "Je naam en e-mailadres gaan naar mijn mailbox voor deze aanvraag. Ik zie dat je het CV hebt opgevraagd, verder niets.",
+            "privacyLink": "Zo ga ik met je gegevens om",
+            "mailAction": "Mail mij het CV",
             "sentTitle": "Kijk in je mail",
             "sentText": "De link is onderweg naar {email}. Daarmee open je dit resultaat opnieuw en download je het CV.",
             "errors": {
                 "name": "Vul je naam in.",
                 "email": "Vul een e-mailadres in waar de link naartoe kan.",
-                "failed": "De aanvraag kwam er niet doorheen. Probeer het zo nog eens, of mail mij, dan stuur ik het CV zelf.",
+                "failed": "De aanvraag kwam er niet doorheen. Probeer het zo nog eens.",
                 "rateLimited": "Er staan nu veel aanvragen in de rij. Wacht een minuut, dan gaat de volgende erdoor."
             }
         },
@@ -2108,10 +2111,15 @@
             "title": "Je resultaat en het CV erbij",
             "intro": "Dit is het resultaat van de vacaturecheck die je hebt gedaan. Met de knop bouw ik het CV op die vacature.",
             "loading": "Bezig met ophalen van het resultaat...",
+            "ready": "Je resultaat staat hieronder.",
             "failed": "Het resultaat staat er niet meer. Een resultaat blijft dertig dagen staan. Doe de check opnieuw, dan komt het CV er weer bij.",
             "download": "Download het CV op deze vacature",
             "downloading": "Bezig met opbouwen van het CV...",
             "downloadNote": "Bij de eerste download wordt het bestand opgebouwd, dat duurt een halve minuut.",
+            "downloaded": "Het CV staat in je downloads.",
+            "downloadFailed": "Het CV kwam er niet doorheen. Je resultaat staat er nog, dus probeer het zo nog eens.",
+            "mailAction": "Mail mij het CV",
+            "newCheck": "Een andere vacature checken",
             "invalid": "Deze link werkt niet meer. Een resultaat blijft dertig dagen staan en de link uit de mail is de ingang. Plak de vacature hieronder opnieuw, dan staat het resultaat er weer."
         },
         "check": {
@@ -2139,6 +2147,7 @@
             "report": {
                 "title": "Wat mijn werkervaring laat zien",
                 "counts": "{inRecord} van {total} eisen staan in mijn werkervaring, {partly} deels, {notInRecord} niet.",
+                "nextSteps": "Hieronder staat het CV op deze vacature, en daaronder de knop om een gesprek te plannen.",
                 "requirementsTitle": "Eis voor eis",
                 "legend": {
                     "title": "Wat de labels betekenen",

@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from "react";
 import { Section, type SectionPadding } from "@/components/Section";
 import { Container, type ContainerWidth } from "@/components/Container";
+import { mergeClasses } from "@/lib/mergeClasses";
 
 const DEFAULT_TITLE_ID = "page-hero-title";
 
@@ -17,6 +18,7 @@ type PageHeroProps = {
   title: string;
   titleAccent?: string;
   description: string;
+  descriptionHiddenOnPhones?: boolean;
   badge?: string;
   badgeIcon?: ComponentType<{ className?: string }>;
   titleId?: string;
@@ -35,6 +37,7 @@ export const PageHero = ({
   title,
   titleAccent,
   description,
+  descriptionHiddenOnPhones = false,
   badge,
   badgeIcon: BadgeIcon,
   titleId,
@@ -65,7 +68,12 @@ export const PageHero = ({
           <span className="block text-emerald-300">{titleAccent}</span>
         )}
       </h1>
-      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
+      <p
+        className={mergeClasses(
+          "mt-4 max-w-2xl text-lg leading-relaxed text-slate-300",
+          descriptionHiddenOnPhones && "hidden sm:block"
+        )}
+      >
         {description}
       </p>
       {actionsFirstOnPhones ? (

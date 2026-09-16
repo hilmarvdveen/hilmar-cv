@@ -35,9 +35,10 @@ type FitReportProps = {
   report: FitReportData;
   sessionId: string;
   headingRef?: RefObject<HTMLHeadingElement | null>;
+  nextStepsNote?: string;
 };
 
-export const FitReport = ({ report, sessionId, headingRef }: FitReportProps) => {
+export const FitReport = ({ report, sessionId, headingRef, nextStepsNote }: FitReportProps) => {
   const t = useTranslations("fit.check");
   const counts = countFitVerdicts(report);
   const hasRequirements = report.requirements.length > 0;
@@ -77,8 +78,11 @@ export const FitReport = ({ report, sessionId, headingRef }: FitReportProps) => 
         {report.summary && (
           <p className="mt-3 text-base leading-relaxed text-gray-700">{report.summary}</p>
         )}
-        {!hasRequirements && (
+        {!hasRequirements && !report.summary && (
           <p className="mt-3 text-base leading-relaxed text-gray-700">{t("report.empty")}</p>
+        )}
+        {nextStepsNote && (
+          <p className="mt-4 text-sm leading-relaxed text-gray-600">{nextStepsNote}</p>
         )}
       </Card>
 
