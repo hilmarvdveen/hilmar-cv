@@ -9,7 +9,7 @@ import { PostRepository } from "./PostRepository";
 import { flowNode, flowEdge } from "../flow";
 
 export const meta: BlogPostMeta = {
-  slug: "apollo-federation-in-production-by-building-one",
+  slug: "apollo-federation-explained-by-building-a-supergraph",
   category: "architecture",
   track: "backend",
   publishedDate: "2026-09-09",
@@ -20,7 +20,7 @@ export const meta: BlogPostMeta = {
   },
   description: {
     en: "Five subgraphs, one composed supergraph, and the guarantees under it: entity keys, a saga, an outbox, idempotency, retries, a circuit breaker and one trace.",
-    nl: "Vijf subgraphs, één samengestelde supergraph en de garanties eronder: entity-keys, een saga, een outbox, idempotentie, een circuit breaker en één trace.",
+    nl: "Vijf subgraphs, één samengestelde supergraph, en daaronder entity-keys, een saga, een outbox, idempotentie, retries, een circuit breaker en één trace.",
   },
   excerpt: {
     en: "One GraphQL schema in front of five services that different teams own. This walks through a federated graph I built end to end: the entity keys, the composition step, the contract check that blocks a merge, and the nine guarantees underneath, each with the file it lives in and the test that proves it.",
@@ -106,21 +106,21 @@ const SUBGRAPH_ROWS: SubgraphRow[] = [
     name: "catalogue",
     owns: { en: "Product, Category, stock", nl: "Product, Category, voorraad" },
     references: { en: "none", nl: "geen" },
-    publishes: "ProductChanged, StockReserved, StockReleased",
-    consumes: "OrderPlaced",
+    publishes: "ProductChanged (inside catalogue)",
+    consumes: "",
   },
   {
     name: "cart",
     owns: { en: "Cart, CartLine, the anonymous cart", nl: "Cart, CartLine, het anonieme mandje" },
     references: { en: "Product by key", nl: "Product via key" },
-    publishes: "none",
-    consumes: "ProductChanged",
+    publishes: "",
+    consumes: "OrderPlaced",
   },
   {
     name: "promotions",
     owns: { en: "PromotionCode, the rules, Cart.promotion", nl: "PromotionCode, de regels, Cart.promotion" },
     references: { en: "Cart by key", nl: "Cart via key" },
-    publishes: "none",
+    publishes: "",
     consumes: "OrderPlaced",
   },
   {
@@ -128,14 +128,14 @@ const SUBGRAPH_ROWS: SubgraphRow[] = [
     owns: { en: "Order, OrderLine, placeOrder, the outbox", nl: "Order, OrderLine, placeOrder, de outbox" },
     references: { en: "Cart, Product, Customer by key", nl: "Cart, Product, Customer via key" },
     publishes: "OrderPlaced",
-    consumes: "StockReserved, StockReleased",
+    consumes: "",
   },
   {
     name: "accounts",
     owns: { en: "Customer, Session, the wishlist, the tokens", nl: "Customer, Session, de wenslijst, de tokens" },
     references: { en: "Product by key", nl: "Product via key" },
-    publishes: "CustomerRegistered",
-    consumes: "none",
+    publishes: "",
+    consumes: "OrderPlaced",
   },
 ];
 
@@ -221,17 +221,17 @@ const GUARANTEE_ROWS: GuaranteeRow[] = [
   {
     topic: { en: "The circuit breaker and the degraded cart", nl: "De circuit breaker en het uitgeklede mandje" },
     place: "cart/.../degradedCatalogueReader.ts",
-    proof: "router/tests/graph.test.ts",
+    proof: "router/tests/graph.test.ts, \"the graph when the catalogue subgraph is stopped\"",
   },
   {
     topic: { en: "DataLoader and query plans", nl: "DataLoader en queryplannen" },
     place: "router/src/queryPlanPlugin.ts",
-    proof: "router/tests/graph.test.ts",
+    proof: "router/tests/graph.test.ts, \"reads the query plan and shows one batched catalogue fetch for three cart lines\"",
   },
   {
     topic: { en: "One trace per request", nl: "Eén trace per verzoek" },
     place: "shared/src/telemetry/requestTracing.ts",
-    proof: "router/tests/graph.test.ts",
+    proof: "router/tests/graph.test.ts, \"puts the gateway and every subgraph it called on one trace\"",
   },
 ];
 
@@ -367,8 +367,9 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.entities6[locale]}</P>
       <CodeBlock lang="ts" filename="subgraphs/cart/src/adapters/catalogue/entityCatalogueReader.ts" code={ENTITY_CATALOGUE_READER_CODE} />
       <P>{copy.entities7[locale]}</P>
-      <CodeBlock lang="json" filename="POST http://localhost:4100/graphql" code={ADD_TO_CART_ANSWER_CODE} />
       <P>{copy.entities8[locale]}</P>
+      <CodeBlock lang="graphql" filename="mutation AddToCart" code={ADD_TO_CART_QUERY_CODE} />
+      <CodeBlock lang="json" filename="POST http://localhost:4100/graphql" code={ADD_TO_CART_ANSWER_CODE} />
 
       <Divider />
 
@@ -389,6 +390,7 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.composition6[locale]}</P>
       <CodeBlock lang="yaml" filename="router/router.yaml" code={ROUTER_YAML_CODE} />
       <P>{copy.composition7[locale]}</P>
+      <CodeBlock lang="bash" filename="backends/node" code={ROUTER_COMMAND_CODE} />
       <Callout variant="warning" title={copy.routerCalloutTitle[locale]}>
         {copy.routerCalloutBody[locale]}
       </Callout>
@@ -505,10 +507,10 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.outbox2[locale]}</P>
       <CodeBlock lang="ts" filename="subgraphs/ordering/src/application/outboxPublisher.ts" code={OUTBOX_PUBLISHER_CODE} />
       <P>{copy.outbox3[locale]}</P>
-      <CodeBlock lang="ts" filename="shared/src/messaging/handledEventStore.ts" code={HANDLED_EVENT_STORE_CODE} />
       <P>{copy.outbox4[locale]}</P>
-      <CodeBlock lang="ts" filename="subgraphs/ordering/tests/outboxPublisher.test.ts" code={OUTBOX_TESTS_CODE} />
+      <CodeBlock lang="ts" filename="shared/src/messaging/handledEventStore.ts" code={HANDLED_EVENT_STORE_CODE} />
       <P>{copy.outbox5[locale]}</P>
+      <CodeBlock lang="ts" filename="subgraphs/ordering/tests/outboxPublisher.test.ts" code={OUTBOX_TESTS_CODE} />
       <Callout variant="tip" title={copy.outboxCalloutTitle[locale]}>
         {copy.outboxCalloutBody[locale]}
       </Callout>
@@ -959,6 +961,7 @@ const SUPERGRAPH_CART_CODE = `type Cart
   total: Money! @join__field(graph: PROMOTIONS, requires: "subtotal { amount currency }")
 }
 
+# lines 57 to 112 hold the other composed types and are left out here
 
 enum join__Graph {
   ACCOUNTS @join__graph(name: "accounts", url: "http://localhost:4105/graphql")
@@ -3007,6 +3010,26 @@ jobs:
       - run: node tools/run-conformance.mjs
       - run: node tools/run-conformance.mjs`;
 
+const ADD_TO_CART_QUERY_CODE = `mutation AddToCart($productId: ID!, $quantity: Int) {
+  addToCart(productId: $productId, quantity: $quantity) {
+    cart {
+      id
+      lines { id quantity product { id name price { amount } } lineTotal { amount currency } }
+      promotion { code kind discount { amount } }
+      subtotal { amount }
+      shipping { amount }
+      total { amount }
+      updatedAt
+    }
+    availableStock
+    errors { code message field }
+  }
+}
+
+{ "productId": "product-18", "quantity": 2 }`;
+
+const ROUTER_COMMAND_CODE = `router --supergraph router/supergraph.graphql --config router/router.yaml`;
+
 const ADD_TO_CART_ANSWER_CODE = `{
   "data": {
     "addToCart": {
@@ -3121,8 +3144,8 @@ const COPY = {
     nl: "De graph is de interessante helft. Vijf subgraphs, vijf databases, één samengestelde supergraph, en eronder de negen dingen die een winkel in deze vorm moet garanderen: een cache die geïnvalideerd wordt, een saga over twee services, een idempotentiesleutel op de afrekening, retries met een budget, een outbox met at-least-once-bezorging, een circuit breaker, gebundelde entity-reads, queryplannen die je kunt lezen, en één trace per verzoek. Elk daarvan heeft een bestand waarvan de naam zegt wat het is, een test die het bewijst, en een afweging die ernaast staat. Zo is dit artikel ook opgebouwd.",
   },
   intro3: {
-    en: "One thing to say at the top, because it changes how you should read the rest. Federation in production is not on my record. At bol.com the GraphQL schema was the contract between the frontend and the backend teams, which is the problem federation is built for, and that engagement gets its own paragraph near the end. The graph here is mine, built in the open so that every decision in it can be read, argued with and run on your own machine.",
-    nl: "Eén ding vooraf, want het bepaalt hoe je de rest moet lezen. Federation in productie staat niet op mijn cv. Bij bol.com was het GraphQL-schema het contract tussen de frontend en de backendteams, en dat is precies het probleem waarvoor federation gemaakt is. Die opdracht krijgt verderop een eigen alinea. De graph hier is van mij, in het openbaar gebouwd, zodat elke beslissing erin te lezen, te bekritiseren en op je eigen machine te draaien is.",
+    en: "One thing to say at the top, because it changes how you should read the rest. Federation in production is not on my record. The bol.com engagement that stands closest to it gets its own paragraph near the end. The graph here is mine, built in the open so that every decision in it can be read, argued with and run on your own machine.",
+    nl: "Eén ding vooraf, want het bepaalt hoe je de rest moet lezen. Federation in productie staat niet op mijn cv. De opdracht bij bol.com die er het dichtst bij komt, krijgt verderop een eigen alinea. De graph hier is van mij, in het openbaar gebouwd, zodat elke beslissing erin te lezen, te bekritiseren en op je eigen machine te draaien is.",
   },
   versionNote: {
     en: "The versions were read from the project's own table on 9 September 2026: Node.js 24.20.0, Apollo Server 5.5.1 with @apollo/subgraph 2.15.0, @apollo/gateway 2.14.4 with @apollo/composition and @apollo/federation-internals at that same 2.14.4, Express 5.2.1, dataloader 2.2.3, jose 6.2.12, TypeScript 6.0.3, @opentelemetry/api 1.9.1 with the Node tracing SDK at 2.11.0, and Apollo Router 2.16.3 as the version router.yaml is written for. The store keeps its rows in SQLite through node:sqlite, which Node 24 ships, and a PostgreSQL 18 adapter sits behind the same port. That adapter is written and unverified, because there is no Docker on the machine I built this on, and the section that names PostgreSQL says so again.",
@@ -3235,8 +3258,8 @@ const COPY = {
 
   entitiesTitle: { en: "Subgraphs, entities and keys", nl: "Subgraphs, entities en keys" },
   entities1: {
-    en: "An entity is a type that more than one subgraph can talk about, identified by a key. The catalogue owns Product, so its schema is where the key is declared and where every field of a product lives. Two other directives appear here as well. @shareable marks a type that several subgraphs may serve, which is why Money is declared in four of the five schemas. @inaccessible marks a field that is composed into the supergraph and then removed from the API schema, which is how an internal capability lives inside a federated graph without leaking into the public contract.",
-    nl: "Een entity is een type waar meer dan één subgraph over kan praten, herkenbaar aan een key. De catalogue bezit Product, dus in dat schema staat de key en staan alle velden van een product. Er komen hier nog twee directives voorbij. @shareable markeert een type dat meerdere subgraphs mogen serveren, en daarom staat Money in vier van de vijf schema's. @inaccessible markeert een veld dat wel in de supergraph wordt samengesteld en er daarna uit het API-schema wordt gehaald, en zo leeft een interne mogelijkheid binnen een federated graph zonder in het publieke contract te lekken.",
+    en: "An entity is a type that more than one subgraph can talk about, identified by a key. The catalogue owns Product, so its schema is where the key is declared and where every field of a product lives. Two other directives appear here as well. @shareable marks a type that several subgraphs may serve, which is why Money is declared in four of the five schemas. @inaccessible marks a field or a type that is composed into the supergraph and then removed from the API schema, which is how an internal capability lives inside a federated graph without leaking into the public contract.",
+    nl: "Een entity is een type waar meer dan één subgraph over kan praten, herkenbaar aan een key. De catalogue bezit Product, dus in dat schema staat de key en staan alle velden van een product. Er komen hier nog twee directives voorbij. @shareable markeert een type dat meerdere subgraphs mogen serveren, en daarom staat Money in vier van de vijf schema's. @inaccessible markeert een veld of een type dat wel in de supergraph wordt samengesteld en er daarna uit het API-schema wordt gehaald, en zo leeft een interne mogelijkheid binnen een federated graph zonder in het publieke contract te lekken.",
   },
   entities2: {
     en: "Look at the last two mutations. reserveStock and releaseStock are how ordering takes stock out of the catalogue during a checkout. They are part of the graph, they are typed, they are tested, and a client that reads the public schema never sees them. Only a caller that talks to port 4101 directly can reach them.",
@@ -3251,8 +3274,8 @@ const COPY = {
     nl: "Dan het scherpste deel van federation, en het deel dat je rustig moet lezen. De subgraph promotions bezit drie velden van een entity die van iemand anders is. De korting van een mandje, de verzendkosten en het totaal zijn promotieregels, dus die horen bij promotions. Om ze uit te rekenen is het subtotaal nodig, en het subtotaal is van cart. @external zegt dat het veld van een ander is en @requires zegt welke van die vreemde velden deze resolver nodig heeft. De gateway leest het subtotaal dan bij cart, geeft het aan promotions mee in de entity-representatie, en promotions antwoordt met de drie bedragen.",
   },
   entities4b: {
-    en: "Between those two blocks the promotions schema repeats Money, UserError, UserErrorCode and CartPayload with @shareable. Every subgraph that serves a shared type declares it, and composition checks that the declarations agree. The mutations at the bottom carry the same @inaccessible pattern as the catalogue: applying and removing a code is public, clearing a cart's promotion and counting a use are internal.",
-    nl: "Tussen die twee blokken herhaalt het promotions-schema Money, UserError, UserErrorCode en CartPayload met @shareable. Elke subgraph die een gedeeld type serveert declareert het, en de compositie controleert of die declaraties overeenkomen. De mutations onderaan dragen hetzelfde @inaccessible-patroon als de catalogus: een code toepassen en verwijderen is publiek, de promotie van een mandje wissen en een gebruik tellen zijn intern.",
+    en: "Between those two blocks the promotions schema repeats the enum UserErrorCode and declares UserError and CartPayload with @shareable, the same pattern as Money at the top of the block above. Every subgraph that serves a shared type declares it, and composition checks that the declarations agree. The mutations at the bottom carry the same @inaccessible pattern as the catalogue: applying and removing a code is public, clearing a cart's promotion and counting a use are internal.",
+    nl: "Tussen die twee blokken herhaalt het promotions-schema de enum UserErrorCode en declareert het UserError en CartPayload met @shareable, hetzelfde patroon als Money boven in het blok hierboven. Elke subgraph die een gedeeld type serveert declareert het, en de compositie controleert of die declaraties overeenkomen. De mutations onderaan dragen hetzelfde @inaccessible-patroon als de catalogus: een code toepassen en verwijderen is publiek, de promotie van een mandje wissen en een gebruik tellen zijn intern.",
   },
   requiresCalloutTitle: { en: "Where a business rule lives", nl: "Waar een bedrijfsregel woont" },
   requiresCalloutBody: {
@@ -3272,18 +3295,18 @@ const COPY = {
     nl: "Eén ding in dat bestand was een middag lang een bug en verdient een naam. DataLoader heeft een loadMany die een lijst keys aanneemt, en die zet een mislukte batch om in waarden in de teruggegeven array en faalt nooit. Een mandje waarvan de catalogus plat lag zag er daardoor uit als een mandje met lege producten, en er bereikte niemand een fout. Het bestand mapt nu load over de identifiers en wacht ze samen af, zodat een fout ook een fout is. De chaostest in de sectie over veerkracht heeft dat gevonden.",
   },
   entities8: {
-    en: "Put those pieces together and one mutation from a browser touches four services. This is the answer to addToCart, captured from the running graph on 9 September 2026.",
-    nl: "Zet die stukken bij elkaar en één mutation uit een browser raakt vier services. Dit is het antwoord op addToCart, op 9 september 2026 opgevangen uit de draaiende graph.",
+    en: "Put those pieces together and one mutation from a browser touches four services. Here is the addToCart mutation a store front sends, with the two variables it carries, and the answer captured from the running graph on 9 September 2026.",
+    nl: "Zet die stukken bij elkaar en één mutation uit een browser raakt vier services. Hier is de addToCart-mutation die een winkel stuurt, met de twee variabelen die hij meedraagt, en het antwoord dat op 9 september 2026 uit de draaiende graph is opgevangen.",
   },
 
   compositionTitle: { en: "Composing the supergraph, and the contract it must match", nl: "De supergraph samenstellen, en het contract waaraan hij moet voldoen" },
   composition1: {
-    en: "Composition is a build step, and in this project it is fifty lines of script. composeServices from @apollo/composition takes the five schemas with the url each one listens on and answers either a supergraph document or a list of errors that name the field that broke. There are two profiles, because the development graph carries one extra mutation that reloads the seed data and production carries none.",
-    nl: "Compositie is een bouwstap, en in dit project is dat vijftig regels script. composeServices uit @apollo/composition neemt de vijf schema's met de url waarop elk luistert, en antwoordt met een supergraph-document of met een lijst fouten die het veld noemen dat het brak. Er zijn twee profielen, want de ontwikkelgraph draagt één extra mutation die de seeddata opnieuw laadt en productie draagt die niet.",
+    en: "Composition is a build step, and in this project it is one short script. composeServices from @apollo/composition takes the five schemas with the url each one listens on and answers either a supergraph document or a list of errors that name the field that broke. There are two profiles, because the development graph carries one extra mutation that reloads the seed data, and each subgraph's development schema adds a resetSubgraphSeed of its own behind @inaccessible, while production carries neither.",
+    nl: "Compositie is een bouwstap, en in dit project is dat één kort script. composeServices uit @apollo/composition neemt de vijf schema's met de url waarop elk luistert, en antwoordt met een supergraph-document of met een lijst fouten die het veld noemen dat het brak. Er zijn twee profielen, want de ontwikkelgraph draagt één extra mutation die de seeddata opnieuw laadt, en elk ontwikkelschema van een subgraph voegt daar een eigen resetSubgraphSeed achter @inaccessible aan toe, terwijl productie geen van beide draagt.",
   },
   composition2: {
-    en: "The composed file is not a schema a person writes. It is a plan. Every field carries a join__field directive that says which subgraph answers it, every entity carries a join__type that says which subgraphs hold a key for it, and an enum at the bottom maps each subgraph name to its address. Here is the Cart from the last section as the composer wrote it, with the graph enum underneath.",
-    nl: "Het samengestelde bestand is geen schema dat een mens schrijft. Het is een plan. Elk veld draagt een join__field-directive die zegt welke subgraph het beantwoordt, elke entity draagt een join__type die zegt welke subgraphs er een key voor hebben, en een enum onderaan koppelt elke subgraphnaam aan zijn adres. Hier is de Cart uit de vorige sectie zoals de composer hem schreef, met de graph-enum eronder.",
+    en: "The composed file is not a schema a person writes. It is a plan. A field that more than one subgraph could answer carries a join__field directive naming the one that does, every entity carries a join__type that says which subgraphs hold a key for it, and a join__Graph enum maps each subgraph name to its address. Here is the Cart from the last section as the composer wrote it, with the graph enum underneath.",
+    nl: "Het samengestelde bestand is geen schema dat een mens schrijft. Het is een plan. Een veld dat meer dan één subgraph zou kunnen beantwoorden draagt een join__field-directive die de subgraph noemt die het doet, elke entity draagt een join__type die zegt welke subgraphs er een key voor hebben, en een join__Graph-enum koppelt elke subgraphnaam aan zijn adres. Hier is de Cart uit de vorige sectie zoals de composer hem schreef, met de graph-enum eronder.",
   },
   composition3: {
     en: "Composition proves that the five parts fit each other. It does not prove that the result is the API the store promised. That is a second script. It builds the supergraph, extracts the API schema from it with @apollo/federation-internals, and compares every type, field, argument, default value and enum value with the contract file that all seven implementations of this store share.",
@@ -3294,25 +3317,25 @@ const COPY = {
     nl: "Het middendeel van dat bestand is gewone code die twee typemaps doorloopt en verschillen verzamelt. De twee uiteinden zijn het deel dat ertoe doet. Beschrijvingen en volgorde worden genegeerd, want het contract draagt de tekst en de subgraphschema's dragen de vorm. Al het andere wordt exact vergeleken, in beide richtingen, dus een veld dat de graph toevoegt faalt net zo hard als een veld dat hij weglaat.",
   },
   composition4: {
-    en: "Then the process that serves it. ApolloGateway reads the composed file from disk, so no subgraph is asked anything at start-up and the graph a deploy serves is the graph that was checked. Around it sit the ordinary Apollo Server pieces: CORS for the three frontend origins with credentials allowed, a body limit, an origin check plugin, a plugin that carries the query plan, and health and readiness routes.",
-    nl: "Dan het proces dat hem serveert. ApolloGateway leest het samengestelde bestand van schijf, dus bij het opstarten wordt aan geen enkele subgraph iets gevraagd en is de graph die een deploy serveert de graph die gecontroleerd is. Eromheen staan de gewone Apollo Server-onderdelen: CORS voor de drie frontendorigins met credentials toegestaan, een bodylimiet, een plugin voor de origincheck, een plugin die het queryplan meedraagt, en routes voor health en readiness.",
+    en: "Then the process that serves it. ApolloGateway reads the composed file from disk, so no subgraph is asked anything at start-up and the graph a deploy serves is the graph that was checked. Around it sit the ordinary Apollo Server pieces: CORS for the three frontend origins with credentials allowed, a body limit, an origin check plugin, a plugin that carries the query plan, and health and readiness routes. The file also exports a maximum depth and a maximum cost at the top, two numbers the gateway names and nothing reads, because the engine that would enforce them is the router.",
+    nl: "Dan het proces dat hem serveert. ApolloGateway leest het samengestelde bestand van schijf, dus bij het opstarten wordt aan geen enkele subgraph iets gevraagd en is de graph die een deploy serveert de graph die gecontroleerd is. Eromheen staan de gewone Apollo Server-onderdelen: CORS voor de drie frontendorigins met credentials toegestaan, een bodylimiet, een plugin voor de origincheck, een plugin die het queryplan meedraagt, en routes voor health en readiness. Het bestand exporteert bovenaan ook een maximale diepte en maximale kosten, twee getallen die de gateway noemt en die niets leest, want de motor die ze zou afdwingen is de router.",
   },
   composition5: {
-    en: "Header propagation is the piece that makes a distributed security model possible, and it is twenty lines. The gateway copies the authorization, cookie and origin headers of the incoming request onto every subgraph request, writes the current trace context into a traceparent header, tags the request with the subgraph name, and hands any set-cookie header from a subgraph back to the browser.",
-    nl: "Header-propagatie is het onderdeel dat een gedistribueerd beveiligingsmodel mogelijk maakt, en het zijn twintig regels. De gateway kopieert de headers authorization, cookie en origin van het inkomende verzoek naar elk subgraphverzoek, schrijft de huidige tracecontext in een traceparent-header, labelt het verzoek met de subgraphnaam, en geeft een set-cookie-header van een subgraph terug aan de browser.",
+    en: "Header propagation is the piece that makes a distributed security model possible, and it is two functions on the gateway's data source. The gateway copies the authorization, cookie and origin headers of the incoming request onto every subgraph request, writes the current trace context into a traceparent header, tags the request with the subgraph name, and hands any set-cookie header from a subgraph back to the browser.",
+    nl: "Header-propagatie is het onderdeel dat een gedistribueerd beveiligingsmodel mogelijk maakt, en het zijn twee functies op de datasource van de gateway. De gateway kopieert de headers authorization, cookie en origin van het inkomende verzoek naar elk subgraphverzoek, schrijft de huidige tracecontext in een traceparent-header, labelt het verzoek met de subgraphnaam, en geeft een set-cookie-header van een subgraph terug aan de browser.",
   },
   composition6: {
-    en: "In production the process above is a Rust binary. Apollo Router takes the same supergraph file unchanged and reads a configuration file where this gateway has code. Everything the gateway does here appears there as yaml: the listen address and the graph path, the health endpoint, CORS with set-cookie exposed, propagation of the three headers, and a timeout per subgraph.",
-    nl: "In productie is het proces hierboven een Rust-binary. Apollo Router neemt hetzelfde supergraph-bestand ongewijzigd en leest een configuratiebestand waar deze gateway code heeft. Alles wat de gateway hier doet, staat daar als yaml: het luisteradres en het graphpad, het health-endpoint, CORS met set-cookie zichtbaar, propagatie van de drie headers, en een timeout per subgraph.",
+    en: "In a production deployment the process above is a Rust binary. Apollo Router takes the same supergraph file unchanged and reads a configuration file where this gateway has code. Everything the gateway does here appears there as yaml: the listen address and the graph path, the health endpoint, CORS with set-cookie exposed, propagation of the three headers, and a timeout per subgraph.",
+    nl: "In een productiedeployment is het proces hierboven een Rust-binary. Apollo Router neemt hetzelfde supergraph-bestand ongewijzigd en leest een configuratiebestand waar deze gateway code heeft. Alles wat de gateway hier doet, staat daar als yaml: het luisteradres en het graphpad, het health-endpoint, CORS met set-cookie zichtbaar, propagatie van de drie headers, en een timeout per subgraph.",
   },
   composition7: {
-    en: "Two commands swap the engine. The router is started with the supergraph and the configuration file, and nothing else in the project changes.",
-    nl: "Twee commando's wisselen de motor om. De router wordt gestart met de supergraph en het configuratiebestand, en verder verandert er niets in het project.",
+    en: "One command swaps the engine. The router is started with the supergraph and the configuration file, and nothing else in the project changes.",
+    nl: "Eén commando wisselt de motor om. De router wordt gestart met de supergraph en het configuratiebestand, en verder verandert er niets in het project.",
   },
   routerCalloutTitle: { en: "Written for the router, run on the gateway", nl: "Geschreven voor de router, gedraaid op de gateway" },
   routerCalloutBody: {
-    en: "router.yaml is written for Apollo Router 2.16.3 and it is unrun here. The antivirus on the machine I built this on blocks unsigned downloaded executables, which stops both the router binary and the Rover binary that fetches the composition plugin. So this project composes with a script and checks the contract with a script, and both are in this article. A reader whose machine runs the binaries swaps in the two commands above and changes nothing else. What the router adds is worth naming: a compiled query planner and execution engine, and automatic persisted queries, response caching, rate limits, coprocessors and OpenTelemetry export as configuration.",
-    nl: "router.yaml is geschreven voor Apollo Router 2.16.3 en is hier niet gedraaid. De antivirus op de machine waarop ik dit bouwde blokkeert ongesigneerde gedownloade executables, en dat stopt zowel de routerbinary als de Rover-binary die de compositieplugin ophaalt. Daarom stelt dit project samen met een script en controleert het het contract met een script, en allebei staan ze in dit artikel. Wie de binaries wel kan draaien, zet de twee commando's hierboven ervoor in de plaats en verandert verder niets. Wat de router toevoegt is het noemen waard: een gecompileerde queryplanner en uitvoeringsmotor, en automatic persisted queries, response caching, rate limits, coprocessors en OpenTelemetry-export als configuratie.",
+    en: "router.yaml is written for Apollo Router 2.16.3 and it is unrun here. The antivirus on the machine I built this on blocks unsigned downloaded executables, which stops both the router binary and the Rover binary that fetches the composition plugin. So this project composes with a script and checks the contract with a script, and both are in this article. A reader whose machine runs the binaries runs the one command above and changes nothing else. What the router adds is worth naming: a compiled query planner and execution engine, and automatic persisted queries, response caching, rate limits, coprocessors and OpenTelemetry export as configuration.",
+    nl: "router.yaml is geschreven voor Apollo Router 2.16.3 en is hier niet gedraaid. De antivirus op de machine waarop ik dit bouwde blokkeert ongesigneerde gedownloade executables, en dat stopt zowel de routerbinary als de Rover-binary die de compositieplugin ophaalt. Daarom stelt dit project samen met een script en controleert het het contract met een script, en allebei staan ze in dit artikel. Wie de binaries wel kan draaien, draait het ene commando hierboven en verandert verder niets. Wat de router toevoegt is het noemen waard: een gecompileerde queryplanner en uitvoeringsmotor, en automatic persisted queries, response caching, rate limits, coprocessors en OpenTelemetry-export als configuratie.",
   },
   composition8: {
     en: "The important sentence in that box is the first one. The supergraph file is the interface between composition and execution. Everything in this article about keys, plans and limits holds under either engine, because both read the same document.",
@@ -3371,8 +3394,8 @@ const COPY = {
     nl: "Wat dat oplevert zie je in elke resolvermap. De map wordt gedeclareerd als het gegenereerde Resolvers-type, dus een argument dat niet bestaat, een returnvorm met een ontbrekend veld of een contexteigenschap die niemand erin heeft gezet is een compileerfout. Hier is de Query- en Mutation-helft van de catalogus, met het Product-blok uit de vorige sectie in hetzelfde object.",
   },
   types3: {
-    en: "One type assertion survived, and here is where it lives. GraphQL Code Generator types a reference resolver with two arguments and @apollo/subgraph types every resolver with four. The two do not line up, so the generated map is asserted once, at the boundary in shared/src/graphql/subgraphServer.ts where the server is built. The safety that matters is kept, because each resolver map is still declared as its generated type where it is written.",
-    nl: "Eén type-assertie is blijven staan, en hier woont hij. GraphQL Code Generator typeert een reference resolver met twee argumenten en @apollo/subgraph typeert elke resolver met vier. Die twee sluiten niet op elkaar aan, dus de gegenereerde map wordt één keer geasserteerd, op de grens in shared/src/graphql/subgraphServer.ts waar de server wordt gebouwd. De veiligheid die telt blijft behouden, want elke resolvermap wordt nog steeds als zijn gegenereerde type gedeclareerd waar hij geschreven wordt.",
+    en: "One type assertion survived, and here is where it lives. GraphQL Code Generator types a reference resolver with three arguments and @apollo/subgraph types every resolver with four. The two do not line up, so the generated map is asserted once, at the boundary in shared/src/graphql/subgraphServer.ts where the server is built. The safety that matters is kept, because each resolver map is still declared as its generated type where it is written.",
+    nl: "Eén type-assertie is blijven staan, en hier woont hij. GraphQL Code Generator typeert een reference resolver met drie argumenten en @apollo/subgraph typeert elke resolver met vier. Die twee sluiten niet op elkaar aan, dus de gegenereerde map wordt één keer geasserteerd, op de grens in shared/src/graphql/subgraphServer.ts waar de server wordt gebouwd. De veiligheid die telt blijft behouden, want elke resolvermap wordt nog steeds als zijn gegenereerde type gedeclareerd waar hij geschreven wordt.",
   },
   types4: {
     en: "The real question a team asks is what a schema change costs. In this project it is one command and a red build until everything agrees: the subgraph schema, the generated resolvers, composition, the contract diff, the seed data, the expected answers of thirty three scenarios, and the typed documents in three store fronts. That sounds heavy and it is the point. A change that is cheap to make and expensive to notice is the change that breaks a client six weeks later.",
@@ -3429,7 +3452,7 @@ const COPY = {
   sagaStep5: { en: "ordering reads the promotion, the shipping and the total from promotions through _entities, with the subtotal inside the representation, which is exactly what the @requires from section two asks for.", nl: "ordering leest de promotie, de verzendkosten en het totaal bij promotions via _entities, met het subtotaal in de representatie, precies wat de @requires uit sectie twee vraagt." },
   sagaStep6: { en: "ordering reserves the stock in catalogue with the same key. Either every line is reserved or none is, and a refusal names the product. That reservation is the first step of the saga.", nl: "ordering reserveert de voorraad bij catalogue met dezelfde sleutel. Of elke regel wordt gereserveerd of geen enkele, en een weigering noemt het product. Die reservering is de eerste stap van de saga." },
   sagaStep7: { en: "In one database transaction the order, its lines and one outbox row are written together. If that transaction fails, the saga releases the reservation, so no stock is ever held without its order.", nl: "In één databasetransactie worden de bestelling, de regels en één outboxregel samen weggeschreven. Faalt die transactie, dan geeft de saga de reservering vrij, zodat er nooit voorraad vastzit zonder bestelling." },
-  sagaStep8: { en: "After the commit the outbox publisher is nudged. It reads the row that was just written and runs the consumers: the cart is emptied, its promotion is cleared, the use of the code is counted, and the confirmation mail is addressed by reading the customer from accounts through its entity reference.", nl: "Na de commit krijgt de outbox-publisher een zetje. Die leest de zojuist geschreven regel en draait de consumers: het mandje wordt geleegd, de promotie wordt gewist, het gebruik van de code wordt geteld, en de bevestigingsmail wordt geadresseerd door de klant bij accounts op te halen via zijn entity-verwijzing." },
+  sagaStep8: { en: "After the commit the outbox publisher is nudged. It reads the row that was just written and runs the consumers: the cart is emptied, its promotion is cleared, the use of the code is counted when there was one, and the confirmation mail is addressed by reading the customer from accounts through its entity reference.", nl: "Na de commit krijgt de outbox-publisher een zetje. Die leest de zojuist geschreven regel en draait de consumers: het mandje wordt geleegd, de promotie wordt gewist, het gebruik van de code wordt geteld als er een code was, en de bevestigingsmail wordt geadresseerd door de klant bij accounts op te halen via zijn entity-verwijzing." },
   saga2: {
     en: "There is no transaction across two services, so the shape is a saga: reserve, do the work, and put the reservation back when the work fails. That lives in one file whose only job is that sentence, which is why placeOrder reads as the eight steps above and not as a nest of try blocks.",
     nl: "Er is geen transactie over twee services heen, dus de vorm is een saga: reserveren, het werk doen, en de reservering terugzetten als het werk faalt. Dat staat in één bestand met precies die ene taak, en daarom leest placeOrder als de acht stappen hierboven en niet als een nest van try-blokken.",
@@ -3453,8 +3476,8 @@ const COPY = {
     nl: "Promotions doet één onderdeel op beide manieren, in één bestand, zodat de keuze zichtbaar is en niet verspreid. Een code valideren is een request: er wacht een bezoeker, het antwoord is het oordeel, en er wordt niets weggeschreven dat een tweede aanroep zou kunnen verdubbelen. Een gebruik tellen is een event: er wacht niemand, en de outbox mag hetzelfde event twee keer bezorgen.",
   },
   interactions2: {
-    en: "One consumer of the four carries a guard, and that is deliberate. Emptying a cart is idempotent by its nature, and so is clearing its promotion: doing it twice leaves the world where doing it once left it. Counting a use is not, so that one consumer runs through a shared handled event store keyed by the event id and the consumer name. Guards on the other three would be code that is never wrong and never right either.",
-    nl: "Eén consumer van de vier draagt een bewaker, en dat is met opzet. Een mandje legen is van nature idempotent, en de promotie wissen ook: het twee keer doen laat de wereld achter zoals het één keer doen hem achterliet. Een gebruik tellen is dat niet, dus die ene consumer loopt door een gedeelde handled-event-store op de event-id en de naam van de consumer. Bewakers op de andere drie zouden code zijn die nooit fout is en ook nooit goed.",
+    en: "One consumer of the four carries a guard, and that is deliberate. Counting a use of a promotion code twice would leave the world in a place one call never put it, so that one consumer runs through a shared handled event store keyed by the event id and the consumer name. Emptying a cart and clearing its promotion are idempotent by their nature, so a guard on those two would be code that is never wrong and never right either. The confirmation mail is where at least once is visible to a customer, and this backend accepts a repeat there.",
+    nl: "Eén consumer van de vier draagt een bewaker, en dat is met opzet. Een gebruik van een promotiecode twee keer tellen laat de wereld achter op een plek waar één aanroep hem nooit bracht, dus die ene consumer loopt door een gedeelde handled-event-store op de event-id en de naam van de consumer. Een mandje legen en de promotie ervan wissen zijn van nature idempotent, dus een bewaker op die twee zou code zijn die nooit fout is en ook nooit goed. De bevestigingsmail is de plek waar at-least-once zichtbaar is voor een klant, en deze backend accepteert daar een herhaling.",
   },
   interactions3: {
     en: "The test proves the pair: the request answers applied or the refusal code in the same call and counts no use, the same event id three times raises the counter once, two event ids raise it twice, and a repeat answers true because the outcome the publisher wanted is the outcome it has. The trade-off is latency and coupling against eventual consistency, decided per interaction and not per service. The visitor may not wait for the counter, and the counter may not be wrong. Those two wishes point at different styles, and one subgraph can hold both.",
@@ -3485,16 +3508,16 @@ const COPY = {
     nl: "Een retry is voor een aanroep die veilig herhaald kan worden en voor een fout die een retry kan verhelpen. Beide helften zijn beslissingen die iemand moet opschrijven. De vertraging verdubbelt en draagt jitter, zodat duizend clients die op hetzelfde moment faalden niet op hetzelfde moment terugkomen. En het budget is het deel dat meestal ontbreekt: een schuivend venster dat het minimum plus een deel van de geziene aanroepen toestaat, zodat de retries stoppen als alles faalt.",
   },
   retries2: {
-    en: "The client that every subgraph uses to call another one decides both halves at the call site. It retries only when the caller passes idempotent: true, and every read the subgraphs make of each other is marked that way, and so are the outbox consumers, because they are idempotent by their event id. A connection failure or a 5xx is retryable. A GraphQL error answer is final, because the other service understood the question and said no.",
-    nl: "De client waarmee elke subgraph een andere aanroept, beslist beide helften op de plek van de aanroep. Hij probeert alleen opnieuw als de aanroeper idempotent: true meegeeft, en elke read die de subgraphs bij elkaar doen is zo gemarkeerd, en de outbox-consumers ook, want die zijn idempotent op hun event-id. Een verbindingsfout of een 5xx is te herproberen. Een GraphQL-foutantwoord is definitief, want de andere service begreep de vraag en zei nee.",
+    en: "The client that every subgraph uses to call another one decides both halves at the call site. It retries only when the caller passes idempotent: true, and every read one subgraph makes of another subgraph's data is marked that way, and so are the four outbox consumers, because emptying a cart and clearing its promotion change nothing when they run twice, and the counter is guarded by the event id. A connection failure or a 5xx is retryable. A GraphQL error answer is final, because the other service understood the question and said no.",
+    nl: "De client waarmee elke subgraph een andere aanroept, beslist beide helften op de plek van de aanroep. Hij probeert alleen opnieuw als de aanroeper idempotent: true meegeeft, en elke read die de ene subgraph van de data van een andere doet is zo gemarkeerd, en de vier outbox-consumers ook, want een mandje legen en de promotie ervan wissen veranderen niets als ze twee keer draaien, en de teller wordt bewaakt door de event-id. Een verbindingsfout of een 5xx is te herproberen. Een GraphQL-foutantwoord is definitief, want de andere service begreep de vraag en zei nee.",
   },
   retries3: {
     en: "The test that carries this topic is the storm. A hundred calls that fail four times each would be four hundred attempts. With a budget of five plus a fifth of the calls in the window, the test asserts at most a hundred and twenty five.",
     nl: "De test die dit onderwerp draagt is de storm. Honderd aanroepen die elk vier keer falen zouden vierhonderd pogingen zijn. Met een budget van vijf plus een vijfde van de aanroepen in het venster, asserteert de test hoogstens honderdvijfentwintig.",
   },
   retries4: {
-    en: "The trade-off is when a retry makes an outage worse. A downstream that is slow because it is overloaded gets three times the traffic from a client that retries without a budget, which is how one struggling service becomes an outage across a graph. The budget is what turns a retry from a hope into a bounded one.",
-    nl: "De afweging is wanneer een retry een storing erger maakt. Een downstream die traag is omdat hij overbelast is, krijgt drie keer zoveel verkeer van een client die zonder budget herprobeert, en zo wordt één worstelende service een storing over de hele graph. Het budget maakt van een retry een begrensde poging.",
+    en: "The trade-off is when a retry makes an outage worse. A downstream that is slow because it is overloaded meets a client that retries without a budget, and a default of three attempts means every failing call can arrive twice more, which is how one struggling service becomes an outage across a graph. The budget is what turns a retry from a hope into a bounded one.",
+    nl: "De afweging is wanneer een retry een storing erger maakt. Een downstream die traag is omdat hij overbelast is, treft een client die zonder budget herprobeert, en een standaard van drie pogingen betekent dat elke mislukte aanroep nog twee keer kan aankomen, en zo wordt één worstelende service een storing over de hele graph. Het budget verandert een retry van een hoop in een begrensde poging.",
   },
 
   outboxTitle: { en: "Delivery guarantees: the outbox", nl: "Bezorggaranties: de outbox" },
@@ -3511,8 +3534,8 @@ const COPY = {
     nl: "Twee regels in dat bestand dragen een beslissing. De publisher polt elke twee seconden, en placeOrder geeft hem meteen na de commit één zetje. Een puur asynchrone publisher zou de nettere vorm zijn, en zou een conformance-scenario breken: de run plaatst een bestelling en vraagt in het volgende verzoek het mandje op, en dat mandje moet leeg zijn. Het zetje zorgt dat het eigen verzoek van de bezoeker het effect ziet, en de poller maakt er een garantie van, geen hoop. Allebei, niet één van de twee.",
   },
   outbox4: {
-    en: "The store that makes at least once delivery survivable is thirty lines and one primary key on the pair of an event id and a consumer name.",
-    nl: "De store die at-least-once-bezorging draaglijk maakt is dertig regels en één primaire sleutel op het paar van een event-id en een consumernaam.",
+    en: "The store that makes at least once delivery survivable is one table, one primary key on the pair of an event id and a consumer name, and one method that runs the work once.",
+    nl: "De store die at-least-once-bezorging draaglijk maakt is één tabel, één primaire sleutel op het paar van een event-id en een consumernaam, en één methode die het werk één keer draait.",
   },
   outbox5: {
     en: "The tests start with the crash. An order is placed with a publisher that does nothing, so the row is left unpublished the way a process that died would leave it, and the real publisher picks it up and delivers it. Then at least once with an idempotent consumer: the mail fails once, the row comes round again, both deliveries reach the counter, and the counter reads one.",
@@ -3526,8 +3549,8 @@ const COPY = {
 
   resilienceTitle: { en: "The cart that still renders when the catalogue is down", nl: "Het mandje dat blijft werken als de catalogus plat ligt" },
   resilience1: {
-    en: "When the catalogue stops answering, the cart page has a choice: fail, or show the lines with the prices it last saw. It shows them. A circuit breaker counts the failures, opens after three, and stops the calls entirely for five seconds, so a service that is down is not hammered by every visitor. This one is thirty lines written out, and it is deliberately not a dependency, for two reasons. A reader of a tutorial should see the state machine. And a dependency would have to be explained anyway, which is more words than the state machine takes.",
-    nl: "Als de catalogus stopt met antwoorden, heeft de mandjespagina een keuze: falen, of de regels tonen met de prijzen die hij het laatst zag. Hij toont ze. Een circuit breaker telt de fouten, gaat na drie open, en stopt de aanroepen vijf seconden helemaal, zodat een service die plat ligt niet door elke bezoeker wordt geramd. Deze is dertig regels uitgeschreven en geen dependency, om twee redenen. Wie een tutorial leest, hoort de toestandsmachine te zien. En een dependency zou toch uitgelegd moeten worden, en dat kost meer woorden dan de toestandsmachine zelf.",
+    en: "When the catalogue stops answering, the cart page has a choice: fail, or show the lines with the prices it last saw. It shows them. A circuit breaker counts the failures, opens after three, and stops the calls entirely for five seconds, so a service that is down is not hammered by every visitor. This one is a state machine written out, and it is deliberately not a dependency, for two reasons. A reader of a tutorial should see the state machine. And a dependency would have to be explained anyway, which is more words than the state machine takes.",
+    nl: "Als de catalogus stopt met antwoorden, heeft de mandjespagina een keuze: falen, of de regels tonen met de prijzen die hij het laatst zag. Hij toont ze. Een circuit breaker telt de fouten, gaat na drie open, en stopt de aanroepen vijf seconden helemaal, zodat een service die plat ligt niet door elke bezoeker wordt geramd. Deze is een toestandsmachine die is uitgeschreven, en met opzet geen dependency, om twee redenen. Wie een tutorial leest, hoort de toestandsmachine te zien. En een dependency zou toch uitgelegd moeten worden, en dat kost meer woorden dan de toestandsmachine zelf.",
   },
   resilience2: {
     en: "The reader in cart remembers every product it was told about and answers from that memory when the live call fails or the circuit is open. A product it has never seen is answered as nothing, because a wrong price is worse than a missing line.",
@@ -3538,16 +3561,16 @@ const COPY = {
     nl: "Drie regels in de cart-host bepalen wat er uitgekleed wordt. Het leespad krijgt de uitgeklede reader. Het schrijfpad houdt de live catalogus, want een product toevoegen heeft de voorraad van dat moment nodig, en een mandjesregel die niet waargemaakt kan worden is erger dan een weigering waar een bezoeker iets mee kan.",
   },
   resilience4: {
-    en: "And then the chaos test, which is the only test in this project that proves a claim about the whole graph at once. It fills a cart through the gateway, stops the catalogue subgraph, and asks the graph for the cart again.",
-    nl: "En dan de chaostest, de enige test in dit project die een uitspraak over de hele graph in één keer bewijst. Hij vult een mandje via de gateway, stopt de subgraph catalogue, en vraagt de graph opnieuw om het mandje.",
+    en: "And then the chaos test, which is the one test that proves what the graph does when a part of it is gone. It fills a cart through the gateway, stops the catalogue subgraph, and asks the graph for the cart again.",
+    nl: "En dan de chaostest, de ene test die bewijst wat de graph doet als een deel ervan weg is. Hij vult een mandje via de gateway, stopt de subgraph catalogue, en vraagt de graph opnieuw om het mandje.",
   },
   resilience5: {
-    en: "That test lives inside the graph test file, and that placement is a deliberate decision. As a second file that started its own servers it starved the first file's event loop and both runs went flaky, so the whole graph starts once, in one process, and the chaos block runs last. A passing test run has therefore been through the chaos case as well, which is the property that matters.",
-    nl: "Die test staat in het bestand van de graphtest, en die plek is een beslissing en geen gewoonte. Als tweede bestand met eigen servers liet hij de event loop van het eerste bestand verhongeren en werden beide runs wisselvallig, dus de hele graph start één keer, in één proces, en het chaosblok draait als laatste. Een geslaagde testrun is daardoor ook door het chaosgeval heen gegaan, en dat is de eigenschap die telt.",
+    en: "That test lives inside the graph test file, and that placement is a deliberate decision. The whole graph starts once, in one process, and the chaos block is the last block of that file. A passing test run has therefore been through the chaos case as well, which is the property that matters.",
+    nl: "Die test staat in het bestand van de graphtest, en die plek is een bewuste beslissing. De hele graph start één keer, in één proces, en het chaosblok is het laatste blok van dat bestand. Een geslaagde testrun is daardoor ook door het chaosgeval heen gegaan, en dat is de eigenschap die telt.",
   },
   resilience6: {
-    en: "The trade-off is what to degrade and what to fail. A price that is a minute old is better than an empty page, and a visitor can still see what is in the cart. Adding a product does not degrade. Getting that line right is more valuable than any amount of breaker configuration, because a breaker only decides how quickly you stop calling, and the degrade decides what the customer sees.",
-    nl: "De afweging is wat je uitkleedt en wat je laat falen. Een prijs van een minuut oud is beter dan een lege pagina, en een bezoeker ziet nog steeds wat er in het mandje zit. Een product toevoegen wordt niet uitgekleed. Die grens goed trekken is waardevoller dan welke breakerconfiguratie ook, want een breaker bepaalt alleen hoe snel je stopt met bellen, en het uitkleden bepaalt wat de klant ziet.",
+    en: "The trade-off is what to degrade and what to fail. A price that is a minute old is better than an empty page, and a visitor can still see what is in the cart. Getting that line right is more valuable than any amount of breaker configuration, because a breaker only decides how quickly you stop calling, and the degrade decides what the customer sees.",
+    nl: "De afweging is wat je uitkleedt en wat je laat falen. Een prijs van een minuut oud is beter dan een lege pagina, en een bezoeker ziet nog steeds wat er in het mandje zit. Die grens goed trekken is waardevoller dan welke breakerconfiguratie ook, want een breaker bepaalt alleen hoe snel je stopt met bellen, en het uitkleden bepaalt wat de klant ziet.",
   },
 
   performanceTitle: { en: "DataLoader and the query plan", nl: "DataLoader en het queryplan" },
@@ -3560,18 +3583,18 @@ const COPY = {
     nl: "De test vraagt om een mandje met drie verschillende producten en hun namen, precies de vorm die een naïeve graph vier aanroepen kost.",
   },
   performance3: {
-    en: "One fetch to cart and one to catalogue, for three lines. The test after it proves the plan stays out of a response that did not ask for it. The header makes it opt in and the profile makes it unavailable where it should be, which is the same pair the seed reset mutation uses.",
-    nl: "Eén fetch naar cart en één naar catalogue, voor drie regels. De test erna bewijst dat het plan buiten een antwoord blijft dat er niet om vroeg. De header maakt het opt-in en het profiel maakt het onbeschikbaar waar dat hoort, hetzelfde paar dat de seed-resetmutation gebruikt.",
+    en: "One fetch to cart and one to catalogue, for three lines. The test after it proves the plan stays out of a response that did not ask for it. The header makes it opt in and the profile makes it unavailable where it should be, which is the same pair the seed reset mutation uses. The block below is the rest of the same router.yaml the composition section opened, the half that carries the operation limits.",
+    nl: "Eén fetch naar cart en één naar catalogue, voor drie regels. De test erna bewijst dat het plan buiten een antwoord blijft dat er niet om vroeg. De header maakt het opt-in en het profiel maakt het onbeschikbaar waar dat hoort, hetzelfde paar dat de seed-resetmutation gebruikt. Het blok hieronder is de rest van dezelfde router.yaml die de compositiesectie opende, de helft met de operatielimieten.",
   },
   performance4: {
-    en: "The other half of performance under traffic is the limits, and in production they are configuration. A depth limit stops a query that walks a cycle forever, a height limit stops one that asks for everything, an alias limit stops the trick of asking for the same expensive field a hundred times under a hundred names, and the parser limits stop a document that is expensive before it is even validated. The trade-off is limits that protect the graph against limits that block a legitimate screen, and the only way to set them is to look at the largest screen a real client draws and leave room above it.",
-    nl: "De andere helft van prestaties onder verkeer zijn de limieten, en in productie zijn dat instellingen. Een dieptelimiet stopt een query die eeuwig in een cyclus loopt, een hoogtelimiet stopt er een die alles opvraagt, een aliaslimiet stopt de truc om hetzelfde dure veld honderd keer onder honderd namen te vragen, en de parserlimieten stoppen een document dat duur is voordat het gevalideerd wordt. De afweging is limieten die de graph beschermen tegenover limieten die een legitiem scherm blokkeren, en de enige manier om ze te zetten is kijken naar het grootste scherm dat een echte client tekent en daarboven ruimte laten.",
+    en: "The other half of performance under traffic is the limits, and in production they are configuration. A depth limit stops a query that walks a cycle forever, a height limit stops one that asks for everything, an alias limit stops the trick of asking for the same expensive field a hundred times under a hundred names, and the parser limits stop a document that is expensive before it is even validated. Those four operation limits are written here and not proven, because this project does not run the router, and the two numbers the gateway exports stand in the same state, named and enforced by nothing until an engine reads them. The trade-off is limits that protect the graph against limits that block a legitimate screen, and the only way to set them is to look at the largest screen a real client draws and leave room above it.",
+    nl: "De andere helft van prestaties onder verkeer zijn de limieten, en in productie zijn dat instellingen. Een dieptelimiet stopt een query die eeuwig in een cyclus loopt, een hoogtelimiet stopt er een die alles opvraagt, een aliaslimiet stopt de truc om hetzelfde dure veld honderd keer onder honderd namen te vragen, en de parserlimieten stoppen een document dat duur is voordat het gevalideerd wordt. Die vier operatielimieten zijn hier geschreven en niet bewezen, want dit project draait de router niet, en de twee getallen die de gateway exporteert staan er net zo bij, genoemd en door niets afgedwongen tot een motor ze leest. De afweging is limieten die de graph beschermen tegenover limieten die een legitiem scherm blokkeren, en de enige manier om ze te zetten is kijken naar het grootste scherm dat een echte client tekent en daarboven ruimte laten.",
   },
 
   tracingTitle: { en: "One trace per request", nl: "Eén trace per verzoek" },
   tracing1: {
-    en: "A request that touches the gateway and three subgraphs is four processes, and a slow request has to be one thing to look at. The tracing module registers the OpenTelemetry Node SDK once per process with the W3C trace context propagator. An Express middleware opens a span for every incoming request, continuing the trace the traceparent header carries, and that span is the active context for the whole request, so everything the request starts is a child of it. Both the subgraph client and the gateway's data source write the active context back into a traceparent header, which is what carries the trace across the hop.",
-    nl: "Een verzoek dat de gateway en drie subgraphs raakt, zijn vier processen, en een traag verzoek moet één ding zijn om naar te kijken. De tracingmodule registreert de OpenTelemetry Node-SDK één keer per proces met de W3C-tracecontext-propagator. Een Express-middleware opent een span voor elk binnenkomend verzoek en zet de trace voort die de traceparent-header meedraagt, en die span is de actieve context voor het hele verzoek, dus alles wat het verzoek start is er een kind van. Zowel de subgraphclient als de datasource van de gateway schrijft de actieve context terug in een traceparent-header, en dat draagt de trace over de sprong heen.",
+    en: "A request that touches the gateway and three subgraphs is four processes, and a slow request has to be one thing to look at. The tracing module registers the Node tracing SDK once per process with the W3C trace context propagator. An Express middleware opens a span for every incoming request, continuing the trace the traceparent header carries, and that span is the active context for the whole request, so everything the request starts is a child of it. Both the subgraph client and the gateway's data source write the active context back into a traceparent header, which is what carries the trace across the hop.",
+    nl: "Een verzoek dat de gateway en drie subgraphs raakt, zijn vier processen, en een traag verzoek moet één ding zijn om naar te kijken. De tracingmodule registreert de Node-tracing-SDK één keer per proces met de W3C-tracecontext-propagator. Een Express-middleware opent een span voor elk binnenkomend verzoek en zet de trace voort die de traceparent-header meedraagt, en die span is de actieve context voor het hele verzoek, dus alles wat het verzoek start is er een kind van. Zowel de subgraphclient als de datasource van de gateway schrijft de actieve context terug in een traceparent-header, en dat draagt de trace over de sprong heen.",
   },
   tracing2: {
     en: "The exporter keeps the last two hundred spans in memory, because there is no collector on this machine. It is bounded on purpose: a process that records everything keeps nothing useful for long. A production graph swaps it for an exporter to a collector and adds a sampler, which is one line in this file, and the assertion the test makes stays the same, because the trace id is what joins the services either way.",
@@ -3592,8 +3615,8 @@ const COPY = {
     nl: "De build bewijst de typen. Compose bewijst dat de vijf schema's op elkaar passen. De contractcheck bewijst dat de samengestelde API dezelfde is die elke winkel verwacht, in beide profielen. De tests bewijzen de domeinregels en de negen garanties. Daarna start de conformance-suite de hele graph en jaagt er drieëndertig scenario's doorheen via de gateway, twee keer achter elkaar, zodat de seedreset de graph moet achterlaten in de staat die de volgende run verwacht. Een schemawijziging die daar iets van breekt, kan niet gemerged worden.",
   },
   continuous3: {
-    en: "Two things a production graph adds are not here, and both are worth naming. One Compose file that brings the whole graph up with PostgreSQL and the poller, and an OpenTelemetry collector for the spans, are the next increment in this project's backlog. The workflow above runs the graph as five Node processes on the runner.",
-    nl: "Twee dingen die een productiegraph toevoegt staan hier niet, en allebei zijn ze het noemen waard. Eén Compose-bestand dat de hele graph met PostgreSQL en de poller opstart, en een OpenTelemetry-collector voor de spans, zijn de volgende stap op de backlog van dit project. De workflow hierboven draait de graph als vijf Node-processen op de runner.",
+    en: "Two things a production graph adds are not here, and both are worth naming. One Compose file that brings the whole graph up with PostgreSQL and the poller, and an OpenTelemetry collector for the spans, are the next increment in this project's backlog. The workflow above starts the whole graph, the five subgraphs and the gateway, inside one Node process on the runner.",
+    nl: "Twee dingen die een productiegraph toevoegt staan hier niet, en allebei zijn ze het noemen waard. Eén Compose-bestand dat de hele graph met PostgreSQL en de poller opstart, en een OpenTelemetry-collector voor de spans, zijn de volgende stap op de backlog van dit project. De workflow hierboven start de hele graph, de vijf subgraphs en de gateway, in één Node-proces op de runner.",
   },
 
   costTitle: { en: "What this cost, and what I would do first", nl: "Wat dit kostte, en wat ik als eerste zou doen" },
@@ -3627,8 +3650,8 @@ const COPY = {
   cost5Before: { en: "Several teams behind one schema is the problem a federated graph is built to solve, and that part of the work has ", nl: "Meerdere teams achter één schema is het probleem waarvoor een federated graph gemaakt is, en dat deel van het werk heeft " },
   contractArticleLink: { en: "its own article on GraphQL as a contract", nl: "een eigen artikel over GraphQL als contract" },
   cost5After: {
-    en: ". The federation half is the part I built here to answer it in code, and the paragraph above is the whole of what my record says on the subject.",
-    nl: ". De federation-helft is wat ik hier gebouwd heb om die vraag met code te beantwoorden, en de alinea hierboven is alles wat mijn cv erover zegt.",
+    en: ". The federation half is the part I built here to answer it in code.",
+    nl: ". De federation-helft is wat ik hier gebouwd heb om die vraag met code te beantwoorden.",
   },
   cost6: {
     en: "That is the shape of the answer I would give in an interview too. The decisions in this article are the ones I can defend line by line, because each one has a file, a test and a reason that survives a follow-up question.",

@@ -86,7 +86,7 @@ describe("StackSection", () => {
     const article = screen.getByRole("link", { name: "link" });
     expect(article).toHaveAttribute(
       "href",
-      "/blog/apollo-federation-in-production-by-building-one"
+      "/blog/apollo-federation-explained-by-building-a-supergraph"
     );
     expect(article).toHaveAttribute("data-placement", "home-stack-article");
   });

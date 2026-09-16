@@ -4,7 +4,7 @@ import { Body, meta } from "./FederationPost";
 
 describe("FederationPost", () => {
   it("has bilingual metadata within the title and description limits", () => {
-    expect(meta.slug).toBe("apollo-federation-in-production-by-building-one");
+    expect(meta.slug).toBe("apollo-federation-explained-by-building-a-supergraph");
     expect(meta.title.en.length).toBeLessThan(60);
     expect(meta.title.nl.length).toBeLessThan(60);
     expect(meta.description.en.length).toBeLessThan(160);
