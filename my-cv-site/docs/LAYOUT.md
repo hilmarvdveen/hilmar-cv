@@ -569,3 +569,16 @@ The same measurement pass moved the /fit textarea from 665 to 503 at 390 by
 hiding the hero description below `sm`, which is the `descriptionHiddenOnPhones`
 prop in the hero table above and the /book precedent applied through the shared
 primitive.
+### One card for a compact engagement row (16 September 2026)
+
+`CompactEngagementCard` in `src/features/experience/components` is the one
+shape for an engagement in a list: the logo mark at 96 by 32, the company
+as an h3, one line of context (the period and the role on the experience
+hub, the city on the region hub), the outcome sentence, and a read more
+link named after the company that is stretched over the whole card, with
+the hover lift and the emerald border of the other cards. A list of them
+is a one column grid with a 16 pixel gap. The region hub's "rest of the
+map" used to be a bordered list with a right aligned link that wrapped
+differently on every row, which Hilmar rejected on sight. Any new list of
+engagements uses this card and never a bespoke row.
+

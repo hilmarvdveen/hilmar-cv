@@ -8,6 +8,7 @@ import { Button } from "@/components/Button";
 import { Link } from "@/i18n/navigation";
 import type { WorkEntry } from "@/data/workHistory";
 import { regionPath, type Region } from "@/data/regions";
+import { CompactEngagementCard } from "@/features/experience/components/CompactEngagementCard";
 
 type RegionHubProps = {
   regions: Region[];
@@ -22,6 +23,7 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
   const t = useTranslations("regions");
   const work = useTranslations("work");
   const home = useTranslations("home");
+  const common = useTranslations("common");
 
   return (
     <>
@@ -61,30 +63,23 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
             title={t("hub.restTitle")}
             subtitle={t("hub.restBody", { count: regions.length })}
           />
-          <ul className="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
+          <div className="grid grid-cols-1 gap-4">
             {outside.map((entry) => {
               const company = work(`${entry.id}.company`);
               return (
-                <li
+                <CompactEngagementCard
                   key={entry.id}
-                  className="flex flex-col gap-1 p-4 sm:flex-row sm:items-start sm:justify-between"
-                >
-                  <div>
-                    <p className="text-base text-gray-700">
-                      <span className="font-semibold text-textMain">{company}</span>
-                      {" · "}
-                      {work(`${entry.id}.location`)}
-                    </p>
-                    <p className="text-sm text-gray-600">{work(`${entry.id}.summary`)}</p>
-                  </div>
-                  <Link href={`/experience/${entry.id}`} className={linkClass}>
-                    {work("readMore", { company })}
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </li>
+                  id={entry.id}
+                  logo={entry.logo}
+                  logoAlt={common("images.companyLogoAlt", { company: entry.company })}
+                  company={company}
+                  metaLine={work(`${entry.id}.location`)}
+                  summary={work(`${entry.id}.summary`)}
+                  readMoreLabel={work("readMore", { company })}
+                />
               );
             })}
-          </ul>
+          </div>
         </Container>
       </Section>
 

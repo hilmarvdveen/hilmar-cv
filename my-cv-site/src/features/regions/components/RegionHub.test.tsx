@@ -38,6 +38,9 @@ describe("RegionHub", () => {
     expect(outsideLinks[0]).toHaveAttribute("href", `/experience/${outside[0].id}`);
     expect(outsideLinks[0]).toHaveAccessibleName(`readMore:${outside[0].id}.company`);
     expect(screen.getByText(`${outside[0].id}.summary`)).toBeInTheDocument();
+    const outsideCards = screen.getAllByRole("article");
+    expect(outsideCards).toHaveLength(outside.length);
+    expect(screen.getAllByRole("img")[0]).toHaveAccessibleName(`images.companyLogoAlt:${outside[0].company}`);
     expect(screen.getByText("hub.remoteBody")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "close.button" })).toHaveAttribute("data-placement", "region-hub-close");
   });
