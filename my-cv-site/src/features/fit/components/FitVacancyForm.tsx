@@ -8,6 +8,7 @@ import { Card } from "@/components/Card";
 import { HoneypotField } from "@/components/HoneypotField";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { FIT_LIMITS } from "@/lib/fit";
+import { TURNSTILE_TOKEN_FIELD } from "@/lib/fit/turnstile";
 
 export const FIT_CHECK_HEADING_ID = "fit-check-heading";
 
@@ -32,6 +33,7 @@ type FitVacancyFormProps = {
   failure: FitCheckFailure | null;
   honeypotValue: string;
   onHoneypotChange: (value: string) => void;
+  turnstileSiteKey?: string;
 };
 
 export const FitVacancyForm = ({
@@ -44,6 +46,7 @@ export const FitVacancyForm = ({
   failure,
   honeypotValue,
   onHoneypotChange,
+  turnstileSiteKey,
 }: FitVacancyFormProps) => {
   const t = useTranslations("fit.check");
   const hasReachedCap = vacancy.length >= FIT_LIMITS.vacancyMaximum;
@@ -102,6 +105,14 @@ export const FitVacancyForm = ({
             </p>
           )}
         </div>
+
+        {turnstileSiteKey && (
+          <div
+            className="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-response-field-name={TURNSTILE_TOKEN_FIELD}
+          />
+        )}
 
         <div className="space-y-3">
           <Button

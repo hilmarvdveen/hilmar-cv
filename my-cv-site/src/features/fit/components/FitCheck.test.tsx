@@ -32,12 +32,13 @@ const REPORT = {
 
 const VACANCY = "We are looking for a senior frontend engineer with React experience.";
 
-const renderCheck = () =>
+const renderCheck = (turnstileSiteKey?: string) =>
   render(
     <FitCheck
       heading="Paste the vacancy"
       intro="Paste the whole text or just the requirements section."
       disclosure={<p>How this works</p>}
+      turnstileSiteKey={turnstileSiteKey}
     />
   );
 
@@ -243,5 +244,30 @@ describe("FitCheck", () => {
     await check();
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.failed"));
     expect(trackFitEvent).toHaveBeenCalledWith("fit_failed", { status: 0 });
+  });
+});
+
+describe("FitCheck with a challenge widget", () => {
+  it("posts an empty token while the widget has answered nothing", async () => {
+    renderCheck("site-key");
+    await check();
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+    const [, options] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
+    expect(JSON.parse(String(options.body)).turnstileToken).toBe("");
+  });
+
+  it("posts the token the widget wrote into the form", async () => {
+    renderCheck("site-key");
+    const form = screen.getByRole("button", { name: /form.submit/ }).closest("form");
+    const token = document.createElement("input");
+    token.type = "hidden";
+    token.name = "cf-turnstile-response";
+    token.value = "turnstile-token-value";
+    form?.appendChild(token);
+
+    await check();
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+    const [, options] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
+    expect(JSON.parse(String(options.body)).turnstileToken).toBe("turnstile-token-value");
   });
 });

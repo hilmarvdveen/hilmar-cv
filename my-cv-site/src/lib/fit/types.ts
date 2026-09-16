@@ -46,3 +46,42 @@ export type FitReportResponse = {
 export type FitAnswerResponse = {
   answer: FitAnswer;
 };
+
+export type FitStoredResult = {
+  report: FitReport;
+  vacancy: string;
+  locale: FitLocale;
+  hasCv: boolean;
+};
+
+export type FitCvStatus = {
+  ready: boolean;
+  pages: number;
+};
+
+export type VacancyLeadRate = {
+  minimum: number | null;
+  maximum: number | null;
+  unit: string;
+  currency: string;
+};
+
+export type VacancyLeadContact = {
+  name: string;
+  email: string;
+  phone: string;
+  organisation: string;
+};
+
+export type VacancyLead = {
+  sessionId: string;
+  title: string;
+  endClient: string;
+  intermediary: string;
+  contractForm: string;
+  location: string;
+  closingDate: string;
+  rate: VacancyLeadRate;
+  contact: VacancyLeadContact;
+  verdictCounts: FitVerdictCounts;
+};

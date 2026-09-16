@@ -2081,11 +2081,38 @@
         "disclosure": {
             "title": "Hoe dit werkt",
             "assistant": "Dit is een AI-assistent. Hij werkt alleen met mijn vastgelegde werkervaring en noemt de opdracht erbij waar die de eis laat zien.",
-            "processing": "De tekst van de vacature bewaar ik niet. Het resultaat blijft dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen."
+            "processing": "De tekst van de vacature blijft samen met het resultaat dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen en ik er een CV op kan schrijven. Daarna zijn ze allebei weg."
         },
         "section": {
             "title": "Plak de vacature",
             "intro": "Plak de hele tekst of alleen het stuk met de eisen. Je hoeft verder niets in te vullen."
+        },
+        "cv": {
+            "title": "Dit CV op deze vacature",
+            "intro": "Het CV zet de eisen van deze vacature in de eerste tabel en zet de competenties in de volgorde die deze rol vraagt. Elke opdracht erin blijft in de woorden van mijn vastgelegde werkervaring.",
+            "nameLabel": "Je naam",
+            "emailLabel": "Je e-mailadres",
+            "organisationLabel": "Organisatie (optioneel)",
+            "submit": "Mail mij het CV op deze vacature",
+            "sending": "Bezig met versturen...",
+            "sentTitle": "Kijk in je mail",
+            "sentText": "De link is onderweg naar {email}. Daarmee open je dit resultaat opnieuw en download je het CV.",
+            "errors": {
+                "name": "Vul je naam in.",
+                "email": "Vul een e-mailadres in waar de link naartoe kan.",
+                "failed": "De aanvraag kwam er niet doorheen. Probeer het zo nog eens, of mail mij, dan stuur ik het CV zelf.",
+                "rateLimited": "Er staan nu veel aanvragen in de rij. Wacht een minuut, dan gaat de volgende erdoor."
+            }
+        },
+        "result": {
+            "title": "Je resultaat en het CV erbij",
+            "intro": "Dit is het resultaat van de vacaturecheck die je hebt gedaan. Met de knop bouw ik het CV op die vacature.",
+            "loading": "Bezig met ophalen van het resultaat...",
+            "failed": "Het resultaat staat er niet meer. Een resultaat blijft dertig dagen staan. Doe de check opnieuw, dan komt het CV er weer bij.",
+            "download": "Download het CV op deze vacature",
+            "downloading": "Bezig met opbouwen van het CV...",
+            "downloadNote": "Bij de eerste download wordt het bestand opgebouwd, dat duurt een halve minuut.",
+            "invalid": "Deze link werkt niet meer. Een resultaat blijft dertig dagen staan en de link uit de mail is de ingang. Plak de vacature hieronder opnieuw, dan staat het resultaat er weer."
         },
         "check": {
             "form": {

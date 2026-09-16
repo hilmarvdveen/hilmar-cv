@@ -128,4 +128,17 @@ describe("FitVacancyForm", () => {
     renderForm();
     expect(screen.getByLabelText("Company website (leave empty)")).toBeInTheDocument();
   });
+
+  it("renders no challenge widget without a site key", () => {
+    renderForm();
+    expect(document.querySelector("[data-sitekey]")).toBeNull();
+  });
+
+  it("renders the challenge widget on the key Cloudflare gave, writing into its own field", () => {
+    renderForm({ turnstileSiteKey: "site-key" });
+    const widget = document.querySelector("[data-sitekey]");
+    expect(widget).not.toBeNull();
+    expect(widget).toHaveAttribute("data-sitekey", "site-key");
+    expect(widget).toHaveAttribute("data-response-field-name", "cf-turnstile-response");
+  });
 });

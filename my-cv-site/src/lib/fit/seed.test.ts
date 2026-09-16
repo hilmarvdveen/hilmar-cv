@@ -17,6 +17,11 @@ const messagesFor = (suffix: string) => ({
       headline: `Loyalty on a new platform ${suffix}`,
       summary: `Moved the account pages ${suffix}`,
       delivered: [`Subscriptions on React ${suffix}`, `Reversible cut-over ${suffix}`],
+      body: [{ paragraph: `The account pages moved without a gap ${suffix}` }],
+      body: [
+        { paragraph: `The storefront ran on Java ${suffix}` },
+        { heading: `The cut-over ${suffix}`, paragraph: `Traffic moved per percentage ${suffix}` },
+      ],
     },
     niped: {
       company: "Niped",
@@ -25,6 +30,8 @@ const messagesFor = (suffix: string) => ({
       headline: `Health insight ${suffix}`,
       summary: `Rebuilt the intake ${suffix}`,
       delivered: [`Intake in React ${suffix}`],
+      body: [{ heading: `Intake ${suffix}`, paragraph: `The intake went to React ${suffix}` }],
+      body: [{ paragraph: `The intake became a wizard ${suffix}` }],
     },
   },
   faq: {
@@ -149,6 +156,19 @@ describe("buildSeedRecord", () => {
     expect(bol.headline.nl).toBe("Loyalty on a new platform NL");
     expect(bol.summary.en).toBe("Moved the account pages EN");
     expect(bol.delivered.nl).toEqual(["Subscriptions on React NL", "Reversible cut-over NL"]);
+  });
+
+  it("carries the story paragraphs of the engagement page in order, per locale", () => {
+    const [bol, niped] = record.engagements;
+    expect(bol.stories.en).toEqual([
+      "The storefront ran on Java EN",
+      "Traffic moved per percentage EN",
+    ]);
+    expect(bol.stories.nl).toEqual([
+      "The storefront ran on Java NL",
+      "Traffic moved per percentage NL",
+    ]);
+    expect(niped.stories.nl).toEqual(["The intake became a wizard NL"]);
   });
 
   it("gives every post a url and turns a missing update date into null", () => {

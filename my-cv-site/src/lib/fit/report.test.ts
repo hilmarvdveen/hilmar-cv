@@ -15,6 +15,8 @@ import {
   isFitAnswer,
   isFitReport,
   isFitVerdict,
+  readFitCvStatus,
+  readStoredFitResult,
   sanitizeFitAnswer,
   sanitizeFitReport,
   sanitizeSessionId,
@@ -324,5 +326,64 @@ describe("fitTechnologyDuration", () => {
   it("drops a figure that rounds to nothing", () => {
     expect(fitTechnologyDuration(0)).toBeNull();
     expect(fitTechnologyDuration(0.02)).toBeNull();
+  });
+});
+
+describe("readStoredFitResult", () => {
+  const stored = {
+    report: {
+      summary: "React sits in the record",
+      requirements: [
+        {
+          requirement: "React",
+          verdict: "inRecord",
+          note: "Since 2017",
+          engagements: [
+            { id: workHistory[0]!.id, company: workHistory[0]!.company },
+            { id: "invented", company: "Invented" },
+          ],
+        },
+      ],
+      technologies: [],
+    },
+    vacancy: "The vacancy text",
+    locale: "nl",
+    hasCv: true,
+  };
+
+  it("reads the report, the vacancy and the locale, and sanitizes the report", () => {
+    const result = readStoredFitResult(stored);
+    expect(result?.vacancy).toBe("The vacancy text");
+    expect(result?.locale).toBe("nl");
+    expect(result?.hasCv).toBe(true);
+    expect(result?.report.requirements[0]!.engagements).toEqual([
+      { id: workHistory[0]!.id, company: workHistory[0]!.company },
+    ]);
+  });
+
+  it("reads a missing cv flag as false", () => {
+    expect(readStoredFitResult({ ...stored, hasCv: undefined })?.hasCv).toBe(false);
+  });
+
+  it("refuses anything that is not a stored result", () => {
+    expect(readStoredFitResult(null)).toBeNull();
+    expect(readStoredFitResult({ ...stored, report: { summary: 1 } })).toBeNull();
+    expect(readStoredFitResult({ ...stored, vacancy: 42 })).toBeNull();
+    expect(readStoredFitResult({ ...stored, locale: "de" })).toBeNull();
+  });
+});
+
+describe("readFitCvStatus", () => {
+  it("reads the flag and the page count", () => {
+    expect(readFitCvStatus({ ready: true, pages: 2 })).toEqual({ ready: true, pages: 2 });
+  });
+
+  it("answers a not ready status for anything unusable", () => {
+    expect(readFitCvStatus(null)).toEqual({ ready: false, pages: 0 });
+    expect(readFitCvStatus({ ready: "yes", pages: "nonsense" })).toEqual({
+      ready: false,
+      pages: 0,
+    });
+    expect(readFitCvStatus({ ready: true, pages: 2.8 })).toEqual({ ready: true, pages: 2 });
   });
 });

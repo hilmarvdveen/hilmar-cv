@@ -1,9 +1,11 @@
 import { workHistory } from "@/data/workHistory";
 import type {
   FitAnswer,
+  FitCvStatus,
   FitEngagementReference,
   FitReport,
   FitRequirement,
+  FitStoredResult,
   FitTechnology,
   FitTechnologyDuration,
   FitVerdict,
@@ -183,4 +185,26 @@ export function countFitVerdicts(report: FitReport): FitVerdictCounts {
     counts[requirement.verdict] += 1;
   }
   return counts;
+}
+
+export function readStoredFitResult(value: unknown): FitStoredResult | null {
+  if (!isRecord(value)) return null;
+  if (!isFitReport(value.report)) return null;
+  if (typeof value.vacancy !== "string") return null;
+  if (value.locale !== "nl" && value.locale !== "en") return null;
+  return {
+    report: sanitizeFitReport(value.report),
+    vacancy: value.vacancy,
+    locale: value.locale,
+    hasCv: value.hasCv === true,
+  };
+}
+
+export function readFitCvStatus(value: unknown): FitCvStatus {
+  if (!isRecord(value)) return { ready: false, pages: 0 };
+  const pages = Number(value.pages);
+  return {
+    ready: value.ready === true,
+    pages: Number.isFinite(pages) && pages > 0 ? Math.floor(pages) : 0,
+  };
 }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
@@ -154,5 +154,34 @@ describe("POST /api/fit/question", () => {
     expect(response.status).toBe(429);
     expect(response.headers.get("Retry-After")).toBe("42");
     expect(await response.json()).toMatchObject({ retryAfterSeconds: 42 });
+  });
+});
+
+describe("the optional challenge", () => {
+  const originalEnvironment = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...originalEnvironment };
+  });
+
+  it("verifies the token before forwarding and refuses a failed challenge", async () => {
+    process.env.TURNSTILE_SECRET_KEY = "secret-key";
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "site-key";
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: false }) })
+    );
+
+    const refused = await POST(post({ ...valid(), turnstileToken: "token" }));
+    expect(refused.status).toBe(403);
+    expect(requestFitAnswer).not.toHaveBeenCalled();
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) })
+    );
+    const accepted = await POST(post({ ...valid(), turnstileToken: "token" }));
+    expect(accepted.status).toBe(200);
+    expect(requestFitAnswer).toHaveBeenCalled();
   });
 });

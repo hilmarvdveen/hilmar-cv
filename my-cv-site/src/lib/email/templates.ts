@@ -75,7 +75,7 @@ function renderDetailRow(label: string, valueHtml: string): string {
 </tr>`;
 }
 
-function renderJoinBlock(buttonLabel: string, linkLabel: string, joinUrl: string): string {
+function renderActionBlock(buttonLabel: string, linkLabel: string, joinUrl: string): string {
   const url = escapeHtml(joinUrl);
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:18px 0;">
 <tr><td style="border-radius:8px;background-color:${BRAND_EMERALD};">
@@ -136,7 +136,7 @@ export function renderBookingConfirmationEmail(input: BookingEmailInput): Render
     )
     .join("");
   const joinBlock = input.joinUrl
-    ? renderJoinBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
+    ? renderActionBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
     : "";
   const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
 <p style="margin:0;">${copy.intro}</p>
@@ -192,7 +192,7 @@ export function renderBookingReminderEmail(
   const moment = formatBookingMoment(input.isoDate, input.locale);
   const name = escapeHtml(input.name);
   const joinBlock = input.joinUrl
-    ? renderJoinBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
+    ? renderActionBlock(copy.joinButtonLabel, copy.joinLinkLabel, input.joinUrl)
     : "";
   const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
 <p style="margin:0;">${copy.intro}</p>
@@ -393,5 +393,183 @@ export function renderBookingWatchEmail(input: BookingWatchEmailInput): Rendered
   return {
     subject,
     html: renderLayout(bodyHtml, "Wekelijkse controle van de boekingskoppeling."),
+  };
+}
+
+export type FitLinkEmailInput = {
+  locale: EmailLocale;
+  name: string;
+  resultUrl: string;
+};
+
+const FIT_LINK_COPY = {
+  nl: {
+    subject: "Je CV op deze vacature staat klaar",
+    greeting: (name: string) => `Hi ${name},`,
+    intro:
+      "Via de link hieronder open je het resultaat van de vacaturecheck opnieuw. Op die pagina staat de knop waarmee je het CV op deze vacature download.",
+    buttonLabel: "Open het resultaat en download het CV",
+    linkLabel: "Werkt de knop niet? Kopieer deze link:",
+    note: "Het CV wordt bij de eerste download opgebouwd, dat duurt een halve minuut. De link werkt dertig dagen.",
+    bookingIntro: "Wil je de vacature liever samen doorlopen?",
+    bookingLabel: "Plan een gesprek van 30 minuten",
+    signoff: "Met vriendelijke groet,",
+    footer: "Je ontvangt deze mail omdat je een CV op een vacature hebt aangevraagd.",
+  },
+  en: {
+    subject: "Your CV for this vacancy is ready",
+    greeting: (name: string) => `Hi ${name},`,
+    intro:
+      "The link below reopens the result of the vacancy check. That page carries the button that downloads the CV written for this vacancy.",
+    buttonLabel: "Open the result and download the CV",
+    linkLabel: "If the button does not work, copy this link:",
+    note: "The CV is built on the first download, which takes about half a minute. The link works for thirty days.",
+    bookingIntro: "Rather go through the vacancy together?",
+    bookingLabel: "Book a 30-minute call",
+    signoff: "Kind regards,",
+    footer: "You received this email because you asked for a CV for a vacancy.",
+  },
+} as const;
+
+export function renderFitLinkEmail(input: FitLinkEmailInput): RenderedEmail {
+  const copy = FIT_LINK_COPY[input.locale];
+  const name = escapeHtml(input.name);
+  const bookingUrl = `${CONTACT_SITE_URL}/${input.locale}/book`;
+  const bodyHtml = `<p style="margin:0 0 14px;">${copy.greeting(name)}</p>
+<p style="margin:0 0 18px;">${copy.intro}</p>
+${renderActionBlock(copy.buttonLabel, copy.linkLabel, input.resultUrl)}
+<p style="margin:0 0 18px;font-size:14px;color:#4b5563;">${copy.note}</p>
+${renderContactBookingBlock(copy.bookingIntro, copy.bookingLabel, bookingUrl)}
+<p style="margin:0;">${copy.signoff}<br><strong>Hilmar van der Veen</strong></p>`;
+  return {
+    subject: copy.subject,
+    html: renderLayout(bodyHtml, copy.footer),
+  };
+}
+
+export type FitLeadNotificationInput = {
+  name: string;
+  email: string;
+  organisation: string;
+  sessionId: string;
+  resultUrl: string;
+};
+
+export function renderFitLeadNotification(input: FitLeadNotificationInput): RenderedEmail {
+  const name = escapeHtml(input.name);
+  const email = escapeHtml(input.email);
+  const organisation = input.organisation ? escapeHtml(input.organisation) : NOT_PROVIDED.nl;
+  const resultUrl = escapeHtml(input.resultUrl);
+  const rows = [
+    renderDetailRow("Wie", `<strong>${name}</strong>`),
+    renderDetailRow(
+      "E-mail",
+      `<a href="mailto:${email}" style="color:${BRAND_EMERALD};">${email}</a>`
+    ),
+    renderDetailRow("Organisatie", organisation),
+    renderDetailRow("Nummer", escapeHtml(input.sessionId)),
+    renderDetailRow(
+      "Resultaat",
+      `<a href="${resultUrl}" style="color:${BRAND_EMERALD};word-break:break-all;">${resultUrl}</a>`
+    ),
+  ].join("");
+  const bodyHtml = `<p style="margin:0 0 14px;">${name} heeft via de vacaturecheck een CV op een vacature gevraagd. De link naar het resultaat is verstuurd.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">${rows}</table>
+<p style="margin:0;">Beantwoord deze mail om direct bij ${name} uit te komen.</p>`;
+  return {
+    subject: `CV op vacature gevraagd: ${input.name}`,
+    html: renderLayout(bodyHtml, "Automatische melding van de vacaturecheck."),
+  };
+}
+
+export type FitLeadsDigestLead = {
+  sessionId: string;
+  title: string;
+  endClient: string;
+  intermediary: string;
+  contractForm: string;
+  closingDate: string;
+  rate: { minimum: number | null; maximum: number | null; unit: string; currency: string };
+  contact: { name: string; email: string; phone: string; organisation: string };
+  verdictCounts: { inRecord: number; partly: number; notInRecord: number };
+};
+
+export type FitLeadsDigestEmailInput = {
+  since: string;
+  leads: FitLeadsDigestLead[];
+};
+
+const CONTRACT_FORM_NAME: Record<string, string> = {
+  freelance: "Freelance",
+  secondment: "Detachering",
+  payroll: "Loondienst",
+  unknown: "Onbekend",
+};
+
+const DIGEST_COLUMNS = [
+  "Vacature",
+  "Eindklant",
+  "Bemiddelaar",
+  "Contractvorm",
+  "Tarief",
+  "Sluiting",
+  "In de werkervaring",
+  "Contact",
+] as const;
+
+const UNKNOWN_VALUE = "Onbekend";
+
+const digestValue = (value: string): string => (value ? escapeHtml(value) : UNKNOWN_VALUE);
+
+const digestRate = (rate: FitLeadsDigestLead["rate"]): string => {
+  const currency = rate.currency ? escapeHtml(rate.currency) : "€";
+  const unit = rate.unit === "day" ? "per dag" : rate.unit === "hour" ? "per uur" : "";
+  if (rate.minimum && rate.maximum && rate.minimum !== rate.maximum) {
+    return `${currency}${rate.minimum} tot ${currency}${rate.maximum} ${unit}`.trim();
+  }
+  const single = rate.minimum ?? rate.maximum;
+  return single ? `${currency}${single} ${unit}`.trim() : UNKNOWN_VALUE;
+};
+
+const digestContact = (contact: FitLeadsDigestLead["contact"]): string => {
+  const parts = [contact.name, contact.organisation, contact.email, contact.phone].filter(
+    (part) => part !== ""
+  );
+  return parts.length > 0 ? escapeHtml(parts.join(", ")) : UNKNOWN_VALUE;
+};
+
+const digestCell = (valueHtml: string): string =>
+  `<td style="padding:8px 10px;border-bottom:1px solid #e5e7eb;font-size:13px;color:#1f2937;vertical-align:top;">${valueHtml}</td>`;
+
+const digestHeaderCell = (label: string): string =>
+  `<th align="left" style="padding:8px 10px;border-bottom:2px solid ${BRAND_NAVY};font-size:12px;font-weight:700;color:${BRAND_NAVY};text-transform:uppercase;letter-spacing:0.4px;white-space:nowrap;">${label}</th>`;
+
+export function renderFitLeadsDigestEmail(input: FitLeadsDigestEmailInput): RenderedEmail {
+  const headerCells = DIGEST_COLUMNS.map(digestHeaderCell).join("");
+  const rows = input.leads
+    .map((lead) =>
+      `<tr>${[
+        digestValue(lead.title),
+        digestValue(lead.endClient),
+        digestValue(lead.intermediary),
+        CONTRACT_FORM_NAME[lead.contractForm] ?? UNKNOWN_VALUE,
+        digestRate(lead.rate),
+        digestValue(lead.closingDate),
+        `${lead.verdictCounts.inRecord} in, ${lead.verdictCounts.partly} deels, ${lead.verdictCounts.notInRecord} niet`,
+        digestContact(lead.contact),
+      ]
+        .map(digestCell)
+        .join("")}</tr>`
+    )
+    .join("");
+  const bodyHtml = `<p style="margin:0 0 14px;">Vacatures die sinds ${escapeHtml(input.since)} door de vacaturecheck zijn gegaan: ${input.leads.length}.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 18px;border-collapse:collapse;">
+<tr>${headerCells}</tr>
+${rows}
+</table>
+<p style="margin:0;">Onbekend betekent dat de vacaturetekst het veld niet noemde.</p>`;
+  return {
+    subject: `Vacaturecheck: ${input.leads.length} nieuwe vacatures sinds ${input.since}`,
+    html: renderLayout(bodyHtml, "Wekelijks overzicht van de vacaturecheck."),
   };
 }

@@ -1,5 +1,13 @@
-import { retryAfterSecondsFromBody } from "./report";
-import type { FitAnswerResponse, FitLocale, FitReportResponse } from "./types";
+import { normalizeVacancyLeads } from "./leads";
+import { readFitCvStatus, readStoredFitResult, retryAfterSecondsFromBody } from "./report";
+import type {
+  FitAnswerResponse,
+  FitCvStatus,
+  FitLocale,
+  FitReportResponse,
+  FitStoredResult,
+  VacancyLead,
+} from "./types";
 
 export class FitAgentRateLimitError extends Error {
   readonly retryAfterSeconds: number;
@@ -110,4 +118,123 @@ export async function requestFitAnswer(
     body: { question, sessionId, locale },
     clientAddress,
   })) as FitAnswerResponse;
+}
+
+export function agentStoredResultPath(sessionId: string): string {
+  return `/fit/${encodeURIComponent(sessionId)}`;
+}
+
+type AgentReadRequest = {
+  configuration: FitAgentConfiguration;
+  path: string;
+  clientAddress: string;
+};
+
+async function getFromAgent({
+  configuration,
+  path,
+  clientAddress,
+}: AgentReadRequest): Promise<Response> {
+  const response = await fetch(`${configuration.url}${path}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${configuration.token}`,
+      "x-forwarded-for": clientAddress,
+    },
+    signal: AbortSignal.timeout(configuration.timeoutMilliseconds),
+    cache: "no-store",
+  });
+
+  if (response.status === 429) {
+    throw new FitAgentRateLimitError(await readRetryAfterSeconds(response));
+  }
+
+  if (!response.ok) {
+    throw new Error(`The fit agent answered ${response.status}`);
+  }
+
+  return response;
+}
+
+export type FitStoredResultRequest = {
+  sessionId: string;
+  clientAddress: string;
+};
+
+export async function requestStoredFitResult(
+  configuration: FitAgentConfiguration,
+  { sessionId, clientAddress }: FitStoredResultRequest
+): Promise<FitStoredResult | null> {
+  const response = await getFromAgent({
+    configuration,
+    path: agentStoredResultPath(sessionId),
+    clientAddress,
+  });
+  return readStoredFitResult(await response.json());
+}
+
+export type FitCvRequest = {
+  sessionId: string;
+  locale: FitLocale;
+  clientAddress: string;
+};
+
+export async function requestTailoredCv(
+  configuration: FitAgentConfiguration,
+  { sessionId, locale, clientAddress }: FitCvRequest
+): Promise<FitCvStatus> {
+  return readFitCvStatus(
+    await postToAgent({
+      configuration,
+      path: `${agentStoredResultPath(sessionId)}/cv`,
+      body: { locale },
+      clientAddress,
+    })
+  );
+}
+
+export async function fetchTailoredCvDocument(
+  configuration: FitAgentConfiguration,
+  { sessionId, locale, clientAddress }: FitCvRequest
+): Promise<Response> {
+  return getFromAgent({
+    configuration,
+    path: `${agentStoredResultPath(sessionId)}/cv.pdf?locale=${encodeURIComponent(locale)}`,
+    clientAddress,
+  });
+}
+
+export type FitRequesterRequest = {
+  sessionId: string;
+  emailDomain: string;
+  clientAddress: string;
+};
+
+export async function reportRequesterEmailDomain(
+  configuration: FitAgentConfiguration,
+  { sessionId, emailDomain, clientAddress }: FitRequesterRequest
+): Promise<void> {
+  await postToAgent({
+    configuration,
+    path: `/leads/${encodeURIComponent(sessionId)}/requester`,
+    body: { emailDomain },
+    clientAddress,
+  });
+}
+
+export type FitLeadsRequest = {
+  since: string;
+  clientAddress: string;
+};
+
+export async function requestRecentLeads(
+  configuration: FitAgentConfiguration,
+  { since, clientAddress }: FitLeadsRequest
+): Promise<VacancyLead[]> {
+  const response = await getFromAgent({
+    configuration,
+    path: `/leads?since=${encodeURIComponent(since)}`,
+    clientAddress,
+  });
+  return normalizeVacancyLeads(await response.json());
 }

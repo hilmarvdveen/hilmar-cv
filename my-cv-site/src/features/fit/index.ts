@@ -7,4 +7,9 @@ export {
 export { FitDisclosure } from "./components/FitDisclosure";
 export { FitReport } from "./components/FitReport";
 export { FitQuestion } from "./components/FitQuestion";
+export { FitCvCard } from "./components/FitCvCard";
+export {
+  FitReopenedResult,
+  type FitReopenedResultLabels,
+} from "./components/FitReopenedResult";
 export { FitBooking } from "./components/FitBooking";

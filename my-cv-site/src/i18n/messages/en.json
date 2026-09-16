@@ -2221,11 +2221,38 @@
         "disclosure": {
             "title": "How this works",
             "assistant": "This is an AI assistant. It works only from my recorded work history and names the engagement wherever that work history shows a requirement.",
-            "processing": "I do not keep the vacancy text. The result stays for thirty days under a random number, so you can still ask a question about it."
+            "processing": "The vacancy text stays with the result for thirty days under a random number, so you can still ask a question about it and I can write a CV to it. After that both are gone."
         },
         "section": {
             "title": "Paste the vacancy",
             "intro": "Paste the whole text or just the requirements section. You fill in nothing else."
+        },
+        "cv": {
+            "title": "This CV, written to this vacancy",
+            "intro": "The CV puts the requirements of this vacancy in the first table and orders the competencies the way this role asks for. Every engagement in it stays in the words of my recorded work history.",
+            "nameLabel": "Your name",
+            "emailLabel": "Your email address",
+            "organisationLabel": "Organisation (optional)",
+            "submit": "Mail me the CV for this vacancy",
+            "sending": "Sending...",
+            "sentTitle": "Check your mail",
+            "sentText": "The link is on its way to {email}. It opens this result again and carries the download button.",
+            "errors": {
+                "name": "Fill in your name.",
+                "email": "Fill in an email address the link can go to.",
+                "failed": "The request did not come through. Try again in a moment, or mail me and I will send the CV myself.",
+                "rateLimited": "There is a queue right now. Wait a minute and the next one goes through."
+            }
+        },
+        "result": {
+            "title": "Your result and the CV that goes with it",
+            "intro": "This is the result of the vacancy check you ran. The button builds the CV for that vacancy.",
+            "loading": "Getting the result...",
+            "failed": "The result is no longer there. A result stays for thirty days. Run the check again and the CV comes with it.",
+            "download": "Download the CV for this vacancy",
+            "downloading": "Building the CV...",
+            "downloadNote": "The first download builds the file, which takes about half a minute.",
+            "invalid": "This link does not work any more. A result stays for thirty days, and the link from the mail is the way in. Paste the vacancy below again and the result is back."
         },
         "check": {
             "form": {

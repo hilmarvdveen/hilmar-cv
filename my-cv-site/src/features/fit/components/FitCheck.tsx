@@ -11,10 +11,17 @@ import {
   trackFitEvent,
   type FitReport as FitReportData,
 } from "@/lib/fit";
+import { TURNSTILE_TOKEN_FIELD } from "@/lib/fit/turnstile";
 import { FitVacancyForm, type FitCheckFailure } from "./FitVacancyForm";
 import { FitReport } from "./FitReport";
 import { FitQuestion } from "./FitQuestion";
+import { FitCvCard } from "./FitCvCard";
 import { FitBooking } from "./FitBooking";
+
+const turnstileTokenFrom = (form: HTMLFormElement): string => {
+  const token = new FormData(form).get(TURNSTILE_TOKEN_FIELD);
+  return typeof token === "string" ? token : "";
+};
 
 const readRetryAfterSeconds = async (response: Response): Promise<number> => {
   try {
@@ -28,9 +35,10 @@ type FitCheckProps = {
   heading: string;
   intro: string;
   disclosure: ReactNode;
+  turnstileSiteKey?: string;
 };
 
-export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
+export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCheckProps) => {
   const t = useTranslations("fit.check");
   const locale = useLocale();
   const honeypot = useHoneypot();
@@ -64,6 +72,7 @@ export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
     event.preventDefault();
     if (isChecking) return;
 
+    const turnstileToken = turnstileTokenFrom(event.currentTarget as HTMLFormElement);
     const trimmed = vacancy.trim();
     if (trimmed.length < FIT_LIMITS.vacancyMinimum) {
       setFailure({ message: t("errors.tooShort"), recoverable: true });
@@ -82,6 +91,7 @@ export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
         body: JSON.stringify({
           vacancy: trimmed,
           locale,
+          turnstileToken,
           ...honeypot.payload(),
           formStartedAt: firstChangeAt.current ?? Date.now(),
         }),
@@ -126,6 +136,7 @@ export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
         failure={failure}
         honeypotValue={honeypot.value}
         onHoneypotChange={honeypot.setValue}
+        turnstileSiteKey={turnstileSiteKey}
       />
 
       <div className="mt-8">{disclosure}</div>
@@ -137,7 +148,12 @@ export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
       {report && !isChecking && (
         <>
           <FitReport report={report} sessionId={sessionId} headingRef={resultHeadingRef} />
-          {sessionId && <FitQuestion sessionId={sessionId} />}
+          {sessionId && (
+            <>
+              <FitQuestion sessionId={sessionId} />
+              <FitCvCard sessionId={sessionId} />
+            </>
+          )}
           <FitBooking />
         </>
       )}

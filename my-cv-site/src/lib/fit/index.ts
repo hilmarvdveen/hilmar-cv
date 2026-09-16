@@ -1,15 +1,20 @@
 export type {
   FitAnswer,
   FitAnswerResponse,
+  FitCvStatus,
   FitEngagementReference,
   FitLocale,
   FitReport,
   FitReportResponse,
   FitRequirement,
+  FitStoredResult,
   FitTechnology,
   FitTechnologyDuration,
   FitVerdict,
   FitVerdictCounts,
+  VacancyLead,
+  VacancyLeadContact,
+  VacancyLeadRate,
 } from "./types";
 
 export {
@@ -26,6 +31,8 @@ export {
   isFitAnswer,
   isFitReport,
   isFitVerdict,
+  readFitCvStatus,
+  readStoredFitResult,
   retryAfterSecondsFromBody,
   sanitizeFitAnswer,
   sanitizeFitReport,
@@ -35,11 +42,19 @@ export {
 export {
   FIT_AGENT_DEFAULT_TIMEOUT_MILLISECONDS,
   FitAgentRateLimitError,
+  agentStoredResultPath,
+  fetchTailoredCvDocument,
   getFitAgentConfiguration,
+  reportRequesterEmailDomain,
   requestFitAnswer,
   requestFitReport,
+  requestRecentLeads,
+  requestStoredFitResult,
+  requestTailoredCv,
   type FitAgentConfiguration,
 } from "./agentClient";
+
+export { LEAD_LIMITS, digestSinceDate, normalizeVacancyLeads } from "./leads";
 
 export {
   FIT_EVENT_CATEGORY,

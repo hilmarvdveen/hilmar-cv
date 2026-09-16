@@ -17,6 +17,7 @@ import {
   sanitizeFitAnswer,
   sanitizeSessionId,
 } from "@/lib/fit";
+import { getTurnstileConfiguration, verifyTurnstileToken } from "@/lib/fit/turnstile";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -29,6 +30,7 @@ type FitQuestionBody = {
   locale: string;
   company_website?: string;
   formStartedAt?: number;
+  turnstileToken?: string;
 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -76,6 +78,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         { error: 'Field "sessionId" is not an allowed value.' },
         { status: 400 }
       );
+    }
+
+    const turnstile = getTurnstileConfiguration();
+    if (
+      turnstile &&
+      !(await verifyTurnstileToken(turnstile, {
+        token: body.turnstileToken,
+        clientAddress: getClientIp(request),
+      }))
+    ) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const configuration = getFitAgentConfiguration();

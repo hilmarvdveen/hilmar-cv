@@ -36,8 +36,13 @@ mkdirSync(dirname(target), { recursive: true });
 writeFileSync(target, `${JSON.stringify(record, null, 2)}\n`, "utf8");
 
 console.log(`wrote ${target}`);
+const storyCount = (locale) =>
+  record.engagements.reduce((total, engagement) => total + engagement.stories[locale].length, 0);
+
 console.log(
   `engagements ${record.engagements.length}, technologies ${
     new Set(record.engagements.flatMap((engagement) => engagement.technologies)).size
-  }, posts ${record.posts.length}, faq ${record.faq.length}`
+  }, posts ${record.posts.length}, faq ${record.faq.length}, stories ${storyCount(
+    "en"
+  )} english and ${storyCount("nl")} dutch`
 );

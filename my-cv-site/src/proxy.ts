@@ -7,18 +7,22 @@ const intlMiddleware = createMiddleware(routing);
 export default async function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   
+  const turnstileHost = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+    ? ' https://challenges.cloudflare.com'
+    : '';
+
   const response = intlMiddleware(request);
   
   const nextResponse = response || NextResponse.next();
   
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://vitals.vercel-analytics.com;
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://vitals.vercel-analytics.com${turnstileHost};
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https:;
     font-src 'self' https://fonts.gstatic.com;
     connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.g.doubleclick.net https://vitals.vercel-analytics.com https://vercel.live wss://vercel.live;
-    frame-src 'self';
+    frame-src 'self'${turnstileHost};
     object-src 'none';
     base-uri 'self';
     form-action 'self';

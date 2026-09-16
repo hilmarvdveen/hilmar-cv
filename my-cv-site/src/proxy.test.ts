@@ -37,6 +37,25 @@ describe("proxy", () => {
     }
   });
 
+  it("names no challenge host while Turnstile is not configured", async () => {
+    const policy = (
+      await proxy(new NextRequest("https://www.hilmarvanderveen.com/nl"))
+    ).headers.get("Content-Security-Policy") ?? "";
+    expect(policy).not.toContain("https://challenges.cloudflare.com");
+  });
+
+  it("allows the challenge script and frame once the public key is set", async () => {
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "site-key");
+    const policy = (
+      await proxy(new NextRequest("https://www.hilmarvanderveen.com/nl"))
+    ).headers.get("Content-Security-Policy") ?? "";
+    expect(directive(policy, "script-src")).toContain("https://challenges.cloudflare.com");
+    expect(directive(policy, "frame-src")).toBe(
+      "frame-src 'self' https://challenges.cloudflare.com"
+    );
+    vi.unstubAllEnvs();
+  });
+
   it("issues a different nonce on every request", async () => {
     const first = await proxy(new NextRequest("https://www.hilmarvanderveen.com/nl"));
     const second = await proxy(new NextRequest("https://www.hilmarvanderveen.com/en"));

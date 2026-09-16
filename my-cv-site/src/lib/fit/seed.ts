@@ -31,6 +31,11 @@ export type SeedPostEntry = {
   keywords: string[];
 };
 
+export type SeedWorkEntrySection = {
+  heading?: string;
+  paragraph: string;
+};
+
 export type SeedWorkEntryMessages = {
   company: string;
   location: string;
@@ -38,6 +43,7 @@ export type SeedWorkEntryMessages = {
   headline: string;
   summary: string;
   delivered: string[];
+  body: SeedWorkEntrySection[];
 };
 
 export type SeedFaqCategoryMessages = {
@@ -75,6 +81,7 @@ export type SeedEngagement = {
   headline: SeedLocalizedText;
   summary: SeedLocalizedText;
   delivered: SeedLocalizedList;
+  stories: SeedLocalizedList;
 };
 
 export type SeedPost = {
@@ -241,6 +248,9 @@ function buildEngagements(input: SeedRecordInput): SeedEngagement[] {
       delivered: perLocale((locale) => [
         ...entryMessages(input.messages, locale, entry.id).delivered,
       ]),
+      stories: perLocale((locale) =>
+        entryMessages(input.messages, locale, entry.id).body.map((section) => section.paragraph)
+      ),
     };
   });
 }

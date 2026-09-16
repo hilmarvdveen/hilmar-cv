@@ -7,6 +7,10 @@
     {
       "path": "/api/booking/watch",
       "schedule": "30 7 * * 1"
+    },
+    {
+      "path": "/api/fit/leads-digest",
+      "schedule": "15 7 * * 1"
     }
   ]
 }

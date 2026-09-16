@@ -7,6 +7,9 @@ import {
   renderBookingReminderEmail,
   renderContactConfirmationEmail,
   renderBookingWatchEmail,
+  renderFitLeadNotification,
+  renderFitLeadsDigestEmail,
+  renderFitLinkEmail,
   type BookingEmailInput,
   type BookingReminderEmailInput,
 } from "./templates";
@@ -358,5 +361,129 @@ describe("renderBookingWatchEmail", () => {
     expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "soon", daysLeft: 20, expiresOn: "2026-09-28" } }).subject).toContain("over 20 dagen");
     expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "fine", daysLeft: 200, expiresOn: "2027-03-27" } }).subject).toContain("in orde");
     expect(renderBookingWatchEmail({ steps: healthySteps, expiry: { level: "expired", daysLeft: -3, expiresOn: "2026-09-05" } }).html).toContain("kan niemand een gesprek boeken");
+  });
+});
+
+describe("renderFitLinkEmail", () => {
+  const resultUrl =
+    "https://www.hilmarvanderveen.com/nl/fit?result=session-id-value&key=signature";
+
+  it("carries the signed link twice and the booking button, in Dutch", () => {
+    const email = renderFitLinkEmail({ locale: "nl", name: "Jane Doe", resultUrl });
+    expect(email.subject).toBe("Je CV op deze vacature staat klaar");
+    expect(email.html).toContain("Hi Jane Doe,");
+    const escapedUrl = resultUrl.replace("&", "&amp;");
+    expect(email.html.split(escapedUrl).length - 1).toBe(3);
+    expect(email.html).toContain("Open het resultaat en download het CV");
+    expect(email.html).toContain("/nl/book");
+    expect(email.html).toContain("KVK 97564303");
+  });
+
+  it("writes the same mail in English", () => {
+    const email = renderFitLinkEmail({ locale: "en", name: "Jane Doe", resultUrl });
+    expect(email.subject).toBe("Your CV for this vacancy is ready");
+    expect(email.html).toContain("Open the result and download the CV");
+    expect(email.html).toContain("/en/book");
+  });
+
+  it("escapes the visitor name", () => {
+    const email = renderFitLinkEmail({
+      locale: "nl",
+      name: '<script>alert("x")</script>',
+      resultUrl,
+    });
+    expect(email.html).not.toContain("<script>alert");
+    expect(email.html).toContain("&lt;script&gt;");
+  });
+});
+
+describe("renderFitLeadNotification", () => {
+  it("names the lead, the number and the link, with the organisation when there is one", () => {
+    const email = renderFitLeadNotification({
+      name: "Jane Doe",
+      email: "jane@example.com",
+      organisation: "Acme",
+      sessionId: "session-id-value",
+      resultUrl: "https://www.hilmarvanderveen.com/nl/fit?result=session-id-value&key=signature",
+    });
+    expect(email.subject).toBe("CV op vacature gevraagd: Jane Doe");
+    expect(email.html).toContain("Jane Doe");
+    expect(email.html).toContain("mailto:jane@example.com");
+    expect(email.html).toContain("Acme");
+    expect(email.html).toContain("session-id-value");
+  });
+
+  it("says the organisation was not given when it is empty", () => {
+    const email = renderFitLeadNotification({
+      name: "Jane Doe",
+      email: "jane@example.com",
+      organisation: "",
+      sessionId: "session-id-value",
+      resultUrl: "https://www.hilmarvanderveen.com/nl/fit",
+    });
+    expect(email.html).toContain("Niet opgegeven");
+  });
+});
+
+describe("renderFitLeadsDigestEmail", () => {
+  const lead = {
+    sessionId: "session-id-value",
+    title: "Senior frontend engineer",
+    endClient: "A government body",
+    intermediary: "An agency",
+    contractForm: "freelance",
+    closingDate: "2026-09-21",
+    rate: { minimum: 95, maximum: 125, unit: "hour", currency: "€" },
+    contact: {
+      name: "A recruiter",
+      email: "recruiter@example.com",
+      phone: "",
+      organisation: "An agency",
+    },
+    verdictCounts: { inRecord: 8, partly: 2, notInRecord: 1 },
+  };
+
+  it("counts the leads in the subject and renders every column", () => {
+    const email = renderFitLeadsDigestEmail({ since: "2026-09-14", leads: [lead] });
+    expect(email.subject).toBe("Vacaturecheck: 1 nieuwe vacatures sinds 2026-09-14");
+    expect(email.html).toContain("Senior frontend engineer");
+    expect(email.html).toContain("Freelance");
+    expect(email.html).toContain("€95 tot €125 per uur");
+    expect(email.html).toContain("8 in, 2 deels, 1 niet");
+    expect(email.html).toContain("A recruiter, An agency, recruiter@example.com");
+    expect(email.html).toContain("Vacature");
+  });
+
+  it("says Onbekend for every field the vacancy did not name", () => {
+    const email = renderFitLeadsDigestEmail({
+      since: "2026-09-14",
+      leads: [
+        {
+          sessionId: "session-id-value",
+          title: "",
+          endClient: "",
+          intermediary: "",
+          contractForm: "",
+          closingDate: "",
+          rate: { minimum: null, maximum: null, unit: "", currency: "" },
+          contact: { name: "", email: "", phone: "", organisation: "" },
+          verdictCounts: { inRecord: 0, partly: 0, notInRecord: 0 },
+        },
+      ],
+    });
+    expect(email.html.split("Onbekend").length - 1).toBeGreaterThanOrEqual(7);
+  });
+
+  it("reads a single rate and a day rate", () => {
+    const perDay = renderFitLeadsDigestEmail({
+      since: "2026-09-14",
+      leads: [
+        {
+          ...lead,
+          rate: { minimum: 800, maximum: null, unit: "day", currency: "" },
+        },
+      ],
+    });
+    expect(perDay.html).toContain("€800 per dag");
   });
 });
