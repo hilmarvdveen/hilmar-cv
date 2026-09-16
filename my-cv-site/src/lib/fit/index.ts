@@ -7,19 +7,26 @@ export type {
   FitReportResponse,
   FitRequirement,
   FitTechnology,
+  FitTechnologyDuration,
   FitVerdict,
   FitVerdictCounts,
 } from "./types";
 
 export {
   EMPTY_FIT_REPORT,
+  FIT_DAILY_CAP_RETRY_SECONDS,
   FIT_LIMITS,
   FIT_VERDICTS,
+  RECORD_ENGAGEMENT_COMPANIES,
   RECORD_ENGAGEMENT_IDS,
+  companyNamesForEngagements,
   countFitVerdicts,
+  fitTechnologyDuration,
+  isDailyCapRetry,
   isFitAnswer,
   isFitReport,
   isFitVerdict,
+  retryAfterSecondsFromBody,
   sanitizeFitAnswer,
   sanitizeFitReport,
   sanitizeSessionId,
@@ -27,6 +34,7 @@ export {
 
 export {
   FIT_AGENT_DEFAULT_TIMEOUT_MILLISECONDS,
+  FitAgentRateLimitError,
   getFitAgentConfiguration,
   requestFitAnswer,
   requestFitReport,

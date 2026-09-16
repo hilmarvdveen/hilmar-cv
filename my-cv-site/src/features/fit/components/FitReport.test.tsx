@@ -33,24 +33,43 @@ const report: FitReportData = {
   ],
 };
 
+const renderReport = (overrides: Partial<FitReportData> = {}, sessionId = "") =>
+  render(<FitReport report={{ ...report, ...overrides }} sessionId={sessionId} />);
+
 describe("FitReport", () => {
-  it("shows the summary and one entry per requirement", () => {
-    render(<FitReport report={report} />);
+  it("puts the result under its own second level heading", () => {
+    renderReport();
+    const heading = screen.getByRole("heading", { level: 2, name: "report.title" });
+    expect(heading).toHaveAttribute("tabIndex", "-1");
+    expect(screen.getByRole("region", { name: "report.title" })).toBeInTheDocument();
+  });
+
+  it("shows the verdict counts above the summary and one entry per requirement", () => {
+    renderReport();
+    expect(screen.getByText("report.counts")).toBeInTheDocument();
     expect(screen.getByText(report.summary)).toBeInTheDocument();
     expect(screen.getByText("Five years of React")).toBeInTheDocument();
     expect(screen.getByText("Kubernetes operations")).toBeInTheDocument();
     expect(screen.getByText("Salesforce administration")).toBeInTheDocument();
   });
 
+  it("explains the three labels once, above the requirement list", () => {
+    renderReport();
+    expect(screen.getByText("report.legend.title")).toBeInTheDocument();
+    expect(screen.getByText("report.legend.inRecord")).toBeInTheDocument();
+    expect(screen.getByText("report.legend.partly")).toBeInTheDocument();
+    expect(screen.getByText("report.legend.notInRecord")).toBeInTheDocument();
+  });
+
   it("names the verdict of every requirement", () => {
-    render(<FitReport report={report} />);
+    renderReport();
     expect(screen.getByText("report.verdicts.inRecord")).toBeInTheDocument();
     expect(screen.getByText("report.verdicts.partly")).toBeInTheDocument();
     expect(screen.getByText("report.verdicts.notInRecord")).toBeInTheDocument();
   });
 
   it("links the evidence to the engagement page and leaves an empty list out", () => {
-    render(<FitReport report={report} />);
+    renderReport();
     expect(screen.getByRole("link", { name: "bol.com" })).toHaveAttribute(
       "href",
       "/experience/bol"
@@ -62,29 +81,57 @@ describe("FitReport", () => {
     expect(screen.getAllByText("report.evidenceLabel")).toHaveLength(2);
   });
 
-  it("lists the years per technology", () => {
-    render(<FitReport report={report} />);
+  it("lists the years per technology with the basis and the engagements behind each figure", () => {
+    renderReport();
+    expect(screen.getByText("report.technologiesBasis")).toBeInTheDocument();
     expect(screen.getByText("React")).toBeInTheDocument();
     expect(screen.getByText("Angular")).toBeInTheDocument();
+    expect(screen.getByText("bol.com", { selector: "p" })).toBeInTheDocument();
+    expect(screen.getByText("Athlon")).toBeInTheDocument();
+    expect(screen.getAllByText("report.years")).toHaveLength(2);
   });
 
-  it("leaves the technology block out when the agent found none", () => {
-    render(<FitReport report={{ ...report, technologies: [] }} />);
+  it("prints a technology under one year in months and drops one that rounds to nothing", () => {
+    renderReport({
+      technologies: [
+        { name: "Terraform", years: 0.5, engagements: [] },
+        { name: "Nothing", years: 0, engagements: [] },
+      ],
+    });
+    expect(screen.getByText("Terraform")).toBeInTheDocument();
+    expect(screen.getByText("report.months")).toBeInTheDocument();
+    expect(screen.queryByText("Nothing")).toBeNull();
+  });
+
+  it("leaves the technology block out when no figure survives", () => {
+    renderReport({ technologies: [] });
     expect(screen.queryByText("report.technologiesTitle")).toBeNull();
   });
 
-  it("carries exactly one booking button with the fit placement", () => {
-    render(<FitReport report={report} />);
+  it("carries no booking button of its own, because the booking card closes the page", () => {
+    renderReport();
     const bookLinks = screen
       .getAllByRole("link")
       .filter((link) => link.getAttribute("href") === "/book");
-    expect(bookLinks).toHaveLength(1);
-    expect(bookLinks[0]).toHaveAttribute("data-placement", "fit-report");
+    expect(bookLinks).toHaveLength(0);
   });
 
-  it("shows the empty state instead of the panels when there are no requirements", () => {
-    render(<FitReport report={{ summary: "", requirements: [], technologies: [] }} />);
+  it("keeps the summary and the technologies in the empty state", () => {
+    renderReport({ requirements: [] });
     expect(screen.getByText("report.empty")).toBeInTheDocument();
+    expect(screen.getByText(report.summary)).toBeInTheDocument();
+    expect(screen.getByText("report.technologiesTitle")).toBeInTheDocument();
     expect(screen.queryByText("report.requirementsTitle")).toBeNull();
+    expect(screen.queryByText("report.counts")).toBeNull();
+  });
+
+  it("names the number of the stored result when there is one", () => {
+    renderReport({}, "session-id-value");
+    expect(screen.getByText("report.sessionLabel")).toBeInTheDocument();
+  });
+
+  it("leaves the number line out when no session came back", () => {
+    renderReport();
+    expect(screen.queryByText("report.sessionLabel")).toBeNull();
   });
 });

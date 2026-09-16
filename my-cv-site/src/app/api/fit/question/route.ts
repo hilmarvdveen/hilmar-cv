@@ -5,10 +5,12 @@ import {
   isAllowedOrigin,
   looksAutomated,
   serverErrorResponse,
+  tooManyRequestsResponse,
   validateFields,
 } from "@/lib/security";
 import {
   FIT_LIMITS,
+  FitAgentRateLimitError,
   getFitAgentConfiguration,
   isFitAnswer,
   requestFitAnswer,
@@ -95,6 +97,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ answer: sanitizeFitAnswer(result.answer) });
   } catch (error: unknown) {
+    if (error instanceof FitAgentRateLimitError) {
+      return tooManyRequestsResponse(error.retryAfterSeconds);
+    }
     console.error("Fit question failed");
     return serverErrorResponse(error, "The fit check is not available right now");
   }

@@ -7,7 +7,7 @@ const parse = (locale: "en" | "nl") =>
       locale,
       title: locale === "nl" ? "Vacaturecheck" : "Vacancy check",
       description: "Paste a vacancy and see what the record holds.",
-      homeLabel: locale === "nl" ? "Home" : "Home",
+      homeLabel: "Home",
       pageLabel: locale === "nl" ? "Vacaturecheck" : "Vacancy check",
     })
   );
@@ -29,7 +29,7 @@ describe("fitPageSchema", () => {
     expect(webPage.inLanguage).toBe("en-US");
   });
 
-  it("emits a two-item breadcrumb with the visible labels", () => {
+  it("emits the only breadcrumb on the page, because Breadcrumb renders nothing on a one segment path", () => {
     const [, breadcrumbs] = parse("nl");
     expect(breadcrumbs["@type"]).toBe("BreadcrumbList");
     expect(breadcrumbs.itemListElement).toEqual([

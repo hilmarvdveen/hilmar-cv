@@ -31,9 +31,19 @@ beforeEach(() => {
 });
 
 describe("FitQuestion", () => {
-  it("disables the button until the visitor writes something", () => {
+  it("keeps the button enabled and in the tab order while the field is empty", () => {
     render(<FitQuestion sessionId="session-id-value" />);
-    expect(screen.getByRole("button", { name: /question.submit/ })).toBeDisabled();
+    const submit = screen.getByRole("button", { name: /question.submit/ });
+    expect(submit).toBeEnabled();
+    expect(submit).not.toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("offers a two row textarea for the question", () => {
+    render(<FitQuestion sessionId="session-id-value" />);
+    const field = screen.getByLabelText("question.label");
+    expect(field.tagName).toBe("TEXTAREA");
+    expect(field).toHaveAttribute("rows", "2");
+    expect(field).toHaveAttribute("maxLength", "500");
   });
 
   it("posts the question with the session id and shows the answer", async () => {
@@ -67,6 +77,21 @@ describe("FitQuestion", () => {
     await ask("why");
     expect(screen.getByRole("alert")).toHaveTextContent("question.errors.tooShort");
     expect(fetch).not.toHaveBeenCalled();
+    const field = screen.getByLabelText("question.label");
+    expect(field).toHaveAttribute("aria-invalid", "true");
+    expect(field).toHaveAccessibleDescription("question.errors.tooShort");
+  });
+
+  it("ignores a second submit while the first answer is still coming", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise(() => undefined)));
+    render(<FitQuestion sessionId="session-id-value" />);
+    await ask();
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /question.asking/ })).toBeInTheDocument()
+    );
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: /question.asking/ }));
+    expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it("shows the rate limit message on a 429", async () => {

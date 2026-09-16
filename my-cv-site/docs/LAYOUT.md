@@ -40,7 +40,7 @@ scale so a new page never hand rolls its own hero markup:
 | Slot | Rule |
 |---|---|
 | Background and text | `bg-brand-navy text-white` |
-| Vertical padding | `py-16 sm:py-20` |
+| Vertical padding | `py-16 sm:py-20`, or `py-12 sm:py-14` through the optional `padding="compact"` prop, which `PageHero` passes to `Section` |
 | Badge | optional uppercase eyebrow in `text-emerald-300`, with an optional icon |
 | Heading | `text-[1.75rem] leading-[1.15]` on phones (the shared `text-3xl` budget wrapped a 58-character title to four lines at 390), `sm:text-5xl` from `sm`, white, with an optional accent line |
 | Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background |
@@ -440,3 +440,48 @@ their text showed through). Rule: `sticky` only on an element that sits in
 a column of its own, whose containing block is that column. A full-width
 block in a single-column flow is never sticky. The map's detail panel on
 /about follows the rule: it is sticky inside its own grid column from md.
+
+## Previous and next at the foot of a page (9 September 2026)
+
+Every page that belongs to a sequence ends in the same neighbour row, the
+engagement pages since R15 and the blog posts since this round. The row is
+a `nav` with an accessible name, placed above the close band, with a top
+rule and `pt-6`, one column on phones and a split row from `sm`, an arrow
+pointing outward on each side, and an empty `span` holding the slot when a
+neighbour is missing so a lone next link stays on the right. Previous is
+the newer item and next the older one, because the underlying lists read
+newest first. The blog row clamps each link at `sm:max-w-[48%]` because
+article titles are long. The blog row has no middle link back to the index,
+since the close band beneath already carries that link.
+
+## A task page puts its input on the first screen (16 September 2026)
+
+`/book` and `/fit` are the two pages that exist to be used, not read, and both
+are exceptions to the reading rhythm. The rule for a task page: the control the
+page asks for is reachable without scrolling at 390 by 844 and at 1280 by 900,
+with the consent banner counted as occupying the bottom of the viewport on a
+first visit.
+
+`/fit` failed it on 16 September 2026, with the textarea starting at 1016 pixels
+and 662 visible. Three cuts fixed it, and they are the pattern for the next task
+page:
+
+1. `padding="compact"` on both bands. `PageHero` gained a `padding` prop for
+   this, so it stays one primitive instead of a second hero.
+2. The reassurance card moved out of the hero to sit under the input, which is
+   where the decision it supports is actually made.
+3. The form card leads its section. No `SectionTitle` block above it. The card
+   carries the section heading (the id the `Section` is labelled by) and the
+   intro line itself, so the words are kept and the 40 pixel `mb-10` plus the
+   `text-section-title` step are not spent above the control.
+
+Two rules came out of the same pass and apply everywhere:
+
+- A button that is about to be pressed never moves. An error or a failure card
+  renders after the submit button, not above it, so inserting it cannot shift
+  the target under the visitor's thumb.
+- No submit button carries the `disabled` attribute. A disabled button leaves
+  the tab order, and a focused element that becomes disabled hands focus to the
+  document, which cost a keyboard visitor the whole wait plus the chrome to tab
+  back. Use `aria-disabled` for busy, guard the handler, and let the error carry
+  the reason.

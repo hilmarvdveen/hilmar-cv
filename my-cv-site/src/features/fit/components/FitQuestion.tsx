@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { FIT_LIMITS, trackFitEvent, type FitAnswer } from "@/lib/fit";
 
 const QUESTION_FIELD_ID = "fit-question";
+const QUESTION_ERROR_ID = "fit-question-error";
 
 type FitQuestionProps = {
   sessionId: string;
@@ -24,6 +25,8 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (isAsking) return;
+
     const trimmed = question.trim();
     if (trimmed.length < FIT_LIMITS.questionMinimum) {
       setErrorMessage(t("question.errors.tooShort"));
@@ -66,7 +69,7 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
       <h3 className="text-subsection-title text-textMain">{t("question.title")}</h3>
       <p className="mt-2 text-base leading-relaxed text-gray-700">{t("question.description")}</p>
 
-      <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+      <form onSubmit={handleSubmit} className="mt-5 space-y-4" aria-busy={isAsking}>
         <div>
           <label
             htmlFor={QUESTION_FIELD_ID}
@@ -74,29 +77,29 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
           >
             {t("question.label")}
           </label>
-          <input
+          <textarea
             id={QUESTION_FIELD_ID}
             name="question"
-            type="text"
+            rows={2}
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
             maxLength={FIT_LIMITS.questionMaximum}
             placeholder={t("question.placeholder")}
-            className="w-full rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
             required
             aria-required="true"
+            aria-invalid={errorMessage !== ""}
+            aria-describedby={errorMessage === "" ? undefined : QUESTION_ERROR_ID}
           />
         </div>
 
-        <Button
-          type="submit"
-          variant="outline"
-          size="md"
-          disabled={isAsking || question.trim().length === 0}
-        >
+        <Button type="submit" variant="outline" size="md" aria-disabled={isAsking}>
           {isAsking ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
+              <Loader2
+                className="h-5 w-5 animate-spin motion-reduce:animate-none"
+                aria-hidden="true"
+              />
               {t("question.asking")}
             </>
           ) : (
@@ -111,6 +114,7 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
       <div aria-live="polite" className="mt-5">
         {errorMessage && (
           <p
+            id={QUESTION_ERROR_ID}
             className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
             role="alert"
           >
@@ -118,19 +122,19 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
           </p>
         )}
         {answer && (
-          <div className="rounded-xl border border-gray-200 bg-bgLight px-5 py-4">
+          <Card variant="tinted" className="p-5">
             <p className="text-xs font-bold uppercase tracking-widest text-primary">
               {t("question.answerLabel")}
             </p>
             <p className="mt-2 text-base leading-relaxed text-gray-700">{answer.answer}</p>
             {answer.engagements.length > 0 && (
-              <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-600">
+              <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600">
                 <span className="font-semibold">{t("report.evidenceLabel")}</span>
                 {answer.engagements.map((engagement) => (
                   <Link
                     key={engagement.id}
                     href={`/experience/${engagement.id}`}
-                    className="inline-flex min-h-6 items-center rounded-sm text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-6 items-center rounded-sm px-1 text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                     data-placement="fit-answer-evidence"
                   >
                     {engagement.company}
@@ -138,7 +142,7 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
                 ))}
               </p>
             )}
-          </div>
+          </Card>
         )}
       </div>
     </Card>

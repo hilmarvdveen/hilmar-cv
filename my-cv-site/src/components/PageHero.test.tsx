@@ -23,6 +23,18 @@ describe("PageHero", () => {
     expect(region).toContainElement(heading);
   });
 
+  it("carries the default vertical rhythm and passes a compact band through", () => {
+    const { unmount } = render(
+      <PageHero title="Vacancy check" description="Paste a vacancy." />
+    );
+    expect(screen.getByRole("region", { name: "Vacancy check" })).toHaveClass("py-16");
+    unmount();
+    render(
+      <PageHero padding="compact" title="Vacancy check" description="Paste a vacancy." />
+    );
+    expect(screen.getByRole("region", { name: "Vacancy check" })).toHaveClass("py-12");
+  });
+
   it("uses a custom title id in place of the default", () => {
     render(
       <PageHero

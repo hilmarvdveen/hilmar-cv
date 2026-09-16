@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
-import { Section } from "@/components/Section";
+import { Section, type SectionPadding } from "@/components/Section";
 import { Container, type ContainerWidth } from "@/components/Container";
 
 const DEFAULT_TITLE_ID = "page-hero-title";
@@ -13,6 +13,7 @@ const ASIDE_GRIDS: Record<PageHeroAsideWidth, string> = {
 
 type PageHeroProps = {
   width?: ContainerWidth;
+  padding?: SectionPadding;
   title: string;
   titleAccent?: string;
   description: string;
@@ -29,6 +30,7 @@ type PageHeroProps = {
 
 export const PageHero = ({
   width = "default",
+  padding = "default",
   title,
   titleAccent,
   description,
@@ -74,7 +76,7 @@ export const PageHero = ({
   );
 
   return (
-    <Section background="navy" aria-labelledby={headingId}>
+    <Section background="navy" padding={padding} aria-labelledby={headingId}>
       <Container width={width}>
         {breadcrumb}
         {aside ? (

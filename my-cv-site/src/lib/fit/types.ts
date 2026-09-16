@@ -33,6 +33,11 @@ export type FitAnswer = {
 
 export type FitVerdictCounts = Record<FitVerdict, number>;
 
+export type FitTechnologyDuration = {
+  unit: "years" | "months";
+  value: number;
+};
+
 export type FitReportResponse = {
   report: FitReport;
   sessionId: string;

@@ -14,6 +14,7 @@ vi.mock("@/lib/fit", async () => {
   };
 });
 
+import { FitAgentRateLimitError } from "@/lib/fit";
 import { POST } from "./route";
 
 const CONFIGURATION = {
@@ -145,5 +146,13 @@ describe("POST /api/fit/question", () => {
     const response = await POST(post(valid()));
     expect(response.status).toBe(500);
     expect(JSON.stringify(await response.json())).not.toContain("503");
+  });
+
+  it("passes an upstream refusal through as 429 with the seconds to wait", async () => {
+    requestFitAnswer.mockRejectedValue(new FitAgentRateLimitError(42));
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBe("42");
+    expect(await response.json()).toMatchObject({ retryAfterSeconds: 42 });
   });
 });

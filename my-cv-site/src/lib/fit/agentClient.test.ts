@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   FIT_AGENT_DEFAULT_TIMEOUT_MILLISECONDS,
+  FitAgentRateLimitError,
   getFitAgentConfiguration,
   requestFitAnswer,
   requestFitReport,
@@ -99,6 +100,41 @@ describe("requestFitReport", () => {
     await expect(
       requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
     ).rejects.toThrow("The fit agent answered 503");
+  });
+
+  it("throws a rate limit error carrying the seconds from the agent body", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 429,
+        json: async () => ({ error: "daily cap", retryAfterSeconds: 28_800 }),
+      })
+    );
+
+    await expect(
+      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+    ).rejects.toMatchObject({ name: "FitAgentRateLimitError", retryAfterSeconds: 28_800 });
+  });
+
+  it("falls back to zero seconds when the refusal carries no readable body", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 429,
+        json: async () => {
+          throw new Error("not json");
+        },
+      })
+    );
+
+    await expect(
+      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+    ).rejects.toBeInstanceOf(FitAgentRateLimitError);
+    await expect(
+      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+    ).rejects.toMatchObject({ retryAfterSeconds: 0 });
   });
 });
 

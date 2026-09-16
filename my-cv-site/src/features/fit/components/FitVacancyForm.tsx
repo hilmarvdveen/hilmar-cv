@@ -2,38 +2,68 @@
 
 import type { FormEvent } from "react";
 import { useTranslations } from "next-intl";
-import { Loader2, Search } from "lucide-react";
+import { AlertCircle, Loader2, Search } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { HoneypotField } from "@/components/HoneypotField";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { FIT_LIMITS } from "@/lib/fit";
 
+export const FIT_CHECK_HEADING_ID = "fit-check-heading";
+
 const VACANCY_FIELD_ID = "fit-vacancy";
+const HINT_ID = "fit-vacancy-hint";
+const COUNTER_ID = "fit-vacancy-counter";
+const CAP_NOTE_ID = "fit-vacancy-cap-note";
+const FAILURE_ID = "fit-vacancy-failure";
+
+export type FitCheckFailure = {
+  message: string;
+  recoverable: boolean;
+};
 
 type FitVacancyFormProps = {
+  heading: string;
+  intro: string;
   vacancy: string;
   onVacancyChange: (value: string) => void;
   onSubmit: (event: FormEvent) => void;
   isChecking: boolean;
-  errorMessage: string;
+  failure: FitCheckFailure | null;
   honeypotValue: string;
   onHoneypotChange: (value: string) => void;
 };
 
 export const FitVacancyForm = ({
+  heading,
+  intro,
   vacancy,
   onVacancyChange,
   onSubmit,
   isChecking,
-  errorMessage,
+  failure,
   honeypotValue,
   onHoneypotChange,
 }: FitVacancyFormProps) => {
   const t = useTranslations("fit.check");
+  const hasReachedCap = vacancy.length >= FIT_LIMITS.vacancyMaximum;
+  const fieldDescription = [
+    HINT_ID,
+    COUNTER_ID,
+    hasReachedCap ? CAP_NOTE_ID : null,
+    failure ? FAILURE_ID : null,
+  ]
+    .filter((identifier) => identifier !== null)
+    .join(" ");
 
   return (
     <Card className="p-4 sm:p-6">
-      <form onSubmit={onSubmit} className="space-y-4">
+      <h2 id={FIT_CHECK_HEADING_ID} className="text-subsection-title text-textMain">
+        {heading}
+      </h2>
+      <p className="mt-2 text-base leading-relaxed text-gray-600">{intro}</p>
+
+      <form onSubmit={onSubmit} className="mt-4 space-y-4" aria-busy={isChecking}>
         <HoneypotField value={honeypotValue} onChange={onHoneypotChange} />
 
         <div>
@@ -43,7 +73,9 @@ export const FitVacancyForm = ({
           >
             {t("form.label")}
           </label>
-          <p className="text-sm text-gray-600 mb-3">{t("form.hint")}</p>
+          <p id={HINT_ID} className="text-sm text-gray-600 mb-3">
+            {t("form.hint")}
+          </p>
           <textarea
             id={VACANCY_FIELD_ID}
             name="vacancy"
@@ -55,44 +87,92 @@ export const FitVacancyForm = ({
             className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
             required
             aria-required="true"
+            aria-describedby={fieldDescription}
+            aria-invalid={failure !== null}
           />
-          <p className="mt-2 text-sm text-gray-600">
+          <p id={COUNTER_ID} className="mt-2 text-sm text-gray-600">
             {t("form.counter", {
               characters: vacancy.length,
               maximum: FIT_LIMITS.vacancyMaximum,
             })}
           </p>
+          {hasReachedCap && (
+            <p id={CAP_NOTE_ID} className="mt-1 text-sm leading-relaxed text-gray-700">
+              {t("form.capNote")}
+            </p>
+          )}
         </div>
 
-        {errorMessage && (
-          <p
-            className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
-            role="alert"
-            aria-live="assertive"
+        <div className="space-y-3">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            aria-disabled={isChecking}
+            className="w-full sm:w-auto"
           >
-            {errorMessage}
-          </p>
-        )}
-
-        <Button
-          type="submit"
-          variant="primary"
-          size="lg"
-          disabled={isChecking || vacancy.trim().length === 0}
-          className="w-full sm:w-auto"
-        >
-          {isChecking ? (
-            <>
-              <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
-              {t("form.checking")}
-            </>
-          ) : (
-            <>
-              <Search className="h-5 w-5" aria-hidden="true" />
-              {t("form.submit")}
-            </>
+            {isChecking ? (
+              <>
+                <Loader2
+                  className="h-5 w-5 animate-spin motion-reduce:animate-none"
+                  aria-hidden="true"
+                />
+                {t("form.checking")}
+              </>
+            ) : (
+              <>
+                <Search className="h-5 w-5" aria-hidden="true" />
+                {t("form.submit")}
+              </>
+            )}
+          </Button>
+          {isChecking && (
+            <p className="text-sm leading-relaxed text-gray-600">{t("form.checkingNote")}</p>
           )}
-        </Button>
+        </div>
+
+        {failure &&
+          (failure.recoverable ? (
+            <p
+              id={FAILURE_ID}
+              className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
+              role="alert"
+            >
+              {failure.message}
+            </p>
+          ) : (
+            <div id={FAILURE_ID} role="alert">
+              <Card variant="tinted" className="p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle
+                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-500"
+                    aria-hidden="true"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-base leading-relaxed text-gray-700">{failure.message}</p>
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+                      <Button
+                        href="/book"
+                        variant="primary"
+                        size="md"
+                        data-placement="fit-failed"
+                        className="w-full sm:w-auto"
+                      >
+                        {t("report.bookButton")}
+                      </Button>
+                      <a
+                        href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
+                        data-placement="fit-failed-mail"
+                        className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                      >
+                        {t("errors.mailAction")}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          ))}
       </form>
     </Card>
   );

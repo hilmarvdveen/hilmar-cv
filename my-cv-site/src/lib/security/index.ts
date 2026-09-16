@@ -19,6 +19,7 @@ export {
   enforceRateLimit,
   getClientIp,
   checkRateLimit,
+  tooManyRequestsResponse,
   RATE_LIMITS,
   type RateLimitName,
   type RateLimitRule,

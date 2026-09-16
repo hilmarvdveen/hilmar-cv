@@ -968,7 +968,7 @@
             ]
         },
         "facts": {
-            "fitLink": "Heb je een vacature? Check hem tegen mijn werkervaring",
+            "fitLink": "Check je vacature tegen mijn werkervaring",
             "title": "De praktische gegevens",
             "items": [
                 {
@@ -2064,35 +2064,53 @@
         "hero": {
             "badge": "AI-assistent op mijn werkervaring",
             "title": "Past deze vacature bij mijn werk?",
-            "description": "Plak de tekst van de vacature. Je ziet per eis wat mijn werkervaring bevat en welke opdracht dat laat zien. Daarna kun je er een vraag over stellen."
+            "description": "Je ziet per eis wat mijn werkervaring bevat en bij welke opdracht dat te zien is. Eén regel per eis, die je zo kunt doorsturen. Daarna kun je er vragen over stellen.",
+            "note": "Liever samen doorlopen?",
+            "noteLink": "Plan een gesprek van 30 minuten"
         },
         "disclosure": {
             "title": "Hoe dit werkt",
-            "assistant": "Dit is een AI-assistent. Hij antwoordt uit mijn vastgelegde werkervaring en noemt bij elke regel de opdracht erbij.",
-            "processing": "De tekst van de vacature wordt gebruikt om het antwoord te schrijven en daarna niet bewaard."
+            "assistant": "Dit is een AI-assistent. Hij werkt alleen met mijn vastgelegde werkervaring en noemt de opdracht erbij waar die de eis laat zien.",
+            "processing": "De tekst van de vacature bewaar ik niet. Het resultaat blijft dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen."
         },
         "section": {
             "title": "Plak de vacature",
-            "intro": "De hele tekst werkt, en alleen het stuk met de eisen werkt ook. De check duurt ongeveer een halve minuut."
+            "intro": "Plak de hele tekst of alleen het stuk met de eisen. Je hoeft verder niets in te vullen."
         },
         "check": {
             "form": {
                 "label": "Tekst van de vacature",
-                "hint": "Twintig tekens of meer. Het stuk met de eisen telt het zwaarst.",
+                "hint": "Hoe meer van de eisen erin staan, hoe scherper de uitkomst.",
                 "placeholder": "Plak de vacature hier",
                 "counter": "{characters} van {maximum} tekens",
+                "capNote": "Dit is het maximum. De rest van de tekst staat er niet in. Het stuk met de eisen is het deel dat telt.",
                 "submit": "Check de vacature",
-                "checking": "Bezig met checken..."
+                "checking": "Bezig met checken...",
+                "checkingNote": "De assistent leest de eisen een voor een na. Dat duurt meestal een halve minuut."
+            },
+            "status": {
+                "checking": "De check draait.",
+                "ready": "Het resultaat staat hieronder."
             },
             "errors": {
-                "tooShort": "Plak iets meer van de vacature. Vanaf twintig tekens draait de check.",
-                "rateLimited": "Dat zijn veel checks in een minuut. Wacht een minuut, dan draait de volgende.",
-                "failed": "De check is nu even niet bereikbaar. Probeer het zo nog eens, of plan een gesprek, dan loop ik de vacature met je door."
+                "tooShort": "Plak iets meer van de vacature, bijvoorbeeld het stuk met de eisen.",
+                "rateLimited": "Er staan nu veel checks in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
+                "capReached": "De check heeft voor vandaag zijn limiet bereikt. Morgen draait hij weer. Wil je niet wachten, plan dan een gesprek, dan loop ik de vacature met je door.",
+                "failed": "De check kwam er niet doorheen. Bij een lange vacature helpt het om alleen het stuk met de eisen te plakken. Lukt het daarna nog niet, plan dan een gesprek, dan loop ik de vacature met je door.",
+                "mailAction": "Mail de vacature naar mij"
             },
             "report": {
-                "title": "Wat de werkervaring laat zien",
+                "title": "Wat mijn werkervaring laat zien",
+                "counts": "{inRecord} van {total} eisen staan in mijn werkervaring, {partly} deels, {notInRecord} niet.",
                 "requirementsTitle": "Eis voor eis",
+                "legend": {
+                    "title": "Wat de labels betekenen",
+                    "inRecord": "In de werkervaring: een opdracht draagt deze technologie of deze verantwoordelijkheid.",
+                    "partly": "Deels: de werkervaring draagt aangrenzend werk, of minder jaren dan de vacature vraagt.",
+                    "notInRecord": "Niet in de werkervaring: hiervoor staat er geen bewijs in. Bij die eis lees je wat de werkervaring wel laat zien."
+                },
                 "technologiesTitle": "Jaren per technologie",
+                "technologiesBasis": "Geteld over de opdrachten waarin de technologie voorkomt. Maanden die overlappen tellen een keer.",
                 "verdicts": {
                     "inRecord": "In de werkervaring",
                     "partly": "Deels",
@@ -2100,23 +2118,25 @@
                 },
                 "evidenceLabel": "Te zien bij",
                 "years": "{years, plural, one {# jaar} other {# jaar}}",
-                "empty": "De check las in deze tekst geen losse eisen. Plak het stuk met de eisen, dan volgt de lijst.",
-                "bookTitle": "Klopt dit met wat je zoekt?",
-                "bookText": "In dertig minuten lopen we de eisen samen door en hoor je waar ik het meeste toevoeg.",
+                "months": "{months, plural, one {# maand} other {# maanden}}",
+                "empty": "De check las in deze tekst geen losse eisen. Plak het stuk met de eisen, dan volgt de lijst per eis. Wil je het liever samen doorlopen, plan dan een gesprek.",
+                "sessionLabel": "Nummer van dit resultaat: {sessionId}. Wil je het eerder laten verwijderen, mail dat nummer naar {email}.",
+                "bookTitle": "Dit was de korte versie",
+                "bookText": "In dertig minuten lopen we de eisen langs en hoor je per eis wat ik er in de eerste weken mee zou doen.",
                 "bookButton": "Plan een gesprek van 30 minuten"
             },
             "question": {
                 "title": "Stel een vraag over het resultaat",
-                "description": "Bijvoorbeeld hoeveel jaar React erin zit, of welke opdracht het dichtst bij deze rol ligt.",
+                "description": "Bijvoorbeeld welke opdracht het dichtst bij deze rol ligt, of hoe ik een migratie als deze zou aanpakken.",
                 "label": "Je vraag",
                 "placeholder": "Hoeveel jaar ervaring met GraphQL?",
                 "submit": "Stel de vraag",
                 "asking": "Bezig met antwoorden...",
                 "answerLabel": "Antwoord",
                 "errors": {
-                    "tooShort": "Schrijf de vraag iets voller. Vanaf vijf tekens werkt het.",
-                    "rateLimited": "Dat zijn veel vragen in een minuut. Wacht een minuut, dan draait de volgende.",
-                    "failed": "Het antwoord kwam er niet doorheen. Stel de vraag zo nog eens."
+                    "tooShort": "Maak de vraag iets langer. Een paar woorden is genoeg.",
+                    "rateLimited": "Er staan nu veel vragen in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
+                    "failed": "Het antwoord kwam niet door. Stel de vraag zo nog eens."
                 }
             }
         }

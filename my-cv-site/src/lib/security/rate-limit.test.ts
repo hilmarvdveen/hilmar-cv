@@ -5,6 +5,7 @@ import {
   getClientIp,
   enforceRateLimit,
   RATE_LIMITS,
+  tooManyRequestsResponse,
   __resetRateLimitStore,
 } from "./rate-limit";
 
@@ -98,5 +99,16 @@ describe("enforceRateLimit", () => {
       enforceRateLimit(buildRequest({ "x-real-ip": "3.3.3.3" }), "email", now);
     }
     expect(enforceRateLimit(buildRequest({ "x-real-ip": "4.4.4.4" }), "email", now)).toBeNull();
+  });
+});
+
+describe("tooManyRequestsResponse", () => {
+  it("carries the seconds to wait in the header and in the body", async () => {
+    const response = tooManyRequestsResponse(28_800);
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBe("28800");
+    const body = await response.json();
+    expect(body.retryAfterSeconds).toBe(28_800);
+    expect(body.error).toMatch(/too many requests/i);
   });
 });

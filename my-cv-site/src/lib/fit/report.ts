@@ -5,6 +5,7 @@ import type {
   FitReport,
   FitRequirement,
   FitTechnology,
+  FitTechnologyDuration,
   FitVerdict,
   FitVerdictCounts,
 } from "./types";
@@ -35,6 +36,12 @@ export const EMPTY_FIT_REPORT: FitReport = {
 export const RECORD_ENGAGEMENT_IDS: ReadonlySet<string> = new Set(
   workHistory.map((entry) => entry.id)
 );
+
+export const RECORD_ENGAGEMENT_COMPANIES: ReadonlyMap<string, string> = new Map(
+  workHistory.map((entry) => [entry.id, entry.company])
+);
+
+export const FIT_DAILY_CAP_RETRY_SECONDS = 120;
 
 const SESSION_ID_PATTERN = /^[A-Za-z0-9_-]+$/;
 
@@ -138,6 +145,36 @@ export function sanitizeSessionId(value: unknown): string {
   if (trimmed.length < FIT_LIMITS.sessionIdMinimum) return "";
   if (trimmed.length > FIT_LIMITS.sessionIdMaximum) return "";
   return SESSION_ID_PATTERN.test(trimmed) ? trimmed : "";
+}
+
+export function retryAfterSecondsFromBody(body: unknown): number {
+  if (!isRecord(body)) return 0;
+  const seconds = Number(body.retryAfterSeconds);
+  if (!Number.isFinite(seconds) || seconds <= 0) return 0;
+  return Math.ceil(seconds);
+}
+
+export function isDailyCapRetry(retryAfterSeconds: number): boolean {
+  return retryAfterSeconds > FIT_DAILY_CAP_RETRY_SECONDS;
+}
+
+export function companyNamesForEngagements(
+  engagementIds: readonly string[],
+  companies: ReadonlyMap<string, string> = RECORD_ENGAGEMENT_COMPANIES
+): string[] {
+  const names: string[] = [];
+  for (const engagementId of engagementIds) {
+    const company = companies.get(engagementId);
+    if (company && !names.includes(company)) names.push(company);
+  }
+  return names;
+}
+
+export function fitTechnologyDuration(years: number): FitTechnologyDuration | null {
+  const months = Math.round(years * 12);
+  if (months <= 0) return null;
+  if (months < 12) return { unit: "months", value: months };
+  return { unit: "years", value: Math.round(years * 10) / 10 };
 }
 
 export function countFitVerdicts(report: FitReport): FitVerdictCounts {

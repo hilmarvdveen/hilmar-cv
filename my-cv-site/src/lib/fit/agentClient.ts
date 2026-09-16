@@ -1,4 +1,15 @@
+import { retryAfterSecondsFromBody } from "./report";
 import type { FitAnswerResponse, FitLocale, FitReportResponse } from "./types";
+
+export class FitAgentRateLimitError extends Error {
+  readonly retryAfterSeconds: number;
+
+  constructor(retryAfterSeconds: number) {
+    super("The fit agent answered 429");
+    this.name = "FitAgentRateLimitError";
+    this.retryAfterSeconds = retryAfterSeconds;
+  }
+}
 
 export type FitAgentConfiguration = {
   url: string;
@@ -27,6 +38,14 @@ type AgentRequest = {
   clientAddress: string;
 };
 
+async function readRetryAfterSeconds(response: Response): Promise<number> {
+  try {
+    return retryAfterSecondsFromBody(await response.json());
+  } catch {
+    return 0;
+  }
+}
+
 async function postToAgent({
   configuration,
   path,
@@ -44,6 +63,10 @@ async function postToAgent({
     signal: AbortSignal.timeout(configuration.timeoutMilliseconds),
     cache: "no-store",
   });
+
+  if (response.status === 429) {
+    throw new FitAgentRateLimitError(await readRetryAfterSeconds(response));
+  }
 
   if (!response.ok) {
     throw new Error(`The fit agent answered ${response.status}`);

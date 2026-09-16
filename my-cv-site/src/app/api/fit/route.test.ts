@@ -14,6 +14,7 @@ vi.mock("@/lib/fit", async () => {
   };
 });
 
+import { FitAgentRateLimitError } from "@/lib/fit";
 import { POST } from "./route";
 
 const CONFIGURATION = {
@@ -164,5 +165,21 @@ describe("POST /api/fit", () => {
     const response = await POST(post(valid()));
     expect(response.status).toBe(500);
     expect(JSON.stringify(await response.json())).not.toContain("503");
+  });
+
+  it("passes an upstream per-caller refusal through as 429 with the short wait", async () => {
+    requestFitReport.mockRejectedValue(new FitAgentRateLimitError(42));
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBe("42");
+    expect(await response.json()).toMatchObject({ retryAfterSeconds: 42 });
+  });
+
+  it("passes the upstream daily cap through as 429 with the wait until tomorrow", async () => {
+    requestFitReport.mockRejectedValue(new FitAgentRateLimitError(28_800));
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBe("28800");
+    expect(await response.json()).toMatchObject({ retryAfterSeconds: 28_800 });
   });
 });

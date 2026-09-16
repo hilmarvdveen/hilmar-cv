@@ -5,11 +5,13 @@ import {
   isAllowedOrigin,
   looksAutomated,
   serverErrorResponse,
+  tooManyRequestsResponse,
   validateFields,
 } from "@/lib/security";
 import {
   EMPTY_FIT_REPORT,
   FIT_LIMITS,
+  FitAgentRateLimitError,
   getFitAgentConfiguration,
   isFitReport,
   requestFitReport,
@@ -82,6 +84,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       sessionId: sanitizeSessionId(result.sessionId),
     });
   } catch (error: unknown) {
+    if (error instanceof FitAgentRateLimitError) {
+      return tooManyRequestsResponse(error.retryAfterSeconds);
+    }
     console.error("Fit check failed");
     return serverErrorResponse(error, "The fit check is not available right now");
   }

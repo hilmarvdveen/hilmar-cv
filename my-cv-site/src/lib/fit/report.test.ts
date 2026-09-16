@@ -4,8 +4,14 @@ import {
   EMPTY_FIT_REPORT,
   FIT_LIMITS,
   FIT_VERDICTS,
+  FIT_DAILY_CAP_RETRY_SECONDS,
+  RECORD_ENGAGEMENT_COMPANIES,
   RECORD_ENGAGEMENT_IDS,
+  companyNamesForEngagements,
   countFitVerdicts,
+  fitTechnologyDuration,
+  isDailyCapRetry,
+  retryAfterSecondsFromBody,
   isFitAnswer,
   isFitReport,
   isFitVerdict,
@@ -260,5 +266,63 @@ describe("countFitVerdicts", () => {
       })
     );
     expect(counts).toEqual({ inRecord: 2, partly: 1, notInRecord: 1 });
+  });
+});
+
+describe("retryAfterSecondsFromBody", () => {
+  it("reads a positive number and rounds it up", () => {
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: 30 })).toBe(30);
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: 30.2 })).toBe(31);
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: "45" })).toBe(45);
+  });
+
+  it("answers zero for anything else", () => {
+    expect(retryAfterSecondsFromBody(null)).toBe(0);
+    expect(retryAfterSecondsFromBody(["nope"])).toBe(0);
+    expect(retryAfterSecondsFromBody({})).toBe(0);
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: 0 })).toBe(0);
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: -5 })).toBe(0);
+    expect(retryAfterSecondsFromBody({ retryAfterSeconds: "later" })).toBe(0);
+  });
+});
+
+describe("isDailyCapRetry", () => {
+  it("separates the daily cap from the per-minute limit", () => {
+    expect(isDailyCapRetry(0)).toBe(false);
+    expect(isDailyCapRetry(60)).toBe(false);
+    expect(isDailyCapRetry(FIT_DAILY_CAP_RETRY_SECONDS)).toBe(false);
+    expect(isDailyCapRetry(FIT_DAILY_CAP_RETRY_SECONDS + 1)).toBe(true);
+    expect(isDailyCapRetry(28_800)).toBe(true);
+  });
+});
+
+describe("companyNamesForEngagements", () => {
+  it("names every engagement in the record once, in the order given", () => {
+    expect(companyNamesForEngagements(["bol", "bol"])).toEqual(["bol.com"]);
+    expect(RECORD_ENGAGEMENT_COMPANIES.get("bol")).toBe("bol.com");
+  });
+
+  it("drops an engagement the record does not hold", () => {
+    expect(companyNamesForEngagements(["invented"])).toEqual([]);
+    expect(
+      companyNamesForEngagements(["one", "two"], new Map([["one", "One"], ["two", "Two"]]))
+    ).toEqual(["One", "Two"]);
+  });
+});
+
+describe("fitTechnologyDuration", () => {
+  it("reports a year or more in years", () => {
+    expect(fitTechnologyDuration(7.5)).toEqual({ unit: "years", value: 7.5 });
+    expect(fitTechnologyDuration(1)).toEqual({ unit: "years", value: 1 });
+  });
+
+  it("reports less than a year in months", () => {
+    expect(fitTechnologyDuration(0.5)).toEqual({ unit: "months", value: 6 });
+    expect(fitTechnologyDuration(0.25)).toEqual({ unit: "months", value: 3 });
+  });
+
+  it("drops a figure that rounds to nothing", () => {
+    expect(fitTechnologyDuration(0)).toBeNull();
+    expect(fitTechnologyDuration(0.02)).toBeNull();
   });
 });

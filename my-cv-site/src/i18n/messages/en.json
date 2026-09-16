@@ -1007,7 +1007,7 @@
             ]
         },
         "facts": {
-            "fitLink": "Got a vacancy? Check it against my work history",
+            "fitLink": "Check your vacancy against my work history",
             "title": "The practical details",
             "items": [
                 {
@@ -2199,63 +2199,83 @@
     "fit": {
         "meta": {
             "title": "Vacancy check on my work history",
-            "description": "Paste a vacancy and see per requirement what my work history holds, with the engagement that shows it. Then ask a question about the result."
+            "description": "Paste a vacancy and see what my work history holds for each requirement, with the engagement that shows it. Then ask a question about the result."
         },
         "hero": {
             "badge": "AI assistant on my work history",
             "title": "Does this vacancy fit my work?",
-            "description": "Paste the text of the vacancy. You get, per requirement, what my work history holds and which engagement shows it. After that you can ask a question about the result."
+            "description": "You see what my work history holds for each requirement, and which engagement shows it. One line per requirement, ready to forward. After that you can ask questions about the result.",
+            "note": "Rather go through it together?",
+            "noteLink": "Book a 30-minute call"
         },
         "disclosure": {
             "title": "How this works",
-            "assistant": "This is an AI assistant. It answers from my recorded work history and names the engagement behind every line.",
-            "processing": "The vacancy text is used to write the answer and is not kept afterwards."
+            "assistant": "This is an AI assistant. It works only from my recorded work history and names the engagement wherever that work history shows a requirement.",
+            "processing": "I do not keep the vacancy text. The result stays for thirty days under a random number, so you can still ask a question about it."
         },
         "section": {
             "title": "Paste the vacancy",
-            "intro": "The whole text works, and so does the requirements section on its own. The check takes about half a minute."
+            "intro": "Paste the whole text or just the requirements section. You fill in nothing else."
         },
         "check": {
             "form": {
                 "label": "Vacancy text",
-                "hint": "Twenty characters or more. The requirements section is the part that counts most.",
+                "hint": "The more of the requirements you paste, the sharper the result.",
                 "placeholder": "Paste the vacancy here",
                 "counter": "{characters} of {maximum} characters",
+                "capNote": "This is the maximum. The rest of the text is not included. The requirements section is the part that counts.",
                 "submit": "Check the vacancy",
-                "checking": "Checking..."
+                "checking": "Checking...",
+                "checkingNote": "The assistant reads the requirements one by one. That usually takes about half a minute."
+            },
+            "status": {
+                "checking": "The check is running.",
+                "ready": "The result is below."
             },
             "errors": {
-                "tooShort": "Paste a bit more of the vacancy. The check runs from twenty characters.",
-                "rateLimited": "That is a lot of checks in one minute. Wait a minute and the next one runs.",
-                "failed": "The check is not reachable right now. Try again in a moment, or book a call and I will walk through the vacancy with you."
+                "tooShort": "Paste a bit more of the vacancy, for example the requirements section.",
+                "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
+                "capReached": "The check has reached its limit for today. It runs again tomorrow. If you would rather not wait, book a call and I will walk through the vacancy with you.",
+                "failed": "The check did not come through. With a long vacancy it helps to paste only the requirements section. If that does not work either, book a call and I will walk through the vacancy with you.",
+                "mailAction": "Mail the vacancy to me"
             },
             "report": {
-                "title": "What the work history shows",
+                "title": "What my work history shows",
+                "counts": "{inRecord} of {total} requirements are in my work history, {partly} partly, {notInRecord} not.",
                 "requirementsTitle": "Requirement by requirement",
-                "technologiesTitle": "Years per technology",
-                "verdicts": {
-                    "inRecord": "In the record",
-                    "partly": "Partly",
-                    "notInRecord": "Not in the record"
+                "legend": {
+                    "title": "What the labels mean",
+                    "inRecord": "In the work history: an engagement carries this technology or this responsibility.",
+                    "partly": "Partly: the work history carries adjacent work, or fewer years than the vacancy asks for.",
+                    "notInRecord": "Not in the work history: no evidence for it. On that line you read what the work history does hold."
                 },
-                "evidenceLabel": "Shown at",
+                "technologiesTitle": "Years per technology",
+                "technologiesBasis": "Counted over the engagements that carry the technology. Months that overlap count once.",
+                "verdicts": {
+                    "inRecord": "In the work history",
+                    "partly": "Partly",
+                    "notInRecord": "Not in the work history"
+                },
+                "evidenceLabel": "Where it shows",
                 "years": "{years, plural, one {# year} other {# years}}",
-                "empty": "The check read no separate requirements in this text. Paste the requirements section and the list follows.",
-                "bookTitle": "Does this match what you need?",
-                "bookText": "In thirty minutes we walk through the requirements together and you hear where I add the most.",
+                "months": "{months, plural, one {# month} other {# months}}",
+                "empty": "The check read no separate requirements in this text. Paste the requirements section and the list per requirement follows. If you would rather walk through it together, book a call.",
+                "sessionLabel": "Number of this result: {sessionId}. To have it removed sooner, mail that number to {email}.",
+                "bookTitle": "That was the short version",
+                "bookText": "In thirty minutes we go through the requirements and you hear what I would pick up in the first weeks.",
                 "bookButton": "Book a 30-minute call"
             },
             "question": {
                 "title": "Ask a question about the result",
-                "description": "For example how many years of React there are, or which engagement sits closest to this role.",
+                "description": "For example which engagement sits closest to this role, or how I would approach a migration like this one.",
                 "label": "Your question",
                 "placeholder": "How many years of experience with GraphQL?",
                 "submit": "Ask the question",
                 "asking": "Answering...",
                 "answerLabel": "Answer",
                 "errors": {
-                    "tooShort": "Write the question a little fuller. Five characters is enough to start.",
-                    "rateLimited": "That is a lot of questions in one minute. Wait a minute and the next one runs.",
+                    "tooShort": "Make the question a little longer. A few words is enough.",
+                    "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
                     "failed": "The answer did not come through. Ask it again in a moment."
                 }
             }

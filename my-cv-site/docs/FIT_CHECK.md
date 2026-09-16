@@ -72,6 +72,26 @@ Both routes follow the house gate, in this order:
 `export const runtime = "nodejs"` and `export const maxDuration = 60` on both.
 The page is never prerendered, per the CSP nonce rule.
 
+### The upstream 429 travels
+
+The agent answers 429 for two different reasons: its own per-caller limit, and
+its daily money cap. Both carry `retryAfterSeconds` in the body. Before
+16 September 2026 `agentClient.ts` threw on every non-ok status and the routes
+answered 500, so a spent daily cap told the visitor to try again in a moment,
+which was the one thing that could not help.
+
+Now `postToAgent` throws `FitAgentRateLimitError` on a 429, carrying the seconds
+it read from the agent body (zero when that body is unreadable). Both routes
+catch that error before `serverErrorResponse` and answer with
+`tooManyRequestsResponse(retryAfterSeconds)` from `src/lib/security`, which puts
+the number in the `Retry-After` header and in the body.
+
+The island reads the number back and picks the sentence with `isDailyCapRetry`:
+over 120 seconds it shows `errors.capReached` (the check is done for today, plan
+a call), at or under it shows `errors.rateLimited` (a queue, wait a minute). The
+site own per-minute refusal carries no `retryAfterSeconds`, so it reads as zero
+and lands on the queue sentence, which is what it is.
+
 ## Limits
 
 `FIT_LIMITS` in `src/lib/fit/report.ts` is the one place they live.
@@ -96,14 +116,85 @@ in `workHistory`, so the page can never link to an engagement page that answers
 404, whatever the model invents. `sanitizeSessionId` refuses anything that is
 not a plausible base64url identifier.
 
+## The page, top to bottom
+
+The order is fixed and every block sits in `FitCheck`, the one client island:
+
+1. The form card. It leads the second section and carries its own `h2`
+   (`section.title`, the id the `Section` is labelled by) and `section.intro`,
+   so no separate section title block stands above it.
+2. The disclosure card. The page renders it as a server component and hands it
+   to `FitCheck` as a slot, so `fit.disclosure` and `fit.hero.note` stay out of
+   the client payload. It sits under the textarea, where the visitor decides
+   whether to paste a client text at all, and its last line is the text link to
+   `/book` with `data-placement="fit-hero"`.
+3. The status line, `role="status" aria-live="polite"`, visually hidden.
+4. The result, `FitReport`, under its own `h2` (`report.title`), with the
+   deterministic count line above the model prose, the three label definitions
+   once above the requirement list, the years per technology with their basis
+   and engagement names, and the number of the stored result at the end.
+5. The question box, `FitQuestion`.
+6. The booking card, `FitBooking`, the close of the page.
+
+The question box comes before the booking card on purpose. The booking card is
+the last thing a visitor meets and does the close band job, which is why this
+page has no close band of its own.
+
+### Above the fold
+
+The input is the one thing the page asks for, so it has to be reachable without
+scrolling at 390 and at 1280. Three rules hold that:
+
+- Both bands are `padding="compact"` (`PageHero` passes the prop through to
+  `Section`).
+- The disclosure card sits under the textarea, not in the hero.
+- The form card leads the section. No section title block and no intro
+  paragraph above the card.
+
+Measured before the change on a 390 by 844 phone with the consent banner open:
+662 pixels visible, the textarea starting at 1016. Anything added above the form
+has to be measured again.
+
+### States
+
+| State | What renders |
+|---|---|
+| Idle | form, disclosure |
+| Checking | the button marked `aria-disabled` and still focusable, the form `aria-busy`, `form.checkingNote` under the button, the status line saying the check is running |
+| Done | the status line saying the result is below, focus moved to the result heading, the result, the question box (only with a session id), the booking card |
+| Too short | `errors.tooShort` as a plain alert tied to the field through `aria-describedby`, the finished report and the question box left standing |
+| Failed | a card with the message, the booking button (`fit-failed`) and the mail link (`fit-failed-mail`), below the submit so the button never moves under the visitor thumb, the finished report left standing |
+| Empty result | the summary and the technologies when the agent returned them, the `report.empty` sentence, and the booking card |
+
+Neither button ever carries the `disabled` attribute. A disabled button leaves
+the tab order and hands focus to the document, which is what happened on
+16 September 2026: pressing the check button dropped keyboard focus for the
+whole wait and nothing announced the result.
+
 ## What is not stored and not logged
 
 The vacancy text and the question exist for the duration of the request. They
 are never written to `console`, never put in an analytics parameter, and never
 persisted on this side. The agent stores the report under a random session id
-with a thirty day expiry and nothing else. The page says both things before the
-form, in `fit.disclosure`, together with the disclosure that the assistant is an
-AI system.
+with a thirty day expiry and nothing else. The disclosure card says both things
+before the report exists, together with the disclosure that the assistant is an
+AI system, and it says them accurately: the text is not kept, the result stays
+thirty days under a random number so a question about it remains possible.
+
+That number is on the page in small type under the report
+(`report.sessionLabel`), with the contact email from `BUSINESS_PROFILE`, because
+the privacy statement offers deletion by number. The privacy document in
+`src/features/legal/legalContent.ts` carries the matching lines in both
+languages: the vacancy text as a processed item under article 6(1)(f), Microsoft
+Azure and Supabase in the processor list, and one sentence under automated
+decision-making saying the assistant describes the owner record and decides
+nothing about the reader.
+
+The honeypot timing starts at the first change of the textarea, not at
+hydration. `useHoneypot` keeps its own semantics for the other forms and the
+island overrides `formStartedAt` in the body it posts. Before that, a visitor
+who arrived with the vacancy on the clipboard and pasted within two seconds was
+told the text held no requirements.
 
 The two routes log a fixed sentence on failure, never the input and never the
 upstream body.
@@ -123,9 +214,12 @@ the category `fit`, on top of `pushDataLayerEvent` like the booking family.
 | `fit_question_failed` | `status` |
 
 No parameter carries text from the vacancy or the question. The booking button
-inside the report carries `data-placement="fit-report"`, so `SiteEvents` reports
-its `cta_click` without extra code, and the three entrances carry
-`footer-fit`, `hiring-fit` and `contact-facts-fit`.
+in the closing card carries `data-placement="fit-report"`, so `SiteEvents`
+reports its `cta_click` without extra code. The other placements on this page
+are `fit-hero` (the text link in the disclosure card), `fit-failed` and
+`fit-failed-mail` (the failure card), and `fit-evidence` and
+`fit-answer-evidence` (the engagement links in a report and in an answer). The
+three entrances carry `footer-fit`, `hiring-fit` and `contact-facts-fit`.
 
 The hypotheses to read after the deploy:
 
@@ -169,5 +263,22 @@ record does show.
 
 ## Glitch log
 
-Nothing yet. The first entries belong here: what the agent returned that the
-guard refused, and what a real vacancy did to the report.
+- 16 September 2026, the review board round on this page (P5 designer, P7 sales
+  editor, P8 product editor). The defects that were real: the input sat a screen
+  and a half below the fold at both widths, the check dropped keyboard focus to
+  the document for the whole wait and announced nothing, the Dutch booking
+  button stuck eight pixels out of its card at 390, two length rules disagreed
+  (the button gate let twelve characters through while the handler refused under
+  twenty), a validation error unmounted the finished report, the failure message
+  named an action with no button behind it, a spent daily cap said "try again in
+  a moment", the privacy statement said nothing about the feature, and the years
+  figure printed a bare number that could read "0 jaar". All of those are fixed
+  above.
+- Still open and not this page code: the years figure counts distinct months
+  over case-insensitive substring matches, so React includes the React Router
+  months. The basis line now says how it counts and the engagement names sit
+  beside each figure, but the match rule lives in the agent. A stored report
+  still cannot be reopened or forwarded.
+
+The first entries about the model belong here too: what the agent returned that
+the guard refused, and what a real vacancy did to the report.

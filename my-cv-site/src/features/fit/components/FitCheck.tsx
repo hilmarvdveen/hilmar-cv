@@ -1,58 +1,96 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import {
   FIT_LIMITS,
   countFitVerdicts,
+  isDailyCapRetry,
+  retryAfterSecondsFromBody,
   trackFitEvent,
   type FitReport as FitReportData,
 } from "@/lib/fit";
-import { FitVacancyForm } from "./FitVacancyForm";
+import { FitVacancyForm, type FitCheckFailure } from "./FitVacancyForm";
 import { FitReport } from "./FitReport";
 import { FitQuestion } from "./FitQuestion";
+import { FitBooking } from "./FitBooking";
 
-type FitCheckStatus = "idle" | "checking" | "done" | "failed";
+const readRetryAfterSeconds = async (response: Response): Promise<number> => {
+  try {
+    return retryAfterSecondsFromBody(await response.json());
+  } catch {
+    return 0;
+  }
+};
 
-export const FitCheck = () => {
+type FitCheckProps = {
+  heading: string;
+  intro: string;
+  disclosure: ReactNode;
+};
+
+export const FitCheck = ({ heading, intro, disclosure }: FitCheckProps) => {
   const t = useTranslations("fit.check");
   const locale = useLocale();
   const honeypot = useHoneypot();
 
   const [vacancy, setVacancy] = useState("");
-  const [status, setStatus] = useState<FitCheckStatus>("idle");
+  const [isChecking, setIsChecking] = useState(false);
   const [report, setReport] = useState<FitReportData | null>(null);
   const [sessionId, setSessionId] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [failure, setFailure] = useState<FitCheckFailure | null>(null);
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const firstChangeAt = useRef<number | null>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement | null>(null);
+
+  useEffect(() => {
+    if (report) resultHeadingRef.current?.focus();
+  }, [report]);
+
+  const handleVacancyChange = (value: string) => {
+    if (firstChangeAt.current === null) firstChangeAt.current = Date.now();
+    setVacancy(value);
+  };
+
+  const failureMessageFor = async (response: Response): Promise<string> => {
+    if (response.status !== 429) return t("errors.failed");
+    const retryAfterSeconds = await readRetryAfterSeconds(response);
+    return isDailyCapRetry(retryAfterSeconds) ? t("errors.capReached") : t("errors.rateLimited");
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const trimmed = vacancy.trim();
+    if (isChecking) return;
 
+    const trimmed = vacancy.trim();
     if (trimmed.length < FIT_LIMITS.vacancyMinimum) {
-      setStatus("failed");
-      setErrorMessage(t("errors.tooShort"));
+      setFailure({ message: t("errors.tooShort"), recoverable: true });
       return;
     }
 
-    setStatus("checking");
-    setErrorMessage("");
+    setIsChecking(true);
+    setFailure(null);
+    setStatusMessage(t("status.checking"));
     trackFitEvent("fit_submitted", { characters: trimmed.length });
 
     try {
       const response = await fetch("/api/fit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vacancy: trimmed, locale, ...honeypot.payload() }),
+        body: JSON.stringify({
+          vacancy: trimmed,
+          locale,
+          ...honeypot.payload(),
+          formStartedAt: firstChangeAt.current ?? Date.now(),
+        }),
       });
 
       if (!response.ok) {
         trackFitEvent("fit_failed", { status: response.status });
-        setStatus("failed");
-        setErrorMessage(
-          response.status === 429 ? t("errors.rateLimited") : t("errors.failed")
-        );
+        setFailure({ message: await failureMessageFor(response), recoverable: false });
+        setStatusMessage("");
         return;
       }
 
@@ -66,28 +104,43 @@ export const FitCheck = () => {
       });
       setReport(data.report);
       setSessionId(data.sessionId);
-      setStatus("done");
+      setStatusMessage(t("status.ready"));
     } catch {
       trackFitEvent("fit_failed", { status: 0 });
-      setStatus("failed");
-      setErrorMessage(t("errors.failed"));
+      setFailure({ message: t("errors.failed"), recoverable: false });
+      setStatusMessage("");
+    } finally {
+      setIsChecking(false);
     }
   };
 
   return (
     <div>
       <FitVacancyForm
+        heading={heading}
+        intro={intro}
         vacancy={vacancy}
-        onVacancyChange={setVacancy}
+        onVacancyChange={handleVacancyChange}
         onSubmit={handleSubmit}
-        isChecking={status === "checking"}
-        errorMessage={errorMessage}
+        isChecking={isChecking}
+        failure={failure}
         honeypotValue={honeypot.value}
         onHoneypotChange={honeypot.setValue}
       />
 
-      {status === "done" && report && <FitReport report={report} />}
-      {status === "done" && report && sessionId && <FitQuestion sessionId={sessionId} />}
+      <div className="mt-8">{disclosure}</div>
+
+      <p role="status" aria-live="polite" className="sr-only">
+        {statusMessage}
+      </p>
+
+      {report && !isChecking && (
+        <>
+          <FitReport report={report} sessionId={sessionId} headingRef={resultHeadingRef} />
+          {sessionId && <FitQuestion sessionId={sessionId} />}
+          <FitBooking />
+        </>
+      )}
     </div>
   );
 };

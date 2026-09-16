@@ -55,6 +55,13 @@ export function checkRateLimit(
   };
 }
 
+export function tooManyRequestsResponse(retryAfterSeconds: number): NextResponse {
+  return NextResponse.json(
+    { error: "Too many requests. Please try again later.", retryAfterSeconds },
+    { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } }
+  );
+}
+
 export function enforceRateLimit(
   request: NextRequest,
   name: RateLimitName,
