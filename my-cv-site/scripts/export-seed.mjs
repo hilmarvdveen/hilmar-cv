@@ -11,6 +11,7 @@ const defaultTarget = resolvePath(siteDirectory, "seed", "record.json");
 const target = process.argv[2] ? resolvePath(process.argv[2]) : defaultTarget;
 
 const { workHistory } = await import("@/data/workHistory");
+const { ownWork } = await import("@/data/ownWork");
 const { BLOG_POSTS } = await import("@/features/blog/registry");
 const { buildSeedRecord } = await import("@/lib/fit/seed");
 const englishMessages = (await import("@/i18n/messages/en.json", { with: { type: "json" } })).default;
@@ -21,6 +22,7 @@ const generatedAt = process.env.SEED_GENERATED_AT ?? new Date().toISOString().sl
 const record = buildSeedRecord({
   generatedAt,
   engagements: workHistory,
+  ownWork,
   posts: BLOG_POSTS.map((post) => ({
     slug: post.slug,
     category: post.category,
@@ -42,7 +44,9 @@ const storyCount = (locale) =>
   record.engagements.reduce((total, engagement) => total + engagement.stories[locale].length, 0);
 
 console.log(
-  `engagements ${record.engagements.length}, technologies ${
+  `engagements ${record.engagements.filter((engagement) => engagement.kind === "client").length} for clients and ${
+    record.engagements.filter((engagement) => engagement.kind === "ownWork").length
+  } of my own, technologies ${
     new Set(record.engagements.flatMap((engagement) => engagement.technologies)).size
   }, posts ${record.posts.length}, faq ${record.faq.length}, stories ${storyCount(
     "en"

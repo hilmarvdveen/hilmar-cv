@@ -32,6 +32,15 @@ const messagesFor = (suffix: string) => ({
       body: [{ paragraph: `The intake became a wizard ${suffix}` }],
     },
   },
+  ownWork: {
+    "own-platform": {
+      role: `Owner ${suffix}`,
+      headline: `My own platform ${suffix}`,
+      summary: `I build and run it ${suffix}`,
+      delivered: [`A booking flow ${suffix}`],
+      body: [{ paragraph: `It runs in production ${suffix}` }],
+    },
+  },
   faq: {
     categories: {
       general: {
@@ -71,6 +80,18 @@ const input: SeedRecordInput = {
       mode: "workMode.onSite",
       language: "language.english",
       tech: ["tech.kotlin"],
+    },
+  ],
+  ownWork: [
+    {
+      id: "own-platform",
+      name: "hilmarvanderveen.com",
+      url: "/",
+      from: "2025-05",
+      location: "Zandvoort",
+      mode: "workMode.remote",
+      language: "language.dutch",
+      tech: ["tech.react"],
     },
   ],
   posts: [
@@ -131,10 +152,15 @@ describe("buildSeedRecord", () => {
   });
 
   it("maps the mode and language keys to their plain values", () => {
-    expect(record.engagements.map((engagement) => engagement.mode)).toEqual(["hybrid", "onSite"]);
+    expect(record.engagements.map((engagement) => engagement.mode)).toEqual([
+      "hybrid",
+      "onSite",
+      "remote",
+    ]);
     expect(record.engagements.map((engagement) => engagement.language)).toEqual([
       "dutch",
       "english",
+      "dutch",
     ]);
   });
 
@@ -156,6 +182,33 @@ describe("buildSeedRecord", () => {
     expect(bol.headline.nl).toBe("Loyalty on a new platform NL");
     expect(bol.summary.en).toBe("Moved the account pages EN");
     expect(bol.delivered.nl).toEqual(["Subscriptions on React NL", "Reversible cut-over NL"]);
+  });
+
+  it("marks client engagements and my own work as two kinds, with own work last", () => {
+    expect(record.engagements.map((engagement) => engagement.kind)).toEqual([
+      "client",
+      "client",
+      "ownWork",
+    ]);
+  });
+
+  it("builds an own-work entry that runs until the month of the export", () => {
+    const platform = record.engagements[2];
+    expect(platform).toMatchObject({
+      id: "own-platform",
+      url: "/",
+      company: "hilmarvanderveen.com",
+      location: "Zandvoort",
+      from: "2025-05",
+      to: "2026-09",
+      technologies: ["React"],
+      technologyKeys: ["react"],
+    });
+    expect(platform.role).toEqual({ en: "Owner EN", nl: "Owner NL" });
+    expect(platform.headline.nl).toBe("My own platform NL");
+    expect(platform.summary.en).toBe("I build and run it EN");
+    expect(platform.delivered.nl).toEqual(["A booking flow NL"]);
+    expect(platform.stories.en).toEqual(["It runs in production EN"]);
   });
 
   it("carries the story paragraphs of the engagement page in order, per locale", () => {

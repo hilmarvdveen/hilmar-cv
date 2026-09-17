@@ -690,8 +690,8 @@ const COPY = {
     nl: "Twee eigenschappen houden de stap bruikbaar. Hij draait op de merge request, zodat een bevinding binnenkomt terwijl de wijziging open staat en de schrijver het component nog in zijn hoofd heeft. En het rapport wordt bewaard als artefact.",
   },
   pipeline3: {
-    en: "At the Belastingdienst the entrepreneur portal and the visual forms editor both stayed at WCAG 2.1 AA, verified with automated tests in a pipeline that ran through GitLab, Jenkins, Tekton and ArgoCD. At the Nationale Postcode Loterij Playwright and Cypress keep watch over the existing campaigns while new ones arrive.",
-    nl: "Bij de Belastingdienst bleven het ondernemersportaal en de visuele formulierenbouwer allebei op WCAG 2.1 AA, geborgd met geautomatiseerde tests in een pipeline via GitLab, Jenkins, Tekton en ArgoCD. Bij de Nationale Postcode Loterij houden Playwright en Cypress de bestaande campagnes in de gaten terwijl er nieuwe bij komen.",
+    en: "At the Belastingdienst the entrepreneur portal and the visual forms editor both stayed at WCAG 2.1 AA, verified with automated tests in a pipeline that ran through GitLab, Jenkins, Tekton and Argo CD. At the Nationale Postcode Loterij Playwright and Cypress keep watch over the existing campaigns while new ones arrive.",
+    nl: "Bij de Belastingdienst bleven het ondernemersportaal en de visuele formulierenbouwer allebei op WCAG 2.1 AA, geborgd met geautomatiseerde tests in een pipeline via GitLab, Jenkins, Tekton en Argo CD. Bij de Nationale Postcode Loterij houden Playwright en Cypress de bestaande campagnes in de gaten terwijl er nieuwe bij komen.",
   },
   baselineNoteTitle: {
     en: "Start the gate on the new code",

@@ -568,6 +568,44 @@ every sentence, and the agent's database is derived. Reseed after any change to
 `workHistory.ts`, the `work` namespace, the `faq` namespace or the blog
 registry.
 
+### Own work in the export (17 September 2026)
+
+The twelve client engagements say nothing about Node.js, PostgreSQL, MongoDB,
+Azure OpenAI or MCP, while the CVs describe them in his own work. So the export
+carries his own work as engagements of a second kind. Every engagement has
+`kind`, `"client"` or `"ownWork"`, and own work comes last in the list.
+
+- The entries live in `src/data/ownWork.ts` (id, name, url, start month,
+  technologies from the same `Tech` map) and their sentences in the `ownWork`
+  namespace of both message files, in the shape of a `work` entry without
+  company and location. Three entries on 17 September 2026: `own-platform`
+  (this site), `reference-repository` (the public Zappy Mart repository) and
+  `vacancy-fit` (the fit check itself).
+- An own-work entry has no end month in the data. The builder writes the month
+  of the export, so a reseed keeps it current.
+- The rule on the agent side: evidence from own work alone never makes a
+  requirement fully met. It gives "partly", with a note that says it runs in his
+  own platform and not yet at a client. The years table counts client months
+  only. The CV written to a vacancy keeps own work in its own paragraph.
+- A technology goes into an own-work entry only when it runs today and a reader
+  can check it: on this site, in the public repository, or on the live fit
+  check. What is written and not yet verified by a run stays out (the PostgreSQL
+  profiles and Testcontainers rows of Zappy Mart on 17 September 2026).
+- The page still links evidence to `/experience/<id>` and drops ids it does not
+  know, so own-work evidence shows in the note and not as a link. An own-work
+  page on the site is on the backlog (improvements section L), and the link
+  follows it.
+
+The same day the technologies the CVs claim per engagement and the data lacked
+were attached, from the inventory in
+`Hilmar/review-board/2026-09-17-cv-versus-site-record.md`: Node.js and Express
+at bol.com, gRPC, Microsoft Identity and Azure Key Vault at Omniplan, RabbitMQ
+and MassTransit at Bluefield, ASP.NET Core at Opinity, Azure at the
+Belastingdienst, Kubernetes and Azure DevOps at Athlon, the named headless CMS
+per engagement, Linux where containers and clusters ran, and SSH at every
+engagement (his statement of 11 September 2026). Reseed after any change to
+`ownWork.ts` or the `ownWork` namespace too.
+
 ## Copy rules for this page
 
 The rate never appears in the `fit` namespace, and a test asserts it. The

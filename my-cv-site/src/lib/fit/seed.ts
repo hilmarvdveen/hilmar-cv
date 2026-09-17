@@ -20,6 +20,17 @@ export type SeedWorkEntry = {
   tech: string[];
 };
 
+export type SeedOwnWorkEntry = {
+  id: string;
+  name: string;
+  url: string;
+  from: string;
+  location: string;
+  mode: string;
+  language: string;
+  tech: string[];
+};
+
 export type SeedPostEntry = {
   slug: string;
   category: string;
@@ -51,14 +62,18 @@ export type SeedFaqCategoryMessages = {
   questions: Array<{ question: string; answer: string }>;
 };
 
+export type SeedOwnWorkMessages = Omit<SeedWorkEntryMessages, "company" | "location">;
+
 export type SeedMessages = {
   work: Record<string, unknown>;
+  ownWork: Record<string, unknown>;
   faq: { categories: Record<string, SeedFaqCategoryMessages> };
 };
 
 export type SeedRecordInput = {
   generatedAt: string;
   engagements: SeedWorkEntry[];
+  ownWork: SeedOwnWorkEntry[];
   posts: SeedPostEntry[];
   messages: Record<FitLocale, SeedMessages>;
 };
@@ -66,8 +81,11 @@ export type SeedRecordInput = {
 export type SeedLocalizedText = Record<FitLocale, string>;
 export type SeedLocalizedList = Record<FitLocale, string[]>;
 
+export type SeedEngagementKind = "client" | "ownWork";
+
 export type SeedEngagement = {
   id: string;
+  kind: SeedEngagementKind;
   url: string;
   company: string;
   location: string;
@@ -236,6 +254,7 @@ function buildEngagements(input: SeedRecordInput): SeedEngagement[] {
     const technologyKeys = entry.tech.map(technologyKeyOf);
     return {
       id: entry.id,
+      kind: "client",
       url: `/experience/${entry.id}`,
       company: entry.company,
       location: entry.location,
@@ -253,6 +272,42 @@ function buildEngagements(input: SeedRecordInput): SeedEngagement[] {
       ]),
       stories: perLocale((locale) =>
         entryMessages(input.messages, locale, entry.id).body.map((section) => section.paragraph)
+      ),
+    };
+  });
+}
+
+const ownWorkMessages = (
+  messages: Record<FitLocale, SeedMessages>,
+  locale: FitLocale,
+  id: string
+): SeedOwnWorkMessages => messages[locale].ownWork[id] as SeedOwnWorkMessages;
+
+function buildOwnWork(input: SeedRecordInput): SeedEngagement[] {
+  const labels = technologyLabels(input.messages);
+  const currentMonth = input.generatedAt.slice(0, 7);
+  return input.ownWork.map((entry) => {
+    const technologyKeys = entry.tech.map(technologyKeyOf);
+    return {
+      id: entry.id,
+      kind: "ownWork",
+      url: entry.url,
+      company: entry.name,
+      location: entry.location,
+      from: entry.from,
+      to: currentMonth,
+      mode: WORK_MODES[entry.mode],
+      language: LANGUAGES[entry.language],
+      technologies: technologyKeys.map((key) => labels[key]),
+      technologyKeys,
+      role: perLocale((locale) => ownWorkMessages(input.messages, locale, entry.id).role),
+      headline: perLocale((locale) => ownWorkMessages(input.messages, locale, entry.id).headline),
+      summary: perLocale((locale) => ownWorkMessages(input.messages, locale, entry.id).summary),
+      delivered: perLocale((locale) => [
+        ...ownWorkMessages(input.messages, locale, entry.id).delivered,
+      ]),
+      stories: perLocale((locale) =>
+        ownWorkMessages(input.messages, locale, entry.id).body.map((section) => section.paragraph)
       ),
     };
   });
@@ -300,7 +355,7 @@ export function buildSeedRecord(input: SeedRecordInput): SeedRecord {
     generatedAt: input.generatedAt,
     site: BUSINESS_PROFILE.CONTACT.WEBSITE,
     profile: buildProfile(),
-    engagements: buildEngagements(input),
+    engagements: [...buildEngagements(input), ...buildOwnWork(input)],
     posts: buildPosts(input),
     faq: buildFaq(input),
   };

@@ -459,7 +459,7 @@
             "ComponentDesign": "Component Design",
             "Gitlab": "GitLab",
             "Bitbucket": "Bitbucket",
-            "DotNetCore": ".Net Core",
+            "DotNetCore": ".NET Core",
             "AzureAppServices": "Azure App Services",
             "AzureCloud": "Azure Cloud",
             "EntityFramework": "Entity Framework",
@@ -511,7 +511,38 @@
             "Terraform": "Terraform",
             "Python": "Python",
             "OpenIDConnect": "OpenID Connect",
-            "SpringBoot": "Spring Boot"
+            "SpringBoot": "Spring Boot",
+            "SpringForGraphQL": "Spring for GraphQL",
+            "JUnit": "JUnit",
+            "Mockito": "Mockito",
+            "Contentstack": "Contentstack",
+            "Storyblok": "Storyblok",
+            "Bloomreach": "Bloomreach",
+            "AspNetCore": "ASP.NET Core",
+            "GRPC": "gRPC",
+            "MicrosoftIdentity": "Microsoft Identity",
+            "AzureKeyVault": "Azure Key Vault",
+            "MicroFrontends": "Micro-frontends",
+            "RabbitMQ": "RabbitMQ",
+            "MassTransit": "MassTransit",
+            "Linux": "Linux",
+            "SSH": "SSH",
+            "MicrosoftGraph": "Microsoft Graph API",
+            "OAuth2": "OAuth 2.0",
+            "ContentSecurityPolicy": "Content Security Policy",
+            "ApolloServer": "Apollo Server",
+            "ApolloFederation": "Apollo Federation",
+            "DotNet10": ".NET 10",
+            "Java25": "Java 25",
+            "ModelContextProtocolServer": "MCP server",
+            "ModelContextProtocolClient": "MCP client",
+            "AzureOpenAI": "Azure OpenAI",
+            "TextToSql": "Text-to-SQL",
+            "ArtificialIntelligenceAgents": "AI agents",
+            "LanguageModelIntegration": "LLM integration",
+            "MongoDB": "MongoDB",
+            "AzureContainerApps": "Azure Container Apps",
+            "CodingAgents": "Coding agents (Claude Code)"
         },
         "bol": {
             "company": "bol.com",
@@ -530,27 +561,31 @@
                     "heading": "Loyalty en de gedeelde abonnementspagina"
                 },
                 {
-                    "paragraph": "De acquisitiepagina van Kobo Plus herbouwde ik als server-gerenderde pagina waarvan marketeers de inhoud beheren in het headless CMS. Eén paginaregister wisselt de seizoens-, experiment- en vriendenactievarianten met één regel code, en bezoekers die via een uitnodiging binnenkomen zien een gepersonaliseerde hero. Marketing past die pagina sindsdien aan zonder deploy van engineering.",
+                    "paragraph": "De acquisitiepagina van Kobo Plus herbouwde ik als server-gerenderde pagina waarvan marketeers de inhoud beheren in het headless CMS Contentstack. Eén paginaregister wisselt de seizoens-, experiment- en vriendenactievarianten met één regel code, en bezoekers die via een uitnodiging binnenkomen zien een gepersonaliseerde hero. Marketing past die pagina sindsdien aan zonder deploy van engineering.",
                     "heading": "Marketing zonder deploy"
                 },
                 {
-                    "paragraph": "In Digital bouwde ik de app voor software en games van een lege map tot productie in de Nx-monorepo. Daar hoorden server-rendering, routing, CI/CD, Google Cloud en Kubernetes bij, plus het beveiligingsprofiel en de allowlist voor authenticatie. Daarna voerde ik de cut-over van de live accountpagina's uit via de routinglaag van het platform, die een ander team beheert. Eerst kregen medewerkers de nieuwe pagina's te zien, daarna een percentage van de klanten, per bezoeker gehasht zodat niemand tussen de oude en de nieuwe pagina heen en weer sprong. Elke stap was in één handeling terug te draaien. Tijdens het opschalen vond en verhielp ik een fout in de volgorde waarin routes werden gematcht. Klanten gingen over zonder onderbreking van de dienstverlening.",
+                    "paragraph": "In Digital bouwde ik de app voor software en games van een lege map tot productie in de Nx-monorepo. Daar hoorden de Node.js-server op Express 5, server-rendering, routing, CI/CD, Google Cloud en Kubernetes bij, plus het beveiligingsprofiel en de allowlist voor authenticatie. Toen de eerste release op de deployrechten stukliep, herstelde ik die op het platform zelf, zodat de app uitgerold kon worden. Daarna voerde ik de cut-over van de live accountpagina's uit via de routinglaag van het platform, die een ander team beheert. Eerst kregen medewerkers de nieuwe pagina's te zien, daarna een percentage van de klanten, per bezoeker gehasht zodat niemand tussen de oude en de nieuwe pagina heen en weer sprong. Elke stap was in één handeling terug te draaien. Tijdens het opschalen vond en verhielp ik een fout in de volgorde waarin routes werden gematcht. Klanten gingen over zonder onderbreking van de dienstverlening.",
                     "heading": "De Digital-app en de cut-over"
                 },
                 {
-                    "paragraph": "Samen met de ontwerper en het businessteam realiseerde ik negen A/B-experimenten op vijf plekken in de winkel, van de acquisitiepagina tot de productpagina en het winkelmandje. Ik bouwde ze in code en configureerde ze in de experimenteertool. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden. Won een variant, dan maakte ik die de nieuwe standaard en haalde ik de experimentcode weg.",
+                    "paragraph": "Samen met de ontwerper en het businessteam realiseerde ik negen A/B-experimenten op vijf plekken in de winkel, van de acquisitiepagina tot de productpagina en het winkelmandje. Ik bouwde ze in code, met de verdeling over de varianten op de server, en configureerde ze in de experimenteertool. Winnende varianten leverden GMV-stijgingen op tot 24%, grofweg 5% tot 24% over de winnaars. Niet elk experiment won, dus het totale effect was positief maar bescheiden. Won een variant, dan maakte ik die de nieuwe standaard en haalde ik de experimentcode weg.",
                     "heading": "Negen experimenten"
                 },
                 {
-                    "paragraph": "Ik zorgde ook dat de cijfers achter die beslissingen klopten. Placeholder-ID's werden echte product-ID's, zodat de funnels van productpagina en winkelmandje weer op elkaar aansluiten. Een alles-of-niets-afhandeling van GraphQL herschreef ik, zodat een gedeeltelijk antwoord toch toont wat er wel is en elke fout in Sentry terechtkomt. Sentry zette ik end-to-end aan, met leesbare stack traces op staging en productie. Voor de kortingscodes van Kobo Plus kreeg elke uitkomst van de backend zijn eigen melding, zodat een klant nooit een algemene foutmelding te zien krijgt.",
+                    "paragraph": "Ik zorgde ook dat de cijfers achter die beslissingen klopten. Placeholder-ID's werden echte product-ID's, zodat de funnels van productpagina en winkelmandje weer op elkaar aansluiten. Een alles-of-niets-afhandeling van GraphQL herschreef ik, zodat een gedeeltelijk antwoord toch toont wat er wel is en elke fout in Sentry terechtkomt. Sentry zette ik end-to-end aan, met een stap in CI die de source maps uploadt, zodat de stack traces op staging en productie leesbaar zijn. Voor de kortingscodes van Kobo Plus kreeg elke uitkomst van de backend zijn eigen melding, zodat een klant nooit een algemene foutmelding te zien krijgt.",
                     "heading": "Cijfers die kloppen"
                 },
                 {
-                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. In refinements stel ik veel vragen, zodat randgevallen vroeg boven tafel komen en schattingen kloppen. Junior ontwikkelaars begeleidde ik. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend, en als de capaciteit krap was schreef ik backendlogica in Kotlin.",
+                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. In refinements stel ik veel vragen, zodat randgevallen vroeg boven tafel komen en schattingen kloppen. Junior ontwikkelaars begeleidde ik. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend.",
                     "heading": "Werken over teamgrenzen heen"
                 },
                 {
-                    "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, de types lopen van de GraphQL-query tot in de component door zonder casts, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen.",
+                    "paragraph": "Waar de capaciteit in het backendteam krap was, schreef ik de Kotlin zelf, op Spring Boot met Spring for GraphQL. Nieuwe velden in het gefedereerde schema kregen hun controller en schema mapping, en waar een schema zowel ingelogde als anonieme klanten bedient, kregen beide hun controller en hun test. Een veld dat al in productie werd gebruikt veranderde nooit ter plekke: we markeerden het als deprecated, zetten een V2 ernaast, migreerden elke afnemer en namen daarna de oorspronkelijke naam terug, in frontend en backend tegelijk. Elke controller kreeg zijn tests met GraphQlTester, JUnit, mockito-kotlin en AssertJ, en de resolvers een timeout in de configuratie, zodat een trage afhankelijkheid een veld laat falen en niet het hele verzoek.",
+                    "heading": "De Kotlin-kant"
+                },
+                {
+                    "paragraph": "Wat ik oplever moet te onderhouden zijn door een team dat zijn kracht in de backend heeft. De componenten zijn getypeerd en klein, de types lopen van de GraphQL-query tot in de component door zonder casts, verantwoordelijkheden blijven gescheiden, en bij elke pagina horen unittests, GraphQL-mocks en een Storybook-story per scenario. De types komen uit het schema zelf met gql.tada, urql voert de queries uit met fragment masking zodat een component alleen de gegevens ziet waar hij om vroeg, de queries gaan als persisted documents naar de server, en welk type uit een union terugkomt lees ik af aan de typenaam. De toegankelijkheid volgt WCAG 2.2 AA. Tijdens het bouwen bleef ik ontwerpfouten en verbeteringen voorleggen aan de product owner en de ontwerper. Die gesprekken vonden plaats toen er nog ruimte was om er iets mee te doen.",
                     "heading": "Wat er blijft"
                 }
             ],
@@ -559,7 +594,8 @@
                 "Klanten beheren abonnementen, software en games op het nieuwe React-platform, pagina voor pagina uit de oude Java-webshop gehaald",
                 "Marketing past de Kobo Plus-acquisitiepagina aan zonder engineering-deploy, via het headless CMS en een paginaregister",
                 "De live accountpagina's gingen per percentage over, met elke stap in één handeling terug te draaien",
-                "Productbeslissingen rusten op betrouwbare cijfers: negen experimenten gebouwd en ingericht, funnels hersteld, Sentry end-to-end"
+                "Productbeslissingen rusten op betrouwbare cijfers: negen experimenten gebouwd en ingericht, funnels hersteld, Sentry end-to-end",
+                "Nieuwe GraphQL-velden gingen live zonder een draaiende afnemer te breken, in Kotlin op Spring Boot met Spring for GraphQL toen het backendteam vol zat"
             ],
             "headline": "Loyalty en Digital naar een nieuw platform, zonder onderbreking",
             "close": "Draait bij jullie ook een oude webshop die stap voor stap naar React moet, terwijl klanten blijven bestellen? Dan hoor ik graag welke pagina jullie als eerste zouden verplaatsen, wie hem het eerst te zien krijgt en hoe je die stap terugdraait."
@@ -570,15 +606,19 @@
             "role": "Senior Frontend Developer",
             "body": [
                 {
-                    "paragraph": "De Belastingdienst publiceert aangiftepagina's en formulieren waar ondernemers in het hele land mee uit de voeten moeten kunnen. Een nieuwe pagina in het ondernemersportaal kostte één tot twee weken frontendwerk. Een nieuw belastingformulier kostte maanden, met een doorlopende stroom vragen tussen de redactie en het ontwikkelteam. Mijn opdracht was dat sneller te maken zonder in te leveren op toegankelijkheid en consistentie. De opdracht is vier keer verlengd."
+                    "paragraph": "De Belastingdienst publiceert aangiftepagina's en formulieren waar ondernemers in het hele land mee uit de voeten moeten kunnen, met persoonsgegevens die door elke pagina van het ondernemersportaal lopen. Een nieuwe pagina in het ondernemersportaal kostte één tot twee weken frontendwerk. Een nieuw belastingformulier kostte maanden, met een doorlopende stroom vragen tussen de redactie en het ontwikkelteam. Mijn opdracht was dat sneller te maken zonder in te leveren op toegankelijkheid en consistentie. De opdracht is vier keer verlengd."
                 },
                 {
                     "paragraph": "Voor het ondernemersportaal ontwierp ik een datagedreven Angular-architectuur waarin pagina's uit backendconfiguratie worden opgebouwd. Generieke componenten halen hun logica en hun weergave uit injectable services en configuratiebestanden, zodat de btw-pagina, de loonheffingspagina en de vliegbelastingpagina dezelfde bouwstenen delen. Conditionele zichtbaarheid, meertalige labels en validatieregels komen uit JSON-schema's. Ik bouwde de filterset met dropdowns, zoekvelden en verwijderbare chips. Een wrapper sorteert kleine tabellen in de browser volgens kolomtype en de sorteerregels van het BOLD design system.",
                     "heading": "Pagina's uit configuratie"
                 },
                 {
-                    "paragraph": "Die aanpak werd het fundament onder de visuele formulierenbouwer die ik daarna van de grond af bouwde. Redacteuren slepen bouwblokken op een canvas en stellen elk blok in via een zijpaneel: labels, validaties, condities en afhankelijkheden, met commentaar en versies per component. In een tryout-weergave draaien ze hun eigen formulier zoals een bezoeker het ziet. Ook aan de backend werkte ik mee en breidde ik de endpoints uit. Het werk van de redactie wordt opgeslagen in configuratiebestanden, zodat de staat van elk formulier vanuit de backend reproduceerbaar is.",
+                    "paragraph": "Die aanpak werd het fundament onder de visuele formulierenbouwer die ik daarna van de grond af bouwde. Redacteuren slepen bouwblokken op een canvas en stellen elk blok in via een zijpaneel: labels, validaties, condities en afhankelijkheden, met commentaar en versies per component. In een tryout-weergave draaien ze hun eigen formulier zoals een bezoeker het ziet. Het werk van de redactie wordt opgeslagen in configuratiebestanden, zodat de staat van elk formulier vanuit de backend reproduceerbaar is.",
                     "heading": "De visuele formulierenbouwer"
+                },
+                {
+                    "paragraph": "De formulierenbouwer had endpoints nodig die er nog niet waren, dus bouwde ik die kant mee, in Java 8 op Spring Boot, en zo hoefde de release niet op een ander team te wachten. Elk endpoint zit in een controller en is gekoppeld aan een handler. De handler haalt zijn gegevens niet rechtstreeks uit de database. Hij gaat langs een laag die controleert of de gegevens er al zijn en langs een rules engine die bepaalt of een eigenschap gezet mag worden. Pas daarna zet of verwijdert de persistentielaag de records in MySQL. Mijn werk zat vóór die persistentielaag: de endpoints en de handlers erachter, met JUnit- en Mockito-tests. De eigenschappen die een formulier kan dragen staan in een properties-bestand en zijn geregistreerd in Java. Komt er een nieuw verzoek binnen, dan werkt die registratie de database bij, zodat altijd vastligt welke eigenschappen in gebruik zijn en een nieuwe eigenschap een kleine, herhaalbare wijziging is. Elke wijziging kreeg een versienummer in de Maven-pom, patch, minor of major, zodat het team terug kon zien wat een release veranderde.",
+                    "heading": "De Java-kant van het platform"
                 },
                 {
                     "paragraph": "Het heen en weer met het ontwikkelteam is verdwenen. In het ondernemersportaal ging een nieuwe pagina van één tot twee weken naar één tot twee dagen. Beide bleven op WCAG 2.1 AA, gecontroleerd met geautomatiseerde tests in de pijplijn.",
@@ -589,7 +629,7 @@
                     "heading": "Het design system in de teams"
                 },
                 {
-                    "paragraph": "Wat achterblijft is een platform waarin andere ontwikkelaars verder kunnen. De code leest zonder toelichting, verantwoordelijkheden lopen niet door elkaar, unittests dekken de logica af, en de technische documentatie in Confluence bevat voorbeelden per framework, randgevallen en beperkingen. CI/CD liep via GitLab, Jenkins, Tekton en ArgoCD, met testautomatisering in Cypress en Playwright. Tijdens het bouwen legde ik ontwerpfouten en verbeteringen voor aan de product owner en de ontwerper, zodat ze in het ontwerp werden opgelost en niet in de code werden gerepareerd.",
+                    "paragraph": "Wat achterblijft is een platform waarin andere ontwikkelaars verder kunnen. De code leest zonder toelichting, verantwoordelijkheden lopen niet door elkaar, unittests dekken de logica af, en de technische documentatie in Confluence bevat voorbeelden per framework, randgevallen en beperkingen. CI/CD liep via GitLab, Jenkins, Tekton en Argo CD naar een on-premises Azure-omgeving, met testautomatisering in Cypress en Playwright. Tijdens het bouwen legde ik ontwerpfouten en verbeteringen voor aan de product owner en de ontwerper, zodat ze in het ontwerp werden opgelost en niet in de code werden gerepareerd.",
                     "heading": "Wat er blijft"
                 }
             ],
@@ -598,7 +638,8 @@
                 "Redacteuren bouwen, controleren en demonstreren een nieuw belastingformulier zelf in de visuele formulierenbouwer, in dagen waar het maanden kostte",
                 "Een nieuwe portaalpagina kost één tot twee dagen waar het één tot twee weken was, dankzij een datagedreven Angular-architectuur",
                 "WCAG 2.1 AA bleef op beide overeind, geborgd met geautomatiseerde tests in de pipeline",
-                "Teams nemen het BOLD design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen"
+                "Teams nemen het BOLD design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen",
+                "De formulierenbouwer wachtte niet op de backlog van een ander team: de Java-endpoints en de handlers erachter gingen mee, met JUnit- en Mockito-tests"
             ],
             "headline": "Van maanden naar dagen voor een nieuw belastingformulier",
             "close": "Bij de Belastingdienst kwam de winst doordat redacteuren hun eigen formulieren gingen bouwen. Loopt bij jullie elke inhoudelijke wijziging nog via het ontwikkelteam, dan kijk ik graag met je mee waar dat vastloopt."
@@ -616,7 +657,7 @@
                     "heading": "Eén design system, een thema per label"
                 },
                 {
-                    "paragraph": "Dat gold over de Europese labels heen. Serverloze API's op AWS leveren de dynamische content en GitLab-pijplijnen en Docker zetten een campagne live. Playwright en Cypress houden de bestaande campagnes in de gaten terwijl er nieuwe bij komen.",
+                    "paragraph": "Dat gold over de Europese labels heen. De serverloze API's voor de dynamische content schreef ik als Python-functies op AWS Lambda, en ik zette de GitLab CI-pijplijnen op die de site in Docker bouwen, eerst Playwright en Cypress tegen de bestaande campagnes draaien en daarna een nieuwe campagne live zetten.",
                     "heading": "Over de Europese labels heen"
                 },
                 {
@@ -651,6 +692,10 @@
                     "heading": "Selfservice en dashboards"
                 },
                 {
+                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter, zodat een feature samen met zijn frontend live ging en niet op de backlog van de backend wachtte.",
+                    "heading": "De backendstories"
+                },
+                {
                     "paragraph": "De applicatie kwam terug op een actuele stack, toegankelijk volgens WCAG 2.1 AA en eenvoudig uit te breiden."
                 },
                 {
@@ -667,7 +712,8 @@
                 "Klanten regelen meer zelf in een selfserviceplatform met conditionele logica en validatie",
                 "De applicatie draait weer op Angular 12, toegankelijk volgens WCAG 2.1 AA en eenvoudig uit te breiden",
                 "Elk nieuw scherm begint bij een geteste componentenbibliotheek, wat de herbouw betaalbaar hield",
-                "Het team schrijft betere Angular na coaching en code reviews, junior en senior"
+                "Het team schrijft betere Angular na coaching en code reviews, junior en senior",
+                "Een feature ging samen met zijn frontend live, doordat ik ook de backendstories op de REST-API in Java 8 en Spring Boot 2.3 oppakte"
             ],
             "headline": "Selfservice vernieuwd op een actuele Angular-stack",
             "close": "De applicatie van Athlon draaide op een framework dat aan vervanging toe was, en tijdens de overstap bleef alles gewoon werken. Schuift zo'n migratie bij jullie steeds door, dan kijk ik graag met je naar de eerste stap."
@@ -729,7 +775,7 @@
                     "paragraph": "Het platform draaide op AngularJS met een .NET-backend uit dezelfde tijd. Omniplan wilde gaan samenwerken met externe organisaties, en dat vraagt om toegang die per partij te regelen is. De bestaande opzet liet dat niet toe, dus de frontend en de backend gingen samen op de schop."
                 },
                 {
-                    "paragraph": "Ik migreerde de frontend naar Angular 9 en bracht de backend over naar .NET Core met REST- en gRPC-services. Daarnaast ontwierp ik een modulaire autorisatie- en lidmaatschapsdienst op Microsoft Identity en JWT, waarmee een externe organisatie precies de rechten krijgt die bij haar rol horen. De services draaien op Azure App Services met Docker en Kubernetes, en het datamodel in Entity Framework op MSSQL werd opnieuw ingedeeld."
+                    "paragraph": "Ik migreerde de frontend naar Angular 9 en bracht de backend over naar .NET Core met REST- en gRPC-services. Daarnaast ontwierp ik een modulaire autorisatie- en lidmaatschapsdienst op Microsoft Identity, OpenID Connect en JWT, doorgevoerd in de frontend en de backend, waarmee een externe organisatie precies de rechten krijgt die bij haar rol horen. De secrets staan in Azure Key Vault. De services draaien op Azure App Services met Docker en Kubernetes, en het datamodel in Entity Framework op MSSQL werd opnieuw ingedeeld."
                 },
                 {
                     "paragraph": "De schermen halen hun gedrag uit de configuratie van de backend. Validaties, rechten en invoervelden werden daarmee een instelling, waardoor een functionele wijziging vaak zonder nieuwe frontendcode kan. Een nieuwe partner aansluiten werd een kwestie van configureren."
@@ -2757,6 +2803,80 @@
             ],
             "closeTitle": "Zit je team in Den Haag?",
             "closeBody": "Dertig minuten, en je weet of dit bij je platform past, op locatie in Den Haag of remote."
+        }
+    },
+    "ownWork": {
+        "own-platform": {
+            "role": "Eigenaar en engineer van mijn eigen platform",
+            "headline": "Mijn eigen platform, gebouwd en beheerd als een product in productie",
+            "summary": "Ik bouw en beheer hilmarvanderveen.com, een tweetalige Next.js-applicatie met een boekingsflow op de Microsoft Graph API. Het is mijn eigen werk, naast de opdrachten bij klanten.",
+            "delivered": [
+                "Een tweetalige Next.js-applicatie op Node.js, op de server gerenderd, met React, TypeScript en Tailwind CSS.",
+                "Een boekingsflow op de Microsoft Graph API met OAuth 2.0 client credentials, beschikbaarheid in de juiste tijdzone, een Teams-vergadering per afspraak en een health-endpoint voor de koppeling.",
+                "Elke publieke route achter een allowlist op herkomst, een limiet per adres, een honeypot en strikte validatie, onder een Content Security Policy met een nonce per request.",
+                "Een testpoort op 100 procent statement coverage met Vitest en Testing Library, plus scripts die voor elke commit alle routes in beide talen nalopen.",
+                "Gebouwd met coding agents onder mijn regie, dagelijks sinds 2025, met een vaste set reviewpersona's op elke wijziging."
+            ],
+            "body": [
+                {
+                    "paragraph": "Het platform is een product dat ik in productie beheer. Een bezoeker boekt in drie stappen een gesprek, en de afspraak komt via de Microsoft Graph API als Teams-vergadering in mijn Microsoft 365-agenda. De route handlers dekken contact, de CV-download en de boekingsflow, met een herinneringsroute achter een cron-secret en een wekelijkse controle op de koppeling."
+                },
+                {
+                    "paragraph": "Beveiliging hoort bij de bouw. De Content Security Policy draagt een nonce per request, elke publieke route doorloopt dezelfde volgorde van controles, en scripts controleren voor elke commit structuur, sitemap, metadata en nonces op alle routes. Toegankelijkheid volgt WCAG 2.2 AA."
+                },
+                {
+                    "paragraph": "Ik bouw het met coding agents, dagelijks sinds 2025. Ik bepaal de architectuur, de contracten en de review, en de agents schrijven en testen elk pakket daartegen. De artikelen op de site leggen dezelfde patronen uit met code die draait."
+                }
+            ]
+        },
+        "reference-repository": {
+            "role": "Auteur van een publieke referentierepository",
+            "headline": "Eén winkelcontract, vier keer gebouwd aan de backend en drie keer aan de voorkant",
+            "summary": "Zappy Mart is mijn publieke referentierepository op GitHub. Backends in C#, Java, Kotlin en Node.js bedienen één GraphQL-contract, met frontends in React Router, Next.js en Angular die ertegen draaien.",
+            "delivered": [
+                "Vier backends achter één contract: C# op .NET 10 met ASP.NET Core, Java 25 en Kotlin op Spring Boot, en een gefedereerde Node.js-backend op Apollo Server met Apollo Federation.",
+                "Drie winkelfrontends, in React Router, Next.js en Angular, onder één gedeelde Playwright-suite.",
+                "33 conformancescenario's die elke backend doorstaat, gedraaid tegen de gebouwde host in een GitHub-workflow.",
+                "De draaiende code achter mijn artikelen over hexagonale architectuur, API-ontwerp, sessies en JWT, en GraphQL-federatie.",
+                "Grotendeels gebouwd door coding agents onder mijn regie, waarbij elk pakket door zijn build, zijn tests en de conformancescenario's moet."
+            ],
+            "body": [
+                {
+                    "paragraph": "De repository beantwoordt één vraag in draaiende code: wat blijft gelijk als de taal verandert. Eén GraphQL-contract beschrijft de winkel. Elke backend implementeert het in zijn eigen idioom, en dezelfde 33 conformancescenario's bepalen of het af is."
+                },
+                {
+                    "paragraph": "De gefedereerde Node.js-backend splitst hetzelfde contract in subgraphs achter één supergraph op Apollo Federation. Die draait in mijn repository en de workflow ervan, niet bij een klant, en mijn artikel over federatie is ermee geschreven."
+                },
+                {
+                    "paragraph": "De repository staat publiek op github.com/hilmarvdveen/zappy-mart. Iedereen kan lezen hoe ik vandaag een backend in C#, Java of Kotlin opbouw, naast het werk bij klanten waar de code bij de klant blijft."
+                }
+            ]
+        },
+        "vacancy-fit": {
+            "role": "Ontwerper en engineer van de vacature-fitcheck",
+            "headline": "Een AI-agent die een vacature beantwoordt vanuit mijn werkervaring, eis voor eis",
+            "summary": "De vacature-fitcheck op mijn platform draait op een AI-agent die ik op Azure OpenAI heb gebouwd. Hij leest mijn werkervaring via een MCP-server die ik zelf schreef, en zegt per eis wat er is en wat er niet is.",
+            "delivered": [
+                "Een AI-agent op een gpt-5-mini-deployment in Azure OpenAI met tool calling. Het model kiest en de code bouwt, dus jaren en oordelen komen uit data.",
+                "Een MCP-server in TypeScript over Streamable HTTP met bearer-authenticatie en acht tools op PostgreSQL, Azure OpenAI en MongoDB.",
+                "Een MCP-client als commandlinetool en in de agent.",
+                "Een Text-to-SQL-tool die een vraag in gewoon Nederlands omzet in één alleen-lezen SELECT, achter een allowlist, een alleen-lezen databaserol en een statement timeout.",
+                "Terraform voor elke Azure-resource: Container Apps op Linux, de modeldeployment met een eigen contentfilter, Key Vault, Log Analytics met alerts en het MongoDB-cluster.",
+                "Een GitHub-workflow die test, de containerimages op kwetsbaarheden scant, bij elke push een plan maakt en op een handmatige run toepast.",
+                "Kosten begrensd door de opzet: een dagelijks tokenbudget, een capaciteitsplafond op de deployment en één replica per app.",
+                "Privacy by design onder de AVG: de vacaturetekst wordt verwerkt en nooit opgeslagen, en de pagina zegt dat het een AI-assistent is, zoals de EU AI Act vraagt."
+            ],
+            "body": [
+                {
+                    "paragraph": "Een recruiter plakt een vacature op hilmarvanderveen.com/fit en krijgt per eis een oordeel, de opdrachten die het bewijzen en de jaren per technologie. De agent mag alleen zeggen wat zijn tools teruggeven. Code telt de jaren, controleert elke genoemde technologie tegen de database en verlaagt een oordeel dat de data niet kan dragen."
+                },
+                {
+                    "paragraph": "De keten is een LLM-integratie in drie stappen. De site roept de agent aan, de agent roept de MCP-server aan, en de server leest PostgreSQL en MongoDB. Elke stap kent precies één geheim en de browser praat nooit met Azure. Een CV op maat van de vacature komt uit dezelfde data en wordt in de container naar PDF gerenderd."
+                },
+                {
+                    "paragraph": "Ik heb de hele keten getest met een coding agent op de plek van het model, voor de eerste echte aanroep, en een adversarial review gedraaid op elke route die geld uitgeeft. De code staat in een besloten repository, die ik via een gedeeld scherm laat zien."
+                }
+            ]
         }
     }
 }

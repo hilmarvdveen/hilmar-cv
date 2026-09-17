@@ -498,7 +498,7 @@
             "ComponentDesign": "Component Design",
             "Gitlab": "GitLab",
             "Bitbucket": "Bitbucket",
-            "DotNetCore": ".Net Core",
+            "DotNetCore": ".NET Core",
             "AzureAppServices": "Azure App Services",
             "AzureCloud": "Azure Cloud",
             "EntityFramework": "Entity Framework",
@@ -550,7 +550,38 @@
             "Terraform": "Terraform",
             "Python": "Python",
             "OpenIDConnect": "OpenID Connect",
-            "SpringBoot": "Spring Boot"
+            "SpringBoot": "Spring Boot",
+            "SpringForGraphQL": "Spring for GraphQL",
+            "JUnit": "JUnit",
+            "Mockito": "Mockito",
+            "Contentstack": "Contentstack",
+            "Storyblok": "Storyblok",
+            "Bloomreach": "Bloomreach",
+            "AspNetCore": "ASP.NET Core",
+            "GRPC": "gRPC",
+            "MicrosoftIdentity": "Microsoft Identity",
+            "AzureKeyVault": "Azure Key Vault",
+            "MicroFrontends": "Micro-frontends",
+            "RabbitMQ": "RabbitMQ",
+            "MassTransit": "MassTransit",
+            "Linux": "Linux",
+            "SSH": "SSH",
+            "MicrosoftGraph": "Microsoft Graph API",
+            "OAuth2": "OAuth 2.0",
+            "ContentSecurityPolicy": "Content Security Policy",
+            "ApolloServer": "Apollo Server",
+            "ApolloFederation": "Apollo Federation",
+            "DotNet10": ".NET 10",
+            "Java25": "Java 25",
+            "ModelContextProtocolServer": "MCP server",
+            "ModelContextProtocolClient": "MCP client",
+            "AzureOpenAI": "Azure OpenAI",
+            "TextToSql": "Text-to-SQL",
+            "ArtificialIntelligenceAgents": "AI agents",
+            "LanguageModelIntegration": "LLM integration",
+            "MongoDB": "MongoDB",
+            "AzureContainerApps": "Azure Container Apps",
+            "CodingAgents": "Coding agents (Claude Code)"
         },
         "bol": {
             "company": "bol.com",
@@ -569,27 +600,31 @@
                     "heading": "Loyalty and the shared subscription page"
                 },
                 {
-                    "paragraph": "I rebuilt the Kobo Plus acquisition page as a server-rendered page whose content marketers manage in the headless CMS. One page registry swaps the seasonal, experiment and refer-a-friend variants with a single line of code, and visitors who arrive through an invitation see a personalised hero. Marketing has been changing that page ever since without an engineering deploy.",
+                    "paragraph": "I rebuilt the Kobo Plus acquisition page as a server-rendered page whose content marketers manage in the headless CMS, Contentstack. One page registry swaps the seasonal, experiment and refer-a-friend variants with a single line of code, and visitors who arrive through an invitation see a personalised hero. Marketing has been changing that page ever since without an engineering deploy.",
                     "heading": "Marketing without a deploy"
                 },
                 {
-                    "paragraph": "In Digital I built the app for software and games from an empty folder to production inside the Nx monorepo. That included server rendering, routing, CI/CD, Google Cloud and Kubernetes, the security profile and the authentication allow-list. I then ran the cut-over of the live account pages through the platform's routing layer, which another team owns. Employees saw the new pages first, then a percentage of customers, hashed per visitor so nobody bounced between the old and the new page. Every step was reversible in one move. During the ramp I found and fixed a route-matching-order bug. Customers moved across with no customer-facing outage.",
+                    "paragraph": "In Digital I built the app for software and games from an empty folder to production inside the Nx monorepo. That included the Node.js server on Express 5, server rendering, routing, CI/CD, Google Cloud and Kubernetes, the security profile and the authentication allow-list. When the first release failed on the deploy permissions I repaired them on the platform itself, so the app could ship. I then ran the cut-over of the live account pages through the platform's routing layer, which another team owns. Employees saw the new pages first, then a percentage of customers, hashed per visitor so nobody bounced between the old and the new page. Every step was reversible in one move. During the ramp I found and fixed a route-matching-order bug. Customers moved across with no customer-facing outage.",
                     "heading": "The Digital app and the cut-over"
                 },
                 {
-                    "paragraph": "With the designer and the business team I shipped nine A/B experiments across five places in the shop, from the acquisition page to the product page and the basket. I built them in code and configured them in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest. When a variant won I made it the new default and removed the experiment scaffolding.",
+                    "paragraph": "With the designer and the business team I shipped nine A/B experiments across five places in the shop, from the acquisition page to the product page and the basket. I built them in code, with the bucketing done on the server, and configured them in the experimentation tool. Winning variants delivered GMV uplifts of up to 24% (roughly 5% to 24% across the winners). Not every experiment won, so the aggregate effect was positive but modest. When a variant won I made it the new default and removed the experiment scaffolding.",
                     "heading": "Nine experiments"
                 },
                 {
-                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end with readable stack traces on staging and production. For the Kobo Plus promotion codes every backend outcome got its own message, so a customer never sees a generic error.",
+                    "paragraph": "I also made the numbers behind those decisions trustworthy. Placeholder identifiers became real product IDs, so the product-page and basket funnels line up again. I rewrote an all-or-nothing GraphQL handler, so a partial response still shows what is there while every error reaches Sentry. I switched Sentry on end-to-end, with a source-map upload step in CI that makes the stack traces readable on staging and production. For the Kobo Plus promotion codes every backend outcome got its own message, so a customer never sees a generic error.",
                     "heading": "Numbers that hold up"
                 },
                 {
-                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend, and I wrote backend logic in Kotlin when capacity was tight.",
+                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend.",
                     "heading": "Working across team boundaries"
                 },
                 {
-                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, the types run from the GraphQL query into the component without casts, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them.",
+                    "paragraph": "Where the backend team was short on capacity I wrote the Kotlin myself, on Spring Boot with Spring for GraphQL. New fields in the federated schema got their controller and schema mapping, and where a schema serves both logged-in and anonymous customers, both got their controller and their test. A field already in use in production never changed in place: we marked it deprecated, added a V2 next to it, migrated every consumer and then took the original name back, in frontend and backend at the same time. Every controller got its tests with GraphQlTester, JUnit, mockito-kotlin and AssertJ, and the resolvers a timeout in the configuration, so a slow dependency fails a field and not the whole request.",
+                    "heading": "The Kotlin side"
+                },
+                {
+                    "paragraph": "What I hand over has to be maintainable by a team whose strength is the backend. The components are typed and small, the types run from the GraphQL query into the component without casts, responsibilities stay separate, and every page carries unit tests, GraphQL mocks and a Storybook story per scenario. The types come from the schema itself with gql.tada, urql runs the queries with fragment masking so a component only sees the data it asked for, the queries travel to the server as persisted documents, and which member of a union came back is read from its type name. Accessibility follows WCAG 2.2 AA. While building I kept raising design flaws and possible improvements with the product owner and the designer. Those conversations happened while there was still room to act on them.",
                     "heading": "What stays behind"
                 }
             ],
@@ -598,7 +633,8 @@
                 "Customers manage subscriptions, software and games on the new React platform, moved page by page from the legacy Java storefront",
                 "Marketing changes the Kobo Plus acquisition page without an engineering deploy, through the headless CMS and a page registry",
                 "The live account pages moved a percentage at a time, every step reversible in one move",
-                "Product decisions rest on trustworthy numbers: nine experiments built and configured, funnels repaired, Sentry end to end"
+                "Product decisions rest on trustworthy numbers: nine experiments built and configured, funnels repaired, Sentry end to end",
+                "New GraphQL fields went live without breaking a running client, in Kotlin on Spring Boot with Spring for GraphQL when the backend team was full"
             ],
             "headline": "Loyalty and Digital on a new platform, with no customer-facing outage",
             "close": "Is there an old storefront at your end that has to move to React page by page while customers keep ordering? Then I would like to hear which page you would move first, who gets to see it first and how you would take that step back."
@@ -609,15 +645,19 @@
             "role": "Senior Frontend Developer",
             "body": [
                 {
-                    "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency. The engagement was extended four times."
+                    "paragraph": "The Belastingdienst publishes tax pages and forms that entrepreneurs across the country have to be able to use, with personal data running through every page of the entrepreneur portal. A new page in the entrepreneur portal took one to two weeks of frontend work. A new income-tax form took months, with a constant stream of questions running between the content editors and the development team. My assignment was to make that faster without giving up accessibility or consistency. The engagement was extended four times."
                 },
                 {
                     "paragraph": "For the entrepreneur portal I designed a data-driven Angular architecture in which pages are assembled from backend configuration. Generic components take their logic and their appearance from injectable services and configuration files, so the VAT page, the payroll-tax page and the flight-tax page share the same building blocks. Conditional visibility, multilingual labels and validation rules come from JSON schemas. I added the filter set with dropdowns, search fields and removable chips. A wrapper sorts small tables in the browser according to column type and the sorting rules of the BOLD design system.",
                     "heading": "Pages from configuration"
                 },
                 {
-                    "paragraph": "That approach became the foundation under the visual forms editor I then built from scratch. Editors drag form blocks onto a canvas and configure each block in a side panel: labels, validations, conditions and dependencies, with comments and versions per component. In a tryout view they run their own form the way a visitor sees it. I worked on the backend as well and extended the endpoints. The editors' work is stored in configuration files, so the state of every form is reproducible from the backend.",
+                    "paragraph": "That approach became the foundation under the visual forms editor I then built from scratch. Editors drag form blocks onto a canvas and configure each block in a side panel: labels, validations, conditions and dependencies, with comments and versions per component. In a tryout view they run their own form the way a visitor sees it. The editors' work is stored in configuration files, so the state of every form is reproducible from the backend.",
                     "heading": "The visual forms editor"
+                },
+                {
+                    "paragraph": "The forms editor needed endpoints that did not exist yet, so I built that side as well, in Java 8 on Spring Boot, and the release did not wait on another team. Every endpoint sits in a controller and is wired to a handler. The handler does not read the database directly. It goes through a layer that checks whether the data is already there and through a rules engine that decides whether a property may be set. Only then does the persistence layer set or delete the records in MySQL. My work sat before that persistence layer: the endpoints and the handlers behind them, with JUnit and Mockito tests. The properties a form can carry live in a properties file and are registered in Java. When a new request comes in, that registration updates the database, so it is always known which properties are in use and a new property is a small, repeatable change. Every change carried a version bump in the Maven pom, patch, minor or major, so the team could see what a release changed.",
+                    "heading": "The Java side of the platform"
                 },
                 {
                     "paragraph": "The back-and-forth with the development team is gone. In the entrepreneur portal a new page went from one to two weeks to one to two days. Both stayed at WCAG 2.1 AA, verified with automated tests in the pipeline.",
@@ -628,7 +668,7 @@
                     "heading": "The design system in the teams"
                 },
                 {
-                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and ArgoCD, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code.",
+                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and Argo CD onto an on-premises Azure environment, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code.",
                     "heading": "What stays behind"
                 }
             ],
@@ -637,7 +677,8 @@
                 "Editors build, check and demo a new tax form themselves in the visual forms editor, in days where it took months",
                 "A new portal page takes one to two days where it took one to two weeks, from a data-driven Angular architecture",
                 "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
-                "Teams adopt the BOLD design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help"
+                "Teams adopt the BOLD design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help",
+                "The forms editor did not wait on another team's backlog: its Java endpoints and the handlers behind them shipped with it, tested with JUnit and Mockito"
             ],
             "headline": "From months to days for a new income-tax form",
             "close": "At the Belastingdienst the gain came from letting the content editors build their own forms. If every content change at your end still runs through the development team, I am happy to look with you at where it gets stuck."
@@ -655,7 +696,7 @@
                     "heading": "One design system, a theme per label"
                 },
                 {
-                    "paragraph": "That held across the European labels. Serverless APIs on AWS deliver the dynamic content, and GitLab pipelines and Docker put a campaign live. Playwright and Cypress keep watch over the existing campaigns while new ones arrive.",
+                    "paragraph": "That held across the European labels. I wrote the serverless APIs for the dynamic content as Python functions on AWS Lambda, and I created the GitLab CI pipelines that build the site in Docker, run Playwright and Cypress against the existing campaigns first and then put a new campaign live.",
                     "heading": "Across the European labels"
                 },
                 {
@@ -690,6 +731,10 @@
                     "heading": "Self-service and dashboards"
                 },
                 {
+                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called and the handlers behind them, so a feature went live together with its frontend and never waited on the backend backlog.",
+                    "heading": "The backend stories"
+                },
+                {
                     "paragraph": "The application came back on a current stack, accessible to WCAG 2.1 AA and straightforward to extend."
                 },
                 {
@@ -706,7 +751,8 @@
                 "Customers arrange more themselves in a self-service platform with conditional logic and validation",
                 "The application runs on Angular 12 again, accessible to WCAG 2.1 AA and straightforward to extend",
                 "Every new screen starts from a tested component library, which kept the rebuild affordable",
-                "The team writes better Angular after coaching and code reviews, junior and senior alike"
+                "The team writes better Angular after coaching and code reviews, junior and senior alike",
+                "A feature went live together with its frontend, because I picked up the backend stories on the REST API in Java 8 and Spring Boot 2.3 as well"
             ],
             "headline": "Self-service renewed on a current Angular stack",
             "close": "Athlon's application sat on a framework that was due for replacement, and everything kept working through the move. If a migration like that keeps sliding down your list, I am glad to look at the first step with you."
@@ -768,7 +814,7 @@
                     "paragraph": "The platform ran on AngularJS with a .NET backend of the same age. Omniplan wanted to work with outside organisations, and that asks for access you can grant per party. The existing setup did not allow it, so the frontend and the backend were rebuilt together."
                 },
                 {
-                    "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity and JWT, which gives an outside organisation exactly the rights that belong to its role. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on MSSQL was laid out again."
+                    "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity, OpenID Connect and JWT, implemented in the frontend and the backend, which gives an outside organisation exactly the rights that belong to its role. Its secrets live in Azure Key Vault. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on MSSQL was laid out again."
                 },
                 {
                     "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new frontend code. Connecting a new partner became a matter of configuration."
@@ -2757,6 +2803,80 @@
             ],
             "closeTitle": "Is your team in The Hague?",
             "closeBody": "Thirty minutes, and you know whether this fits your platform, on site in The Hague or remote."
+        }
+    },
+    "ownWork": {
+        "own-platform": {
+            "role": "Owner and engineer of my own platform",
+            "headline": "My own platform, built and run as a product in production",
+            "summary": "I build and run hilmarvanderveen.com, a bilingual Next.js application with a booking flow on the Microsoft Graph API. It is my own work, next to the engagements at clients.",
+            "delivered": [
+                "A bilingual Next.js application on Node.js, rendered on the server, with React, TypeScript and Tailwind CSS.",
+                "A booking flow on the Microsoft Graph API with OAuth 2.0 client credentials, availability in the right timezone, a Teams meeting per booking and a health endpoint for the connection.",
+                "Every public route behind an origin allow-list, a rate limit per address, a honeypot and strict validation, under a Content Security Policy with a nonce per request.",
+                "A test gate at 100 percent statement coverage with Vitest and Testing Library, plus scripts that crawl every route in both languages before a commit.",
+                "Built with coding agents under my direction, daily since 2025, with a fixed set of review personas on every change."
+            ],
+            "body": [
+                {
+                    "paragraph": "The platform is a product I run in production. A visitor books a call in three steps, and the booking lands in my Microsoft 365 calendar as a Teams meeting through the Microsoft Graph API. The route handlers cover contact, the CV download and the booking flow, with a reminder route under a cron secret and a weekly watch on the integration."
+                },
+                {
+                    "paragraph": "Security is part of the build. The Content Security Policy carries a nonce per request, every public route passes the same order of checks, and scripts verify structure, sitemap, metadata and nonces on every route before a commit. Accessibility follows WCAG 2.2 AA."
+                },
+                {
+                    "paragraph": "I build it with coding agents, daily since 2025. I set the architecture, the contracts and the review, and the agents write and test each package against them. The articles on the site explain the same patterns with code that runs."
+                }
+            ]
+        },
+        "reference-repository": {
+            "role": "Author of a public reference repository",
+            "headline": "One store contract, built four times on the backend and three times on the front",
+            "summary": "Zappy Mart is my public reference repository on GitHub. C#, Java, Kotlin and Node.js backends serve one GraphQL contract, with React Router, Next.js and Angular fronts running against them.",
+            "delivered": [
+                "Four backends behind one contract: C# on .NET 10 with ASP.NET Core, Java 25 and Kotlin on Spring Boot, and a federated Node.js backend on Apollo Server with Apollo Federation.",
+                "Three store fronts, in React Router, Next.js and Angular, under one shared Playwright suite.",
+                "33 conformance scenarios that every backend passes, run against the built host in a GitHub workflow.",
+                "The running code behind my articles on hexagonal architecture, API design, sessions and JWT, and GraphQL federation.",
+                "Built largely by coding agents under my direction, with every package gated by its build, its tests and the conformance scenarios."
+            ],
+            "body": [
+                {
+                    "paragraph": "The repository answers one question in running code: what stays the same when the language changes. One GraphQL contract describes the store. Each backend implements it in its own idiom, and the same 33 conformance scenarios decide whether it is done."
+                },
+                {
+                    "paragraph": "The federated Node.js backend splits the same contract into subgraphs behind one supergraph on Apollo Federation. It runs in my repository and its workflow, not at a client, and my article on federation is written from it."
+                },
+                {
+                    "paragraph": "The repository is public at github.com/hilmarvdveen/zappy-mart. Anyone can read how I structure a backend in C#, Java or Kotlin today, next to the client work where the code stays with the client."
+                }
+            ]
+        },
+        "vacancy-fit": {
+            "role": "Designer and engineer of the vacancy fit check",
+            "headline": "An AI agent that answers a vacancy from my work history, requirement by requirement",
+            "summary": "The vacancy fit check on my platform runs on an AI agent I built on Azure OpenAI. It reads my work history through an MCP server I wrote, and says per requirement what is there and what is not.",
+            "delivered": [
+                "An AI agent on a gpt-5-mini deployment in Azure OpenAI with tool calling. The model selects and the code builds, so years and verdicts come from data.",
+                "An MCP server in TypeScript over Streamable HTTP with bearer authentication and eight tools on PostgreSQL, Azure OpenAI and MongoDB.",
+                "An MCP client as a command-line tool and inside the agent.",
+                "A Text-to-SQL tool that turns a question in plain Dutch into one read-only SELECT, behind an allow-list, a read-only database role and a statement timeout.",
+                "Terraform for every Azure resource: Container Apps on Linux, the model deployment with its own content filter, Key Vault, Log Analytics with alerts and the MongoDB cluster.",
+                "A GitHub workflow that tests, scans the container images for vulnerabilities, plans on every push and applies on a manual run.",
+                "Spend capped by structure: a daily token budget, a capacity ceiling on the deployment and one replica per app.",
+                "Privacy by design under the AVG: the vacancy text is processed and never stored, and the page says it is an AI assistant, as the EU AI Act asks."
+            ],
+            "body": [
+                {
+                    "paragraph": "A recruiter pastes a vacancy on hilmarvanderveen.com/fit and gets a verdict per requirement, the engagements that prove it and the years per technology. The agent may only state what its tools return. Code counts the years, checks every claimed technology against the database and lowers a verdict the data cannot carry."
+                },
+                {
+                    "paragraph": "The chain is an LLM integration in three hops. The site calls the agent, the agent calls the MCP server, and the server reads PostgreSQL and MongoDB. Each hop knows exactly one secret and the browser never talks to Azure. A CV written to the vacancy comes from the same data and is rendered to PDF in the container."
+                },
+                {
+                    "paragraph": "I tested the whole chain with a coding agent in the seat of the model before the first real call, and ran an adversarial review on every route that spends money. The code is in a private repository, which I walk through on a shared screen."
+                }
+            ]
         }
     }
 }
