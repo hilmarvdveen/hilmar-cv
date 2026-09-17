@@ -27,7 +27,7 @@ secret.
 
 ## Contracts
 
-The agent API is the authority, documented in `record-assistant/docs/architecture.md`.
+The agent API is the authority, documented in `vacancy-fit/docs/architecture.md`.
 
 | Call | Body | Answer |
 |---|---|---|
@@ -549,7 +549,7 @@ both sides. `generatedAt` is the date only, or `SEED_GENERATED_AT` when it is
 set, so two exports of the same record are byte for byte identical and a
 re-export can be read as "nothing changed".
 
-The shape is fixed by `record-assistant/docs/architecture.md`: a profile from
+The shape is fixed by `vacancy-fit/docs/architecture.md`: a profile from
 `BUSINESS_PROFILE`, `PRICING`, `RATE_TEXT` and `QUALIFICATIONS`, the engagements
 with their English technology labels beside the technology keys, the role,
 headline, summary and delivered list per locale, the story paragraphs of the
