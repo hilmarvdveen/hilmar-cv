@@ -656,7 +656,7 @@
                     "heading": "The visual forms editor"
                 },
                 {
-                    "paragraph": "The forms editor needed endpoints that did not exist yet, so I built that side as well, in Java 8 on Spring Boot, and the release did not wait on another team. Every endpoint sits in a controller and is wired to a handler. The handler does not read the database directly. It goes through a layer that checks whether the data is already there and through a rules engine that decides whether a property may be set. Only then does the persistence layer set or delete the records in MySQL. My work sat before that persistence layer: the endpoints and the handlers behind them, with JUnit and Mockito tests. The properties a form can carry live in a properties file and are registered in Java. When a new request comes in, that registration updates the database, so it is always known which properties are in use and a new property is a small, repeatable change. Every change carried a version bump in the Maven pom, patch, minor or major, so the team could see what a release changed.",
+                    "paragraph": "The forms editor needed endpoints that did not exist yet, so I built that side as well, in Java 8 on Spring Boot. Every endpoint sits in a controller and is wired to a handler. The handler does not read the database directly. It goes through a layer that checks whether the data is already there and through a rules engine that decides whether a property may be set. Only then does the persistence layer set or delete the records in MySQL. My work sat before the persistence layer: the endpoints and the handlers behind them, with JUnit and Mockito tests. The properties a form can carry live in a properties file and are registered in Java. When a new request comes in, that registration updates the database, so it is always known which properties are in use and a new property is a small, repeatable change. Every change carried a version bump in the Maven pom, patch, minor or major, so the team could see what a release changed.",
                     "heading": "The Java side of the platform"
                 },
                 {
@@ -678,7 +678,7 @@
                 "A new portal page takes one to two days where it took one to two weeks, from a data-driven Angular architecture",
                 "WCAG 2.1 AA held on both, verified by automated tests in the pipeline",
                 "Teams adopt the BOLD design system faster, with wrappers and documentation for Angular, React and Vue and hands-on help",
-                "The forms editor did not wait on another team's backlog: its Java endpoints and the handlers behind them shipped with it, tested with JUnit and Mockito"
+                "The forms editor did not wait on another team's backlog, because I built its Java side myself"
             ],
             "headline": "From months to days for a new income-tax form",
             "close": "At the Belastingdienst the gain came from letting the content editors build their own forms. If every content change at your end still runs through the development team, I am happy to look with you at where it gets stuck."
@@ -731,7 +731,7 @@
                     "heading": "Self-service and dashboards"
                 },
                 {
-                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called and the handlers behind them, so a feature went live together with its frontend and never waited on the backend backlog.",
+                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called, and the handlers behind them.",
                     "heading": "The backend stories"
                 },
                 {

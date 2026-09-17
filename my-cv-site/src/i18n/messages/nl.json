@@ -617,7 +617,7 @@
                     "heading": "De visuele formulierenbouwer"
                 },
                 {
-                    "paragraph": "De formulierenbouwer had endpoints nodig die er nog niet waren, dus bouwde ik die kant mee, in Java 8 op Spring Boot, en zo hoefde de release niet op een ander team te wachten. Elk endpoint zit in een controller en is gekoppeld aan een handler. De handler haalt zijn gegevens niet rechtstreeks uit de database. Hij gaat langs een laag die controleert of de gegevens er al zijn en langs een rules engine die bepaalt of een eigenschap gezet mag worden. Pas daarna zet of verwijdert de persistentielaag de records in MySQL. Mijn werk zat vóór die persistentielaag: de endpoints en de handlers erachter, met JUnit- en Mockito-tests. De eigenschappen die een formulier kan dragen staan in een properties-bestand en zijn geregistreerd in Java. Komt er een nieuw verzoek binnen, dan werkt die registratie de database bij, zodat altijd vastligt welke eigenschappen in gebruik zijn en een nieuwe eigenschap een kleine, herhaalbare wijziging is. Elke wijziging kreeg een versienummer in de Maven-pom, patch, minor of major, zodat het team terug kon zien wat een release veranderde.",
+                    "paragraph": "De formulierenbouwer had endpoints nodig die er nog niet waren, dus bouwde ik die kant mee, in Java 8 op Spring Boot. Elk endpoint zit in een controller en is gekoppeld aan een handler. De handler haalt zijn gegevens niet rechtstreeks uit de database. Hij gaat langs een laag die controleert of de gegevens er al zijn en langs een rules engine die bepaalt of een eigenschap gezet mag worden. Pas daarna zet of verwijdert de persistentielaag de records in MySQL. Mijn werk zat vóór de persistentielaag: de endpoints en de handlers erachter, met JUnit- en Mockito-tests. De eigenschappen die een formulier kan dragen staan in een properties-bestand en zijn geregistreerd in Java. Komt er een nieuw verzoek binnen, dan werkt die registratie de database bij, zodat altijd vastligt welke eigenschappen in gebruik zijn en een nieuwe eigenschap een kleine, herhaalbare wijziging is. Elke wijziging kreeg een versienummer in de Maven-pom, patch, minor of major, zodat het team terug kon zien wat een release veranderde.",
                     "heading": "De Java-kant van het platform"
                 },
                 {
@@ -639,7 +639,7 @@
                 "Een nieuwe portaalpagina kost één tot twee dagen waar het één tot twee weken was, dankzij een datagedreven Angular-architectuur",
                 "WCAG 2.1 AA bleef op beide overeind, geborgd met geautomatiseerde tests in de pipeline",
                 "Teams nemen het BOLD design system sneller in gebruik, met wrappers en documentatie voor Angular, React en Vue en hulp aan de knoppen",
-                "De formulierenbouwer wachtte niet op de backlog van een ander team: de Java-endpoints en de handlers erachter gingen mee, met JUnit- en Mockito-tests"
+                "De formulierenbouwer wachtte niet op de backlog van een ander team, doordat ik de Java-kant zelf meebouwde"
             ],
             "headline": "Van maanden naar dagen voor een nieuw belastingformulier",
             "close": "Bij de Belastingdienst kwam de winst doordat redacteuren hun eigen formulieren gingen bouwen. Loopt bij jullie elke inhoudelijke wijziging nog via het ontwikkelteam, dan kijk ik graag met je mee waar dat vastloopt."
@@ -692,7 +692,7 @@
                     "heading": "Selfservice en dashboards"
                 },
                 {
-                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter, zodat een feature samen met zijn frontend live ging en niet op de backlog van de backend wachtte.",
+                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter.",
                     "heading": "De backendstories"
                 },
                 {
