@@ -22,6 +22,7 @@ export function isAllowedOrigin(request: NextRequest): boolean {
   const candidate = originHost ?? refererHost;
 
   if (!candidate) {
+    if (request.headers.get("sec-fetch-site") === "same-origin") return true;
     return process.env.NODE_ENV !== "production";
   }
 

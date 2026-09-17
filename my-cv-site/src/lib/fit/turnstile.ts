@@ -3,7 +3,7 @@ export const TURNSTILE_VERIFY_URL =
 
 export const TURNSTILE_SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
-export const TURNSTILE_TOKEN_FIELD = "cf-turnstile-response";
+export { TURNSTILE_TOKEN_FIELD, turnstileTokenFrom } from "./turnstileField";
 
 const VERIFY_TIMEOUT_MILLISECONDS = 8_000;
 

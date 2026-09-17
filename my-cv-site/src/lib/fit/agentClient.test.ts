@@ -2,16 +2,24 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   FIT_AGENT_DEFAULT_TIMEOUT_MILLISECONDS,
   FitAgentRateLimitError,
+  FitAgentRefusalError,
+  FitCvNotReadyError,
+  agentBudget,
   agentStoredResultPath,
   fetchTailoredCvDocument,
   getFitAgentConfiguration,
+  getFitLeadsToken,
   reportRequesterEmailDomain,
   requestFitAnswer,
   requestFitReport,
+  requestLead,
   requestRecentLeads,
   requestStoredFitResult,
   requestTailoredCv,
+  requestTailoredCvStatus,
 } from "./agentClient";
+import leadRecordFixture from "./fixtures/leadRecord.json";
+import storedResultFixture from "./fixtures/storedResult.json";
 
 const configuration = {
   url: "https://agent.example.com",
@@ -26,6 +34,7 @@ beforeEach(() => {
   delete process.env.FIT_AGENT_URL;
   delete process.env.FIT_AGENT_TOKEN;
   delete process.env.FIT_AGENT_TIMEOUT_MS;
+  delete process.env.FIT_LEADS_TOKEN;
 });
 
 afterEach(() => {
@@ -144,6 +153,58 @@ describe("requestFitReport", () => {
   });
 });
 
+describe("getFitLeadsToken", () => {
+  it("answers the second bearer only when it is set", () => {
+    expect(getFitLeadsToken()).toBeNull();
+    process.env.FIT_LEADS_TOKEN = "leads-token";
+    expect(getFitLeadsToken()).toBe("leads-token");
+  });
+});
+
+describe("agentBudget", () => {
+  it("never raises the configured timeout and lowers it to the route budget", () => {
+    expect(agentBudget(configuration, 500).timeoutMilliseconds).toBe(500);
+    expect(agentBudget(configuration, 90_000).timeoutMilliseconds).toBe(1_000);
+    expect(agentBudget(configuration, 500).token).toBe("secret-token");
+  });
+});
+
+describe("the refusal of the input gate", () => {
+  it("throws a typed refusal carrying the reason the agent named", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 400,
+        json: async () => ({ error: "refused", reason: "instruction" }),
+      })
+    );
+
+    await expect(
+      requestFitReport(configuration, { vacancy: "x", locale: "nl", clientAddress: "1.2.3.4" })
+    ).rejects.toMatchObject({ name: "FitAgentRefusalError", reason: "instruction" });
+  });
+
+  it("throws with the status when a 400 carries no known reason", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 400,
+        json: async () => ({ error: "validation failed" }),
+      })
+    );
+
+    const failure = requestFitReport(configuration, {
+      vacancy: "x",
+      locale: "nl",
+      clientAddress: "1.2.3.4",
+    });
+    await expect(failure).rejects.toThrow("The fit agent answered 400");
+    await expect(failure).rejects.not.toBeInstanceOf(FitAgentRefusalError);
+  });
+});
+
 describe("requestFitAnswer", () => {
   it("posts the question, the session id and the locale", async () => {
     const payload = { answer: { answer: "Seven years.", engagements: [] } };
@@ -190,14 +251,10 @@ describe("agentStoredResultPath", () => {
 });
 
 describe("requestStoredFitResult", () => {
-  it("reads the stored report, the vacancy and the locale", async () => {
-    const stored = {
-      report: { summary: "A summary", requirements: [], technologies: [] },
-      vacancy: "The vacancy text",
-      locale: "nl",
-      hasCv: true,
-    };
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => stored });
+  it("reads the stored report, the vacancy, the locale, the title and the date", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue({ ok: true, status: 200, json: async () => storedResultFixture });
     vi.stubGlobal("fetch", fetchMock);
 
     const result = await requestStoredFitResult(configuration, {
@@ -205,7 +262,10 @@ describe("requestStoredFitResult", () => {
       clientAddress: "198.51.100.9",
     });
 
-    expect(result).toEqual(stored);
+    expect(result?.title).toBe("Senior frontend engineer InnovatieLab");
+    expect(result?.createdAt).toBe("2026-09-17T08:12:44.000Z");
+    expect(result?.locale).toBe("nl");
+    expect(result?.hasCv).toBe(true);
     const [url, options] = fetchMock.mock.calls[0];
     expect(url).toBe("https://agent.example.com/fit/session-id-value");
     expect(options.method).toBe("GET");
@@ -244,17 +304,30 @@ describe("requestStoredFitResult", () => {
     ).rejects.toBeInstanceOf(FitAgentRateLimitError);
   });
 
-  it("throws with the status on any other refusal", async () => {
+  it("answers null on a session the agent does not hold", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue({ ok: false, status: 404, json: async () => ({}) })
+    );
+    expect(
+      await requestStoredFitResult(configuration, {
+        sessionId: "session-id-value",
+        clientAddress: "1.2.3.4",
+      })
+    ).toBeNull();
+  });
+
+  it("throws with the status on any other refusal", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 503, json: async () => ({}) })
     );
     await expect(
       requestStoredFitResult(configuration, {
         sessionId: "session-id-value",
         clientAddress: "1.2.3.4",
       })
-    ).rejects.toThrow("The fit agent answered 404");
+    ).rejects.toThrow("The fit agent answered 503");
   });
 });
 
@@ -271,10 +344,88 @@ describe("requestTailoredCv and fetchTailoredCvDocument", () => {
       clientAddress: "1.2.3.4",
     });
 
-    expect(status).toEqual({ ready: true, pages: 2 });
+    expect(status).toEqual({ ready: true, pages: 2, failed: false });
     const [url, options] = fetchMock.mock.calls[0];
     expect(url).toBe("https://agent.example.com/fit/session-id-value/cv");
     expect(JSON.parse(options.body)).toEqual({ locale: "en" });
+  });
+
+  it("reads a session the agent no longer holds as a failed build", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 404, json: async () => ({}) })
+    );
+
+    expect(
+      await requestTailoredCv(configuration, {
+        sessionId: "session-id-value",
+        locale: "nl",
+        clientAddress: "1.2.3.4",
+      })
+    ).toEqual({ ready: false, pages: 0, failed: true });
+  });
+
+  it("reads a build that is still running from the 202 answer", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, status: 202, json: async () => ({ ready: false }) })
+    );
+
+    expect(
+      await requestTailoredCv(configuration, {
+        sessionId: "session-id-value",
+        locale: "nl",
+        clientAddress: "1.2.3.4",
+      })
+    ).toEqual({ ready: false, pages: 0, failed: false });
+  });
+
+  it("reads the status of a build from the locale specific path", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue({ ok: true, status: 200, json: async () => ({ ready: true, pages: 2 }) });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const status = await requestTailoredCvStatus(configuration, {
+      sessionId: "session-id-value",
+      locale: "nl",
+      clientAddress: "1.2.3.4",
+    });
+
+    expect(status).toEqual({ ready: true, pages: 2, failed: false });
+    expect(fetchMock.mock.calls[0][0]).toBe(
+      "https://agent.example.com/fit/session-id-value/cv?locale=nl"
+    );
+  });
+
+  it("reads a status the agent never started as a failed build", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 404, json: async () => ({}) })
+    );
+
+    expect(
+      await requestTailoredCvStatus(configuration, {
+        sessionId: "session-id-value",
+        locale: "nl",
+        clientAddress: "1.2.3.4",
+      })
+    ).toEqual({ ready: false, pages: 0, failed: true });
+  });
+
+  it("throws the not ready error when the document is not stored yet", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 409, json: async () => ({}) })
+    );
+
+    await expect(
+      fetchTailoredCvDocument(configuration, {
+        sessionId: "session-id-value",
+        locale: "nl",
+        clientAddress: "1.2.3.4",
+      })
+    ).rejects.toBeInstanceOf(FitCvNotReadyError);
   });
 
   it("streams the document from the locale specific path", async () => {
@@ -296,7 +447,7 @@ describe("requestTailoredCv and fetchTailoredCvDocument", () => {
 });
 
 describe("reportRequesterEmailDomain", () => {
-  it("posts the domain to the lead register", async () => {
+  it("posts the domain to the lead register with the leads token", async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({}) });
     vi.stubGlobal("fetch", fetchMock);
 
@@ -304,30 +455,81 @@ describe("reportRequesterEmailDomain", () => {
       sessionId: "session-id-value",
       emailDomain: "example.com",
       clientAddress: "1.2.3.4",
+      leadsToken: "leads-token",
     });
 
     const [url, options] = fetchMock.mock.calls[0];
     expect(url).toBe("https://agent.example.com/leads/session-id-value/requester");
+    expect(options.headers.Authorization).toBe("Bearer leads-token");
     expect(JSON.parse(options.body)).toEqual({ emailDomain: "example.com" });
   });
 });
 
 describe("requestRecentLeads", () => {
-  it("asks for the leads since a date and normalizes them", async () => {
+  it("asks for the leads since a date with the leads token and normalizes them", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => ({ leads: [{ sessionId: "session-id-value", title: "A vacancy" }] }),
+      json: async () => ({
+        leads: [{ sessionId: "session-id-value", lead: { title: "A vacancy" } }],
+      }),
     });
     vi.stubGlobal("fetch", fetchMock);
 
     const leads = await requestRecentLeads(configuration, {
       since: "2026-09-14",
       clientAddress: "1.2.3.4",
+      leadsToken: "leads-token",
     });
 
     expect(leads).toHaveLength(1);
-    expect(leads[0].title).toBe("A vacancy");
-    expect(fetchMock.mock.calls[0][0]).toBe("https://agent.example.com/leads?since=2026-09-14");
+    expect(leads[0]!.lead.title).toBe("A vacancy");
+    const [url, options] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://agent.example.com/leads?since=2026-09-14");
+    expect(options.headers.Authorization).toBe("Bearer leads-token");
+  });
+});
+
+describe("requestLead", () => {
+  it("reads one lead record with the leads token and never the vacancy text", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        lead: leadRecordFixture,
+        report: storedResultFixture.report,
+        vacancy: storedResultFixture.vacancy,
+        locale: "nl",
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const record = await requestLead(configuration, {
+      sessionId: "hR2m9QpLtVwXyZ04",
+      clientAddress: "1.2.3.4",
+      leadsToken: "leads-token",
+    });
+
+    expect(record?.lead.title).toBe("Senior frontend engineer InnovatieLab");
+    expect(record?.verdictCounts).toEqual({ inRecord: 2, partly: 1, notInRecord: 1 });
+    expect(JSON.stringify(record)).not.toContain(storedResultFixture.vacancy.slice(0, 40));
+    const [url, options] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://agent.example.com/leads/hR2m9QpLtVwXyZ04");
+    expect(options.headers.Authorization).toBe("Bearer leads-token");
+  });
+
+  it("answers null on a session the register does not hold", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 404, json: async () => ({}) })
+    );
+
+    expect(
+      await requestLead(configuration, {
+        sessionId: "session-id-value",
+        clientAddress: "1.2.3.4",
+        leadsToken: "leads-token",
+      })
+    ).toBeNull();
   });
 });

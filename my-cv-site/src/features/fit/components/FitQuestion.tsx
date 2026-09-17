@@ -1,23 +1,29 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, MessageCircleQuestion } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Link } from "@/i18n/navigation";
-import { FIT_LIMITS, trackFitEvent, type FitAnswer } from "@/lib/fit";
-
-const QUESTION_FIELD_ID = "fit-question";
-const QUESTION_ERROR_ID = "fit-question-error";
+import {
+  FIT_LIMITS,
+  TURNSTILE_TOKEN_FIELD,
+  trackFitEvent,
+  turnstileTokenFrom,
+  type FitAnswer,
+} from "@/lib/fit/client";
 
 type FitQuestionProps = {
   sessionId: string;
+  turnstileSiteKey?: string;
 };
 
-export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
+export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) => {
   const t = useTranslations("fit.check");
   const locale = useLocale();
+  const questionFieldId = useId();
+  const questionErrorId = useId();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState<FitAnswer | null>(null);
   const [isAsking, setIsAsking] = useState(false);
@@ -27,6 +33,7 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
     event.preventDefault();
     if (isAsking) return;
 
+    const turnstileToken = turnstileTokenFrom(event.currentTarget as HTMLFormElement);
     const trimmed = question.trim();
     if (trimmed.length < FIT_LIMITS.questionMinimum) {
       setErrorMessage(t("question.errors.tooShort"));
@@ -42,7 +49,7 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
       const response = await fetch("/api/fit/question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: trimmed, sessionId, locale }),
+        body: JSON.stringify({ question: trimmed, sessionId, locale, turnstileToken }),
       });
 
       if (!response.ok) {
@@ -72,13 +79,13 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
       <form onSubmit={handleSubmit} className="mt-5 space-y-4" aria-busy={isAsking}>
         <div>
           <label
-            htmlFor={QUESTION_FIELD_ID}
+            htmlFor={questionFieldId}
             className="block text-sm font-semibold text-gray-900 mb-2"
           >
             {t("question.label")}
           </label>
           <textarea
-            id={QUESTION_FIELD_ID}
+            id={questionFieldId}
             name="question"
             rows={2}
             value={question}
@@ -89,9 +96,17 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
             required
             aria-required="true"
             aria-invalid={errorMessage !== ""}
-            aria-describedby={errorMessage === "" ? undefined : QUESTION_ERROR_ID}
+            aria-describedby={errorMessage === "" ? undefined : questionErrorId}
           />
         </div>
+
+        {turnstileSiteKey && (
+          <div
+            className="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-response-field-name={TURNSTILE_TOKEN_FIELD}
+          />
+        )}
 
         <Button type="submit" variant="outline" size="md" aria-disabled={isAsking}>
           {isAsking ? (
@@ -111,12 +126,11 @@ export const FitQuestion = ({ sessionId }: FitQuestionProps) => {
         </Button>
       </form>
 
-      <div aria-live="polite" className="mt-5">
+      <div role="status" className="mt-5">
         {errorMessage && (
           <p
-            id={QUESTION_ERROR_ID}
+            id={questionErrorId}
             className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
-            role="alert"
           >
             {errorMessage}
           </p>

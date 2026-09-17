@@ -32,6 +32,25 @@ export function fitResultUrl(locale: FitLocale, sessionId: string, key: string):
   return `${base}${fitResultPath(locale, sessionId, key)}`;
 }
 
+export type SignedFitRequestResult =
+  | { status: "invalidSession" }
+  | { status: "invalidKey" }
+  | { status: "ok"; sessionId: string; locale: FitLocale };
+
+export function readSignedFitRequest(
+  session: unknown,
+  key: unknown,
+  locale: unknown,
+  secret: string
+): SignedFitRequestResult {
+  const sessionId = sanitizeSessionId(session);
+  if (!sessionId) return { status: "invalidSession" };
+  if (typeof key !== "string" || !verifySession(sessionId, key, secret)) {
+    return { status: "invalidKey" };
+  }
+  return { status: "ok", sessionId, locale: locale === "en" ? "en" : "nl" };
+}
+
 export function fitReopenState(
   session: unknown,
   key: unknown,

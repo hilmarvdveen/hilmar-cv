@@ -6,8 +6,8 @@ import { FitCheck } from "./FitCheck";
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
 const trackFitEvent = vi.fn();
-vi.mock("@/lib/fit", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/fit")>("@/lib/fit");
+vi.mock("@/lib/fit/client", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/fit/client")>("@/lib/fit/client");
   return { ...actual, trackFitEvent: (...parameters: unknown[]) => trackFitEvent(...parameters) };
 });
 
@@ -30,7 +30,14 @@ const REPORT = {
   technologies: [{ name: "React", years: 7, engagements: ["bol"] }],
 };
 
-const VACANCY = "We are looking for a senior frontend engineer with React experience.";
+const VACANCY = [
+  "Senior Frontend Engineer, Randstad.",
+  "Je werkt in een team dat de winkelomgeving vernieuwt.",
+  "Wij vragen: minimaal vijf jaar React en TypeScript, ervaring met een GraphQL-laag,",
+  "ervaring met Azure DevOps en ervaring met een designsysteem.",
+  "Wij bieden een opdracht van twaalf maanden met optie tot verlenging.",
+  "Sluitingsdatum 30 september 2026.",
+].join(" ");
 
 const renderCheck = (turnstileSiteKey?: string) =>
   render(
@@ -41,6 +48,8 @@ const renderCheck = (turnstileSiteKey?: string) =>
       turnstileSiteKey={turnstileSiteKey}
     />
   );
+
+const pageStatusRegion = () => screen.getAllByRole("status")[0]!;
 
 const check = async (vacancy = VACANCY) => {
   const user = userEvent.setup();
@@ -162,13 +171,13 @@ describe("FitCheck", () => {
     await user.type(screen.getByLabelText("emailLabel"), "jane@example.com");
     await user.click(screen.getByRole("button", { name: "submit" }));
 
-    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("sentText"));
+    await waitFor(() => expect(pageStatusRegion()).toHaveTextContent("sentText"));
   });
 
   it("announces the arrival and moves focus to the result heading", async () => {
     renderCheck();
     await check();
-    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("status.ready"));
+    await waitFor(() => expect(pageStatusRegion()).toHaveTextContent("status.ready"));
     expect(document.activeElement).toBe(
       screen.getByRole("heading", { level: 2, name: "report.title" })
     );
@@ -190,11 +199,40 @@ describe("FitCheck", () => {
     expect(screen.getByRole("heading", { level: 2, name: "report.bookTitle" })).toBeInTheDocument();
   });
 
-  it("refuses a vacancy under twenty characters without calling the route", async () => {
+  it("refuses a vacancy under two hundred characters without calling the route", async () => {
     renderCheck();
     await check("React please");
-    expect(screen.getByRole("alert")).toHaveTextContent("errors.tooShort");
+    expect(screen.getByRole("alert")).toHaveTextContent("errors.reasons.tooShort");
     expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("shows one sentence per reason when the agent refuses the text", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 422,
+        json: async () => ({ reason: "codeBlock" }),
+      })
+    );
+    renderCheck();
+    await check();
+    await waitFor(() =>
+      expect(screen.getByRole("alert")).toHaveTextContent("errors.reasons.codeBlock")
+    );
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_failed", { status: 422 });
+  });
+
+  it("falls back to the vacancy sentence when a refusal names no reason", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({}) })
+    );
+    renderCheck();
+    await check();
+    await waitFor(() =>
+      expect(screen.getByRole("alert")).toHaveTextContent("errors.reasons.notAVacancy")
+    );
   });
 
   it("keeps the finished report and the question box when a re-check is refused", async () => {
@@ -207,7 +245,7 @@ describe("FitCheck", () => {
     await user.paste("React please");
     await user.click(screen.getByRole("button", { name: /form.submit/ }));
 
-    expect(screen.getByRole("alert")).toHaveTextContent("errors.tooShort");
+    expect(screen.getByRole("alert")).toHaveTextContent("errors.reasons.tooShort");
     expect(screen.getByText(REPORT.summary)).toBeInTheDocument();
     expect(screen.getByLabelText("question.label")).toBeInTheDocument();
   });

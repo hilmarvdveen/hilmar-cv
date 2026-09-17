@@ -3,6 +3,7 @@ import type {
   FitAnswer,
   FitCvStatus,
   FitEngagementReference,
+  FitRefusalReason,
   FitReport,
   FitRequirement,
   FitStoredResult,
@@ -13,19 +14,32 @@ import type {
 } from "./types";
 
 export const FIT_LIMITS = {
-  vacancyMinimum: 20,
+  vacancyMinimum: 200,
   vacancyMaximum: 10_000,
   questionMinimum: 5,
   questionMaximum: 500,
   requirements: 30,
   technologies: 40,
   summary: 1_200,
+  requirement: 500,
   note: 400,
   answer: 1_500,
+  company: 120,
+  technologyName: 60,
+  title: 160,
   engagementsPerItem: 12,
   sessionIdMinimum: 16,
   sessionIdMaximum: 64,
 } as const;
+
+export const FIT_REFUSAL_REASONS: readonly FitRefusalReason[] = [
+  "tooShort",
+  "notAVacancy",
+  "codeBlock",
+  "encodedBlob",
+  "tooManyLinks",
+  "instruction",
+];
 
 export const FIT_VERDICTS: readonly FitVerdict[] = ["inRecord", "partly", "notInRecord"];
 
@@ -52,6 +66,14 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 export function isFitVerdict(value: unknown): value is FitVerdict {
   return typeof value === "string" && FIT_VERDICTS.includes(value as FitVerdict);
+}
+
+export function readFitRefusalReason(value: unknown): FitRefusalReason | null {
+  if (!isRecord(value)) return null;
+  const reason = value.reason;
+  return FIT_REFUSAL_REASONS.includes(reason as FitRefusalReason)
+    ? (reason as FitRefusalReason)
+    : null;
 }
 
 function isEngagementReference(value: unknown): value is FitEngagementReference {
@@ -109,7 +131,10 @@ const keepKnownEngagements = (
   engagements
     .filter((engagement) => knownIds.has(engagement.id))
     .slice(0, FIT_LIMITS.engagementsPerItem)
-    .map((engagement) => ({ id: engagement.id, company: clamp(engagement.company, 80) }));
+    .map((engagement) => ({
+      id: engagement.id,
+      company: clamp(engagement.company, FIT_LIMITS.company),
+    }));
 
 export function sanitizeFitReport(
   report: FitReport,
@@ -118,13 +143,13 @@ export function sanitizeFitReport(
   return {
     summary: clamp(report.summary, FIT_LIMITS.summary),
     requirements: report.requirements.slice(0, FIT_LIMITS.requirements).map((requirement) => ({
-      requirement: clamp(requirement.requirement, FIT_LIMITS.note),
+      requirement: clamp(requirement.requirement, FIT_LIMITS.requirement),
       verdict: requirement.verdict,
       note: clamp(requirement.note, FIT_LIMITS.note),
       engagements: keepKnownEngagements(requirement.engagements, knownIds),
     })),
     technologies: report.technologies.slice(0, FIT_LIMITS.technologies).map((technology) => ({
-      name: clamp(technology.name, 60),
+      name: clamp(technology.name, FIT_LIMITS.technologyName),
       years: Math.max(0, Math.round(technology.years * 10) / 10),
       engagements: technology.engagements.filter((id) => knownIds.has(id)),
     })),
@@ -196,15 +221,18 @@ export function readStoredFitResult(value: unknown): FitStoredResult | null {
     report: sanitizeFitReport(value.report),
     vacancy: value.vacancy,
     locale: value.locale,
+    title: typeof value.title === "string" ? clamp(value.title, FIT_LIMITS.title) : "",
+    createdAt: typeof value.createdAt === "string" ? value.createdAt : "",
     hasCv: value.hasCv === true,
   };
 }
 
 export function readFitCvStatus(value: unknown): FitCvStatus {
-  if (!isRecord(value)) return { ready: false, pages: 0 };
+  if (!isRecord(value)) return { ready: false, pages: 0, failed: false };
   const pages = Number(value.pages);
   return {
     ready: value.ready === true,
     pages: Number.isFinite(pages) && pages > 0 ? Math.floor(pages) : 0,
+    failed: value.failed === true,
   };
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/Button";
 import { Card, type CardVariant } from "@/components/Card";

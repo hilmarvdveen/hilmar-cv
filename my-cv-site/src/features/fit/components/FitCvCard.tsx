@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import { useHoneypot } from "@/hooks/useHoneypot";
 import { LIMITS, isValidEmail } from "@/lib/security";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
-import { trackFitEvent } from "@/lib/fit";
+import { trackFitEvent } from "@/lib/fit/client";
 
 const NAME_FIELD_ID = "fit-cv-name";
 const EMAIL_FIELD_ID = "fit-cv-email";
@@ -72,7 +72,6 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
 
     setIsSending(true);
     setFailureMessage("");
-    trackFitEvent("fit_cv_requested");
 
     try {
       const response = await fetch("/api/fit/cv-request", {
@@ -89,15 +88,18 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
       });
 
       if (!response.ok) {
+        trackFitEvent("fit_cv_failed", { status: response.status });
         setFailureMessage(
           response.status === 429 ? t("errors.rateLimited") : t("errors.failed")
         );
         return;
       }
 
+      trackFitEvent("fit_cv_requested");
       setSentTo(trimmedEmail);
       onSent(t("sentText", { email: trimmedEmail }));
     } catch {
+      trackFitEvent("fit_cv_failed", { status: 0 });
       setFailureMessage(t("errors.failed"));
     } finally {
       setIsSending(false);

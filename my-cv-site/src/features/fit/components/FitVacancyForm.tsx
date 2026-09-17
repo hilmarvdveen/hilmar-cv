@@ -7,8 +7,7 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { HoneypotField } from "@/components/HoneypotField";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
-import { FIT_LIMITS } from "@/lib/fit";
-import { TURNSTILE_TOKEN_FIELD } from "@/lib/fit/turnstile";
+import { FIT_LIMITS, TURNSTILE_TOKEN_FIELD } from "@/lib/fit/client";
 
 export const FIT_CHECK_HEADING_ID = "fit-check-heading";
 
@@ -96,6 +95,7 @@ export const FitVacancyForm = ({
           <p id={COUNTER_ID} className="mt-2 text-sm text-gray-600">
             {t("form.counter", {
               characters: vacancy.length,
+              minimum: FIT_LIMITS.vacancyMinimum,
               maximum: FIT_LIMITS.vacancyMaximum,
             })}
           </p>
@@ -118,7 +118,7 @@ export const FitVacancyForm = ({
           <Button
             type="submit"
             variant="primary"
-            size="lg"
+            size="md"
             aria-disabled={isChecking}
             className="w-full sm:w-auto"
           >

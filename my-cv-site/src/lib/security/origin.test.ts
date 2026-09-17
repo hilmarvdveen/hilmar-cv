@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { isAllowedOrigin } from "./origin";
 
@@ -30,6 +30,15 @@ describe("isAllowedOrigin", () => {
 
   it("tolerates a missing origin outside production (test env)", () => {
     expect(isAllowedOrigin(buildRequest({}))).toBe(true);
+  });
+
+  it("accepts a same origin request that carries neither origin nor referer", () => {
+    const originalEnvironment = process.env.NODE_ENV;
+    vi.stubEnv("NODE_ENV", "production");
+    expect(isAllowedOrigin(buildRequest({ "sec-fetch-site": "same-origin" }))).toBe(true);
+    expect(isAllowedOrigin(buildRequest({ "sec-fetch-site": "cross-site" }))).toBe(false);
+    expect(isAllowedOrigin(buildRequest({}))).toBe(false);
+    vi.stubEnv("NODE_ENV", originalEnvironment ?? "test");
   });
 
   it("treats a malformed Origin as no origin (falls back to referer/env)", () => {

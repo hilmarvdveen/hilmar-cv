@@ -43,17 +43,31 @@ const CONFIGURATION = {
 
 const CRON_SECRET = "test-cron-secret";
 
+const LEADS_TOKEN = "test-leads-token";
+
 const LEAD = {
   sessionId: "session-id-value-1",
-  title: "Senior frontend engineer",
-  endClient: "A government body",
-  intermediary: "An agency",
-  contractForm: "freelance",
-  location: "Utrecht",
-  closingDate: "2026-09-21",
-  rate: { minimum: 95, maximum: 125, unit: "hour", currency: "€" },
-  contact: { name: "A recruiter", email: "recruiter@example.com", phone: "", organisation: "" },
+  lead: {
+    title: "Senior frontend engineer",
+    endClient: "A government body",
+    intermediary: "An agency",
+    contractForm: "freelance",
+    location: "Utrecht",
+    workMode: "hybrid",
+    hoursPerWeek: "36",
+    startDate: "2026-10-01",
+    durationMonths: "12",
+    extensionOptions: "",
+    closingDate: "2026-09-21",
+    rate: { minimum: 95, maximum: 125, unit: "hour", currency: "€" },
+    contact: { name: "A recruiter", email: "recruiter@example.com", phone: "", organisation: "" },
+  },
   verdictCounts: { inRecord: 8, partly: 2, notInRecord: 1 },
+  notInRecord: [],
+  requesterEmailDomain: "",
+  seenCount: 1,
+  firstSeenAt: "2026-09-14T07:15:00.000Z",
+  lastSeenAt: "2026-09-14T07:15:00.000Z",
 };
 
 const originalEnvironment = { ...process.env };
@@ -68,6 +82,7 @@ function get(token?: string) {
 beforeEach(() => {
   __resetRateLimitStore();
   process.env.CRON_SECRET = CRON_SECRET;
+  process.env.FIT_LEADS_TOKEN = LEADS_TOKEN;
   getGraphCredentials.mockReset().mockReturnValue(CREDENTIALS);
   getFitAgentConfiguration.mockReset().mockReturnValue(CONFIGURATION);
   requestRecentLeads.mockReset().mockResolvedValue([LEAD]);
@@ -104,6 +119,11 @@ describe("GET /api/fit/leads-digest", () => {
     const response = await GET(get(CRON_SECRET));
     expect(response.status).toBe(500);
     expect(await response.json()).toEqual({ error: "Server configuration error" });
+
+    getFitAgentConfiguration.mockReturnValue(CONFIGURATION);
+    delete process.env.FIT_LEADS_TOKEN;
+    expect((await GET(get(CRON_SECRET))).status).toBe(500);
+    expect(requestRecentLeads).not.toHaveBeenCalled();
   });
 
   it("asks for the leads of the last seven days and mails the table", async () => {
@@ -111,15 +131,20 @@ describe("GET /api/fit/leads-digest", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ sent: true, count: 1 });
 
-    const [request] = requestRecentLeads.mock.calls[0] as [unknown, { since: string }];
-    expect(request).toBe(CONFIGURATION);
-    expect(requestRecentLeads.mock.calls[0][1].since).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    const [configuration, parameters] = requestRecentLeads.mock.calls[0] as [
+      unknown,
+      { since: string; leadsToken: string },
+    ];
+    expect(configuration).toBe(CONFIGURATION);
+    expect(parameters.since).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(parameters.leadsToken).toBe(LEADS_TOKEN);
 
     const [, , mail] = sendMail.mock.calls[0] as [unknown, unknown, Record<string, string>];
     expect(mail.to).toBe(CREDENTIALS.smtpUser);
-    expect(mail.subject).toContain("1 nieuwe vacatures");
+    expect(mail.subject).toContain("1 nieuwe vacature");
     expect(mail.body).toContain("Senior frontend engineer");
     expect(mail.body).toContain("Freelance");
+    expect(mail.body).toContain("Aansluiting");
   });
 
   it("sends nothing when no vacancy came through", async () => {

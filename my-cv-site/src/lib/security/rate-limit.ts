@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export type RateLimitRule = { limit: number; windowMs: number };
+export type RateLimitRule = { limit: number; windowMilliseconds: number };
 
 export const RATE_LIMITS = {
-  email: { limit: 5, windowMs: 60_000 },
-  read: { limit: 30, windowMs: 60_000 }, // 30 requests / minute / IP
-  fit: { limit: 10, windowMs: 60_000 },
+  email: { limit: 5, windowMilliseconds: 60_000 },
+  read: { limit: 30, windowMilliseconds: 60_000 },
+  fit: { limit: 10, windowMilliseconds: 60_000 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;
@@ -36,12 +36,12 @@ export function checkRateLimit(
   rule: RateLimitRule,
   now: number
 ): RateLimitResult {
-  const windowStart = now - rule.windowMs;
-  const hits = (store.get(key) ?? []).filter((t) => t > windowStart);
+  const windowStart = now - rule.windowMilliseconds;
+  const hits = (store.get(key) ?? []).filter((hit) => hit > windowStart);
 
   if (hits.length >= rule.limit) {
     store.set(key, hits);
-    const retryAfterSeconds = Math.ceil((hits[0]! + rule.windowMs - now) / 1000);
+    const retryAfterSeconds = Math.ceil((hits[0]! + rule.windowMilliseconds - now) / 1000);
     return { success: false, limit: rule.limit, remaining: 0, retryAfterSeconds };
   }
 
@@ -68,8 +68,8 @@ export function enforceRateLimit(
   now: number = Date.now()
 ): NextResponse | null {
   const rule = RATE_LIMITS[name];
-  const ip = getClientIp(request);
-  const result = checkRateLimit(`${name}:${ip}`, rule, now);
+  const clientAddress = getClientIp(request);
+  const result = checkRateLimit(`${name}:${clientAddress}`, rule, now);
 
   if (result.success) return null;
 

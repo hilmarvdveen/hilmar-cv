@@ -14,7 +14,7 @@ vi.mock("@/lib/fit", async () => {
   };
 });
 
-import { FitAgentRateLimitError } from "@/lib/fit";
+import { FitAgentRateLimitError, FitAgentRefusalError } from "@/lib/fit";
 import { POST } from "./route";
 
 const CONFIGURATION = {
@@ -39,7 +39,14 @@ const REPORT = {
   technologies: [{ name: "React", years: 7, engagements: ["bol"] }],
 };
 
-const vacancy = "We are looking for a senior frontend engineer with React experience.";
+const vacancy = [
+  "Senior Frontend Engineer, Randstad.",
+  "Je werkt in een team dat de winkelomgeving vernieuwt.",
+  "Wij vragen: minimaal vijf jaar React en TypeScript, ervaring met een GraphQL-laag,",
+  "ervaring met Azure DevOps en ervaring met een designsysteem.",
+  "Wij bieden een opdracht van twaalf maanden met optie tot verlenging.",
+  "Sluitingsdatum 30 september 2026.",
+].join(" ");
 
 function post(body: unknown, headers: Record<string, string> = {}) {
   return new NextRequest("https://www.hilmarvanderveen.com/api/fit", {
@@ -108,12 +115,18 @@ describe("POST /api/fit", () => {
     });
   });
 
-  it("answers 400 on a vacancy under twenty characters", async () => {
+  it("answers 422 with the tooShort reason under two hundred characters", async () => {
     const response = await POST(post({ ...valid(), vacancy: "React please" }));
-    expect(response.status).toBe(400);
-    expect(await response.json()).toMatchObject({
-      error: 'Field "vacancy" is shorter than the minimum length.',
-    });
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "tooShort" });
+    expect(requestFitReport).not.toHaveBeenCalled();
+  });
+
+  it("passes a refusal of the input gate through as 422 with its reason", async () => {
+    requestFitReport.mockRejectedValue(new FitAgentRefusalError("instruction"));
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "instruction" });
   });
 
   it("answers 500 when the agent is not configured", async () => {

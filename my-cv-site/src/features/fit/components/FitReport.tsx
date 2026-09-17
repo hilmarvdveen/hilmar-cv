@@ -1,6 +1,4 @@
-"use client";
-
-import type { RefObject } from "react";
+import { useId, type RefObject } from "react";
 import { useTranslations } from "next-intl";
 import { Card } from "@/components/Card";
 import { Link } from "@/i18n/navigation";
@@ -13,7 +11,7 @@ import {
   fitTechnologyDuration,
   type FitReport as FitReportData,
   type FitVerdict,
-} from "@/lib/fit";
+} from "@/lib/fit/client";
 
 const VERDICT_STYLES: Record<FitVerdict, string> = {
   inRecord: "bg-emerald-100 text-emerald-800",
@@ -27,19 +25,25 @@ const VERDICT_MARKS: Record<FitVerdict, string> = {
   notInRecord: "bg-gray-200",
 };
 
-const RESULT_HEADING_ID = "fit-result-heading";
-const REQUIREMENTS_HEADING_ID = "fit-requirements-heading";
-const TECHNOLOGIES_HEADING_ID = "fit-technologies-heading";
-
 type FitReportProps = {
   report: FitReportData;
   sessionId: string;
   headingRef?: RefObject<HTMLHeadingElement | null>;
   nextStepsNote?: string;
+  nextStepsLinkLabel?: string;
 };
 
-export const FitReport = ({ report, sessionId, headingRef, nextStepsNote }: FitReportProps) => {
+export const FitReport = ({
+  report,
+  sessionId,
+  headingRef,
+  nextStepsNote,
+  nextStepsLinkLabel,
+}: FitReportProps) => {
   const t = useTranslations("fit.check");
+  const resultHeadingId = useId();
+  const requirementsHeadingId = useId();
+  const technologiesHeadingId = useId();
   const counts = countFitVerdicts(report);
   const hasRequirements = report.requirements.length > 0;
   const technologyRows = report.technologies.flatMap((technology) => {
@@ -55,10 +59,10 @@ export const FitReport = ({ report, sessionId, headingRef, nextStepsNote }: FitR
   });
 
   return (
-    <section aria-labelledby={RESULT_HEADING_ID} className="mt-8 space-y-8">
+    <section aria-labelledby={resultHeadingId} className="mt-8 space-y-8">
       <Card>
         <h2
-          id={RESULT_HEADING_ID}
+          id={resultHeadingId}
           ref={headingRef}
           tabIndex={-1}
           className="text-subsection-title text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
@@ -82,13 +86,27 @@ export const FitReport = ({ report, sessionId, headingRef, nextStepsNote }: FitR
           <p className="mt-3 text-base leading-relaxed text-gray-700">{t("report.empty")}</p>
         )}
         {nextStepsNote && (
-          <p className="mt-4 text-sm leading-relaxed text-gray-600">{nextStepsNote}</p>
+          <p className="mt-4 text-sm leading-relaxed text-gray-600">
+            {nextStepsNote}
+            {nextStepsLinkLabel && (
+              <>
+                {" "}
+                <Link
+                  href="/book"
+                  data-placement="fit-result-next"
+                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                >
+                  {nextStepsLinkLabel}
+                </Link>
+              </>
+            )}
+          </p>
         )}
       </Card>
 
       {hasRequirements && (
-        <section aria-labelledby={REQUIREMENTS_HEADING_ID}>
-          <h3 id={REQUIREMENTS_HEADING_ID} className="text-subsection-title text-textMain mb-4">
+        <section aria-labelledby={requirementsHeadingId}>
+          <h3 id={requirementsHeadingId} className="text-subsection-title text-textMain mb-4">
             {t("report.requirementsTitle")}
           </h3>
 
@@ -154,8 +172,8 @@ export const FitReport = ({ report, sessionId, headingRef, nextStepsNote }: FitR
       )}
 
       {technologyRows.length > 0 && (
-        <section aria-labelledby={TECHNOLOGIES_HEADING_ID}>
-          <h3 id={TECHNOLOGIES_HEADING_ID} className="text-subsection-title text-textMain mb-2">
+        <section aria-labelledby={technologiesHeadingId}>
+          <h3 id={technologiesHeadingId} className="text-subsection-title text-textMain mb-2">
             {t("report.technologiesTitle")}
           </h3>
           <p className="mb-4 text-sm leading-relaxed text-gray-600">

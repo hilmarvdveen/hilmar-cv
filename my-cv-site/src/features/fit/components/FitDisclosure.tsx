@@ -10,6 +10,7 @@ export const FitDisclosure = () => {
       <p className="text-sm font-semibold text-textMain">{t("disclosure.title")}</p>
       <p className="mt-2 text-base leading-relaxed text-gray-700">{t("disclosure.assistant")}</p>
       <p className="mt-2 text-base leading-relaxed text-gray-700">{t("disclosure.processing")}</p>
+      <p className="mt-2 text-base leading-relaxed text-gray-700">{t("disclosure.register")}</p>
       <p className="mt-4 text-base leading-relaxed text-gray-700">
         {t("hero.note")}{" "}
         <Link

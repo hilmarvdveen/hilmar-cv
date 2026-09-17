@@ -36,7 +36,7 @@ describe("getClientIp", () => {
 });
 
 describe("checkRateLimit", () => {
-  const rule = { limit: 3, windowMs: 1000 };
+  const rule = { limit: 3, windowMilliseconds: 1000 };
 
   it("allows up to the limit then blocks within the window", () => {
     const now = 1_000_000;
@@ -83,7 +83,7 @@ describe("enforceRateLimit", () => {
   });
 
   it("gives the fit check ten requests a minute per address", () => {
-    expect(RATE_LIMITS.fit).toEqual({ limit: 10, windowMs: 60_000 });
+    expect(RATE_LIMITS.fit).toEqual({ limit: 10, windowMilliseconds: 60_000 });
     const now = 8_000_000;
     const makeRequest = () => buildRequest({ "x-real-ip": "5.5.5.5" });
     for (let index = 0; index < RATE_LIMITS.fit.limit; index++) {

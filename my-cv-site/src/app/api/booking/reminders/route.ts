@@ -10,18 +10,13 @@ import {
   bookingWallClockToUtc,
   tomorrowBookingDateKey,
 } from "@/lib/graph";
-import { enforceRateLimit, serverErrorResponse } from "@/lib/security";
+import { enforceRateLimit, isAuthorizedCron, serverErrorResponse } from "@/lib/security";
 import { renderBookingReminderEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const expectedSecret = process.env.CRON_SECRET;
-  const authorizationHeader = request.headers.get("authorization");
-  const providedSecret = authorizationHeader?.startsWith("Bearer ")
-    ? authorizationHeader.slice("Bearer ".length)
-    : undefined;
-  if (!expectedSecret || providedSecret !== expectedSecret) {
+  if (!isAuthorizedCron(request)) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

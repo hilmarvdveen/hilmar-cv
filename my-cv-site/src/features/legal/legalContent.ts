@@ -51,8 +51,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
             "CV download: your name, email address, the CV language and, if you fill it in, the reason for the download, so I can follow up on your request and answer questions about the CV. Legal basis: your consent (Art. 6(1)(a) GDPR).",
             "Consultation booking: your name, email address and company, and the project details and time slot you choose, so I can schedule and prepare our meeting. Legal basis: steps prior to a contract and my legitimate interest in managing bookings (Art. 6(1)(b)/(f) GDPR).",
             "Analytics: aggregated, statistical usage data (see the Cookie Policy). Legal basis: your consent for cookie-based analytics, and legitimate interest for privacy-friendly, cookieless measurement.",
-            "Vacancy check: the vacancy text you paste, processed by an AI assistant to write the answer. The text is stored with the result for thirty days under a random number, so you can still ask a question about it and I can write a CV for the vacancy. Legal basis: my legitimate interest in answering your question about my work history (Art. 6(1)(f) GDPR).",
-            "Vacancy register: contact details that appear in a vacancy you paste, such as the name, email address or phone number of the recruiter, are kept in an internal register for twelve months so I can answer the vacancy. Legal basis: my legitimate interest in following up on assignments offered to me (Art. 6(1)(f) GDPR). I contact nobody automatically on the basis of that register.",
+            "Vacancy check: the vacancy text you paste, processed by an AI assistant to write the answer. The text, the result and the CV written for the vacancy are stored for thirty days under a random number, so you can still ask a question about it and open the result again from the link in the email. After thirty days those three are deleted. Legal basis: my legitimate interest in answering your question about my work history (Art. 6(1)(f) GDPR).",
+            "Vacancy register: the key facts of a vacancy you paste are kept longer than those thirty days. That register holds the title, the organisation, the conditions such as location, hours, rate and closing date, the requirements with the outcome the check gave them, and the contact details that stand in the vacancy text itself, such as the name, email address or phone number of the recruiter. It is kept for twelve months from the first check, I am the only reader, and it exists so I can respond to the vacancy. Legal basis: my legitimate interest in following up on assignments offered to me (Art. 6(1)(f) GDPR). I contact nobody automatically on the basis of that register.",
           ],
         },
         {
@@ -101,7 +101,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
           heading: "Automated decision-making",
           paragraphs: [
             "I do not use automated decision-making or profiling that produces legal or similarly significant effects.",
-            `The vacancy check is an AI assistant that describes my own work history. It decides nothing about you. To have a stored result removed before the thirty days are up, mail the number shown under the result to ${EMAIL}.`,
+            `The vacancy check is an AI assistant that describes my own work history. It decides nothing about you. To have a stored result or its entry in the vacancy register removed sooner, mail the number shown under the result to ${EMAIL} and I erase both.`,
           ],
         },
         {
@@ -126,8 +126,8 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
             "CV-download: je naam, e-mailadres, de taal van het CV en, als je die invult, de reden voor de download, zodat ik je verzoek kan opvolgen en vragen over het CV kan beantwoorden. Grondslag: jouw toestemming (art. 6 lid 1 a AVG).",
             "Afspraak inplannen: je naam, e-mailadres en bedrijf, en de projectdetails en het tijdslot dat je kiest, zodat ik onze afspraak kan plannen en voorbereiden. Grondslag: stappen vóór een overeenkomst en mijn gerechtvaardigd belang bij het beheren van afspraken (art. 6 lid 1 b/f AVG).",
             "Statistieken: geaggregeerde, statistische gebruiksgegevens (zie het Cookiebeleid). Grondslag: jouw toestemming voor analytische cookies, en gerechtvaardigd belang voor privacyvriendelijke, cookieloze meting.",
-            "Vacaturecheck: de vacaturetekst die je plakt, verwerkt door een AI-assistent om het antwoord te schrijven. De tekst blijft samen met het resultaat dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen en ik er een CV op kan schrijven. Grondslag: mijn gerechtvaardigd belang bij het beantwoorden van je vraag over mijn werkervaring (art. 6 lid 1 f AVG).",
-            "Vacatureregister: contactgegevens die in een geplakte vacature staan, zoals de naam, het e-mailadres of het telefoonnummer van de recruiter, bewaar ik twaalf maanden in een intern register om op de vacature te kunnen reageren. Grondslag: mijn gerechtvaardigd belang bij het opvolgen van opdrachten die mij worden aangeboden (art. 6 lid 1 f AVG). Op basis van dat register neem ik met niemand automatisch contact op.",
+            "Vacaturecheck: de vacaturetekst die je plakt, verwerkt door een AI-assistent om het antwoord te schrijven. De tekst, het resultaat en het CV dat op de vacature is geschreven blijven dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen en het resultaat opnieuw kunt openen met de link uit de mail. Na dertig dagen zijn die drie verwijderd. Grondslag: mijn gerechtvaardigd belang bij het beantwoorden van je vraag over mijn werkervaring (art. 6 lid 1 f AVG).",
+            "Vacatureregister: de kern van een geplakte vacature bewaar ik langer dan die dertig dagen. In dat register staan de titel, de organisatie, de voorwaarden zoals locatie, uren, tarief en sluitingsdatum, de eisen met de uitkomst die de check ze gaf, en de contactgegevens die in de vacaturetekst zelf staan, zoals de naam, het e-mailadres of het telefoonnummer van de recruiter. Het register blijft twaalf maanden staan, gerekend vanaf de eerste check, ik ben de enige die het leest, en het bestaat zodat ik op de vacature kan reageren. Grondslag: mijn gerechtvaardigd belang bij het opvolgen van opdrachten die mij worden aangeboden (art. 6 lid 1 f AVG). Op basis van dat register neem ik met niemand automatisch contact op.",
           ],
         },
         {
@@ -176,7 +176,7 @@ export const LEGAL_CONTENT: Record<LegalSlug, Record<LegalLocale, LegalDoc>> = {
           heading: "Geautomatiseerde besluitvorming",
           paragraphs: [
             "Ik gebruik geen geautomatiseerde besluitvorming of profilering met rechtsgevolgen of vergelijkbare gevolgen.",
-            `De vacaturecheck is een AI-assistent die mijn eigen werkervaring beschrijft. Over jou beslist hij niets. Wil je een bewaard resultaat eerder laten verwijderen dan na dertig dagen, mail dan het nummer dat onder het resultaat staat naar ${EMAIL}.`,
+            `De vacaturecheck is een AI-assistent die mijn eigen werkervaring beschrijft. Over jou beslist hij niets. Wil je een bewaard resultaat of de regel in het vacatureregister eerder laten verwijderen, mail dan het nummer dat onder het resultaat staat naar ${EMAIL}, dan wis ik beide.`,
           ],
         },
         {

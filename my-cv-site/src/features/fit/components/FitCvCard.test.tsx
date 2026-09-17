@@ -6,8 +6,8 @@ import { FitCvCard } from "./FitCvCard";
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
 const trackFitEvent = vi.fn();
-vi.mock("@/lib/fit", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/fit")>("@/lib/fit");
+vi.mock("@/lib/fit/client", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/fit/client")>("@/lib/fit/client");
   return { ...actual, trackFitEvent: (...parameters: unknown[]) => trackFitEvent(...parameters) };
 });
 
@@ -115,6 +115,9 @@ describe("FitCvCard", () => {
     vi.mocked(fetch).mockResolvedValue({ ok: false, status: 500, json: async () => ({}) } as Response);
     await userEvent.setup().click(screen.getByRole("button", { name: /submit/ }));
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.failed"));
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_cv_failed", { status: 429 });
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_cv_failed", { status: 500 });
+    expect(trackFitEvent).not.toHaveBeenCalledWith("fit_cv_requested");
   });
 
   it("puts the mail address behind a labelled link when the request does not come through", async () => {
@@ -143,5 +146,6 @@ describe("FitCvCard", () => {
     renderCard();
     await fill();
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.failed"));
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_cv_failed", { status: 0 });
   });
 });

@@ -4,6 +4,7 @@ import {
   fitResultPath,
   fitResultUrl,
   getFitLinkSecret,
+  readSignedFitRequest,
   signSession,
   verifySession,
 } from "./resultLink";
@@ -71,6 +72,35 @@ describe("fitResultPath and fitResultUrl", () => {
     expect(fitResultUrl("en", SESSION, "signature")).toBe(
       "https://www.hilmarvanderveen.com/en/fit?result=session-id-value-1&key=signature"
     );
+  });
+});
+
+describe("readSignedFitRequest", () => {
+  it("reads the session, the key and the locale of a signed request", () => {
+    expect(readSignedFitRequest(SESSION, signSession(SESSION, SECRET), "en", SECRET)).toEqual({
+      status: "ok",
+      sessionId: SESSION,
+      locale: "en",
+    });
+  });
+
+  it("falls back to Dutch for any other locale", () => {
+    expect(
+      readSignedFitRequest(SESSION, signSession(SESSION, SECRET), "de", SECRET)
+    ).toMatchObject({ status: "ok", locale: "nl" });
+    expect(
+      readSignedFitRequest(SESSION, signSession(SESSION, SECRET), null, SECRET)
+    ).toMatchObject({ status: "ok", locale: "nl" });
+  });
+
+  it("names an unusable session apart from a key this site did not sign", () => {
+    expect(readSignedFitRequest("short", "any-key", "nl", SECRET)).toEqual({
+      status: "invalidSession",
+    });
+    expect(readSignedFitRequest(SESSION, "wrong-key-value-here", "nl", SECRET)).toEqual({
+      status: "invalidKey",
+    });
+    expect(readSignedFitRequest(SESSION, 42, "nl", SECRET)).toEqual({ status: "invalidKey" });
   });
 });
 

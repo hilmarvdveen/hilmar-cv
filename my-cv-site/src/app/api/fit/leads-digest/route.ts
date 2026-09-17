@@ -1,19 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGraphCredentials, getAccessToken, getGraphClient, sendMail } from "@/lib/graph";
-import { enforceRateLimit, getClientIp, serverErrorResponse } from "@/lib/security";
+import {
+  enforceRateLimit,
+  getClientIp,
+  isAuthorizedCron,
+  serverErrorResponse,
+} from "@/lib/security";
 import { renderFitLeadsDigestEmail } from "@/lib/email";
-import { digestSinceDate, getFitAgentConfiguration, requestRecentLeads } from "@/lib/fit";
+import {
+  digestSinceDate,
+  getFitAgentConfiguration,
+  getFitLeadsToken,
+  requestRecentLeads,
+} from "@/lib/fit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const expectedSecret = process.env.CRON_SECRET;
-  const authorizationHeader = request.headers.get("authorization");
-  const providedSecret = authorizationHeader?.startsWith("Bearer ")
-    ? authorizationHeader.slice("Bearer ".length)
-    : undefined;
-  if (!expectedSecret || providedSecret !== expectedSecret) {
+  if (!isAuthorizedCron(request)) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -23,7 +28,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const credentials = getGraphCredentials();
     const configuration = getFitAgentConfiguration();
-    if (!credentials || !configuration) {
+    const leadsToken = getFitLeadsToken();
+    if (!credentials || !configuration || !leadsToken) {
       console.error("Missing required environment variables for the fit leads digest");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
@@ -32,6 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const leads = await requestRecentLeads(configuration, {
       since,
       clientAddress: getClientIp(request),
+      leadsToken,
     });
 
     if (leads.length === 0) {

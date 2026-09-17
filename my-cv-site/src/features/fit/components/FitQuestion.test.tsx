@@ -6,8 +6,8 @@ import { FitQuestion } from "./FitQuestion";
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
 const trackFitEvent = vi.fn();
-vi.mock("@/lib/fit", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/fit")>("@/lib/fit");
+vi.mock("@/lib/fit/client", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/fit/client")>("@/lib/fit/client");
   return { ...actual, trackFitEvent: (...parameters: unknown[]) => trackFitEvent(...parameters) };
 });
 
@@ -57,6 +57,7 @@ describe("FitQuestion", () => {
       question: "How many years of React?",
       sessionId: "session-id-value",
       locale: "en",
+      turnstileToken: "",
     });
     expect(screen.getByRole("link", { name: "bol.com" })).toHaveAttribute(
       "href",
@@ -75,7 +76,7 @@ describe("FitQuestion", () => {
   it("refuses a question under five characters without calling the route", async () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask("why");
-    expect(screen.getByRole("alert")).toHaveTextContent("question.errors.tooShort");
+    expect(screen.getByRole("status")).toHaveTextContent("question.errors.tooShort");
     expect(fetch).not.toHaveBeenCalled();
     const field = screen.getByLabelText("question.label");
     expect(field).toHaveAttribute("aria-invalid", "true");
@@ -99,7 +100,7 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.rateLimited")
+      expect(screen.getByRole("status")).toHaveTextContent("question.errors.rateLimited")
     );
     expect(trackFitEvent).toHaveBeenCalledWith("fit_question_failed", { status: 429 });
   });
@@ -109,7 +110,7 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.failed")
+      expect(screen.getByRole("status")).toHaveTextContent("question.errors.failed")
     );
   });
 
@@ -118,9 +119,33 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.failed")
+      expect(screen.getByRole("status")).toHaveTextContent("question.errors.failed")
     );
     expect(trackFitEvent).toHaveBeenCalledWith("fit_question_failed", { status: 0 });
+  });
+
+  it("posts the token the widget wrote into the form", async () => {
+    render(<FitQuestion sessionId="session-id-value" turnstileSiteKey="site-key" />);
+    const form = screen.getByLabelText("question.label").closest("form");
+    const field = document.createElement("input");
+    field.name = "cf-turnstile-response";
+    field.value = "challenge-token";
+    field.type = "hidden";
+    form?.appendChild(field);
+
+    await ask();
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+    const [, options] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
+    expect(JSON.parse(String(options.body)).turnstileToken).toBe("challenge-token");
+  });
+
+  it("renders the challenge widget only when the site key is configured", () => {
+    const { unmount } = render(<FitQuestion sessionId="session-id-value" />);
+    expect(document.querySelectorAll(".cf-turnstile")).toHaveLength(0);
+    unmount();
+
+    render(<FitQuestion sessionId="session-id-value" turnstileSiteKey="site-key" />);
+    expect(document.querySelectorAll(".cf-turnstile")).toHaveLength(1);
   });
 
   it("leaves the engagement row out when the answer cites none", async () => {

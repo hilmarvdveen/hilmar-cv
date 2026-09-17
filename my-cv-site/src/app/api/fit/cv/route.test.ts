@@ -16,9 +16,9 @@ vi.mock("@/lib/fit", async () => {
   };
 });
 
-import { FitAgentRateLimitError } from "@/lib/fit";
+import { FitAgentRateLimitError, FitCvNotReadyError } from "@/lib/fit";
 import { signSession } from "@/lib/fit/resultLink";
-import { GET } from "./route";
+import { GET, POST } from "./route";
 
 const CONFIGURATION = {
   url: "https://agent.example.com",
@@ -45,6 +45,19 @@ function get(parameters: Record<string, string>, headers: Record<string, string>
   });
 }
 
+function post(body: unknown, headers: Record<string, string> = {}) {
+  return new NextRequest("https://www.hilmarvanderveen.com/api/fit/cv", {
+    method: "POST",
+    headers: {
+      origin: "https://www.hilmarvanderveen.com",
+      "content-type": "application/json",
+      "x-forwarded-for": "203.0.113.9",
+      ...headers,
+    },
+    body: JSON.stringify(body),
+  });
+}
+
 const validQuery = (locale = "nl") => ({
   session: SESSION,
   key: signSession(SESSION, LINK_SECRET),
@@ -55,7 +68,7 @@ beforeEach(() => {
   __resetRateLimitStore();
   process.env.FIT_LINK_SECRET = LINK_SECRET;
   getFitAgentConfiguration.mockReset().mockReturnValue(CONFIGURATION);
-  requestTailoredCv.mockReset().mockResolvedValue({ ready: true, pages: 2 });
+  requestTailoredCv.mockReset().mockResolvedValue({ ready: true, pages: 2, failed: false });
   fetchTailoredCvDocument.mockReset().mockImplementation(async () => pdfDocument());
   vi.spyOn(console, "error").mockImplementation(() => undefined);
 });
@@ -64,11 +77,75 @@ afterEach(() => {
   process.env = { ...originalEnvironment };
 });
 
+describe("POST /api/fit/cv", () => {
+  it("refuses a cross-site origin with 403", async () => {
+    const response = await POST(post(validQuery(), { origin: "https://evil.example.com" }));
+    expect(response.status).toBe(403);
+    expect(requestTailoredCv).not.toHaveBeenCalled();
+  });
+
+  it("answers 429 with Retry-After once the fit bucket is empty", async () => {
+    for (let attempt = 0; attempt < 10; attempt += 1) {
+      expect((await POST(post(validQuery()))).status).toBe(200);
+    }
+    const response = await POST(post(validQuery()));
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBeTruthy();
+  });
+
+  it("answers 400 on a session that is not a plausible identifier", async () => {
+    expect((await POST(post({ session: "short", key: "anything" }))).status).toBe(400);
+    expect(requestTailoredCv).not.toHaveBeenCalled();
+  });
+
+  it("refuses a key that this site did not sign", async () => {
+    const response = await POST(
+      post({ session: SESSION, key: signSession(SESSION, "other"), locale: "nl" })
+    );
+    expect(response.status).toBe(403);
+    expect(requestTailoredCv).not.toHaveBeenCalled();
+  });
+
+  it("answers 500 without naming the missing variable", async () => {
+    delete process.env.FIT_LINK_SECRET;
+    expect((await POST(post(validQuery()))).status).toBe(500);
+
+    process.env.FIT_LINK_SECRET = LINK_SECRET;
+    getFitAgentConfiguration.mockReturnValue(null);
+    expect((await POST(post(validQuery()))).status).toBe(500);
+  });
+
+  it("starts the build within its own budget and answers the state of the agent", async () => {
+    requestTailoredCv.mockResolvedValue({ ready: false, pages: 0, failed: false });
+    const response = await POST(post(validQuery("en")));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ready: false, pages: 0, failed: false });
+    expect(requestTailoredCv).toHaveBeenCalledWith(
+      { ...CONFIGURATION, timeoutMilliseconds: 15_000 },
+      { sessionId: SESSION, locale: "en", clientAddress: "203.0.113.9" }
+    );
+  });
+
+  it("passes the upstream 429 through with its seconds", async () => {
+    requestTailoredCv.mockRejectedValue(new FitAgentRateLimitError(3600));
+    const response = await POST(post(validQuery()));
+    expect(response.status).toBe(429);
+    expect(response.headers.get("Retry-After")).toBe("3600");
+  });
+
+  it("answers 500 with a generic message on anything else", async () => {
+    requestTailoredCv.mockRejectedValue(new Error("The fit agent answered 502"));
+    const response = await POST(post(validQuery()));
+    expect(response.status).toBe(500);
+    expect(JSON.stringify(await response.json())).not.toContain("502");
+  });
+});
+
 describe("GET /api/fit/cv", () => {
   it("refuses a cross-site origin with 403", async () => {
     const response = await GET(get(validQuery(), { origin: "https://evil.example.com" }));
     expect(response.status).toBe(403);
-    expect(requestTailoredCv).not.toHaveBeenCalled();
+    expect(fetchTailoredCvDocument).not.toHaveBeenCalled();
   });
 
   it("answers 429 with Retry-After once the read bucket is empty", async () => {
@@ -82,7 +159,7 @@ describe("GET /api/fit/cv", () => {
 
   it("answers 400 on a session that is not a plausible identifier", async () => {
     expect((await GET(get({ session: "short", key: "anything" }))).status).toBe(400);
-    expect(requestTailoredCv).not.toHaveBeenCalled();
+    expect(fetchTailoredCvDocument).not.toHaveBeenCalled();
   });
 
   it("answers 500 without naming the missing variable", async () => {
@@ -102,7 +179,7 @@ describe("GET /api/fit/cv", () => {
     expect(fetchTailoredCvDocument).not.toHaveBeenCalled();
   });
 
-  it("builds the CV once and streams it as a download", async () => {
+  it("streams the document as a download without starting a build", async () => {
     const response = await GET(get(validQuery("en")));
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("application/pdf");
@@ -112,16 +189,11 @@ describe("GET /api/fit/cv", () => {
     expect(response.headers.get("Cache-Control")).toBe("no-store");
     expect(await response.text()).toBe("pdf-bytes");
 
-    expect(requestTailoredCv).toHaveBeenCalledWith(CONFIGURATION, {
-      sessionId: SESSION,
-      locale: "en",
-      clientAddress: "203.0.113.9",
-    });
-    expect(fetchTailoredCvDocument).toHaveBeenCalledWith(CONFIGURATION, {
-      sessionId: SESSION,
-      locale: "en",
-      clientAddress: "203.0.113.9",
-    });
+    expect(requestTailoredCv).not.toHaveBeenCalled();
+    expect(fetchTailoredCvDocument).toHaveBeenCalledWith(
+      { ...CONFIGURATION, timeoutMilliseconds: 45_000 },
+      { sessionId: SESSION, locale: "en", clientAddress: "203.0.113.9" }
+    );
   });
 
   it("falls back to Dutch for an unknown locale", async () => {
@@ -129,8 +201,15 @@ describe("GET /api/fit/cv", () => {
     expect(response.headers.get("Content-Disposition")).toContain("cv-hilmar-van-der-veen-nl.pdf");
   });
 
+  it("answers 409 with a body while the document is not ready", async () => {
+    fetchTailoredCvDocument.mockRejectedValue(new FitCvNotReadyError());
+    const response = await GET(get(validQuery()));
+    expect(response.status).toBe(409);
+    expect(await response.json()).toEqual({ ready: false });
+  });
+
   it("passes the upstream 429 through with its seconds", async () => {
-    requestTailoredCv.mockRejectedValue(new FitAgentRateLimitError(3600));
+    fetchTailoredCvDocument.mockRejectedValue(new FitAgentRateLimitError(3600));
     const response = await GET(get(validQuery()));
     expect(response.status).toBe(429);
     expect(response.headers.get("Retry-After")).toBe("3600");

@@ -2221,7 +2221,8 @@
         "disclosure": {
             "title": "How this works",
             "assistant": "This is an AI assistant. It works only from my recorded work history and names the engagement wherever that work history shows a requirement.",
-            "processing": "The vacancy text stays with the result for thirty days under a random number, so you can still ask a question about it and I can write a CV to it. After that both are gone."
+            "processing": "The vacancy text stays with the result and the CV for thirty days under a random number, so you can still ask a question about it. After that they are gone.",
+            "register": "What stays longer is the core of the vacancy: the title, the organisation, the conditions, the requirements with their outcome, and the contact details that stand in the text itself. I keep those for twelve months in an internal register that only I read, so I can respond to the vacancy. To have it gone sooner, mail the number shown under the result."
         },
         "section": {
             "title": "Paste the vacancy",
@@ -2248,16 +2249,23 @@
             }
         },
         "result": {
-            "title": "Your result and the CV that goes with it",
-            "intro": "This is the result of the vacancy check you ran. The button builds the CV for that vacancy.",
+            "title": "Hilmar van der Veen next to this vacancy",
+            "intro": "Below you find, per requirement, what my work history shows, with the engagement that shows it and the CV written to this vacancy.",
             "loading": "Getting the result...",
             "ready": "Your result is below.",
             "failed": "The result is no longer there. A result stays for thirty days. Run the check again and the CV comes with it.",
+            "rateLimited": "There is a queue right now. Wait a minute and reload the page, and your result is back.",
+            "checkedOn": "Checked on {date}",
+            "untitled": "This vacancy",
             "download": "Download the CV for this vacancy",
             "downloading": "Building the CV...",
             "downloadNote": "The first download builds the file, which takes about half a minute.",
             "downloaded": "The CV is in your downloads.",
             "downloadFailed": "The CV did not come through. Your result is still here, so try again in a moment.",
+            "downloadTimedOut": "Building the CV is taking longer than expected. Try again in a few minutes and the file is usually ready.",
+            "downloadRateLimited": "There is a queue of downloads right now. Wait a minute and the next one goes through.",
+            "nextSteps": "Rather go through the requirements together?",
+            "nextStepsLink": "Book a 30-minute call",
             "mailAction": "Mail me the CV",
             "newCheck": "Check another vacancy",
             "invalid": "This link does not work any more. A result stays for thirty days, and the link from the mail is the way in. Paste the vacancy below again and the result is back."
@@ -2267,7 +2275,7 @@
                 "label": "Vacancy text",
                 "hint": "The more of the requirements you paste, the sharper the result.",
                 "placeholder": "Paste the vacancy here",
-                "counter": "{characters} of {maximum} characters",
+                "counter": "{characters} of {maximum} characters, at least {minimum}",
                 "capNote": "This is the maximum. The rest of the text is not included. The requirements section is the part that counts.",
                 "submit": "Check the vacancy",
                 "checking": "Checking...",
@@ -2278,7 +2286,14 @@
                 "ready": "The result is below."
             },
             "errors": {
-                "tooShort": "Paste a bit more of the vacancy, for example the requirements section.",
+                "reasons": {
+                    "tooShort": "This text is too short to read requirements from. Paste the requirements section with it. From about two hundred characters the check has enough to read.",
+                    "notAVacancy": "This text holds no requirements the check can read. Paste the part of the vacancy that says what you are looking for, for example the list of requirements or the tasks.",
+                    "codeBlock": "This text holds a code block. Paste the vacancy text itself, without the code sample, and the check reads the requirements from it.",
+                    "encodedBlob": "This text holds a long run of characters that is not readable text, for example from an attachment. Paste the vacancy as plain text.",
+                    "tooManyLinks": "This text is mostly links. Paste the vacancy text itself and the check reads the requirements from it.",
+                    "instruction": "This text carries an instruction to the assistant. The check reads vacancy texts only. Paste the vacancy itself and you get the result per requirement."
+                },
                 "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
                 "capReached": "The check has reached its limit for today. It runs again tomorrow. If you would rather not wait, book a call and I will walk through the vacancy with you.",
                 "failed": "The check did not come through. With a long vacancy it helps to paste only the requirements section. If that does not work either, book a call and I will walk through the vacancy with you.",
@@ -2286,7 +2301,7 @@
             },
             "report": {
                 "title": "What my work history shows",
-                "counts": "{inRecord} of {total} requirements are in my work history, {partly} partly, {notInRecord} not.",
+                "counts": "{total, plural, one {{inRecord} of 1 requirement is in my work history} other {{inRecord} of # requirements are in my work history}}, {partly} partly, {notInRecord} not.",
                 "nextSteps": "Below this you find the CV written to this vacancy, and under that the button to book a call.",
                 "requirementsTitle": "Requirement by requirement",
                 "legend": {

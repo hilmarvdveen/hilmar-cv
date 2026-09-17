@@ -16,12 +16,16 @@ import {
   isFitReport,
   isFitVerdict,
   readFitCvStatus,
+  FIT_REFUSAL_REASONS,
+  readFitRefusalReason,
   readStoredFitResult,
   sanitizeFitAnswer,
   sanitizeFitReport,
   sanitizeSessionId,
 } from "./report";
 import type { FitReport } from "./types";
+import fitResponse from "./fixtures/fitResponse.json";
+import storedResult from "./fixtures/storedResult.json";
 
 const report = (overrides: Partial<FitReport> = {}): FitReport => ({
   summary: "The record covers React and a reversible cut-over.",
@@ -41,10 +45,34 @@ describe("the fit limits and verdicts", () => {
   it("names the three verdicts and an empty report", () => {
     expect(FIT_VERDICTS).toEqual(["inRecord", "partly", "notInRecord"]);
     expect(EMPTY_FIT_REPORT).toEqual({ summary: "", requirements: [], technologies: [] });
-    expect(FIT_LIMITS.vacancyMinimum).toBe(20);
+    expect(FIT_LIMITS.vacancyMinimum).toBe(200);
     expect(FIT_LIMITS.vacancyMaximum).toBe(10_000);
     expect(FIT_LIMITS.questionMinimum).toBe(5);
     expect(FIT_LIMITS.questionMaximum).toBe(500);
+  });
+
+  it("carries the length caps the agent schema allows", () => {
+    expect(FIT_LIMITS.requirement).toBe(500);
+    expect(FIT_LIMITS.company).toBe(120);
+    expect(FIT_LIMITS.note).toBe(400);
+    expect(FIT_LIMITS.summary).toBe(1_200);
+  });
+
+  it("names the six refusal reasons the agent can answer", () => {
+    expect(FIT_REFUSAL_REASONS).toEqual([
+      "tooShort",
+      "notAVacancy",
+      "codeBlock",
+      "encodedBlob",
+      "tooManyLinks",
+      "instruction",
+    ]);
+  });
+
+  it("reads a refusal reason and refuses anything else", () => {
+    expect(readFitRefusalReason({ error: "no", reason: "codeBlock" })).toBe("codeBlock");
+    expect(readFitRefusalReason({ error: "no", reason: "invented" })).toBeNull();
+    expect(readFitRefusalReason(null)).toBeNull();
   });
 
   it("knows every engagement id in the work history", () => {
@@ -348,6 +376,8 @@ describe("readStoredFitResult", () => {
     },
     vacancy: "The vacancy text",
     locale: "nl",
+    title: "Senior Frontend Engineer",
+    createdAt: "2026-09-17T09:12:44.000Z",
     hasCv: true,
   };
 
@@ -355,14 +385,24 @@ describe("readStoredFitResult", () => {
     const result = readStoredFitResult(stored);
     expect(result?.vacancy).toBe("The vacancy text");
     expect(result?.locale).toBe("nl");
+    expect(result?.title).toBe("Senior Frontend Engineer");
+    expect(result?.createdAt).toBe("2026-09-17T09:12:44.000Z");
     expect(result?.hasCv).toBe(true);
     expect(result?.report.requirements[0]!.engagements).toEqual([
       { id: workHistory[0]!.id, company: workHistory[0]!.company },
     ]);
   });
 
-  it("reads a missing cv flag as false", () => {
-    expect(readStoredFitResult({ ...stored, hasCv: undefined })?.hasCv).toBe(false);
+  it("reads a missing cv flag as false and a missing title as empty", () => {
+    const result = readStoredFitResult({
+      ...stored,
+      hasCv: undefined,
+      title: undefined,
+      createdAt: 42,
+    });
+    expect(result?.hasCv).toBe(false);
+    expect(result?.title).toBe("");
+    expect(result?.createdAt).toBe("");
   });
 
   it("refuses anything that is not a stored result", () => {
@@ -375,15 +415,55 @@ describe("readStoredFitResult", () => {
 
 describe("readFitCvStatus", () => {
   it("reads the flag and the page count", () => {
-    expect(readFitCvStatus({ ready: true, pages: 2 })).toEqual({ ready: true, pages: 2 });
+    expect(readFitCvStatus({ ready: true, pages: 2 })).toEqual({
+      ready: true,
+      pages: 2,
+      failed: false,
+    });
+  });
+
+  it("reads a build that failed", () => {
+    expect(readFitCvStatus({ ready: false, failed: true })).toEqual({
+      ready: false,
+      pages: 0,
+      failed: true,
+    });
   });
 
   it("answers a not ready status for anything unusable", () => {
-    expect(readFitCvStatus(null)).toEqual({ ready: false, pages: 0 });
+    expect(readFitCvStatus(null)).toEqual({ ready: false, pages: 0, failed: false });
     expect(readFitCvStatus({ ready: "yes", pages: "nonsense" })).toEqual({
       ready: false,
       pages: 0,
+      failed: false,
     });
-    expect(readFitCvStatus({ ready: true, pages: 2.8 })).toEqual({ ready: true, pages: 2 });
+    expect(readFitCvStatus({ ready: true, pages: 2.8 })).toEqual({
+      ready: true,
+      pages: 2,
+      failed: false,
+    });
+  });
+});
+
+describe("the golden answers of the agent", () => {
+  it("accepts the report of a full POST /fit answer and keeps its longest sentences", () => {
+    expect(isFitReport(fitResponse.report)).toBe(true);
+    const sanitized = sanitizeFitReport(fitResponse.report as FitReport);
+    expect(sanitized.requirements).toHaveLength(fitResponse.report.requirements.length);
+    expect(sanitized.requirements[0]!.requirement).toBe(
+      fitResponse.report.requirements[0]!.requirement
+    );
+    expect(sanitized.summary).toBe(fitResponse.report.summary);
+    expect(sanitizeSessionId(fitResponse.sessionId)).toBe(fitResponse.sessionId);
+    expect(sanitized.technologies).toHaveLength(fitResponse.report.technologies.length);
+  });
+
+  it("reads the golden stored result with its title and date", () => {
+    const stored = readStoredFitResult(storedResult);
+    expect(stored?.title).toBe("Senior frontend engineer InnovatieLab");
+    expect(stored?.createdAt).toBe("2026-09-17T08:12:44.000Z");
+    expect(stored?.hasCv).toBe(true);
+    expect(stored?.locale).toBe("nl");
+    expect(stored?.report.requirements).toHaveLength(4);
   });
 });

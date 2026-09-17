@@ -5,7 +5,7 @@ import {
   QUALIFICATIONS,
   RATE_TEXT,
 } from "@/lib/seo/constants/meta-constants";
-import { buildSeedRecord, type SeedRecordInput } from "./seed";
+import { SEED_SCHEMA_VERSION, buildSeedRecord, type SeedRecordInput } from "./seed";
 
 const messagesFor = (suffix: string) => ({
   work: {
@@ -17,7 +17,6 @@ const messagesFor = (suffix: string) => ({
       headline: `Loyalty on a new platform ${suffix}`,
       summary: `Moved the account pages ${suffix}`,
       delivered: [`Subscriptions on React ${suffix}`, `Reversible cut-over ${suffix}`],
-      body: [{ paragraph: `The account pages moved without a gap ${suffix}` }],
       body: [
         { paragraph: `The storefront ran on Java ${suffix}` },
         { heading: `The cut-over ${suffix}`, paragraph: `Traffic moved per percentage ${suffix}` },
@@ -30,7 +29,6 @@ const messagesFor = (suffix: string) => ({
       headline: `Health insight ${suffix}`,
       summary: `Rebuilt the intake ${suffix}`,
       delivered: [`Intake in React ${suffix}`],
-      body: [{ heading: `Intake ${suffix}`, paragraph: `The intake went to React ${suffix}` }],
       body: [{ paragraph: `The intake became a wizard ${suffix}` }],
     },
   },
@@ -102,7 +100,9 @@ const input: SeedRecordInput = {
 describe("buildSeedRecord", () => {
   const record = buildSeedRecord(input);
 
-  it("carries the generation stamp and the site", () => {
+  it("carries the schema version, the generation stamp and the site", () => {
+    expect(record.schemaVersion).toBe(SEED_SCHEMA_VERSION);
+    expect(record.schemaVersion).toBe(1);
     expect(record.generatedAt).toBe("2026-09-13T10:00:00.000Z");
     expect(record.site).toBe(BUSINESS_PROFILE.CONTACT.WEBSITE);
   });

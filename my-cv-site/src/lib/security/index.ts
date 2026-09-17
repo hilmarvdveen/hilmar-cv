@@ -1,5 +1,6 @@
 export { escapeHtml } from "./escape";
 export { isAllowedOrigin } from "./origin";
+export { isAuthorizedCron } from "./cron";
 export {
   validateFields,
   validateStringArray,

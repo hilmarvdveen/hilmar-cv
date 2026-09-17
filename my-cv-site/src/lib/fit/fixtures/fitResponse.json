@@ -1,0 +1,44 @@
+{
+  "report": {
+    "summary": "Deze opdracht vraagt een senior frontend engineer die een omzetkritische pagina van legacy naar React brengt. Bij bol.com bouwde ik de loyaliteitspagina en de Digital-app en zette ik het verkeer stap voor stap over. Bij de Belastingdienst leverde ik de formulierenbouwer waarmee een formulier in dagen live gaat. Bij de Nationale Postcode Loterij bracht de componentenbibliotheek paginabouw van weken naar dagen. Daarnaast bouw ik een eigen platform met vier backends en drie winkelfronten.",
+    "requirements": [
+      {
+        "requirement": "Aantoonbare ervaring met React en TypeScript",
+        "verdict": "inRecord",
+        "note": "Bij bol.com draaien de klantpagina's op React en TypeScript, sinds juli 2025. Bij Athlon en de Nationale Postcode Loterij lag dezelfde combinatie onder de componentenbibliotheek.",
+        "engagements": [
+          { "id": "bol", "company": "bol.com" },
+          { "id": "postcode-loterij", "company": "Nationale Postcode Loterij" }
+        ]
+      },
+      {
+        "requirement": "Ervaring met GraphQL als contract tussen frontend en backend",
+        "verdict": "inRecord",
+        "note": "Bij bol.com is GraphQL het contract tussen de winkelpagina's en de teams erachter, met getypeerde queries in de build.",
+        "engagements": [{ "id": "bol", "company": "bol.com" }]
+      },
+      {
+        "requirement": "Ervaring met Azure en MongoDB",
+        "verdict": "partly",
+        "note": "Azure staat bij Omniplan en Niped in mijn werkervaring, met pipelines en hosting. MongoDB draait in mijn eigen platform, naast PostgreSQL bij vier backends.",
+        "engagements": [
+          { "id": "omniplan", "company": "Omniplan" },
+          { "id": "niped", "company": "Niped" }
+        ]
+      },
+      {
+        "requirement": "Je hebt een afgeronde WO-opleiding",
+        "verdict": "notInRecord",
+        "note": "De opleiding is een BSc Natuur- en Sterrenkunde aan de Universiteit van Amsterdam, met daarnaast het volledige engineer-curriculum van Certified Secure.",
+        "engagements": []
+      }
+    ],
+    "technologies": [
+      { "name": "React", "years": 8.8, "engagements": ["bol", "postcode-loterij", "athlon"] },
+      { "name": "TypeScript", "years": 8.1, "engagements": ["bol", "postcode-loterij", "athlon"] },
+      { "name": "GraphQL", "years": 1.3, "engagements": ["bol"] },
+      { "name": "Azure", "years": 2.4, "engagements": ["omniplan", "niped"] }
+    ]
+  },
+  "sessionId": "hR2m9QpLtVwXyZ04"
+}

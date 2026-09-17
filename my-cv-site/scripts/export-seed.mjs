@@ -16,8 +16,10 @@ const { buildSeedRecord } = await import("@/lib/fit/seed");
 const englishMessages = (await import("@/i18n/messages/en.json", { with: { type: "json" } })).default;
 const dutchMessages = (await import("@/i18n/messages/nl.json", { with: { type: "json" } })).default;
 
+const generatedAt = process.env.SEED_GENERATED_AT ?? new Date().toISOString().slice(0, 10);
+
 const record = buildSeedRecord({
-  generatedAt: new Date().toISOString(),
+  generatedAt,
   engagements: workHistory,
   posts: BLOG_POSTS.map((post) => ({
     slug: post.slug,

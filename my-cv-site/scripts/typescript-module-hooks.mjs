@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { registerHooks } from "node:module";
 import { dirname, resolve as resolvePath } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -8,11 +8,19 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const sourceDirectory = resolvePath(scriptDirectory, "..", "src");
 const extensions = [".ts", ".tsx", "/index.ts", "/index.tsx", ".json"];
 
+const isExistingFile = (candidate) => {
+  try {
+    return statSync(candidate).isFile();
+  } catch {
+    return false;
+  }
+};
+
 const firstExistingPath = (candidate) => {
-  if (existsSync(candidate) && !candidate.endsWith("/")) return candidate;
+  if (isExistingFile(candidate) && !candidate.endsWith("/")) return candidate;
   for (const extension of extensions) {
     const withExtension = `${candidate}${extension}`;
-    if (existsSync(withExtension)) return withExtension;
+    if (isExistingFile(withExtension)) return withExtension;
   }
   return null;
 };

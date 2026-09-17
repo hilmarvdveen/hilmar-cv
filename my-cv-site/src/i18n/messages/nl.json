@@ -2081,7 +2081,8 @@
         "disclosure": {
             "title": "Hoe dit werkt",
             "assistant": "Dit is een AI-assistent. Hij werkt alleen met mijn vastgelegde werkervaring en noemt de opdracht erbij waar die de eis laat zien.",
-            "processing": "De tekst van de vacature blijft samen met het resultaat dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen en ik er een CV op kan schrijven. Daarna zijn ze allebei weg."
+            "processing": "De tekst van de vacature blijft samen met het resultaat en het CV dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen. Daarna zijn ze weg.",
+            "register": "Wat langer blijft staan is de kern van de vacature: de titel, de organisatie, de voorwaarden, de eisen met hun uitkomst en de contactgegevens die in de tekst zelf staan. Die houd ik twaalf maanden in een intern register dat alleen ik lees, zodat ik op de vacature kan reageren. Wil je het eerder kwijt, mail dan het nummer dat onder het resultaat staat."
         },
         "section": {
             "title": "Plak de vacature",
@@ -2108,16 +2109,23 @@
             }
         },
         "result": {
-            "title": "Je resultaat en het CV erbij",
-            "intro": "Dit is het resultaat van de vacaturecheck die je hebt gedaan. Met de knop bouw ik het CV op die vacature.",
+            "title": "Hilmar van der Veen naast deze vacature",
+            "intro": "Per eis staat hieronder wat mijn werkervaring laat zien, met de opdracht erbij en het CV dat op deze vacature is geschreven.",
             "loading": "Bezig met ophalen van het resultaat...",
             "ready": "Je resultaat staat hieronder.",
             "failed": "Het resultaat staat er niet meer. Een resultaat blijft dertig dagen staan. Doe de check opnieuw, dan komt het CV er weer bij.",
+            "rateLimited": "Er staan nu veel verzoeken in de rij. Wacht een minuut en laad de pagina opnieuw, dan staat je resultaat er weer.",
+            "checkedOn": "Gecheckt op {date}",
+            "untitled": "Deze vacature",
             "download": "Download het CV op deze vacature",
             "downloading": "Bezig met opbouwen van het CV...",
             "downloadNote": "Bij de eerste download wordt het bestand opgebouwd, dat duurt een halve minuut.",
             "downloaded": "Het CV staat in je downloads.",
             "downloadFailed": "Het CV kwam er niet doorheen. Je resultaat staat er nog, dus probeer het zo nog eens.",
+            "downloadTimedOut": "Het opbouwen van het CV duurt langer dan verwacht. Probeer het over een paar minuten opnieuw, dan staat het bestand meestal klaar.",
+            "downloadRateLimited": "Er staan nu veel downloads in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
+            "nextSteps": "Wil je de eisen samen langslopen?",
+            "nextStepsLink": "Plan een gesprek van 30 minuten",
             "mailAction": "Mail mij het CV",
             "newCheck": "Een andere vacature checken",
             "invalid": "Deze link werkt niet meer. Een resultaat blijft dertig dagen staan en de link uit de mail is de ingang. Plak de vacature hieronder opnieuw, dan staat het resultaat er weer."
@@ -2127,7 +2135,7 @@
                 "label": "Tekst van de vacature",
                 "hint": "Hoe meer van de eisen erin staan, hoe scherper de uitkomst.",
                 "placeholder": "Plak de vacature hier",
-                "counter": "{characters} van {maximum} tekens",
+                "counter": "{characters} van {maximum} tekens, minimaal {minimum}",
                 "capNote": "Dit is het maximum. De rest van de tekst staat er niet in. Het stuk met de eisen is het deel dat telt.",
                 "submit": "Check de vacature",
                 "checking": "Bezig met checken...",
@@ -2138,7 +2146,14 @@
                 "ready": "Het resultaat staat hieronder."
             },
             "errors": {
-                "tooShort": "Plak iets meer van de vacature, bijvoorbeeld het stuk met de eisen.",
+                "reasons": {
+                    "tooShort": "Deze tekst is te kort om er eisen uit te lezen. Plak het stuk met de eisen erbij. Vanaf ongeveer tweehonderd tekens heeft de check genoeg om te lezen.",
+                    "notAVacancy": "In deze tekst staan geen eisen die de check kan lezen. Plak het deel van de vacature waarin staat wat je zoekt, bijvoorbeeld de lijst met eisen of de taken.",
+                    "codeBlock": "In deze tekst staat een codeblok. Plak de vacaturetekst zelf, zonder het codevoorbeeld, dan leest de check de eisen eruit.",
+                    "encodedBlob": "In deze tekst staat een lange reeks tekens die geen leesbare tekst is, bijvoorbeeld uit een bijlage. Plak de vacature als gewone tekst.",
+                    "tooManyLinks": "Deze tekst bestaat vooral uit links. Plak de vacaturetekst zelf, dan leest de check de eisen eruit.",
+                    "instruction": "In deze tekst staat een instructie aan de assistent. De check leest alleen vacatureteksten. Plak de vacature zelf, dan krijg je het resultaat per eis."
+                },
                 "rateLimited": "Er staan nu veel checks in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
                 "capReached": "De check heeft voor vandaag zijn limiet bereikt. Morgen draait hij weer. Wil je niet wachten, plan dan een gesprek, dan loop ik de vacature met je door.",
                 "failed": "De check kwam er niet doorheen. Bij een lange vacature helpt het om alleen het stuk met de eisen te plakken. Lukt het daarna nog niet, plan dan een gesprek, dan loop ik de vacature met je door.",
@@ -2146,7 +2161,7 @@
             },
             "report": {
                 "title": "Wat mijn werkervaring laat zien",
-                "counts": "{inRecord} van {total} eisen staan in mijn werkervaring, {partly} deels, {notInRecord} niet.",
+                "counts": "{total, plural, one {{inRecord} van 1 eis staat in mijn werkervaring} other {{inRecord} van # eisen staan in mijn werkervaring}}, {partly} deels, {notInRecord} niet.",
                 "nextSteps": "Hieronder staat het CV op deze vacature, en daaronder de knop om een gesprek te plannen.",
                 "requirementsTitle": "Eis voor eis",
                 "legend": {

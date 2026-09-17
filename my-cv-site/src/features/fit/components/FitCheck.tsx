@@ -7,27 +7,23 @@ import {
   FIT_LIMITS,
   countFitVerdicts,
   isDailyCapRetry,
+  readFitRefusalReason,
   retryAfterSecondsFromBody,
   trackFitEvent,
+  turnstileTokenFrom,
   type FitReport as FitReportData,
-} from "@/lib/fit";
-import { TURNSTILE_TOKEN_FIELD } from "@/lib/fit/turnstile";
+} from "@/lib/fit/client";
 import { FitVacancyForm, type FitCheckFailure } from "./FitVacancyForm";
 import { FitReport } from "./FitReport";
 import { FitQuestion } from "./FitQuestion";
 import { FitCvCard } from "./FitCvCard";
 import { FitBooking } from "./FitBooking";
 
-const turnstileTokenFrom = (form: HTMLFormElement): string => {
-  const token = new FormData(form).get(TURNSTILE_TOKEN_FIELD);
-  return typeof token === "string" ? token : "";
-};
-
-const readRetryAfterSeconds = async (response: Response): Promise<number> => {
+const readResponseBody = async (response: Response): Promise<unknown> => {
   try {
-    return retryAfterSecondsFromBody(await response.json());
+    return await response.json();
   } catch {
-    return 0;
+    return null;
   }
 };
 
@@ -62,10 +58,25 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
     setVacancy(value);
   };
 
-  const failureMessageFor = async (response: Response): Promise<string> => {
-    if (response.status !== 429) return t("errors.failed");
-    const retryAfterSeconds = await readRetryAfterSeconds(response);
-    return isDailyCapRetry(retryAfterSeconds) ? t("errors.capReached") : t("errors.rateLimited");
+  const refusalFailure = (body: unknown): FitCheckFailure => {
+    const reason = readFitRefusalReason(body) ?? "notAVacancy";
+    return { message: t(`errors.reasons.${reason}`), recoverable: true };
+  };
+
+  const rateLimitFailure = (body: unknown): FitCheckFailure => {
+    const retryAfterSeconds = retryAfterSecondsFromBody(body);
+    return {
+      message: isDailyCapRetry(retryAfterSeconds)
+        ? t("errors.capReached")
+        : t("errors.rateLimited"),
+      recoverable: false,
+    };
+  };
+
+  const failureFor = async (response: Response): Promise<FitCheckFailure> => {
+    if (response.status === 422) return refusalFailure(await readResponseBody(response));
+    if (response.status === 429) return rateLimitFailure(await readResponseBody(response));
+    return { message: t("errors.failed"), recoverable: false };
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -75,7 +86,7 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
     const turnstileToken = turnstileTokenFrom(event.currentTarget as HTMLFormElement);
     const trimmed = vacancy.trim();
     if (trimmed.length < FIT_LIMITS.vacancyMinimum) {
-      setFailure({ message: t("errors.tooShort"), recoverable: true });
+      setFailure({ message: t("errors.reasons.tooShort"), recoverable: true });
       return;
     }
 
@@ -99,7 +110,7 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
 
       if (!response.ok) {
         trackFitEvent("fit_failed", { status: response.status });
-        setFailure({ message: await failureMessageFor(response), recoverable: false });
+        setFailure(await failureFor(response));
         setStatusMessage("");
         return;
       }
@@ -155,7 +166,9 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
             headingRef={resultHeadingRef}
             nextStepsNote={offersTailoredCv ? t("report.nextSteps") : undefined}
           />
-          {sessionId && <FitQuestion sessionId={sessionId} />}
+          {sessionId && (
+            <FitQuestion sessionId={sessionId} turnstileSiteKey={turnstileSiteKey} />
+          )}
           {offersTailoredCv && <FitCvCard sessionId={sessionId} onSent={setStatusMessage} />}
           <FitBooking />
         </>

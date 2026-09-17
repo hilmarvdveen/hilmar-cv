@@ -8,6 +8,7 @@ import {
   renderContactConfirmationEmail,
   renderBookingWatchEmail,
   renderFitLeadNotification,
+  formatDigestDate,
   renderFitLeadsDigestEmail,
   renderFitLinkEmail,
   type BookingEmailInput,
@@ -368,52 +369,101 @@ describe("renderFitLinkEmail", () => {
   const resultUrl =
     "https://www.hilmarvanderveen.com/nl/fit?result=session-id-value&key=signature";
 
-  it("carries the signed link twice and the booking button, in Dutch", () => {
-    const email = renderFitLinkEmail({ locale: "nl", name: "Jane Doe", resultUrl });
-    expect(email.subject).toBe("Je CV op deze vacature staat klaar");
+  it("opens the result with one button, the note before the fallback link, in Dutch", () => {
+    const email = renderFitLinkEmail({
+      locale: "nl",
+      name: "Jane Doe",
+      resultUrl,
+      vacancyTitle: "Senior Frontend Engineer",
+    });
+    expect(email.subject).toBe("Je resultaat en het CV op deze vacature");
     expect(email.html).toContain("Hi Jane Doe,");
+    expect(email.html).toContain("Open je resultaat");
+    expect(email.html).toContain("Veel succes met de vacature,");
+    expect(email.html).toContain("Het CV is geschreven op Senior Frontend Engineer.");
+    expect(email.html).toContain('<html lang="nl">');
+    expect(email.html).toContain('<meta name="color-scheme" content="light dark">');
+
     const escapedUrl = resultUrl.replace("&", "&amp;");
     expect(email.html.split(escapedUrl).length - 1).toBe(3);
-    expect(email.html).toContain("Open het resultaat en download het CV");
+
+    const noteIndex = email.html.indexOf("Het CV wordt bij de eerste download opgebouwd");
+    const fallbackIndex = email.html.indexOf("Werkt de knop niet?");
+    expect(noteIndex).toBeGreaterThan(0);
+    expect(noteIndex).toBeLessThan(fallbackIndex);
+  });
+
+  it("carries one button and the booking offer as a text link", () => {
+    const email = renderFitLinkEmail({ locale: "nl", name: "Jane Doe", resultUrl });
+    expect(email.html.split("display:block;font-size:15px").length - 1).toBe(1);
     expect(email.html).toContain("/nl/book");
+    expect(email.html).toContain("Plan een gesprek van 30 minuten</a>");
     expect(email.html).toContain("KVK 97564303");
+    expect(email.html).toContain("Het CV is op deze vacature geschreven.");
   });
 
   it("writes the same mail in English", () => {
-    const email = renderFitLinkEmail({ locale: "en", name: "Jane Doe", resultUrl });
-    expect(email.subject).toBe("Your CV for this vacancy is ready");
-    expect(email.html).toContain("Open the result and download the CV");
+    const email = renderFitLinkEmail({
+      locale: "en",
+      name: "Jane Doe",
+      resultUrl,
+      vacancyTitle: "Senior Frontend Engineer",
+    });
+    expect(email.subject).toBe("Your result and the CV for this vacancy");
+    expect(email.html).toContain("Open your result");
+    expect(email.html).toContain("Good luck with the vacancy,");
     expect(email.html).toContain("/en/book");
+    expect(email.html).toContain('<html lang="en">');
   });
 
-  it("escapes the visitor name", () => {
+  it("escapes the visitor name and the vacancy title", () => {
     const email = renderFitLinkEmail({
       locale: "nl",
       name: '<script>alert("x")</script>',
       resultUrl,
+      vacancyTitle: '<img src=x onerror="alert(1)">',
     });
     expect(email.html).not.toContain("<script>alert");
+    expect(email.html).not.toContain("<img src=x");
     expect(email.html).toContain("&lt;script&gt;");
   });
 });
 
 describe("renderFitLeadNotification", () => {
-  it("names the lead, the number and the link, with the organisation when there is one", () => {
-    const email = renderFitLeadNotification({
-      name: "Jane Doe",
-      email: "jane@example.com",
-      organisation: "Acme",
-      sessionId: "session-id-value",
-      resultUrl: "https://www.hilmarvanderveen.com/nl/fit?result=session-id-value&key=signature",
-    });
-    expect(email.subject).toBe("CV op vacature gevraagd: Jane Doe");
-    expect(email.html).toContain("Jane Doe");
+  const lead = {
+    name: "Jane Doe",
+    email: "jane@example.com",
+    organisation: "Acme",
+    sessionId: "session-id-value",
+    resultUrl: "https://www.hilmarvanderveen.com/nl/fit?result=session-id-value&key=signature",
+    vacancyTitle: "Senior Frontend Engineer",
+    endClient: "A government body",
+    closingDate: "2026-09-30",
+    verdictCounts: { inRecord: 4, partly: 4, notInRecord: 1 },
+  };
+
+  it("names the vacancy, the end client, the fit and the closing date", () => {
+    const email = renderFitLeadNotification(lead);
+    expect(email.subject).toBe("CV gevraagd: Jane Doe, Acme");
+    expect(email.html).toContain("De link is naar jane@example.com verstuurd.");
+    expect(email.html).toContain("Vacature");
+    expect(email.html).toContain("Senior Frontend Engineer");
+    expect(email.html).toContain("Eindklant");
+    expect(email.html).toContain("A government body");
+    expect(email.html).toContain("Aansluiting");
+    expect(email.html).toContain("4 in, 4 deels, 1 niet");
+    expect(email.html).toContain("Sluit op");
+    expect(email.html).toContain("2026-09-30");
     expect(email.html).toContain("mailto:jane@example.com");
-    expect(email.html).toContain("Acme");
-    expect(email.html).toContain("session-id-value");
   });
 
-  it("says the organisation was not given when it is empty", () => {
+  it("carries the session number in the footer line and not as a row", () => {
+    const email = renderFitLeadNotification(lead);
+    expect(email.html).toContain("Nummer van dit resultaat: session-id-value.");
+    expect(email.html).not.toContain(">Nummer</td>");
+  });
+
+  it("falls back to the name alone and to Onbekend for what the vacancy did not name", () => {
     const email = renderFitLeadNotification({
       name: "Jane Doe",
       email: "jane@example.com",
@@ -421,37 +471,65 @@ describe("renderFitLeadNotification", () => {
       sessionId: "session-id-value",
       resultUrl: "https://www.hilmarvanderveen.com/nl/fit",
     });
+    expect(email.subject).toBe("CV gevraagd: Jane Doe");
     expect(email.html).toContain("Niet opgegeven");
+    expect(email.html.split("Onbekend").length - 1).toBeGreaterThanOrEqual(4);
+  });
+});
+
+describe("formatDigestDate", () => {
+  it("writes a Dutch day and month", () => {
+    expect(formatDigestDate("2026-09-10")).toBe("10 september");
+  });
+
+  it("keeps a date it cannot read", () => {
+    expect(formatDigestDate("not a date")).toBe("not a date");
   });
 });
 
 describe("renderFitLeadsDigestEmail", () => {
-  const lead = {
+  const record = {
     sessionId: "session-id-value",
-    title: "Senior frontend engineer",
-    endClient: "A government body",
-    intermediary: "An agency",
-    contractForm: "freelance",
-    closingDate: "2026-09-21",
-    rate: { minimum: 95, maximum: 125, unit: "hour", currency: "€" },
-    contact: {
-      name: "A recruiter",
-      email: "recruiter@example.com",
-      phone: "",
-      organisation: "An agency",
+    lead: {
+      title: "Senior frontend engineer",
+      endClient: "A government body",
+      intermediary: "An agency",
+      contractForm: "freelance",
+      closingDate: "2026-09-21",
+      rate: { minimum: 95, maximum: 125, unit: "hour", currency: "\u20ac" },
+      contact: {
+        name: "A recruiter",
+        email: "recruiter@example.com",
+        phone: "",
+        organisation: "An agency",
+      },
     },
     verdictCounts: { inRecord: 8, partly: 2, notInRecord: 1 },
   };
 
-  it("counts the leads in the subject and renders every column", () => {
-    const email = renderFitLeadsDigestEmail({ since: "2026-09-14", leads: [lead] });
-    expect(email.subject).toBe("Vacaturecheck: 1 nieuwe vacatures sinds 2026-09-14");
-    expect(email.html).toContain("Senior frontend engineer");
+  it("counts the vacancies in the subject and renders one card per lead", () => {
+    const email = renderFitLeadsDigestEmail({ since: "2026-09-14", leads: [record, record] });
+    expect(email.subject).toBe("Vacaturecheck: 2 nieuwe vacatures sinds 14 september");
+    expect(email.html).toContain(
+      "Sinds 14 september zijn er 2 vacatures gecheckt. De vacature met de eerste sluitingsdatum staat bovenaan."
+    );
+    expect(email.html.split("Senior frontend engineer").length - 1).toBe(2);
+    expect(email.html).toContain("Eindklant");
+    expect(email.html).toContain("Bemiddelaar");
+    expect(email.html).toContain("Contractvorm");
     expect(email.html).toContain("Freelance");
-    expect(email.html).toContain("€95 tot €125 per uur");
+    expect(email.html).toContain("Tarief");
+    expect(email.html).toContain("\u20ac95 tot \u20ac125 per uur");
+    expect(email.html).toContain("Sluit op");
+    expect(email.html).toContain("Aansluiting");
     expect(email.html).toContain("8 in, 2 deels, 1 niet");
     expect(email.html).toContain("A recruiter, An agency, recruiter@example.com");
-    expect(email.html).toContain("Vacature");
+  });
+
+  it("writes one vacancy in the singular", () => {
+    const email = renderFitLeadsDigestEmail({ since: "2026-09-14", leads: [record] });
+    expect(email.subject).toBe("Vacaturecheck: 1 nieuwe vacature sinds 14 september");
+    expect(email.html).toContain("Sinds 14 september is er 1 vacature gecheckt.");
   });
 
   it("says Onbekend for every field the vacancy did not name", () => {
@@ -460,13 +538,15 @@ describe("renderFitLeadsDigestEmail", () => {
       leads: [
         {
           sessionId: "session-id-value",
-          title: "",
-          endClient: "",
-          intermediary: "",
-          contractForm: "",
-          closingDate: "",
-          rate: { minimum: null, maximum: null, unit: "", currency: "" },
-          contact: { name: "", email: "", phone: "", organisation: "" },
+          lead: {
+            title: "",
+            endClient: "",
+            intermediary: "",
+            contractForm: "",
+            closingDate: "",
+            rate: { minimum: null, maximum: null, unit: "", currency: "" },
+            contact: { name: "", email: "", phone: "", organisation: "" },
+          },
           verdictCounts: { inRecord: 0, partly: 0, notInRecord: 0 },
         },
       ],
@@ -479,11 +559,14 @@ describe("renderFitLeadsDigestEmail", () => {
       since: "2026-09-14",
       leads: [
         {
-          ...lead,
-          rate: { minimum: 800, maximum: null, unit: "day", currency: "" },
+          ...record,
+          lead: {
+            ...record.lead,
+            rate: { minimum: 800, maximum: null, unit: "day", currency: "" },
+          },
         },
       ],
     });
-    expect(perDay.html).toContain("€800 per dag");
+    expect(perDay.html).toContain("\u20ac800 per dag");
   });
 });

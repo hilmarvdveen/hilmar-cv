@@ -58,6 +58,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
       report: stored.report,
       locale: stored.locale,
+      title: stored.title,
+      createdAt: stored.createdAt,
       hasCv: stored.hasCv,
     });
   } catch (error: unknown) {

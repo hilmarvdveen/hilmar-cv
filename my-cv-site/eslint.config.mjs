@@ -23,6 +23,7 @@ const eslintConfig = [
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "react-hooks/set-state-in-effect": "warn",
       "id-denylist": ["error", ...ABBREVIATED_IDENTIFIERS],
+      "no-dupe-keys": "error",
     },
   },
 ];

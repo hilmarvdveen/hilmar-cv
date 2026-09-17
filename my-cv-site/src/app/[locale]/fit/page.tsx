@@ -15,7 +15,11 @@ import {
 } from "@/features/fit";
 import { sanitizeSessionId } from "@/lib/fit";
 import { fitReopenState, getFitLinkSecret } from "@/lib/fit/resultLink";
-import { TURNSTILE_SCRIPT_URL, getTurnstileSiteKey } from "@/lib/fit/turnstile";
+import {
+  TURNSTILE_SCRIPT_URL,
+  getTurnstileConfiguration,
+  getTurnstileSiteKey,
+} from "@/lib/fit/turnstile";
 import { brandedTitle, localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { fitPageSchema } from "@/lib/seo/fitSchema";
 
@@ -46,7 +50,8 @@ export default async function FitPage({ params, searchParams }: Props) {
 
   const reopenState = fitReopenState(result, key, getFitLinkSecret());
   const isReopened = reopenState === "valid";
-  const turnstileSiteKey = getTurnstileSiteKey();
+  const resultKey = typeof key === "string" ? key : "";
+  const turnstileSiteKey = getTurnstileConfiguration() ? getTurnstileSiteKey() : null;
   const nonce = turnstileSiteKey ? ((await headers()).get("x-nonce") ?? undefined) : undefined;
 
   const structuredData = fitPageSchema({
@@ -88,16 +93,24 @@ export default async function FitPage({ params, searchParams }: Props) {
           <Container width="narrow">
             <FitReopenedResult
               sessionId={sanitizeSessionId(result)}
-              resultKey={key as string}
+              resultKey={resultKey}
+              turnstileSiteKey={turnstileSiteKey ?? undefined}
               labels={{
                 loading: t("result.loading"),
                 ready: t("result.ready"),
                 failed: t("result.failed"),
+                rateLimited: t("result.rateLimited"),
+                checkedOn: t("result.checkedOn"),
+                untitled: t("result.untitled"),
                 download: t("result.download"),
                 downloading: t("result.downloading"),
                 downloadNote: t("result.downloadNote"),
                 downloaded: t("result.downloaded"),
                 downloadFailed: t("result.downloadFailed"),
+                downloadTimedOut: t("result.downloadTimedOut"),
+                downloadRateLimited: t("result.downloadRateLimited"),
+                nextSteps: t("result.nextSteps"),
+                nextStepsLink: t("result.nextStepsLink"),
                 mailAction: t("result.mailAction"),
               }}
             />

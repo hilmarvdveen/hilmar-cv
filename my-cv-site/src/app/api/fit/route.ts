@@ -12,6 +12,7 @@ import {
   EMPTY_FIT_REPORT,
   FIT_LIMITS,
   FitAgentRateLimitError,
+  FitAgentRefusalError,
   getFitAgentConfiguration,
   isFitReport,
   requestFitReport,
@@ -59,10 +60,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const vacancy = (body.vacancy as string).trim();
     if (vacancy.length < FIT_LIMITS.vacancyMinimum) {
-      return NextResponse.json(
-        { error: 'Field "vacancy" is shorter than the minimum length.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ reason: "tooShort" }, { status: 422 });
     }
 
     const turnstile = getTurnstileConfiguration();
@@ -99,6 +97,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error: unknown) {
     if (error instanceof FitAgentRateLimitError) {
       return tooManyRequestsResponse(error.retryAfterSeconds);
+    }
+    if (error instanceof FitAgentRefusalError) {
+      return NextResponse.json({ reason: error.reason }, { status: 422 });
     }
     console.error("Fit check failed");
     return serverErrorResponse(error, "The fit check is not available right now");

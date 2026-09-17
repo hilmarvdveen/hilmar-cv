@@ -2,6 +2,14 @@ export type FitLocale = "nl" | "en";
 
 export type FitVerdict = "inRecord" | "partly" | "notInRecord";
 
+export type FitRefusalReason =
+  | "tooShort"
+  | "notAVacancy"
+  | "codeBlock"
+  | "encodedBlob"
+  | "tooManyLinks"
+  | "instruction";
+
 export type FitEngagementReference = {
   id: string;
   company: string;
@@ -51,12 +59,15 @@ export type FitStoredResult = {
   report: FitReport;
   vacancy: string;
   locale: FitLocale;
+  title: string;
+  createdAt: string;
   hasCv: boolean;
 };
 
 export type FitCvStatus = {
   ready: boolean;
   pages: number;
+  failed: boolean;
 };
 
 export type VacancyLeadRate = {
@@ -74,14 +85,29 @@ export type VacancyLeadContact = {
 };
 
 export type VacancyLead = {
-  sessionId: string;
   title: string;
   endClient: string;
   intermediary: string;
   contractForm: string;
   location: string;
+  workMode: string;
+  hoursPerWeek: string;
+  startDate: string;
+  durationMonths: string;
+  extensionOptions: string;
   closingDate: string;
   rate: VacancyLeadRate;
   contact: VacancyLeadContact;
+};
+
+export type VacancyLeadRecord = {
+  sessionId: string;
+  sessionIds: string[];
+  lead: VacancyLead;
   verdictCounts: FitVerdictCounts;
+  notInRecord: string[];
+  requesterEmailDomain: string;
+  seenCount: number;
+  firstSeenAt: string;
+  lastSeenAt: string;
 };

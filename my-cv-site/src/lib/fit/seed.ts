@@ -139,7 +139,10 @@ export type SeedProfile = {
   };
 };
 
+export const SEED_SCHEMA_VERSION = 1;
+
 export type SeedRecord = {
+  schemaVersion: number;
   generatedAt: string;
   site: string;
   profile: SeedProfile;
@@ -293,6 +296,7 @@ function buildFaq(input: SeedRecordInput): SeedFaqEntry[] {
 
 export function buildSeedRecord(input: SeedRecordInput): SeedRecord {
   return {
+    schemaVersion: SEED_SCHEMA_VERSION,
     generatedAt: input.generatedAt,
     site: BUSINESS_PROFILE.CONTACT.WEBSITE,
     profile: buildProfile(),
