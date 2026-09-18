@@ -6,6 +6,7 @@ export const RATE_LIMITS = {
   email: { limit: 5, windowMilliseconds: 60_000 },
   read: { limit: 30, windowMilliseconds: 60_000 },
   fit: { limit: 10, windowMilliseconds: 60_000 },
+  fitStatus: { limit: 60, windowMilliseconds: 60_000 },
 } as const;
 
 export type RateLimitName = keyof typeof RATE_LIMITS;

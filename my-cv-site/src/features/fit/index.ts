@@ -13,3 +13,5 @@ export {
   type FitReopenedResultLabels,
 } from "./components/FitReopenedResult";
 export { FitBooking } from "./components/FitBooking";
+export { FitJobNotifier } from "./components/FitJobNotifier";
+export { FitWaitingPanel } from "./components/FitWaitingPanel";

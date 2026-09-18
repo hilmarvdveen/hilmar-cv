@@ -1,3 +1,5 @@
+import { FIT_JOB_LOST_STATUS, failedFitJob, readFitJobStatus, sanitizeJobId } from "./job";
+import type { FitJobStatus } from "./job";
 import { normalizeVacancyLeads, readVacancyLeadRecord } from "./leads";
 import {
   readFitCvStatus,
@@ -142,17 +144,26 @@ export type FitReportRequest = {
   clientAddress: string;
 };
 
-export async function requestFitReport(
+export type FitJobStart =
+  | { started: true; jobId: string }
+  | { started: false; answer: FitReportResponse };
+
+export async function startFitJob(
   configuration: FitAgentConfiguration,
   { vacancy, locale, clientAddress }: FitReportRequest
-): Promise<FitReportResponse> {
+): Promise<FitJobStart> {
   const answer = await postToAgent({
     configuration,
-    path: "/fit",
+    path: "/fit/jobs",
     body: { vacancy, locale },
     clientAddress,
   });
-  return answer.body as FitReportResponse;
+  if (answer.status === 202) {
+    const jobId = sanitizeJobId((answer.body as { jobId?: unknown } | null)?.jobId);
+    if (jobId === "") throw new Error("The fit agent started a job without an id");
+    return { started: true, jobId };
+  }
+  return { started: false, answer: answer.body as FitReportResponse };
 }
 
 export type FitAnswerRequest = {
@@ -209,6 +220,25 @@ async function getFromAgent({
   }
 
   return response;
+}
+
+export type FitJobStatusRequest = {
+  jobId: string;
+  clientAddress: string;
+};
+
+export async function requestFitJobStatus(
+  configuration: FitAgentConfiguration,
+  { jobId, clientAddress }: FitJobStatusRequest
+): Promise<FitJobStatus> {
+  const response = await getFromAgent({
+    configuration,
+    path: `/fit/jobs/${encodeURIComponent(jobId)}`,
+    clientAddress,
+    toleratedStatuses: [FIT_JOB_LOST_STATUS],
+  });
+  if (response.status === FIT_JOB_LOST_STATUS) return failedFitJob(FIT_JOB_LOST_STATUS);
+  return readFitJobStatus(await response.json());
 }
 
 export type FitStoredResultRequest = {

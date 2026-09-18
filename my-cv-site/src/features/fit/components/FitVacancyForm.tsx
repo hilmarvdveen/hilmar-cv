@@ -1,6 +1,6 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useEffect, useRef, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { AlertCircle, Loader2, Search } from "lucide-react";
 import { Button } from "@/components/Button";
@@ -48,7 +48,13 @@ export const FitVacancyForm = ({
   turnstileSiteKey,
 }: FitVacancyFormProps) => {
   const t = useTranslations("fit.check");
+  const failureRef = useRef<HTMLDivElement | null>(null);
   const hasReachedCap = vacancy.length >= FIT_LIMITS.vacancyMaximum;
+
+  useEffect(() => {
+    if (failure) failureRef.current?.focus();
+  }, [failure]);
+
   const fieldDescription = [
     HINT_ID,
     COUNTER_ID,
@@ -65,7 +71,7 @@ export const FitVacancyForm = ({
       </h2>
       <p className="mt-2 text-base leading-relaxed text-gray-600">{intro}</p>
 
-      <form onSubmit={onSubmit} className="mt-4 space-y-4" aria-busy={isChecking}>
+      <form onSubmit={onSubmit} className="mt-4 space-y-4" aria-busy={isChecking} noValidate>
         <HoneypotField value={honeypotValue} onChange={onHoneypotChange} />
 
         <div>
@@ -137,22 +143,27 @@ export const FitVacancyForm = ({
               </>
             )}
           </Button>
-          {isChecking && (
-            <p className="text-sm leading-relaxed text-gray-600">{t("form.checkingNote")}</p>
-          )}
         </div>
 
         {failure &&
           (failure.recoverable ? (
-            <p
+            <div
               id={FAILURE_ID}
-              className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
+              ref={failureRef}
+              tabIndex={-1}
+              className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
               role="alert"
             >
-              {failure.message}
-            </p>
+              <p>{failure.message}</p>
+            </div>
           ) : (
-            <div id={FAILURE_ID} role="alert">
+            <div
+              id={FAILURE_ID}
+              ref={failureRef}
+              tabIndex={-1}
+              role="alert"
+              className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
               <Card variant="tinted" className="p-4">
                 <div className="flex items-start gap-3">
                   <AlertCircle
@@ -161,10 +172,13 @@ export const FitVacancyForm = ({
                   />
                   <div className="min-w-0 flex-1">
                     <p className="text-base leading-relaxed text-gray-700">{failure.message}</p>
-                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                      <Button type="submit" variant="primary" size="md" className="w-full sm:w-auto">
+                        {t("errors.retryAction")}
+                      </Button>
                       <Button
                         href="/book"
-                        variant="primary"
+                        variant="outline"
                         size="md"
                         data-placement="fit-failed"
                         className="w-full sm:w-auto"

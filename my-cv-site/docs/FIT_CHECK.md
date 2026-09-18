@@ -428,13 +428,15 @@ has to be measured again.
 | State | What renders |
 |---|---|
 | Idle | form, disclosure |
-| Checking | the button marked `aria-disabled` and still focusable, the form `aria-busy`, `form.checkingNote` under the button, the status line saying the check is running |
+| Starting | the button marked `aria-disabled` and still focusable, the form `aria-busy`, for the second or two until the job id is back |
+| Running | the waiting panel in place of the form card, see "The check as a job" below. A finished report from an earlier check stays mounted under it, with its question box, its answer and its CV card |
 | Done | the status line saying the result is below, focus moved to the result heading, the result, the question box (only with a session id), the CV card (only with a requirement), the booking card |
-| CV sent | the same card with the form replaced by the sent message, focus on the sent heading, the sent sentence in the page live region |
+| CV sent | the same card with the form replaced by the sent message, focus on the sent heading, the sent sentence in the page live region, and a text button (`fit.cv.resend`) that brings the form back for a mistyped address |
 | Too short or refused | one sentence from `errors.reasons.*` as a plain alert tied to the field through `aria-describedby`, the finished report and the question box left standing |
-| Failed | a card with the message, the booking button (`fit-failed`) and the mail link (`fit-failed-mail`), below the submit so the button never moves under the visitor thumb, the finished report left standing |
+| Failed | a card with the message, a retry button that submits the form again (`errors.retryAction`), the booking button (`fit-failed`) and the mail link (`fit-failed-mail`), focus on the card, below the submit so the button never moves under the visitor thumb, the finished report left standing |
 | Empty result | the summary and the technologies when the agent returned them, `report.empty` only when there is no summary to say it, no CV card, and the booking card |
-| Reopened | the result hero, the vacancy title with the date of the check, the download button, the report with the way on to a call, the question box, the booking card, and the vacancy form behind the `result.newCheck` disclosure |
+| Reopened | the result hero, the vacancy title with the date of the check, the download button, the report with the way on to a call, the question box, the booking card, and a link to a fresh /fit for another vacancy (`result.newCheck`, placement `fit-reopen-new-check`). The form is not embedded here since 18 September 2026, because a second check rendered a second report and a second booking card on one page |
+| Reopen failed | the sentence, then the booking button (`fit-reopen-failed`), the link to a new check and the mail link (`fit-reopen-failed-mail`), where it was one sentence with nothing to click |
 | Building the CV | the button marked `aria-disabled` with the spinner, the status line saying the document is being built, the status route asked every four seconds |
 | Build timed out | `result.downloadTimedOut` under the button with the mail link, the result left standing |
 | Download refused | `result.downloadRateLimited` on a 429 and `result.downloadFailed` on anything else, both with the mail link |
@@ -443,6 +445,69 @@ Neither button ever carries the `disabled` attribute. A disabled button leaves
 the tab order and hands focus to the document, which is what happened on
 16 September 2026: pressing the check button dropped keyboard focus for the
 whole wait and nothing announced the result.
+
+## The check as a job (18 September 2026)
+
+A report takes 22 seconds warm and 70 to 90 seconds after a quiet spell, because
+both containers sleep. A Vercel function waits sixty seconds at most, so the
+first visitor of the day got `errors.failed` after a minute of a spinner. The
+check is a job now.
+
+- `POST /api/fit` runs the same gate order as before and then starts a job at
+  the agent (`POST /fit/jobs`). It answers `202 { jobId }`. A repeat of a recent
+  vacancy still answers `200 { report, sessionId }` at once, and a refusal or a
+  cap still answers 422 or 429 at once, because the agent decides those before
+  a job exists. The start has a budget of fifty seconds
+  (`FIT_JOB_START_BUDGET_MILLISECONDS`), which is what a sleeping container
+  needs to wake.
+- `GET /api/fit/status?job=<32 hexadecimal characters>` checks the origin, the
+  rate rule `fitStatus` (sixty a minute per address), the shape of the id and
+  the configuration, then asks the agent with a budget of ten seconds. It
+  answers `{ state: "running", phase, toolCalls, elapsedSeconds }`,
+  `{ state: "done", report, sessionId }` with the report sanitised, or
+  `{ state: "failed", status, reason, retryAfterSeconds }`. The agent's own
+  sentence never travels. A job the agent no longer holds answers failed
+  with 404. The job id is 128 random bits and is the only key, so the route
+  needs no signature.
+- The phases are real. The agent reports `reading` before its first
+  completion, `searching` after every tool call with the running count,
+  `writing` before the final answer, `verifying` before code looks up every
+  technology, `saving` before the report is stored.
+
+In the browser the job lives in `sessionStorage` under `fit.job` (the job id,
+the start time and the language, never the vacancy text), and the finished
+report under `fit.result` for an hour. Session storage is per tab and gone when
+the tab closes. `src/lib/fit/job.ts` holds the pure readers and writers,
+`src/lib/fit/jobStore.ts` is the external store React subscribes to, and
+`useFitJob` polls: the first poll after one second, then every two and a half
+seconds, for at most four minutes, after which the job counts as failed with
+status 504. A poll that fails is not a failed job. The hook keeps polling.
+
+The waiting panel (`FitWaitingPanel`) replaces the form card in place and keeps
+a minimum height, so nothing above or below it moves. It shows the first 140
+characters of the vacancy, five segments for the five phases with the current
+one pulsing, one status line that rotates every five seconds within the phase
+in the manner of a coding agent, the elapsed time with tabular figures and the
+number of lookups. Past sixty seconds a line says the check is starting up, past
+two minutes it says the result will appear here and the booking button joins
+(`fit-waiting-book`). There is no cancel, because the tokens are spent upstream
+already. The affordance is the opposite one: a link to /experience that says
+read on (`fit-waiting-browse`). The rotating line is `aria-hidden`. One polite
+status region says the check is running and that a notice follows, and changes
+once, at sixty seconds. With reduced motion the pulse and the rotation stop and
+the phase still changes, because that is information.
+
+The notifier (`FitJobNotifier`, mounted once in the locale layout) renders
+nothing on /fit and nothing without a job. On every other page it polls the
+same job and shows a small fixed notice: a spinner and one line while the check
+runs, the ready line with a link to /fit (`fit-notifier-ready`), or the failed
+line with a link back (`fit-notifier-failed`). It sits at `z-30`, under the
+sticky booking bar and the consent banner, and above the bar through
+`--bottom-bar-offset`, so it never covers the booking button and moves nothing.
+It never takes focus. The ready and failed lines are announced once, the running
+line is not. The close button and Escape dismiss it. Back on /fit the page shows
+the finished report from the session and marks it seen, so the notice does not
+return.
 
 ## What is not stored and not logged
 
@@ -454,6 +519,19 @@ because the follow-up question and the CV need it. The disclosure card says so
 before the report exists, together with the disclosure that the assistant is an
 AI system: the text stays with the result and the CV for thirty days under a
 random number, and after that those three are gone.
+
+Since 18 September 2026 the browser keeps two things in `sessionStorage`, which
+is per tab and gone when the tab closes: the id of a running job with its start
+time and language, and the finished report with its session number for an hour,
+so a visitor who read on elsewhere finds the result when they come back. The
+vacancy text is never kept there. The follow-up question is never stored on
+either side, and since the same day the question box says so
+(`fit.check.question.privacyNote`). The CV card names what the request sets in
+motion: name, address and organisation go to the mailbox with the title of the
+vacancy, and of the address only the domain is kept (`fit.cv.privacyNote`). The
+privacy statement does not name the CV request or the domain yet. That wording
+is the owner's to approve, findings M1 and M2 of the editors' round of
+18 September.
 
 The name, address and organisation of the CV step go to the mailbox and nowhere
 else. The agent hears only the email domain, never the address. The pairs of a
@@ -512,7 +590,10 @@ are `fit-hero` (the text link in the disclosure card), `fit-failed` and
 `fit-failed-mail` (the failure card), `fit-evidence` and
 `fit-answer-evidence` (the engagement links in a report and in an answer), and
 `fit-result-next` (the text link to the call in the summary card of a reopened
-result). The three entrances carry `footer-fit`, `hiring-fit` and
+result). Since 18 September 2026 the waiting panel carries `fit-waiting-browse`
+and `fit-waiting-book`, and the site-wide notice `fit-notifier-ready` and
+`fit-notifier-failed`. `fit_completed` and `fit_failed` fire where the job ends,
+on /fit or in the notice on another page, once per job. The three entrances carry `footer-fit`, `hiring-fit` and
 `contact-facts-fit`. The two mail links of the CV step carry `fit-cv-mail` (the
 request did not come through) and `fit-download-mail` (the build did not come
 through).

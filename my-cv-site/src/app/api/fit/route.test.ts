@@ -3,14 +3,14 @@ import { NextRequest } from "next/server";
 import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 
 const getFitAgentConfiguration = vi.fn();
-const requestFitReport = vi.fn();
+const startFitJob = vi.fn();
 
 vi.mock("@/lib/fit", async () => {
   const actual = await vi.importActual<typeof import("@/lib/fit")>("@/lib/fit");
   return {
     ...actual,
     getFitAgentConfiguration: () => getFitAgentConfiguration(),
-    requestFitReport: (...parameters: unknown[]) => requestFitReport(...parameters),
+    startFitJob: (...parameters: unknown[]) => startFitJob(...parameters),
   };
 });
 
@@ -66,7 +66,9 @@ const valid = () => ({ vacancy, locale: "nl", formStartedAt: Date.now() - 10_000
 beforeEach(() => {
   __resetRateLimitStore();
   getFitAgentConfiguration.mockReset().mockReturnValue(CONFIGURATION);
-  requestFitReport.mockReset().mockResolvedValue({ report: REPORT, sessionId: "session-id-value" });
+  startFitJob
+    .mockReset()
+    .mockResolvedValue({ started: false, answer: { report: REPORT, sessionId: "session-id-value" } });
   vi.spyOn(console, "error").mockImplementation(() => undefined);
 });
 
@@ -74,7 +76,7 @@ describe("POST /api/fit", () => {
   it("refuses a cross-site origin with 403", async () => {
     const response = await POST(post(valid(), { origin: "https://evil.example.com" }));
     expect(response.status).toBe(403);
-    expect(requestFitReport).not.toHaveBeenCalled();
+    expect(startFitJob).not.toHaveBeenCalled();
   });
 
   it("answers 429 with Retry-After once the fit bucket is empty", async () => {
@@ -93,13 +95,13 @@ describe("POST /api/fit", () => {
       report: { summary: "", requirements: [], technologies: [] },
       sessionId: "",
     });
-    expect(requestFitReport).not.toHaveBeenCalled();
+    expect(startFitJob).not.toHaveBeenCalled();
   });
 
   it("succeeds silently when the form was submitted within two seconds", async () => {
     const response = await POST(post({ ...valid(), formStartedAt: Date.now() }));
     expect(response.status).toBe(200);
-    expect(requestFitReport).not.toHaveBeenCalled();
+    expect(startFitJob).not.toHaveBeenCalled();
   });
 
   it("answers 400 on an empty vacancy", async () => {
@@ -119,11 +121,11 @@ describe("POST /api/fit", () => {
     const response = await POST(post({ ...valid(), vacancy: "React please" }));
     expect(response.status).toBe(422);
     expect(await response.json()).toEqual({ reason: "tooShort" });
-    expect(requestFitReport).not.toHaveBeenCalled();
+    expect(startFitJob).not.toHaveBeenCalled();
   });
 
   it("passes a refusal of the input gate through as 422 with its reason", async () => {
-    requestFitReport.mockRejectedValue(new FitAgentRefusalError("instruction"));
+    startFitJob.mockRejectedValue(new FitAgentRefusalError("instruction"));
     const response = await POST(post(valid()));
     expect(response.status).toBe(422);
     expect(await response.json()).toEqual({ reason: "instruction" });
@@ -138,7 +140,7 @@ describe("POST /api/fit", () => {
 
   it("forwards the trimmed vacancy, the locale and the caller's address", async () => {
     await POST(post({ ...valid(), vacancy: `  ${vacancy}  `, locale: "en" }));
-    expect(requestFitReport).toHaveBeenCalledWith(CONFIGURATION, {
+    expect(startFitJob).toHaveBeenCalledWith(CONFIGURATION, {
       vacancy,
       locale: "en",
       clientAddress: "203.0.113.7",
@@ -147,10 +149,17 @@ describe("POST /api/fit", () => {
 
   it("treats an unknown locale as Dutch", async () => {
     await POST(post({ ...valid(), locale: "de" }));
-    expect(requestFitReport.mock.calls[0][1].locale).toBe("nl");
+    expect(startFitJob.mock.calls[0][1].locale).toBe("nl");
   });
 
-  it("returns the sanitised report and drops an engagement outside the record", async () => {
+  it("answers 202 with the job id when the agent started a run in the background", async () => {
+    startFitJob.mockResolvedValue({ started: true, jobId: "c".repeat(32) });
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(202);
+    expect(await response.json()).toEqual({ jobId: "c".repeat(32) });
+  });
+
+  it("returns the sanitised report of a repeated vacancy at once and drops an engagement outside the record", async () => {
     const response = await POST(post(valid()));
     expect(response.status).toBe(200);
     const body = await response.json();
@@ -159,13 +168,16 @@ describe("POST /api/fit", () => {
   });
 
   it("drops a session id that is not plausible", async () => {
-    requestFitReport.mockResolvedValue({ report: REPORT, sessionId: "nope" });
+    startFitJob.mockResolvedValue({ started: false, answer: { report: REPORT, sessionId: "nope" } });
     const body = await (await POST(post(valid()))).json();
     expect(body.sessionId).toBe("");
   });
 
   it("answers a generic 500 when the agent returns an unexpected shape", async () => {
-    requestFitReport.mockResolvedValue({ report: { summary: 7 }, sessionId: "session-id-value" });
+    startFitJob.mockResolvedValue({
+      started: false,
+      answer: { report: { summary: 7 }, sessionId: "session-id-value" },
+    });
     const response = await POST(post(valid()));
     expect(response.status).toBe(500);
     expect(await response.json()).toMatchObject({
@@ -174,14 +186,14 @@ describe("POST /api/fit", () => {
   });
 
   it("answers a generic 500 without the upstream message when the agent fails", async () => {
-    requestFitReport.mockRejectedValue(new Error("The fit agent answered 503"));
+    startFitJob.mockRejectedValue(new Error("The fit agent answered 503"));
     const response = await POST(post(valid()));
     expect(response.status).toBe(500);
     expect(JSON.stringify(await response.json())).not.toContain("503");
   });
 
   it("passes an upstream per-caller refusal through as 429 with the short wait", async () => {
-    requestFitReport.mockRejectedValue(new FitAgentRateLimitError(42));
+    startFitJob.mockRejectedValue(new FitAgentRateLimitError(42));
     const response = await POST(post(valid()));
     expect(response.status).toBe(429);
     expect(response.headers.get("Retry-After")).toBe("42");
@@ -189,7 +201,7 @@ describe("POST /api/fit", () => {
   });
 
   it("passes the upstream daily cap through as 429 with the wait until tomorrow", async () => {
-    requestFitReport.mockRejectedValue(new FitAgentRateLimitError(28_800));
+    startFitJob.mockRejectedValue(new FitAgentRateLimitError(28_800));
     const response = await POST(post(valid()));
     expect(response.status).toBe(429);
     expect(response.headers.get("Retry-After")).toBe("28800");
@@ -214,7 +226,7 @@ describe("the optional challenge", () => {
 
     const refused = await POST(post({ ...valid(), turnstileToken: "token" }));
     expect(refused.status).toBe(403);
-    expect(requestFitReport).not.toHaveBeenCalled();
+    expect(startFitJob).not.toHaveBeenCalled();
 
     vi.stubGlobal(
       "fetch",
@@ -222,6 +234,6 @@ describe("the optional challenge", () => {
     );
     const accepted = await POST(post({ ...valid(), turnstileToken: "token" }));
     expect(accepted.status).toBe(200);
-    expect(requestFitReport).toHaveBeenCalled();
+    expect(startFitJob).toHaveBeenCalled();
   });
 });

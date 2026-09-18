@@ -19,6 +19,7 @@ export {
   countFitVerdicts,
   fitTechnologyDuration,
   isDailyCapRetry,
+  isOwnWorkEngagement,
   readFitRefusalReason,
   retryAfterSecondsFromBody,
 } from "./report";

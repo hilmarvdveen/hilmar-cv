@@ -2118,7 +2118,7 @@
             "description": "Plak een vacature en zie per eis wat mijn werkervaring bevat, met de opdracht die het laat zien. Daarna stel je er een vraag over."
         },
         "hero": {
-            "badge": "AI-assistent op mijn werkervaring",
+            "badge": "AI-assistent",
             "title": "Past deze vacature bij mijn werk?",
             "description": "Je ziet per eis wat mijn werkervaring bevat en bij welke opdracht dat te zien is. Eén regel per eis, die je zo kunt doorsturen. Daarna kun je er vragen over stellen.",
             "note": "Liever samen doorlopen?",
@@ -2126,7 +2126,7 @@
         },
         "disclosure": {
             "title": "Hoe dit werkt",
-            "assistant": "Dit is een AI-assistent. Hij werkt alleen met mijn vastgelegde werkervaring en noemt de opdracht erbij waar die de eis laat zien.",
+            "assistant": "Dit is een AI-assistent. Hij werkt alleen met mijn werkervaring en noemt bij elke eis de opdracht die het laat zien.",
             "processing": "De tekst van de vacature blijft samen met het resultaat en het CV dertig dagen staan onder een willekeurig nummer, zodat je er nog een vraag over kunt stellen. Daarna zijn ze weg.",
             "register": "Wat langer blijft staan is de kern van de vacature: de titel, de organisatie, de voorwaarden, de eisen met hun uitkomst en de contactgegevens die in de tekst zelf staan. Die houd ik twaalf maanden in een intern register dat alleen ik lees, zodat ik op de vacature kan reageren. Wil je het eerder kwijt, mail dan het nummer dat onder het resultaat staat."
         },
@@ -2135,18 +2135,19 @@
             "intro": "Plak de hele tekst of alleen het stuk met de eisen. Je hoeft verder niets in te vullen."
         },
         "cv": {
-            "title": "Dit CV op deze vacature",
-            "intro": "Het CV zet de eisen van deze vacature in de eerste tabel en zet de competenties in de volgorde die deze rol vraagt. Elke opdracht erin blijft in de woorden van mijn vastgelegde werkervaring.",
+            "title": "Het CV op deze vacature",
+            "intro": "Het CV zet de eisen van deze vacature in de eerste tabel en zet de competenties in de volgorde die deze rol vraagt. Elke opdracht erin blijft in de woorden van mijn werkervaring.",
             "nameLabel": "Je naam",
             "emailLabel": "Je e-mailadres",
             "organisationLabel": "Organisatie (optioneel)",
             "submit": "Mail mij het CV op deze vacature",
-            "sending": "Bezig met versturen...",
-            "privacyNote": "Je naam en e-mailadres gaan naar mijn mailbox voor deze aanvraag. Ik zie dat je het CV hebt opgevraagd, verder niets.",
+            "sending": "Versturen…",
+            "privacyNote": "Je naam, je e-mailadres en je organisatie gaan naar mijn mailbox, samen met de titel van deze vacature. Van je adres houd ik alleen het domein bij, bijvoorbeeld @kvk.nl.",
             "privacyLink": "Zo ga ik met je gegevens om",
             "mailAction": "Mail mij het CV",
             "sentTitle": "Kijk in je mail",
             "sentText": "De link is onderweg naar {email}. Daarmee open je dit resultaat opnieuw en download je het CV.",
+            "resend": "Verkeerd adres? Stuur het opnieuw",
             "errors": {
                 "name": "Vul je naam in.",
                 "email": "Vul een e-mailadres in waar de link naartoe kan.",
@@ -2155,9 +2156,9 @@
             }
         },
         "result": {
-            "title": "Hilmar van der Veen naast deze vacature",
+            "title": "Deze vacature naast mijn werkervaring",
             "intro": "Per eis staat hieronder wat mijn werkervaring laat zien, met de opdracht erbij en het CV dat op deze vacature is geschreven.",
-            "loading": "Bezig met ophalen van het resultaat...",
+            "loading": "Resultaat ophalen…",
             "ready": "Je resultaat staat hieronder.",
             "failed": "Het resultaat staat er niet meer. Een resultaat blijft dertig dagen staan. Doe de check opnieuw, dan komt het CV er weer bij.",
             "rateLimited": "Er staan nu veel verzoeken in de rij. Wacht een minuut en laad de pagina opnieuw, dan staat je resultaat er weer.",
@@ -2184,11 +2185,10 @@
                 "counter": "{characters} van {maximum} tekens, minimaal {minimum}",
                 "capNote": "Dit is het maximum. De rest van de tekst staat er niet in. Het stuk met de eisen is het deel dat telt.",
                 "submit": "Check de vacature",
-                "checking": "Bezig met checken...",
-                "checkingNote": "De assistent leest de eisen een voor een na. Dat duurt meestal een halve minuut."
+                "checking": "Checken…"
             },
             "status": {
-                "checking": "De check draait.",
+                "checking": "De check draait. Je kunt verder lezen, je krijgt een melding zodra het resultaat er staat.",
                 "ready": "Het resultaat staat hieronder."
             },
             "errors": {
@@ -2203,25 +2203,26 @@
                 "rateLimited": "Er staan nu veel checks in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
                 "capReached": "De check heeft voor vandaag zijn limiet bereikt. Morgen draait hij weer. Wil je niet wachten, plan dan een gesprek, dan loop ik de vacature met je door.",
                 "failed": "De check kwam er niet doorheen. Bij een lange vacature helpt het om alleen het stuk met de eisen te plakken. Lukt het daarna nog niet, plan dan een gesprek, dan loop ik de vacature met je door.",
-                "mailAction": "Mail de vacature naar mij"
+                "mailAction": "Mail de vacature naar mij",
+                "retryAction": "Probeer het opnieuw"
             },
             "report": {
                 "title": "Wat mijn werkervaring laat zien",
-                "counts": "{total, plural, one {{inRecord} van 1 eis staat in mijn werkervaring} other {{inRecord} van # eisen staan in mijn werkervaring}}, {partly} deels, {notInRecord} niet.",
+                "counts": "{total, plural, one {{inRecord} van 1 eis staat in mijn werkervaring} other {{inRecord} van # eisen staan in mijn werkervaring}}, {partly} deels en {notInRecord} nog niet.",
                 "nextSteps": "Hieronder staat het CV op deze vacature, en daaronder de knop om een gesprek te plannen.",
                 "requirementsTitle": "Eis voor eis",
                 "legend": {
                     "title": "Wat de labels betekenen",
-                    "inRecord": "In de werkervaring: een opdracht draagt deze technologie of deze verantwoordelijkheid.",
-                    "partly": "Deels: de werkervaring draagt aangrenzend werk, of minder jaren dan de vacature vraagt.",
-                    "notInRecord": "Niet in de werkervaring: hiervoor staat er geen bewijs in. Bij die eis lees je wat de werkervaring wel laat zien."
+                    "inRecord": "In de werkervaring: een opdracht laat deze technologie of deze verantwoordelijkheid zien. Bij een diploma of een curriculum staat geen opdracht.",
+                    "partly": "Deels: het aangrenzende werk staat er wel, of minder jaren dan de vacature vraagt. Of het draait in mijn eigen werk en nog niet in een opdracht bij een klant.",
+                    "notInRecord": "Nog niet in de werkervaring: geen opdracht draagt deze eis tot nu toe. Bij die eis lees je wat mijn werkervaring wel laat zien."
                 },
                 "technologiesTitle": "Jaren per technologie",
-                "technologiesBasis": "Geteld over de opdrachten waarin de technologie voorkomt. Maanden die overlappen tellen een keer.",
+                "technologiesBasis": "Geteld over de opdrachten bij klanten waarin de technologie voorkomt. Maanden die overlappen tellen een keer. Mijn eigen werk telt hier niet mee.",
                 "verdicts": {
                     "inRecord": "In de werkervaring",
                     "partly": "Deels",
-                    "notInRecord": "Niet in de werkervaring"
+                    "notInRecord": "Nog niet in de werkervaring"
                 },
                 "evidenceLabel": "Te zien bij",
                 "years": "{years, plural, one {# jaar} other {# jaar}}",
@@ -2230,7 +2231,18 @@
                 "sessionLabel": "Nummer van dit resultaat: {sessionId}. Wil je het eerder laten verwijderen, mail dat nummer naar {email}.",
                 "bookTitle": "Dit was de korte versie",
                 "bookText": "In dertig minuten lopen we de eisen langs en hoor je per eis wat ik er in de eerste weken mee zou doen.",
-                "bookButton": "Plan een gesprek van 30 minuten"
+                "bookButton": "Plan een gesprek van 30 minuten",
+                "technologiesSummary": "{count, plural, one {# technologie} other {# technologieën}}",
+                "otherCompanies": "en {count} andere",
+                "noteMore": "Lees verder",
+                "noteLess": "Minder",
+                "noteSubject": "over {requirement}",
+                "ownWorkLabel": "eigen werk",
+                "ownWork": {
+                    "own-platform": "hilmarvanderveen.com",
+                    "reference-repository": "Zappy Mart, mijn publieke repository",
+                    "vacancy-fit": "Vacaturecheck"
+                }
             },
             "question": {
                 "title": "Stel een vraag over het resultaat",
@@ -2238,14 +2250,70 @@
                 "label": "Je vraag",
                 "placeholder": "Hoeveel jaar ervaring met GraphQL?",
                 "submit": "Stel de vraag",
-                "asking": "Bezig met antwoorden...",
+                "asking": "Antwoord schrijven…",
                 "answerLabel": "Antwoord",
                 "errors": {
                     "tooShort": "Maak de vraag iets langer. Een paar woorden is genoeg.",
                     "rateLimited": "Er staan nu veel vragen in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
                     "failed": "Het antwoord kwam niet door. Stel de vraag zo nog eens."
-                }
+                },
+                "privacyNote": "Je vraag bewaar ik niet."
+            },
+            "progress": {
+                "title": "De check draait",
+                "intro": "Meestal binnen een minuut klaar. De eerste check na een stille periode moet opstarten en duurt ongeveer anderhalve minuut. Je kunt gewoon verder lezen op de site, je krijgt een melding zodra het resultaat er staat.",
+                "keepBrowsing": "Lees gerust verder, je krijgt een melding",
+                "lookups": "{count, plural, one {# keer opgezocht} other {# keer opgezocht}}",
+                "elapsedSeconds": "{seconds, plural, one {# seconde} other {# seconden}}",
+                "elapsedMinutes": "{minutes, plural, one {# minuut} other {# minuten}}, {seconds, plural, one {# seconde} other {# seconden}}",
+                "phases": {
+                    "reading": {
+                        "1": "Vacature lezen…",
+                        "2": "Eisen uit de tekst halen…",
+                        "3": "Eisen op een rij zetten…",
+                        "4": "Kijken wat er gevraagd wordt…"
+                    },
+                    "searching": {
+                        "1": "Zoeken in mijn werkervaring…",
+                        "2": "De juiste opdracht opzoeken…",
+                        "3": "Jaren per technologie tellen…",
+                        "4": "Opdrachten erbij zoeken…"
+                    },
+                    "writing": {
+                        "1": "Oordeel per eis schrijven…",
+                        "2": "Eis voor eis uitwerken…",
+                        "3": "Per eis één regel schrijven…",
+                        "4": "De uitkomst opschrijven…"
+                    },
+                    "verifying": {
+                        "1": "Elke technologie natrekken…",
+                        "2": "Namen langs de opdrachten leggen…",
+                        "3": "Jaren narekenen…",
+                        "4": "Code checkt elke technologie…"
+                    },
+                    "saving": {
+                        "1": "Resultaat opslaan…",
+                        "2": "Nummer aan je resultaat hangen…",
+                        "3": "Resultaat klaarzetten…",
+                        "4": "Bijna klaar…"
+                    }
+                },
+                "stillRunning": "Deze check start op, dus hij duurt langer. Nog ongeveer een halve minuut.",
+                "takingLong": "Dit duurt langer dan gewoonlijk. Je resultaat komt hier te staan, ook als je verder leest.",
+                "announceStart": "De check draait. Je kunt verder lezen, je krijgt een melding zodra het resultaat er staat.",
+                "announceStillRunning": "De check draait nog."
             }
+        },
+        "notifier": {
+            "label": "Melding van de vacaturecheck",
+            "running": "De vacaturecheck draait nog.",
+            "ready": "Je vacaturecheck is klaar.",
+            "readyLink": "Bekijk het resultaat",
+            "failed": "De vacaturecheck is niet afgerond.",
+            "failedLink": "Terug naar de vacaturecheck",
+            "dismiss": "Melding sluiten",
+            "announceReady": "Je vacaturecheck is klaar. Ga naar de vacaturecheck om het resultaat te lezen.",
+            "announceFailed": "De vacaturecheck is niet afgerond. Open de vacaturecheck om het opnieuw te doen."
         }
     },
     "search": {

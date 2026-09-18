@@ -11,7 +11,8 @@ import {
   getFitLeadsToken,
   reportRequesterEmailDomain,
   requestFitAnswer,
-  requestFitReport,
+  requestFitJobStatus,
+  startFitJob,
   requestLead,
   requestRecentLeads,
   requestStoredFitResult,
@@ -77,21 +78,21 @@ describe("getFitAgentConfiguration", () => {
   });
 });
 
-describe("requestFitReport", () => {
-  it("sends the bearer token, the forwarded address and an abort signal", async () => {
-    const payload = { report: { summary: "", requirements: [], technologies: [] }, sessionId: "abc" };
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => payload });
+describe("startFitJob", () => {
+  it("sends the bearer token, the forwarded address and an abort signal, and answers with the job id", async () => {
+    const jobId = "a".repeat(32);
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 202, json: async () => ({ jobId }) });
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await requestFitReport(configuration, {
+    const result = await startFitJob(configuration, {
       vacancy: "We are looking for a senior frontend engineer.",
       locale: "nl",
       clientAddress: "203.0.113.7",
     });
 
-    expect(result).toEqual(payload);
+    expect(result).toEqual({ started: true, jobId });
     const [url, options] = fetchMock.mock.calls[0];
-    expect(url).toBe("https://agent.example.com/fit");
+    expect(url).toBe("https://agent.example.com/fit/jobs");
     expect(options.headers.Authorization).toBe("Bearer secret-token");
     expect(options.headers["x-forwarded-for"]).toBe("203.0.113.7");
     expect(options.cache).toBe("no-store");
@@ -100,6 +101,26 @@ describe("requestFitReport", () => {
       vacancy: "We are looking for a senior frontend engineer.",
       locale: "nl",
     });
+  });
+
+  it("hands a repeat of a recent vacancy through as the report it already is", async () => {
+    const payload = { report: { summary: "", requirements: [], technologies: [] }, sessionId: "abc" };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => payload }));
+
+    expect(
+      await startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+    ).toEqual({ started: false, answer: payload });
+  });
+
+  it("throws when a started job carries no usable id", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, status: 202, json: async () => ({ jobId: "short" }) })
+    );
+
+    await expect(
+      startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+    ).rejects.toThrow("The fit agent started a job without an id");
   });
 
   it("throws with the status only when the agent refuses", async () => {
@@ -113,7 +134,7 @@ describe("requestFitReport", () => {
     );
 
     await expect(
-      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+      startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
     ).rejects.toThrow("The fit agent answered 503");
   });
 
@@ -128,7 +149,7 @@ describe("requestFitReport", () => {
     );
 
     await expect(
-      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+      startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
     ).rejects.toMatchObject({ name: "FitAgentRateLimitError", retryAfterSeconds: 28_800 });
   });
 
@@ -145,11 +166,39 @@ describe("requestFitReport", () => {
     );
 
     await expect(
-      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+      startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
     ).rejects.toBeInstanceOf(FitAgentRateLimitError);
     await expect(
-      requestFitReport(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
+      startFitJob(configuration, { vacancy: "x", locale: "en", clientAddress: "1.2.3.4" })
     ).rejects.toMatchObject({ retryAfterSeconds: 0 });
+  });
+});
+
+describe("requestFitJobStatus", () => {
+  it("reads a running job with its phase from the job path", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ state: "running", phase: "searching", toolCalls: 4, elapsedSeconds: 12 }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const status = await requestFitJobStatus(configuration, {
+      jobId: "b".repeat(32),
+      clientAddress: "203.0.113.7",
+    });
+
+    expect(status).toEqual({ state: "running", phase: "searching", toolCalls: 4, elapsedSeconds: 12 });
+    expect(fetchMock.mock.calls[0][0]).toBe(`https://agent.example.com/fit/jobs/${"b".repeat(32)}`);
+    expect(fetchMock.mock.calls[0][1].headers["x-forwarded-for"]).toBe("203.0.113.7");
+  });
+
+  it("answers a job the agent no longer holds as failed with 404", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 404, json: async () => ({}) }));
+
+    expect(
+      await requestFitJobStatus(configuration, { jobId: "b".repeat(32), clientAddress: "1.2.3.4" })
+    ).toEqual({ state: "failed", status: 404, reason: null, retryAfterSeconds: 0 });
   });
 });
 
@@ -181,7 +230,7 @@ describe("the refusal of the input gate", () => {
     );
 
     await expect(
-      requestFitReport(configuration, { vacancy: "x", locale: "nl", clientAddress: "1.2.3.4" })
+      startFitJob(configuration, { vacancy: "x", locale: "nl", clientAddress: "1.2.3.4" })
     ).rejects.toMatchObject({ name: "FitAgentRefusalError", reason: "instruction" });
   });
 
@@ -195,7 +244,7 @@ describe("the refusal of the input gate", () => {
       })
     );
 
-    const failure = requestFitReport(configuration, {
+    const failure = startFitJob(configuration, {
       vacancy: "x",
       locale: "nl",
       clientAddress: "1.2.3.4",

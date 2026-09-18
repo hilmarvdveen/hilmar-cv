@@ -12,6 +12,8 @@ vi.mock("@/lib/fit/client", async () => {
 });
 
 const LABELS = {
+  bookAction: "Book a 30-minute call",
+  newCheck: "Check another vacancy",
   loading: "Getting the result",
   ready: "Your result is below",
   failed: "The result is no longer there",
@@ -158,6 +160,19 @@ describe("FitReopenedResult", () => {
     renderView();
     await waitFor(() => expect(pageStatusRegion()).toHaveTextContent(LABELS.failed));
     expect(screen.queryByRole("button", { name: LABELS.download })).not.toBeInTheDocument();
+  });
+
+  it("gives the visitor of a lost result three ways on: the call, a new check and the mail", async () => {
+    vi.mocked(fetch).mockResolvedValue(jsonResponse({}, 404));
+    renderView();
+
+    const booking = await screen.findByRole("link", { name: LABELS.bookAction });
+    expect(booking).toHaveAttribute("data-placement", "fit-reopen-failed");
+    expect(screen.getByRole("link", { name: LABELS.newCheck })).toHaveAttribute("href", "/fit");
+    expect(screen.getByRole("link", { name: LABELS.mailAction })).toHaveAttribute(
+      "href",
+      expect.stringMatching(/^mailto:/)
+    );
   });
 
   it("says there is a queue when the read bucket refuses it", async () => {

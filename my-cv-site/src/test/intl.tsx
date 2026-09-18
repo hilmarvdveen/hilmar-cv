@@ -1,16 +1,19 @@
 import type { ReactNode } from "react";
 
-type TFn = ((key: string) => string) & { raw: (key: string) => unknown };
+type RawValues = Record<string, unknown>;
 
-function makeT(): TFn {
-  const t = ((key: string) => key) as TFn;
-  t.raw = () => [];
-  return t;
+type TranslationFunction = ((key: string) => string) & { raw: (key: string) => unknown };
+
+function makeTranslation(rawValues: RawValues): TranslationFunction {
+  const translate = ((key: string) => key) as TranslationFunction;
+  translate.raw = (key: string) => rawValues[key] ?? [];
+  return translate;
 }
 
-export function intlMock() {
+export function intlMock(options: { raw?: RawValues } = {}) {
+  const rawValues = options.raw ?? {};
   return {
-    useTranslations: () => makeT(),
+    useTranslations: () => makeTranslation(rawValues),
     useLocale: () => "en",
     useMessages: () => ({}),
     useFormatter: () => ({}),

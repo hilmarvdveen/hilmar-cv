@@ -122,6 +122,13 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
             <p className="mt-2 text-base leading-relaxed text-gray-700">
               {t("sentText", { email: sentTo })}
             </p>
+            <button
+              type="button"
+              onClick={() => setSentTo("")}
+              className="mt-3 inline-flex min-h-6 cursor-pointer items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {t("resend")}
+            </button>
           </div>
         </div>
       ) : (

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import { Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/Button";
+import { Link } from "@/i18n/navigation";
 import { Card } from "@/components/Card";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
@@ -21,6 +22,8 @@ import { FitQuestion } from "./FitQuestion";
 import { FitBooking } from "./FitBooking";
 
 export type FitReopenedResultLabels = {
+  bookAction: string;
+  newCheck: string;
   loading: string;
   ready: string;
   failed: string;
@@ -255,6 +258,31 @@ export const FitReopenedResult = ({
           <p className="text-base leading-relaxed text-gray-700">
             {loadState === "failed" ? labels.failed : labels.rateLimited}
           </p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <Button
+              href="/book"
+              variant="primary"
+              size="md"
+              data-placement="fit-reopen-failed"
+              className="w-full sm:w-auto"
+            >
+              {labels.bookAction}
+            </Button>
+            <Link
+              href="/fit"
+              data-placement="fit-reopen-new-check"
+              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {labels.newCheck}
+            </Link>
+            <a
+              href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
+              data-placement="fit-reopen-failed-mail"
+              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {labels.mailAction}
+            </a>
+          </div>
         </Card>
       )}
 

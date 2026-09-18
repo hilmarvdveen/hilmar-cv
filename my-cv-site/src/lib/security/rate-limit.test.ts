@@ -93,6 +93,16 @@ describe("enforceRateLimit", () => {
     expect(response!.status).toBe(429);
   });
 
+  it("gives the status polling sixty requests a minute per address", () => {
+    expect(RATE_LIMITS.fitStatus).toEqual({ limit: 60, windowMilliseconds: 60_000 });
+    const now = 9_000_000;
+    const makeRequest = () => buildRequest({ "x-real-ip": "6.6.6.6" });
+    for (let index = 0; index < RATE_LIMITS.fitStatus.limit; index++) {
+      expect(enforceRateLimit(makeRequest(), "fitStatus", now)).toBeNull();
+    }
+    expect(enforceRateLimit(makeRequest(), "fitStatus", now)!.status).toBe(429);
+  });
+
   it("tracks limits per IP independently", () => {
     const now = 7_000_000;
     for (let index = 0; index < RATE_LIMITS.email.limit; index++) {

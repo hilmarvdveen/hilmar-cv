@@ -1,3 +1,4 @@
+import { ownWork } from "@/data/ownWork";
 import { workHistory } from "@/data/workHistory";
 import type {
   FitAnswer,
@@ -52,6 +53,17 @@ export const EMPTY_FIT_REPORT: FitReport = {
 export const RECORD_ENGAGEMENT_IDS: ReadonlySet<string> = new Set(
   workHistory.map((entry) => entry.id)
 );
+
+export const OWN_WORK_ENGAGEMENT_IDS: ReadonlySet<string> = new Set(ownWork.map((entry) => entry.id));
+
+export const KNOWN_ENGAGEMENT_IDS: ReadonlySet<string> = new Set([
+  ...RECORD_ENGAGEMENT_IDS,
+  ...OWN_WORK_ENGAGEMENT_IDS,
+]);
+
+export function isOwnWorkEngagement(engagementId: string): boolean {
+  return OWN_WORK_ENGAGEMENT_IDS.has(engagementId);
+}
 
 export const RECORD_ENGAGEMENT_COMPANIES: ReadonlyMap<string, string> = new Map(
   workHistory.map((entry) => [entry.id, entry.company])
@@ -138,7 +150,7 @@ const keepKnownEngagements = (
 
 export function sanitizeFitReport(
   report: FitReport,
-  knownIds: ReadonlySet<string> = RECORD_ENGAGEMENT_IDS
+  knownIds: ReadonlySet<string> = KNOWN_ENGAGEMENT_IDS
 ): FitReport {
   return {
     summary: clamp(report.summary, FIT_LIMITS.summary),
@@ -158,7 +170,7 @@ export function sanitizeFitReport(
 
 export function sanitizeFitAnswer(
   answer: FitAnswer,
-  knownIds: ReadonlySet<string> = RECORD_ENGAGEMENT_IDS
+  knownIds: ReadonlySet<string> = KNOWN_ENGAGEMENT_IDS
 ): FitAnswer {
   return {
     answer: clamp(answer.answer, FIT_LIMITS.answer),

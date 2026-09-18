@@ -1,5 +1,6 @@
 import { useId, type RefObject } from "react";
 import { useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Link } from "@/i18n/navigation";
 import { mergeClasses } from "@/lib/mergeClasses";
@@ -12,6 +13,10 @@ import {
   type FitReport as FitReportData,
   type FitVerdict,
 } from "@/lib/fit/client";
+import { FitEvidence } from "./FitEvidence";
+import { FitNote } from "./FitNote";
+
+export const FIT_COMPANIES_NAMED_PER_TECHNOLOGY = 3;
 
 const VERDICT_STYLES: Record<FitVerdict, string> = {
   inRecord: "bg-emerald-100 text-emerald-800",
@@ -23,6 +28,12 @@ const VERDICT_MARKS: Record<FitVerdict, string> = {
   inRecord: "bg-emerald-100",
   partly: "bg-brand-navy/10",
   notInRecord: "bg-gray-200",
+};
+
+const VERDICT_RULES: Record<FitVerdict, string> = {
+  inRecord: "border-l-emerald-600",
+  partly: "border-l-brand-navy",
+  notInRecord: "border-l-gray-400",
 };
 
 type FitReportProps = {
@@ -57,6 +68,13 @@ export const FitReport = ({
       },
     ];
   });
+  const describeCompanies = (companies: string[]): string => {
+    const named = companies.slice(0, FIT_COMPANIES_NAMED_PER_TECHNOLOGY);
+    const others = companies.length - named.length;
+    return others > 0
+      ? `${named.join(", ")} ${t("report.otherCompanies", { count: others })}`
+      : named.join(", ");
+  };
 
   return (
     <section aria-labelledby={resultHeadingId} className="mt-8 space-y-8">
@@ -70,14 +88,32 @@ export const FitReport = ({
           {t("report.title")}
         </h2>
         {hasRequirements && (
-          <p className="mt-3 text-base font-semibold text-textMain">
-            {t("report.counts", {
-              inRecord: counts.inRecord,
-              partly: counts.partly,
-              notInRecord: counts.notInRecord,
-              total: report.requirements.length,
-            })}
-          </p>
+          <>
+            <p className="sr-only">
+              {t("report.counts", {
+                inRecord: counts.inRecord,
+                partly: counts.partly,
+                notInRecord: counts.notInRecord,
+                total: report.requirements.length,
+              })}
+            </p>
+            <dl className="mt-4 grid grid-cols-3 gap-3" aria-hidden="true">
+              {FIT_VERDICTS.map((verdict) => (
+                <div
+                  key={verdict}
+                  className={mergeClasses(
+                    "flex flex-col-reverse justify-end rounded-lg border-l-4 bg-gray-50 p-3",
+                    VERDICT_RULES[verdict]
+                  )}
+                >
+                  <dt className="mt-1 text-sm leading-snug text-gray-600">
+                    {t(`report.verdicts.${verdict}`)}
+                  </dt>
+                  <dd className="text-figure text-primary tabular-nums">{counts[verdict]}</dd>
+                </div>
+              ))}
+            </dl>
+          </>
         )}
         {report.summary && (
           <p className="mt-3 text-base leading-relaxed text-gray-700">{report.summary}</p>
@@ -134,7 +170,7 @@ export const FitReport = ({
           <ul className="space-y-4">
             {report.requirements.map((requirement) => (
               <li key={requirement.requirement}>
-                <Card>
+                <Card className={mergeClasses("border-l-4 p-4 sm:p-7", VERDICT_RULES[requirement.verdict])}>
                   <div className="flex flex-col-reverse items-start gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-3">
                     <p className="text-base font-bold text-textMain">{requirement.requirement}</p>
                     <span
@@ -146,24 +182,8 @@ export const FitReport = ({
                       {t(`report.verdicts.${requirement.verdict}`)}
                     </span>
                   </div>
-                  <p className="mt-2 text-base leading-relaxed text-gray-700">
-                    {requirement.note}
-                  </p>
-                  {requirement.engagements.length > 0 && (
-                    <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600">
-                      <span className="font-semibold">{t("report.evidenceLabel")}</span>
-                      {requirement.engagements.map((engagement) => (
-                        <Link
-                          key={engagement.id}
-                          href={`/experience/${engagement.id}`}
-                          className="inline-flex min-h-6 items-center rounded-sm px-1 text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                          data-placement="fit-evidence"
-                        >
-                          {engagement.company}
-                        </Link>
-                      ))}
-                    </p>
-                  )}
+                  <FitNote note={requirement.note} requirement={requirement.requirement} />
+                  <FitEvidence engagements={requirement.engagements} placement="fit-evidence" />
                 </Card>
               </li>
             ))}
@@ -173,30 +193,47 @@ export const FitReport = ({
 
       {technologyRows.length > 0 && (
         <section aria-labelledby={technologiesHeadingId}>
-          <h3 id={technologiesHeadingId} className="text-subsection-title text-textMain mb-2">
-            {t("report.technologiesTitle")}
-          </h3>
-          <p className="mb-4 text-sm leading-relaxed text-gray-600">
-            {t("report.technologiesBasis")}
-          </p>
-          <Card>
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-              {technologyRows.map((row) => (
-                <li key={row.name}>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <span className="text-base text-textMain">{row.name}</span>
-                    <span className="text-base font-bold text-primary">
-                      {row.duration.unit === "years"
-                        ? t("report.years", { years: row.duration.value })
-                        : t("report.months", { months: row.duration.value })}
-                    </span>
-                  </div>
-                  {row.companies.length > 0 && (
-                    <p className="mt-1 text-sm text-gray-600">{row.companies.join(", ")}</p>
-                  )}
-                </li>
-              ))}
-            </ul>
+          <Card className="p-0">
+            <details className="group">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:p-7 [&::-webkit-details-marker]:hidden">
+                <span>
+                  <h3 id={technologiesHeadingId} className="text-subsection-title text-textMain">
+                    {t("report.technologiesTitle")}
+                  </h3>
+                  <span className="mt-1 block text-sm text-gray-600">
+                    {t("report.technologiesSummary", { count: technologyRows.length })}
+                  </span>
+                </span>
+                <ChevronDown
+                  className="h-5 w-5 shrink-0 text-gray-600 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                  aria-hidden="true"
+                />
+              </summary>
+              <div className="px-4 pb-4 sm:px-7 sm:pb-7">
+                <p className="mb-4 text-sm leading-relaxed text-gray-600">
+                  {t("report.technologiesBasis")}
+                </p>
+                <dl className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+                  {technologyRows.map((row) => (
+                    <div key={row.name}>
+                      <div className="flex items-baseline justify-between gap-4">
+                        <dt className="text-base text-textMain">{row.name}</dt>
+                        <dd className="text-right text-base font-bold tabular-nums text-primary">
+                          {row.duration.unit === "years"
+                            ? t("report.years", { years: row.duration.value })
+                            : t("report.months", { months: row.duration.value })}
+                        </dd>
+                      </div>
+                      {row.companies.length > 0 && (
+                        <dd className="mt-1 text-sm text-gray-600">
+                          {describeCompanies(row.companies)}
+                        </dd>
+                      )}
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </details>
           </Card>
         </section>
       )}

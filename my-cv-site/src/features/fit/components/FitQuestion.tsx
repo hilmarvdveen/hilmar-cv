@@ -1,11 +1,10 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Loader2, MessageCircleQuestion } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import { Link } from "@/i18n/navigation";
 import {
   FIT_LIMITS,
   TURNSTILE_TOKEN_FIELD,
@@ -13,6 +12,7 @@ import {
   turnstileTokenFrom,
   type FitAnswer,
 } from "@/lib/fit/client";
+import { FitEvidence } from "./FitEvidence";
 
 type FitQuestionProps = {
   sessionId: string;
@@ -28,6 +28,11 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
   const [answer, setAnswer] = useState<FitAnswer | null>(null);
   const [isAsking, setIsAsking] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const answerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (answer) answerRef.current?.focus();
+  }, [answer]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -76,7 +81,7 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
       <h3 className="text-subsection-title text-textMain">{t("question.title")}</h3>
       <p className="mt-2 text-base leading-relaxed text-gray-700">{t("question.description")}</p>
 
-      <form onSubmit={handleSubmit} className="mt-5 space-y-4" aria-busy={isAsking}>
+      <form onSubmit={handleSubmit} className="mt-5 space-y-4" aria-busy={isAsking} noValidate>
         <div>
           <label
             htmlFor={questionFieldId}
@@ -98,6 +103,7 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
             aria-invalid={errorMessage !== ""}
             aria-describedby={errorMessage === "" ? undefined : questionErrorId}
           />
+          <p className="mt-2 text-sm text-gray-600">{t("question.privacyNote")}</p>
         </div>
 
         {turnstileSiteKey && (
@@ -126,37 +132,30 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
         </Button>
       </form>
 
-      <div role="status" className="mt-5">
+      <div className="mt-5">
         {errorMessage && (
           <p
             id={questionErrorId}
+            role="alert"
             className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
           >
             {errorMessage}
           </p>
         )}
         {answer && (
-          <Card variant="tinted" className="p-5">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">
-              {t("question.answerLabel")}
-            </p>
-            <p className="mt-2 text-base leading-relaxed text-gray-700">{answer.answer}</p>
-            {answer.engagements.length > 0 && (
-              <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600">
-                <span className="font-semibold">{t("report.evidenceLabel")}</span>
-                {answer.engagements.map((engagement) => (
-                  <Link
-                    key={engagement.id}
-                    href={`/experience/${engagement.id}`}
-                    className="inline-flex min-h-6 items-center rounded-sm px-1 text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                    data-placement="fit-answer-evidence"
-                  >
-                    {engagement.company}
-                  </Link>
-                ))}
+          <div
+            ref={answerRef}
+            tabIndex={-1}
+            className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          >
+            <Card variant="tinted" className="p-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary">
+                {t("question.answerLabel")}
               </p>
-            )}
-          </Card>
+              <p className="mt-2 text-base leading-relaxed text-gray-700">{answer.answer}</p>
+              <FitEvidence engagements={answer.engagements} placement="fit-answer-evidence" />
+            </Card>
+          </div>
         )}
       </div>
     </Card>

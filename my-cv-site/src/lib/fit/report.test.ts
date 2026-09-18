@@ -1,12 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { ownWork } from "@/data/ownWork";
 import { workHistory } from "@/data/workHistory";
 import {
   EMPTY_FIT_REPORT,
   FIT_LIMITS,
   FIT_VERDICTS,
   FIT_DAILY_CAP_RETRY_SECONDS,
+  KNOWN_ENGAGEMENT_IDS,
+  OWN_WORK_ENGAGEMENT_IDS,
   RECORD_ENGAGEMENT_COMPANIES,
   RECORD_ENGAGEMENT_IDS,
+  isOwnWorkEngagement,
   companyNamesForEngagements,
   countFitVerdicts,
   fitTechnologyDuration,
@@ -79,6 +83,14 @@ describe("the fit limits and verdicts", () => {
     expect(RECORD_ENGAGEMENT_IDS.size).toBe(workHistory.length);
     expect(RECORD_ENGAGEMENT_IDS.has("bol")).toBe(true);
     expect(RECORD_ENGAGEMENT_IDS.has("not-a-client")).toBe(false);
+  });
+
+  it("counts own work as known without calling it client experience", () => {
+    expect(OWN_WORK_ENGAGEMENT_IDS.size).toBe(ownWork.length);
+    expect(KNOWN_ENGAGEMENT_IDS.size).toBe(workHistory.length + ownWork.length);
+    expect(isOwnWorkEngagement("vacancy-fit")).toBe(true);
+    expect(isOwnWorkEngagement("bol")).toBe(false);
+    expect(isOwnWorkEngagement("not-a-client")).toBe(false);
   });
 
   it("recognises a verdict and refuses anything else", () => {
@@ -193,6 +205,29 @@ describe("sanitizeFitReport", () => {
     expect(sanitized.technologies[0].engagements).toEqual(["bol"]);
   });
 
+  it("keeps an own work engagement beside the client ones", () => {
+    const sanitized = sanitizeFitReport(
+      report({
+        requirements: [
+          {
+            requirement: "Agents and an MCP server",
+            verdict: "partly",
+            note: "Built for this site.",
+            engagements: [
+              { id: "vacancy-fit", company: "Vacancy check" },
+              { id: "made-up", company: "Made Up" },
+            ],
+          },
+        ],
+        technologies: [{ name: "MCP", years: 1, engagements: ["vacancy-fit", "made-up"] }],
+      })
+    );
+    expect(sanitized.requirements[0].engagements).toEqual([
+      { id: "vacancy-fit", company: "Vacancy check" },
+    ]);
+    expect(sanitized.technologies[0].engagements).toEqual(["vacancy-fit"]);
+  });
+
   it("uses the known ids it is given", () => {
     const sanitized = sanitizeFitReport(report(), new Set(["niped"]));
     expect(sanitized.requirements[0].engagements).toEqual([]);
@@ -258,6 +293,19 @@ describe("sanitizeFitAnswer", () => {
     });
     expect(sanitized.answer).toHaveLength(FIT_LIMITS.answer);
     expect(sanitized.engagements).toEqual([{ id: "bol", company: "bol.com" }]);
+  });
+
+  it("keeps an own work engagement and drops an unknown one", () => {
+    const sanitized = sanitizeFitAnswer({
+      answer: "The vacancy check runs on this site.",
+      engagements: [
+        { id: "own-platform", company: "hilmarvanderveen.com" },
+        { id: "elsewhere", company: "Elsewhere" },
+      ],
+    });
+    expect(sanitized.engagements).toEqual([
+      { id: "own-platform", company: "hilmarvanderveen.com" },
+    ]);
   });
 
   it("uses the known ids it is given", () => {

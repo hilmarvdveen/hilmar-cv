@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { FitReport } from "./FitReport";
 import type { FitReport as FitReportData } from "@/lib/fit";
 
@@ -61,11 +62,19 @@ describe("FitReport", () => {
     expect(screen.getByText("report.legend.notInRecord")).toBeInTheDocument();
   });
 
-  it("names the verdict of every requirement", () => {
+  it("names the verdict of every requirement, once in the tile and once on the card", () => {
     renderReport();
-    expect(screen.getByText("report.verdicts.inRecord")).toBeInTheDocument();
-    expect(screen.getByText("report.verdicts.partly")).toBeInTheDocument();
-    expect(screen.getByText("report.verdicts.notInRecord")).toBeInTheDocument();
+    expect(screen.getAllByText("report.verdicts.inRecord")).toHaveLength(2);
+    expect(screen.getAllByText("report.verdicts.partly")).toHaveLength(2);
+    expect(screen.getAllByText("report.verdicts.notInRecord")).toHaveLength(2);
+  });
+
+  it("counts the verdicts in three tiles a screen reader skips, with one sentence instead", () => {
+    renderReport();
+    expect(screen.getByText("report.counts")).toBeInTheDocument();
+    const figures = screen.getAllByText("1", { selector: "dd" });
+    expect(figures).toHaveLength(3);
+    expect(figures[0]!.closest("dl")).toHaveAttribute("aria-hidden", "true");
   });
 
   it("links the evidence to the engagement page and leaves an empty list out", () => {
@@ -78,7 +87,50 @@ describe("FitReport", () => {
       "href",
       "/experience/omniplan"
     );
-    expect(screen.getAllByText("report.evidenceLabel")).toHaveLength(2);
+    expect(screen.getAllByText("evidenceLabel")).toHaveLength(2);
+  });
+
+  it("names own work without a link to an engagement page", () => {
+    renderReport({
+      requirements: [
+        {
+          requirement: "Agents and an MCP server",
+          verdict: "partly",
+          note: "Built for this site.",
+          engagements: [{ id: "vacancy-fit", company: "Vacancy check" }],
+        },
+      ],
+    });
+    expect(screen.getByText("ownWork.vacancy-fit")).toBeInTheDocument();
+    expect(screen.getByText("ownWorkLabel")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Vacancy check" })).toBeNull();
+  });
+
+  it("opens a long note from its own button", async () => {
+    const user = userEvent.setup();
+    renderReport({
+      requirements: [
+        {
+          requirement: "A long story",
+          verdict: "inRecord",
+          note: "React ".repeat(60),
+          engagements: [],
+        },
+      ],
+    });
+    await user.click(screen.getByRole("button", { name: /noteMore/ }));
+    expect(screen.getByRole("button", { name: /noteLess/ })).toHaveAttribute(
+      "aria-expanded",
+      "true"
+    );
+  });
+
+  it("keeps the years behind a disclosure with its own heading", () => {
+    renderReport();
+    const heading = screen.getByRole("heading", { level: 3, name: "report.technologiesTitle" });
+    expect(heading.closest("summary")).not.toBeNull();
+    expect(heading.closest("details")).not.toBeNull();
+    expect(screen.getByText("report.technologiesSummary")).toBeInTheDocument();
   });
 
   it("lists the years per technology with the basis and the engagements behind each figure", () => {
@@ -86,9 +138,26 @@ describe("FitReport", () => {
     expect(screen.getByText("report.technologiesBasis")).toBeInTheDocument();
     expect(screen.getByText("React")).toBeInTheDocument();
     expect(screen.getByText("Angular")).toBeInTheDocument();
-    expect(screen.getByText("bol.com", { selector: "p" })).toBeInTheDocument();
+    expect(screen.getByText("bol.com", { selector: "dd" })).toBeInTheDocument();
     expect(screen.getByText("Athlon")).toBeInTheDocument();
     expect(screen.getAllByText("report.years")).toHaveLength(2);
+  });
+
+  it("names three companies per technology and counts the rest", () => {
+    renderReport({
+      requirements: [],
+      technologies: [
+        {
+          name: "TypeScript",
+          years: 8,
+          engagements: ["bol", "belastingdienst", "athlon", "omniplan"],
+        },
+      ],
+    });
+    expect(
+      screen.getByText("bol.com, Belastingdienst, Athlon report.otherCompanies")
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Omniplan/)).toBeNull();
   });
 
   it("prints a technology under one year in months and drops one that rounds to nothing", () => {

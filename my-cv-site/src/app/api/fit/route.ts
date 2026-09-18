@@ -15,10 +15,12 @@ import {
   FitAgentRefusalError,
   getFitAgentConfiguration,
   isFitReport,
-  requestFitReport,
   sanitizeFitReport,
   sanitizeSessionId,
+  agentBudget,
+  startFitJob,
 } from "@/lib/fit";
+import { FIT_JOB_START_BUDGET_MILLISECONDS } from "@/lib/fit/job";
 import { getTurnstileConfiguration, verifyTurnstileToken } from "@/lib/fit/turnstile";
 
 export const runtime = "nodejs";
@@ -80,19 +82,23 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
 
-    const result = await requestFitReport(configuration, {
+    const job = await startFitJob(agentBudget(configuration, FIT_JOB_START_BUDGET_MILLISECONDS), {
       vacancy,
       locale: body.locale === "en" ? "en" : "nl",
       clientAddress: getClientIp(request),
     });
 
-    if (!isFitReport(result?.report)) {
+    if (job.started) {
+      return NextResponse.json({ jobId: job.jobId }, { status: 202 });
+    }
+
+    if (!isFitReport(job.answer?.report)) {
       throw new Error("The fit agent returned a report in an unexpected shape");
     }
 
     return NextResponse.json({
-      report: sanitizeFitReport(result.report),
-      sessionId: sanitizeSessionId(result.sessionId),
+      report: sanitizeFitReport(job.answer.report),
+      sessionId: sanitizeSessionId(job.answer.sessionId),
     });
   } catch (error: unknown) {
     if (error instanceof FitAgentRateLimitError) {

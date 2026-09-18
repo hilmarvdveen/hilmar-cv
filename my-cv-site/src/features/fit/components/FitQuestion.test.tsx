@@ -65,6 +65,18 @@ describe("FitQuestion", () => {
     );
   });
 
+  it("moves focus to the answer once it arrives", async () => {
+    render(<FitQuestion sessionId="session-id-value" />);
+    await ask();
+    await waitFor(() => expect(screen.getByText(ANSWER.answer)).toBeInTheDocument());
+    expect(screen.getByText(ANSWER.answer).closest("[tabindex]")).toHaveFocus();
+  });
+
+  it("says under the field that the question is not kept", () => {
+    render(<FitQuestion sessionId="session-id-value" />);
+    expect(screen.getByText("question.privacyNote")).toBeInTheDocument();
+  });
+
   it("reports the submitted and answered events", async () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
@@ -76,7 +88,7 @@ describe("FitQuestion", () => {
   it("refuses a question under five characters without calling the route", async () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask("why");
-    expect(screen.getByRole("status")).toHaveTextContent("question.errors.tooShort");
+    expect(screen.getByRole("alert")).toHaveTextContent("question.errors.tooShort");
     expect(fetch).not.toHaveBeenCalled();
     const field = screen.getByLabelText("question.label");
     expect(field).toHaveAttribute("aria-invalid", "true");
@@ -100,7 +112,7 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("status")).toHaveTextContent("question.errors.rateLimited")
+      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.rateLimited")
     );
     expect(trackFitEvent).toHaveBeenCalledWith("fit_question_failed", { status: 429 });
   });
@@ -110,7 +122,7 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("status")).toHaveTextContent("question.errors.failed")
+      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.failed")
     );
   });
 
@@ -119,7 +131,7 @@ describe("FitQuestion", () => {
     render(<FitQuestion sessionId="session-id-value" />);
     await ask();
     await waitFor(() =>
-      expect(screen.getByRole("status")).toHaveTextContent("question.errors.failed")
+      expect(screen.getByRole("alert")).toHaveTextContent("question.errors.failed")
     );
     expect(trackFitEvent).toHaveBeenCalledWith("fit_question_failed", { status: 0 });
   });
@@ -162,6 +174,6 @@ describe("FitQuestion", () => {
     await waitFor(() =>
       expect(screen.getByText("Nothing in the record.")).toBeInTheDocument()
     );
-    expect(screen.queryByText("report.evidenceLabel")).toBeNull();
+    expect(screen.queryByText("evidenceLabel")).toBeNull();
   });
 });

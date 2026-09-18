@@ -11,6 +11,7 @@ export const CLIENT_MESSAGE_KEYS = [
   "search",
   "fit.check",
   "fit.cv",
+  "fit.notifier",
 ] as const;
 
 const readPath = (source: Messages, path: string[]): unknown =>

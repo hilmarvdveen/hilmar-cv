@@ -2258,35 +2258,36 @@
             "description": "Paste a vacancy and see what my work history holds for each requirement, with the engagement that shows it. Then ask a question about the result."
         },
         "hero": {
-            "badge": "AI assistant on my work history",
+            "badge": "AI assistant",
             "title": "Does this vacancy fit my work?",
             "description": "You see what my work history holds for each requirement, and which engagement shows it. One line per requirement, ready to forward. After that you can ask questions about the result.",
-            "note": "Rather go through it together?",
+            "note": "Would you rather go through it together?",
             "noteLink": "Book a 30-minute call"
         },
         "disclosure": {
             "title": "How this works",
-            "assistant": "This is an AI assistant. It works only from my recorded work history and names the engagement wherever that work history shows a requirement.",
+            "assistant": "This is an AI assistant. It works only from my work history and names the engagement that shows each requirement.",
             "processing": "The vacancy text stays with the result and the CV for thirty days under a random number, so you can still ask a question about it. After that they are gone.",
             "register": "What stays longer is the core of the vacancy: the title, the organisation, the conditions, the requirements with their outcome, and the contact details that stand in the text itself. I keep those for twelve months in an internal register that only I read, so I can respond to the vacancy. To have it gone sooner, mail the number shown under the result."
         },
         "section": {
             "title": "Paste the vacancy",
-            "intro": "Paste the whole text or just the requirements section. You fill in nothing else."
+            "intro": "Paste the whole text or just the requirements section. Nothing else to fill in."
         },
         "cv": {
-            "title": "This CV, written to this vacancy",
-            "intro": "The CV puts the requirements of this vacancy in the first table and orders the competencies the way this role asks for. Every engagement in it stays in the words of my recorded work history.",
+            "title": "This CV, written for this vacancy",
+            "intro": "The CV puts the requirements of this vacancy in the first table and orders the competencies the way this role asks for. Every engagement in it stays in the words of my work history.",
             "nameLabel": "Your name",
             "emailLabel": "Your email address",
             "organisationLabel": "Organisation (optional)",
             "submit": "Mail me the CV for this vacancy",
-            "sending": "Sending...",
-            "privacyNote": "Your name and email address go to my mailbox for this request. I see that you asked for the CV, nothing else.",
+            "sending": "Sending…",
+            "privacyNote": "Your name, your email address and your organisation go to my mailbox, together with the title of this vacancy. Of your address I keep the domain only, for example @kvk.nl.",
             "privacyLink": "How I handle your data",
             "mailAction": "Mail me the CV",
             "sentTitle": "Check your mail",
             "sentText": "The link is on its way to {email}. It opens this result again and carries the download button.",
+            "resend": "Wrong address? Send it again",
             "errors": {
                 "name": "Fill in your name.",
                 "email": "Fill in an email address the link can go to.",
@@ -2295,9 +2296,9 @@
             }
         },
         "result": {
-            "title": "Hilmar van der Veen next to this vacancy",
-            "intro": "Below you find, per requirement, what my work history shows, with the engagement that shows it and the CV written to this vacancy.",
-            "loading": "Getting the result...",
+            "title": "This vacancy next to my work history",
+            "intro": "Below you find what my work history shows for each requirement, with the engagement that shows it and the CV written for this vacancy.",
+            "loading": "Getting the result…",
             "ready": "Your result is below.",
             "failed": "The result is no longer there. A result stays for thirty days. Run the check again and the CV comes with it.",
             "rateLimited": "There is a queue right now. Wait a minute and reload the page, and your result is back.",
@@ -2310,7 +2311,7 @@
             "downloadFailed": "The CV did not come through. Your result is still here, so try again in a moment.",
             "downloadTimedOut": "Building the CV is taking longer than expected. Try again in a few minutes and the file is usually ready.",
             "downloadRateLimited": "There is a queue of downloads right now. Wait a minute and the next one goes through.",
-            "nextSteps": "Rather go through the requirements together?",
+            "nextSteps": "Would you rather go through the requirements together?",
             "nextStepsLink": "Book a 30-minute call",
             "mailAction": "Mail me the CV",
             "newCheck": "Check another vacancy",
@@ -2324,11 +2325,10 @@
                 "counter": "{characters} of {maximum} characters, at least {minimum}",
                 "capNote": "This is the maximum. The rest of the text is not included. The requirements section is the part that counts.",
                 "submit": "Check the vacancy",
-                "checking": "Checking...",
-                "checkingNote": "The assistant reads the requirements one by one. That usually takes about half a minute."
+                "checking": "Checking…"
             },
             "status": {
-                "checking": "The check is running.",
+                "checking": "The check is running. You can read on and you get a notice the moment the result is ready.",
                 "ready": "The result is below."
             },
             "errors": {
@@ -2343,25 +2343,26 @@
                 "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
                 "capReached": "The check has reached its limit for today. It runs again tomorrow. If you would rather not wait, book a call and I will walk through the vacancy with you.",
                 "failed": "The check did not come through. With a long vacancy it helps to paste only the requirements section. If that does not work either, book a call and I will walk through the vacancy with you.",
-                "mailAction": "Mail the vacancy to me"
+                "mailAction": "Mail the vacancy to me",
+                "retryAction": "Try again"
             },
             "report": {
                 "title": "What my work history shows",
-                "counts": "{total, plural, one {{inRecord} of 1 requirement is in my work history} other {{inRecord} of # requirements are in my work history}}, {partly} partly, {notInRecord} not.",
+                "counts": "{total, plural, one {{inRecord} of 1 requirement is in my work history} other {{inRecord} of # requirements are in my work history}}, {partly} partly and {notInRecord} not yet.",
                 "nextSteps": "Below this you find the CV written to this vacancy, and under that the button to book a call.",
                 "requirementsTitle": "Requirement by requirement",
                 "legend": {
                     "title": "What the labels mean",
-                    "inRecord": "In the work history: an engagement carries this technology or this responsibility.",
-                    "partly": "Partly: the work history carries adjacent work, or fewer years than the vacancy asks for.",
-                    "notInRecord": "Not in the work history: no evidence for it. On that line you read what the work history does hold."
+                    "inRecord": "In the work history: an engagement shows this technology or this responsibility. A degree or a course has no engagement beside it.",
+                    "partly": "Partly: the adjacent work is there, or fewer years than the vacancy asks for. Or it runs in my own work and not yet in a client engagement.",
+                    "notInRecord": "Not yet in the work history: no engagement carries this requirement so far. On that line you read what my work history does hold."
                 },
                 "technologiesTitle": "Years per technology",
-                "technologiesBasis": "Counted over the engagements that carry the technology. Months that overlap count once.",
+                "technologiesBasis": "Counted over the client engagements that carry the technology. Months that overlap count once. My own work does not count here.",
                 "verdicts": {
                     "inRecord": "In the work history",
                     "partly": "Partly",
-                    "notInRecord": "Not in the work history"
+                    "notInRecord": "Not yet in the work history"
                 },
                 "evidenceLabel": "Where it shows",
                 "years": "{years, plural, one {# year} other {# years}}",
@@ -2370,7 +2371,18 @@
                 "sessionLabel": "Number of this result: {sessionId}. To have it removed sooner, mail that number to {email}.",
                 "bookTitle": "That was the short version",
                 "bookText": "In thirty minutes we go through the requirements and you hear what I would pick up in the first weeks.",
-                "bookButton": "Book a 30-minute call"
+                "bookButton": "Book a 30-minute call",
+                "technologiesSummary": "{count, plural, one {# technology} other {# technologies}}",
+                "otherCompanies": "and {count} more",
+                "noteMore": "Read on",
+                "noteLess": "Less",
+                "noteSubject": "about {requirement}",
+                "ownWorkLabel": "own work",
+                "ownWork": {
+                    "own-platform": "hilmarvanderveen.com",
+                    "reference-repository": "Zappy Mart, my public repository",
+                    "vacancy-fit": "Vacancy check"
+                }
             },
             "question": {
                 "title": "Ask a question about the result",
@@ -2378,14 +2390,70 @@
                 "label": "Your question",
                 "placeholder": "How many years of experience with GraphQL?",
                 "submit": "Ask the question",
-                "asking": "Answering...",
+                "asking": "Writing the answer…",
                 "answerLabel": "Answer",
                 "errors": {
                     "tooShort": "Make the question a little longer. A few words is enough.",
                     "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
                     "failed": "The answer did not come through. Ask it again in a moment."
-                }
+                },
+                "privacyNote": "I do not keep your question."
+            },
+            "progress": {
+                "title": "The check is running",
+                "intro": "Usually done inside a minute. The first check after a quiet spell has to start up and takes about a minute and a half. You can read on wherever you like, and you get a notice the moment the result is ready.",
+                "keepBrowsing": "Read on, you get a notice when it is ready",
+                "lookups": "{count, plural, one {# lookup} other {# lookups}}",
+                "elapsedSeconds": "{seconds, plural, one {# second} other {# seconds}}",
+                "elapsedMinutes": "{minutes, plural, one {# minute} other {# minutes}}, {seconds, plural, one {# second} other {# seconds}}",
+                "phases": {
+                    "reading": {
+                        "1": "Reading the vacancy…",
+                        "2": "Pulling the requirements out…",
+                        "3": "Listing what you ask for…",
+                        "4": "Splitting it into requirements…"
+                    },
+                    "searching": {
+                        "1": "Searching my work history…",
+                        "2": "Looking up the engagement…",
+                        "3": "Counting years per technology…",
+                        "4": "Finding what shows it…"
+                    },
+                    "writing": {
+                        "1": "Writing the verdict per requirement…",
+                        "2": "Working through the requirements…",
+                        "3": "One line per requirement…",
+                        "4": "Putting it into words…"
+                    },
+                    "verifying": {
+                        "1": "Checking every technology…",
+                        "2": "Matching names to engagements…",
+                        "3": "Recounting the years…",
+                        "4": "Code checks every technology…"
+                    },
+                    "saving": {
+                        "1": "Storing the result…",
+                        "2": "Giving the result its number…",
+                        "3": "Getting the result ready…",
+                        "4": "Almost there…"
+                    }
+                },
+                "stillRunning": "This one is starting up, so it takes longer. About half a minute to go.",
+                "takingLong": "This is taking longer than usual. Your result appears here, also if you read on.",
+                "announceStart": "The check is running. You can read on and you get a notice the moment the result is ready.",
+                "announceStillRunning": "The check is still running."
             }
+        },
+        "notifier": {
+            "label": "Notice from the vacancy check",
+            "running": "The vacancy check is still running.",
+            "ready": "Your vacancy check is ready.",
+            "readyLink": "See the result",
+            "failed": "The vacancy check did not finish.",
+            "failedLink": "Back to the vacancy check",
+            "dismiss": "Close this notice",
+            "announceReady": "Your vacancy check is ready. Go to the vacancy check to read the result.",
+            "announceFailed": "The vacancy check did not finish. Open the vacancy check to run it again."
         }
     },
     "search": {

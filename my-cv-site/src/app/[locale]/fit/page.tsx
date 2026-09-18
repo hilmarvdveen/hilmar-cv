@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
@@ -15,6 +15,7 @@ import {
 } from "@/features/fit";
 import { sanitizeSessionId } from "@/lib/fit";
 import { fitReopenState, getFitLinkSecret } from "@/lib/fit/resultLink";
+import { Link } from "@/i18n/navigation";
 import {
   TURNSTILE_SCRIPT_URL,
   getTurnstileConfiguration,
@@ -96,6 +97,8 @@ export default async function FitPage({ params, searchParams }: Props) {
               resultKey={resultKey}
               turnstileSiteKey={turnstileSiteKey ?? undefined}
               labels={{
+                bookAction: t("check.report.bookButton"),
+                newCheck: t("result.newCheck"),
                 loading: t("result.loading"),
                 ready: t("result.ready"),
                 failed: t("result.failed"),
@@ -126,16 +129,13 @@ export default async function FitPage({ params, searchParams }: Props) {
             </Card>
           )}
           {isReopened ? (
-            <details className="group">
-              <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-sm py-1 text-base font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
-                {t("result.newCheck")}
-                <ChevronDown
-                  className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180"
-                  aria-hidden="true"
-                />
-              </summary>
-              <div className="mt-6">{checkIsland}</div>
-            </details>
+            <Link
+              href="/fit"
+              data-placement="fit-reopen-new-check"
+              className="inline-flex min-h-6 items-center rounded-sm py-1 text-base font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            >
+              {t("result.newCheck")}
+            </Link>
           ) : (
             checkIsland
           )}

@@ -74,7 +74,13 @@ describe("FitVacancyForm", () => {
     const submit = screen.getByRole("button", { name: /form.checking/ });
     expect(submit).toBeEnabled();
     expect(submit).toHaveAttribute("aria-disabled", "true");
-    expect(screen.getByText("form.checkingNote")).toBeInTheDocument();
+  });
+
+  it("leaves the browser bubbles out so the written sentences are the ones that show", () => {
+    renderForm();
+    expect(screen.getByRole("button", { name: /form.submit/ }).closest("form")).toHaveAttribute(
+      "noValidate"
+    );
   });
 
   it("reports every keystroke to the parent", async () => {
@@ -109,6 +115,21 @@ describe("FitVacancyForm", () => {
     expect(field).toHaveAccessibleDescription(
       "form.hint form.counter Paste a bit more of the vacancy."
     );
+  });
+
+  it("moves focus to the failure so a screen reader lands on it", () => {
+    renderForm({ failure: { message: "Paste a bit more of the vacancy.", recoverable: true } });
+    expect(screen.getByRole("alert")).toHaveFocus();
+  });
+
+  it("starts a new check from the retry button inside the failure card", async () => {
+    const user = userEvent.setup();
+    const props = renderForm({
+      vacancy: "A senior frontend engineer with React.",
+      failure: { message: "The check did not come through.", recoverable: false },
+    });
+    await user.click(screen.getByRole("button", { name: "errors.retryAction" }));
+    expect(props.onSubmit).toHaveBeenCalled();
   });
 
   it("shows a failure as a card with the booking action and the mail link", () => {

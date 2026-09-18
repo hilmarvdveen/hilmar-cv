@@ -1,7 +1,9 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { finishedFitJobSnapshot, showFinishedFitJob } from "@/lib/fit/jobStore";
 import { FitCheck } from "./FitCheck";
+import type { FitReport } from "@/lib/fit";
 
 vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
 
@@ -11,7 +13,7 @@ vi.mock("@/lib/fit/client", async () => {
   return { ...actual, trackFitEvent: (...parameters: unknown[]) => trackFitEvent(...parameters) };
 });
 
-const REPORT = {
+const REPORT: FitReport = {
   summary: "React and a reversible cut-over sit in the record.",
   requirements: [
     {
@@ -49,17 +51,39 @@ const renderCheck = (turnstileSiteKey?: string) =>
     />
   );
 
+const JOB_ID = "c".repeat(32);
+
 const pageStatusRegion = () => screen.getAllByRole("status")[0]!;
 
-const check = async (vacancy = VACANCY) => {
-  const user = userEvent.setup();
+const check = async (vacancy = VACANCY, user = userEvent.setup()) => {
   await user.click(screen.getByLabelText("form.label"));
   await user.paste(vacancy);
   await user.click(screen.getByRole("button", { name: /form.submit/ }));
 };
 
+const queuedJob = (statusBody: unknown) =>
+  vi.fn(async (url: string) =>
+    url.startsWith("/api/fit/status")
+      ? { ok: true, status: 200, json: async () => statusBody }
+      : { ok: true, status: 202, json: async () => ({ jobId: JOB_ID }) }
+  );
+
+const letTheJobRun = async (milliseconds = 1_000) => {
+  await waitFor(() => expect(fetch).toHaveBeenCalled());
+  await vi.advanceTimersByTimeAsync(milliseconds);
+};
+
+const rememberAResult = (seen: boolean) =>
+  showFinishedFitJob({
+    report: REPORT,
+    sessionId: "session-id-value",
+    finishedAt: Date.now(),
+    seen,
+  });
+
 beforeEach(() => {
   trackFitEvent.mockReset();
+  window.sessionStorage.clear();
   vi.stubGlobal(
     "fetch",
     vi.fn().mockResolvedValue({
@@ -68,6 +92,11 @@ beforeEach(() => {
       json: async () => ({ report: REPORT, sessionId: "session-id-value" }),
     })
   );
+});
+
+afterEach(() => {
+  vi.useRealTimers();
+  window.sessionStorage.clear();
 });
 
 describe("FitCheck", () => {
@@ -299,11 +328,13 @@ describe("FitCheck", () => {
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.rateLimited"));
   });
 
-  it("ignores a second submit while the first check is still running", async () => {
+  it("ignores a second submit while the first check is still starting", async () => {
     vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise(() => undefined)));
     renderCheck();
     await check();
-    await waitFor(() => expect(screen.getByText("form.checkingNote")).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /form.checking/ })).toBeInTheDocument()
+    );
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: /form.checking/ }));
     expect(fetch).toHaveBeenCalledTimes(1);
@@ -322,6 +353,127 @@ describe("FitCheck", () => {
     await check();
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.failed"));
     expect(trackFitEvent).toHaveBeenCalledWith("fit_failed", { status: 0 });
+  });
+});
+
+describe("FitCheck with a queued job", () => {
+  const checkWithTheClockRunning = async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    renderCheck();
+    await check(VACANCY, user);
+    return user;
+  };
+
+  it("waits for the job and shows the report once it is done", async () => {
+    vi.stubGlobal(
+      "fetch",
+      queuedJob({ state: "done", report: REPORT, sessionId: "session-id-value" })
+    );
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
+    expect(screen.getByLabelText("form.label")).toBeInTheDocument();
+    expect(document.activeElement).toBe(
+      screen.getByRole("heading", { level: 2, name: "report.title" })
+    );
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_completed", {
+      requirements: 2,
+      inRecord: 1,
+      partly: 0,
+      notInRecord: 1,
+    });
+  });
+
+  it("puts the waiting panel where the form was, so a second check cannot start", async () => {
+    vi.stubGlobal("fetch", queuedJob({ state: "running", phase: "searching", toolCalls: 2 }));
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    expect(screen.getByRole("heading", { level: 2, name: "title" })).toBeInTheDocument();
+    expect(screen.queryByLabelText("form.label")).toBeNull();
+    expect(screen.queryByRole("button", { name: /form.submit/ })).toBeNull();
+  });
+
+  it("names the reason when the agent refused the text while the job ran", async () => {
+    vi.stubGlobal("fetch", queuedJob({ state: "failed", status: 400, reason: "instruction" }));
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    await waitFor(() =>
+      expect(screen.getByRole("alert")).toHaveTextContent("errors.reasons.instruction")
+    );
+    expect(screen.getByLabelText("form.label")).toBeInTheDocument();
+  });
+
+  it("says the daily cap is reached when the job waits for tomorrow", async () => {
+    vi.stubGlobal(
+      "fetch",
+      queuedJob({ state: "failed", status: 429, retryAfterSeconds: 28_800 })
+    );
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.capReached"));
+  });
+
+  it("falls back to the general sentence on any other failed job", async () => {
+    vi.stubGlobal("fetch", queuedJob({ state: "failed", status: 500 }));
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.failed"));
+    expect(trackFitEvent).toHaveBeenCalledWith("fit_failed", { status: 500 });
+  });
+
+  it("keeps the standing report in place while the next job runs", async () => {
+    rememberAResult(true);
+    vi.stubGlobal("fetch", queuedJob({ state: "running", phase: "reading", toolCalls: 0 }));
+    await checkWithTheClockRunning();
+    await letTheJobRun();
+
+    expect(screen.getByRole("heading", { level: 2, name: "title" })).toBeInTheDocument();
+    expect(screen.getByText(REPORT.summary)).toBeInTheDocument();
+  });
+});
+
+describe("FitCheck with an answer it cannot use", () => {
+  it("shows the repeat report even when no session came with it", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({ report: REPORT }) })
+    );
+    renderCheck();
+    await check();
+
+    await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
+    expect(screen.queryByLabelText("question.label")).toBeNull();
+  });
+
+  it("keeps the form and says nothing when the answer holds neither job nor report", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => ({}) })
+    );
+    renderCheck();
+    await check();
+
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+    expect(screen.getByLabelText("form.label")).toBeInTheDocument();
+    expect(screen.queryByText(REPORT.summary)).toBeNull();
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+});
+
+describe("FitCheck with a result from an earlier page", () => {
+  it("shows the result the session kept and marks it as seen", async () => {
+    rememberAResult(false);
+    renderCheck();
+
+    expect(screen.getByText(REPORT.summary)).toBeInTheDocument();
+    await waitFor(() => expect(finishedFitJobSnapshot()?.seen).toBe(true));
+    await waitFor(() => expect(pageStatusRegion()).toHaveTextContent("status.ready"));
   });
 });
 

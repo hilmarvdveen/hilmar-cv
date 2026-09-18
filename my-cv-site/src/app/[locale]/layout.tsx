@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyCallToActionBar } from "@/components/StickyCallToActionBar";
+import { FitJobNotifier } from "@/features/fit";
 import { AnalyticsConsent, GoogleTagManager, SiteEvents, configuredTagManagerId } from "@/features/analytics";
 import { getMessages, getTranslations } from "next-intl/server";
 import { CLIENT_MESSAGE_KEYS, pickMessages } from "@/i18n/pickMessages";
@@ -123,6 +124,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <Footer />
           </div>
           <StickyCallToActionBar />
+          <FitJobNotifier />
           <SiteEvents />
         </NextIntlClientProvider>
 

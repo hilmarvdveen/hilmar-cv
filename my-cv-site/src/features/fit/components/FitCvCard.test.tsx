@@ -100,6 +100,16 @@ describe("FitCvCard", () => {
     expect(onSent).toHaveBeenCalledWith("sentText");
   });
 
+  it("brings the form back for a visitor who typed the wrong address", async () => {
+    renderCard();
+    await fill();
+
+    await userEvent.click(await screen.findByRole("button", { name: "resend" }));
+
+    expect(screen.getByRole("button", { name: /submit/ })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "sentTitle" })).not.toBeInTheDocument();
+  });
+
   it("shows the queue sentence on 429 and the general one on any other refusal", async () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: false,
