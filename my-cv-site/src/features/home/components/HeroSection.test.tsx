@@ -92,6 +92,27 @@ describe("HeroSection", () => {
     expect(chip?.className).not.toContain("bg-white/5");
   });
 
+  it("lines the fact list up on the hero's left edge without inner horizontal padding", () => {
+    render(<HeroSection />);
+    const [factList] = screen.getAllByRole("list");
+    expect(factList.className).toContain("grid");
+    expect(factList.className).not.toContain("flex-wrap");
+    screen.getAllByRole("listitem").forEach((item) => {
+      expect(item.className).toContain("items-start");
+      expect(item.className).not.toMatch(/(^|\s)(sm:)?px-/);
+    });
+  });
+
+  it("keeps every check mark at its full size next to its own text column", () => {
+    render(<HeroSection />);
+    screen.getAllByRole("listitem").forEach((item) => {
+      const [icon, text] = Array.from(item.children);
+      expect(icon.getAttribute("class")).toContain("shrink-0");
+      expect(icon).toHaveAttribute("aria-hidden", "true");
+      expect(text.className).toContain("min-w-0");
+    });
+  });
+
   it("links the recruiter facts under the chip row to the hiring section", () => {
     render(<HeroSection />);
     const link = screen.getByRole("link", { name: "factsLink" });

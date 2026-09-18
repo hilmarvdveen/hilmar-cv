@@ -164,12 +164,12 @@ export const ServiceDetailPage = ({
       >
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {hero.features.map((feature) => (
-            <li key={feature} className="flex items-center gap-3 text-slate-200">
+            <li key={feature} className="flex items-start gap-3 text-slate-200">
               <CheckCircle
-                className="h-4 w-4 shrink-0 text-emerald-400"
+                className="mt-1 h-4 w-4 shrink-0 text-emerald-400"
                 aria-hidden="true"
               />
-              <span>{feature}</span>
+              <span className="min-w-0">{feature}</span>
             </li>
           ))}
         </ul>
@@ -310,12 +310,12 @@ export const ServiceDetailPage = ({
                 </div>
                 <ul className="mt-6 space-y-2">
                   {step.details.map((detail) => (
-                    <li key={detail} className="flex items-center gap-2 text-gray-700">
+                    <li key={detail} className="flex items-start gap-2 text-gray-700">
                       <CheckCircle
-                        className="h-4 w-4 shrink-0 text-emerald-700"
+                        className="mt-1 h-4 w-4 shrink-0 text-emerald-700"
                         aria-hidden="true"
                       />
-                      <span>{detail}</span>
+                      <span className="min-w-0">{detail}</span>
                     </li>
                   ))}
                 </ul>

@@ -145,6 +145,18 @@ describe("ServiceDetailPage", () => {
     }
   });
 
+  it("tops every hero check mark against the first line of its own text column", () => {
+    render(<ServiceDetailPage {...baseProps} />);
+    for (const feature of baseProps.hero.features) {
+      const item = screen.getByText(feature).closest("li");
+      expect(item?.className).toContain("items-start");
+      const [icon, text] = Array.from(item?.children ?? []);
+      expect(icon.getAttribute("class")).toContain("shrink-0");
+      expect(icon.getAttribute("class")).toContain("mt-1");
+      expect(text.className).toContain("min-w-0");
+    }
+  });
+
   it("links the hero actions to book and contact", () => {
     render(<ServiceDetailPage {...baseProps} />);
     expect(

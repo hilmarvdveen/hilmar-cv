@@ -178,12 +178,12 @@ export default async function ServicesPage({ params }: Props) {
                   </h4>
                   <ul className="space-y-2">
                     {service.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-center gap-2">
+                      <li key={benefit} className="flex items-start gap-2">
                         <CheckCircle
-                          className="h-4 w-4 text-emerald-700"
+                          className="mt-1 h-4 w-4 shrink-0 text-emerald-700"
                           aria-hidden="true"
                         />
-                        <span className="text-gray-700">{benefit}</span>
+                        <span className="min-w-0 text-gray-700">{benefit}</span>
                       </li>
                     ))}
                   </ul>

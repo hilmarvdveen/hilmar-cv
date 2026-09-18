@@ -581,4 +581,17 @@ is a one column grid with a 16 pixel gap. The region hub's "rest of the
 map" used to be a bordered list with a right aligned link that wrapped
 differently on every row, which Hilmar rejected on sight. Any new list of
 engagements uses this card and never a bespoke row.
+### Check mark lists (18 September 2026)
+
+A list of facts with a check mark in front of each item follows one rule,
+after Hilmar saw the hero's list out of line on tablet and phone. The list
+is a grid, never a wrapping flex row, so every column starts on one x. An
+item is `flex items-start gap-2`: the icon carries `shrink-0` and a small
+top margin that puts it on the first line's cap height, and the text sits
+in its own `min-w-0` column so a wrapped second line starts under the
+text and never under the icon. An item carries no horizontal padding
+unless it has a visible background, because invisible padding moves the
+icon off the edge the heading, the button and the notes share. The hero's
+fact list, the service detail hero features, the method details and the
+services benefits all follow it, and their tests assert it by role.
 

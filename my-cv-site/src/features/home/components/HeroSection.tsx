@@ -90,14 +90,20 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        <ul className="mt-8 flex flex-wrap gap-2 sm:mt-10 sm:gap-3" aria-label={t("heading")}>
+        <ul
+          className="mt-8 grid gap-x-6 gap-y-2.5 sm:mt-10 sm:grid-cols-2 sm:gap-y-3 xl:grid-cols-4"
+          aria-label={t("heading")}
+        >
           {chips.map((chip) => (
             <li
               key={chip}
-              className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold text-slate-200 sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5 sm:text-sm"
+              className="flex items-start gap-2 text-xs font-semibold text-slate-200 sm:text-sm"
             >
-              <Check className="h-3.5 w-3.5 text-emerald-300 sm:h-4 sm:w-4" aria-hidden="true" />
-              {chip}
+              <Check
+                className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-300 sm:h-4 sm:w-4"
+                aria-hidden="true"
+              />
+              <span className="min-w-0">{chip}</span>
             </li>
           ))}
         </ul>
