@@ -78,6 +78,10 @@ export function readFitJobStatus(body: unknown): FitJobStatus {
   return failedFitJob(status === 0 ? 502 : status, body);
 }
 
+export function furthestFitJobPhase(first: FitJobPhase, second: FitJobPhase): FitJobPhase {
+  return FIT_JOB_PHASES.indexOf(second) > FIT_JOB_PHASES.indexOf(first) ? second : first;
+}
+
 export function hasFitJobBudgetLeft(elapsedMilliseconds: number): boolean {
   return elapsedMilliseconds + FIT_JOB_POLL_INTERVAL_MILLISECONDS <= FIT_JOB_POLL_BUDGET_MILLISECONDS;
 }

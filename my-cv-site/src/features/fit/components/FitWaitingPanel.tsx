@@ -21,6 +21,7 @@ const SECONDS_IN_A_MINUTE = 60;
 
 type FitWaitingPanelProps = {
   phase: FitJobPhase;
+  furthestPhase: FitJobPhase;
   toolCalls: number;
   elapsedSeconds: number;
   vacancyExcerpt: string;
@@ -36,6 +37,7 @@ const segmentClasses = (position: number, current: number): string => {
 
 export const FitWaitingPanel = ({
   phase,
+  furthestPhase,
   toolCalls,
   elapsedSeconds,
   vacancyExcerpt,
@@ -45,7 +47,7 @@ export const FitWaitingPanel = ({
   const headingId = useId();
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const current = FIT_JOB_PHASES.indexOf(phase);
+  const current = FIT_JOB_PHASES.indexOf(furthestPhase);
   const verbs = Object.values(t.raw(`phases.${phase}`) as Record<string, string>);
   const verbPosition = prefersReducedMotion
     ? 0

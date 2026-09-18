@@ -99,6 +99,25 @@ describe("useFitJob", () => {
     });
   });
 
+  it("keeps the furthest phase when the agent goes back to looking things up", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(runningAnswer("writing", 4))
+      .mockResolvedValue(runningAnswer("searching", 6));
+    const { result } = renderHook(() => useFitJob(true));
+    startJob();
+
+    await letTimePass(1_000);
+    expect(result.current.view).toMatchObject({ phase: "writing", furthestPhase: "writing" });
+
+    await letTimePass(2_500);
+    expect(result.current.view).toMatchObject({
+      phase: "searching",
+      furthestPhase: "writing",
+      toolCalls: 6,
+    });
+  });
+
   it("counts the seconds while the job runs", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     const { result } = renderHook(() => useFitJob(true));

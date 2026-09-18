@@ -495,7 +495,12 @@ already. The affordance is the opposite one: a link to /experience that says
 read on (`fit-waiting-browse`). The rotating line is `aria-hidden`. One polite
 status region says the check is running and that a notice follows, and changes
 once, at sixty seconds. With reduced motion the pulse and the rotation stop and
-the phase still changes, because that is information.
+the phase still changes, because that is information. The agent reports
+`writing` as soon as a round of lookups ends and goes back to `searching` when
+the model asks for more, so the status line follows the real phase and the
+segments follow the furthest phase seen (`furthestFitJobPhase`), which never
+moves back. The first live job on 18 September showed why: forty seconds of
+"searching" while the report was being written.
 
 The notifier (`FitJobNotifier`, mounted once in the locale layout) renders
 nothing on /fit and nothing without a job. On every other page it polls the

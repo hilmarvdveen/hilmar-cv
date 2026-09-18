@@ -190,6 +190,7 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
       {view.state === "running" ? (
         <FitWaitingPanel
           phase={view.phase}
+          furthestPhase={view.furthestPhase}
           toolCalls={view.toolCalls}
           elapsedSeconds={view.elapsedSeconds}
           vacancyExcerpt={vacancy.trim().slice(0, FIT_WAITING_EXCERPT_LENGTH)}

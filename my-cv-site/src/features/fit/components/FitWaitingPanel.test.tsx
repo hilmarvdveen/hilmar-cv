@@ -20,6 +20,7 @@ const renderPanel = (overrides: Partial<Parameters<typeof FitWaitingPanel>[0]> =
   render(
     <FitWaitingPanel
       phase="reading"
+      furthestPhase="reading"
       toolCalls={0}
       elapsedSeconds={0}
       vacancyExcerpt={EXCERPT}

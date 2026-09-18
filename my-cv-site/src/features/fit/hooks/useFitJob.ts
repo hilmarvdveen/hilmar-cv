@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import {
   FIT_JOB_POLL_INTERVAL_MILLISECONDS,
+  furthestFitJobPhase,
   hasFitJobBudgetLeft,
   readFitJobStatus,
   type FitJobPhase,
@@ -24,7 +25,13 @@ export const FIT_JOB_OUT_OF_TIME_STATUS = 504;
 
 export type FitJobView =
   | { state: "idle" }
-  | { state: "running"; phase: FitJobPhase; toolCalls: number; elapsedSeconds: number }
+  | {
+      state: "running";
+      phase: FitJobPhase;
+      furthestPhase: FitJobPhase;
+      toolCalls: number;
+      elapsedSeconds: number;
+    }
   | { state: "done"; report: FitReport; sessionId: string; seen: boolean }
   | {
       state: "failed";
@@ -33,7 +40,12 @@ export type FitJobView =
       retryAfterSeconds: number;
     };
 
-type JobProgress = { jobId: string; phase: FitJobPhase; toolCalls: number };
+type JobProgress = {
+  jobId: string;
+  phase: FitJobPhase;
+  furthestPhase: FitJobPhase;
+  toolCalls: number;
+};
 
 type JobFailure = Extract<FitJobStatus, { state: "failed" }> & { jobId: string };
 
@@ -109,7 +121,15 @@ export const useFitJob = (enabled: boolean): FitJobHandle => {
         return;
       }
       if (status?.state === "running") {
-        setProgress({ jobId: pending.jobId, phase: status.phase, toolCalls: status.toolCalls });
+        setProgress((known) => ({
+          jobId: pending.jobId,
+          phase: status.phase,
+          furthestPhase:
+            known?.jobId === pending.jobId
+              ? furthestFitJobPhase(known.furthestPhase, status.phase)
+              : status.phase,
+          toolCalls: status.toolCalls,
+        }));
       }
       timer = setTimeout(poll, FIT_JOB_POLL_INTERVAL_MILLISECONDS);
     };
@@ -136,6 +156,7 @@ export const useFitJob = (enabled: boolean): FitJobHandle => {
       return {
         state: "running",
         phase: known?.phase ?? "reading",
+        furthestPhase: known?.furthestPhase ?? "reading",
         toolCalls: known?.toolCalls ?? 0,
         elapsedSeconds: Math.max(0, Math.floor((now - pending.startedAt) / 1000)),
       };

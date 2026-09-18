@@ -9,6 +9,7 @@ import {
   failedFitJob,
   forgetFinishedFitJob,
   forgetPendingFitJob,
+  furthestFitJobPhase,
   hasFitJobBudgetLeft,
   markFinishedFitJobSeen,
   readFinishedFitJob,
@@ -119,6 +120,14 @@ describe("readFitJobStatus", () => {
   it("answers anything unreadable as failed with 502", () => {
     expect(readFitJobStatus(null)).toEqual(failedFitJob(502));
     expect(readFitJobStatus({ state: "failed" })).toEqual(failedFitJob(502));
+  });
+});
+
+describe("furthestFitJobPhase", () => {
+  it("never goes back in the order of the phases", () => {
+    expect(furthestFitJobPhase("writing", "searching")).toBe("writing");
+    expect(furthestFitJobPhase("searching", "verifying")).toBe("verifying");
+    expect(furthestFitJobPhase("saving", "saving")).toBe("saving");
   });
 });
 
