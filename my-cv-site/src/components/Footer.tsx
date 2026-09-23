@@ -86,7 +86,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-brand-navy pb-[var(--consent-height,0px)] text-gray-300">
+    <footer className="border-t border-white/10 bg-brand-navy pb-[calc(var(--consent-height,0px)+var(--bottom-bar-offset,0px))] text-gray-300">
       <Container className="py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           <div className="lg:col-span-1">
@@ -175,8 +175,8 @@ export const Footer = () => {
                 href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                 className="flex min-h-6 items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
               >
-                <Mail className="w-4 h-4" />
-                <span>{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
+                <Mail className="w-4 h-4 shrink-0" />
+                <span className="min-w-0">{BUSINESS_PROFILE.CONTACT.EMAIL}</span>
               </a>
 
               <a

@@ -75,4 +75,20 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("contentinfo").className).toContain("border-white/10");
   });
+
+  it("reserves room at the bottom for the consent banner and the sticky booking bar together", () => {
+    render(<Footer />);
+    expect(screen.getByRole("contentinfo").className).toContain(
+      "pb-[calc(var(--consent-height,0px)+var(--bottom-bar-offset,0px))]"
+    );
+  });
+
+  it("lets the email address shrink and wrap so its row never widens the page", () => {
+    render(<Footer />);
+    const emailLink = screen
+      .getAllByRole("link")
+      .find((link) => link.getAttribute("href")?.startsWith("mailto:"));
+    expect(emailLink?.querySelector("span")).toHaveClass("min-w-0");
+    expect(emailLink?.querySelector("svg")).toHaveClass("shrink-0");
+  });
 });

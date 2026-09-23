@@ -67,11 +67,11 @@ describe("ResultsStrip", () => {
     expect(listItems).toHaveLength(items.length);
   });
 
-  it("gives every list item fixed rows so short details never leave a gap", () => {
+  it("gives every list item its own rows so short details never leave a gap and a wrapped label never runs over its detail", () => {
     render(<ResultsStrip />);
     const listItems = screen.getAllByRole("listitem");
     for (const listItem of listItems) {
-      expect(listItem).toHaveClass("lg:grid-rows-[5rem_2.5rem_1fr]");
+      expect(listItem).toHaveClass("lg:grid-rows-[5rem_minmax(3rem,auto)_1fr]");
       expect(listItem).not.toHaveClass("lg:grid-rows-subgrid");
       expect(listItem).not.toHaveClass("lg:row-span-3");
     }

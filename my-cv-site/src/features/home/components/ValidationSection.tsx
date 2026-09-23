@@ -28,7 +28,7 @@ export const ValidationSection = () => {
               <p className="text-base leading-relaxed text-gray-600">
                 {panel.body}
               </p>
-              <p className="mt-2 text-xs uppercase tracking-wide text-gray-500">
+              <p className="mt-2 text-xs text-gray-600">
                 {panel.attribution}
               </p>
               {index === panels.length - 1 && (

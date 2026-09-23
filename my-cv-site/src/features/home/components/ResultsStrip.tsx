@@ -29,7 +29,7 @@ export const ResultsStrip = () => {
             {items.map((item, itemIndex) => (
               <li
                 key={item.value}
-                className="border-l-[3px] border-primary pl-6 lg:grid lg:grid-rows-[5rem_2.5rem_1fr]"
+                className="border-l-[3px] border-primary pl-6 lg:grid lg:grid-rows-[5rem_minmax(3rem,auto)_1fr]"
               >
                 <p className="text-figure text-primary text-balance">
                   {item.value}

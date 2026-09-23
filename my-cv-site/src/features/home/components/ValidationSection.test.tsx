@@ -52,6 +52,15 @@ describe("ValidationSection", () => {
     });
   });
 
+  it("renders every attribution as small print rather than as an uppercase eyebrow", () => {
+    render(<ValidationSection />);
+    panels.forEach((panel) => {
+      const attribution = screen.getByText(panel.attribution);
+      expect(attribution).toHaveClass("text-xs", "text-gray-600");
+      expect(attribution).not.toHaveClass("uppercase");
+    });
+  });
+
   it("wires the section aria-labelledby to the heading id", () => {
     const { container } = render(<ValidationSection />);
     const section = container.querySelector("section");

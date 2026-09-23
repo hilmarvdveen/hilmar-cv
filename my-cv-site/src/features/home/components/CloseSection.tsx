@@ -29,7 +29,13 @@ export const CloseSection = () => {
             {t("body")}
           </p>
           <div className="flex flex-col items-center gap-4">
-            <Button href="/book" variant="white" size="lg" data-placement="close">
+            <Button
+              href="/book"
+              variant="white"
+              size="lg"
+              className="max-sm:px-4 max-sm:text-base"
+              data-placement="close"
+            >
               <Calendar className="w-5 h-5" />
               <span>{t("button")}</span>
             </Button>
