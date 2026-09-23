@@ -43,8 +43,9 @@ describe("searchEntries with extra entries", () => {
     expect(searchEntries("the hague", "en").map((entry) => entry.href)).toContain("/freelance-frontend-developer/den-haag");
   });
 
-  it("finds the vacancy check in both languages", () => {
-    expect(searchEntries("vacature", "nl").map((entry) => entry.href)).toContain("/fit");
-    expect(searchEntries("vacancy", "en").map((entry) => entry.href)).toContain("/fit");
+  it("leaves the vacancy check out of the index in both languages", () => {
+    expect(searchEntries("vacature", "nl").map((entry) => entry.href)).not.toContain("/fit");
+    expect(searchEntries("vacancy", "en").map((entry) => entry.href)).not.toContain("/fit");
+    expect(SEARCH_INDEX.map((entry) => entry.href)).not.toContain("/fit");
   });
 });

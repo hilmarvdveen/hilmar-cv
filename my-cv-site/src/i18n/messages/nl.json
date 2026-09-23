@@ -2198,7 +2198,8 @@
                     "codeBlock": "In deze tekst staat een codeblok. Plak de vacaturetekst zelf, zonder het codevoorbeeld, dan leest de check de eisen eruit.",
                     "encodedBlob": "In deze tekst staat een lange reeks tekens die geen leesbare tekst is, bijvoorbeeld uit een bijlage. Plak de vacature als gewone tekst.",
                     "tooManyLinks": "Deze tekst bestaat vooral uit links. Plak de vacaturetekst zelf, dan leest de check de eisen eruit.",
-                    "instruction": "In deze tekst staat een instructie aan de assistent. De check leest alleen vacatureteksten. Plak de vacature zelf, dan krijg je het resultaat per eis."
+                    "instruction": "In deze tekst staat een instructie aan de assistent. De check leest alleen vacatureteksten. Plak de vacature zelf, dan krijg je het resultaat per eis.",
+                    "looksAutomated": "De check las deze inzending als automatisch verkeer. Laad de pagina opnieuw en plak de vacature nog een keer, dan gaat hij er wel doorheen."
                 },
                 "rateLimited": "Er staan nu veel checks in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
                 "capReached": "De check heeft voor vandaag zijn limiet bereikt. Morgen draait hij weer. Wil je niet wachten, plan dan een gesprek, dan loop ik de vacature met je door.",
@@ -2267,6 +2268,12 @@
                 "elapsedSeconds": "{seconds, plural, one {# seconde} other {# seconden}}",
                 "elapsedMinutes": "{minutes, plural, one {# minuut} other {# minuten}}, {seconds, plural, one {# seconde} other {# seconden}}",
                 "phases": {
+                    "starting": {
+                        "1": "De check start op…",
+                        "2": "Je tekst staat klaar…",
+                        "3": "De check pakt je vacature op…",
+                        "4": "Zo begint hij met lezen…"
+                    },
                     "reading": {
                         "1": "Vacature lezen…",
                         "2": "Eisen uit de tekst halen…",

@@ -45,11 +45,9 @@ describe("Footer", () => {
     ).toBeNull();
   });
 
-  it("links the vacancy check from the quick links with its placement", () => {
+  it("does not list the vacancy check among the quick links", () => {
     render(<Footer />);
-    const link = screen.getByRole("link", { name: "quickLinks.items.fit" });
-    expect(link).toHaveAttribute("href", "/fit");
-    expect(link).toHaveAttribute("data-placement", "footer-fit");
+    expect(screen.queryByRole("link", { name: "quickLinks.items.fit" })).toBeNull();
   });
 
   it("does not render a booking link in the services column", () => {

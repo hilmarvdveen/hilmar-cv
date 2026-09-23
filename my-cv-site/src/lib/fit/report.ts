@@ -40,15 +40,10 @@ export const FIT_REFUSAL_REASONS: readonly FitRefusalReason[] = [
   "encodedBlob",
   "tooManyLinks",
   "instruction",
+  "looksAutomated",
 ];
 
 export const FIT_VERDICTS: readonly FitVerdict[] = ["inRecord", "partly", "notInRecord"];
-
-export const EMPTY_FIT_REPORT: FitReport = {
-  summary: "",
-  requirements: [],
-  technologies: [],
-};
 
 export const RECORD_ENGAGEMENT_IDS: ReadonlySet<string> = new Set(
   workHistory.map((entry) => entry.id)

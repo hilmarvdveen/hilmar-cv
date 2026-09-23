@@ -88,19 +88,17 @@ describe("POST /api/fit", () => {
     expect(response.headers.get("Retry-After")).toBeTruthy();
   });
 
-  it("succeeds silently on the honeypot without calling the agent", async () => {
+  it("names the automated submission instead of answering an empty report", async () => {
     const response = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({
-      report: { summary: "", requirements: [], technologies: [] },
-      sessionId: "",
-    });
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(startFitJob).not.toHaveBeenCalled();
   });
 
-  it("succeeds silently when the form was submitted within two seconds", async () => {
+  it("names the automated submission when the form was filled within two seconds", async () => {
     const response = await POST(post({ ...valid(), formStartedAt: Date.now() }));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(startFitJob).not.toHaveBeenCalled();
   });
 

@@ -9,7 +9,6 @@ import {
   validateFields,
 } from "@/lib/security";
 import {
-  EMPTY_FIT_REPORT,
   FIT_LIMITS,
   FitAgentRateLimitError,
   FitAgentRefusalError,
@@ -46,7 +45,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body = (await request.json()) as Partial<FitRequestBody>;
 
     if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ report: EMPTY_FIT_REPORT, sessionId: "" });
+      return NextResponse.json({ reason: "looksAutomated" }, { status: 422 });
     }
 
     const validation = validateFields({

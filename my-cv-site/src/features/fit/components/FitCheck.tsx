@@ -20,9 +20,15 @@ import {
   startPendingFitJob,
 } from "@/lib/fit/jobStore";
 import { useFitJob } from "../hooks/useFitJob";
+import { useSecondsSince } from "../hooks/useSecondsSince";
 import { useTrackFitJobOutcome } from "../hooks/useTrackFitJobOutcome";
 import { FitVacancyForm, type FitCheckFailure } from "./FitVacancyForm";
-import { FitWaitingPanel, FIT_WAITING_EXCERPT_LENGTH } from "./FitWaitingPanel";
+import {
+  FitWaitingPanel,
+  FIT_STARTING_PHASE,
+  FIT_WAITING_EXCERPT_LENGTH,
+  type FitWaitingProgress,
+} from "./FitWaitingPanel";
 import { FitReport } from "./FitReport";
 import { FitQuestion } from "./FitQuestion";
 import { FitCvCard } from "./FitCvCard";
@@ -56,17 +62,18 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
   const job = useFitJob(true);
 
   const [vacancy, setVacancy] = useState("");
-  const [isStarting, setIsStarting] = useState(false);
+  const [startingAt, setStartingAt] = useState<number | null>(null);
   const [startFailure, setStartFailure] = useState<FitCheckFailure | null>(null);
   const [cvStatusMessage, setCvStatusMessage] = useState("");
 
-  const firstChangeAt = useRef<number | null>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement | null>(null);
   const resultAwaitsFocus = useRef(false);
 
   const view = job.view;
   const result = job.standingResult;
   const isRunning = view.state === "running";
+  const isStarting = startingAt !== null;
+  const startingSeconds = useSecondsSince(startingAt);
 
   useTrackFitJobOutcome(view, true, () => resultHeadingRef.current?.focus());
 
@@ -79,11 +86,6 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
     resultAwaitsFocus.current = false;
     resultHeadingRef.current?.focus();
   }, [result]);
-
-  const handleVacancyChange = (value: string) => {
-    if (firstChangeAt.current === null) firstChangeAt.current = Date.now();
-    setVacancy(value);
-  };
 
   const refusalFailure = (body: unknown): FitCheckFailure => {
     const reason = readFitRefusalReason(body) ?? "notAVacancy";
@@ -116,7 +118,6 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (isStarting || isRunning) return;
 
     const turnstileToken = turnstileTokenFrom(event.currentTarget as HTMLFormElement);
     const trimmed = vacancy.trim();
@@ -126,7 +127,7 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
       return;
     }
 
-    setIsStarting(true);
+    setStartingAt(Date.now());
     setStartFailure(null);
     trackFitEvent("fit_submitted", { characters: trimmed.length });
 
@@ -139,7 +140,6 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
           locale,
           turnstileToken,
           ...honeypot.payload(),
-          formStartedAt: firstChangeAt.current ?? Date.now(),
         }),
       });
 
@@ -176,23 +176,38 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
       trackFitEvent("fit_failed", { status: 0 });
       setStartFailure({ message: t("errors.failed"), recoverable: false });
     } finally {
-      setIsStarting(false);
+      setStartingAt(null);
     }
   };
 
   const failure = startFailure ?? jobFailure();
+  const verdictCounts = result === null ? null : countFitVerdicts(result.report);
   const offersTailoredCv =
-    result !== null && result.sessionId !== "" && result.report.requirements.length > 0;
+    result !== null &&
+    result.sessionId !== "" &&
+    verdictCounts !== null &&
+    verdictCounts.inRecord + verdictCounts.partly > 0;
   const statusMessage = result !== null && !isRunning ? t("status.ready") : "";
+  const waiting: FitWaitingProgress =
+    view.state === "running"
+      ? {
+          phase: view.phase,
+          furthestPhase: view.furthestPhase,
+          toolCalls: view.toolCalls,
+          elapsedSeconds: view.elapsedSeconds,
+        }
+      : {
+          phase: FIT_STARTING_PHASE,
+          furthestPhase: FIT_STARTING_PHASE,
+          toolCalls: 0,
+          elapsedSeconds: startingSeconds,
+        };
 
   return (
     <div>
-      {view.state === "running" ? (
+      {isStarting || isRunning ? (
         <FitWaitingPanel
-          phase={view.phase}
-          furthestPhase={view.furthestPhase}
-          toolCalls={view.toolCalls}
-          elapsedSeconds={view.elapsedSeconds}
+          {...waiting}
           vacancyExcerpt={vacancy.trim().slice(0, FIT_WAITING_EXCERPT_LENGTH)}
         />
       ) : (
@@ -200,9 +215,8 @@ export const FitCheck = ({ heading, intro, disclosure, turnstileSiteKey }: FitCh
           heading={heading}
           intro={intro}
           vacancy={vacancy}
-          onVacancyChange={handleVacancyChange}
+          onVacancyChange={setVacancy}
           onSubmit={handleSubmit}
-          isChecking={isStarting}
           failure={failure}
           honeypotValue={honeypot.value}
           onHoneypotChange={honeypot.setValue}

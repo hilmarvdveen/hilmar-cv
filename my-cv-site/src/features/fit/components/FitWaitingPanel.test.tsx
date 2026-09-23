@@ -8,7 +8,11 @@ vi.mock("next-intl", async () => {
   const { intlMock } = await import("@/test/intl");
   const phases = english.fit.check.progress.phases;
   return intlMock({
-    raw: { "phases.reading": phases.reading, "phases.searching": phases.searching },
+    raw: {
+      "phases.starting": phases.starting,
+      "phases.reading": phases.reading,
+      "phases.searching": phases.searching,
+    },
   });
 });
 
@@ -69,6 +73,13 @@ describe("FitWaitingPanel", () => {
 
     renderPanel({ elapsedSeconds: 20 });
     expect(screen.getByText(PHASES.reading["1"])).toBeInTheDocument();
+  });
+
+  it("draws the starting lines before the agent reports a phase", () => {
+    renderPanel({ phase: "starting", furthestPhase: "starting" });
+    expect(screen.getByText(PHASES.starting["1"])).toBeInTheDocument();
+    expect(screen.getByText("intro")).toBeInTheDocument();
+    expect(screen.queryByText(PHASES.reading["1"])).toBeNull();
   });
 
   it("draws its lines from the phase the agent is in", () => {

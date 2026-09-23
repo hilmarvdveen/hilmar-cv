@@ -77,6 +77,24 @@ describe("FitReport", () => {
     expect(figures[0]!.closest("dl")).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("keeps the not yet figure out of the colour that reads as a win", () => {
+    renderReport({
+      requirements: [
+        ...report.requirements,
+        {
+          requirement: "Salesforce reporting",
+          verdict: "notInRecord",
+          note: "The record holds no Salesforce work.",
+          engagements: [],
+        },
+      ],
+    });
+    const notYet = screen.getByText("2", { selector: "dd" });
+    expect(notYet).toHaveClass("text-gray-700");
+    expect(notYet).not.toHaveClass("text-primary");
+    expect(screen.getAllByText("1", { selector: "dd" })[0]).toHaveClass("text-primary");
+  });
+
   it("links the evidence to the engagement page and leaves an empty list out", () => {
     renderReport();
     expect(screen.getByRole("link", { name: "bol.com" })).toHaveAttribute(

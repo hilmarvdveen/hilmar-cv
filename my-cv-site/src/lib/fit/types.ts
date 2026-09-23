@@ -8,7 +8,8 @@ export type FitRefusalReason =
   | "codeBlock"
   | "encodedBlob"
   | "tooManyLinks"
-  | "instruction";
+  | "instruction"
+  | "looksAutomated";
 
 export type FitEngagementReference = {
   id: string;

@@ -27,7 +27,6 @@ const renderForm = (overrides: Partial<Parameters<typeof FitVacancyForm>[0]> = {
     vacancy: "",
     onVacancyChange: vi.fn(),
     onSubmit: vi.fn((event: { preventDefault: () => void }) => event.preventDefault()),
-    isChecking: false,
     failure: null,
     honeypotValue: "",
     onHoneypotChange: vi.fn(),
@@ -67,13 +66,6 @@ describe("FitVacancyForm", () => {
     const submit = screen.getByRole("button", { name: /form.submit/ });
     expect(submit).toBeEnabled();
     expect(submit).not.toHaveAttribute("aria-disabled", "true");
-  });
-
-  it("marks the button busy without taking it out of the document while a check runs", () => {
-    renderForm({ vacancy: "A senior frontend engineer.", isChecking: true });
-    const submit = screen.getByRole("button", { name: /form.checking/ });
-    expect(submit).toBeEnabled();
-    expect(submit).toHaveAttribute("aria-disabled", "true");
   });
 
   it("leaves the browser bubbles out so the written sentences are the ones that show", () => {

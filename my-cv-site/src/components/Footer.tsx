@@ -45,10 +45,9 @@ export const Footer = () => {
     },
   ];
 
-  const quickLinks: Array<{ name: string; href: string; placement?: string }> = [
+  const quickLinks = [
     { name: t("quickLinks.items.about"), href: "/about" },
     { name: t("quickLinks.items.experience"), href: "/experience" },
-    { name: t("quickLinks.items.fit"), href: "/fit", placement: "footer-fit" },
     { name: t("quickLinks.items.regions"), href: "/freelance-frontend-developer" },
     { name: t("quickLinks.items.projects"), href: "/projects" },
     { name: t("quickLinks.items.blog"), href: "/blog" },
@@ -154,7 +153,6 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    data-placement={link.placement}
                     className="inline-block py-1 text-gray-400 hover:text-emerald-400 transition-colors duration-200 hover:underline"
                   >
                     {link.name}

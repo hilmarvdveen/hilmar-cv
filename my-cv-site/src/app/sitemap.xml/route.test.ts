@@ -19,10 +19,10 @@ describe("GET /sitemap.xml", () => {
     expect(xml).toContain("<loc>https://www.hilmarvanderveen.com/nl/blog</loc>");
   });
 
-  it("lists the vacancy check in both locales", async () => {
+  it("leaves the vacancy check out in both locales", async () => {
     const response = await GET();
     const xml = await response.text();
-    expect(xml).toContain("<loc>https://www.hilmarvanderveen.com/nl/fit</loc>");
-    expect(xml).toContain("<loc>https://www.hilmarvanderveen.com/en/fit</loc>");
+    expect(xml).not.toContain("<loc>https://www.hilmarvanderveen.com/nl/fit</loc>");
+    expect(xml).not.toContain("<loc>https://www.hilmarvanderveen.com/en/fit</loc>");
   });
 });

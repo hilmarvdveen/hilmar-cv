@@ -16,14 +16,20 @@ import {
 
 export const FIT_WAITING_EXCERPT_LENGTH = 140;
 export const FIT_WAITING_VERB_SECONDS = 5;
+export const FIT_STARTING_PHASE = "starting";
+
+export type FitWaitingPhase = FitJobPhase | typeof FIT_STARTING_PHASE;
 
 const SECONDS_IN_A_MINUTE = 60;
 
-type FitWaitingPanelProps = {
-  phase: FitJobPhase;
-  furthestPhase: FitJobPhase;
+export type FitWaitingProgress = {
+  phase: FitWaitingPhase;
+  furthestPhase: FitWaitingPhase;
   toolCalls: number;
   elapsedSeconds: number;
+};
+
+type FitWaitingPanelProps = FitWaitingProgress & {
   vacancyExcerpt: string;
 };
 
@@ -47,7 +53,7 @@ export const FitWaitingPanel = ({
   const headingId = useId();
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const current = FIT_JOB_PHASES.indexOf(furthestPhase);
+  const current = FIT_JOB_PHASES.findIndex((known) => known === furthestPhase);
   const verbs = Object.values(t.raw(`phases.${phase}`) as Record<string, string>);
   const verbPosition = prefersReducedMotion
     ? 0

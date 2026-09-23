@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { ownWork } from "@/data/ownWork";
 import { workHistory } from "@/data/workHistory";
 import {
-  EMPTY_FIT_REPORT,
   FIT_LIMITS,
   FIT_VERDICTS,
   FIT_DAILY_CAP_RETRY_SECONDS,
@@ -46,9 +45,8 @@ const report = (overrides: Partial<FitReport> = {}): FitReport => ({
 });
 
 describe("the fit limits and verdicts", () => {
-  it("names the three verdicts and an empty report", () => {
+  it("names the three verdicts", () => {
     expect(FIT_VERDICTS).toEqual(["inRecord", "partly", "notInRecord"]);
-    expect(EMPTY_FIT_REPORT).toEqual({ summary: "", requirements: [], technologies: [] });
     expect(FIT_LIMITS.vacancyMinimum).toBe(200);
     expect(FIT_LIMITS.vacancyMaximum).toBe(10_000);
     expect(FIT_LIMITS.questionMinimum).toBe(5);
@@ -62,7 +60,7 @@ describe("the fit limits and verdicts", () => {
     expect(FIT_LIMITS.summary).toBe(1_200);
   });
 
-  it("names the six refusal reasons the agent can answer", () => {
+  it("names the refusal reasons the check can answer", () => {
     expect(FIT_REFUSAL_REASONS).toEqual([
       "tooShort",
       "notAVacancy",
@@ -70,6 +68,7 @@ describe("the fit limits and verdicts", () => {
       "encodedBlob",
       "tooManyLinks",
       "instruction",
+      "looksAutomated",
     ]);
   });
 

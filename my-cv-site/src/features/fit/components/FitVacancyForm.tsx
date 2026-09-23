@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
-import { AlertCircle, Loader2, Search } from "lucide-react";
+import { AlertCircle, Search } from "lucide-react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { HoneypotField } from "@/components/HoneypotField";
@@ -28,7 +28,6 @@ type FitVacancyFormProps = {
   vacancy: string;
   onVacancyChange: (value: string) => void;
   onSubmit: (event: FormEvent) => void;
-  isChecking: boolean;
   failure: FitCheckFailure | null;
   honeypotValue: string;
   onHoneypotChange: (value: string) => void;
@@ -41,7 +40,6 @@ export const FitVacancyForm = ({
   vacancy,
   onVacancyChange,
   onSubmit,
-  isChecking,
   failure,
   honeypotValue,
   onHoneypotChange,
@@ -71,7 +69,7 @@ export const FitVacancyForm = ({
       </h2>
       <p className="mt-2 text-base leading-relaxed text-gray-600">{intro}</p>
 
-      <form onSubmit={onSubmit} className="mt-4 space-y-4" aria-busy={isChecking} noValidate>
+      <form onSubmit={onSubmit} className="mt-4 space-y-4" noValidate>
         <HoneypotField value={honeypotValue} onChange={onHoneypotChange} />
 
         <div>
@@ -121,27 +119,9 @@ export const FitVacancyForm = ({
         )}
 
         <div className="space-y-3">
-          <Button
-            type="submit"
-            variant="primary"
-            size="md"
-            aria-disabled={isChecking}
-            className="w-full sm:w-auto"
-          >
-            {isChecking ? (
-              <>
-                <Loader2
-                  className="h-5 w-5 animate-spin motion-reduce:animate-none"
-                  aria-hidden="true"
-                />
-                {t("form.checking")}
-              </>
-            ) : (
-              <>
-                <Search className="h-5 w-5" aria-hidden="true" />
-                {t("form.submit")}
-              </>
-            )}
+          <Button type="submit" variant="primary" size="md" className="w-full sm:w-auto">
+            <Search className="h-5 w-5" aria-hidden="true" />
+            {t("form.submit")}
           </Button>
         </div>
 

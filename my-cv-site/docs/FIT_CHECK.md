@@ -699,6 +699,45 @@ disclosure says what the tool does and what happens to the text, never what it
 cannot do. The verdict labels are neutral names, and the summary says what the
 record does show.
 
+## Out of sight since 23 September 2026
+
+The review `Hilmar/review-board/2026-09-23-fit-dignity.md` ran three vacancies
+through the live check and found that one of the three would earn a forward and
+two would cost the call. On the owner's decision of the same day the page stays
+live and reachable by direct link, and every entrance to it is gone:
+
+- the footer quick link (placement `footer-fit`)
+- the homepage hiring facts link (placement `hiring-fit`, the `home.hiring.fitLink` copy)
+- the contact facts link (placement `contact-facts-fit`)
+- the entry in `src/features/search/searchIndex.ts`, so the site's own search
+  does not lead there either
+- the entry in `src/app/sitemap.xml/route.ts`, which also takes the page out of
+  `check:sitemap` and `check:seo`, both of which walk the sitemap
+
+The message keys of the three links stay in both files and nothing reads them.
+The layout notice that a report is ready keeps its link, because it appears only
+while a job of that visitor runs. The direct link is the use the review called
+the strongest anyway: his own reply to a recruiter who mailed him a vacancy,
+where he reads the report before he sends it.
+
+The entrances come back when the five fixes the review ranked are in and the
+same three vacancies read clean on a re-run. Those five are the prompt line that
+leaked into an answer, the years of experience answered as not in the work
+history, the duplicated requirements the model narrates, the honeypot calling a
+real vacancy empty, and the verifier contradicting the sentence in front of it.
+The order after that is the board's own: read the three reports end to end, then
+one week of the Monday digest, then one entrance at a time.
+
+Fixed on the page the same day, from the same review: the honeypot clock starts
+at the form's mount instead of at the paste and its refusal is an explicit
+sentence (`errors.reasons.looksAutomated`, a 422 from `POST /api/fit`) instead
+of a result card that said the text held no requirements, the waiting panel
+mounts on the click with a `starting` phase of its own so the sentence about the
+wait is on screen in the first second instead of the twenty eighth, the tailored
+CV is offered only when at least one requirement is in the record or partly, and
+the three verdict figures carry the verdict's own colour, so the not yet count
+no longer reads as a win.
+
 ## Glitch log
 
 - 16 September 2026, the review board round on this page (P5 designer, P7 sales

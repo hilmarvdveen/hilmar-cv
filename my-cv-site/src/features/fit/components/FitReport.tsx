@@ -30,6 +30,12 @@ const VERDICT_MARKS: Record<FitVerdict, string> = {
   notInRecord: "bg-gray-200",
 };
 
+const VERDICT_FIGURES: Record<FitVerdict, string> = {
+  inRecord: "text-primary",
+  partly: "text-brand-navy",
+  notInRecord: "text-gray-700",
+};
+
 const VERDICT_RULES: Record<FitVerdict, string> = {
   inRecord: "border-l-emerald-600",
   partly: "border-l-brand-navy",
@@ -109,7 +115,11 @@ export const FitReport = ({
                   <dt className="mt-1 text-sm leading-snug text-gray-600">
                     {t(`report.verdicts.${verdict}`)}
                   </dt>
-                  <dd className="text-figure text-primary tabular-nums">{counts[verdict]}</dd>
+                  <dd
+                    className={mergeClasses("text-figure tabular-nums", VERDICT_FIGURES[verdict])}
+                  >
+                    {counts[verdict]}
+                  </dd>
                 </div>
               ))}
             </dl>

@@ -20,7 +20,6 @@ export type {
 } from "./types";
 
 export {
-  EMPTY_FIT_REPORT,
   FIT_DAILY_CAP_RETRY_SECONDS,
   FIT_LIMITS,
   FIT_REFUSAL_REASONS,

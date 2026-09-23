@@ -2338,7 +2338,8 @@
                     "codeBlock": "This text holds a code block. Paste the vacancy text itself, without the code sample, and the check reads the requirements from it.",
                     "encodedBlob": "This text holds a long run of characters that is not readable text, for example from an attachment. Paste the vacancy as plain text.",
                     "tooManyLinks": "This text is mostly links. Paste the vacancy text itself and the check reads the requirements from it.",
-                    "instruction": "This text carries an instruction to the assistant. The check reads vacancy texts only. Paste the vacancy itself and you get the result per requirement."
+                    "instruction": "This text carries an instruction to the assistant. The check reads vacancy texts only. Paste the vacancy itself and you get the result per requirement.",
+                    "looksAutomated": "The check read this submission as automated traffic. Reload the page and paste the vacancy once more, and it goes through."
                 },
                 "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
                 "capReached": "The check has reached its limit for today. It runs again tomorrow. If you would rather not wait, book a call and I will walk through the vacancy with you.",
@@ -2407,6 +2408,12 @@
                 "elapsedSeconds": "{seconds, plural, one {# second} other {# seconds}}",
                 "elapsedMinutes": "{minutes, plural, one {# minute} other {# minutes}}, {seconds, plural, one {# second} other {# seconds}}",
                 "phases": {
+                    "starting": {
+                        "1": "The check is starting up…",
+                        "2": "Your text is ready…",
+                        "3": "The check is picking up your vacancy…",
+                        "4": "Almost ready to read…"
+                    },
                     "reading": {
                         "1": "Reading the vacancy…",
                         "2": "Pulling the requirements out…",

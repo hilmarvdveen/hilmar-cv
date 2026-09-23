@@ -122,20 +122,19 @@ describe("FitCheck", () => {
     expect(typeof body.formStartedAt).toBe("number");
   });
 
-  it("starts the timing at the first change of the textarea, not at mount", async () => {
-    const mountedAt = Date.now();
+  it("starts the timing when the form mounts, not when the vacancy is pasted", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     renderCheck();
-    const user = userEvent.setup();
-    await user.click(screen.getByLabelText("form.label"));
-    await user.paste(VACANCY);
-    const pastedAt = Date.now();
-    await user.click(screen.getByRole("button", { name: /form.submit/ }));
+    const mountedAt = Date.now();
+    await vi.advanceTimersByTimeAsync(5_000);
+    await check(VACANCY, user);
 
-    await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
     const [, options] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
     const body = JSON.parse(String(options.body));
-    expect(body.formStartedAt).toBeGreaterThanOrEqual(mountedAt);
-    expect(body.formStartedAt).toBeLessThanOrEqual(pastedAt);
+    expect(body.formStartedAt).toBeLessThanOrEqual(mountedAt);
+    expect(Date.now() - body.formStartedAt).toBeGreaterThanOrEqual(5_000);
   });
 
   it("reports the submitted and completed events with the verdict counts", async () => {
@@ -168,6 +167,32 @@ describe("FitCheck", () => {
       tailoredCv.compareDocumentPosition(booking) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
     expect(screen.getByText("report.nextSteps")).toBeInTheDocument();
+  });
+
+  it("offers no CV when no requirement is in the record or partly", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          report: {
+            ...REPORT,
+            requirements: REPORT.requirements.map((requirement) => ({
+              ...requirement,
+              verdict: "notInRecord" as const,
+            })),
+          },
+          sessionId: "session-id-value",
+        }),
+      })
+    );
+    renderCheck();
+    await check();
+    await waitFor(() => expect(screen.getByText(REPORT.summary)).toBeInTheDocument());
+    expect(screen.queryByLabelText("nameLabel")).toBeNull();
+    expect(screen.queryByText("report.nextSteps")).toBeNull();
+    expect(screen.getByRole("heading", { level: 2, name: "report.bookTitle" })).toBeInTheDocument();
   });
 
   it("offers no CV and promises nothing below when the check read no requirements", async () => {
@@ -328,16 +353,29 @@ describe("FitCheck", () => {
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("errors.rateLimited"));
   });
 
-  it("ignores a second submit while the first check is still starting", async () => {
+  it("puts the waiting panel where the form was from the click, with the wait explained", async () => {
     vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise(() => undefined)));
     renderCheck();
     await check();
     await waitFor(() =>
-      expect(screen.getByRole("button", { name: /form.checking/ })).toBeInTheDocument()
+      expect(screen.getByRole("heading", { level: 2, name: "title" })).toBeInTheDocument()
     );
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: /form.checking/ }));
+    expect(screen.getByText("intro")).toBeInTheDocument();
+    expect(screen.queryByLabelText("form.label")).toBeNull();
+    expect(screen.queryByRole("button", { name: /form.submit/ })).toBeNull();
     expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("says the check is starting up once the wait passes a minute", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockReturnValue(new Promise(() => undefined)));
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    renderCheck();
+    await check(VACANCY, user);
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+    await vi.advanceTimersByTimeAsync(61_000);
+
+    expect(screen.getByText("stillRunning")).toBeInTheDocument();
   });
 
   it("shows the general failure message on any other status", async () => {
