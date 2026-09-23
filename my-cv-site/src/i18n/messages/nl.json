@@ -441,7 +441,6 @@
             "MVVM": "MVVM",
             "WebForms": "Web Forms",
             "Azure": "Azure",
-            "MSSQL": "MSSQL",
             "TailwindCSS": "Tailwind CSS",
             "NextJS": "Next.js",
             "RxJS": "RxJS",
@@ -775,7 +774,7 @@
                     "paragraph": "Het platform draaide op AngularJS met een .NET-backend uit dezelfde tijd. Omniplan wilde gaan samenwerken met externe organisaties, en dat vraagt om toegang die per partij te regelen is. De bestaande opzet liet dat niet toe, dus de frontend en de backend gingen samen op de schop."
                 },
                 {
-                    "paragraph": "Ik migreerde de frontend naar Angular 9 en bracht de backend over naar .NET Core met REST- en gRPC-services. Daarnaast ontwierp ik een modulaire autorisatie- en lidmaatschapsdienst op Microsoft Identity, OpenID Connect en JWT, doorgevoerd in de frontend en de backend, waarmee een externe organisatie precies de rechten krijgt die bij haar rol horen. De secrets staan in Azure Key Vault. De services draaien op Azure App Services met Docker en Kubernetes, en het datamodel in Entity Framework op MSSQL werd opnieuw ingedeeld."
+                    "paragraph": "Ik migreerde de frontend naar Angular 9 en bracht de backend over naar .NET Core met REST- en gRPC-services. Daarnaast ontwierp ik een modulaire autorisatie- en lidmaatschapsdienst op Microsoft Identity, OpenID Connect en JWT, doorgevoerd in de frontend en de backend, waarmee een externe organisatie precies de rechten krijgt die bij haar rol horen. De secrets staan in Azure Key Vault. De services draaien op Azure App Services met Docker en Kubernetes, en het datamodel in Entity Framework op SQL Server werd opnieuw ingedeeld."
                 },
                 {
                     "paragraph": "De schermen halen hun gedrag uit de configuratie van de backend. Validaties, rechten en invoervelden werden daarmee een instelling, waardoor een functionele wijziging vaak zonder nieuwe frontendcode kan. Een nieuwe partner aansluiten werd een kwestie van configureren."
@@ -1375,7 +1374,7 @@
                         "name": "Databases",
                         "items": [
                             {
-                                "name": "MSSQL"
+                                "name": "SQL Server"
                             },
                             {
                                 "name": "MySQL"

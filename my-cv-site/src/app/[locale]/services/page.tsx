@@ -62,7 +62,7 @@ export default async function ServicesPage({ params }: Props) {
         "Kotlin",
         "GraphQL",
         "REST",
-        "MSSQL",
+        "SQL Server",
         "MySQL",
         "Docker",
         "Kubernetes",

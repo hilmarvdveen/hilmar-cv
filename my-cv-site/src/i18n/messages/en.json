@@ -480,7 +480,6 @@
             "MVVM": "MVVM",
             "WebForms": "Web Forms",
             "Azure": "Azure",
-            "MSSQL": "MSSQL",
             "TailwindCSS": "Tailwind CSS",
             "NextJS": "Next.js",
             "RxJS": "RxJS",
@@ -814,7 +813,7 @@
                     "paragraph": "The platform ran on AngularJS with a .NET backend of the same age. Omniplan wanted to work with outside organisations, and that asks for access you can grant per party. The existing setup did not allow it, so the frontend and the backend were rebuilt together."
                 },
                 {
-                    "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity, OpenID Connect and JWT, implemented in the frontend and the backend, which gives an outside organisation exactly the rights that belong to its role. Its secrets live in Azure Key Vault. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on MSSQL was laid out again."
+                    "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity, OpenID Connect and JWT, implemented in the frontend and the backend, which gives an outside organisation exactly the rights that belong to its role. Its secrets live in Azure Key Vault. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on SQL Server was laid out again."
                 },
                 {
                     "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new frontend code. Connecting a new partner became a matter of configuration."
@@ -1414,7 +1413,7 @@
                         "name": "Databases",
                         "items": [
                             {
-                                "name": "MSSQL"
+                                "name": "SQL Server"
                             },
                             {
                                 "name": "MySQL"
