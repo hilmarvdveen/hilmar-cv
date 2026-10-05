@@ -185,6 +185,16 @@ node scripts/crawl-locales.mjs http://localhost:3123
 pnpm dlx lighthouse http://localhost:3123/nl --output=json --output-path=./lh.json --chrome-flags="--headless=new"
 ```
 
+The other production-build checks run the same way, against the started build:
+
+```bash
+pnpm check:locales http://localhost:3123     # every route in both languages
+pnpm check:structure http://localhost:3123   # one h1, one main, orderly headings, unique ids, named links per page
+pnpm check:seo http://localhost:3123         # every sitemap URL: canonical, hreflang, cards, title and description length, structured data
+pnpm check:sitemap http://localhost:3123     # every internal link is in the sitemap and every sitemap URL is linked
+pnpm check:nonce http://localhost:3123       # every script nonce equal to the header nonce (catches prerendered routes)
+```
+
 The Lighthouse command needs `CHROME_PATH` on Windows. Read the scores from
 `categories`, the metrics from `audits.first-contentful-paint` and friends,
 and the top items from `audits.unused-javascript`. Run it against the
@@ -220,7 +230,7 @@ What remains is the documented ceiling: every page is dynamic because
 of the per-request nonce, so the HTML cannot be served from the edge
 cache, and the React runtime has to be evaluated before the simulator
 counts the heading as painted. The one lever left is the decision on
-the CSP (static pages need the nonce gone), recorded in the root guide.
+the CSP (static pages need the nonce gone), recorded in `Hilmar/BACKLOG-ALL-PROJECTS.md`.
 Note for the build: after a component changes from client to server,
 run `pnpm build` on a clean `.next`, otherwise the client manifest keeps
 the old reference and the page throws at render.

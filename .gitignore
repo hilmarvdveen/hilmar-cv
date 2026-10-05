@@ -10,3 +10,6 @@
 
 .vercel
 .env*
+
+# Path-scoped Claude rules summarise the dossier, kept local like /Hilmar/
+/.claude/rules/
