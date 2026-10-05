@@ -45,8 +45,8 @@ export const BUSINESS_PROFILE = {
   SEARCH_TITLE_DUTCH: 'Senior Frontend Developer',
   ESTABLISHED: '2016',
   YEARS_EXPERIENCE: '10+',
-  AVAILABLE_FROM: '1 October 2026',
-  AVAILABLE_FROM_DUTCH: '1 oktober 2026',
+  AVAILABLE_FROM: 'immediately',
+  AVAILABLE_FROM_DUTCH: 'direct',
   SPECIALIZATION: 'React, Next.js, Angular, TypeScript and GraphQL'
 } as const;
 

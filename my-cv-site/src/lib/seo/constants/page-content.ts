@@ -7,7 +7,7 @@ export const HOMEPAGE_CONTENT = {
     LONG_TAIL: [
       'Senior frontend engineer ten years React Next.js Angular',
       'Legacy to server-side rendered React without downtime',
-      'Frontend engineer available from 1 October 2026 Randstad'
+      'Frontend engineer available immediately Randstad'
     ]
   }
 } as const;
@@ -117,7 +117,7 @@ export const BLOG_CONTENT = {
 export const FAQ_CONTENT = {
   SEO_FOCUS: {
     PRIMARY: 'Freelance frontend engineer questions',
-    SECONDARY: ['Frontend engineer rate Netherlands', 'Hybrid frontend engagement Randstad', 'Availability from 1 October 2026'],
+    SECONDARY: ['Frontend engineer rate Netherlands', 'Hybrid frontend engagement Randstad', 'Immediate availability frontend engineer'],
     SERVICE_FOCUSED: ['How a frontend engagement starts', 'Working with a backend team', 'Handover and documentation']
   }
 } as const;

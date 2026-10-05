@@ -5,9 +5,9 @@
         "lane": "Het oude systeem blijft live",
         "ramp": "Verkeer gaat stap voor stap over"
     },
-            "badge": "Beschikbaar vanaf 1 oktober 2026 · de Randstad, hybride of remote",
+            "badge": "Direct beschikbaar · de Randstad, hybride of remote",
             "heading": "Senior frontend engineer voor de hele keten. Van legacy‑specificatie tot live cut-over.",
-            "description": "Ruim tien jaar senior in React en Angular, nu bij bol.com. Ik bouw de pagina's die klanten zien, van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en zet ze in omkeerbare stappen live op echt verkeer.",
+            "description": "Ruim tien jaar senior in React en Angular, meest recent bij bol.com. Ik bouw de pagina's die klanten zien, van specificatie tot productie, leg het GraphQL-contract vast met het backendteam en zet ze in omkeerbare stappen live op echt verkeer.",
             "bookCall": "Plan een gesprek van 30 minuten",
             "downloadCv": "CV downloaden (PDF)",
             "credentials": "Hilmar ICT Services · KVK 97564303 · Zandvoort NL",
@@ -51,7 +51,7 @@
             "caveat": "Niet elk experiment won, dus het totale effect was positief maar bescheiden."
         },
         "flagship": {
-            "eyebrow": "Huidige opdracht",
+            "eyebrow": "Meest recente opdracht",
             "title": "Van een verouderde Java-webshop naar React, pagina voor pagina",
             "intro": "bol.com is een van de grootste online retailers van Nederland en België. Mijn opdracht daar begon in juli 2025.",
             "cards": [
@@ -184,7 +184,7 @@
                 },
                 {
                     "title": "Een aanbeveling van een engineering manager",
-                    "body": "Een engineering manager bij bol.com beval me aan bij zijn collega's na een zeer krappe procedure voor een andere seniorrol, waarin ik als tweede eindigde. Uit die aanbeveling kwam de huidige opdracht voort.",
+                    "body": "Een engineering manager bij bol.com beval me aan bij zijn collega's na een zeer krappe procedure voor een andere seniorrol, waarin ik als tweede eindigde. Uit die aanbeveling kwam mijn opdracht daar voort.",
                     "attribution": "bol.com, engineering manager bij een andere seniorrol, 2025"
                 },
                 {
@@ -248,8 +248,7 @@
             "facts": [
                 {
                     "label": "Beschikbaarheid",
-                    "value": "Vanaf 1 oktober 2026",
-                    "detail": "Eerder in overleg",
+                    "value": "Direct",
                     "highlight": true
                 },
                 {
@@ -328,7 +327,7 @@
                     },
                     {
                         "title": "Als senior aansluiten bij een bestaand frontendteam",
-                        "description": "Jullie team levert en heeft er een senior frontend engineer naast nodig. Bij bol.com ben ik de frontendspecialist in een team met vooral backendontwikkelaars. Bij Athlon begeleidde ik het frontendteam door een Angular-migratie heen en deed ik hun code reviews.",
+                        "description": "Jullie team levert en heeft er een senior frontend engineer naast nodig. Bij bol.com was ik de frontendspecialist in een team met vooral backendontwikkelaars. Bij Athlon begeleidde ik het frontendteam door een Angular-migratie heen en deed ik hun code reviews.",
                         "href": "/services/consulting",
                         "linkLabel": "Hoe ik binnen een team werk"
                     }
@@ -374,7 +373,7 @@
             "others": "Andere opdrachten"
         },
         "title": "Werkervaring",
-        "description": "Elke opdracht sinds 2016, inclusief de huidige bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Elke opdracht heeft een eigen pagina met het hele verhaal.",
+        "description": "Elke opdracht sinds 2016, inclusief die bij bol.com. Per opdracht lees je wat het opleverde, wat mijn rol was en op welke stack het draaide. Elke opdracht heeft een eigen pagina met het hele verhaal.",
         "resultsLink": "De vier opdrachten met het resultaat voorop",
         "metaDescription": "Twaalf opdrachten sinds 2016, met bol.com, en per opdracht wat het opleverde, mijn rol en de stack. Senior frontend engineer, React en Angular, freelance.",
         "cta": {
@@ -549,7 +548,7 @@
             "role": "Senior Frontend Engineer (Loyalty- en Digital-teams)",
             "body": [
                 {
-                    "paragraph": "bol.com is een van de grootste online retailers van Nederland en België. De winkel draaide op een grote Java-applicatie die stap voor stap wordt vervangen door een server-side gerenderd React-platform. Sinds juli 2025 ben ik daar de frontendspecialist in teams die vooral uit backendontwikkelaars bestaan, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd."
+                    "paragraph": "bol.com is een van de grootste online retailers van Nederland en België. De winkel draaide op een grote Java-applicatie die stap voor stap wordt vervangen door een server-side gerenderd React-platform. Van juli 2025 tot oktober 2026 was ik daar de frontendspecialist in teams die vooral uit backendontwikkelaars bestonden, eerst in Loyalty en daarna in Digital. De opdracht is drie keer verlengd."
                 },
                 {
                     "paragraph": "De pagina's die ik moest verhuizen hadden geen geschreven specificatie. Hun gedrag zat in server-side Java en 226 Handlebars-templates. Ik las die code en legde per pagina vast wat de pagina precies doet: de exacte URL's, alle teksten, de classificatieregels en de analytics-events. Die lezing toetste ik bij de backend-engineers die de services beheren. Dat draaiboek maakte het mogelijk om pagina voor pagina te migreren met weinig risico.",
@@ -969,7 +968,7 @@
         ],
         "cta": {
             "title": "Welke hiervan lijkt op jouw situatie?",
-            "description": "Een gesprek van dertig minuten is genoeg om te zien of dezelfde aanpak bij jouw platform past. Freelance via Hilmar ICT Services, beschikbaar vanaf 1 oktober 2026.",
+            "description": "Een gesprek van dertig minuten is genoeg om te zien of dezelfde aanpak bij jouw platform past. Freelance via Hilmar ICT Services, direct beschikbaar.",
             "button": "Plan een gesprek van 30 minuten"
         }
     },
@@ -1003,7 +1002,7 @@
             "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw.",
             "company": "Bedrijf",
             "start": "Wanneer wil je starten?",
-            "startPlaceholder": "Bijvoorbeeld 1 oktober 2026"
+            "startPlaceholder": "Bijvoorbeeld zo snel mogelijk"
         },
         "cta": {
             "button": "Plan een gesprek van 30 minuten"
@@ -1031,7 +1030,7 @@
             "items": [
                 {
                     "label": "Beschikbaarheid",
-                    "value": "Vanaf 1 oktober 2026, eerder in overleg"
+                    "value": "Direct"
                 },
                 {
                     "label": "Contractvorm",
@@ -1286,7 +1285,7 @@
                     }
                 ],
                 "terms": [
-                    "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+                    "Direct beschikbaar",
                     "32 tot 40 uur per week, zes maanden of langer",
                     "De Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
@@ -1484,7 +1483,7 @@
                     }
                 ],
                 "terms": [
-                    "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+                    "Direct beschikbaar",
                     "32 tot 40 uur per week, zes maanden of langer",
                     "De Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
@@ -1663,7 +1662,7 @@
                     }
                 ],
                 "terms": [
-                    "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+                    "Direct beschikbaar",
                     "32 tot 40 uur per week, zes maanden of langer",
                     "De Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
@@ -1814,7 +1813,7 @@
                     }
                 ],
                 "terms": [
-                    "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+                    "Direct beschikbaar",
                     "32 tot 40 uur per week, zes maanden of langer",
                     "De Randstad, 1 tot 2 dagen op locatie, of volledig remote",
                     "Freelance via Hilmar ICT Services, KVK 97564303",
@@ -1879,7 +1878,7 @@
             "openMenu": "Menu openen",
             "closeMenu": "Menu sluiten",
             "language": "Taal",
-            "availability": "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+            "availability": "Direct beschikbaar",
             "search": "Zoeken",
             "menuLabel": "Hoofdmenu"
         },
@@ -1914,7 +1913,7 @@
             "subtitle": "het eerste gesprek",
             "description": "Beschikbaarheid, tarief, werkwijze en contractvorm staan hier, zodat een gesprek meteen bij de echte vraag kan beginnen. Wat ontbreekt, gaat in een bericht of in de eerste dertig minuten.",
             "features": {
-                "quick": "Vanaf 1 oktober 2026",
+                "quick": "Direct",
                 "expert": "React en Angular, senior sinds 2016",
                 "remote": "De Randstad of remote"
             }
@@ -1932,7 +1931,7 @@
                     },
                     {
                         "question": "Wanneer ben je beschikbaar en voor hoeveel uur?",
-                        "answer": "Vanaf 1 oktober 2026, en eerder in overleg. 32 tot 40 uur per week, voor zes maanden of langer. Mijn huidige opdracht bij bol.com begon in juli 2025 en is drie keer verlengd. Per 1 oktober 2026 beëindigt bol.com de inzet van alle externe krachten, en daarmee eindigt ook mijn opdracht."
+                        "answer": "Direct. 32 tot 40 uur per week, voor zes maanden of langer. Mijn opdracht bij bol.com liep van juli 2025 tot oktober 2026 en is drie keer verlengd. Per 1 oktober 2026 beëindigde bol.com de inzet van alle externe krachten, ook die van mij."
                     },
                     {
                         "question": "Waar werk je, en in welke talen?",
@@ -2410,7 +2409,7 @@
             ],
             "practicalTitle": "Praktisch",
             "practical": [
-                "Beschikbaar vanaf 1 oktober 2026, eerder in overleg",
+                "Direct beschikbaar",
                 "De Randstad, hybride of remote, 1 à 2 dagen op locatie werkt goed",
                 "Freelance ZZP via Hilmar ICT Services, KVK 97564303",
                 "€95 tot €125 per uur, afhankelijk van projecttype en werk"
@@ -2537,12 +2536,11 @@
         "hiring": {
           "eyebrow": "Praktisch",
           "title": "Wat je nodig hebt om me in te huren",
-          "intro": "Ik ben Hilmar van der Veen. Sinds 2016 werk ik aan de voorkant van grote webplatformen, nu bij bol.com en daarvoor bij onder meer de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular zijn het dagelijkse werk, met TypeScript, GraphQL en toegankelijkheid eromheen.",
+          "intro": "Ik ben Hilmar van der Veen. Sinds 2016 werk ik aan de voorkant van grote webplatformen, meest recent bij bol.com en daarvoor bij onder meer de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular zijn het dagelijkse werk, met TypeScript, GraphQL en toegankelijkheid eromheen.",
           "facts": [
             {
               "label": "Beschikbaar",
-              "value": "Vanaf 1 oktober 2026",
-              "detail": "Eerder in overleg"
+              "value": "Direct"
             },
             {
               "label": "Werkvorm",
@@ -2588,7 +2586,7 @@
             "title": "Senior Frontend Engineer",
             "description": "Freelance senior frontend engineer. React en Angular, in de Randstad en remote.",
             "location": "Zandvoort NL • de Randstad, hybride of remote",
-            "availability": "Beschikbaar vanaf 1 oktober 2026, eerder in overleg"
+            "availability": "Direct beschikbaar"
         },
         "services": {
             "title": "Diensten",
@@ -2681,7 +2679,7 @@
     "regions": {
         "hub": {
             "title": "Frontend developer inhuren in de Randstad",
-            "description": "Waar ik werk: {cities}, hybride of remote. Twaalf opdrachten sinds 2016. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Waar ik werk: {cities}, hybride of remote. Twaalf opdrachten sinds 2016. Direct beschikbaar.",
             "heroTitle": "Frontend developer inhuren in de Randstad",
             "heroDescription": "Vanuit Zandvoort werk ik voor opdrachtgevers in {cities}. Een à twee dagen per week op locatie, de rest remote.",
             "baseTitle": "Thuisbasis en ritme",
@@ -2713,7 +2711,7 @@
         "amsterdam": {
             "name": "Amsterdam",
             "title": "Freelance frontend developer Amsterdam inhuren",
-            "description": "Senior frontend developer, freelance. {count} opdrachten in Amsterdam, waaronder de Nationale Postcode Loterij. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Senior frontend developer, freelance. {count} opdrachten in Amsterdam, waaronder de Nationale Postcode Loterij. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Amsterdam",
             "heroDescription": "{count} van mijn {total} opdrachten sinds 2016 waren in Amsterdam. Van Zandvoort ben ik er in een halfuur, direct met de trein.",
             "hubLine": "{count} opdrachten, van een design system voor de Nationale Postcode Loterij tot één componentenbibliotheek voor Randstad en Yacht.",
@@ -2744,8 +2742,8 @@
                     "answer": "Een à twee dagen op locatie werkt goed, de rest remote. Welke dagen, stemmen we in het gesprek af op refinement en review."
                 },
                 {
-                    "question": "Kun je voor 1 oktober beginnen?",
-                    "answer": "Beschikbaar vanaf 1 oktober 2026, eerder in overleg."
+                    "question": "Hoe snel kun je beginnen?",
+                    "answer": "Direct beschikbaar."
                 },
                 {
                     "question": "Werk je ook voor opdrachtgevers buiten Amsterdam?",
@@ -2758,13 +2756,13 @@
         "utrecht": {
             "name": "Utrecht",
             "title": "Freelance frontend developer Utrecht inhuren",
-            "description": "Senior frontend developer, freelance. In Utrecht bij bol.com en Bluefield Smart Access. React, GraphQL en .NET. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Senior frontend developer, freelance. In Utrecht bij bol.com en Bluefield Smart Access. React, GraphQL en .NET. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Utrecht",
-            "heroDescription": "Ik werk nu bij bol.com in Utrecht, hybride, en daarvoor bij Bluefield Smart Access.",
-            "hubLine": "{count} opdrachten, met bol.com als lopende opdracht.",
-            "engagementsLead": "{count} opdrachten in Utrecht: het lopende werk bij bol.com en eerder Bluefield Smart Access.",
+            "heroDescription": "In Utrecht werkte ik bij bol.com, hybride, en daarvoor bij Bluefield Smart Access.",
+            "hubLine": "{count} opdrachten, met bol.com als meest recente.",
+            "engagementsLead": "{count} opdrachten in Utrecht: meest recent bol.com en eerder Bluefield Smart Access.",
             "travel": [
-                "Bij bol.com werk ik hybride, met vaste dagen in Utrecht en de rest remote. Bij Bluefield Smart Access werkte ik op locatie.",
+                "Bij bol.com werkte ik hybride, met vaste dagen in Utrecht en de rest remote. Bij Bluefield Smart Access werkte ik op locatie.",
                 "Zandvoort naar Utrecht Centraal is ruim een uur met de trein, met één overstap.",
                 "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
             ],
@@ -2790,11 +2788,11 @@
                 },
                 {
                     "question": "Hoe werkt hybride bij jou?",
-                    "answer": "Vaste dagen op kantoor voor refinement en review, de rest remote. Bij bol.com werkt dat zo sinds juli 2025."
+                    "answer": "Vaste dagen op kantoor voor refinement en review, de rest remote. Bij bol.com werkte dat zo van juli 2025 tot oktober 2026."
                 },
                 {
                     "question": "Vanaf wanneer ben je beschikbaar?",
-                    "answer": "Vanaf 1 oktober 2026, eerder in overleg."
+                    "answer": "Direct."
                 }
             ],
             "closeTitle": "Zit je team in Utrecht?",
@@ -2803,7 +2801,7 @@
         "rotterdam": {
             "name": "Rotterdam",
             "title": "Freelance frontend developer Rotterdam inhuren",
-            "description": "Senior frontend developer, freelance. Bij Opinity in Rotterdam bouwde ik frontend en backend van een ritregistratie. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Senior frontend developer, freelance. Bij Opinity in Rotterdam bouwde ik frontend en backend van een ritregistratie. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Rotterdam",
             "heroDescription": "Bij Opinity in Rotterdam bouwde ik in vier maanden de frontend en de backend van een bedrijfskritische ritregistratie, op locatie.",
             "hubLine": "Eén opdracht, op locatie: frontend en backend in vier maanden bij Opinity.",
@@ -2840,7 +2838,7 @@
         "den-haag": {
             "name": "Den Haag",
             "title": "Freelance frontend developer Den Haag inhuren",
-            "description": "Senior frontend developer, freelance. Overheidsplatform bij de Belastingdienst, Angular en .NET bij Ortec in Zoetermeer. Beschikbaar vanaf 1 oktober 2026.",
+            "description": "Senior frontend developer, freelance. Overheidsplatform bij de Belastingdienst, Angular en .NET bij Ortec in Zoetermeer. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Den Haag",
             "heroDescription": "Bij de Belastingdienst in Apeldoorn bouwde ik het formulierenplatform waarmee een nieuw belastingformulier van maanden naar een paar dagen ging. Bij Ortec in Zoetermeer, vlak bij Den Haag, werkte ik op locatie.",
             "hubLine": "Publieke sector bij de Belastingdienst, op locatie bij Ortec in Zoetermeer.",

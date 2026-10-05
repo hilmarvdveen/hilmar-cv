@@ -1040,8 +1040,8 @@ const COPY = {
     nl: "Dit artikel schrijft de inschrijf-API voor workshops uit het C#-artikel opnieuw in Kotlin, één keer op Spring Boot en één keer op Ktor. De requests, de statuscodes en de foutbodies blijven waar ze waren. Wat de taal verandert, is alles daaromheen.",
   },
   intro1: {
-    en: "I am a frontend engineer who writes backend code when the build needs it. At bol.com I am the frontend specialist in teams made up mostly of backend developers, and I wrote backend logic in Kotlin when capacity was tight. That is the situation this article is written for.",
-    nl: "Ik ben een frontend engineer die backendcode schrijft als de bouw daarom vraagt. Bij bol.com ben ik de frontendspecialist in teams die vooral uit backenddevelopers bestaan, en schreef ik backendlogica in Kotlin als de capaciteit krap was. Voor die situatie is dit artikel geschreven.",
+    en: "I am a frontend engineer who writes backend code when the build needs it. At bol.com I was the frontend specialist in teams made up mostly of backend developers, and I wrote backend logic in Kotlin when capacity was tight. That is the situation this article is written for.",
+    nl: "Ik ben een frontend engineer die backendcode schrijft als de bouw daarom vraagt. Bij bol.com was ik de frontendspecialist in teams die vooral uit backenddevelopers bestonden, en schreef ik backendlogica in Kotlin als de capaciteit krap was. Voor die situatie is dit artikel geschreven.",
   },
   versions: {
     en: "The samples target Kotlin 2.4 with Spring Boot 4.1 and Ktor 3.5, checked on 7 September 2026. Kotlin 2.4 ships K2 as the only compiler, so there is no second compiler to keep in mind. Spring Boot 4.1 manages Kotlin 2.3.21 and accepts 2.2 and up, so a build that wants 2.4.10 says so in its own plugin block. The toolchain everywhere is JDK 25, the current release with long-term support.",

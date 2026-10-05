@@ -93,8 +93,8 @@ export class SEOEngine {
       locale,
       title: `${BUSINESS_PROFILE.NAME} | Freelance ${BUSINESS_PROFILE.SEARCH_TITLE}`,
       description: locale === 'nl'
-        ? `Freelance senior frontend developer, 10+ jaar React, Next.js en Angular. Nu bij bol.com, drie keer verlengd. Vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH} in de Randstad en remote.`
-        : `Freelance senior frontend developer, 10+ years of React, Next.js and Angular. At bol.com now, extended three times. From ${BUSINESS_PROFILE.AVAILABLE_FROM}, Randstad and remote.`,
+        ? `Freelance senior frontend developer, 10+ jaar React, Next.js en Angular. Bij bol.com drie keer verlengd. Direct beschikbaar in de Randstad en remote.`
+        : `Freelance senior frontend developer, 10+ years of React, Next.js and Angular. Extended three times at bol.com. Available immediately, Randstad and remote.`,
       keywords: [
         ...HOMEPAGE_CONTENT.SEO_FOCUS.SECONDARY,
         ...HOMEPAGE_CONTENT.SEO_FOCUS.LONG_TAIL,
@@ -228,8 +228,8 @@ export class SEOEngine {
         ? 'Veelgestelde vragen | Freelance frontend developer'
         : 'Frequently asked questions | Freelance frontend developer',
       description: locale === 'nl'
-        ? `Inzet, tarief (${RATE_TEXT.nl}), beschikbaarheid vanaf ${BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH}, hybride werken in de Randstad en hoe een opdracht start.`
-        : `Engagements, the rate (${RATE_TEXT.en}), availability from ${BUSINESS_PROFILE.AVAILABLE_FROM}, hybrid work in the Randstad and how a contract starts.`,
+        ? `Inzet, tarief (${RATE_TEXT.nl}), directe beschikbaarheid, hybride werken in de Randstad en hoe een opdracht start.`
+        : `Engagements, the rate (${RATE_TEXT.en}), immediate availability, hybrid work in the Randstad and how a contract starts.`,
       keywords: [
         ...FAQ_CONTENT.SEO_FOCUS.SECONDARY,
         ...FAQ_CONTENT.SEO_FOCUS.SERVICE_FOCUSED,

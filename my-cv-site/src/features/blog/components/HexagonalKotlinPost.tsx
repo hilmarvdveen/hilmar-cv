@@ -650,8 +650,8 @@ const COPY = {
     nl: "De druk komt van boven. Een pagina wil één veld minder, een nieuw scherm wil twee entiteiten in één aanroep, een experiment wil een tweede variant van dezelfde lijst. Elk verzoek is klein. Elk verzoek komt binnen bij een resolver, en een resolver die ook de regels bevat, maakt van elke opmaakvraag een zakelijk risico.",
   },
   intro2: {
-    en: "At bol.com I am the frontend specialist in teams that are mostly backend developers, and I treat the GraphQL schema as the contract between us. When a field arrives in an awkward shape I go back to the backend engineers so we can reshape it there, and when capacity is tight I write the Kotlin myself.",
-    nl: "Bij bol.com ben ik de frontendspecialist in teams die vooral uit backenddevelopers bestaan, en ik behandel het GraphQL-schema als het contract tussen ons. Komt een veld in een onhandige vorm binnen, dan ga ik terug naar de backend engineers zodat we het daar kunnen aanpassen, en als de capaciteit krap is schrijf ik de Kotlin zelf.",
+    en: "At bol.com I was the frontend specialist in teams that were mostly backend developers, and I treated the GraphQL schema as the contract between us. When a field arrived in an awkward shape I went back to the backend engineers so we could reshape it there, and when capacity was tight I wrote the Kotlin myself.",
+    nl: "Bij bol.com was ik de frontendspecialist in teams die vooral uit backenddevelopers bestonden, en ik behandelde het GraphQL-schema als het contract tussen ons. Kwam een veld in een onhandige vorm binnen, dan ging ik terug naar de backend engineers zodat we het daar konden aanpassen, en als de capaciteit krap was schreef ik de Kotlin zelf.",
   },
   quote: {
     en: "A resolver should answer the question the frontend asked. It should not be the only place where the answer gets decided.",

@@ -714,8 +714,8 @@ const COPY = {
     nl: "De documentatie die allebei voorkomt is kort. Per component: wat het zelf levert, wat de gebruikende code meegeeft, en welke toestanden het aankondigt. Een story per toestand doet de rest, want de snelste review van een component is iemand die een toetsenbord op elke story zet.",
   },
   handover3: {
-    en: "At bol.com I work in teams made up mostly of backend developers, so what I hand over has to be maintainable by a team whose strength is the backend. At the Belastingdienst the technical documentation carried per-framework examples, edge cases and limitations, and I worked hands-on with developers across several teams on their implementation. A library nobody has adopted holds no level at all.",
-    nl: "Bij bol.com werk ik in teams die grotendeels uit backenddevelopers bestaan, dus wat ik overdraag moet te onderhouden zijn door een team waarvan de kracht in de backend zit. Bij de Belastingdienst droeg de technische documentatie voorbeelden per framework, randgevallen en beperkingen, en werkte ik met developers uit meerdere teams hands-on aan hun implementatie. Een bibliotheek die niemand heeft overgenomen houdt geen niveau vast.",
+    en: "At bol.com I worked in teams made up mostly of backend developers, so what I handed over had to be maintainable by a team whose strength is the backend. At the Belastingdienst the technical documentation carried per-framework examples, edge cases and limitations, and I worked hands-on with developers across several teams on their implementation. A library nobody has adopted holds no level at all.",
+    nl: "Bij bol.com werkte ik in teams die grotendeels uit backenddevelopers bestonden, dus wat ik overdroeg moest te onderhouden zijn door een team waarvan de kracht in de backend zat. Bij de Belastingdienst droeg de technische documentatie voorbeelden per framework, randgevallen en beperkingen, en werkte ik met developers uit meerdere teams hands-on aan hun implementatie. Een bibliotheek die niemand heeft overgenomen houdt geen niveau vast.",
   },
   closeTitle: {
     en: "What to take away",
