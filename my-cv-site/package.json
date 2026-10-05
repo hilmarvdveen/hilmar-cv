@@ -39,6 +39,9 @@
     "react-dom": "^19.2.8",
     "tailwind-merge": "^3.6.0"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "packageManager": "pnpm@10.34.6",
   "pnpm": {
     "overrides": {
