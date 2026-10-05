@@ -13,3 +13,6 @@
 
 # Path-scoped Claude rules summarise the dossier, kept local like /Hilmar/
 /.claude/rules/
+
+# Session handover and work packages for the site, kept local like /Hilmar/
+/my-cv-site/docs/work/
