@@ -45,7 +45,7 @@
   "packageManager": "pnpm@10.34.6",
   "pnpm": {
     "overrides": {
-      "postcss": "^8.5.10"
+      "postcss": "8.5.28"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
