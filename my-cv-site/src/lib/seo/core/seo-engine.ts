@@ -10,6 +10,7 @@ import type {
 } from '../types/seo-types';
 import type { Metadata } from 'next';
 import {
+  AVAILABILITY,
   BUSINESS_PROFILE,
   RATE_TEXT,
   LOCALE_CONFIG
@@ -93,8 +94,8 @@ export class SEOEngine {
       locale,
       title: `${BUSINESS_PROFILE.NAME} | Freelance ${BUSINESS_PROFILE.SEARCH_TITLE}`,
       description: locale === 'nl'
-        ? `Freelance senior frontend developer, 10+ jaar React, Next.js en Angular. Bij bol.com drie keer verlengd. Direct beschikbaar in de Randstad en remote.`
-        : `Freelance senior frontend developer, 10+ years of React, Next.js and Angular. Extended three times at bol.com. Available immediately, Randstad and remote.`,
+        ? `Freelance senior frontend developer, 10+ jaar React, Next.js en Angular. Bij bol.com drie keer verlengd. ${AVAILABILITY.STATEMENT.nl} in de Randstad en remote.`
+        : `Freelance senior frontend developer, 10+ years of React, Next.js and Angular. Extended three times at bol.com. ${AVAILABILITY.STATEMENT.en}, Randstad and remote.`,
       keywords: [
         ...HOMEPAGE_CONTENT.SEO_FOCUS.SECONDARY,
         ...HOMEPAGE_CONTENT.SEO_FOCUS.LONG_TAIL,

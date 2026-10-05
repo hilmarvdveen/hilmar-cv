@@ -1,4 +1,5 @@
 import {
+  AVAILABILITY,
   BUSINESS_PROFILE,
   PRICING,
   QUALIFICATIONS,
@@ -228,8 +229,8 @@ function buildProfile(): SeedProfile {
     established: BUSINESS_PROFILE.ESTABLISHED,
     yearsExperience: BUSINESS_PROFILE.YEARS_EXPERIENCE,
     availableFrom: {
-      en: BUSINESS_PROFILE.AVAILABLE_FROM,
-      nl: BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH,
+      en: AVAILABILITY.SHORT.en,
+      nl: AVAILABILITY.SHORT.nl,
     },
     specialization: BUSINESS_PROFILE.SPECIALIZATION,
     rate: {

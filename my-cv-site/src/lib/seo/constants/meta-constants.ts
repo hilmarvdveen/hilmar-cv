@@ -45,10 +45,20 @@ export const BUSINESS_PROFILE = {
   SEARCH_TITLE_DUTCH: 'Senior Frontend Developer',
   ESTABLISHED: '2016',
   YEARS_EXPERIENCE: '10+',
-  AVAILABLE_FROM: 'immediately',
-  AVAILABLE_FROM_DUTCH: 'direct',
   SPECIALIZATION: 'React, Next.js, Angular, TypeScript and GraphQL'
 } as const;
+
+export type AvailabilityText = { readonly en: string; readonly nl: string };
+
+export const AVAILABILITY: {
+  readonly START_DATE: string | null;
+  readonly STATEMENT: AvailabilityText;
+  readonly SHORT: AvailabilityText;
+} = {
+  START_DATE: null,
+  STATEMENT: { en: 'Available immediately', nl: 'Direct beschikbaar' },
+  SHORT: { en: 'Immediately', nl: 'Direct' }
+};
 
 export const PRICING = {
   HOURLY_RATE_MIN: 95,

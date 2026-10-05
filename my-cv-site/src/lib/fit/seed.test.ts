@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  AVAILABILITY,
   BUSINESS_PROFILE,
   PRICING,
   QUALIFICATIONS,
@@ -136,8 +137,8 @@ describe("buildSeedRecord", () => {
     expect(record.profile.country).toBe("NL");
     expect(record.profile.serviceArea.cities).toEqual([...BUSINESS_PROFILE.SERVICE_AREA.CITIES]);
     expect(record.profile.availableFrom).toEqual({
-      en: BUSINESS_PROFILE.AVAILABLE_FROM,
-      nl: BUSINESS_PROFILE.AVAILABLE_FROM_DUTCH,
+      en: AVAILABILITY.SHORT.en,
+      nl: AVAILABILITY.SHORT.nl,
     });
     expect(record.profile.rate).toEqual({
       minimum: PRICING.HOURLY_RATE_MIN,
