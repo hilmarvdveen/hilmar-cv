@@ -37,6 +37,7 @@ import {
   type DetailsField,
   firstBookableDay,
   fromDateKey,
+  FURTHEST_BOOKING_DAYS,
 } from "@/lib/booking";
 import {
   useBookingForm,
@@ -54,7 +55,6 @@ type SlotsStatus = "idle" | "loading" | "ready" | "failed";
 
 const STEP_COUNT = 3;
 const VISIBLE_DAYS = 10;
-const FURTHEST_BOOKING_DAYS = 90;
 export const STEP_HEADING_ID = "booking-step-heading";
 
 const STEP_KEYS: Record<BookingStep, string> = {
@@ -124,6 +124,12 @@ export const BookingForm = () => {
   const [fieldErrors, setFieldErrors] = useState<DetailsErrors>({});
 
   const requestedDate = useRef("");
+
+  const forgetSlots = useCallback((date: string) => {
+    setSlotsByDate((previous) =>
+      Object.fromEntries(Object.entries(previous).filter(([cachedDate]) => cachedDate !== date))
+    );
+  }, []);
   const previousStep = useRef<BookingStep>(step);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const slotGroupRef = useRef<HTMLDivElement>(null);
@@ -309,14 +315,18 @@ export const BookingForm = () => {
         const result = await response.json().catch(() => ({}));
         console.error("Booking submission failed:", response.status, result.error);
         setStatus("idle");
+        if (response.status === 409) forgetSlots(details.date);
         setSubmitError(
           response.status === 429
             ? t("errors.tooManyRequests")
-            : t("errors.submissionFailedDetail")
+            : response.status === 409
+              ? t("errors.slotTaken")
+              : t("errors.submissionFailedDetail")
         );
         trackBookingEvent("booking_failed", { status: response.status });
         return;
       }
+      forgetSlots(details.date);
       setStatus("submitted");
       trackBookingEvent("booking_completed");
     } catch (error) {

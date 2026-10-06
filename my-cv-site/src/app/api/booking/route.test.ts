@@ -5,12 +5,17 @@ import { __resetRateLimitStore } from "@/lib/security/rate-limit";
 const sendMail = vi.fn();
 const createCalendarEvent = vi.fn();
 const getGraphCredentials = vi.fn();
+const fetchDayEvents = vi.fn();
+const slotRefusal = vi.fn();
 vi.mock("@/lib/graph", () => ({
   getGraphCredentials: () => getGraphCredentials(),
   getAccessToken: vi.fn(async () => "token"),
   getGraphClient: vi.fn(() => ({})),
   sendMail: (...args: unknown[]) => sendMail(...args),
   createCalendarEvent: (...args: unknown[]) => createCalendarEvent(...args),
+  fetchDayEvents: (...args: unknown[]) => fetchDayEvents(...args),
+  slotRefusal: (...args: unknown[]) => slotRefusal(...args),
+  bookingTimezoneDateKey: () => "2026-10-09",
   BOOKING_TIMEZONE: "Europe/Amsterdam",
 }));
 
@@ -44,6 +49,8 @@ beforeEach(() => {
   sendMail.mockReset().mockResolvedValue(undefined);
   createCalendarEvent.mockReset().mockResolvedValue({ joinUrl: undefined });
   getGraphCredentials.mockReset().mockReturnValue(CREDS);
+  fetchDayEvents.mockReset().mockResolvedValue([]);
+  slotRefusal.mockReset().mockReturnValue(null);
 });
 
 const valid = () => ({
@@ -78,6 +85,31 @@ describe("POST /api/booking", () => {
     expect(response.status).toBe(422);
     expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(createCalendarEvent).not.toHaveBeenCalled();
+  });
+
+  it("answers 409 when the slot was taken in the meantime and creates no event", async () => {
+    slotRefusal.mockReturnValue("taken");
+    const response = await POST(post(valid()));
+    expect(response.status).toBe(409);
+    expect(await response.json()).toEqual({ reason: "slotTaken" });
+    expect(createCalendarEvent).not.toHaveBeenCalled();
+    expect(sendMail).not.toHaveBeenCalled();
+  });
+
+  it("answers 400 for a time that is not a bookable slot and creates no event", async () => {
+    for (const refusal of ["notASlot", "tooSoon"]) {
+      slotRefusal.mockReturnValue(refusal);
+      const response = await POST(post(valid()));
+      expect(response.status).toBe(400);
+    }
+    expect(createCalendarEvent).not.toHaveBeenCalled();
+  });
+
+  it("checks the requested time against that day in the owner calendar", async () => {
+    const body = valid();
+    await POST(post(body));
+    expect(fetchDayEvents).toHaveBeenCalledWith(expect.anything(), CREDS.smtpUser, "2026-10-09");
+    expect(slotRefusal.mock.calls[0][0]).toEqual(new Date(body.date));
   });
 
   it("creates an event, notifies the owner and confirms to the visitor", async () => {

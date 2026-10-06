@@ -4,15 +4,14 @@ import {
   getAccessToken,
   getGraphClient,
   generateTimeSlots,
-  isSlotAvailable,
+  fetchDayEvents,
+  isBookingWeekend,
+  slotRefusal,
   BOOKING_TIMEZONE,
 } from "@/lib/graph";
 import { serverErrorResponse, enforceRateLimit } from "@/lib/security";
-import { MINIMUM_NOTICE_MINUTES } from "@/lib/booking/schedule";
 
 export const runtime = "nodejs";
-
-const MINIMUM_NOTICE_MILLISECONDS = MINIMUM_NOTICE_MINUTES * 60 * 1000;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
@@ -48,29 +47,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const client = getGraphClient(accessToken);
     const { smtpUser } = credentials;
 
-    const startOfDay = new Date(`${date}T00:00:00`);
-    const endOfDay = new Date(`${date}T23:59:59`);
-
-    const result = await client
-      .api(`/users/${smtpUser}/calendarview`)
-      .query({
-        startDateTime: startOfDay.toISOString(),
-        endDateTime: endOfDay.toISOString(),
-        $orderby: "start/dateTime",
-      })
-      .header("Prefer", `outlook.timezone="${BOOKING_TIMEZONE}"`)
-      .get();
-
-    const events = result.value || [];
-
-    const isWeekend = selectedDate.getUTCDay() === 0 || selectedDate.getUTCDay() === 6;
-    const earliestStart = Date.now() + MINIMUM_NOTICE_MILLISECONDS;
-    const slots = isWeekend ? [] : generateTimeSlots(date);
-    const availableSlots = slots.filter(
-      (iso) =>
-        new Date(iso).getTime() >= earliestStart &&
-        isSlotAvailable(new Date(iso), events)
-    );
+    const events = await fetchDayEvents(client, smtpUser, date);
+    const now = Date.now();
+    const availableSlots = isBookingWeekend(date)
+      ? []
+      : generateTimeSlots(date).filter((iso) => slotRefusal(new Date(iso), events, now) === null);
 
     const formattedSlots = availableSlots.map((slot) => ({
       value: slot,

@@ -1,5 +1,11 @@
 import { Client } from "@microsoft/microsoft-graph-client";
-import { SLOT_MINUTES, SLOTS_PER_DAY, WORKDAY_START_HOUR } from "@/lib/booking/schedule";
+import {
+  FURTHEST_BOOKING_DAYS,
+  MINIMUM_NOTICE_MINUTES,
+  SLOT_MINUTES,
+  SLOTS_PER_DAY,
+  WORKDAY_START_HOUR,
+} from "@/lib/booking/schedule";
 
 export const BOOKING_TIMEZONE = "Europe/Amsterdam";
 const REMINDER_MINUTES_BEFORE_START = 60;
@@ -84,7 +90,7 @@ export function formatAsBookingWallClock(instant: Date): string {
   );
 }
 
-function bookingTimezoneDateKey(instant: Date): string {
+export function bookingTimezoneDateKey(instant: Date): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: BOOKING_TIMEZONE,
     year: "numeric",
@@ -132,6 +138,66 @@ export function isSlotAvailable(
     const eventEnd = parseGraphDateTime(event.end.dateTime);
     return slotStart < eventEnd && slotEnd > eventStart;
   });
+}
+
+export type SlotRefusal = "notASlot" | "tooSoon" | "taken";
+
+const DAY_EVENTS_PAGE_SIZE = 100;
+
+type CalendarViewPage = {
+  value?: CalendarEvent[];
+  "@odata.nextLink"?: string;
+};
+
+export function isBookingWeekend(date: string): boolean {
+  const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
+  return weekday === 0 || weekday === 6;
+}
+
+export function slotRefusal(
+  slotStart: Date,
+  events: CalendarEvent[],
+  now: number
+): SlotRefusal | null {
+  const date = bookingTimezoneDateKey(slotStart);
+  if (isBookingWeekend(date) || !generateTimeSlots(date).includes(slotStart.toISOString())) {
+    return "notASlot";
+  }
+  if (date > bookingTimezoneDateKey(new Date(now + FURTHEST_BOOKING_DAYS * 86400000))) {
+    return "notASlot";
+  }
+  if (slotStart.getTime() < now + MINIMUM_NOTICE_MINUTES * 60000) return "tooSoon";
+  if (!isSlotAvailable(slotStart, events)) return "taken";
+  return null;
+}
+
+export async function fetchDayEvents(
+  client: Client,
+  userEmail: string,
+  date: string
+): Promise<CalendarEvent[]> {
+  const result = (await client
+    .api(`/users/${userEmail}/calendarview`)
+    .query({
+      startDateTime: bookingWallClockToUtc(date, 0, 0).toISOString(),
+      endDateTime: bookingWallClockToUtc(date, 23, 59, 59).toISOString(),
+      $orderby: "start/dateTime",
+      $select: "start,end",
+      $top: DAY_EVENTS_PAGE_SIZE,
+    })
+    .header("Prefer", `outlook.timezone="${BOOKING_TIMEZONE}"`)
+    .get()) as CalendarViewPage | undefined;
+  const events = [...(result?.value ?? [])];
+  let nextLink = result?.["@odata.nextLink"];
+  while (nextLink) {
+    const page = (await client
+      .api(nextLink)
+      .header("Prefer", `outlook.timezone="${BOOKING_TIMEZONE}"`)
+      .get()) as CalendarViewPage | undefined;
+    events.push(...(page?.value ?? []));
+    nextLink = page?.["@odata.nextLink"];
+  }
+  return events;
 }
 
 export type CreateEventInput = {

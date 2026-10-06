@@ -2439,6 +2439,7 @@
             "submissionFailed": "De boeking is niet gelukt",
             "loadSlotsFailed": "De beschikbare tijden konden niet worden geladen. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com kan ook, dan plan ik het gesprek voor je in.",
             "submissionFailedDetail": "Je boeking is niet verzonden. Probeer het zo opnieuw. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook. Dan plan ik het gesprek voor je in.",
+            "slotTaken": "Dit tijdstip is net voor jou geboekt. Kies een ander moment via Wijzig bij Wanneer.",
             "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw."
         }
     },

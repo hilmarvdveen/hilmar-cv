@@ -254,6 +254,24 @@ describe("BookingForm: confirm", () => {
     expect(screen.getByRole("heading", { name: "flow.steps.confirm" })).toBeInTheDocument();
   });
 
+  it("tells the visitor the slot was just taken on a 409 and loads that day fresh", async () => {
+    const fetchMock = installFetch({ submitStatus: 409 });
+    const user = userEvent.setup();
+    renderForm();
+    await pickFirstSlotAndContinue(user);
+    await fillDetailsAndContinue(user);
+    const slotRequestsBefore = fetchMock.mock.calls.filter(([input]) => input.startsWith("/api/booking/slots")).length;
+
+    await user.click(confirmButton());
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("errors.slotTaken");
+    await waitFor(() =>
+      expect(
+        fetchMock.mock.calls.filter(([input]) => input.startsWith("/api/booking/slots")).length
+      ).toBeGreaterThan(slotRequestsBefore)
+    );
+  });
+
   it("lets the visitor change the moment from the summary", async () => {
     installFetch();
     const user = userEvent.setup();

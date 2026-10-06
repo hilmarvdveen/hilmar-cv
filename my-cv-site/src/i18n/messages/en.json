@@ -2574,6 +2574,7 @@
             "submissionFailed": "The booking did not go through",
             "loadSlotsFailed": "The available times could not be loaded. Try again in a moment. You can also email hilmar@hilmarvanderveen.com and I will schedule the call for you.",
             "submissionFailedDetail": "Your booking did not go through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947. I will schedule the call for you.",
+            "slotTaken": "This time was booked just before you. Pick another moment with Change next to When.",
             "tooManyRequests": "Too many attempts in a short time. Wait a minute and try again."
         }
     },

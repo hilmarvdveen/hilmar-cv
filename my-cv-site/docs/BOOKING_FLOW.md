@@ -129,6 +129,23 @@ button and no picker.)
 
 - The slots API drops times that start within the next hour and offers
   nothing on weekends, so the grid never shows a time that cannot be booked.
+- The booking API runs the same check before it creates the event
+  (`slotRefusal` in `src/lib/graph/calendar.ts`, one function for both
+  routes): the time must be on the slot grid of a weekday, at least an
+  hour ahead, no further out than `FURTHEST_BOOKING_DAYS` (90, shared
+  with the form in `src/lib/booking/schedule.ts`), and free in the
+  calendar at that moment. The day is read in full: `fetchDayEvents`
+  selects only start and end, asks 100 events a page and follows every
+  `@odata.nextLink`, because Graph's default page of 10 would hide later
+  events on a busy day. A taken slot answers
+  409 `slotTaken` and the form says so, with Change next to When as the
+  way out. Any other refused time answers 400. Without this check a stale
+  grid or a direct request could book any moment, also a taken one or
+  03:00 on a Sunday (found in the production test of 6 October 2026).
+  Two visitors confirming the same slot within the same second can still
+  both get through, because the check and the event are two Graph calls.
+- After a booking, and after a 409, the form forgets the cached times of
+  that day, so the next look at that day loads it fresh.
 - A booking draft is saved for seven days and restored on return. A restored
   time that is no longer free is dropped silently. A saved step is only
   restored when the data it needs is still there.

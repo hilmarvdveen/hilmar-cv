@@ -5,6 +5,9 @@ import {
   getGraphClient,
   sendMail,
   createCalendarEvent,
+  fetchDayEvents,
+  slotRefusal,
+  bookingTimezoneDateKey,
 } from "@/lib/graph";
 import {
   isAllowedOrigin,
@@ -78,6 +81,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const accessToken = await getAccessToken(credentials);
     const client = getGraphClient(accessToken);
     const { smtpUser } = credentials;
+
+    const dayEvents = await fetchDayEvents(client, smtpUser, bookingTimezoneDateKey(bookingDate));
+    const refusal = slotRefusal(bookingDate, dayEvents, Date.now());
+    if (refusal === "taken") {
+      return NextResponse.json({ reason: "slotTaken" }, { status: 409 });
+    }
+    if (refusal) {
+      return NextResponse.json({ error: "Not a bookable time" }, { status: 400 });
+    }
 
     const bookingInput: BookingEmailInput = {
       locale,

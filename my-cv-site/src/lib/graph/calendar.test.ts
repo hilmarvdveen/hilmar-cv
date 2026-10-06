@@ -9,6 +9,9 @@ import {
   tomorrowBookingDateKey,
   bookingSubjectLocale,
   listUpcomingBookings,
+  slotRefusal,
+  isBookingWeekend,
+  fetchDayEvents,
   BOOKING_TIMEZONE,
   type CalendarEvent,
 } from "./calendar";
@@ -254,6 +257,101 @@ describe("bookingSubjectLocale", () => {
 
   it("falls back to English for an unrecognised subject", () => {
     expect(bookingSubjectLocale("Team meeting")).toBe("en");
+  });
+});
+
+describe("isBookingWeekend", () => {
+  it("marks Saturday and Sunday and lets a weekday through", () => {
+    expect(isBookingWeekend("2026-10-17")).toBe(true);
+    expect(isBookingWeekend("2026-10-18")).toBe(true);
+    expect(isBookingWeekend("2026-10-15")).toBe(false);
+  });
+});
+
+describe("slotRefusal", () => {
+  const slot = new Date("2026-10-15T14:00:00.000Z");
+  const longBefore = new Date("2026-10-10T08:00:00Z").getTime();
+
+  it("accepts a free slot on the grid of a weekday with enough notice", () => {
+    expect(slotRefusal(slot, [], longBefore)).toBeNull();
+  });
+
+  it("refuses a time off the slot grid, outside working hours or in the weekend", () => {
+    expect(slotRefusal(new Date("2026-10-15T14:10:00.000Z"), [], longBefore)).toBe("notASlot");
+    expect(slotRefusal(new Date("2026-10-15T01:00:00.000Z"), [], longBefore)).toBe("notASlot");
+    expect(slotRefusal(new Date("2026-10-17T12:00:00.000Z"), [], longBefore)).toBe("notASlot");
+  });
+
+  it("refuses a slot beyond the booking horizon", () => {
+    const now = new Date("2026-10-06T08:00:00Z").getTime();
+    expect(slotRefusal(new Date("2027-01-04T08:00:00.000Z"), [], now)).toBeNull();
+    expect(slotRefusal(new Date("2027-01-05T08:00:00.000Z"), [], now)).toBe("notASlot");
+    expect(slotRefusal(new Date("2099-03-02T08:00:00.000Z"), [], now)).toBe("notASlot");
+  });
+
+  it("refuses a slot inside the minimum notice", () => {
+    expect(slotRefusal(slot, [], slot.getTime() - 30 * 60000)).toBe("tooSoon");
+  });
+
+  it("refuses a slot an event in the owner calendar already covers", () => {
+    const events: CalendarEvent[] = [
+      { start: { dateTime: "2026-10-15T16:00:00.0000000" }, end: { dateTime: "2026-10-15T16:30:00.0000000" } },
+    ];
+    expect(slotRefusal(slot, events, longBefore)).toBe("taken");
+  });
+});
+
+describe("fetchDayEvents", () => {
+  it("reads the Amsterdam day from the calendar view and returns its events", async () => {
+    const events = [{ start: { dateTime: "a" }, end: { dateTime: "b" } }];
+    const get = vi.fn().mockResolvedValue({ value: events });
+    const header = vi.fn(() => ({ get }));
+    const query = vi.fn(() => ({ header }));
+    const api = vi.fn(() => ({ query }));
+    const client = { api } as unknown as Client;
+
+    await expect(fetchDayEvents(client, "owner@example.com", "2026-10-15")).resolves.toEqual(events);
+    expect(api).toHaveBeenCalledWith("/users/owner@example.com/calendarview");
+    expect(query).toHaveBeenCalledWith({
+      startDateTime: "2026-10-14T22:00:00.000Z",
+      endDateTime: "2026-10-15T21:59:59.000Z",
+      $orderby: "start/dateTime",
+      $select: "start,end",
+      $top: 100,
+    });
+  });
+
+  it("follows every next page so a busy day is read in full", async () => {
+    const first = { start: { dateTime: "a" }, end: { dateTime: "b" } };
+    const second = { start: { dateTime: "c" }, end: { dateTime: "d" } };
+    const nextLink = "https://graph.microsoft.com/v1.0/users/owner/calendarview?skip=100";
+    const firstGet = vi.fn().mockResolvedValue({ value: [first], "@odata.nextLink": nextLink });
+    const nextGet = vi.fn().mockResolvedValue({ value: [second] });
+    const api = vi.fn((path: string) =>
+      path === nextLink
+        ? { header: () => ({ get: nextGet }) }
+        : { query: () => ({ header: () => ({ get: firstGet }) }) }
+    );
+    const client = { api } as unknown as Client;
+
+    await expect(fetchDayEvents(client, "owner@example.com", "2026-10-15")).resolves.toEqual([first, second]);
+    expect(api).toHaveBeenCalledWith(nextLink);
+  });
+
+  it("stops when a next page answers without a value", async () => {
+    const nextLink = "https://graph.microsoft.com/v1.0/next";
+    const api = vi.fn((path: string) =>
+      path === nextLink
+        ? { header: () => ({ get: vi.fn().mockResolvedValue(undefined) }) }
+        : { query: () => ({ header: () => ({ get: vi.fn().mockResolvedValue({ "@odata.nextLink": nextLink }) }) }) }
+    );
+    await expect(fetchDayEvents({ api } as unknown as Client, "owner@example.com", "2026-10-15")).resolves.toEqual([]);
+  });
+
+  it("returns no events when the calendar view answers without a value", async () => {
+    const get = vi.fn().mockResolvedValue(undefined);
+    const client = { api: () => ({ query: () => ({ header: () => ({ get }) }) }) } as unknown as Client;
+    await expect(fetchDayEvents(client, "owner@example.com", "2026-10-15")).resolves.toEqual([]);
   });
 });
 
