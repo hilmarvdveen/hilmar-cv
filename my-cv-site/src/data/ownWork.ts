@@ -66,6 +66,8 @@ export const ownWork: OwnWorkEntry[] = [
       Tech.GitHubActions,
       Tech.CICDPipelines,
       Tech.CodingAgents,
+      Tech.GitHub,
+      Tech.JWT,
     ],
   },
   {
@@ -98,6 +100,7 @@ export const ownWork: OwnWorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Vitest,
       Tech.CodingAgents,
+      Tech.GitHub,
     ],
   },
 ];

@@ -513,6 +513,7 @@
             "SQLServer": "SQL Server",
             "ReactRouter": "React Router",
             "Scrum": "Scrum",
+            "Kanban": "Kanban",
             "SourceTree": "SourceTree",
             "NHibernate": "NHibernate",
             "MediatR": "MediatR",

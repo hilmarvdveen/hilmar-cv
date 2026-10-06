@@ -86,6 +86,7 @@ export const Tech = {
   SQLServer: "tech.SQLServer",
   ReactRouter: "tech.ReactRouter",
   Scrum: "tech.Scrum",
+  Kanban: "tech.Kanban",
   SourceTree: "tech.SourceTree",
   NHibernate: "tech.NHibernate",
   MediatR: "tech.MediatR",
@@ -220,6 +221,14 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.Kanban,
+      Tech.HTML5,
+      Tech.CSS3,
+      Tech.JavaScript,
+      Tech.Git,
+      Tech.Gitlab,
+      Tech.DataDrivenUI,
     ],
   },
   {
@@ -272,6 +281,10 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.DataDrivenUI,
+      Tech.ConfigurationDrivenUI,
+      Tech.ComponentDesign,
     ],
   },
   {
@@ -315,6 +328,10 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.CSS3,
+      Tech.Gitlab,
+      Tech.ComponentDesign,
     ],
   },
   {
@@ -360,6 +377,11 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.CSS3,
+      Tech.Git,
+      Tech.RestAPI,
+      Tech.ConfigurationDrivenUI,
     ],
   },
   {
@@ -394,6 +416,8 @@ export const workHistory: WorkEntry[] = [
       Tech.Jira,
       Tech.Bloomreach,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.CSS3,
     ],
   },
   {
@@ -420,6 +444,7 @@ export const workHistory: WorkEntry[] = [
       Tech.Git,
       Tech.AspNetCore,
       Tech.SSH,
+      Tech.Scrum,
     ],
   },
   {
@@ -458,6 +483,10 @@ export const workHistory: WorkEntry[] = [
       Tech.AzureKeyVault,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.HTML5,
+      Tech.CSS3,
+      Tech.Azure,
     ],
   },
   {
@@ -499,6 +528,9 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.Git,
+      Tech.Azure,
     ],
   },
   {
@@ -538,6 +570,8 @@ export const workHistory: WorkEntry[] = [
       Tech.CICDPipelines,
       Tech.Linux,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.Angular,
     ],
   },
   {
@@ -569,6 +603,7 @@ export const workHistory: WorkEntry[] = [
       Tech.Bitbucket,
       Tech.Jira,
       Tech.SSH,
+      Tech.Git,
     ],
   },
   {
@@ -605,6 +640,8 @@ export const workHistory: WorkEntry[] = [
       Tech.OctopusDeploy,
       Tech.UIKit,
       Tech.SSH,
+      Tech.Scrum,
+      Tech.Git,
     ],
   },
   {
@@ -636,6 +673,7 @@ export const workHistory: WorkEntry[] = [
       Tech.Git,
       Tech.IntegrationTesting,
       Tech.SSH,
+      Tech.Scrum,
     ],
   },
 ];
