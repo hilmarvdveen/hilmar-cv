@@ -418,6 +418,8 @@ export const workHistory: WorkEntry[] = [
       Tech.SSH,
       Tech.Scrum,
       Tech.CSS3,
+      Tech.TypeScript,
+      Tech.RxJS,
     ],
   },
   {
@@ -572,6 +574,7 @@ export const workHistory: WorkEntry[] = [
       Tech.SSH,
       Tech.Scrum,
       Tech.Angular,
+      Tech.RxJS,
     ],
   },
   {
@@ -604,6 +607,7 @@ export const workHistory: WorkEntry[] = [
       Tech.Jira,
       Tech.SSH,
       Tech.Git,
+      Tech.TypeScript,
     ],
   },
   {
