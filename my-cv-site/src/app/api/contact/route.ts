@@ -113,7 +113,7 @@ Tijdstempel: ${new Date().toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam"
       isHtml: true,
     });
 
-    console.log(`Contact form submitted by: ${safeName} (${safeEmail})`);
+    console.log("Contact form submitted");
 
     return NextResponse.json({ success: true, message: "Message sent successfully" });
   } catch (error: unknown) {

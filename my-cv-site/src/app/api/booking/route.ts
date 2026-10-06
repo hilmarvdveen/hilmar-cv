@@ -131,7 +131,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       isHtml: true,
     });
 
-    console.log(`Booking created for: ${booking.name} (${booking.email}) on ${bookingDate.toLocaleString()}`);
+    console.log(`Booking created for the slot ${booking.isoDate}`);
 
     return NextResponse.json({ success: true, message: "Booking created successfully" });
   } catch (error: unknown) {

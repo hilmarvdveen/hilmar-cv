@@ -112,6 +112,16 @@ describe("POST /api/booking", () => {
     expect(slotRefusal.mock.calls[0][0]).toEqual(new Date(body.date));
   });
 
+  it("logs the outcome without the visitor's name or email", async () => {
+    const log = vi.spyOn(console, "log").mockImplementation(() => undefined);
+    await POST(post(valid()));
+    const logged = JSON.stringify(log.mock.calls);
+    expect(log).toHaveBeenCalled();
+    expect(logged).not.toContain("jane@example.com");
+    expect(logged).not.toContain("Jane");
+    log.mockRestore();
+  });
+
   it("creates an event, notifies the owner and confirms to the visitor", async () => {
     const response = await POST(post(valid()));
     expect(response.status).toBe(200);

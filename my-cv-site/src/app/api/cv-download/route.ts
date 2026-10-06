@@ -146,7 +146,7 @@ ${BUSINESS_PROFILE.TITLE}</p>`;
       isHtml: true,
     });
 
-    console.log(`CV download tracked: ${email}${purposeText ? ` (${purposeText})` : ""}`);
+    console.log(`CV download tracked${purposeText ? ` (${purposeText})` : ""}`);
 
     return NextResponse.json(
       { success: true, message: "CV download tracked successfully" },

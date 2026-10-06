@@ -93,6 +93,16 @@ describe("POST /api/contact", () => {
     expect(sendMail).not.toHaveBeenCalled();
   });
 
+  it("logs the outcome without the visitor's name or email", async () => {
+    const log = vi.spyOn(console, "log").mockImplementation(() => undefined);
+    await POST(post(valid));
+    const logged = JSON.stringify(log.mock.calls);
+    expect(log).toHaveBeenCalled();
+    expect(logged).not.toContain("jane@example.com");
+    expect(logged).not.toContain("Jane");
+    log.mockRestore();
+  });
+
   it("sends both emails on the happy path", async () => {
     const response = await POST(post(valid));
     expect(response.status).toBe(200);
