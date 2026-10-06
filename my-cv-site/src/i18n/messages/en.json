@@ -514,6 +514,7 @@
             "ReactRouter": "React Router",
             "Scrum": "Scrum",
             "Kanban": "Kanban",
+            "AngularSignals": "Angular Signals",
             "SourceTree": "SourceTree",
             "NHibernate": "NHibernate",
             "MediatR": "MediatR",

@@ -61,6 +61,7 @@ export const ownWork: OwnWorkEntry[] = [
       Tech.ReactRouter,
       Tech.NextJS,
       Tech.Angular,
+      Tech.AngularSignals,
       Tech.TypeScript,
       Tech.Playwright,
       Tech.GitHubActions,

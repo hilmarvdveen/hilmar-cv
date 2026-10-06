@@ -19,6 +19,7 @@ export const Tech = {
   JavaScript: "tech.javascript",
   TypeScript: "tech.typescript",
   Angular: "tech.angular",
+  AngularSignals: "tech.AngularSignals",
   React: "tech.react",
   Vue: "tech.vue",
   WebComponents: "tech.webComponents",
