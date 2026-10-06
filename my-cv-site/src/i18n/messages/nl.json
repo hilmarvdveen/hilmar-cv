@@ -441,6 +441,7 @@
             "WebForms": "Web Forms",
             "Azure": "Azure",
             "TailwindCSS": "Tailwind CSS",
+            "Bootstrap": "Bootstrap",
             "NextJS": "Next.js",
             "RxJS": "RxJS",
             "BEM": "BEM",
@@ -911,7 +912,7 @@
                     "paragraph": "Transdev draaide op een Delphi-backend waar moderne web- en mobiele applicaties niet bij konden. Ik ontwierp en bouwde een generieke API-laag in .NET Core die als veilige koppellaag tussen de nieuwe frontends en de bestaande logica staat. Authenticatie en autorisatie zitten op applicatieniveau, zodat externe systemen er op een uniforme manier bij de gegevens konden."
                 },
                 {
-                    "paragraph": "Op die laag bouwde ik een reizigersportaal in Angular. Reizigers vragen daar actuele informatie over bus- en taxiritten op, met componenten in TypeScript en RxJS en een interface die op een telefoon werkt. Daarnaast maakte ik een wachtrijmodule die de status van een telefoongesprek ophaalt uit het platform erachter, zodat een beller zijn positie en de verwachte wachttijd ziet. De epics voor de API-laag en het portaal schreef ik zelf uit in user stories."
+                    "paragraph": "Op die laag bouwde ik een reizigersportaal in Angular. Reizigers vragen daar actuele informatie over bus- en taxiritten op, met componenten in TypeScript en RxJS, styling in Bootstrap en een interface die op een telefoon werkt. Daarnaast maakte ik een wachtrijmodule die de status van een telefoongesprek ophaalt uit het platform erachter, zodat een beller zijn positie en de verwachte wachttijd ziet. De epics voor de API-laag en het portaal schreef ik zelf uit in user stories."
                 },
                 {
                     "paragraph": "Wat achterbleef is een koppellaag waarop volgende kanalen konden aansluiten, en een portaal waarin reizigers hun eigen antwoorden vinden."

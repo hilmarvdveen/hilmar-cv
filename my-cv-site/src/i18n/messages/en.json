@@ -481,6 +481,7 @@
             "WebForms": "Web Forms",
             "Azure": "Azure",
             "TailwindCSS": "Tailwind CSS",
+            "Bootstrap": "Bootstrap",
             "NextJS": "Next.js",
             "RxJS": "RxJS",
             "BEM": "BEM",
@@ -951,7 +952,7 @@
                     "paragraph": "Transdev ran on a Delphi backend that modern web and mobile applications could not reach. I designed and built a generic API layer in .NET Core that stands as a secure gateway between the new front ends and the existing logic. Authentication and authorisation sit at application level, so external systems could reach the data in one uniform way."
                 },
                 {
-                    "paragraph": "On that layer I built a traveller portal in Angular. Travellers look up current information about bus and taxi trips there, with components in TypeScript and RxJS and an interface that works on a phone. I also built a queue module that reads the status of a call from the platform behind it, so a caller sees their position and the expected waiting time. I turned the epics for the API layer and the portal into user stories myself."
+                    "paragraph": "On that layer I built a traveller portal in Angular. Travellers look up current information about bus and taxi trips there, with components in TypeScript and RxJS, styling in Bootstrap and an interface that works on a phone. I also built a queue module that reads the status of a call from the platform behind it, so a caller sees their position and the expected waiting time. I turned the epics for the API layer and the portal into user stories myself."
                 },
                 {
                     "paragraph": "What stayed behind is a gateway that later channels could connect to, and a portal where travellers find their own answers."
