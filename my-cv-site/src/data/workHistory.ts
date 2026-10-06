@@ -334,6 +334,7 @@ export const workHistory: WorkEntry[] = [
       Tech.TypeScript,
       Tech.MonoreposNx,
       Tech.Keycloak,
+      Tech.OpenIDConnect,
       Tech.JavaScript,
       Tech.WCAG21,
       Tech.Jest,
