@@ -9,7 +9,7 @@ import {
 import {
   isAllowedOrigin,
   enforceRateLimit,
-  looksAutomated,
+  rejectAutomatedSubmission,
   validateFields,
   serverErrorResponse,
   LIMITS,
@@ -47,9 +47,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { name, email, date, company, topic } = body;
     const locale: BookingEmailInput["locale"] = body.locale === "en" ? "en" : "nl";
 
-    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ success: true, message: "Booking created successfully" });
-    }
+    const automated = rejectAutomatedSubmission("booking", body as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       name: { value: name, required: true, maxLength: LIMITS.name },

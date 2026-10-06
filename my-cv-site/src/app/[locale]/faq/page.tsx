@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { Clock, Shield, Globe, HelpCircle } from "lucide-react";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale, FAQItem } from "@/lib/seo";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
+import { answerWithBookingAnchor } from "@/lib/faqBookingLink";
 import { FAQClientContent, FAQ_CATEGORY_IDS } from "@/features/faq";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -13,8 +15,12 @@ type Props = {
 
 async function loadFaqItems(locale: string): Promise<FAQItem[]> {
   const t = await getTranslations({ locale, namespace: "faq" });
-  return FAQ_CATEGORY_IDS.flatMap(
-    (id) => t.raw(`categories.${id}.questions`) as FAQItem[]
+  const bookingUrl = `${BUSINESS_PROFILE.CONTACT.WEBSITE.replace(/\/+$/, "")}/${locale}/book`;
+  return FAQ_CATEGORY_IDS.flatMap((id) =>
+    (t.raw(`categories.${id}.questions`) as FAQItem[]).map((item) => ({
+      ...item,
+      answer: answerWithBookingAnchor(item.answer, bookingUrl),
+    }))
   );
 }
 

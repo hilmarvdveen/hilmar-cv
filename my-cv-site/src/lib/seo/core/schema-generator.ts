@@ -150,6 +150,7 @@ export class SchemaGenerator {
       },
       contactPoint: {
         '@type': 'ContactPoint',
+        url: `${this.baseUrl}/${locale}/book`,
         email: BUSINESS_PROFILE.CONTACT.EMAIL,
         telephone: BUSINESS_PROFILE.CONTACT.PHONE,
         contactType: 'customer service',
@@ -431,6 +432,7 @@ export class SchemaGenerator {
         name: BUSINESS_PROFILE.COMPANY,
         contactPoint: {
           '@type': 'ContactPoint',
+          url: `${this.baseUrl}/${config.locale}/book`,
           email: BUSINESS_PROFILE.CONTACT.EMAIL,
           telephone: BUSINESS_PROFILE.CONTACT.PHONE,
           contactType: 'customer service',

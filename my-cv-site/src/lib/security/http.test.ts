@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { serverErrorResponse } from "./http";
+import { rejectAutomatedSubmission, serverErrorResponse } from "./http";
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -45,5 +45,32 @@ describe("serverErrorResponse", () => {
     const response = serverErrorResponse(error, "Oops");
     const json = await response.json();
     expect(json.details).toBe("no-stack message");
+  });
+});
+
+describe("rejectAutomatedSubmission", () => {
+  it("lets a human submission through", () => {
+    expect(rejectAutomatedSubmission("booking", { formStartedAt: 0 }, 10_000)).toBeNull();
+  });
+
+  it("answers 422 and logs the route and signal without the submitted data", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const response = rejectAutomatedSubmission(
+      "contact",
+      { company_website: "bot", email: "jane@example.com" },
+      10_000
+    );
+    expect(response?.status).toBe(422);
+    expect(await response?.json()).toEqual({ reason: "looksAutomated" });
+    expect(warn).toHaveBeenCalledWith("Automated submission rejected: route=contact signal=honeypot");
+    expect(JSON.stringify(warn.mock.calls)).not.toContain("jane@example.com");
+    warn.mockRestore();
+  });
+
+  it("names the timing signal for a submit under two seconds", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    expect(rejectAutomatedSubmission("booking", { formStartedAt: 9_000 }, 10_000)?.status).toBe(422);
+    expect(warn).toHaveBeenCalledWith("Automated submission rejected: route=booking signal=tooFast");
+    warn.mockRestore();
   });
 });

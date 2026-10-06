@@ -24,6 +24,7 @@ import { useHoneypot } from "@/hooks/useHoneypot";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
   firstInvalidField,
+  formatDayButtonName,
   formatDayLabel,
   formatLongDate,
   formatShortDate,
@@ -108,6 +109,7 @@ export const BookingForm = () => {
     step,
     status,
     submitError,
+    formStartedAt,
     updateDetail,
     goToStep,
     setStatus,
@@ -300,6 +302,7 @@ export const BookingForm = () => {
           topic: details.topic.trim(),
           locale,
           ...honeypot.payload(),
+          ...(formStartedAt !== null && { formStartedAt }),
         }),
       });
       if (!response.ok) {
@@ -429,6 +432,7 @@ export const BookingForm = () => {
                 key={day}
                 type="button"
                 aria-pressed={selected}
+                aria-label={formatDayButtonName(day, locale)}
                 onClick={() => selectDay(day)}
                 className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:h-[68px] ${
                   selected
@@ -436,7 +440,6 @@ export const BookingForm = () => {
                     : "border-gray-500 bg-white text-textMain hover:border-emerald-600"
                 }`}
               >
-                <span className="sr-only">{formatLongDate(day, locale)}</span>
                 <span aria-hidden="true" className="text-xs font-semibold uppercase leading-none">
                   {label.weekday}
                 </span>

@@ -31,6 +31,7 @@ type BookingFormContextValue = {
   step: BookingStep;
   status: BookingStatus;
   submitError: string | null;
+  formStartedAt: number | null;
   updateDetail: (field: keyof BookingDetails, value: string) => void;
   goToStep: (step: BookingStep) => void;
   setStatus: (status: BookingStatus) => void;
@@ -53,6 +54,7 @@ type StoredState = {
   details?: Partial<BookingDetails>;
   step?: number;
   timestamp?: number;
+  startedAt?: number;
 };
 
 const BookingFormContext = createContext<BookingFormContextValue | undefined>(
@@ -62,7 +64,7 @@ const BookingFormContext = createContext<BookingFormContextValue | undefined>(
 export function restoreBookingState(
   raw: string | null,
   now: number
-): { details: BookingDetails; step: BookingStep } | null {
+): { details: BookingDetails; step: BookingStep; startedAt: number } | null {
   if (!raw) return null;
   try {
     const stored = JSON.parse(raw) as StoredState;
@@ -77,7 +79,11 @@ export function restoreBookingState(
     let step: BookingStep = 1;
     if (stored.step === 3 && details.time && details.name && details.email) step = 3;
     else if ((stored.step === 2 || stored.step === 3) && details.time) step = 2;
-    return { details, step };
+    const startedAt =
+      typeof stored.startedAt === "number" && Number.isFinite(stored.startedAt)
+        ? stored.startedAt
+        : stored.timestamp;
+    return { details, step, startedAt };
   } catch {
     return null;
   }
@@ -89,6 +95,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
   const [status, setStatus] = useState<BookingStatus>("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [formStartedAt, setFormStartedAt] = useState<number | null>(null);
 
   useEffect(() => {
     readBookingDraft((raw) => {
@@ -97,6 +104,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
         setDetails(restored.details);
         setStep(restored.step);
       }
+      setFormStartedAt(restored ? restored.startedAt : Date.now());
       setIsInitialized(true);
     });
   }, []);
@@ -107,9 +115,14 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
       clearBookingDraft();
       return;
     }
-    const stateToSave: StoredState = { details, step, timestamp: Date.now() };
+    const stateToSave: StoredState = {
+      details,
+      step,
+      timestamp: Date.now(),
+      ...(formStartedAt !== null && { startedAt: formStartedAt }),
+    };
     writeBookingDraft(JSON.stringify(stateToSave));
-  }, [details, step, isInitialized, status]);
+  }, [details, step, isInitialized, status, formStartedAt]);
 
   const updateDetail = useCallback((field: keyof BookingDetails, value: string) => {
     setDetails((previous) => ({ ...previous, [field]: value }));
@@ -124,6 +137,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
     setStep(1);
     setStatus("idle");
     setSubmitError(null);
+    setFormStartedAt(Date.now());
     clearBookingDraft();
   }, []);
 
@@ -132,6 +146,7 @@ export function BookingFormProvider({ children }: { children: React.ReactNode })
     step,
     status,
     submitError,
+    formStartedAt,
     updateDetail,
     goToStep,
     setStatus,

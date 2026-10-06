@@ -72,9 +72,10 @@ describe("POST /api/cv-download", () => {
     expect(response.status).toBe(400);
   });
 
-  it("silently succeeds on honeypot without sending mail", async () => {
+  it("rejects the honeypot with 422 without sending mail", async () => {
     const response = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(sendMail).not.toHaveBeenCalled();
   });
 

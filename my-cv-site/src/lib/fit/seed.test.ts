@@ -53,7 +53,12 @@ const messagesFor = (suffix: string) => ({
       },
       pricing: {
         title: `Pricing ${suffix}`,
-        questions: [{ question: `What does it cost ${suffix}`, answer: `Scoped on the call ${suffix}` }],
+        questions: [
+          {
+            question: `What does it cost ${suffix}`,
+            answer: `Scoped on the call ${suffix}. <book>Book a call</book>.`,
+          },
+        ],
       },
     },
   },
@@ -248,5 +253,9 @@ describe("buildSeedRecord", () => {
       answer: { en: "A frontend engineer EN", nl: "A frontend engineer NL" },
     });
     expect(record.faq[2].category).toBe("pricing");
+    expect(record.faq[2].answer).toEqual({
+      en: "Scoped on the call EN. Book a call.",
+      nl: "Scoped on the call NL. Book a call.",
+    });
   });
 });

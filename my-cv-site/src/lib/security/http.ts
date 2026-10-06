@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { automatedSignal } from "./honeypot";
 
 export function serverErrorResponse(
   error: unknown,
@@ -14,4 +15,15 @@ export function serverErrorResponse(
     },
     { status: 500 }
   );
+}
+
+export function rejectAutomatedSubmission(
+  route: string,
+  body: Record<string, unknown>,
+  now: number
+): NextResponse | null {
+  const signal = automatedSignal(body, now);
+  if (signal === null) return null;
+  console.warn(`Automated submission rejected: route=${route} signal=${signal}`);
+  return NextResponse.json({ reason: "looksAutomated" }, { status: 422 });
 }

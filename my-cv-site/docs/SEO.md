@@ -72,9 +72,14 @@ The engine's titles and descriptions still sell the pre-2026 positioning:
 - `hreflang="en-US"` and `og:locale` = `en-US`. The English audience is
   international, `en` is the broader tag, and Open Graph expects `en_US`
   with an underscore.
-- `robots.txt` blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended and
-  others. That keeps the site out of AI answers, where people now search for
-  freelancers. A deliberate choice either way.
+- `robots.txt` (checked 6 October 2026) blocks only the training crawlers
+  GPTBot, ClaudeBot, Applebot-Extended and CCBot, the retired Anthropic
+  tokens Claude-Web and anthropic-ai, and a list of harvesters. The search
+  and user agents stay open: OAI-SearchBot, ChatGPT-User, Claude-SearchBot,
+  Claude-User, PerplexityBot, Perplexity-User and Google-Extended. So the
+  site can appear in ChatGPT, Claude and Perplexity answers. Blocking the
+  training crawlers is Hilmar's decision of 6 October 2026. Vercel's
+  Firewall bot settings can still block what robots.txt allows.
 
 ### Structural, see RENDERING_AND_PERFORMANCE.md
 

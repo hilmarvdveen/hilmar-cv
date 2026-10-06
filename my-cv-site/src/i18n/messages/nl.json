@@ -998,7 +998,7 @@
             "submit": "Verstuur bericht",
             "sending": "Versturen...",
             "successMessage": "Bedankt. Je hoort binnen één werkdag van me.",
-            "serverError": "Er ging iets mis en je bericht is niet verzonden. Probeer het zo opnieuw, of mail me op hilmar@hilmarvanderveen.com.",
+            "serverError": "Er ging iets mis en je bericht is niet verzonden. Probeer het zo opnieuw, of mail me op hilmar@hilmarvanderveen.com of bel +31 6 8014 9947.",
             "tooManyRequests": "Te veel pogingen kort achter elkaar. Wacht een minuut en probeer het dan opnieuw.",
             "company": "Bedrijf",
             "start": "Wanneer wil je starten?",
@@ -1898,7 +1898,8 @@
             "retry": "Pagina opnieuw laden"
         },
         "whatsapp": "App me via WhatsApp",
-        "whatsappHint": "Voor een snelle vraag, een kort antwoord"
+        "whatsappHint": "Voor een snelle vraag, een kort antwoord",
+        "decoyField": "Niet in gebruik"
     },
     "notFound": {
         "title": "Pagina niet gevonden",
@@ -1931,7 +1932,7 @@
                     },
                     {
                         "question": "Wanneer ben je beschikbaar en voor hoeveel uur?",
-                        "answer": "Direct. 32 tot 40 uur per week, voor zes maanden of langer. Mijn opdracht bij bol.com liep van juli 2025 tot oktober 2026 en is drie keer verlengd. Per 1 oktober 2026 beëindigde bol.com de inzet van alle externe krachten, ook die van mij."
+                        "answer": "Direct. 32 tot 40 uur per week, voor zes maanden of langer. Mijn opdracht bij bol.com liep van juli 2025 tot oktober 2026 en is drie keer verlengd. Per 1 oktober 2026 beëindigde bol.com de inzet van alle externe krachten, ook die van mij. <book>Plan een gesprek van 30 minuten</book>."
                     },
                     {
                         "question": "Waar werk je, en in welke talen?",
@@ -1993,7 +1994,7 @@
                     },
                     {
                         "question": "Wat gaat dit mij kosten?",
-                        "answer": "Dat volgt uit de scope, en in het eerste gesprek wordt die scope bepaald. We lopen de pagina of het team langs, wat er moet veranderen en hoeveel uur per week dat vraagt. Na het gesprek krijg je de uren, het tarief binnen de bandbreedte en de aannames daarachter op papier."
+                        "answer": "Dat volgt uit de scope, en in het eerste gesprek wordt die scope bepaald. We lopen de pagina of het team langs, wat er moet veranderen en hoeveel uur per week dat vraagt. Na het gesprek krijg je de uren, het tarief binnen de bandbreedte en de aannames daarachter op papier. <book>Plan een gesprek van 30 minuten</book>."
                     },
                     {
                         "question": "Hoe werkt de facturering?",
@@ -2009,7 +2010,7 @@
                     },
                     {
                         "question": "Wat gebeurt er in het eerste gesprek?",
-                        "answer": "Dertig minuten, vrijblijvend. Jij beschrijft de pagina, de applicatie of het team, en ik zeg wat ik als eerste zou doen en hoe ik het zou scopen. Voor dat gesprek wordt niets gefactureerd."
+                        "answer": "Dertig minuten, vrijblijvend. Jij beschrijft de pagina, de applicatie of het team, en ik zeg wat ik als eerste zou doen en hoe ik het zou scopen. Voor dat gesprek wordt niets gefactureerd. <book>Plan een gesprek van 30 minuten</book>."
                     }
                 ]
             },
@@ -2071,7 +2072,7 @@
                     },
                     {
                         "question": "En als we toch geen match blijken?",
-                        "answer": "Dan hoor je dat in het gesprek. Als het werk buiten mijn vak valt of de timing niet uitkomt, zeg ik dat, en wijs ik waar ik kan op wat wel past."
+                        "answer": "Dan hoor je dat in het gesprek. Als het werk buiten mijn vak valt of de timing niet uitkomt, zeg ik dat, en wijs ik waar ik kan op wat wel past. <book>Plan een gesprek van 30 minuten</book>."
                     },
                     {
                         "question": "En als de backend het veld niet op tijd kan aanpassen?",
@@ -2149,7 +2150,7 @@
             "errors": {
                 "name": "Vul je naam in.",
                 "email": "Vul een e-mailadres in waar de link naartoe kan.",
-                "failed": "De aanvraag kwam er niet doorheen. Probeer het zo nog eens.",
+                "failed": "De aanvraag kwam er niet doorheen. Probeer het zo nog eens. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook.",
                 "rateLimited": "Er staan nu veel aanvragen in de rij. Wacht een minuut, dan gaat de volgende erdoor."
             }
         },
@@ -2254,7 +2255,7 @@
                 "errors": {
                     "tooShort": "Maak de vraag iets langer. Een paar woorden is genoeg.",
                     "rateLimited": "Er staan nu veel vragen in de rij. Wacht een minuut, dan gaat de volgende erdoor.",
-                    "failed": "Het antwoord kwam niet door. Stel de vraag zo nog eens."
+                    "failed": "Het antwoord kwam niet door. Stel de vraag zo nog eens. Mailen naar hilmar@hilmarvanderveen.com of bellen met +31 6 8014 9947 kan ook."
                 },
                 "privacyNote": "Je vraag bewaar ik niet."
             },

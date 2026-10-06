@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { BookingForm } from "./BookingForm";
 import { BookingFormProvider } from "../context/BookingFormContext";
 import {
-  formatLongDate,
+  formatDayButtonName,
   firstBookableDay,
   fromDateKey,
   getUpcomingWorkingDays,
@@ -100,7 +100,7 @@ describe("BookingForm: pick a moment", () => {
     expect(await screen.findByRole("button", { name: "09:00" })).toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledWith(`/api/booking/slots?date=${FIRST_DAY}`);
     expect(
-      screen.getByRole("button", { name: formatLongDate(FIRST_DAY, "en"), pressed: true })
+      screen.getByRole("button", { name: formatDayButtonName(FIRST_DAY, "en"), pressed: true })
     ).toBeInTheDocument();
   });
 
@@ -111,14 +111,14 @@ describe("BookingForm: pick a moment", () => {
     await screen.findByRole("button", { name: "09:00" });
 
     await user.click(
-      screen.getByRole("button", { name: formatLongDate(SECOND_DAY, "en") })
+      screen.getByRole("button", { name: formatDayButtonName(SECOND_DAY, "en") })
     );
     await screen.findByRole("button", {
-      name: formatLongDate(SECOND_DAY, "en"),
+      name: formatDayButtonName(SECOND_DAY, "en"),
       pressed: true,
     });
     await user.click(
-      screen.getByRole("button", { name: formatLongDate(FIRST_DAY, "en") })
+      screen.getByRole("button", { name: formatDayButtonName(FIRST_DAY, "en") })
     );
 
     expect(await screen.findByRole("button", { name: "09:00" })).toBeInTheDocument();

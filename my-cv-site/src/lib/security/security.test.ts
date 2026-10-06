@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { escapeHtml } from "./escape";
 import { validateFields, validateStringArray, isValidEmail, LIMITS } from "./validate";
-import { isHoneypotTriggered, isSubmittedTooFast, looksAutomated } from "./honeypot";
+import { automatedSignal, isHoneypotTriggered, isSubmittedTooFast, looksAutomated } from "./honeypot";
 
 describe("escapeHtml", () => {
   it("escapes HTML-significant characters", () => {
@@ -113,5 +113,12 @@ describe("honeypot + timing", () => {
     expect(looksAutomated({ company_website: "x", formStartedAt: now - 10000 }, now)).toBe(true);
     expect(looksAutomated({ formStartedAt: now - 100 }, now)).toBe(true);
     expect(looksAutomated({ formStartedAt: now - 10000 }, now)).toBe(false);
+  });
+
+  it("automatedSignal names the check that fired, honeypot first", () => {
+    const now = 1_000_000;
+    expect(automatedSignal({ company_website: "x", formStartedAt: now - 100 }, now)).toBe("honeypot");
+    expect(automatedSignal({ formStartedAt: now - 100 }, now)).toBe("tooFast");
+    expect(automatedSignal({ formStartedAt: now - 10000 }, now)).toBeNull();
   });
 });

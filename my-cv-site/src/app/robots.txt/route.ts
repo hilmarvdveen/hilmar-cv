@@ -10,7 +10,7 @@ export function GET() {
       status: 200,
       headers: {
         'Content-Type': 'text/plain',
-        'Cache-Control': 'public, max-age=86400, stale-while-revalidate=43200', // 24h cache, 12h stale
+        'Cache-Control': 'public, max-age=86400, stale-while-revalidate=43200',
       },
     });
   } catch (error) {
@@ -25,7 +25,7 @@ Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.hilmarvanderveen.com
       status: 200,
       headers: {
         'Content-Type': 'text/plain',
-        'Cache-Control': 'public, max-age=3600', // 1h cache for fallback
+        'Cache-Control': 'public, max-age=3600',
       },
     });
   }

@@ -394,7 +394,8 @@
             "retry": "Reload the page"
         },
         "whatsapp": "Message me on WhatsApp",
-        "whatsappHint": "For a quick question, a short answer"
+        "whatsappHint": "For a quick question, a short answer",
+        "decoyField": "Not in use"
     },
     "experiencePage": {
         "detail": {
@@ -1037,7 +1038,7 @@
             "submit": "Send message",
             "sending": "Sending...",
             "successMessage": "Thank you. You will hear from me within one business day.",
-            "serverError": "Something went wrong and your message was not sent. Try again in a moment, or email me at hilmar@hilmarvanderveen.com.",
+            "serverError": "Something went wrong and your message was not sent. Try again in a moment, or email me at hilmar@hilmarvanderveen.com or call +31 6 8014 9947.",
             "tooManyRequests": "Too many attempts in a short time. Please wait a minute and try again.",
             "company": "Company",
             "start": "When would you like to start?",
@@ -2070,7 +2071,7 @@
                     },
                     {
                         "question": "When are you available and for how many hours?",
-                        "answer": "Immediately. 32 to 40 hours a week, for six months or longer. My engagement at bol.com ran from July 2025 to October 2026 and was extended three times. On 1 October 2026 bol.com ended the engagement of all external staff, mine included."
+                        "answer": "Immediately. 32 to 40 hours a week, for six months or longer. My engagement at bol.com ran from July 2025 to October 2026 and was extended three times. On 1 October 2026 bol.com ended the engagement of all external staff, mine included. <book>Book a 30-minute call</book>."
                     },
                     {
                         "question": "Where do you work, and in which languages?",
@@ -2132,7 +2133,7 @@
                     },
                     {
                         "question": "What will this cost me?",
-                        "answer": "That follows from the scope, and the first call is where the scope gets set. We go through the page or the team, what has to change, and how many hours a week that needs. After the call you get the hours, the rate within the range and the assumptions behind both, in writing."
+                        "answer": "That follows from the scope, and the first call is where the scope gets set. We go through the page or the team, what has to change, and how many hours a week that needs. After the call you get the hours, the rate within the range and the assumptions behind both, in writing. <book>Book a 30-minute call</book>."
                     },
                     {
                         "question": "How does invoicing work?",
@@ -2148,7 +2149,7 @@
                     },
                     {
                         "question": "What happens in the first call?",
-                        "answer": "Thirty minutes, no obligation. You describe the page, the application or the team, and I say what I would do first and how I would scope it. Nothing is invoiced for that conversation."
+                        "answer": "Thirty minutes, no obligation. You describe the page, the application or the team, and I say what I would do first and how I would scope it. Nothing is invoiced for that conversation. <book>Book a 30-minute call</book>."
                     }
                 ]
             },
@@ -2210,7 +2211,7 @@
                     },
                     {
                         "question": "What if we turn out not to be a fit?",
-                        "answer": "Then you hear it in the call. If the work sits outside what I do, or the timing does not line up, I say so, and where I can I point at what would fit better."
+                        "answer": "Then you hear it in the call. If the work sits outside what I do, or the timing does not line up, I say so, and where I can I point at what would fit better. <book>Book a 30-minute call</book>."
                     },
                     {
                         "question": "What if the backend cannot change the field in time?",
@@ -2288,7 +2289,7 @@
             "errors": {
                 "name": "Fill in your name.",
                 "email": "Fill in an email address the link can go to.",
-                "failed": "The request did not come through. Try again in a moment.",
+                "failed": "The request did not come through. Try again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947.",
                 "rateLimited": "There is a queue right now. Wait a minute and the next one goes through."
             }
         },
@@ -2393,7 +2394,7 @@
                 "errors": {
                     "tooShort": "Make the question a little longer. A few words is enough.",
                     "rateLimited": "There is a queue right now. Wait a minute and the next one goes through.",
-                    "failed": "The answer did not come through. Ask it again in a moment."
+                    "failed": "The answer did not come through. Ask it again in a moment. You can also email hilmar@hilmarvanderveen.com or call +31 6 8014 9947."
                 },
                 "privacyNote": "I do not keep your question."
             },

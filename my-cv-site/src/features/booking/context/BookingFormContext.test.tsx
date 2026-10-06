@@ -44,6 +44,15 @@ describe("restoreBookingState", () => {
       )?.step
     ).toBe(3);
   });
+
+  it("keeps the original start time of a restored draft", () => {
+    const draft = JSON.stringify({ details: {}, step: 1, timestamp: NOW - HOUR, startedAt: NOW - 2 * HOUR });
+    expect(restoreBookingState(draft, NOW)?.startedAt).toBe(NOW - 2 * HOUR);
+  });
+
+  it("falls back to the save time for a draft without a start time", () => {
+    expect(restoreBookingState(saved({}, 1), NOW)?.startedAt).toBe(NOW - HOUR);
+  });
 });
 
 const Consumer = () => {
@@ -81,6 +90,25 @@ describe("BookingFormProvider", () => {
     const stored = JSON.parse(localStorage.getItem("hilmar-booking-form-state") ?? "{}");
     expect(stored.details.name).toBe("Jane");
     expect(stored.step).toBe(2);
+  });
+
+  it("carries the start time of a restored draft into the next save", async () => {
+    const startedAt = Date.now() - HOUR;
+    localStorage.setItem(
+      "hilmar-booking-form-state",
+      JSON.stringify({ details: { name: "Saved" }, step: 1, timestamp: Date.now(), startedAt })
+    );
+    render(
+      <BookingFormProvider>
+        <Consumer />
+      </BookingFormProvider>
+    );
+    await screen.findByText("1|idle|Saved");
+    await act(async () => {
+      screen.getByText("name").click();
+    });
+    const stored = JSON.parse(localStorage.getItem("hilmar-booking-form-state") ?? "{}");
+    expect(stored.startedAt).toBe(startedAt);
   });
 
   it("clears the draft once the booking is submitted", async () => {

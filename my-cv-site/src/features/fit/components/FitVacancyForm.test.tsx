@@ -139,7 +139,7 @@ describe("FitVacancyForm", () => {
 
   it("carries the honeypot field for robots", () => {
     renderForm();
-    expect(screen.getByLabelText("Company website (leave empty)")).toBeInTheDocument();
+    expect(screen.getByLabelText("decoyField")).toBeInTheDocument();
   });
 
   it("renders no challenge widget without a site key", () => {

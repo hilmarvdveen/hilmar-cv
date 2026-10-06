@@ -73,9 +73,10 @@ describe("POST /api/booking", () => {
     expect((await response.json()).error).toMatch(/past/i);
   });
 
-  it("silently succeeds on honeypot without creating an event", async () => {
+  it("rejects the honeypot with 422 and creates no event", async () => {
     const response = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(createCalendarEvent).not.toHaveBeenCalled();
   });
 

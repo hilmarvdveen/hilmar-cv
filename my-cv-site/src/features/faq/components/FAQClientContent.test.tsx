@@ -10,7 +10,12 @@ vi.mock("next-intl", async () => {
     raw: (key: string) => unknown;
   };
   t.raw = (key: string) =>
-    key.endsWith("questions") ? [{ question: "What?", answer: "Because." }] : [];
+    key.endsWith("questions")
+      ? [
+          { question: "What?", answer: "Because." },
+          { question: "When?", answer: "Now. <book>Book a call</book>." },
+        ]
+      : [];
   return { ...base, useTranslations: () => t };
 });
 
@@ -72,5 +77,13 @@ describe("FAQClientContent", () => {
     expect(question).toHaveAttribute("aria-expanded", "false");
     expect(answer).toBeInTheDocument();
     expect(answer).not.toBeVisible();
+  });
+
+  it("renders the booking tag in an answer as a link to the booking page", () => {
+    render(<FAQClientContent />);
+    const links = screen.getAllByRole("link", { name: "Book a call", hidden: true });
+    expect(links).toHaveLength(FAQ_CATEGORY_IDS.length);
+    links.forEach((link) => expect(link).toHaveAttribute("href", "/book"));
+    expect(links[0].parentElement).toHaveTextContent("Now. Book a call.");
   });
 });

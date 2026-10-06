@@ -71,6 +71,13 @@ export function formatShortDate(key: string, locale: string): string {
   return `${label.weekday} ${label.day} ${label.month}`;
 }
 
+export function formatDayButtonName(key: string, locale: string): string {
+  const year = new Intl.DateTimeFormat(toIntlLocale(locale), { year: "numeric" }).format(
+    fromDateKey(key)
+  );
+  return `${formatShortDate(key, locale)} ${year}`;
+}
+
 export function formatSlotTime(iso: string): string {
   const moment = new Date(iso);
   if (Number.isNaN(moment.getTime())) return "";

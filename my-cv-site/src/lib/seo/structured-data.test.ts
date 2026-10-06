@@ -310,4 +310,17 @@ describe("structured data (JSON-LD) per page", () => {
       expect((question.acceptedAnswer as { text?: string } | undefined)?.text).toBeTruthy();
     }
   });
+
+  it("every ContactPoint points at the booking page of its own locale", () => {
+    for (const locale of LOCALES) {
+      for (const [page, json] of Object.entries(pagesFor(locale))) {
+        walk(JSON.parse(json), (key, value) => {
+          if (key !== "contactPoint") return;
+          expect((value as { url?: string }).url, page).toBe(
+            `https://${CANONICAL_HOST}/${locale}/book`
+          );
+        });
+      }
+    }
+  });
 });

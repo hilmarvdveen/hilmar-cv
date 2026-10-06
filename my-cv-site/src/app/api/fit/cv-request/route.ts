@@ -5,7 +5,7 @@ import {
   enforceRateLimit,
   getClientIp,
   isAllowedOrigin,
-  looksAutomated,
+  rejectAutomatedSubmission,
   serverErrorResponse,
   tooManyRequestsResponse,
   validateFields,
@@ -114,9 +114,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const body = (await request.json()) as Partial<FitCvRequestBody>;
 
-    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json(SENT);
-    }
+    const automated = rejectAutomatedSubmission("fit/cv-request", body as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       name: { value: body.name, required: true, maxLength: LIMITS.name },

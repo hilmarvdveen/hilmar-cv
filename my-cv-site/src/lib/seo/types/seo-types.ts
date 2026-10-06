@@ -197,6 +197,7 @@ export type PostalAddress = {
 
 export type ContactPoint = {
   '@type': 'ContactPoint';
+  url?: string;
   telephone?: string;
   email: string;
   contactType: string;

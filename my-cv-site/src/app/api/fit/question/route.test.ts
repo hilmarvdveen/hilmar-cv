@@ -72,10 +72,10 @@ describe("POST /api/fit/question", () => {
     expect(response.headers.get("Retry-After")).toBeTruthy();
   });
 
-  it("succeeds silently on the honeypot without calling the agent", async () => {
+  it("rejects the honeypot with 422 without calling the agent", async () => {
     const response = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ answer: { answer: "", engagements: [] } });
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(requestFitAnswer).not.toHaveBeenCalled();
   });
 

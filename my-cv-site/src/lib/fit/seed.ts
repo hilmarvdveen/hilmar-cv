@@ -5,6 +5,7 @@ import {
   QUALIFICATIONS,
   RATE_TEXT,
 } from "@/lib/seo/constants/meta-constants";
+import { plainAnswer } from "@/lib/faqBookingLink";
 import type { FitLocale } from "./types";
 
 export type SeedWorkMode = "remote" | "onSite" | "hybrid";
@@ -342,7 +343,8 @@ function buildFaq(input: SeedRecordInput): SeedFaqEntry[] {
           (locale) => input.messages[locale].faq.categories[category].questions[position].question
         ),
         answer: perLocale(
-          (locale) => input.messages[locale].faq.categories[category].questions[position].answer
+          (locale) =>
+            plainAnswer(input.messages[locale].faq.categories[category].questions[position].answer)
         ),
       });
     }

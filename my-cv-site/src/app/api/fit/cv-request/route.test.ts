@@ -153,10 +153,10 @@ describe("POST /api/fit/cv-request", () => {
     expect(response.headers.get("Retry-After")).toBeTruthy();
   });
 
-  it("succeeds silently on the honeypot without sending a mail", async () => {
+  it("rejects the honeypot with 422 without sending a mail", async () => {
     const response = await POST(post({ ...valid(), company_website: "bot" }));
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ sent: true });
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({ reason: "looksAutomated" });
     expect(sendMail).not.toHaveBeenCalled();
   });
 

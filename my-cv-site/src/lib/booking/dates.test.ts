@@ -8,6 +8,7 @@ import {
   formatDayLabel,
   formatLongDate,
   formatShortDate,
+  formatDayButtonName,
   formatSlotTime,
   firstBookableDay,
   bookingDateKey,
@@ -69,6 +70,11 @@ describe("formatting", () => {
     expect(formatLongDate("2026-10-07", "nl")).toBe("woensdag 7 oktober 2026");
     expect(formatLongDate("2026-10-07", "en")).toBe("Wednesday, 7 October 2026");
     expect(formatShortDate("2026-10-07", "en")).toBe("Wed 7 Oct");
+  });
+
+  it("names a day button by its visible label plus the year", () => {
+    expect(formatDayButtonName("2026-10-09", "en")).toBe("Fri 9 Oct 2026");
+    expect(formatDayButtonName("2026-10-09", "nl")).toBe(`${formatShortDate("2026-10-09", "nl")} 2026`);
   });
 
   it("renders slot instants as Amsterdam wall-clock time", () => {

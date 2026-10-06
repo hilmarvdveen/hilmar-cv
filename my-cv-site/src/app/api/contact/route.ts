@@ -4,7 +4,7 @@ import { renderContactConfirmationEmail, type EmailLocale } from "@/lib/email";
 import {
   isAllowedOrigin,
   enforceRateLimit,
-  looksAutomated,
+  rejectAutomatedSubmission,
   validateFields,
   validateStringArray,
   serverErrorResponse,
@@ -41,9 +41,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { name, email, message, company, start, interests } = body;
     const locale: EmailLocale = body.locale === "nl" ? "nl" : "en";
 
-    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ success: true, message: "Message sent successfully" });
-    }
+    const automated = rejectAutomatedSubmission("contact", body as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       name: { value: name, required: true, maxLength: LIMITS.name },

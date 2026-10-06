@@ -4,6 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { HoneypotField } from "./HoneypotField";
 import { HONEYPOT_FIELD } from "@/lib/security/honeypot";
 
+vi.mock("next-intl", async () => (await import("@/test/intl")).intlMock());
+
 describe("HoneypotField", () => {
   it("renders a hidden decoy input and forwards changes", async () => {
     const onChange = vi.fn();
@@ -18,6 +20,6 @@ describe("HoneypotField", () => {
   it("shows the controlled value", () => {
     render(<HoneypotField value="filled" onChange={() => {}} />);
     expect((document.getElementById(HONEYPOT_FIELD) as HTMLInputElement).value).toBe("filled");
-    expect(screen.getByText(/company website/i)).toBeInTheDocument();
+    expect(screen.getByText("decoyField")).toBeInTheDocument();
   });
 });

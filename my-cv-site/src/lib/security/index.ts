@@ -14,8 +14,10 @@ export {
   isHoneypotTriggered,
   isSubmittedTooFast,
   looksAutomated,
+  automatedSignal,
+  type AutomatedSignal,
 } from "./honeypot";
-export { serverErrorResponse } from "./http";
+export { serverErrorResponse, rejectAutomatedSubmission } from "./http";
 export {
   enforceRateLimit,
   getClientIp,

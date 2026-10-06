@@ -4,7 +4,7 @@ import {
   escapeHtml,
   isAllowedOrigin,
   enforceRateLimit,
-  looksAutomated,
+  rejectAutomatedSubmission,
   validateFields,
   serverErrorResponse,
   LIMITS,
@@ -42,9 +42,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const data = (await request.json()) as Partial<CVDownloadData>;
 
-    if (looksAutomated(data as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ success: true, message: "CV download tracked successfully" });
-    }
+    const automated = rejectAutomatedSubmission("cv-download", data as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       name: { value: data.name, required: true, maxLength: LIMITS.name },

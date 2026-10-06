@@ -3,7 +3,7 @@ import {
   enforceRateLimit,
   getClientIp,
   isAllowedOrigin,
-  looksAutomated,
+  rejectAutomatedSubmission,
   serverErrorResponse,
   tooManyRequestsResponse,
   validateFields,
@@ -21,8 +21,6 @@ import { getTurnstileConfiguration, verifyTurnstileToken } from "@/lib/fit/turns
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
-
-const EMPTY_FIT_ANSWER = { answer: "", engagements: [] };
 
 type FitQuestionBody = {
   question: string;
@@ -44,9 +42,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const body = (await request.json()) as Partial<FitQuestionBody>;
 
-    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ answer: EMPTY_FIT_ANSWER });
-    }
+    const automated = rejectAutomatedSubmission("fit/question", body as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       question: {

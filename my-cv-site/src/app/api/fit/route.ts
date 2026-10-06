@@ -3,7 +3,7 @@ import {
   enforceRateLimit,
   getClientIp,
   isAllowedOrigin,
-  looksAutomated,
+  rejectAutomatedSubmission,
   serverErrorResponse,
   tooManyRequestsResponse,
   validateFields,
@@ -44,9 +44,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const body = (await request.json()) as Partial<FitRequestBody>;
 
-    if (looksAutomated(body as Record<string, unknown>, Date.now())) {
-      return NextResponse.json({ reason: "looksAutomated" }, { status: 422 });
-    }
+    const automated = rejectAutomatedSubmission("fit", body as Record<string, unknown>, Date.now());
+    if (automated) return automated;
 
     const validation = validateFields({
       vacancy: {
