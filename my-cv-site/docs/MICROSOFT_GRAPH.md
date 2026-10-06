@@ -193,9 +193,12 @@ only permission this needs, already granted for booking. The mailbox
 itself needs a Microsoft Teams licence for Graph to create the meeting.
 
 When the mailbox has no Teams licence, or Graph otherwise rejects the two
-online-meeting fields, `createCalendarEvent` retries once with a plain
-event (no `isOnlineMeeting`, no `onlineMeetingProvider`) so the booking
-still succeeds. The confirmation email, the owner notification and the
+online-meeting fields with a 4xx, `createCalendarEvent` retries once with
+a plain event (no `isOnlineMeeting`, no `onlineMeetingProvider`) so the
+booking still succeeds. Any other failure (a 5xx, a timeout, a dropped
+connection) is not retried and the booking reports the error, because
+the first event may already be in the calendar and a retry would book
+the slot twice (found in the security review of 6 October 2026). The confirmation email, the owner notification and the
 calendar body then carry no join link, only the moment and the details.
 
 To verify after a deploy, make a real test booking through `/book` and

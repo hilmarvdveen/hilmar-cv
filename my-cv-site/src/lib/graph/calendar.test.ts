@@ -190,10 +190,23 @@ describe("createCalendarEvent", () => {
     expect(result).toEqual({ joinUrl: undefined });
   });
 
+  it("does not post a second event when the first post failed for another reason than a rejected request", async () => {
+    for (const failure of [
+      Object.assign(new Error("gateway timeout"), { statusCode: 504 }),
+      new Error("socket hang up"),
+      null,
+    ]) {
+      const post = vi.fn().mockRejectedValueOnce(failure);
+      const client = { api: vi.fn(() => ({ post })) } as unknown as Client;
+      await expect(createCalendarEvent(client, "owner@example.com", input)).rejects.toBe(failure);
+      expect(post).toHaveBeenCalledTimes(1);
+    }
+  });
+
   it("retries without the Teams meeting fields when the first post is rejected, and returns an undefined joinUrl", async () => {
     const post = vi
       .fn()
-      .mockRejectedValueOnce(new Error("mailbox has no Teams licence"))
+      .mockRejectedValueOnce(Object.assign(new Error("mailbox has no Teams licence"), { statusCode: 400 }))
       .mockResolvedValueOnce(undefined);
     const api = vi.fn(() => ({ post }));
     const client = { api } as unknown as Client;

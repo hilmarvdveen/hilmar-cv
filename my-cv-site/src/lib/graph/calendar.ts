@@ -260,6 +260,11 @@ function buildCalendarEventBody(
   };
 }
 
+function isRejectedRequest(error: unknown): boolean {
+  const statusCode = (error as { statusCode?: unknown } | null)?.statusCode;
+  return typeof statusCode === "number" && statusCode >= 400 && statusCode < 500;
+}
+
 export async function createCalendarEvent(
   client: Client,
   userEmail: string,
@@ -270,7 +275,8 @@ export async function createCalendarEvent(
       .api(`/users/${userEmail}/events`)
       .post(buildCalendarEventBody(input, true))) as CreatedCalendarEvent | undefined;
     return { joinUrl: response?.onlineMeeting?.joinUrl };
-  } catch {
+  } catch (error) {
+    if (!isRejectedRequest(error)) throw error;
     await client
       .api(`/users/${userEmail}/events`)
       .post(buildCalendarEventBody(input, false));
