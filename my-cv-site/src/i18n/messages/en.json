@@ -2734,16 +2734,16 @@
             ],
             "shapes": [
                 {
-                    "title": "A design system that puts campaigns live in days",
-                    "body": "I put down a component set marketing assembles a campaign page from itself, so a new campaign goes live in days."
+                    "title": "Campaign pages assembled, not rebuilt",
+                    "body": "A campaign page put together from tested components and content in the CMS, so a new campaign does not start from zero."
                 },
                 {
-                    "title": "One component library for two brands",
-                    "body": "Two brands on one component library, with the brand identity as a theme on top. Accessible from the component up."
+                    "title": "A rebrand across several sites at once",
+                    "body": "Shared building blocks, so a rebrand lands on several sites in one go instead of site by site."
                 },
                 {
                     "title": "A platform external parties connect to safely",
-                    "body": "External parties connect through an agreed interface, so the systems stay independent of each other."
+                    "body": "Outside organisations on your platform with the rights of their role and nothing more, from an authorisation service that stands on its own."
                 }
             ],
             "readingLead": "On accessibility inside the component, folder structure and tests, the work that kept coming back in Amsterdam.",
@@ -2779,7 +2779,7 @@
             ],
             "shapes": [
                 {
-                    "title": "Customer pages from legacy to React, with no outage",
+                    "title": "Customer pages from legacy to React, with no customer-facing outage",
                     "body": "I take a customer page on as a whole, read the old system first, and put it live behind a switch that ramps by percentage."
                 },
                 {
@@ -2860,12 +2860,12 @@
             ],
             "shapes": [
                 {
-                    "title": "A forms platform editors build with themselves",
-                    "body": "At the Belastingdienst I built a visual forms editor with which editors and designers compose and check a tax form themselves, at WCAG 2.1 AA."
+                    "title": "Forms built by the people who write them",
+                    "body": "Editors drag form blocks onto a canvas, set labels, validations and conditions per block, and try the form out the way a visitor sees it."
                 },
                 {
-                    "title": "A portal that puts trips and loads live on one screen",
-                    "body": "At Ortec, FedEx staff follow trips, loads and delivery locations live on one screen, in Angular with a .NET backend."
+                    "title": "A portal that puts routes and loads live on one screen",
+                    "body": "Planning data that changes on screen without a refresh, with route and geo visualisations, in Angular with a .NET backend."
                 }
             ],
             "readingLead": "On hexagonal architecture in Java and C#, and an API in ASP.NET Core, the work that fitted the engagements around Den Haag.",

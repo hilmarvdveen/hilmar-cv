@@ -2734,16 +2734,16 @@
             ],
             "shapes": [
                 {
-                    "title": "Een design system dat campagnes in dagen live zet",
-                    "body": "Ik zet een componentenset neer waaruit marketing zelf een campagnepagina samenstelt, zodat een nieuwe campagne in dagen live staat."
+                    "title": "Campagnepagina's samengesteld, niet opnieuw gebouwd",
+                    "body": "Een campagnepagina samengesteld uit geteste componenten en content uit het CMS, zodat een nieuwe campagne niet bij nul begint."
                 },
                 {
-                    "title": "Eén componentenbibliotheek voor twee merken",
-                    "body": "Twee merken op één componentenbibliotheek, met de merkidentiteit als thema erbovenop. Toegankelijk vanaf het component."
+                    "title": "Een rebranding over meerdere sites tegelijk",
+                    "body": "Gedeelde bouwstenen, zodat een rebranding in één keer op meerdere sites landt in plaats van site voor site."
                 },
                 {
                     "title": "Een platform waar externe partijen veilig op aansluiten",
-                    "body": "Externe partijen sluiten aan via een afgesproken koppelvlak, zodat de systemen los van elkaar blijven staan."
+                    "body": "Externe organisaties op je platform met de rechten van hun rol en niet meer, vanuit een autorisatieservice die op zichzelf staat."
                 }
             ],
             "readingLead": "Over toegankelijkheid in het component, mappenstructuur en tests, het werk dat in Amsterdam steeds terugkwam.",
@@ -2779,7 +2779,7 @@
             ],
             "shapes": [
                 {
-                    "title": "Klantpagina's van legacy naar React, zonder onderbreking",
+                    "title": "Klantpagina's van legacy naar React, zonder onderbreking voor klanten",
                     "body": "Ik neem een klantpagina in zijn geheel over, lees eerst het oude systeem en zet hem live achter een schakelaar die per percentage opschaalt."
                 },
                 {
@@ -2860,12 +2860,12 @@
             ],
             "shapes": [
                 {
-                    "title": "Een formulierenplatform waarmee redacteuren zelf bouwen",
-                    "body": "Bij de Belastingdienst bouwde ik een visuele formulierenbouwer waarmee redacteuren en ontwerpers zelf een belastingformulier samenstellen en controleren, op WCAG 2.1 AA."
+                    "title": "Formulieren gebouwd door wie ze schrijft",
+                    "body": "Redacteuren slepen formulierblokken op een canvas, stellen per blok labels, validaties en voorwaarden in, en proberen het formulier uit zoals een bezoeker het ziet."
                 },
                 {
                     "title": "Een portaal dat ritten en ladingen live op één scherm zet",
-                    "body": "Bij Ortec volgen medewerkers van FedEx ritten, ladingen en bezorglocaties live op één scherm, in Angular met een .NET-backend."
+                    "body": "Planningsgegevens die op het scherm veranderen zonder verversen, met route- en geovisualisaties, in Angular met een .NET-backend."
                 }
             ],
             "readingLead": "Over hexagonale architectuur in Java en C#, en een API in ASP.NET Core, het werk dat bij de opdrachten rond Den Haag paste.",
