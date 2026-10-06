@@ -2691,9 +2691,10 @@
             "title": "Frontend developer inhuren in de Randstad",
             "description": "Waar ik werk: {cities}, hybride of remote. Twaalf opdrachten sinds 2016. Direct beschikbaar.",
             "heroTitle": "Frontend developer inhuren in de Randstad",
-            "heroDescription": "Vanuit Zandvoort werk ik voor opdrachtgevers in {cities}. Een à twee dagen per week op locatie, de rest remote.",
+            "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en ik werk voor teams in {cities}, hybride of remote. Direct beschikbaar.",
             "baseTitle": "Thuisbasis en ritme",
-            "baseBody": "Hilmar ICT Services zit in Zandvoort. Amsterdam is een halfuur met de trein, Den Haag ruim drie kwartier en Utrecht en Rotterdam ruim een uur. Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen. De overige dagen werk ik remote, in het Nederlands of het Engels.",
+            "baseBody": "Hilmar ICT Services is gevestigd in Zandvoort, in {province}. In die provincie deed ik {count} van mijn {total} opdrachten.",
+            "baseRhythm": "Amsterdam is een halfuur met de trein, Den Haag ruim drie kwartier en Utrecht en Rotterdam ruim een uur. Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen. De overige dagen werk ik remote, in het Nederlands of het Engels.",
             "citiesTitle": "{count, plural, =3 {Drie steden met een eigen pagina} =4 {Vier steden met een eigen pagina} other {# steden met een eigen pagina}}",
             "cityLink": "Werken in {city}",
             "restTitle": "De rest van de kaart",
@@ -2723,9 +2724,9 @@
             "title": "Freelance frontend developer Amsterdam inhuren",
             "description": "Senior frontend developer, freelance. {count} opdrachten in Amsterdam, waaronder de Nationale Postcode Loterij. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Amsterdam",
-            "heroDescription": "{count} van mijn {total} opdrachten sinds 2016 waren in Amsterdam. Van Zandvoort ben ik er in een halfuur, direct met de trein.",
+            "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en {count} van mijn {total} opdrachten sinds 2016 waren in Amsterdam. Direct beschikbaar.",
             "hubLine": "{count} opdrachten, van een design system voor de Nationale Postcode Loterij tot één componentenbibliotheek voor Randstad en Yacht.",
-            "engagementsLead": "{count} opdrachten in Amsterdam, van een campagnesysteem voor de Nationale Postcode Loterij tot een componentenbibliotheek voor Randstad en Yacht.",
+            "engagementsLead": "Van een campagnesysteem voor de Nationale Postcode Loterij tot een componentenbibliotheek voor Randstad en Yacht.",
             "travel": [
                 "Zandvoort naar Amsterdam Centraal is een halfuur, direct met de trein.",
                 "Bij Conclusion, Randstad en Omniplan werkte ik op locatie in Amsterdam, bij de Nationale Postcode Loterij hybride.",
@@ -2749,11 +2750,11 @@
             "questions": [
                 {
                     "question": "Hoeveel dagen per week ben je op ons kantoor in Amsterdam?",
-                    "answer": "Een à twee dagen op locatie werkt goed, de rest remote. Welke dagen, stemmen we in het gesprek af op refinement en review."
+                    "answer": "De dagen die bij je team passen. Die leggen we in het gesprek vast, en de rest van de week werk ik remote."
                 },
                 {
-                    "question": "Hoe snel kun je beginnen?",
-                    "answer": "Direct beschikbaar."
+                    "question": "Neem je ook meldingen van de klant onder een SLA aan?",
+                    "answer": "Ja. Bij de leeromgeving CLASS was ik het aanspreekpunt voor meldingen van de klant onder de SLA. Ik deed de analyse naar de oorzaak, legde de bevindingen vast en zette de verbeteringen in gang."
                 },
                 {
                     "question": "Werk je ook voor opdrachtgevers buiten Amsterdam?",
@@ -2768,11 +2769,11 @@
             "title": "Freelance frontend developer Utrecht inhuren",
             "description": "Senior frontend developer, freelance. In Utrecht bij bol.com en Bluefield Smart Access. React, GraphQL en .NET. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Utrecht",
-            "heroDescription": "In Utrecht werkte ik bij bol.com, hybride, en daarvoor bij Bluefield Smart Access.",
+            "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en in Utrecht werkte ik bij bol.com en daarvoor bij Bluefield Smart Access. Direct beschikbaar.",
             "hubLine": "{count} opdrachten, met bol.com als meest recente.",
-            "engagementsLead": "{count} opdrachten in Utrecht: meest recent bol.com en eerder Bluefield Smart Access.",
+            "engagementsLead": "{count} opdrachten, de meest recente eerst.",
             "travel": [
-                "Bij bol.com werkte ik hybride, met vaste dagen in Utrecht en de rest remote. Bij Bluefield Smart Access werkte ik op locatie.",
+                "De meest recente opdracht was hybride, de opdracht daarvoor op locatie.",
                 "Zandvoort naar Utrecht Centraal is ruim een uur met de trein, met één overstap.",
                 "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
             ],
@@ -2798,11 +2799,11 @@
                 },
                 {
                     "question": "Hoe werkt hybride bij jou?",
-                    "answer": "Vaste dagen op kantoor voor refinement en review, de rest remote. Bij bol.com werkte dat zo van juli 2025 tot oktober 2026."
+                    "answer": "Welke dagen precies, spreken we in het gesprek af, afgestemd op het ritme van je team. De rest van de week werk ik remote."
                 },
                 {
-                    "question": "Vanaf wanneer ben je beschikbaar?",
-                    "answer": "Direct."
+                    "question": "Hoe werk je in een team dat vooral uit backendontwikkelaars bestaat?",
+                    "answer": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features met maximaal zes tegelijk. Wat ik overdraag is getypeerd en klein, met unittests en een Storybook-story per scenario, zodat een team met zijn kracht in de backend het kan onderhouden."
                 }
             ],
             "closeTitle": "Zit je team in Utrecht?",
@@ -2813,11 +2814,11 @@
             "title": "Freelance frontend developer Rotterdam inhuren",
             "description": "Senior frontend developer, freelance. Bij Opinity in Rotterdam bouwde ik frontend en backend van een ritregistratie. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Rotterdam",
-            "heroDescription": "Bij Opinity in Rotterdam bouwde ik in vier maanden de frontend en de backend van een bedrijfskritische ritregistratie, op locatie.",
+            "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en in Rotterdam bouwde ik de frontend en de backend van een ritregistratie bij Opinity. Direct beschikbaar.",
             "hubLine": "Eén opdracht, op locatie: frontend en backend in vier maanden bij Opinity.",
-            "engagementsLead": "Bij Opinity, op locatie in Rotterdam.",
+            "engagementsLead": "Een applicatie die werkt op een telefoon, gemaakt voor gebruik onderweg en op de werkvloer.",
             "travel": [
-                "Bij Opinity werkte ik op locatie in Rotterdam.",
+                "De opdracht in Rotterdam liep op locatie.",
                 "Zandvoort naar Rotterdam Centraal is ruim een uur met de trein, met één overstap.",
                 "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
             ],
@@ -2831,15 +2832,15 @@
             "questions": [
                 {
                     "question": "Heb je eerder in Rotterdam gewerkt?",
-                    "answer": "Ja, bij Opinity, op locatie. In vier maanden bouwde ik de frontend en de backend van een bedrijfskritische ritregistratie."
+                    "answer": "Ja, bij Opinity, met authenticatie en rolgebaseerde toegang, en validatie in zowel de interface als de API, zodat een fout aan het licht komt op het moment dat iemand hem maakt."
                 },
                 {
                     "question": "Kom je naar kantoor?",
-                    "answer": "Een à twee dagen per week op locatie werkt goed, de rest remote. Zandvoort naar Rotterdam is ruim een uur met de trein."
+                    "answer": "Ja. Welke dagen precies, spreken we in het gesprek af, afgestemd op het ritme van je team."
                 },
                 {
                     "question": "Welke stack past bij een team met .NET?",
-                    "answer": "Angular of React aan de voorkant en ASP.NET Core aan de achterkant, zoals bij Opinity. Wat nieuwere .NET-versies veranderen, staat in de artikelen op deze pagina."
+                    "answer": "Angular of React aan de voorkant en ASP.NET Core aan de achterkant. Wat nieuwere .NET-versies veranderen, staat in de artikelen op deze pagina."
                 }
             ],
             "closeTitle": "Zit je team in Rotterdam?",
@@ -2850,11 +2851,10 @@
             "title": "Freelance frontend developer Den Haag inhuren",
             "description": "Senior frontend developer, freelance. Overheidsplatform bij de Belastingdienst, Angular en .NET bij Ortec in Zoetermeer. Direct beschikbaar.",
             "heroTitle": "Freelance frontend developer in Den Haag",
-            "heroDescription": "Bij de Belastingdienst in Apeldoorn bouwde ik het formulierenplatform waarmee een nieuw belastingformulier van maanden naar een paar dagen ging. Bij Ortec in Zoetermeer, vlak bij Den Haag, werkte ik op locatie.",
+            "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en ik werkte op locatie bij Ortec in Zoetermeer, in de buurt van Den Haag. Direct beschikbaar.",
             "hubLine": "Publieke sector bij de Belastingdienst, op locatie bij Ortec in Zoetermeer.",
-            "engagementsLead": "De publieke sector is waar ik het formulierenplatform van de Belastingdienst bouwde, in Apeldoorn. In Zoetermeer, op vijftien kilometer van Den Haag, werkte ik bij Ortec op locatie.",
+            "engagementsLead": "De publieke sector in Apeldoorn, en Zoetermeer, in de buurt van Den Haag.",
             "travel": [
-                "Bij Ortec in Zoetermeer werkte ik op locatie.",
                 "Zandvoort naar Den Haag Centraal is 48 tot 54 minuten met de trein, met één overstap.",
                 "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
             ],
@@ -2876,7 +2876,7 @@
                 },
                 {
                     "question": "Werk je op locatie in Den Haag?",
-                    "answer": "Een à twee dagen per week op locatie werkt goed, de rest remote. Bij Ortec in Zoetermeer werkte ik op locatie."
+                    "answer": "Ja. Welke dagen precies, spreken we in het gesprek af, afgestemd op het ritme van je team."
                 },
                 {
                     "question": "Welke toegankelijkheidsnorm hanteer je?",

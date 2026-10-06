@@ -14,7 +14,9 @@ import { RegionEngagementCard } from "./RegionEngagementCard";
 
 type Shape = { title: string; body: string };
 type Question = { question: string; answer: string };
-type Fact = { label: string; value: string; detail: string };
+type Fact = { label: string; value: string; detail: string; highlight?: boolean };
+
+const LAST_ROW_SPAN_CLASS = "sm:col-span-2 sm:border-t sm:border-gray-200 sm:pt-6";
 
 type RegionPageProps = {
   region: Region;
@@ -38,7 +40,7 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
   const travel = t.raw(`${region.id}.travel`) as string[];
   const shapes = t.raw(`${region.id}.shapes`) as Shape[];
   const questions = t.raw(`${region.id}.questions`) as Question[];
-  const facts = home.raw("hiring.facts") as Fact[];
+  const facts = (home.raw("hiring.facts") as Fact[]).filter((fact) => !fact.highlight);
 
   return (
     <>
@@ -158,8 +160,13 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
           <SectionTitle id="region-facts-heading" title={t("shared.factsTitle")} />
           <Card>
             <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {facts.map((fact) => (
-                <div key={fact.label}>
+              {facts.map((fact, factIndex) => (
+                <div
+                  key={fact.label}
+                  className={
+                    factIndex === facts.length - 1 && facts.length % 2 === 1 ? LAST_ROW_SPAN_CLASS : undefined
+                  }
+                >
                   <dt className="text-xs font-semibold uppercase tracking-wider text-gray-500">{fact.label}</dt>
                   <dd className="mt-1 text-base font-semibold text-textMain">{fact.value}</dd>
                   {fact.detail && <dd className="mt-0.5 text-sm text-gray-600">{fact.detail}</dd>}

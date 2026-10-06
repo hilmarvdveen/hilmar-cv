@@ -4,6 +4,8 @@ import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
 import { RegionHub } from "@/features/regions";
+import { engagementsInProvince, homeProvince } from "@/features/about";
+import { workHistory } from "@/data/workHistory";
 import { REGIONS, REGION_PATH, engagementsOutsideRegions, regionEngagements, regionPath } from "@/data/regions";
 import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { regionHubSchema } from "@/lib/seo/regionSchema";
@@ -60,7 +62,14 @@ export default async function RegionHubPage({ params }: Props) {
           </Button>
         }
       />
-      <RegionHub regions={REGIONS} engagementCounts={engagementCounts} outside={engagementsOutsideRegions()} />
+      <RegionHub
+        regions={REGIONS}
+        engagementCounts={engagementCounts}
+        outside={engagementsOutsideRegions()}
+        province={homeProvince}
+        provinceCount={engagementsInProvince(homeProvince).length}
+        totalEngagements={workHistory.length}
+      />
     </>
   );
 }

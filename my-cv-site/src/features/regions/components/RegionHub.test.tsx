@@ -23,9 +23,19 @@ vi.mock("@/i18n/navigation", () => ({
 describe("RegionHub", () => {
   it("renders the home base, one card per city, the rest of the map and the close", () => {
     const outside = engagementsOutsideRegions();
-    render(<RegionHub regions={REGIONS} engagementCounts={{ amsterdam: 4, utrecht: 2, rotterdam: 1, "den-haag": 0 }} outside={outside} />);
+    render(
+      <RegionHub
+        regions={REGIONS}
+        engagementCounts={{ amsterdam: 4, utrecht: 2, rotterdam: 1, "den-haag": 0 }}
+        outside={outside}
+        province="Noord-Holland"
+        provinceCount={6}
+        totalEngagements={12}
+      />
+    );
     expect(screen.getByRole("heading", { level: 2, name: "hub.baseTitle" })).toBeInTheDocument();
-    expect(screen.getByText("hub.baseBody")).toBeInTheDocument();
+    expect(screen.getByText("hub.baseBody:Noord-Holland,6,12")).toBeInTheDocument();
+    expect(screen.getByText("hub.baseRhythm")).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: `hub.citiesTitle:${REGIONS.length}` })
     ).toBeInTheDocument();

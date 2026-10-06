@@ -1,3 +1,5 @@
+import { workHistory, type WorkEntry } from "@/data/workHistory";
+
 export const HOME_CITY_NAME = "Zandvoort";
 
 export const MAP_VIEWBOX = { width: 440, height: 500 };
@@ -80,6 +82,13 @@ const engagementCities = workCities.filter((city) => !city.isHome);
 
 export const workCitiesInProvince = (province: string) =>
   engagementCities.filter((city) => city.province === province);
+
+export const homeProvince = workCities.find((city) => city.isHome)?.province ?? "";
+
+export const engagementsInProvince = (province: string): WorkEntry[] => {
+  const cities = new Set(workCitiesInProvince(province).map((city) => city.name));
+  return workHistory.filter((entry) => cities.has(entry.location));
+};
 
 export const highlightedRegions = Array.from(
   new Set(engagementCities.map((city) => city.province))

@@ -12,7 +12,9 @@ const shapes = [
 ];
 const questions = [{ question: "How often on site?", answer: "One or two days." }];
 const facts = [
-  { label: "Availability", value: "From 1 October 2026", detail: "Earlier by arrangement" },
+  { label: "Availability", value: "Immediately", detail: "", highlight: true },
+  { label: "Location", value: "The Randstad, hybrid or remote", detail: "1 to 2 days on site works well" },
+  { label: "Company", value: "Hilmar ICT Services", detail: "KVK 97564303" },
   { label: "Rate", value: "€95 to €125 per hour", detail: "" },
 ];
 
@@ -81,7 +83,9 @@ describe("RegionPage", () => {
     expect(screen.getAllByRole("link", { name: "shared.readPost" }).map((link) => link.getAttribute("href"))).toEqual(
       region.postSlugs.map((slug) => `/blog/${slug}`)
     );
-    expect(screen.getByText("From 1 October 2026")).toBeInTheDocument();
+    expect(screen.queryByText("Immediately")).not.toBeInTheDocument();
+    expect(screen.getByText("The Randstad, hybrid or remote").parentElement).not.toHaveClass("sm:col-span-2");
+    expect(screen.getByText("€95 to €125 per hour").parentElement).toHaveClass("sm:col-span-2");
     const question = screen.getByText("How often on site?");
     expect(question).toBeInTheDocument();
     const summary = question.closest("summary");

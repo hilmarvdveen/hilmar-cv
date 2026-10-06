@@ -8,6 +8,8 @@ import {
   workCitiesInProvince,
   workCityCount,
   workCompanyCount,
+  homeProvince,
+  engagementsInProvince,
 } from "./netherlandsMapData";
 
 const engagementCities = workCities.filter((city) => !city.isHome);
@@ -67,5 +69,17 @@ describe("netherlands map data", () => {
         expect(entry?.location).toBe(city.name);
       }
     }
+  });
+
+  it("places the home base in Noord-Holland and counts the engagements in that province", () => {
+    expect(homeProvince).toBe("Noord-Holland");
+    const inProvince = engagementsInProvince(homeProvince);
+    expect(inProvince.map((entry) => entry.location).sort()).toEqual(["Amsterdam", "Amsterdam", "Amsterdam", "Amsterdam", "Hilversum", "Hoorn"]);
+    expect(inProvince).toHaveLength(6);
+    expect(workHistory).toHaveLength(12);
+  });
+
+  it("counts no engagement for a province without work", () => {
+    expect(engagementsInProvince("Friesland")).toEqual([]);
   });
 });

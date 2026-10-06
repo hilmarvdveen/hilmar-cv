@@ -26,16 +26,17 @@ const SHORT_KEYS = [
   "contact.facts.items.0.value",
 ];
 
-const STATEMENT_SENTENCE_KEYS = ["regions.amsterdam.questions.1.answer"];
-
-const SHORT_SENTENCE_KEYS = ["regions.utrecht.questions.2.answer"];
-
 const STATEMENT_ENDING_KEYS = [
   "regions.hub.description",
   "regions.amsterdam.description",
   "regions.utrecht.description",
   "regions.rotterdam.description",
   "regions.den-haag.description",
+  "regions.hub.heroDescription",
+  "regions.amsterdam.heroDescription",
+  "regions.utrecht.heroDescription",
+  "regions.rotterdam.heroDescription",
+  "regions.den-haag.heroDescription",
 ];
 
 function valueAt(source: unknown, path: string): unknown {
@@ -132,8 +133,6 @@ describe("every availability line follows the one source", () => {
     const short = AVAILABILITY.SHORT[locale as keyof typeof AVAILABILITY.SHORT];
     for (const key of STATEMENT_KEYS) expect(textAt(messages, key), key).toBe(statement);
     for (const key of SHORT_KEYS) expect(textAt(messages, key), key).toBe(short);
-    for (const key of STATEMENT_SENTENCE_KEYS) expect(textAt(messages, key), key).toBe(`${statement}.`);
-    for (const key of SHORT_SENTENCE_KEYS) expect(textAt(messages, key), key).toBe(`${short}.`);
     for (const key of STATEMENT_ENDING_KEYS) expect(textAt(messages, key).endsWith(` ${statement}.`), key).toBe(true);
     expect(textAt(messages, "home.hero.badge").startsWith(`${statement} · `)).toBe(true);
     expect(textAt(messages, "about.hiring.intro")).toContain(` ${statement}. <book>`);

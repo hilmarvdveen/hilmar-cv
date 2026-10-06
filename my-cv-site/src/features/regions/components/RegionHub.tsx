@@ -14,12 +14,22 @@ type RegionHubProps = {
   regions: Region[];
   engagementCounts: Record<string, number>;
   outside: WorkEntry[];
+  province: string;
+  provinceCount: number;
+  totalEngagements: number;
 };
 
 const linkClass =
   "inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
 
-export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps) => {
+export const RegionHub = ({
+  regions,
+  engagementCounts,
+  outside,
+  province,
+  provinceCount,
+  totalEngagements,
+}: RegionHubProps) => {
   const t = useTranslations("regions");
   const work = useTranslations("work");
   const home = useTranslations("home");
@@ -31,7 +41,10 @@ export const RegionHub = ({ regions, engagementCounts, outside }: RegionHubProps
         <Container width="narrow">
           <SectionTitle id="region-base-heading" title={t("hub.baseTitle")} />
           <Card variant="quiet">
-            <p className="text-lg leading-relaxed text-textMain">{t("hub.baseBody")}</p>
+            <p className="text-lg leading-relaxed text-textMain">
+              {t("hub.baseBody", { province, count: provinceCount, total: totalEngagements })}
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-gray-600">{t("hub.baseRhythm")}</p>
           </Card>
         </Container>
       </Section>
