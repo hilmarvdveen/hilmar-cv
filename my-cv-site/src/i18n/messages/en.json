@@ -620,7 +620,7 @@
                     "heading": "Numbers that hold up"
                 },
                 {
-                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. In refinement I ask a lot of questions, so edge cases surface early and estimates hold up. I mentored junior developers and reviewed the work of fellow seniors, usually by pulling someone into a conversation about the feature so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend.",
+                    "paragraph": "Almost every change touched code owned by another team. I coordinated with two teams continuously, and with up to six at once for larger features and production issues. I picked up epics myself. I investigated the code on both sides of the GraphQL contract and wrote the user stories, which the team then refined and estimated in story points. In refinement I asked a lot of questions, so edge cases surfaced early and estimates held up. When the business reported a problem, I looked into the code myself and agreed the priority with the product owner: fix it now, or finish my current task first. I mentored junior developers and made time for anyone who was stuck or had a question. I usually reviewed the work of fellow seniors by pulling someone into a conversation about the feature, so we arrived at the best solution together. GraphQL stayed the contract between frontend and backend.",
                     "heading": "Working across team boundaries"
                 },
                 {
@@ -668,11 +668,11 @@
                     "heading": "From weeks to days"
                 },
                 {
-                    "paragraph": "The BOLD design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with Product Owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services.",
+                    "paragraph": "The BOLD design system, built as Stencil Web Components, only pays off once other teams actually use it. I worked hands-on with developers across multiple teams on their implementation. I wrote wrappers and documentation so the components behave predictably in Angular, React and Vue. I sat down with product owners to unblock them and speed up their rollout. I also tutored a senior developer who knew JavaScript and Vue but no Angular. I took him by the hand through RxJS and streams, which was the hardest part for him, and through the proper use of services. In code reviews I wrote my comments first and then usually talked the code through with the author on a call, since the author sometimes had context I lacked.",
                     "heading": "The design system in the teams"
                 },
                 {
-                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and Argo CD onto an on-premises Azure environment, with test automation in Cypress and Playwright. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code.",
+                    "paragraph": "What stayed behind is a platform other developers can keep working in. The code reads without a guide, responsibilities are not tangled together, unit tests cover the logic, and the technical documentation in Confluence carries per-framework examples, edge cases and limitations. CI/CD ran through GitLab, Jenkins, Tekton and Argo CD onto an on-premises Azure environment, with test automation in Cypress and Playwright. For the entrepreneur portal and the forms editor I picked up the epics myself. I investigated the frontend and the Java endpoints behind it and wrote the user stories, which the team refined and estimated. While building I put design flaws and possible improvements to the product owner and the designer, so they were resolved in the design and not repaired in the code. When the business reported a problem, I looked into the code myself and agreed with the product owner when I would pick it up: right away, or after my current task.",
                     "heading": "What stays behind"
                 }
             ],
@@ -704,7 +704,7 @@
                     "heading": "Across the European labels"
                 },
                 {
-                    "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme.",
+                    "paragraph": "I worked the components out with the designers and the marketing teams, and design choices that did not hold up in code I raised while I was building them. I picked up the epics for the design system myself: I investigated the code and wrote the user stories, which the team refined and estimated. When a developer building on the design system reported a problem, I looked into the components and agreed with the product owner and the designers whether it came before my current task. Towards the end of the engagement I made that call myself, because I was also building the design into the Nationale Postcode Loterij and VriendenLoterij sites. What stayed behind is a tested component library the teams build on themselves, and a way of working in which a new label comes down to a theme.",
                     "heading": "What stays behind"
                 }
             ],
@@ -735,7 +735,7 @@
                     "heading": "One sign-in for several applications"
                 },
                 {
-                    "paragraph": "For the customer side I built a generic self-service platform with conditional logic and validation, configurable in the same low-code spirit. The dashboards got dynamic data visualisations with responsive charts and sortable tables. The frontend talks to several backend REST APIs through OpenAPI 3.0, the content comes from a headless CMS, and delivery runs on Azure DevOps with Docker and Kubernetes.",
+                    "paragraph": "For the customer side I built a generic self-service platform with conditional logic and validation, configurable in the same low-code spirit. The dashboards got dynamic data visualisations with responsive charts and sortable tables. The frontend talks to several backend REST APIs through OpenAPI 3.0, the content comes from a headless CMS, and delivery runs on Azure DevOps with Docker and Kubernetes. I picked up the epics for the self-service application myself: I investigated the code and wrote the user stories, which the team then refined and estimated.",
                     "heading": "Self-service and dashboards"
                 },
                 {
@@ -746,7 +746,7 @@
                     "paragraph": "The application came back on a current stack, accessible to WCAG 2.1 AA and straightforward to extend."
                 },
                 {
-                    "paragraph": "I tutored the developers around me in the best practices of Angular, junior and senior alike, and took them by the hand where the framework got in their way. I did their code reviews and helped them make their code better. With the UX designers I turned wireframes and user feedback into one consistent, accessible frontend. Design flaws that showed up while building went back to the designer and the product owner while there was still room to change them.",
+                    "paragraph": "I tutored the developers around me in the best practices of Angular, junior and senior alike, and took them by the hand where the framework got in their way. I did their code reviews and helped them make their code better. After leaving my comments in the review I usually got on a call with the author to go through the code together, because the author sometimes had context I lacked. With the UX designers I turned wireframes and user feedback into one consistent, accessible frontend. Design flaws that showed up while building went back to the designer and the product owner while there was still room to change them. When the business reported a problem, I looked into the code myself and decided with the product owner whether it came before my current task.",
                     "heading": "Coaching and reviews"
                 },
                 {
@@ -825,7 +825,7 @@
                     "paragraph": "I migrated the frontend to Angular 9 and moved the backend to .NET Core with REST and gRPC services. Alongside that I designed a modular authorisation and membership service on Microsoft Identity, OpenID Connect and JWT, implemented in the frontend and the backend, which gives an outside organisation exactly the rights that belong to its role. Its secrets live in Azure Key Vault. The services run on Azure App Services with Docker and Kubernetes, and the data model in Entity Framework on SQL Server was laid out again."
                 },
                 {
-                    "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new frontend code. Connecting a new partner became a matter of configuration."
+                    "paragraph": "The screens take their behaviour from the configuration in the backend. Validations, permissions and input fields became a setting, so a functional change often needs no new frontend code. Connecting a new partner became a matter of configuration. In the rebuild I picked up epics myself and turned them into user stories, with the architect who led the work."
                 },
                 {
                     "paragraph": "I left a platform behind in which authorisation is a separate, reusable service. New integrations connect to it while the rest of the system stays as it is."
@@ -858,7 +858,7 @@
                     "paragraph": "Next to the portal I worked in a C# backend organised around clean architecture and domain-driven design. For the calendar, data had to be made available to the engine that schedules employees across shifts, and everything that came out of that service had to reach the frontend. I built that integration and the interface with the frontend."
                 },
                 {
-                    "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the frontend and the microservices in step while both sides changed. What stayed behind is a portal that takes new integrations and new views without a rebuild."
+                    "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the frontend and the microservices in step while both sides changed. For the portal I picked up epics myself and worked them out into user stories with the lead developer and the designer. What stayed behind is a portal that takes new integrations and new views without a rebuild."
                 }
             ],
             "summary": "FedEx staff follow routes, loads and delivery locations live on one screen in the portal.",
@@ -882,7 +882,7 @@
                     "paragraph": "For the cycle dashboard I pulled the data out of a Neo4J graph database and put every cycle on screen as a tile with a status in colour. From a tile a user opens the diagnostics or starts a recovery action. The frontend is React with a Redux architecture, the backend a .NET Web API."
                 },
                 {
-                    "paragraph": "For Ziggo I built a WPF application for network administrators and a map view in React on which incidents appear as they happen, with faulty network nodes marked. It reached the C# microservices through an Angular layer, with RabbitMQ and MassTransit carrying the messages. For Tommy Hilfiger I built an application in which employees reserve a parking spot in a calendar and get an access ticket. All of it ran in a Docker pipeline."
+                    "paragraph": "For Ziggo I built a WPF application for network administrators and a map view in React on which incidents appear as they happen, with faulty network nodes marked. It reached the C# microservices through an Angular layer, with RabbitMQ and MassTransit carrying the messages. For Tommy Hilfiger I built an application in which employees reserve a parking spot in a calendar and get an access ticket. All of it ran in a Docker pipeline. For the cycle dashboard and the Ziggo map view I picked up the epics myself and broke them down into user stories."
                 }
             ],
             "summary": "Administrators see complex processes and network incidents in one view, so they know where to step in.",
@@ -951,7 +951,7 @@
                     "paragraph": "Transdev ran on a Delphi backend that modern web and mobile applications could not reach. I designed and built a generic API layer in .NET Core that stands as a secure gateway between the new front ends and the existing logic. Authentication and authorisation sit at application level, so external systems could reach the data in one uniform way."
                 },
                 {
-                    "paragraph": "On that layer I built a traveller portal in Angular. Travellers look up current information about bus and taxi trips there, with components in TypeScript and RxJS and an interface that works on a phone. I also built a queue module that reads the status of a call from the platform behind it, so a caller sees their position and the expected waiting time."
+                    "paragraph": "On that layer I built a traveller portal in Angular. Travellers look up current information about bus and taxi trips there, with components in TypeScript and RxJS and an interface that works on a phone. I also built a queue module that reads the status of a call from the platform behind it, so a caller sees their position and the expected waiting time. I turned the epics for the API layer and the portal into user stories myself."
                 },
                 {
                     "paragraph": "What stayed behind is a gateway that later channels could connect to, and a portal where travellers find their own answers."

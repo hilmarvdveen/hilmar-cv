@@ -580,7 +580,7 @@
                     "heading": "Cijfers die kloppen"
                 },
                 {
-                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. In refinements stel ik veel vragen, zodat randgevallen vroeg boven tafel komen en schattingen kloppen. Junior ontwikkelaars begeleidde ik. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend.",
+                    "paragraph": "Vrijwel elke wijziging raakte code van een ander team. Ik stemde doorlopend af met twee teams, en bij grotere features en productieproblemen met zes tegelijk. Epics pakte ik zelf op. Ik onderzocht de code aan beide kanten van het GraphQL-contract en schreef de user stories, die het team daarna verfijnde en in storypoints schatte. In refinements stelde ik veel vragen, zodat randgevallen vroeg boven tafel kwamen en schattingen klopten. Meldde de business een probleem, dan zocht ik het zelf uit in de code en sprak ik met de product owner de prioriteit af: meteen oplossen, of eerst mijn lopende taak afmaken. Junior ontwikkelaars begeleidde ik, en voor wie vastliep of een vraag had maakte ik tijd. Het werk van mede-seniors reviewde ik meestal door iemand erbij te halen voor een gesprek over de feature, zodat we samen op de beste oplossing uitkwamen. GraphQL bleef het contract tussen frontend en backend.",
                     "heading": "Werken over teamgrenzen heen"
                 },
                 {
@@ -628,11 +628,11 @@
                     "heading": "Van weken naar dagen"
                 },
                 {
-                    "paragraph": "Het BOLD design system, gebouwd met Stencil Web Components, levert pas iets op als andere teams het ook echt gebruiken. Ik werkte hands-on mee met ontwikkelaars uit meerdere teams aan hun implementatie. Ik schreef wrappers en documentatie zodat de componenten zich in Angular, React en Vue voorspelbaar gedragen. Bij Product Owners ging ik langs om ze vlot te trekken en hun uitrol te versnellen. Daarnaast begeleidde ik een senior ontwikkelaar die JavaScript en Vue kende, maar geen Angular. Ik nam hem bij de hand door RxJS en streams, voor hem het lastigste onderdeel, en door het juiste gebruik van services.",
+                    "paragraph": "Het BOLD design system, gebouwd met Stencil Web Components, levert pas iets op als andere teams het ook echt gebruiken. Ik werkte hands-on mee met ontwikkelaars uit meerdere teams aan hun implementatie. Ik schreef wrappers en documentatie zodat de componenten zich in Angular, React en Vue voorspelbaar gedragen. Bij product owners ging ik langs om ze vlot te trekken en hun uitrol te versnellen. Daarnaast begeleidde ik een senior ontwikkelaar die JavaScript en Vue kende, maar geen Angular. Ik nam hem bij de hand door RxJS en streams, voor hem het lastigste onderdeel, en door het juiste gebruik van services. Bij code reviews schreef ik eerst mijn opmerkingen en liep ik de code daarna meestal in een gesprek met de auteur door: die had soms context die ik miste.",
                     "heading": "Het design system in de teams"
                 },
                 {
-                    "paragraph": "Wat achterblijft is een platform waarin andere ontwikkelaars verder kunnen. De code leest zonder toelichting, verantwoordelijkheden lopen niet door elkaar, unittests dekken de logica af, en de technische documentatie in Confluence bevat voorbeelden per framework, randgevallen en beperkingen. CI/CD liep via GitLab, Jenkins, Tekton en Argo CD naar een on-premises Azure-omgeving, met testautomatisering in Cypress en Playwright. Tijdens het bouwen legde ik ontwerpfouten en verbeteringen voor aan de product owner en de ontwerper, zodat ze in het ontwerp werden opgelost en niet in de code werden gerepareerd.",
+                    "paragraph": "Wat achterblijft is een platform waarin andere ontwikkelaars verder kunnen. De code leest zonder toelichting, verantwoordelijkheden lopen niet door elkaar, unittests dekken de logica af, en de technische documentatie in Confluence bevat voorbeelden per framework, randgevallen en beperkingen. CI/CD liep via GitLab, Jenkins, Tekton en Argo CD naar een on-premises Azure-omgeving, met testautomatisering in Cypress en Playwright. Voor het ondernemersportaal en de formulierenbouwer pakte ik de epics zelf op. Ik onderzocht de frontend en de Java-endpoints erachter en schreef de user stories, die het team verfijnde en inschatte. Tijdens het bouwen legde ik ontwerpfouten en verbeteringen voor aan de product owner en de ontwerper, zodat ze in het ontwerp werden opgelost en niet in de code werden gerepareerd. Meldde de business een probleem, dan zocht ik het zelf uit in de code en sprak ik met de product owner af wanneer ik het oppakte: meteen, of na mijn lopende taak.",
                     "heading": "Wat er blijft"
                 }
             ],
@@ -664,7 +664,7 @@
                     "heading": "Over de Europese labels heen"
                 },
                 {
-                    "paragraph": "De componenten werkte ik uit met de designers en de marketingteams, en ontwerpkeuzes die in code niet standhielden besprak ik meteen tijdens het bouwen. Wat achterbleef is een geteste componentenbibliotheek waar de teams zelf op verderbouwen, en een werkwijze waarin een nieuw merk neerkomt op een thema.",
+                    "paragraph": "De componenten werkte ik uit met de ontwerpers en de marketingteams, en ontwerpkeuzes die in code niet standhielden besprak ik meteen tijdens het bouwen. De epics voor het design system pakte ik zelf op: ik onderzocht de code en schreef de user stories, die het team verfijnde en inschatte. Meldde een ontwikkelaar die op het design system bouwde een probleem, dan zocht ik het uit in de componenten en sprak ik met de product owner en de ontwerpers af of het voorging op mijn lopende taak. Tegen het einde van de opdracht besliste ik dat zelf, omdat ik het ontwerp ook zelf in de sites van de Nationale Postcode Loterij en VriendenLoterij inbouwde. Wat achterbleef is een geteste componentenbibliotheek waar de teams zelf op verderbouwen, en een werkwijze waarin een nieuw merk neerkomt op een thema.",
                     "heading": "Wat er blijft"
                 }
             ],
@@ -695,7 +695,7 @@
                     "heading": "Eén keer inloggen voor meerdere applicaties"
                 },
                 {
-                    "paragraph": "Voor de klantkant bouwde ik een generiek selfserviceplatform met conditionele logica en validatie, in te richten volgens dezelfde low-codegedachte. De dashboards kregen dynamische datavisualisaties met responsieve grafieken en sorteerbare tabellen. De frontend praat via OpenAPI 3.0 met meerdere backend-REST-API's, de content komt uit een headless CMS en het uitrollen loopt via Azure DevOps met Docker en Kubernetes.",
+                    "paragraph": "Voor de klantkant bouwde ik een generiek selfserviceplatform met conditionele logica en validatie, in te richten volgens dezelfde low-codegedachte. De dashboards kregen dynamische datavisualisaties met responsieve grafieken en sorteerbare tabellen. De frontend praat via OpenAPI 3.0 met meerdere backend-REST-API's, de content komt uit een headless CMS en het uitrollen loopt via Azure DevOps met Docker en Kubernetes. De epics voor de selfserviceapplicatie pakte ik zelf op: ik onderzocht de code en schreef de user stories, die het team daarna verfijnde en inschatte.",
                     "heading": "Selfservice en dashboards"
                 },
                 {
@@ -706,7 +706,7 @@
                     "paragraph": "De applicatie kwam terug op een actuele stack, toegankelijk volgens WCAG 2.1 AA en eenvoudig uit te breiden."
                 },
                 {
-                    "paragraph": "Ik begeleidde de ontwikkelaars om me heen in de best practices van Angular, zowel junior als senior, en nam ze bij de hand waar het framework in de weg zat. Ik deed hun code reviews en hielp ze hun code beter te maken. Met de UX-ontwerpers vertaalde ik wireframes en gebruikersfeedback naar één consistente, toegankelijke frontend. Ontwerpfouten die tijdens het bouwen opvielen legde ik terug bij de ontwerper en de product owner, toen er nog ruimte was om ze aan te passen.",
+                    "paragraph": "Ik begeleidde de ontwikkelaars om me heen in de best practices van Angular, zowel junior als senior, en nam ze bij de hand waar het framework in de weg zat. Ik deed hun code reviews en hielp ze hun code beter te maken. Na mijn opmerkingen in de review belde ik meestal met de auteur om de code samen door te lopen, want die had soms context die ik miste. Met de UX-ontwerpers vertaalde ik wireframes en gebruikersfeedback naar één consistente, toegankelijke frontend. Ontwerpfouten die tijdens het bouwen opvielen legde ik terug bij de ontwerper en de product owner, toen er nog ruimte was om ze aan te passen. Meldde de business een probleem, dan zocht ik het zelf uit in de code en besliste ik met de product owner of het voorging op mijn lopende taak.",
                     "heading": "Coaching en reviews"
                 },
                 {
@@ -785,7 +785,7 @@
                     "paragraph": "Ik migreerde de frontend naar Angular 9 en bracht de backend over naar .NET Core met REST- en gRPC-services. Daarnaast ontwierp ik een modulaire autorisatie- en lidmaatschapsdienst op Microsoft Identity, OpenID Connect en JWT, doorgevoerd in de frontend en de backend, waarmee een externe organisatie precies de rechten krijgt die bij haar rol horen. De secrets staan in Azure Key Vault. De services draaien op Azure App Services met Docker en Kubernetes, en het datamodel in Entity Framework op SQL Server werd opnieuw ingedeeld."
                 },
                 {
-                    "paragraph": "De schermen halen hun gedrag uit de configuratie van de backend. Validaties, rechten en invoervelden werden daarmee een instelling, waardoor een functionele wijziging vaak zonder nieuwe frontendcode kan. Een nieuwe partner aansluiten werd een kwestie van configureren."
+                    "paragraph": "De schermen halen hun gedrag uit de configuratie van de backend. Validaties, rechten en invoervelden werden daarmee een instelling, waardoor een functionele wijziging vaak zonder nieuwe frontendcode kan. Een nieuwe partner aansluiten werd een kwestie van configureren. In de herbouw pakte ik epics zelf op en maakte ik er user stories van, met de architect die het werk leidde."
                 },
                 {
                     "paragraph": "Ik liet een platform achter waarin de autorisatie een losstaande, herbruikbare dienst is. Nieuwe integraties sluiten daarop aan terwijl de rest van het systeem blijft zoals het is."
@@ -818,7 +818,7 @@
                     "paragraph": "Naast het portaal werkte ik in een C#-backend die was ingericht op clean architecture en domain-driven design. Voor de kalender moesten gegevens beschikbaar komen voor de engine die medewerkers over diensten inroostert, en alles wat uit die service kwam moest naar de frontend. Die integratie en de interface met de frontend bouwde ik."
                 },
                 {
-                    "paragraph": "De REST-contracten stemde ik af met de backendteams op basis van OpenAPI, zodat de frontend en de microservices gelijk opliepen terwijl beide kanten veranderden. Wat achterbleef is een portaal dat nieuwe koppelingen en nieuwe weergaven aankan zonder herbouw."
+                    "paragraph": "De REST-contracten stemde ik af met de backendteams op basis van OpenAPI, zodat de frontend en de microservices gelijk opliepen terwijl beide kanten veranderden. Voor het portaal pakte ik epics zelf op en werkte ik ze met de lead developer en de ontwerper uit tot user stories. Wat achterbleef is een portaal dat nieuwe koppelingen en nieuwe weergaven aankan zonder herbouw."
                 }
             ],
             "summary": "Medewerkers van FedEx volgen ritten, ladingen en bezorglocaties live op één scherm in het portaal.",
@@ -842,7 +842,7 @@
                     "paragraph": "Voor het cyclusdashboard haalde ik de gegevens uit een Neo4J-graafdatabase en bracht ik elke cyclus als tegel in beeld, met een status in kleur. Vanaf een tegel opent een gebruiker de diagnose of start hij een herstelactie. De frontend is React met een Redux-architectuur, de backend een .NET Web API."
                 },
                 {
-                    "paragraph": "Voor Ziggo bouwde ik een WPF-applicatie voor netwerkbeheerders en een kaartweergave in React waarop storingen verschijnen zodra ze optreden, met foutieve netwerknodes gemarkeerd. De communicatie met de C#-microservices liep via een Angular-laag, met RabbitMQ en MassTransit voor het berichtenverkeer. Voor Tommy Hilfiger bouwde ik een applicatie waarin medewerkers via een kalender een parkeerplaats reserveren en een toegangsticket krijgen. Alles draaide in een Docker-pijplijn."
+                    "paragraph": "Voor Ziggo bouwde ik een WPF-applicatie voor netwerkbeheerders en een kaartweergave in React waarop storingen verschijnen zodra ze optreden, met foutieve netwerknodes gemarkeerd. De communicatie met de C#-microservices liep via een Angular-laag, met RabbitMQ en MassTransit voor het berichtenverkeer. Voor Tommy Hilfiger bouwde ik een applicatie waarin medewerkers via een kalender een parkeerplaats reserveren en een toegangsticket krijgen. Alles draaide in een Docker-pijplijn. Voor het cycledashboard en de kaartweergave voor Ziggo pakte ik de epics zelf op en deelde ik ze op in user stories."
                 }
             ],
             "summary": "Beheerders zien complexe processen en netwerkstoringen in één beeld, zodat ze weten waar ze moeten ingrijpen.",
@@ -911,7 +911,7 @@
                     "paragraph": "Transdev draaide op een Delphi-backend waar moderne web- en mobiele applicaties niet bij konden. Ik ontwierp en bouwde een generieke API-laag in .NET Core die als veilige koppellaag tussen de nieuwe frontends en de bestaande logica staat. Authenticatie en autorisatie zitten op applicatieniveau, zodat externe systemen er op een uniforme manier bij de gegevens konden."
                 },
                 {
-                    "paragraph": "Op die laag bouwde ik een reizigersportaal in Angular. Reizigers vragen daar actuele informatie over bus- en taxiritten op, met componenten in TypeScript en RxJS en een interface die op een telefoon werkt. Daarnaast maakte ik een wachtrijmodule die de status van een telefoongesprek ophaalt uit het platform erachter, zodat een beller zijn positie en de verwachte wachttijd ziet."
+                    "paragraph": "Op die laag bouwde ik een reizigersportaal in Angular. Reizigers vragen daar actuele informatie over bus- en taxiritten op, met componenten in TypeScript en RxJS en een interface die op een telefoon werkt. Daarnaast maakte ik een wachtrijmodule die de status van een telefoongesprek ophaalt uit het platform erachter, zodat een beller zijn positie en de verwachte wachttijd ziet. De epics voor de API-laag en het portaal schreef ik zelf uit in user stories."
                 },
                 {
                     "paragraph": "Wat achterbleef is een koppellaag waarop volgende kanalen konden aansluiten, en een portaal waarin reizigers hun eigen antwoorden vinden."
