@@ -23,10 +23,13 @@ export type FitRequirement = {
   engagements: FitEngagementReference[];
 };
 
+export type FitTechnologyRelevance = "asked" | "related";
+
 export type FitTechnology = {
   name: string;
   years: number;
   engagements: string[];
+  relevance?: FitTechnologyRelevance;
 };
 
 export type FitReport = {

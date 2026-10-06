@@ -10,6 +10,7 @@ import type {
   FitStoredResult,
   FitTechnology,
   FitTechnologyDuration,
+  FitTechnologyRelevance,
   FitVerdict,
   FitVerdictCounts,
 } from "./types";
@@ -129,6 +130,14 @@ export function isFitAnswer(value: unknown): value is FitAnswer {
   );
 }
 
+export function readTechnologyRelevance(value: unknown): FitTechnologyRelevance {
+  return value === "related" ? "related" : "asked";
+}
+
+export const RECORD_TECHNOLOGY_COUNT: number = new Set(
+  workHistory.flatMap((entry) => entry.tech)
+).size;
+
 const clamp = (text: string, maximum: number): string => text.trim().slice(0, maximum);
 
 const keepKnownEngagements = (
@@ -159,6 +168,7 @@ export function sanitizeFitReport(
       name: clamp(technology.name, FIT_LIMITS.technologyName),
       years: Math.max(0, Math.round(technology.years * 10) / 10),
       engagements: technology.engagements.filter((id) => knownIds.has(id)),
+      relevance: readTechnologyRelevance(technology.relevance),
     })),
   };
 }

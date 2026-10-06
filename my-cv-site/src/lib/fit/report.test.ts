@@ -9,6 +9,7 @@ import {
   OWN_WORK_ENGAGEMENT_IDS,
   RECORD_ENGAGEMENT_COMPANIES,
   RECORD_ENGAGEMENT_IDS,
+  RECORD_TECHNOLOGY_COUNT,
   isOwnWorkEngagement,
   companyNamesForEngagements,
   countFitVerdicts,
@@ -225,6 +226,34 @@ describe("sanitizeFitReport", () => {
       { id: "vacancy-fit", company: "Vacancy check" },
     ]);
     expect(sanitized.technologies[0].engagements).toEqual(["vacancy-fit"]);
+  });
+
+  it("carries the relevance and reads a missing or unknown value as asked", () => {
+    const sanitized = sanitizeFitReport(
+      report({
+        technologies: [
+          { name: "React", years: 7, engagements: ["bol"], relevance: "asked" },
+          { name: "Redux", years: 5, engagements: ["bol"], relevance: "related" },
+          { name: "Sass", years: 3, engagements: ["bol"] },
+          { name: "Less", years: 2, engagements: ["bol"], relevance: "odd" as never },
+        ],
+      })
+    );
+    expect(sanitized.technologies.map((technology) => technology.relevance)).toEqual([
+      "asked",
+      "related",
+      "asked",
+      "asked",
+    ]);
+  });
+
+  it("accepts a technology without a relevance", () => {
+    expect(isFitReport(report())).toBe(true);
+  });
+
+  it("counts the distinct technologies of the client engagements", () => {
+    expect(RECORD_TECHNOLOGY_COUNT).toBe(new Set(workHistory.flatMap((entry) => entry.tech)).size);
+    expect(RECORD_TECHNOLOGY_COUNT).toBeGreaterThan(0);
   });
 
   it("uses the known ids it is given", () => {

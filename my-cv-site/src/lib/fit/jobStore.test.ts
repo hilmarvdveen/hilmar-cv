@@ -13,7 +13,7 @@ const report: FitReport = {
       engagements: [{ id: "bol", company: "bol.com" }],
     },
   ],
-  technologies: [{ name: "React", years: 5, engagements: ["bol"] }],
+  technologies: [{ name: "React", years: 5, engagements: ["bol"], relevance: "asked" }],
 };
 
 const pendingJob: PendingFitJob = {

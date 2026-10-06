@@ -7,6 +7,7 @@ export type {
   FitRequirement,
   FitTechnology,
   FitTechnologyDuration,
+  FitTechnologyRelevance,
   FitVerdict,
   FitVerdictCounts,
 } from "./types";
@@ -15,12 +16,14 @@ export {
   FIT_LIMITS,
   FIT_REFUSAL_REASONS,
   FIT_VERDICTS,
+  RECORD_TECHNOLOGY_COUNT,
   companyNamesForEngagements,
   countFitVerdicts,
   fitTechnologyDuration,
   isDailyCapRetry,
   isOwnWorkEngagement,
   readFitRefusalReason,
+  readTechnologyRelevance,
   retryAfterSecondsFromBody,
 } from "./report";
 

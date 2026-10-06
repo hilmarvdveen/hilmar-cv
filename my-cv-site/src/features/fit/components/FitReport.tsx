@@ -7,9 +7,11 @@ import { mergeClasses } from "@/lib/mergeClasses";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
   FIT_VERDICTS,
+  RECORD_TECHNOLOGY_COUNT,
   companyNamesForEngagements,
   countFitVerdicts,
   fitTechnologyDuration,
+  readTechnologyRelevance,
   type FitReport as FitReportData,
   type FitVerdict,
 } from "@/lib/fit/client";
@@ -71,9 +73,32 @@ export const FitReport = ({
         name: technology.name,
         duration,
         companies: companyNamesForEngagements(technology.engagements),
+        relevance: readTechnologyRelevance(technology.relevance),
       },
     ];
   });
+  const askedRows = technologyRows.filter((row) => row.relevance === "asked");
+  const relatedRows = technologyRows.filter((row) => row.relevance === "related");
+  const relatedHeadingId = useId();
+  const renderRows = (rows: typeof technologyRows) => (
+    <dl className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+      {rows.map((row) => (
+        <div key={row.name}>
+          <div className="flex items-baseline justify-between gap-4">
+            <dt className="text-base text-textMain">{row.name}</dt>
+            <dd className="text-right text-base font-bold tabular-nums text-primary">
+              {row.duration.unit === "years"
+                ? t("report.years", { years: row.duration.value })
+                : t("report.months", { months: row.duration.value })}
+            </dd>
+          </div>
+          {row.companies.length > 0 && (
+            <dd className="mt-1 text-sm text-gray-600">{describeCompanies(row.companies)}</dd>
+          )}
+        </div>
+      ))}
+    </dl>
+  );
   const describeCompanies = (companies: string[]): string => {
     const named = companies.slice(0, FIT_COMPANIES_NAMED_PER_TECHNOLOGY);
     const others = companies.length - named.length;
@@ -211,7 +236,12 @@ export const FitReport = ({
                     {t("report.technologiesTitle")}
                   </h3>
                   <span className="mt-1 block text-sm text-gray-600">
-                    {t("report.technologiesSummary", { count: technologyRows.length })}
+                    {technologyRows.length > askedRows.length
+                      ? t("report.technologiesSummaryWithRelated", {
+                          count: askedRows.length,
+                          related: technologyRows.length - askedRows.length,
+                        })
+                      : t("report.technologiesSummary", { count: askedRows.length })}
                   </span>
                 </span>
                 <ChevronDown
@@ -223,25 +253,34 @@ export const FitReport = ({
                 <p className="mb-4 text-sm leading-relaxed text-gray-600">
                   {t("report.technologiesBasis")}
                 </p>
-                <dl className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-                  {technologyRows.map((row) => (
-                    <div key={row.name}>
-                      <div className="flex items-baseline justify-between gap-4">
-                        <dt className="text-base text-textMain">{row.name}</dt>
-                        <dd className="text-right text-base font-bold tabular-nums text-primary">
-                          {row.duration.unit === "years"
-                            ? t("report.years", { years: row.duration.value })
-                            : t("report.months", { months: row.duration.value })}
-                        </dd>
-                      </div>
-                      {row.companies.length > 0 && (
-                        <dd className="mt-1 text-sm text-gray-600">
-                          {describeCompanies(row.companies)}
-                        </dd>
-                      )}
-                    </div>
-                  ))}
-                </dl>
+                {askedRows.length > 0 && renderRows(askedRows)}
+                {relatedRows.length > 0 && (
+                  <div
+                    role="group"
+                    aria-labelledby={relatedHeadingId}
+                    className={mergeClasses(
+                      "border-t border-gray-200 pt-4",
+                      askedRows.length > 0 && "mt-6"
+                    )}
+                  >
+                    <h4 id={relatedHeadingId} className="text-base font-semibold text-gray-700">
+                      {t("report.technologiesRelatedTitle")}
+                    </h4>
+                    <p className="mb-4 mt-1 text-sm leading-relaxed text-gray-600">
+                      {t("report.technologiesRelatedNote")}
+                    </p>
+                    {renderRows(relatedRows)}
+                  </div>
+                )}
+                <p className="mt-6 text-sm">
+                  <Link
+                    href="/experience"
+                    data-placement="fit-technologies-all"
+                    className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  >
+                    {t("report.technologiesAllLink", { count: RECORD_TECHNOLOGY_COUNT })}
+                  </Link>
+                </p>
               </div>
             </details>
           </Card>

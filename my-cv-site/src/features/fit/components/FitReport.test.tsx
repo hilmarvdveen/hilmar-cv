@@ -161,6 +161,34 @@ describe("FitReport", () => {
     expect(screen.getAllByText("report.years")).toHaveLength(2);
   });
 
+  it("names both counts in the heading and groups the related ones apart", () => {
+    renderReport({
+      technologies: [
+        { name: "React", years: 7.5, engagements: ["bol"], relevance: "asked" },
+        { name: "Redux", years: 5, engagements: ["bol"], relevance: "related" },
+      ],
+    });
+    expect(screen.getByText("report.technologiesSummaryWithRelated")).toBeInTheDocument();
+    expect(screen.queryByText("report.technologiesSummary")).toBeNull();
+    const group = screen.getByRole("group", { name: "report.technologiesRelatedTitle" });
+    expect(group).toHaveTextContent("Redux");
+    expect(group).not.toHaveTextContent("React");
+    expect(screen.getByText("report.technologiesRelatedNote")).toBeInTheDocument();
+  });
+
+  it("leaves the related group out when there is none", () => {
+    renderReport();
+    expect(screen.queryByText("report.technologiesRelatedTitle")).toBeNull();
+  });
+
+  it("closes the table with a link to the experience page", () => {
+    renderReport();
+    expect(screen.getByRole("link", { name: "report.technologiesAllLink" })).toHaveAttribute(
+      "href",
+      "/experience"
+    );
+  });
+
   it("names three companies per technology and counts the rest", () => {
     renderReport({
       requirements: [],
