@@ -527,6 +527,9 @@
             "GraphQL": "GraphQL",
             "MonoreposNx": "Monorepos (Nx)",
             "CleanArchitecture": "Clean Architecture",
+            "Camunda": "Camunda 7",
+            "Keycloak": "Keycloak",
+            "HexagonalArchitecture": "Hexagonal Architecture",
             "DomainDrivenDesign": "Domain-Driven Design (DDD)",
             "EventDrivenDesign": "Event-driven design",
             "SSRSSG": "SSR / SSG",
@@ -619,7 +622,7 @@
                     "heading": "Working across team boundaries"
                 },
                 {
-                    "paragraph": "Where the backend team was short on capacity I wrote the Kotlin myself, on Spring Boot with Spring for GraphQL. New fields in the federated schema got their controller and schema mapping, and where a schema serves both logged-in and anonymous customers, both got their controller and their test. A field already in use in production never changed in place: we marked it deprecated, added a V2 next to it, migrated every consumer and then took the original name back, in frontend and backend at the same time. Every controller got its tests with GraphQlTester, JUnit, mockito-kotlin and AssertJ, and the resolvers a timeout in the configuration, so a slow dependency fails a field and not the whole request.",
+                    "paragraph": "Where the backend team was short on capacity I wrote the Kotlin myself, on Spring Boot with Spring for GraphQL. New fields in the federated schema got their controller and schema mapping, and where a schema serves both logged-in and anonymous customers, both got their controller and their test. A field already in use in production never changed in place: we marked it deprecated, added a V2 next to it, migrated every consumer and then took the original name back, in frontend and backend at the same time. Every controller got its tests with GraphQlTester, JUnit, mockito-kotlin and AssertJ, and the resolvers a timeout in the configuration, so a slow dependency fails a field and not the whole request. Those services were built around domain-driven design and hexagonal architecture, and I worked inside that structure.",
                     "heading": "The Kotlin side"
                 },
                 {
@@ -726,11 +729,15 @@
                     "heading": "From Angular 1.6 to 12"
                 },
                 {
+                    "paragraph": "The new Angular 12 architecture lived in an Nx monorepo, and the sign-in had to be rebuilt with it. I helped build the Keycloak integration: one shared authentication library, keycloak-angular around keycloak-js, that several frontend applications used, each with its own client, realm and redirect settings. It handled single sign-on and the session check, login and logout, guards on routes and roles, and the access token as a bearer token on every request to the Spring Boot backend.",
+                    "heading": "One sign-in for several applications"
+                },
+                {
                     "paragraph": "For the customer side I built a generic self-service platform with conditional logic and validation, configurable in the same low-code spirit. The dashboards got dynamic data visualisations with responsive charts and sortable tables. The frontend talks to several backend REST APIs through OpenAPI 3.0, the content comes from a headless CMS, and delivery runs on Azure DevOps with Docker and Kubernetes.",
                     "heading": "Self-service and dashboards"
                 },
                 {
-                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called, and the handlers behind them.",
+                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called, and the handlers behind them. The self-service environment for lease drivers also had a damage report, run on a Camunda 7 process. The API layer passed the report to a service around that process, and the driver followed the status of the claim in the dashboard. My role was on the application and integration side.",
                     "heading": "The backend stories"
                 },
                 {
@@ -846,6 +853,9 @@
                     "paragraph": "Deployment ran through Docker to Azure inside a CI/CD pipeline, so a change reached the users without manual steps."
                 },
                 {
+                    "paragraph": "Next to the portal I worked in a C# backend organised around clean architecture and domain-driven design. For the calendar, data had to be made available to the engine that schedules employees across shifts, and everything that came out of that service had to reach the frontend. I built that integration and the interface with the frontend."
+                },
+                {
                     "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the frontend and the microservices in step while both sides changed. What stayed behind is a portal that takes new integrations and new views without a rebuild."
                 }
             ],
@@ -915,7 +925,7 @@
                     "paragraph": "The CLASS learning platform ran on ASP.NET Web Forms and no longer met what its users and the accessibility rules asked of it. My assignment had two halves. Keep the existing application in service, and take the frontend to VueJS step by step."
                 },
                 {
-                    "paragraph": "I built a modular Vue frontend with reusable UI elements, with attention to semantics and accessibility, and improved the validation and the error handling. The frontend talks to the backend over REST WebAPIs, where CQRS and NHibernate carry the data flow. I covered the backend logic with xUnit, and we watched code quality with SonarQube."
+                    "paragraph": "I built a modular Vue frontend with reusable UI elements, with attention to semantics and accessibility, and improved the validation and the error handling. The frontend talks to the backend over REST WebAPIs. Behind them the backend is organised around domain-driven design with CQRS and clean architecture, with NHibernate carrying the data flow. I covered the backend logic with xUnit, and we watched code quality with SonarQube."
                 },
                 {
                     "paragraph": "I was the point of contact for client reports under the SLA, ran the analyses into the cause, wrote the findings down and set the improvements in motion. In the Scrum team I contributed to planning sessions, demos and sprint reviews."

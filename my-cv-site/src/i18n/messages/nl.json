@@ -487,6 +487,9 @@
             "GraphQL": "GraphQL",
             "MonoreposNx": "Monorepos (Nx)",
             "CleanArchitecture": "Clean Architecture",
+            "Camunda": "Camunda 7",
+            "Keycloak": "Keycloak",
+            "HexagonalArchitecture": "Hexagonal Architecture",
             "DomainDrivenDesign": "Domain-Driven Design (DDD)",
             "EventDrivenDesign": "Event-driven design",
             "SSRSSG": "SSR / SSG",
@@ -579,7 +582,7 @@
                     "heading": "Werken over teamgrenzen heen"
                 },
                 {
-                    "paragraph": "Waar de capaciteit in het backendteam krap was, schreef ik de Kotlin zelf, op Spring Boot met Spring for GraphQL. Nieuwe velden in het gefedereerde schema kregen hun controller en schema mapping, en waar een schema zowel ingelogde als anonieme klanten bedient, kregen beide hun controller en hun test. Een veld dat al in productie werd gebruikt veranderde nooit ter plekke: we markeerden het als deprecated, zetten een V2 ernaast, migreerden elke afnemer en namen daarna de oorspronkelijke naam terug, in frontend en backend tegelijk. Elke controller kreeg zijn tests met GraphQlTester, JUnit, mockito-kotlin en AssertJ, en de resolvers een timeout in de configuratie, zodat een trage afhankelijkheid een veld laat falen en niet het hele verzoek.",
+                    "paragraph": "Waar de capaciteit in het backendteam krap was, schreef ik de Kotlin zelf, op Spring Boot met Spring for GraphQL. Nieuwe velden in het gefedereerde schema kregen hun controller en schema mapping, en waar een schema zowel ingelogde als anonieme klanten bedient, kregen beide hun controller en hun test. Een veld dat al in productie werd gebruikt veranderde nooit ter plekke: we markeerden het als deprecated, zetten een V2 ernaast, migreerden elke afnemer en namen daarna de oorspronkelijke naam terug, in frontend en backend tegelijk. Elke controller kreeg zijn tests met GraphQlTester, JUnit, mockito-kotlin en AssertJ, en de resolvers een timeout in de configuratie, zodat een trage afhankelijkheid een veld laat falen en niet het hele verzoek. Die services waren ingericht op domain-driven design en hexagonal architecture, en ik werkte binnen die opzet.",
                     "heading": "De Kotlin-kant"
                 },
                 {
@@ -686,11 +689,15 @@
                     "heading": "Van Angular 1.6 naar 12"
                 },
                 {
+                    "paragraph": "De nieuwe Angular 12-architectuur stond in een Nx-monorepo, en het inloggen moest daarin opnieuw worden gebouwd. Ik hielp de Keycloak-koppeling bouwen: één gedeelde authenticatiebibliotheek, keycloak-angular rond keycloak-js, die meerdere frontendapplicaties gebruikten, elk met eigen client-, realm- en redirectinstellingen. Die regelde single sign-on en de sessiecontrole, in- en uitloggen, guards op routes en rollen, en het access token als bearer token bij elk verzoek aan de Spring Boot-backend.",
+                    "heading": "Eén keer inloggen voor meerdere applicaties"
+                },
+                {
                     "paragraph": "Voor de klantkant bouwde ik een generiek selfserviceplatform met conditionele logica en validatie, in te richten volgens dezelfde low-codegedachte. De dashboards kregen dynamische datavisualisaties met responsieve grafieken en sorteerbare tabellen. De frontend praat via OpenAPI 3.0 met meerdere backend-REST-API's, de content komt uit een headless CMS en het uitrollen loopt via Azure DevOps met Docker en Kubernetes.",
                     "heading": "Selfservice en dashboards"
                 },
                 {
-                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter.",
+                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter. De selfserviceomgeving voor leaserijders had ook een schademelding, die op een Camunda 7-proces draaide. De API-laag gaf de melding door aan een service rond dat proces, en de berijder volgde de status van de claim in het dashboard. Mijn rol lag aan de applicatie- en integratiekant.",
                     "heading": "De backendstories"
                 },
                 {
@@ -806,6 +813,9 @@
                     "paragraph": "Deployment liep via Docker naar Azure binnen een CI/CD-straat, zodat een aanpassing zonder handwerk bij de gebruikers terechtkwam."
                 },
                 {
+                    "paragraph": "Naast het portaal werkte ik in een C#-backend die was ingericht op clean architecture en domain-driven design. Voor de kalender moesten gegevens beschikbaar komen voor de engine die medewerkers over diensten inroostert, en alles wat uit die service kwam moest naar de frontend. Die integratie en de interface met de frontend bouwde ik."
+                },
+                {
                     "paragraph": "De REST-contracten stemde ik af met de backendteams op basis van OpenAPI, zodat de frontend en de microservices gelijk opliepen terwijl beide kanten veranderden. Wat achterbleef is een portaal dat nieuwe koppelingen en nieuwe weergaven aankan zonder herbouw."
                 }
             ],
@@ -875,7 +885,7 @@
                     "paragraph": "De leeromgeving CLASS draaide op ASP.NET Web Forms en voldeed niet meer aan wat gebruikers en toegankelijkheidseisen vroegen. Mijn opdracht bestond uit twee delen. De bestaande applicatie in beheer houden, en de frontend stap voor stap naar VueJS brengen."
                 },
                 {
-                    "paragraph": "Ik bouwde een modulaire Vue-frontend met herbruikbare UI-elementen, met aandacht voor semantiek en toegankelijkheid, en verbeterde de validatie en de foutafhandeling. De frontend praat via REST-WebAPI's met de backend, waar CQRS en NHibernate de gegevensstroom verzorgen. De backendlogica dekte ik af met xUnit, en de codekwaliteit bewaakten we met SonarQube."
+                    "paragraph": "Ik bouwde een modulaire Vue-frontend met herbruikbare UI-elementen, met aandacht voor semantiek en toegankelijkheid, en verbeterde de validatie en de foutafhandeling. De frontend praat via REST-WebAPI's met de backend. Daarachter is de backend ingericht op domain-driven design met CQRS en clean architecture, met NHibernate voor de gegevensstroom. De backendlogica dekte ik af met xUnit, en de codekwaliteit bewaakten we met SonarQube."
                 },
                 {
                     "paragraph": "Ik was het aanspreekpunt voor klantmeldingen onder de SLA, deed de analyses naar de oorzaak, legde de bevindingen vast en zette de verbeteringen in gang. In het Scrumteam leverde ik input bij planningen, demo's en sprintreviews."
