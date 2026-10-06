@@ -620,7 +620,7 @@
                     "heading": "De visuele formulierenbouwer"
                 },
                 {
-                    "paragraph": "De formulierenbouwer had endpoints nodig die er nog niet waren, dus bouwde ik die kant mee, in Java 8 op Spring Boot. Elk endpoint zit in een controller en is gekoppeld aan een handler. De handler haalt zijn gegevens niet rechtstreeks uit de database. Hij gaat langs een laag die controleert of de gegevens er al zijn en langs een rules engine die bepaalt of een eigenschap gezet mag worden. Pas daarna zet of verwijdert de persistentielaag de records in MySQL. Mijn werk zat vóór de persistentielaag: de endpoints en de handlers erachter, met JUnit- en Mockito-tests. De eigenschappen die een formulier kan dragen staan in een properties-bestand en zijn geregistreerd in Java. Komt er een nieuw verzoek binnen, dan werkt die registratie de database bij, zodat altijd vastligt welke eigenschappen in gebruik zijn en een nieuwe eigenschap een kleine, herhaalbare wijziging is. Elke wijziging kreeg een versienummer in de Maven-pom, patch, minor of major, zodat het team terug kon zien wat een release veranderde.",
+                    "paragraph": "De formulierenbouwer had endpoints nodig die er nog niet waren, dus bouwde ik die kant mee, in Java 8 op Spring Boot. Elk endpoint zit in een controller en is gekoppeld aan een handler. De handler haalt zijn gegevens niet rechtstreeks uit de database. Hij gaat langs een laag die controleert of de gegevens er al zijn en langs een rules engine die bepaalt of een eigenschap gezet mag worden. Pas daarna zet of verwijdert de persistentielaag de records in MySQL. Mijn werk zat vóór de persistentielaag: de endpoints en de handlers erachter, met JUnit- en Mockito-tests. De eigenschappen die een formulier kan dragen staan in een properties-bestand en zijn geregistreerd in Java. Komt er een nieuw verzoek binnen, dan werkt die registratie de database bij, zodat altijd vastligt welke eigenschappen in gebruik zijn en een nieuwe eigenschap een kleine, herhaalbare wijziging is. Elke wijziging kreeg een versienummer in de Maven-pom, patch, minor of major, zodat het team terug kon zien wat een release veranderde. Die backend was ingericht op domain-driven design en hexagonal architecture, en ik nam deel aan de sessies waarin het team de domeingrenzen vastlegde.",
                     "heading": "De Java-kant van het platform"
                 },
                 {
@@ -699,7 +699,7 @@
                     "heading": "Selfservice en dashboards"
                 },
                 {
-                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter. De selfserviceomgeving voor leaserijders had ook een schademelding, die op een Camunda 7-proces draaide. De API-laag gaf de melding door aan een service rond dat proces, en de berijder volgde de status van de claim in het dashboard. Mijn rol lag aan de applicatie- en integratiekant.",
+                    "paragraph": "Ik pakte ook backendstories op de REST-API op, Java 8 op Spring Boot 2.3 met Maven. Per story paste ik de controllers en de endpoints aan die de Angular-frontend aanriep, en de handlers erachter. Die Java-code was ingericht op domain-driven design en hexagonal architecture. Het team legde de domeingrenzen vast in sessies waaraan ik deelnam. De selfserviceomgeving voor leaserijders had ook een schademelding, die op een Camunda 7-proces draaide. De API-laag gaf de melding door aan een service rond dat proces, en de berijder volgde de status van de claim in het dashboard. Mijn rol lag aan de applicatie- en integratiekant.",
                     "heading": "De backendstories"
                 },
                 {
@@ -815,7 +815,7 @@
                     "paragraph": "Deployment liep via Docker naar Azure binnen een CI/CD-straat, zodat een aanpassing zonder handwerk bij de gebruikers terechtkwam."
                 },
                 {
-                    "paragraph": "Naast het portaal werkte ik in een C#-backend die was ingericht op clean architecture en domain-driven design. Voor de kalender moesten gegevens beschikbaar komen voor de engine die medewerkers over diensten inroostert, en alles wat uit die service kwam moest naar de frontend. Die integratie en de interface met de frontend bouwde ik."
+                    "paragraph": "Naast het portaal werkte ik in een C#-backend die was ingericht op clean architecture en domain-driven design. Voor de kalender moesten gegevens beschikbaar komen voor de engine die medewerkers over diensten inroostert, en alles wat uit die service kwam moest naar de frontend. Die integratie en de interface met de frontend bouwde ik. Ook zat ik in de teamoverleggen waarin de domeingrenzen werden bepaald."
                 },
                 {
                     "paragraph": "De REST-contracten stemde ik af met de backendteams op basis van OpenAPI, zodat de frontend en de microservices gelijk opliepen terwijl beide kanten veranderden. Voor het portaal pakte ik epics zelf op en werkte ik ze met de lead developer en de ontwerper uit tot user stories. Wat achterbleef is een portaal dat nieuwe koppelingen en nieuwe weergaven aankan zonder herbouw."
@@ -2825,10 +2825,10 @@
             "shapes": [
                 {
                     "title": "Frontend en backend in één opdracht",
-                    "body": "Frontend en API in één paar handen, dus je hoeft de bouw niet over twee partijen te verdelen. Zo liep het bij Opinity ook."
+                    "body": "Frontend en API in één paar handen, dus je hoeft de bouw niet over twee partijen te verdelen."
                 }
             ],
-            "readingLead": "Over een API in ASP.NET Core, hexagonale architectuur in C# en .NET, en tests, het werk dat in Rotterdam terugkwam.",
+            "readingLead": "Over hexagonale architectuur in C# en .NET, een API in ASP.NET Core, en tests. Bij Opinity werkte ik in een monoliet met clean architecture en CQRS. Die twee liggen dicht bij elkaar. In beide wijzen de afhankelijkheden naar binnen, naar het domein.",
             "questions": [
                 {
                     "question": "Heb je eerder in Rotterdam gewerkt?",

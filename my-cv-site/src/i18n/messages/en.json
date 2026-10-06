@@ -660,7 +660,7 @@
                     "heading": "The visual forms editor"
                 },
                 {
-                    "paragraph": "The forms editor needed endpoints that did not exist yet, so I built that side as well, in Java 8 on Spring Boot. Every endpoint sits in a controller and is wired to a handler. The handler does not read the database directly. It goes through a layer that checks whether the data is already there and through a rules engine that decides whether a property may be set. Only then does the persistence layer set or delete the records in MySQL. My work sat before the persistence layer: the endpoints and the handlers behind them, with JUnit and Mockito tests. The properties a form can carry live in a properties file and are registered in Java. When a new request comes in, that registration updates the database, so it is always known which properties are in use and a new property is a small, repeatable change. Every change carried a version bump in the Maven pom, patch, minor or major, so the team could see what a release changed.",
+                    "paragraph": "The forms editor needed endpoints that did not exist yet, so I built that side as well, in Java 8 on Spring Boot. Every endpoint sits in a controller and is wired to a handler. The handler does not read the database directly. It goes through a layer that checks whether the data is already there and through a rules engine that decides whether a property may be set. Only then does the persistence layer set or delete the records in MySQL. My work sat before the persistence layer: the endpoints and the handlers behind them, with JUnit and Mockito tests. The properties a form can carry live in a properties file and are registered in Java. When a new request comes in, that registration updates the database, so it is always known which properties are in use and a new property is a small, repeatable change. Every change carried a version bump in the Maven pom, patch, minor or major, so the team could see what a release changed. That backend was built around domain-driven design and hexagonal architecture, and I took part in the sessions where the team defined the domain boundaries.",
                     "heading": "The Java side of the platform"
                 },
                 {
@@ -739,7 +739,7 @@
                     "heading": "Self-service and dashboards"
                 },
                 {
-                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called, and the handlers behind them. The self-service environment for lease drivers also had a damage report, run on a Camunda 7 process. The API layer passed the report to a service around that process, and the driver followed the status of the claim in the dashboard. My role was on the application and integration side.",
+                    "paragraph": "I also picked up backend stories on the REST API, Java 8 on Spring Boot 2.3 built with Maven. Per story I adjusted the controllers and the endpoints the Angular frontend called, and the handlers behind them. That Java code was built around domain-driven design and hexagonal architecture. The team set the domain boundaries in sessions I took part in. The self-service environment for lease drivers also had a damage report, run on a Camunda 7 process. The API layer passed the report to a service around that process, and the driver followed the status of the claim in the dashboard. My role was on the application and integration side.",
                     "heading": "The backend stories"
                 },
                 {
@@ -855,7 +855,7 @@
                     "paragraph": "Deployment ran through Docker to Azure inside a CI/CD pipeline, so a change reached the users without manual steps."
                 },
                 {
-                    "paragraph": "Next to the portal I worked in a C# backend organised around clean architecture and domain-driven design. For the calendar, data had to be made available to the engine that schedules employees across shifts, and everything that came out of that service had to reach the frontend. I built that integration and the interface with the frontend."
+                    "paragraph": "Next to the portal I worked in a C# backend organised around clean architecture and domain-driven design. For the calendar, data had to be made available to the engine that schedules employees across shifts, and everything that came out of that service had to reach the frontend. I built that integration and the interface with the frontend. I was also part of the team meetings that defined the domain boundaries."
                 },
                 {
                     "paragraph": "I settled the REST contracts with the backend teams on OpenAPI, which kept the frontend and the microservices in step while both sides changed. For the portal I picked up epics myself and worked them out into user stories with the lead developer and the designer. What stayed behind is a portal that takes new integrations and new views without a rebuild."
@@ -2825,10 +2825,10 @@
             "shapes": [
                 {
                     "title": "Frontend and backend in one engagement",
-                    "body": "Frontend and API in one pair of hands, so you do not have to split the build over two parties. That is how it ran at Opinity too."
+                    "body": "Frontend and API in one pair of hands, so you do not have to split the build over two parties."
                 }
             ],
-            "readingLead": "On an API in ASP.NET Core, hexagonal architecture in C# and .NET, and tests, the work that came back in Rotterdam.",
+            "readingLead": "On hexagonal architecture in C# and .NET, an API in ASP.NET Core, and tests. At Opinity I worked in a monolith with clean architecture and CQRS. The two are close kin. In both, the dependencies point inward to the domain.",
             "questions": [
                 {
                     "question": "Have you worked in Rotterdam before?",

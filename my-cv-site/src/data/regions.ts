@@ -70,9 +70,9 @@ export const ALL_REGIONS: Region[] = [
     nearbyEngagementIds: [],
     sectorEngagementIds: [],
     postSlugs: [
+      "hexagonal-architecture-csharp-dotnet",
       "building-an-api-in-csharp",
       "dockerising-dotnet-java-kotlin-apis",
-      "hexagonal-architecture-csharp-dotnet",
       "unit-testing-react-the-right-way",
     ],
     coordinates: [4.47917, 51.9225],
