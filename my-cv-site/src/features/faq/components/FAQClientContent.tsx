@@ -17,7 +17,7 @@ import { Card } from "@/components/Card";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
 import { Link } from "@/i18n/navigation";
-import { splitAnswer } from "@/lib/faqBookingLink";
+import { BookingLinkText } from "@/components/BookingLinkText";
 import { FAQ_CATEGORY_IDS, type FaqCategoryId } from "../categories";
 
 type FaqQuestion = {
@@ -134,19 +134,7 @@ export function FAQClientContent() {
 
                       <div className="px-6 pb-5" hidden={!isOpen}>
                         <p className="whitespace-pre-line leading-relaxed text-gray-600">
-                          {splitAnswer(faq.answer).map((part, partIndex) =>
-                            part.kind === "booking" ? (
-                              <Link
-                                key={partIndex}
-                                href="/book"
-                                className="rounded-sm font-semibold text-emerald-700 underline underline-offset-2 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                              >
-                                {part.text}
-                              </Link>
-                            ) : (
-                              part.text
-                            )
-                          )}
+                          <BookingLinkText text={faq.answer} />
                         </p>
                       </div>
                     </Card>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { answerWithBookingAnchor, plainAnswer, splitAnswer } from "./faqBookingLink";
+import { answerWithBookingAnchor, plainAnswer, splitAnswer } from "./bookingLink";
 
 describe("splitAnswer", () => {
   it("returns a plain answer as one text part", () => {

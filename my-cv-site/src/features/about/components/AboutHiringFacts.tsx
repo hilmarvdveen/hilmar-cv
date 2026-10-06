@@ -8,15 +8,12 @@ type HiringFact = {
   detail?: string;
 };
 
-const AVAILABILITY_INDEX = 0;
-
 export const AboutHiringFacts = () => {
   const t = useTranslations("about");
   const facts = t.raw("hiring.facts") as HiringFact[];
   const identity = {
     company: BUSINESS_PROFILE.REGISTRATION.LEGAL_NAME,
     kvk: BUSINESS_PROFILE.REGISTRATION.KVK,
-    city: BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY,
   };
 
   return (
@@ -28,12 +25,6 @@ export const AboutHiringFacts = () => {
               {fact.label}
             </dt>
             <dd className="mt-1 text-base font-bold text-textMain">
-              {index === AVAILABILITY_INDEX && (
-                <span
-                  className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 align-middle"
-                  aria-hidden="true"
-                />
-              )}
               {t(`hiring.facts.${index}.value`, identity)}
               {fact.detail && (
                 <span className="block text-sm font-normal text-gray-600">

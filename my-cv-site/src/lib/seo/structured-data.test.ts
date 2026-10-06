@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { SEOFactory } from "./factory";
+import { AVAILABILITY } from "./constants/meta-constants";
 import type { Locale } from "./types/seo-types";
 
 const LOCALES: Locale[] = ["en", "nl"];
@@ -321,6 +322,17 @@ describe("structured data (JSON-LD) per page", () => {
           );
         });
       }
+    }
+  });
+
+  it("the Person description speaks the page language and ends on the availability statement", () => {
+    for (const locale of LOCALES) {
+      const person = JSON.parse(SEOFactory.about(locale).structuredData).find(
+        (schema: { "@type": string }) => schema["@type"] === "Person"
+      );
+      expect(person.description.endsWith(` ${AVAILABILITY.STATEMENT[locale]}.`)).toBe(true);
+      expect(person.description).not.toMatch(/freelance senior frontend engineer since/i);
+      expect(person.description).toContain(locale === "nl" ? "werkt in de Randstad" : "working across the Randstad");
     }
   });
 });

@@ -4,7 +4,7 @@ import { Clock, Shield, Globe, HelpCircle } from "lucide-react";
 import { SEOFactory } from "@/lib/seo";
 import type { Locale, FAQItem } from "@/lib/seo";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
-import { answerWithBookingAnchor } from "@/lib/faqBookingLink";
+import { answerWithBookingAnchor } from "@/lib/bookingLink";
 import { FAQClientContent, FAQ_CATEGORY_IDS } from "@/features/faq";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";

@@ -45,7 +45,8 @@ export const BUSINESS_PROFILE = {
   SEARCH_TITLE_DUTCH: 'Senior Frontend Developer',
   ESTABLISHED: '2016',
   YEARS_EXPERIENCE: '10+',
-  SPECIALIZATION: 'React, Next.js, Angular, TypeScript and GraphQL'
+  SPECIALIZATION: 'React, Next.js, Angular, TypeScript and GraphQL',
+  SPECIALIZATION_DUTCH: 'React, Next.js, Angular, TypeScript en GraphQL'
 } as const;
 
 export type AvailabilityText = { readonly en: string; readonly nl: string };
@@ -74,6 +75,7 @@ export const RATE_TEXT = {
 
 export const QUALIFICATIONS = {
   EDUCATION: 'BSc Physics and Astronomy, University of Amsterdam',
+  EDUCATION_DUTCH: 'BSc Natuur- en Sterrenkunde, Universiteit van Amsterdam',
   CERTIFICATIONS: [
     'Certified Secure Essential Security',
     'Certified Secure Essential Specialties',

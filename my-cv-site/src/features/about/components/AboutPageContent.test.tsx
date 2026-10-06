@@ -16,7 +16,11 @@ vi.mock("next-intl", () => {
     routes[key] ?? (values ? `${key}:${Object.values(values).join(",")}` : key)) as ((
     key: string
   ) => string) & { raw: (key: string) => unknown };
-  t.raw = (key: string) => (key === "standards.cards" ? standardsCards : []);
+  t.raw = (key: string) => {
+    if (key === "standards.cards") return standardsCards;
+    if (key === "hiring.intro") return "hiring.intro";
+    return [];
+  };
   return { useTranslations: () => t, useLocale: () => "en" };
 });
 

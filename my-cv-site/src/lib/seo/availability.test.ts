@@ -22,7 +22,6 @@ const STATEMENT_KEYS = [
 
 const SHORT_KEYS = [
   "home.hiring.facts.0.value",
-  "about.hiring.facts.0.value",
   "faq.hero.features.quick",
   "contact.facts.items.0.value",
 ];
@@ -137,6 +136,7 @@ describe("every availability line follows the one source", () => {
     for (const key of SHORT_SENTENCE_KEYS) expect(textAt(messages, key), key).toBe(`${short}.`);
     for (const key of STATEMENT_ENDING_KEYS) expect(textAt(messages, key).endsWith(` ${statement}.`), key).toBe(true);
     expect(textAt(messages, "home.hero.badge").startsWith(`${statement} · `)).toBe(true);
+    expect(textAt(messages, "about.hiring.intro")).toContain(` ${statement}. <book>`);
     expect(textAt(messages, "faq.categories.general.questions.1.answer").startsWith(`${short}. `)).toBe(true);
   });
 });

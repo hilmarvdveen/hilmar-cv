@@ -14,6 +14,7 @@ import type {
 } from '../types/seo-types';
 
 import {
+  AVAILABILITY,
   BUSINESS_PROFILE,
   PRICING,
   QUALIFICATIONS,
@@ -164,6 +165,15 @@ export class SchemaGenerator {
     };
   }
 
+  private personDescription(locale: Locale): string {
+    const title = BUSINESS_PROFILE.TITLE.toLowerCase();
+    const city = BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY;
+    if (locale === 'nl') {
+      return `Freelance ${title} in ${city}, werkt in de Randstad, hybride of remote. Ruim tien jaar senior in ${BUSINESS_PROFILE.SPECIALIZATION_DUTCH}, sinds ${BUSINESS_PROFILE.ESTABLISHED}. Opdrachten bij bol.com, de Belastingdienst, de Nationale Postcode Loterij en Athlon. ${QUALIFICATIONS.EDUCATION_DUTCH}. ${AVAILABILITY.STATEMENT.nl}.`;
+    }
+    return `Freelance ${title} based in ${city}, working across the Randstad, hybrid or remote. ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years senior in ${BUSINESS_PROFILE.SPECIALIZATION}, since ${BUSINESS_PROFILE.ESTABLISHED}. Engagements at bol.com, the Dutch Tax Administration, Nationale Postcode Loterij and Athlon. ${QUALIFICATIONS.EDUCATION}. ${AVAILABILITY.STATEMENT.en}.`;
+  }
+
   private generatePersonSchema(locale: Locale): PersonSchema {
     const nameParts = BUSINESS_PROFILE.NAME.split(' ');
 
@@ -175,7 +185,7 @@ export class SchemaGenerator {
       givenName: nameParts[0],
       familyName: nameParts.slice(1).join(' '),
       jobTitle: BUSINESS_PROFILE.TITLE,
-      description: `Freelance ${BUSINESS_PROFILE.TITLE.toLowerCase()} since 2016, ${BUSINESS_PROFILE.YEARS_EXPERIENCE} years senior in ${BUSINESS_PROFILE.SPECIALIZATION}. Engagements at bol.com, the Dutch Tax Administration, Nationale Postcode Loterij and Athlon. ${QUALIFICATIONS.EDUCATION}.`,
+      description: this.personDescription(locale),
       url: `${this.baseUrl}/${locale}/about`,
       email: BUSINESS_PROFILE.CONTACT.EMAIL,
       telephone: BUSINESS_PROFILE.CONTACT.PHONE,
@@ -194,6 +204,14 @@ export class SchemaGenerator {
         '@type': SCHEMA_TYPES.ORGANIZATION,
         name: BUSINESS_PROFILE.COMPANY,
         url: `${this.baseUrl}/${locale}`
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        url: `${this.baseUrl}/${locale}/book`,
+        email: BUSINESS_PROFILE.CONTACT.EMAIL,
+        telephone: BUSINESS_PROFILE.CONTACT.PHONE,
+        contactType: 'sales',
+        availableLanguage: ['Dutch', 'English']
       },
       alumniOf: {
         '@type': 'EducationalOrganization',

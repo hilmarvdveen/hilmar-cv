@@ -4,9 +4,8 @@ import { AboutHiringFacts } from "./AboutHiringFacts";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 const facts = [
-  { label: "Available", value: "From 1 October 2026", detail: "Earlier by arrangement" },
   { label: "Working arrangement", value: "The Randstad", detail: "One to two days on site" },
-  { label: "Company", value: "{company}", detail: "KVK {kvk}, {city}" },
+  { label: "Company", value: "{company}", detail: "KVK {kvk}" },
   { label: "Contract", value: "Freelance, ZZP", detail: "32 to 40 hours a week" },
   { label: "Languages", value: "Dutch and English", detail: "Native and fluent" },
   { label: "Education", value: "BSc Physics and Astronomy" },
@@ -44,18 +43,16 @@ describe("AboutHiringFacts", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        `KVK ${BUSINESS_PROFILE.REGISTRATION.KVK}, ${BUSINESS_PROFILE.REGISTERED_ADDRESS.CITY}`
+        `KVK ${BUSINESS_PROFILE.REGISTRATION.KVK}`
       )
     ).toBeInTheDocument();
   });
 
   it("adds the detail line only to the facts that carry one", () => {
     render(<AboutHiringFacts />);
-    expect(screen.getByText("Earlier by arrangement")).toBeInTheDocument();
+    expect(screen.getByText("One to two days on site")).toBeInTheDocument();
     const definitions = screen.getAllByRole("definition");
-    expect(definitions[0].textContent).toBe(
-      "From 1 October 2026Earlier by arrangement"
-    );
-    expect(definitions[5].textContent).toBe("BSc Physics and Astronomy");
+    expect(definitions[0].textContent).toBe("The RandstadOne to two days on site");
+    expect(definitions[4].textContent).toBe("BSc Physics and Astronomy");
   });
 });

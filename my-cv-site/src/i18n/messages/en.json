@@ -1964,12 +1964,8 @@
         "hiring": {
           "eyebrow": "Practical",
           "title": "What you need to hire me",
-          "intro": "I am Hilmar van der Veen. Since 2016 I have worked on the front end of large web platforms, most recently at bol.com and before that at the Belastingdienst, the Nationale Postcode Loterij and Athlon. React and Angular are the daily work, with TypeScript, GraphQL and accessibility around them.",
+          "intro": "I am Hilmar van der Veen, a freelance senior frontend engineer based in Zandvoort. Since 2016 I have worked on the front end of large web platforms, most recently at bol.com and before that at the Belastingdienst, the Nationale Postcode Loterij and Athlon. React and Angular are the daily work, with TypeScript, GraphQL and accessibility around them. Available immediately. <book>Book a 30-minute call</book>.",
           "facts": [
-            {
-              "label": "Available",
-              "value": "Immediately"
-            },
             {
               "label": "Working arrangement",
               "value": "The Randstad, hybrid or remote",
@@ -1978,7 +1974,7 @@
             {
               "label": "Company",
               "value": "{company}",
-              "detail": "KVK {kvk}, {city}"
+              "detail": "KVK {kvk}"
             },
             {
               "label": "Contract",

@@ -5,7 +5,7 @@ import {
   QUALIFICATIONS,
   RATE_TEXT,
 } from "@/lib/seo/constants/meta-constants";
-import { plainAnswer } from "@/lib/faqBookingLink";
+import { plainAnswer } from "@/lib/bookingLink";
 import type { FitLocale } from "./types";
 
 export type SeedWorkMode = "remote" | "onSite" | "hybrid";

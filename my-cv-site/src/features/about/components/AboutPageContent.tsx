@@ -9,6 +9,7 @@ import { Container } from "@/components/Container";
 import { Card } from "@/components/Card";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Button } from "@/components/Button";
+import { BookingLinkText } from "@/components/BookingLinkText";
 import { CvDownloadTrigger } from "@/features/home";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
@@ -148,7 +149,7 @@ export function AboutPageContent() {
             title={t("hiring.title")}
           />
           <p className="mb-8 max-w-3xl text-lg leading-relaxed text-gray-700">
-            {t("hiring.intro")}
+            <BookingLinkText text={t.raw("hiring.intro") as string} />
           </p>
           <AboutHiringFacts />
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">

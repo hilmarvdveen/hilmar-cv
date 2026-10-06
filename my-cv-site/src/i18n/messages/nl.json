@@ -2537,12 +2537,8 @@
         "hiring": {
           "eyebrow": "Praktisch",
           "title": "Wat je nodig hebt om me in te huren",
-          "intro": "Ik ben Hilmar van der Veen. Sinds 2016 werk ik aan de voorkant van grote webplatformen, meest recent bij bol.com en daarvoor bij onder meer de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular zijn het dagelijkse werk, met TypeScript, GraphQL en toegankelijkheid eromheen.",
+          "intro": "Ik ben Hilmar van der Veen, freelance senior frontend engineer in Zandvoort. Sinds 2016 werk ik aan de voorkant van grote webplatformen, meest recent bij bol.com en daarvoor bij onder meer de Belastingdienst, de Nationale Postcode Loterij en Athlon. React en Angular zijn het dagelijkse werk, met TypeScript, GraphQL en toegankelijkheid eromheen. Direct beschikbaar. <book>Plan een gesprek van 30 minuten</book>.",
           "facts": [
-            {
-              "label": "Beschikbaar",
-              "value": "Direct"
-            },
             {
               "label": "Werkvorm",
               "value": "De Randstad, hybride of remote",
@@ -2551,7 +2547,7 @@
             {
               "label": "Bedrijf",
               "value": "{company}",
-              "detail": "KVK {kvk}, {city}"
+              "detail": "KVK {kvk}"
             },
             {
               "label": "Contractvorm",
