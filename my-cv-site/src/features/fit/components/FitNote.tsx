@@ -40,8 +40,10 @@ export const FitNote = ({ note, requirement }: FitNoteProps) => {
         aria-controls={noteId}
         className="mt-1 inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
       >
-        {isOpen ? t("noteLess") : t("noteMore")}
-        <span className="sr-only"> {t("noteSubject", { requirement })}</span>
+        <span>
+          {isOpen ? t("noteLess") : t("noteMore")}
+          <span className="sr-only"> {t("noteSubject", { requirement })}</span>
+        </span>
         <ChevronDown
           className={mergeClasses(
             "h-4 w-4 transition-transform motion-reduce:transition-none",
