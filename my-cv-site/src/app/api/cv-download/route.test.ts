@@ -92,6 +92,16 @@ describe("POST /api/cv-download", () => {
     expect(sendMail).toHaveBeenCalledTimes(2);
   });
 
+  it("signs the thank-you mail with the profile title in both locales", async () => {
+    for (const locale of ["en", "nl"]) {
+      sendMail.mockClear();
+      await POST(post({ ...valid(), locale }));
+      const thankYou = sendMail.mock.calls.find((call) => call[2]?.isHtml === true);
+      expect(thankYou![2].body).toContain("Senior Frontend Engineer</p>");
+      expect(thankYou![2].body).not.toContain("Developer");
+    }
+  });
+
   it("maps the purpose to the requested locale (NL)", async () => {
     await POST(post({ ...valid(), locale: "nl", purpose: "recruitment" }));
     const ownerMail = sendMail.mock.calls.find((call) => call[2]?.isHtml !== true);

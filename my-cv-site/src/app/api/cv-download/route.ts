@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGraphCredentials, getAccessToken, getGraphClient, sendMail } from "@/lib/graph";
+import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import {
   escapeHtml,
   isAllowedOrigin,
@@ -116,7 +117,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 <p>Met vriendelijke groet,<br>
 <strong>Hilmar van der Veen</strong><br>
-Senior Frontend Developer</p>`
+${BUSINESS_PROFILE.TITLE}</p>`
         : `<p>Hello ${safeName},</p>
 
 <p>Thank you for downloading my CV! I really appreciate your interest.</p>
@@ -132,7 +133,7 @@ Senior Frontend Developer</p>`
 
 <p>Best regards,<br>
 <strong>Hilmar van der Veen</strong><br>
-Senior Frontend Developer</p>`;
+${BUSINESS_PROFILE.TITLE}</p>`;
 
     await sendMail(client, smtpUser, {
       to: email,
