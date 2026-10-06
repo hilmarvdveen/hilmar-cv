@@ -11,6 +11,7 @@ import { useHoneypot } from "@/hooks/useHoneypot";
 import { HoneypotField } from "@/components/HoneypotField";
 import { LIMITS } from "@/lib/security";
 import { pushSiteEvent } from "@/lib/analytics/events";
+import { ContactLinkText } from "@/components/ContactLinkText";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
@@ -259,7 +260,7 @@ export default function ContactForm() {
               role="alert"
               aria-live="assertive"
             >
-              {errorMessage}
+              <ContactLinkText text={errorMessage} />
             </div>
           )}
 

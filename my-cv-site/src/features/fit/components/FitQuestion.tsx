@@ -13,6 +13,7 @@ import {
   type FitAnswer,
 } from "@/lib/fit/client";
 import { FitEvidence } from "./FitEvidence";
+import { ContactLinkText } from "@/components/ContactLinkText";
 
 type FitQuestionProps = {
   sessionId: string;
@@ -139,7 +140,7 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
             role="alert"
             className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
           >
-            {errorMessage}
+            <ContactLinkText text={errorMessage} />
           </p>
         )}
         {answer && (

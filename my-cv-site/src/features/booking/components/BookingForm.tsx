@@ -45,6 +45,7 @@ import {
   type BookingStep,
 } from "../context/BookingFormContext";
 import { BookingSummary } from "./BookingSummary";
+import { ContactLinkText } from "@/components/ContactLinkText";
 
 type TimeSlot = {
   value: string;
@@ -682,7 +683,9 @@ export const BookingForm = () => {
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600" aria-hidden="true" />
           <div>
             <p className="font-semibold text-red-800">{t("errors.submissionFailed")}</p>
-            <p className="mt-1 text-sm text-red-800">{submitError}</p>
+            <p className="mt-1 text-sm text-red-800">
+              <ContactLinkText text={submitError} />
+            </p>
           </div>
         </div>
       )}

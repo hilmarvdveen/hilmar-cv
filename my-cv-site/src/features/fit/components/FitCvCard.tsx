@@ -11,6 +11,7 @@ import { useHoneypot } from "@/hooks/useHoneypot";
 import { LIMITS, isValidEmail } from "@/lib/security";
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 import { trackFitEvent } from "@/lib/fit/client";
+import { ContactLinkText } from "@/components/ContactLinkText";
 
 const NAME_FIELD_ID = "fit-cv-name";
 const EMAIL_FIELD_ID = "fit-cv-email";
@@ -240,7 +241,7 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
                 role="alert"
                 className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800"
               >
-                {failureMessage}{" "}
+                <ContactLinkText text={failureMessage} />{" "}
                 <a
                   href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                   data-placement="fit-cv-mail"
