@@ -133,7 +133,7 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
         <Section background="white" aria-labelledby="region-reading-heading">
           <Container>
             <SectionTitle id="region-reading-heading" title={t("shared.readingTitle")} subtitle={t(`${region.id}.readingLead`)} />
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className={`grid grid-cols-1 gap-6 ${posts.length % 2 === 0 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
               {posts.map((post) => (
                 <Card
                   key={post.slug}

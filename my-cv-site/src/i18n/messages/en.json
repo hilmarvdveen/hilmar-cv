@@ -2694,13 +2694,13 @@
             "heroDescription": "I am Hilmar van der Veen, a freelance senior frontend engineer, and I work for teams in {cities}, hybrid or remote. Available immediately.",
             "baseTitle": "Home base and rhythm",
             "baseBody": "Hilmar ICT Services is based in Zandvoort, in {province}. In that province I did {count} of my {total} engagements.",
-            "baseRhythm": "Amsterdam is half an hour by train, The Hague a little over three quarters of an hour, and Utrecht and Rotterdam a little over an hour. One or two days a week on site works well, with refinement and review on fixed days. The other days I work remote, in Dutch or in English.",
+            "baseRhythm": "Amsterdam is half an hour by train, The Hague a little over three quarters of an hour, and Utrecht and Rotterdam a little over an hour. One or two days a week on site works well. The other days I work remote, in Dutch or in English.",
             "citiesTitle": "{count, plural, =3 {Three cities with a page of their own} =4 {Four cities with a page of their own} other {# cities with a page of their own}}",
             "cityLink": "Working in {city}",
             "restTitle": "The rest of the map",
             "restBody": "The engagements outside those {count, plural, =3 {three} =4 {four} other {#}} cities, each with its own page under work history.",
             "remoteTitle": "Remote",
-            "remoteBody": "At Athlon I worked fully remote on an Angular migration from 2020 to 2022. At bol.com and the Belastingdienst it was hybrid, with fixed office days. Both work as long as refinement and review happen at fixed moments and the team talks in the code reviews.",
+            "remoteBody": "At Athlon I worked fully remote on an Angular migration from 2020 to 2022. At bol.com and the Belastingdienst it was hybrid. Both work as long as refinement and review happen at fixed moments and the team talks in the code reviews.",
             "closeTitle": "Tell me which city your team is in",
             "closeBody": "Thirty minutes is enough to see whether it fits, on site or remote."
         },
@@ -2730,7 +2730,7 @@
             "travel": [
                 "Zandvoort to Amsterdam Centraal is half an hour, direct by train.",
                 "At Conclusion, Randstad and Omniplan I worked on site in Amsterdam, at Nationale Postcode Loterij hybrid.",
-                "One or two days a week on site works well, with refinement and review on fixed days."
+                "One or two days a week on site works well."
             ],
             "shapes": [
                 {
@@ -2758,7 +2758,7 @@
                 },
                 {
                     "question": "Do you also work for clients outside Amsterdam?",
-                    "answer": "Yes. The other cities with a page of their own are listed at the foot of this page, and remote I work from Zandvoort for the whole country."
+                    "answer": "Yes. The other cities with a page of their own are listed at the foot of this page, and remote I work from Zandvoort across the Randstad."
                 }
             ],
             "closeTitle": "Is your team in Amsterdam?",
@@ -2775,7 +2775,7 @@
             "travel": [
                 "The most recent engagement was hybrid, the one before it on site.",
                 "Zandvoort to Utrecht Centraal is a little over an hour by train, with one change.",
-                "One or two days a week on site works well, with refinement and review on fixed days."
+                "One or two days a week on site works well."
             ],
             "shapes": [
                 {
@@ -2820,7 +2820,7 @@
             "travel": [
                 "The Rotterdam engagement ran on site.",
                 "Zandvoort to Rotterdam Centraal is a little over an hour by train, with one change.",
-                "One or two days a week on site works well, with refinement and review on fixed days."
+                "One or two days a week on site works well."
             ],
             "shapes": [
                 {
@@ -2855,8 +2855,8 @@
             "hubLine": "Public sector at the Belastingdienst, on site at Ortec in Zoetermeer.",
             "engagementsLead": "The public sector in Apeldoorn, and Zoetermeer, near The Hague.",
             "travel": [
-                "Zandvoort to Den Haag Centraal is 48 to 54 minutes by train, with one change.",
-                "One or two days a week on site works well, with refinement and review on fixed days."
+                "Zandvoort to Den Haag Centraal is 48 to 54 minutes by train.",
+                "One or two days a week on site works well."
             ],
             "shapes": [
                 {
@@ -2872,7 +2872,7 @@
             "questions": [
                 {
                     "question": "Do you know the public sector?",
-                    "answer": "At the Belastingdienst I built the forms platform and worked on the design system several teams use. The engagement was extended four times."
+                    "answer": "At the Belastingdienst I built the visual forms editor and the Java endpoints behind it, and worked on the design system several teams use. The engagement was extended four times."
                 },
                 {
                     "question": "Do you work on site in The Hague?",

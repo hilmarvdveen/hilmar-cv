@@ -2694,13 +2694,13 @@
             "heroDescription": "Ik ben Hilmar van der Veen, freelance senior frontend engineer, en ik werk voor teams in {cities}, hybride of remote. Direct beschikbaar.",
             "baseTitle": "Thuisbasis en ritme",
             "baseBody": "Hilmar ICT Services is gevestigd in Zandvoort, in {province}. In die provincie deed ik {count} van mijn {total} opdrachten.",
-            "baseRhythm": "Amsterdam is een halfuur met de trein, Den Haag ruim drie kwartier en Utrecht en Rotterdam ruim een uur. Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen. De overige dagen werk ik remote, in het Nederlands of het Engels.",
+            "baseRhythm": "Amsterdam is een halfuur met de trein, Den Haag ruim drie kwartier en Utrecht en Rotterdam ruim een uur. Een à twee dagen per week op locatie werkt goed. De overige dagen werk ik remote, in het Nederlands of het Engels.",
             "citiesTitle": "{count, plural, =3 {Drie steden met een eigen pagina} =4 {Vier steden met een eigen pagina} other {# steden met een eigen pagina}}",
             "cityLink": "Werken in {city}",
             "restTitle": "De rest van de kaart",
             "restBody": "De opdrachten buiten die {count, plural, =3 {drie} =4 {vier} other {#}} steden, elk met een eigen pagina onder werkervaring.",
             "remoteTitle": "Remote",
-            "remoteBody": "Bij Athlon werkte ik van 2020 tot 2022 volledig remote aan een Angular-migratie. Bij bol.com en de Belastingdienst was het hybride, met vaste dagen op kantoor. Beide vormen werken zolang refinement en review op vaste momenten gebeuren en het team elkaar in de code reviews spreekt.",
+            "remoteBody": "Bij Athlon werkte ik van 2020 tot 2022 volledig remote aan een Angular-migratie. Bij bol.com en de Belastingdienst was het hybride. Beide vormen werken zolang refinement en review op vaste momenten gebeuren en het team elkaar in de code reviews spreekt.",
             "closeTitle": "Vertel in welke stad je team zit",
             "closeBody": "Dertig minuten is genoeg om te zien of het past, op locatie of remote."
         },
@@ -2730,7 +2730,7 @@
             "travel": [
                 "Zandvoort naar Amsterdam Centraal is een halfuur, direct met de trein.",
                 "Bij Conclusion, Randstad en Omniplan werkte ik op locatie in Amsterdam, bij de Nationale Postcode Loterij hybride.",
-                "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
+                "Een à twee dagen per week op locatie werkt goed."
             ],
             "shapes": [
                 {
@@ -2758,7 +2758,7 @@
                 },
                 {
                     "question": "Werk je ook voor opdrachtgevers buiten Amsterdam?",
-                    "answer": "Ja. De andere steden met een eigen pagina staan onderaan deze pagina, en remote werk ik vanuit Zandvoort voor het hele land."
+                    "answer": "Ja. De andere steden met een eigen pagina staan onderaan deze pagina, en remote werk ik vanuit Zandvoort in de hele Randstad."
                 }
             ],
             "closeTitle": "Zit je team in Amsterdam?",
@@ -2775,7 +2775,7 @@
             "travel": [
                 "De meest recente opdracht was hybride, de opdracht daarvoor op locatie.",
                 "Zandvoort naar Utrecht Centraal is ruim een uur met de trein, met één overstap.",
-                "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
+                "Een à twee dagen per week op locatie werkt goed."
             ],
             "shapes": [
                 {
@@ -2820,7 +2820,7 @@
             "travel": [
                 "De opdracht in Rotterdam liep op locatie.",
                 "Zandvoort naar Rotterdam Centraal is ruim een uur met de trein, met één overstap.",
-                "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
+                "Een à twee dagen per week op locatie werkt goed."
             ],
             "shapes": [
                 {
@@ -2855,8 +2855,8 @@
             "hubLine": "Publieke sector bij de Belastingdienst, op locatie bij Ortec in Zoetermeer.",
             "engagementsLead": "De publieke sector in Apeldoorn, en Zoetermeer, in de buurt van Den Haag.",
             "travel": [
-                "Zandvoort naar Den Haag Centraal is 48 tot 54 minuten met de trein, met één overstap.",
-                "Een à twee dagen per week op locatie werkt goed, met refinement en review op vaste dagen."
+                "Zandvoort naar Den Haag Centraal is 48 tot 54 minuten met de trein.",
+                "Een à twee dagen per week op locatie werkt goed."
             ],
             "shapes": [
                 {
@@ -2872,7 +2872,7 @@
             "questions": [
                 {
                     "question": "Ken je de publieke sector?",
-                    "answer": "Bij de Belastingdienst bouwde ik het formulierenplatform en werkte ik aan het design system dat meerdere teams gebruiken. De opdracht werd vier keer verlengd."
+                    "answer": "Bij de Belastingdienst bouwde ik de visuele formuliereditor en de Java-endpoints erachter, en werkte ik aan het design system dat meerdere teams gebruiken. De opdracht werd vier keer verlengd."
                 },
                 {
                     "question": "Werk je op locatie in Den Haag?",
