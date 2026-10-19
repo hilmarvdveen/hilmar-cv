@@ -25,6 +25,7 @@
     "check:nonce": "node scripts/check-nonce.mjs",
     "check:type-scale": "node scripts/check-type-scale.mjs",
     "check:reading-times": "node scripts/check-reading-times.mjs",
+    "check:pages": "node scripts/check-pages.mjs",
     "export:seed": "node scripts/export-seed.mjs"
   },
   "dependencies": {
