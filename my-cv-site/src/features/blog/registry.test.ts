@@ -37,4 +37,8 @@ describe("blog registry", () => {
     expect(BLOG_POSTS[0].featured).toBe(true);
   });
 
+  it("registers the smart energy steering post on the fullstack track", () => {
+    expect(getPostBySlug("smart-energy-steering-architecture")?.track).toBe("fullstack");
+  });
+
 });

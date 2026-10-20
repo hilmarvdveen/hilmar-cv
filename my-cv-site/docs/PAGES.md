@@ -61,7 +61,7 @@ the engagements and the related technologies in the `/fit` report.
 | Route | Source file | Namespaces | Data | SEO | Doc | Instances |
 |---|---|---|---|---|---|---|
 | `/blog` | `blog/page.tsx` | `blog` | `features/blog/registry.ts` | `SEOFactory.blog`, sitemap | none | 1 |
-| `/blog/[slug]` | `blog/[slug]/page.tsx` | `blog`, plus the post's own bilingual `COPY` | `features/blog/registry.ts` | `SEOFactory.blogPost`, sitemap with `lastModified` from the post dates | none | 21 |
+| `/blog/[slug]` | `blog/[slug]/page.tsx` | `blog`, plus the post's own bilingual `COPY` | `features/blog/registry.ts` | `SEOFactory.blogPost`, sitemap with `lastModified` from the post dates | none | 22 |
 
 Each post is one component in `src/features/blog/components/`, registered
 in `registry.ts` with its track. `pnpm check:reading-times` keeps the
@@ -90,6 +90,7 @@ reading time honest.
 | fullstack | `SessionsAndJwtPost` | `sessions-and-jwt-one-design-built-seven-times` |
 | fullstack | `ApolloAcrossStackPost` | `graphql-with-apollo-react-nodejs-kotlin` |
 | fullstack | `RestAndGraphQLPost` | `rest-and-graphql-idempotency-status-codes-when-to-use-which` |
+| fullstack | `SmartEnergySteeringPost` | `smart-energy-steering-architecture` |
 
 ## Regions
 

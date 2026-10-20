@@ -20,6 +20,7 @@ import { meta as sessionsAndJwtMeta, Body as SessionsAndJwtBody } from "./compon
 import { meta as federationMeta, Body as FederationBody } from "./components/FederationPost";
 import { meta as apolloAcrossStackMeta, Body as ApolloAcrossStackBody } from "./components/ApolloAcrossStackPost";
 import { meta as restAndGraphQLMeta, Body as RestAndGraphQLBody } from "./components/RestAndGraphQLPost";
+import { meta as smartEnergySteeringMeta, Body as SmartEnergySteeringBody } from "./components/SmartEnergySteeringPost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -43,6 +44,7 @@ const POSTS: BlogPost[] = [
   { ...federationMeta, track: "backend", Body: FederationBody },
   { ...apolloAcrossStackMeta, track: "fullstack", Body: ApolloAcrossStackBody },
   { ...restAndGraphQLMeta, track: "fullstack", Body: RestAndGraphQLBody },
+  { ...smartEnergySteeringMeta, track: "fullstack", Body: SmartEnergySteeringBody },
 ];
 
 const featuredFirst = (first: BlogPost, second: BlogPost) => Number(second.featured ?? false) - Number(first.featured ?? false);
