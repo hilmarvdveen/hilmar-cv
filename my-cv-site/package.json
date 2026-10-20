@@ -26,7 +26,8 @@
     "check:type-scale": "node scripts/check-type-scale.mjs",
     "check:reading-times": "node scripts/check-reading-times.mjs",
     "check:pages": "node scripts/check-pages.mjs",
-    "export:seed": "node scripts/export-seed.mjs"
+    "export:seed": "node scripts/export-seed.mjs",
+    "export:smart-energy-video": "node scripts/capture-smart-energy-video.mjs"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",

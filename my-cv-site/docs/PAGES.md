@@ -119,6 +119,7 @@ The 4 cities: `amsterdam`, `utrecht`, `rotterdam`, `den-haag`.
 | `/terms` | `terms/page.tsx` | `legal`, `breadcrumb` | `features/legal/legalContent.ts` | `legalPageSchema`, sitemap | none | 1 |
 | `/cookies` | `cookies/page.tsx` | `legal`, `breadcrumb` | `features/legal/legalContent.ts` | `legalPageSchema`, sitemap | none | 1 |
 | `/disclaimer` | `disclaimer/page.tsx` | `legal`, `breadcrumb` | `features/legal/legalContent.ts` | `legalPageSchema`, sitemap | none | 1 |
+| `/smart-energy-capture` | `smart-energy-capture/page.tsx` | none, copy in `features/blog/smartEnergyFilmLabels.ts` | `lib/smartEnergyFilm/` | noindex, not in the sitemap, not found unless `SMART_ENERGY_CAPTURE=enabled` | none | 1 |
 | `/[...rest]` | `[...rest]/page.tsx` | `notFound` | none | noindex, calls `notFound()` | none | any other path |
 
 Shared files in `[locale]/`: `layout.tsx`, `error.tsx`, `not-found.tsx`,
