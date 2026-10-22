@@ -5,6 +5,8 @@ import type { LocalizedText } from "./types";
 
 export type FilmCaption = { headline: string; detail: string };
 
+export type TabId = Exclude<FilmSceneId, "title" | "end">;
+
 export type SmartEnergyFilmLabels = {
   blocks: Record<BlockId, { title: readonly string[]; note: string }>;
   frames: Record<FrameId, string>;
@@ -29,7 +31,9 @@ export type SmartEnergyFilmLabels = {
     mechanisms: readonly string[];
   };
   captions: Record<FilmSceneId, readonly FilmCaption[]>;
-  titleCard: readonly string[];
+  tabs: Record<TabId, string>;
+  stepEyebrow: string;
+  titleCard: { eyebrow: string; headline: string; support: string };
   name: string;
   role: string;
   endCard: { read: string; link: string; ownWork: string };
@@ -64,12 +68,10 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
   frames: {
     azure: same("Azure"),
     containerApps: same("Container Apps"),
-    gates: { en: "Gates for known advisories", nl: "Gates voor bekende advisories" },
   },
   cloudFrames: {
     azure: { en: "Azure, dev and pro", nl: "Azure, dev en pro" },
     containerApps: { en: "Container Apps, 0 to 1 replica", nl: "Container Apps, 0 tot 1 replica" },
-    gates: { en: "Gates for known advisories", nl: "Gates voor bekende advisories" },
   },
   legend: {
     telemetry: { en: "telemetry", nl: "telemetrie" },
@@ -110,6 +112,12 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
   },
   captions: {
     title: [],
+    overview: [
+      {
+        headline: { en: "The whole platform at a glance", nl: "Het hele platform in een oogopslag" },
+        detail: { en: "readings come in, plans go out, a customer watches", nl: "metingen komen binnen, plannen gaan eruit, een klant kijkt mee" },
+      },
+    ],
     reading: [
       {
         headline: { en: "A reading leaves the battery", nl: "Een meting verlaat de batterij" },
@@ -186,10 +194,20 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     ],
     end: [],
   },
-  titleCard: [
-    { en: "A battery that charges when power is cheap.", nl: "Een batterij die laadt als stroom goedkoop is." },
-    { en: "This is the whole platform that plans and steers it.", nl: "Dit is het hele platform dat hem plant en stuurt." },
-  ],
+  tabs: {
+    overview: { en: "Overview", nl: "Overzicht" },
+    reading: { en: "Reading", nl: "Meting" },
+    command: { en: "Command", nl: "Commando" },
+    customer: { en: "Customer", nl: "Klant" },
+    safety: { en: "Safety", nl: "Veiligheid" },
+    cloud: same("Cloud"),
+  },
+  stepEyebrow: { en: "Step {current} of {total}", nl: "Stap {current} van {total}" },
+  titleCard: {
+    eyebrow: { en: "Architecture in one minute", nl: "Architectuur in een minuut" },
+    headline: { en: "A battery that charges when power is cheap.", nl: "Een batterij die laadt als stroom goedkoop is." },
+    support: { en: "This is the whole platform that plans and steers it.", nl: "Dit is het hele platform dat hem plant en stuurt." },
+  },
   endCard: {
     read: { en: "How it is built, step by step:", nl: "Hoe het gebouwd is, stap voor stap:" },
     ownWork: { en: "Own work, never ran at a client.", nl: "Eigen werk, nooit bij een klant gedraaid." },

@@ -1,4 +1,4 @@
-import { ARROWS, BLOCKS, CAMERAS, FRAMES, JOURNEYS, SAFETY_CELLS, SAFETY_PANEL, SHIELDS } from "./layout";
+import { ARROWS, BLOCKS, CAMERAS, FRAMES, GATES_ROW, JOURNEYS, SAFETY_CELLS, SAFETY_PANEL, SHIELDS, VIEWPORT_HEIGHT, cameraHeight } from "./layout";
 import {
   CAMERA_MOVE_MILLISECONDS,
   CAPTION_COUNT,
@@ -6,6 +6,7 @@ import {
   FILM_DURATION_MILLISECONDS,
   FILM_FRAMES_PER_SECOND,
   FILM_SCENES,
+  FILM_TABS,
   filmFrameAtMilliseconds,
   filmFrameCount,
   filmMillisecondsForFrame,
@@ -22,23 +23,24 @@ const frameIn = (id: FilmSceneId, offset: number) => filmFrameAtMilliseconds(sce
 const settledShare = (id: FilmSceneId, share: number) => frameIn(id, CAMERA_MOVE_MILLISECONDS + share * (sceneOf(id).lengthMilliseconds - CAMERA_MOVE_MILLISECONDS));
 
 describe("film timeline", () => {
-  it("runs seven steps for 62 seconds at 30 frames per second", () => {
-    expect(FILM_SCENES.map((scene) => scene.id)).toEqual(["title", "reading", "command", "customer", "safety", "cloud", "end"]);
-    expect(FILM_DURATION_MILLISECONDS).toBe(62000);
+  it("runs eight steps for 68 seconds at 30 frames per second with six tabs", () => {
+    expect(FILM_SCENES.map((scene) => scene.id)).toEqual(["title", "overview", "reading", "command", "customer", "safety", "cloud", "end"]);
+    expect(FILM_TABS).toEqual(["overview", "reading", "command", "customer", "safety", "cloud"]);
+    expect(FILM_DURATION_MILLISECONDS).toBe(68000);
     expect(FILM_FRAMES_PER_SECOND).toBe(30);
-    expect(filmFrameCount).toBe(1860);
+    expect(filmFrameCount).toBe(2040);
     expect(filmMillisecondsForFrame(0)).toBe(0);
   });
 
   it("wraps negative, not a number and past the end, and loops to the first frame", () => {
-    expect(wrapFilmElapsed(-1000)).toBe(61000);
+    expect(wrapFilmElapsed(-1000)).toBe(67000);
     expect(wrapFilmElapsed(Number.NaN)).toBe(0);
     expect(filmSceneIndexAt(FILM_DURATION_MILLISECONDS)).toBe(0);
     expect(filmFrameAtMilliseconds(FILM_DURATION_MILLISECONDS)).toEqual(filmFrameAtMilliseconds(0));
   });
 
   it("interpolates a camera with easing", () => {
-    expect(interpolateCamera({ x: 0, y: 0, size: 100 }, { x: 100, y: 50, size: 50 }, 0.5)).toEqual({ x: 50, y: 25, size: 75 });
+    expect(interpolateCamera({ x: 0, y: 0, width: 100 }, { x: 100, y: 50, width: 50 }, 0.5)).toEqual({ x: 50, y: 25, width: 75 });
   });
 
   it("maps every hop to a caption that exists", () => {
@@ -72,19 +74,28 @@ describe("film layout", () => {
 
   it("frames every zoom inside the poster", () => {
     for (const camera of Object.values(CAMERAS)) {
-      expect(camera.x + camera.size).toBeLessThanOrEqual(1080);
-      expect(camera.y + camera.size).toBeLessThanOrEqual(1080);
+      expect(camera.x + camera.width).toBeLessThanOrEqual(1080);
+      expect(camera.y + cameraHeight(camera)).toBeLessThanOrEqual(1080);
     }
+    expect(cameraHeight(CAMERAS.overview)).toBe(VIEWPORT_HEIGHT);
+    expect(GATES_ROW.y + GATES_ROW.height).toBeLessThanOrEqual(VIEWPORT_HEIGHT);
     expect(CAMERAS.safety.x).toBeLessThanOrEqual(SAFETY_PANEL.x);
-    expect(CAMERAS.safety.y + CAMERAS.safety.size).toBeGreaterThanOrEqual(SAFETY_PANEL.y + SAFETY_PANEL.height);
+    expect(CAMERAS.safety.y + cameraHeight(CAMERAS.safety)).toBeGreaterThanOrEqual(SAFETY_PANEL.y + SAFETY_PANEL.height);
   });
 });
 
 describe("filmFrameAtMilliseconds", () => {
   it("opens on the title card over the overview and fades it out", () => {
     const first = filmFrameAtMilliseconds(0);
-    expect(first).toMatchObject({ sceneId: "title", camera: CAMERAS.overview, titleCardOpacity: 1, captionIndex: null, journey: null });
+    expect(first).toMatchObject({ sceneId: "title", camera: CAMERAS.overview, titleCardOpacity: 1, captionIndex: null, journey: null, tabIndex: null });
     expect(frameIn("title", 3999).titleCardOpacity).toBeLessThan(0.01);
+  });
+
+  it("shows the overview tab with its caption and its progress", () => {
+    const overview = frameIn("overview", 3000);
+    expect(overview).toMatchObject({ tabIndex: 0, captionIndex: 0, sceneProgress: 0.5, journey: null });
+    expect(overview.elapsed).toBe(7000);
+    expect(frameIn("reading", 0).tabIndex).toBe(1);
   });
 
   it("walks journey A hop by hop with its captions", () => {

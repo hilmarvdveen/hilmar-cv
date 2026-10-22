@@ -1,17 +1,18 @@
 import { easeInOut, progressBetween } from "@/lib/smartEnergyExplainer/frame";
 import { CAMERAS, JOURNEYS, SAFETY_MECHANISMS, SHIELDS, type ArrowId, type Camera, type JourneyId, type SafetyMechanism } from "./layout";
 
-export type FilmSceneId = "title" | "reading" | "command" | "customer" | "safety" | "cloud" | "end";
+export type FilmSceneId = "title" | "overview" | "reading" | "command" | "customer" | "safety" | "cloud" | "end";
 
 export type FilmScene = { id: FilmSceneId; startMilliseconds: number; lengthMilliseconds: number };
 
 const SCENE_PLAN: ReadonlyArray<readonly [FilmSceneId, number]> = [
   ["title", 4000],
-  ["reading", 12000],
+  ["overview", 6000],
+  ["reading", 11000],
   ["command", 14000],
   ["customer", 10000],
   ["safety", 10000],
-  ["cloud", 6000],
+  ["cloud", 7000],
   ["end", 6000],
 ];
 
@@ -45,6 +46,7 @@ export const CAMERA_MOVE_MILLISECONDS = 1200;
 
 const SCENE_CAMERA: Record<FilmSceneId, Camera> = {
   title: CAMERAS.overview,
+  overview: CAMERAS.overview,
   reading: CAMERAS.reading,
   command: CAMERAS.command,
   customer: CAMERAS.customer,
@@ -63,6 +65,7 @@ export const CAPTION_OF_HOP: Record<JourneyId, readonly number[]> = {
 
 export const CAPTION_COUNT: Record<FilmSceneId, number> = {
   title: 0,
+  overview: 1,
   reading: 3,
   command: 4,
   customer: 3,
@@ -76,7 +79,7 @@ export const interpolateCamera = (from: Camera, to: Camera, share: number): Came
   return {
     x: from.x + (to.x - from.x) * eased,
     y: from.y + (to.y - from.y) * eased,
-    size: from.size + (to.size - from.size) * eased,
+    width: from.width + (to.width - from.width) * eased,
   };
 };
 
@@ -86,9 +89,14 @@ export type JourneyFrame = { id: JourneyId; hopsShown: number; activeHop: number
 
 export type SafetyFrame = { mechanism: SafetyMechanism; progress: number; finished: readonly SafetyMechanism[] };
 
+export const FILM_TABS: readonly FilmSceneId[] = ["overview", "reading", "command", "customer", "safety", "cloud"];
+
 export type FilmFrame = {
   sceneId: FilmSceneId;
   sceneIndex: number;
+  elapsed: number;
+  tabIndex: number | null;
+  sceneProgress: number;
   camera: Camera;
   captionIndex: number | null;
   journey: JourneyFrame | null;
@@ -159,6 +167,9 @@ export const filmFrameAtMilliseconds = (elapsed: number): FilmFrame => {
   return {
     sceneId: scene.id,
     sceneIndex,
+    elapsed: wrapped,
+    tabIndex: FILM_TABS.includes(scene.id) ? FILM_TABS.indexOf(scene.id) : null,
+    sceneProgress: sceneElapsed / scene.lengthMilliseconds,
     camera,
     captionIndex,
     journey,

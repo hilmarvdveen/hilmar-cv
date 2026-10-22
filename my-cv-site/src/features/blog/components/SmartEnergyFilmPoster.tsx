@@ -6,12 +6,14 @@ import {
   ARROWS,
   BLOCKS,
   FRAMES,
+  GATES_ROW,
   JOURNEYS,
   POSTER_SIZE,
   SAFETY_CELLS,
   SAFETY_MECHANISMS,
   SAFETY_PANEL,
   SHIELDS,
+  cameraHeight,
   type ArrowId,
   type Block,
   type BlockId,
@@ -43,9 +45,9 @@ const BORDERS = { white: GRAY_BORDER, navy: NAVY, emerald: EMERALD_LINE, gray: G
 
 export const LINE_STYLES: Record<LineKind, { colour: string; dash?: string }> = {
   telemetry: { colour: EMERALD_LINE },
-  commands: { colour: NAVY, dash: "12 8" },
+  commands: { colour: NAVY, dash: "14 14" },
   reads: { colour: GRAY_LINE },
-  control: { colour: GRAY_LINE, dash: "2 9" },
+  control: { colour: GRAY_LINE, dash: "2 12" },
 };
 
 const activeArrows = (frame: FilmFrame): ReadonlySet<ArrowId> | null =>
@@ -75,19 +77,39 @@ function FrameBox({ frame, labels, box }: PosterProps & { box: PosterFrame }) {
   );
 }
 
-function ArrowLine({ arrow, dimmed }: { arrow: PosterArrow; dimmed: boolean }) {
+const FLOW_SPEED = 0.09;
+
+const FLOW_PERIOD = 28;
+
+function ArrowLine({ arrow, dimmed, flowing, elapsed }: { arrow: PosterArrow; dimmed: boolean; flowing: boolean; elapsed: number }) {
   const style = LINE_STYLES[arrow.kind];
+  const shift = -((elapsed * FLOW_SPEED) % FLOW_PERIOD);
   return (
-    <path
-      d={polylinePath(arrow.points)}
-      fill="none"
-      stroke={style.colour}
-      strokeWidth={5}
-      strokeLinecap="round"
-      strokeDasharray={style.dash}
-      markerEnd={`url(#film-arrow-${arrow.kind})`}
-      opacity={dimmed ? DIMMED : 1}
-    />
+    <g>
+      <path
+        d={polylinePath(arrow.points)}
+        fill="none"
+        stroke={style.colour}
+        strokeWidth={5}
+        strokeLinecap="round"
+        strokeDasharray={style.dash}
+        strokeDashoffset={style.dash && flowing ? shift : undefined}
+        markerEnd={`url(#film-arrow-${arrow.kind})`}
+        opacity={dimmed ? DIMMED : 1}
+      />
+      {flowing && !style.dash && (
+        <path
+          d={polylinePath(arrow.points)}
+          fill="none"
+          stroke={WHITE}
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeDasharray={`6 ${FLOW_PERIOD - 6}`}
+          strokeDashoffset={shift}
+          opacity={0.9}
+        />
+      )}
+    </g>
   );
 }
 
@@ -162,13 +184,29 @@ function HopNumbers({ frame }: { frame: FilmFrame }) {
   );
 }
 
+const TRAIL = [
+  { lag: 0.14, radius: 6, opacity: 0.3 },
+  { lag: 0.07, radius: 9, opacity: 0.55 },
+];
+
 function Packet({ frame }: { frame: FilmFrame }) {
-  if (frame.journey === null) {
+  const journey = frame.journey;
+  if (journey === null) {
     return null;
   }
-  const arrow = ARROWS.find((candidate) => candidate.id === frame.journey?.packet.arrow) as PosterArrow;
-  const at = pointAlongPolyline(arrow.points, frame.journey.packet.fraction);
-  return <circle cx={at.x} cy={at.y} r={13} fill={LINE_STYLES[arrow.kind].colour} stroke={WHITE} strokeWidth={4} />;
+  const arrow = ARROWS.find((candidate) => candidate.id === journey.packet.arrow) as PosterArrow;
+  const direction = JOURNEYS[journey.id][journey.activeHop].reverse ? -1 : 1;
+  const colour = LINE_STYLES[arrow.kind].colour;
+  const at = pointAlongPolyline(arrow.points, journey.packet.fraction);
+  return (
+    <g>
+      {TRAIL.map((step) => {
+        const trail = pointAlongPolyline(arrow.points, journey.packet.fraction - direction * step.lag);
+        return <circle key={step.lag} cx={trail.x} cy={trail.y} r={step.radius} fill={colour} opacity={step.opacity} />;
+      })}
+      <circle cx={at.x} cy={at.y} r={13} fill={colour} stroke={WHITE} strokeWidth={4} />
+    </g>
+  );
 }
 
 function Shields({ frame, labels }: PosterProps) {
@@ -198,15 +236,17 @@ function Shields({ frame, labels }: PosterProps) {
 }
 
 function Gates({ frame, labels }: PosterProps) {
+  if (frame.sceneId !== "cloud" && frame.sceneId !== "end") {
+    return null;
+  }
   const rows = [labels.gates.slice(0, 4), labels.gates.slice(4)];
-  const quiet = frame.journey !== null || frame.sceneId === "safety";
   return (
-    <g opacity={quiet ? DIMMED : 1}>
+    <g>
       {rows.map((row, rowIndex) => {
         const widths = row.map((gate) => gate.length * 15.5 + 36);
         return row.map((gate, index) => {
-          const x = 36 + widths.slice(0, index).reduce((total, width) => total + width + 16, 0);
-          const y = 912 + rowIndex * 66;
+          const x = GATES_ROW.x + 20 + widths.slice(0, index).reduce((total, width) => total + width + 16, 0);
+          const y = GATES_ROW.y + rowIndex * 56;
           return (
             <g key={gate}>
               <rect x={x} y={y} width={widths[index]} height={48} rx={24} fill={NAVY_TINT} stroke={NAVY} strokeWidth={2} />
@@ -231,7 +271,7 @@ function DuplicateCell({ labels, cell, progress }: CellProps) {
     <g>
       <rect x={cell.x + 140} y={cell.y + 44} width={120} height={84} rx={10} fill={NAVY_TINT} stroke={NAVY} strokeWidth={2} />
       {labels.safety.duplicateKey.map((line, index) => (
-        <text key={line} x={cell.x + 200} y={cell.y + 70 + index * 30} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={NAVY}>
+        <text key={line} x={cell.x + 200} y={cell.y + 70 + index * 30} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={NAVY}>
           {line}
         </text>
       ))}
@@ -249,10 +289,10 @@ function DuplicateCell({ labels, cell, progress }: CellProps) {
 function RaceCell({ labels, cell, progress }: CellProps) {
   return (
     <g>
-      <text x={cell.x + 14} y={cell.y + 76} dominantBaseline="central" fontSize={16} fontWeight={700} fill={EMERALD_TEXT} opacity={progress >= 0.25 ? 1 : DIMMED}>
+      <text x={cell.x + 14} y={cell.y + 76} dominantBaseline="central" fontSize={17} fontWeight={700} fill={EMERALD_TEXT} opacity={progress >= 0.25 ? 1 : DIMMED}>
         {labels.safety.raceWinner}
       </text>
-      <text x={cell.x + 14} y={cell.y + 124} dominantBaseline="central" fontSize={16} fontWeight={700} fill={GRAY} opacity={progress >= 0.6 ? 1 : DIMMED}>
+      <text x={cell.x + 14} y={cell.y + 124} dominantBaseline="central" fontSize={17} fontWeight={700} fill={GRAY} opacity={progress >= 0.6 ? 1 : DIMMED}>
         {labels.safety.raceLoser}
       </text>
       {progress >= 0.6 && <path d={`M${cell.x + 14} ${cell.y + 124} h214`} stroke={GRAY_LINE} strokeWidth={2} />}
@@ -265,18 +305,18 @@ function LockCell({ labels, cell, progress }: CellProps) {
   return (
     <g>
       <rect x={cell.x + 60} y={cell.y + 44} width={150} height={44} rx={22} fill={EMERALD_TINT} stroke={EMERALD_LINE} strokeWidth={2} />
-      <text x={cell.x + 135} y={cell.y + 66} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={EMERALD_TEXT}>
+      <text x={cell.x + 135} y={cell.y + 66} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={EMERALD_TEXT}>
         {labels.safety.lockName}
       </text>
       <rect x={cell.x + 14} y={cell.y + 110} width={110} height={44} rx={10} fill={done ? WHITE : EMERALD_TINT} stroke={EMERALD_LINE} strokeWidth={done ? 1.5 : 3} />
-      <text x={cell.x + 69} y={cell.y + 132} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={NAVY}>
+      <text x={cell.x + 69} y={cell.y + 132} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={NAVY}>
         {labels.safety.lockFirst}
       </text>
       <rect x={cell.x + 146} y={cell.y + 110} width={110} height={44} rx={10} fill={done ? EMERALD_TINT : WHITE} stroke={done ? EMERALD_LINE : GRAY_BORDER} strokeWidth={done ? 3 : 2} strokeDasharray={done ? undefined : "6 4"} />
-      <text x={cell.x + 201} y={cell.y + 132} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={NAVY}>
+      <text x={cell.x + 201} y={cell.y + 132} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={NAVY}>
         {labels.safety.lockSecond}
       </text>
-      <text x={cell.x + 201} y={cell.y + 176} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={600} fill={done ? EMERALD_TEXT : GRAY}>
+      <text x={cell.x + 201} y={cell.y + 176} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={600} fill={done ? EMERALD_TEXT : GRAY}>
         {done ? labels.safety.lockDone : labels.safety.lockWaits}
       </text>
     </g>
@@ -287,13 +327,13 @@ function AuditCell({ labels, cell, progress }: CellProps) {
   return (
     <g>
       <rect x={cell.x + 14} y={cell.y + 40} width={242} height={112} rx={12} fill="none" stroke={EMERALD_LINE} strokeWidth={3} strokeDasharray="8 6" opacity={progress >= 0.1 ? 1 : DIMMED} />
-      <text x={cell.x + 135} y={cell.y + 72} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={NAVY} opacity={progress >= 0.2 ? 1 : DIMMED}>
+      <text x={cell.x + 135} y={cell.y + 72} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={NAVY} opacity={progress >= 0.2 ? 1 : DIMMED}>
         {labels.safety.auditChange}
       </text>
-      <text x={cell.x + 135} y={cell.y + 118} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={NAVY} opacity={progress >= 0.5 ? 1 : DIMMED}>
+      <text x={cell.x + 135} y={cell.y + 118} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={NAVY} opacity={progress >= 0.5 ? 1 : DIMMED}>
         {labels.safety.auditRow}
       </text>
-      <text x={cell.x + 135} y={cell.y + 176} textAnchor="middle" dominantBaseline="central" fontSize={16} fontWeight={700} fill={EMERALD_TEXT} opacity={progress >= 0.8 ? 1 : DIMMED}>
+      <text x={cell.x + 135} y={cell.y + 176} textAnchor="middle" dominantBaseline="central" fontSize={17} fontWeight={700} fill={EMERALD_TEXT} opacity={progress >= 0.8 ? 1 : DIMMED}>
         {labels.safety.auditTransaction}
       </text>
     </g>
@@ -328,7 +368,7 @@ function SafetyPanel({ frame, labels }: PosterProps) {
         return (
           <g key={mechanism} opacity={finished || active ? 1 : DIMMED}>
             <rect x={cell.x} y={cell.y} width={cell.width} height={cell.height} rx={12} fill={active ? EMERALD_TINT : GRAY_TINT} stroke={active ? EMERALD_LINE : GRAY_BORDER} strokeWidth={active ? 3 : 1.5} />
-            <text x={cell.x + 14} y={cell.y + 20} dominantBaseline="central" fontSize={16} fontWeight={800} fill={GRAY}>
+            <text x={cell.x + 14} y={cell.y + 20} dominantBaseline="central" fontSize={17} fontWeight={800} fill={GRAY}>
               {`${index + 1}. ${labels.safety.mechanisms[index]}`}
             </text>
             <Cell labels={labels} cell={cell} progress={progress} />
@@ -345,7 +385,7 @@ export function SmartEnergyFilmPoster({ frame, labels }: PosterProps) {
   const blocks = activeBlocks(frame);
   const journey = frame.journey;
   return (
-    <svg role="img" aria-label={labels.titleCard.join(" ")} viewBox={`${camera.x} ${camera.y} ${camera.size} ${camera.size}`} className="block h-full w-full">
+    <svg role="img" aria-label={labels.titleCard.headline} viewBox={`${camera.x} ${camera.y} ${camera.width} ${cameraHeight(camera)}`} className="block h-full w-full">
       <defs>
         {Object.entries(LINE_STYLES).map(([kind, style]) => (
           <marker key={kind} id={`film-arrow-${kind}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
@@ -358,7 +398,7 @@ export function SmartEnergyFilmPoster({ frame, labels }: PosterProps) {
         <FrameBox key={box.id} frame={frame} labels={labels} box={box} />
       ))}
       {ARROWS.map((arrow) => (
-        <ArrowLine key={arrow.id} arrow={arrow} dimmed={arrows !== null && !arrows.has(arrow.id)} />
+        <ArrowLine key={arrow.id} arrow={arrow} dimmed={arrows !== null && !arrows.has(arrow.id)} flowing={arrows === null || arrows.has(arrow.id)} elapsed={frame.elapsed} />
       ))}
       <Packet frame={frame} />
       {BLOCKS.map((block) => (

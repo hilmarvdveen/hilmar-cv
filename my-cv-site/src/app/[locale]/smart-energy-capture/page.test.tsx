@@ -31,7 +31,7 @@ describe("smart energy capture route", () => {
 
   it("renders the requested frame in the requested language", async () => {
     vi.stubEnv("SMART_ENERGY_CAPTURE", "enabled");
-    render(await SmartEnergyCapturePage(props("nl", "160")));
+    render(await SmartEnergyCapturePage(props("nl", "340")));
     expect(screen.getByText("Een meting verlaat de batterij")).toBeInTheDocument();
   });
 

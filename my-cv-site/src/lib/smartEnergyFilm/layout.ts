@@ -4,7 +4,13 @@ export const POSTER_SIZE = 1080;
 
 export type Rectangle = { x: number; y: number; width: number; height: number };
 
-export type Camera = { x: number; y: number; size: number };
+export const VIEWPORT_WIDTH = 1080;
+
+export const VIEWPORT_HEIGHT = 960;
+
+export type Camera = { x: number; y: number; width: number };
+
+export const cameraHeight = (camera: Camera): number => (camera.width * VIEWPORT_HEIGHT) / VIEWPORT_WIDTH;
 
 export type Tone = "white" | "navy" | "emerald" | "gray";
 
@@ -37,14 +43,13 @@ export const BLOCKS: readonly Block[] = [
   { id: "browser", x: 870, y: 470, width: 190, height: 120, tone: "navy" },
 ];
 
-export type FrameId = "azure" | "containerApps" | "gates";
+export type FrameId = "azure" | "containerApps";
 
 export type PosterFrame = Rectangle & { id: FrameId; tone: "navy" | "emerald"; labelAt: Point; labelAnchor: "start" | "end" };
 
 export const FRAMES: readonly PosterFrame[] = [
   { id: "azure", x: 252, y: 40, width: 596, height: 795, tone: "navy", labelAt: { x: 268, y: 40 }, labelAnchor: "start" },
   { id: "containerApps", x: 270, y: 255, width: 560, height: 345, tone: "emerald", labelAt: { x: 818, y: 600 }, labelAnchor: "end" },
-  { id: "gates", x: 16, y: 872, width: 1048, height: 194, tone: "emerald", labelAt: { x: 32, y: 872 }, labelAnchor: "start" },
 ];
 
 export type LineKind = "telemetry" | "commands" | "reads" | "control";
@@ -135,11 +140,13 @@ export const SAFETY_CELLS: Record<SafetyMechanism, Rectangle> = {
 };
 
 export const CAMERAS = {
-  overview: { x: 0, y: 0, size: POSTER_SIZE },
-  reading: { x: 0, y: 0, size: 850 },
-  command: { x: 0, y: 0, size: 860 },
-  customer: { x: 270, y: 210, size: 810 },
-  safety: { x: 236, y: 320, size: 628 },
+  overview: { x: 0, y: 0, width: 1080 },
+  reading: { x: 0, y: 0, width: 934 },
+  command: { x: 0, y: 0, width: 934 },
+  customer: { x: 262, y: 160, width: 818 },
+  safety: { x: 234, y: 350, width: 632 },
 } satisfies Record<string, Camera>;
 
 export const GATE_COUNT = 7;
+
+export const GATES_ROW: Rectangle = { x: 16, y: 848, width: 1048, height: 104 };

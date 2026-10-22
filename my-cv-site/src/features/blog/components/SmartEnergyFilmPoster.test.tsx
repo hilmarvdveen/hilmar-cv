@@ -16,12 +16,12 @@ const drawAt = (id: FilmSceneId, share: number) => {
 describe("SmartEnergyFilmPoster", () => {
   it("draws the eleven blocks, the frames and the gates in the overview", () => {
     render(<SmartEnergyFilmPoster frame={filmFrameAtMilliseconds(0)} labels={labels} />);
-    expect(screen.getByRole("img")).toHaveAttribute("viewBox", "0 0 1080 1080");
+    expect(screen.getByRole("img")).toHaveAttribute("viewBox", "0 0 1080 960");
     for (const text of ["Battery", "Day-ahead", "IoT Hub", "Service Bus", "pro only", "Gateway", "API", "Planner", "Steering", "Dashboard", "PostgreSQL", "Browser"]) {
       expect(screen.getByText(text)).toBeInTheDocument();
     }
     expect(screen.getByText("Azure")).toBeInTheDocument();
-    expect(screen.getByText("Dependabot")).toBeInTheDocument();
+    expect(screen.queryByText("Dependabot")).not.toBeInTheDocument();
     expect(screen.queryByText("SAS key")).not.toBeInTheDocument();
   });
 
@@ -60,5 +60,6 @@ describe("SmartEnergyFilmPoster", () => {
     }
     expect(screen.getByText("Azure, dev and pro")).toBeInTheDocument();
     expect(screen.getByText("Container Apps, 0 to 1 replica")).toBeInTheDocument();
+    expect(screen.getByText("Dependabot")).toBeInTheDocument();
   });
 });
