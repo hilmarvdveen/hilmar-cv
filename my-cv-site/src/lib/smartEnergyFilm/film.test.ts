@@ -23,17 +23,17 @@ const frameIn = (id: FilmSceneId, offset: number) => filmFrameAtMilliseconds(sce
 const settledShare = (id: FilmSceneId, share: number) => frameIn(id, CAMERA_MOVE_MILLISECONDS + share * (sceneOf(id).lengthMilliseconds - CAMERA_MOVE_MILLISECONDS));
 
 describe("film timeline", () => {
-  it("runs eight steps for 68 seconds at 30 frames per second with six tabs", () => {
-    expect(FILM_SCENES.map((scene) => scene.id)).toEqual(["title", "overview", "reading", "command", "customer", "safety", "cloud", "end"]);
-    expect(FILM_TABS).toEqual(["overview", "reading", "command", "customer", "safety", "cloud"]);
-    expect(FILM_DURATION_MILLISECONDS).toBe(68000);
+  it("runs nine steps for 80 seconds at 30 frames per second with seven tabs", () => {
+    expect(FILM_SCENES.map((scene) => scene.id)).toEqual(["title", "overview", "reading", "command", "customer", "safety", "scale", "cloud", "end"]);
+    expect(FILM_TABS).toEqual(["overview", "reading", "command", "customer", "safety", "scale", "cloud"]);
+    expect(FILM_DURATION_MILLISECONDS).toBe(80000);
     expect(FILM_FRAMES_PER_SECOND).toBe(30);
-    expect(filmFrameCount).toBe(2040);
+    expect(filmFrameCount).toBe(2400);
     expect(filmMillisecondsForFrame(0)).toBe(0);
   });
 
   it("wraps negative, not a number and past the end, and loops to the first frame", () => {
-    expect(wrapFilmElapsed(-1000)).toBe(67000);
+    expect(wrapFilmElapsed(-1000)).toBe(79000);
     expect(wrapFilmElapsed(Number.NaN)).toBe(0);
     expect(filmSceneIndexAt(FILM_DURATION_MILLISECONDS)).toBe(0);
     expect(filmFrameAtMilliseconds(FILM_DURATION_MILLISECONDS)).toEqual(filmFrameAtMilliseconds(0));
@@ -132,6 +132,17 @@ describe("filmFrameAtMilliseconds", () => {
     const audit = settledShare("safety", 0.99);
     expect(audit.safety).toMatchObject({ mechanism: "audit", progress: 1, finished: ["duplicate", "race", "lock"] });
     expect(audit.captionIndex).toBe(3);
+  });
+
+  it("walks the four scale beats over the overview", () => {
+    expect(frameIn("scale", 0).scale).toBeNull();
+    expect(frameIn("scale", 0).captionIndex).toBe(0);
+    expect(settledShare("scale", 0.1).scale).toMatchObject({ beat: "out" });
+    expect(settledShare("scale", 0.3).scale?.beat).toBe("up");
+    expect(settledShare("scale", 0.6).scale?.beat).toBe("down");
+    const next = settledShare("scale", 0.99);
+    expect(next.scale).toMatchObject({ beat: "next", progress: 1 });
+    expect(next).toMatchObject({ captionIndex: 3, tabIndex: 5, camera: CAMERAS.overview });
   });
 
   it("lights the shields one by one in the cloud and keeps them on the end card", () => {

@@ -1,7 +1,7 @@
 import { easeInOut, progressBetween } from "@/lib/smartEnergyExplainer/frame";
 import { CAMERAS, JOURNEYS, SAFETY_MECHANISMS, SHIELDS, type ArrowId, type Camera, type JourneyId, type SafetyMechanism } from "./layout";
 
-export type FilmSceneId = "title" | "overview" | "reading" | "command" | "customer" | "safety" | "cloud" | "end";
+export type FilmSceneId = "title" | "overview" | "reading" | "command" | "customer" | "safety" | "scale" | "cloud" | "end";
 
 export type FilmScene = { id: FilmSceneId; startMilliseconds: number; lengthMilliseconds: number };
 
@@ -12,6 +12,7 @@ const SCENE_PLAN: ReadonlyArray<readonly [FilmSceneId, number]> = [
   ["command", 14000],
   ["customer", 10000],
   ["safety", 10000],
+  ["scale", 12000],
   ["cloud", 7000],
   ["end", 6000],
 ];
@@ -51,6 +52,7 @@ const SCENE_CAMERA: Record<FilmSceneId, Camera> = {
   command: CAMERAS.command,
   customer: CAMERAS.customer,
   safety: CAMERAS.safety,
+  scale: CAMERAS.overview,
   cloud: CAMERAS.overview,
   end: CAMERAS.overview,
 };
@@ -70,6 +72,7 @@ export const CAPTION_COUNT: Record<FilmSceneId, number> = {
   command: 4,
   customer: 3,
   safety: 4,
+  scale: 4,
   cloud: 2,
   end: 0,
 };
@@ -89,7 +92,13 @@ export type JourneyFrame = { id: JourneyId; hopsShown: number; activeHop: number
 
 export type SafetyFrame = { mechanism: SafetyMechanism; progress: number; finished: readonly SafetyMechanism[] };
 
-export const FILM_TABS: readonly FilmSceneId[] = ["overview", "reading", "command", "customer", "safety", "cloud"];
+export const FILM_TABS: readonly FilmSceneId[] = ["overview", "reading", "command", "customer", "safety", "scale", "cloud"];
+
+export type ScaleBeat = "out" | "up" | "down" | "next";
+
+export const SCALE_BEATS: readonly ScaleBeat[] = ["out", "up", "down", "next"];
+
+export type ScaleFrame = { beat: ScaleBeat; progress: number };
 
 export type FilmFrame = {
   sceneId: FilmSceneId;
@@ -101,6 +110,7 @@ export type FilmFrame = {
   captionIndex: number | null;
   journey: JourneyFrame | null;
   safety: SafetyFrame | null;
+  scale: ScaleFrame | null;
   shieldsShown: number;
   titleCardOpacity: number;
   endCardOpacity: number;
@@ -118,6 +128,12 @@ const journeyFrame = (id: JourneyId, settledElapsed: number, playLength: number)
     activeHop,
     packet: { arrow: hop.arrow, fraction: hop.reverse ? 1 - travel : travel },
   };
+};
+
+const scaleFrame = (settledElapsed: number, playLength: number): ScaleFrame => {
+  const beatLength = playLength / SCALE_BEATS.length;
+  const beat = Math.min(SCALE_BEATS.length - 1, Math.floor(settledElapsed / beatLength));
+  return { beat: SCALE_BEATS[beat], progress: progressBetween(settledElapsed - beat * beatLength, 0, beatLength * 0.7) };
 };
 
 const safetyFrame = (settledElapsed: number, playLength: number): SafetyFrame => {
@@ -145,6 +161,7 @@ export const filmFrameAtMilliseconds = (elapsed: number): FilmFrame => {
   const journeyId = SCENE_JOURNEY[scene.id];
   const journey = journeyId && settled ? journeyFrame(journeyId, settledElapsed, playLength) : null;
   const safety = scene.id === "safety" && settled ? safetyFrame(settledElapsed, playLength) : null;
+  const scale = scene.id === "scale" && settled ? scaleFrame(settledElapsed, playLength) : null;
   const captionCount = CAPTION_COUNT[scene.id];
   const captionIndex = (() => {
     if (journey) {
@@ -174,6 +191,7 @@ export const filmFrameAtMilliseconds = (elapsed: number): FilmFrame => {
     captionIndex,
     journey,
     safety,
+    scale,
     shieldsShown,
     titleCardOpacity: scene.id === "title" ? 1 - progressBetween(sceneElapsed, 3400, 4000) : 0,
     endCardOpacity: scene.id === "end" ? progressBetween(sceneElapsed, 0, 600) : 0,

@@ -53,6 +53,27 @@ describe("SmartEnergyFilmPoster", () => {
     expect(screen.getByText("waits")).toBeInTheDocument();
   });
 
+  it("stacks gateway replicas as the queue fills in the out beat", () => {
+    drawAt("scale", 0.2);
+    expect(screen.getByText("1 to n")).toBeInTheDocument();
+    expect(screen.getByText("queue length")).toBeInTheDocument();
+  });
+
+  it("tags the bigger tiers in the up beat", () => {
+    drawAt("scale", 0.45);
+    expect(screen.getByText("Premium")).toBeInTheDocument();
+    expect(screen.getByText("larger tier, chunks, retention")).toBeInTheDocument();
+  });
+
+  it("drops the apps to zero in the down beat and outlines what changes first", () => {
+    const down = drawAt("scale", 0.7);
+    expect(screen.getAllByText("0")).toHaveLength(3);
+    expect(screen.getByText("API").closest("g")).toHaveAttribute("opacity", "0.28");
+    down.unmount();
+    drawAt("scale", 0.99);
+    expect(screen.queryByText("1 to n")).not.toBeInTheDocument();
+  });
+
   it("puts the shields and the cloud labels on the poster in the cloud step", () => {
     drawAt("cloud", 0.99);
     for (const tag of Object.values(labels.shields)) {

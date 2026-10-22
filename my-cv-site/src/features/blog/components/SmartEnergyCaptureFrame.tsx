@@ -8,14 +8,14 @@ type SmartEnergyCaptureFrameProps = { frame: FilmFrame; labels: SmartEnergyFilmL
 
 function Tabs({ frame, labels }: SmartEnergyCaptureFrameProps) {
   return (
-    <div className="flex h-[104px] items-center justify-between gap-2 border-b border-gray-200 px-6">
+    <div className="flex h-[104px] items-center justify-between gap-1 border-b border-gray-200 px-4">
       {FILM_TABS.map((tab, index) => {
         const active = index === frame.tabIndex;
         const done = frame.tabIndex !== null && index < frame.tabIndex;
         return (
           <p
             key={tab}
-            className={`relative overflow-hidden rounded-full px-5 py-2 text-3xl font-semibold ${
+            className={`relative overflow-hidden rounded-full px-3 py-2 text-3xl font-semibold ${
               active ? "bg-brand-navy text-white" : done ? "text-brand-navy" : "text-gray-500"
             }`}
           >

@@ -32,6 +32,7 @@ export type SmartEnergyFilmLabels = {
   };
   captions: Record<FilmSceneId, readonly FilmCaption[]>;
   tabs: Record<TabId, string>;
+  scaleTags: { replicas: string; queue: string; iotHub: string; serviceBus: string; database: string; zero: string };
   stepEyebrow: string;
   titleCard: { eyebrow: string; headline: string; support: string };
   name: string;
@@ -182,6 +183,24 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
         detail: { en: "the audit row in the same transaction", nl: "de auditrij in dezelfde transactie" },
       },
     ],
+    scale: [
+      {
+        headline: { en: "Out: gateways follow the queue", nl: "Uit: gateways volgen de wachtrij" },
+        detail: { en: "KEDA on queue length, Terraform holds one replica today", nl: "KEDA op de wachtrijlengte, Terraform houdt vandaag een replica" },
+      },
+      {
+        headline: { en: "Up: bigger tiers where load lands", nl: "Op: grotere tiers waar de last landt" },
+        detail: { en: "IoT Hub tiers, Service Bus Premium, a larger PostgreSQL tier", nl: "IoT Hub-tiers, Service Bus Premium, een grotere PostgreSQL-tier" },
+      },
+      {
+        headline: { en: "Down: apps scale to zero", nl: "Af: apps schalen naar nul" },
+        detail: { en: "minimum 0 replicas, the jobs run once and exit", nl: "minimaal 0 replica's, de jobs draaien een keer en stoppen" },
+      },
+      {
+        headline: { en: "What changes first as it grows", nl: "Wat als eerste verandert bij groei" },
+        detail: { en: "the single-site planner loop, the rollup in the app, in-memory caches", nl: "de plannerlus per site, de rollup in de app, caches in het geheugen" },
+      },
+    ],
     cloud: [
       {
         headline: { en: "Containers in two environments", nl: "Containers in twee omgevingen" },
@@ -200,7 +219,16 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     command: { en: "Command", nl: "Commando" },
     customer: { en: "Customer", nl: "Klant" },
     safety: { en: "Safety", nl: "Veiligheid" },
+    scale: { en: "Scale", nl: "Schalen" },
     cloud: same("Cloud"),
+  },
+  scaleTags: {
+    replicas: { en: "1 to n", nl: "1 tot n" },
+    queue: { en: "queue length", nl: "wachtrijlengte" },
+    iotHub: { en: "higher tier", nl: "hogere tier" },
+    serviceBus: same("Premium"),
+    database: { en: "larger tier, chunks, retention", nl: "grotere tier, chunks, retentie" },
+    zero: same("0"),
   },
   stepEyebrow: { en: "Step {current} of {total}", nl: "Stap {current} van {total}" },
   titleCard: {

@@ -209,6 +209,106 @@ function Packet({ frame }: { frame: FilmFrame }) {
   );
 }
 
+const blockById = (id: BlockId): Block => BLOCKS.find((block) => block.id === id) as Block;
+
+const SCALED_APPS: readonly BlockId[] = ["gateway", "api", "dashboard"];
+
+const NEXT_BLOCKS: readonly BlockId[] = ["planner", "gateway", "dashboard"];
+
+function Tag({ at, text }: { at: Point; text: string }) {
+  const width = text.length * 16.5 + 36;
+  return (
+    <g>
+      <rect x={at.x - width / 2} y={at.y - 21} width={width} height={42} rx={21} fill={NAVY} />
+      <text x={at.x} y={at.y} textAnchor="middle" dominantBaseline="central" fontSize={28} fontWeight={700} fill={WHITE}>
+        {text}
+      </text>
+    </g>
+  );
+}
+
+function ScaleBehind({ frame }: { frame: FilmFrame }) {
+  if (frame.scale?.beat !== "out") {
+    return null;
+  }
+  const gateway = blockById("gateway");
+  const ghosts = frame.scale.progress >= 0.6 ? 2 : frame.scale.progress >= 0.3 ? 1 : 0;
+  return (
+    <>
+      {Array.from({ length: ghosts }, (_, index) => (
+        <rect
+          key={index}
+          x={gateway.x + 16 * (ghosts - index)}
+          y={gateway.y - 16 * (ghosts - index)}
+          width={gateway.width}
+          height={gateway.height}
+          rx={14}
+          fill={EMERALD_TINT}
+          stroke={EMERALD_LINE}
+          strokeWidth={2.5}
+          strokeDasharray="10 7"
+        />
+      ))}
+    </>
+  );
+}
+
+function ScaleFront({ frame, labels }: PosterProps) {
+  const scale = frame.scale;
+  if (scale === null) {
+    return null;
+  }
+  if (scale.beat === "out") {
+    const queue = blockById("serviceBus");
+    return (
+      <>
+        <rect x={queue.x + 20} y={queue.y + queue.height - 16} width={(queue.width - 40) * scale.progress} height={8} rx={4} fill={NAVY} />
+        <Tag at={{ x: 705, y: 72 }} text={labels.scaleTags.queue} />
+        <Tag at={{ x: 410, y: 266 }} text={labels.scaleTags.replicas} />
+      </>
+    );
+  }
+  if (scale.beat === "up") {
+    return (
+      <g opacity={scale.progress}>
+        <Tag at={{ x: 400, y: 84 }} text={labels.scaleTags.iotHub} />
+        <Tag at={{ x: 705, y: 72 }} text={labels.scaleTags.serviceBus} />
+        <Tag at={{ x: 550, y: 640 }} text={labels.scaleTags.database} />
+      </g>
+    );
+  }
+  if (scale.beat === "down") {
+    return (
+      <g opacity={scale.progress}>
+        {SCALED_APPS.map((id) => {
+          const block = blockById(id);
+          return (
+            <g key={id}>
+              <circle cx={block.x + block.width - 4} cy={block.y + 4} r={22} fill={NAVY} stroke={WHITE} strokeWidth={3} />
+              <text x={block.x + block.width - 4} y={block.y + 4} textAnchor="middle" dominantBaseline="central" fontSize={28} fontWeight={800} fill={WHITE}>
+                {labels.scaleTags.zero}
+              </text>
+            </g>
+          );
+        })}
+      </g>
+    );
+  }
+  return (
+    <g opacity={scale.progress}>
+      {NEXT_BLOCKS.map((id) => {
+        const block = blockById(id);
+        return (
+          <rect key={id} x={block.x - 9} y={block.y - 9} width={block.width + 18} height={block.height + 18} rx={18} fill="none" stroke={EMERALD_LINE} strokeWidth={4} strokeDasharray="12 8" />
+        );
+      })}
+    </g>
+  );
+}
+
+const scaledDown = (frame: FilmFrame, id: BlockId): boolean =>
+  frame.scale?.beat === "down" && frame.scale.progress >= 0.5 && SCALED_APPS.includes(id);
+
 function Shields({ frame, labels }: PosterProps) {
   return (
     <>
@@ -401,16 +501,18 @@ export function SmartEnergyFilmPoster({ frame, labels }: PosterProps) {
         <ArrowLine key={arrow.id} arrow={arrow} dimmed={arrows !== null && !arrows.has(arrow.id)} flowing={arrows === null || arrows.has(arrow.id)} elapsed={frame.elapsed} />
       ))}
       <Packet frame={frame} />
+      <ScaleBehind frame={frame} />
       {BLOCKS.map((block) => (
         <BlockBox
           key={block.id}
           block={block}
           labels={labels}
-          dimmed={blocks !== null && !blocks.has(block.id)}
+          dimmed={(blocks !== null && !blocks.has(block.id)) || scaledDown(frame, block.id)}
           lit={journey !== null && ARROWS.find((arrow) => arrow.id === JOURNEYS[journey.id][journey.activeHop].arrow)?.ends.includes(block.id) === true}
         />
       ))}
       <HopNumbers frame={frame} />
+      <ScaleFront frame={frame} labels={labels} />
       <Shields frame={frame} labels={labels} />
       <Gates frame={frame} labels={labels} />
       <SafetyPanel frame={frame} labels={labels} />
