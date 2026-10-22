@@ -79,7 +79,7 @@ const encode = spawnSync(
 );
 if (encode.status !== 0) process.exit(encode.status ?? 1);
 
-const thumbnail = spawnSync("ffmpeg", ["-y", "-ss", "61", "-i", video, "-frames:v", "1", "-update", "1", join(outputFolder, `smart-energy-${locale}-thumbnail.jpg`)], {
+const thumbnail = spawnSync("ffmpeg", ["-y", "-ss", "2", "-i", video, "-frames:v", "1", "-update", "1", join(outputFolder, `smart-energy-${locale}-thumbnail.jpg`)], {
   stdio: "inherit",
 });
 if (thumbnail.status !== 0) process.exit(thumbnail.status ?? 1);

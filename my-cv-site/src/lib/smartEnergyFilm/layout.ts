@@ -8,158 +8,138 @@ export type Camera = { x: number; y: number; size: number };
 
 export type Tone = "white" | "navy" | "emerald" | "gray";
 
-export type NodeId =
+export type BlockId =
   | "battery"
-  | "evCharger"
-  | "pvInverter"
-  | "heatPump"
   | "prices"
-  | "browser"
   | "iotHub"
-  | "blob"
-  | "budget"
-  | "keyVault"
+  | "serviceBus"
   | "gateway"
   | "api"
-  | "dashboard"
   | "planner"
   | "steering"
-  | "retention"
-  | "simulator"
-  | "serviceBus"
-  | "logAnalytics"
-  | "identities";
+  | "dashboard"
+  | "database"
+  | "browser";
 
-export type PosterNode = Rectangle & { id: NodeId; tone: Tone; dashed?: boolean; group: RevealGroup };
+export type Block = Rectangle & { id: BlockId; tone: Tone; dashed?: boolean };
 
-export type RevealGroup = "header" | "edges" | "cloud" | "containers" | "database" | "arrows" | "security";
-
-export const REVEAL_GROUPS: readonly RevealGroup[] = ["header", "edges", "cloud", "containers", "database", "arrows", "security"];
-
-export const NODES: readonly PosterNode[] = [
-  { id: "battery", x: 30, y: 140, width: 148, height: 48, tone: "emerald", group: "edges" },
-  { id: "evCharger", x: 30, y: 200, width: 148, height: 48, tone: "white", group: "edges" },
-  { id: "pvInverter", x: 30, y: 260, width: 148, height: 48, tone: "white", group: "edges" },
-  { id: "heatPump", x: 30, y: 320, width: 148, height: 48, tone: "white", group: "edges" },
-  { id: "prices", x: 30, y: 640, width: 148, height: 56, tone: "gray", group: "edges" },
-  { id: "browser", x: 912, y: 417, width: 140, height: 70, tone: "navy", group: "edges" },
-  { id: "iotHub", x: 236, y: 172, width: 170, height: 58, tone: "navy", group: "cloud" },
-  { id: "blob", x: 440, y: 172, width: 120, height: 58, tone: "white", group: "cloud" },
-  { id: "budget", x: 576, y: 172, width: 130, height: 58, tone: "white", group: "cloud" },
-  { id: "keyVault", x: 730, y: 172, width: 130, height: 58, tone: "white", group: "cloud" },
-  { id: "serviceBus", x: 730, y: 286, width: 130, height: 100, tone: "gray", dashed: true, group: "cloud" },
-  { id: "logAnalytics", x: 730, y: 510, width: 130, height: 56, tone: "white", group: "cloud" },
-  { id: "identities", x: 730, y: 580, width: 130, height: 56, tone: "white", group: "cloud" },
-  { id: "gateway", x: 250, y: 312, width: 170, height: 64, tone: "emerald", group: "containers" },
-  { id: "api", x: 526, y: 312, width: 170, height: 64, tone: "emerald", group: "containers" },
-  { id: "dashboard", x: 526, y: 420, width: 170, height: 64, tone: "emerald", group: "containers" },
-  { id: "planner", x: 250, y: 552, width: 106, height: 54, tone: "white", group: "containers" },
-  { id: "steering", x: 364, y: 552, width: 106, height: 54, tone: "white", group: "containers" },
-  { id: "retention", x: 478, y: 552, width: 106, height: 54, tone: "white", group: "containers" },
-  { id: "simulator", x: 592, y: 552, width: 106, height: 54, tone: "white", group: "containers" },
+export const BLOCKS: readonly Block[] = [
+  { id: "battery", x: 20, y: 110, width: 210, height: 90, tone: "emerald" },
+  { id: "prices", x: 20, y: 470, width: 210, height: 110, tone: "gray" },
+  { id: "iotHub", x: 280, y: 110, width: 240, height: 90, tone: "navy" },
+  { id: "serviceBus", x: 580, y: 100, width: 250, height: 110, tone: "gray", dashed: true },
+  { id: "gateway", x: 290, y: 300, width: 240, height: 90, tone: "emerald" },
+  { id: "api", x: 570, y: 300, width: 240, height: 90, tone: "emerald" },
+  { id: "planner", x: 290, y: 480, width: 155, height: 100, tone: "white" },
+  { id: "steering", x: 460, y: 480, width: 155, height: 100, tone: "white" },
+  { id: "dashboard", x: 630, y: 480, width: 185, height: 100, tone: "emerald" },
+  { id: "database", x: 280, y: 680, width: 540, height: 120, tone: "navy" },
+  { id: "browser", x: 870, y: 470, width: 190, height: 120, tone: "navy" },
 ];
 
-export type FrameId = "sources" | "consumer" | "subscription" | "resourceGroup" | "containerApps" | "security";
+export type FrameId = "azure" | "containerApps" | "gates";
 
-export type PosterFrame = Rectangle & { id: FrameId; tone: "navy" | "gray" | "emerald"; group: RevealGroup };
+export type PosterFrame = Rectangle & { id: FrameId; tone: "navy" | "emerald"; labelAt: Point; labelAnchor: "start" | "end" };
 
 export const FRAMES: readonly PosterFrame[] = [
-  { id: "sources", x: 16, y: 110, width: 176, height: 730, tone: "gray", group: "edges" },
-  { id: "consumer", x: 900, y: 110, width: 164, height: 730, tone: "gray", group: "edges" },
-  { id: "subscription", x: 204, y: 110, width: 684, height: 730, tone: "navy", group: "cloud" },
-  { id: "resourceGroup", x: 218, y: 146, width: 656, height: 680, tone: "navy", group: "cloud" },
-  { id: "containerApps", x: 232, y: 282, width: 480, height: 360, tone: "emerald", group: "containers" },
-  { id: "security", x: 16, y: 868, width: 1048, height: 200, tone: "emerald", group: "security" },
+  { id: "azure", x: 252, y: 40, width: 596, height: 795, tone: "navy", labelAt: { x: 268, y: 40 }, labelAnchor: "start" },
+  { id: "containerApps", x: 270, y: 255, width: 560, height: 345, tone: "emerald", labelAt: { x: 818, y: 600 }, labelAnchor: "end" },
+  { id: "gates", x: 16, y: 872, width: 1048, height: 194, tone: "emerald", labelAt: { x: 32, y: 872 }, labelAnchor: "start" },
 ];
 
-export const DATABASE: Rectangle = { x: 236, y: 672, width: 624, height: 140 };
+export type LineKind = "telemetry" | "commands" | "reads" | "control";
 
-export type ChipId = "readings" | "rollup" | "currentState" | "command" | "audit" | "plans";
-
-export const CHIPS: ReadonlyArray<{ id: ChipId; at: Point; tone: "emerald" | "navy" }> = [
-  { id: "readings", at: { x: 252, y: 712 }, tone: "emerald" },
-  { id: "rollup", at: { x: 486, y: 712 }, tone: "emerald" },
-  { id: "currentState", at: { x: 656, y: 712 }, tone: "emerald" },
-  { id: "command", at: { x: 252, y: 744 }, tone: "navy" },
-  { id: "audit", at: { x: 500, y: 744 }, tone: "navy" },
-  { id: "plans", at: { x: 614, y: 744 }, tone: "navy" },
-];
+export const LINE_KINDS: readonly LineKind[] = ["telemetry", "commands", "reads", "control"];
 
 export type ArrowId =
-  | "mqtt"
-  | "eventHubs"
-  | "checkpoint"
-  | "batch"
-  | "reads"
-  | "calls"
-  | "poll"
-  | "prices"
-  | "commands"
-  | "sessions"
-  | "cloudToDevice";
+  | "batteryToHub"
+  | "hubToGateway"
+  | "gatewayToDatabase"
+  | "pricesToPlanner"
+  | "plannerToDatabase"
+  | "databaseToSteering"
+  | "steeringToQueue"
+  | "queueToGateway"
+  | "gatewayToHub"
+  | "hubToBattery"
+  | "browserToDashboard"
+  | "dashboardToApi"
+  | "apiToDatabase";
 
-export type PosterArrow = {
-  id: ArrowId;
-  points: readonly Point[];
-  tone: "gray" | "emerald" | "navy";
-  dashed?: boolean;
-  labelAt?: Point;
-};
+export type PosterArrow = { id: ArrowId; kind: LineKind; ends: readonly [BlockId, BlockId]; points: readonly Point[]; hopAt?: Point };
 
 export const ARROWS: readonly PosterArrow[] = [
-  { id: "mqtt", points: [{ x: 178, y: 290 }, { x: 222, y: 290 }, { x: 222, y: 205 }, { x: 236, y: 205 }], tone: "emerald" },
-  { id: "eventHubs", points: [{ x: 320, y: 230 }, { x: 320, y: 312 }], tone: "emerald", labelAt: { x: 320, y: 262 } },
-  { id: "checkpoint", points: [{ x: 420, y: 342 }, { x: 500, y: 342 }, { x: 500, y: 230 }], tone: "gray", labelAt: { x: 500, y: 300 } },
-  { id: "batch", points: [{ x: 335, y: 376 }, { x: 335, y: 420 }, { x: 300, y: 420 }, { x: 300, y: 672 }], tone: "emerald", labelAt: { x: 300, y: 650 } },
-  { id: "reads", points: [{ x: 611, y: 376 }, { x: 611, y: 400 }, { x: 560, y: 400 }, { x: 560, y: 672 }], tone: "gray", labelAt: { x: 560, y: 650 } },
-  { id: "calls", points: [{ x: 611, y: 420 }, { x: 611, y: 376 }], tone: "gray", labelAt: { x: 640, y: 398 } },
-  { id: "poll", points: [{ x: 912, y: 452 }, { x: 696, y: 452 }], tone: "navy", labelAt: { x: 805, y: 452 } },
-  { id: "prices", points: [{ x: 178, y: 668 }, { x: 216, y: 668 }, { x: 216, y: 579 }, { x: 250, y: 579 }], tone: "gray", labelAt: { x: 214, y: 630 } },
-  { id: "commands", points: [{ x: 417, y: 552 }, { x: 417, y: 530 }, { x: 714, y: 530 }, { x: 714, y: 350 }, { x: 730, y: 350 }], tone: "navy", dashed: true, labelAt: { x: 560, y: 530 } },
-  { id: "sessions", points: [{ x: 795, y: 290 }, { x: 795, y: 252 }, { x: 380, y: 252 }, { x: 380, y: 312 }], tone: "navy", dashed: true, labelAt: { x: 640, y: 252 } },
-  { id: "cloudToDevice", points: [{ x: 236, y: 222 }, { x: 210, y: 222 }, { x: 210, y: 164 }, { x: 178, y: 164 }], tone: "navy", labelAt: { x: 104, y: 128 } },
+  { id: "batteryToHub", ends: ["battery", "iotHub"], kind: "telemetry", points: [{ x: 230, y: 145 }, { x: 280, y: 145 }], hopAt: { x: 255, y: 122 } },
+  { id: "hubToGateway", ends: ["iotHub", "gateway"], kind: "telemetry", points: [{ x: 400, y: 200 }, { x: 400, y: 300 }] },
+  { id: "gatewayToDatabase", ends: ["gateway", "database"], kind: "telemetry", points: [{ x: 290, y: 360 }, { x: 262, y: 360 }, { x: 262, y: 740 }, { x: 280, y: 740 }] },
+  { id: "pricesToPlanner", ends: ["prices", "planner"], kind: "control", points: [{ x: 230, y: 530 }, { x: 290, y: 530 }] },
+  { id: "plannerToDatabase", ends: ["planner", "database"], kind: "control", points: [{ x: 367, y: 580 }, { x: 367, y: 680 }] },
+  { id: "databaseToSteering", ends: ["database", "steering"], kind: "control", points: [{ x: 537, y: 680 }, { x: 537, y: 580 }] },
+  { id: "steeringToQueue", ends: ["steering", "serviceBus"], kind: "commands", points: [{ x: 550, y: 480 }, { x: 550, y: 240 }, { x: 705, y: 240 }, { x: 705, y: 210 }], hopAt: { x: 550, y: 410 } },
+  { id: "queueToGateway", ends: ["serviceBus", "gateway"], kind: "commands", points: [{ x: 620, y: 210 }, { x: 620, y: 280 }, { x: 480, y: 280 }, { x: 480, y: 300 }], hopAt: { x: 515, y: 280 } },
+  { id: "gatewayToHub", ends: ["gateway", "iotHub"], kind: "commands", points: [{ x: 330, y: 300 }, { x: 330, y: 200 }] },
+  { id: "hubToBattery", ends: ["iotHub", "battery"], kind: "commands", points: [{ x: 280, y: 180 }, { x: 230, y: 180 }], hopAt: { x: 255, y: 204 } },
+  { id: "browserToDashboard", ends: ["browser", "dashboard"], kind: "reads", points: [{ x: 870, y: 530 }, { x: 815, y: 530 }] },
+  { id: "dashboardToApi", ends: ["dashboard", "api"], kind: "reads", points: [{ x: 722, y: 480 }, { x: 722, y: 390 }] },
+  { id: "apiToDatabase", ends: ["api", "database"], kind: "reads", points: [{ x: 810, y: 345 }, { x: 838, y: 345 }, { x: 838, y: 740 }, { x: 820, y: 740 }], hopAt: { x: 838, y: 650 } },
 ];
 
-export type RouteId = "telemetry" | "pollRequest" | "apiRead" | "commandsOut" | "pricesIn" | "batch";
+export type JourneyId = "reading" | "command" | "customer";
 
-export const ROUTES: Record<RouteId, readonly Point[]> = {
-  telemetry: [{ x: 178, y: 290 }, { x: 222, y: 290 }, { x: 222, y: 205 }, { x: 320, y: 205 }, { x: 320, y: 420 }, { x: 300, y: 420 }, { x: 300, y: 690 }],
-  pollRequest: [{ x: 982, y: 452 }, { x: 611, y: 452 }, { x: 611, y: 344 }],
-  apiRead: [{ x: 611, y: 376 }, { x: 611, y: 400 }, { x: 560, y: 400 }, { x: 560, y: 690 }],
-  commandsOut: [
-    { x: 417, y: 552 },
-    { x: 417, y: 530 },
-    { x: 714, y: 530 },
-    { x: 714, y: 350 },
-    { x: 795, y: 350 },
-    { x: 795, y: 252 },
-    { x: 380, y: 252 },
-    { x: 380, y: 300 },
-    { x: 340, y: 300 },
-    { x: 340, y: 222 },
-    { x: 210, y: 222 },
-    { x: 210, y: 164 },
-    { x: 104, y: 164 },
+export type Hop = { arrow: ArrowId; reverse?: boolean };
+
+export const JOURNEYS: Record<JourneyId, readonly Hop[]> = {
+  reading: [{ arrow: "batteryToHub" }, { arrow: "hubToGateway" }, { arrow: "gatewayToDatabase" }],
+  command: [
+    { arrow: "pricesToPlanner" },
+    { arrow: "plannerToDatabase" },
+    { arrow: "databaseToSteering" },
+    { arrow: "steeringToQueue" },
+    { arrow: "queueToGateway" },
+    { arrow: "gatewayToHub" },
+    { arrow: "hubToBattery" },
+    { arrow: "batteryToHub" },
   ],
-  pricesIn: [{ x: 104, y: 668 }, { x: 216, y: 668 }, { x: 216, y: 579 }, { x: 303, y: 579 }, { x: 303, y: 690 }],
-  batch: [{ x: 335, y: 376 }, { x: 335, y: 420 }, { x: 300, y: 420 }, { x: 300, y: 712 }],
+  customer: [
+    { arrow: "browserToDashboard" },
+    { arrow: "dashboardToApi" },
+    { arrow: "apiToDatabase" },
+    { arrow: "dashboardToApi", reverse: true },
+    { arrow: "browserToDashboard", reverse: true },
+  ],
+};
+
+export type ShieldId = "deviceKey" | "hubIdentity" | "parameterised" | "contentPolicy" | "token" | "internalIngress" | "entraQueue";
+
+export const SHIELDS: ReadonlyArray<{ id: ShieldId; at: Point; tagAt: Point; tagAnchor: "start" | "middle" | "end" }> = [
+  { id: "deviceKey", at: { x: 255, y: 145 }, tagAt: { x: 125, y: 88 }, tagAnchor: "middle" },
+  { id: "hubIdentity", at: { x: 400, y: 250 }, tagAt: { x: 385, y: 232 }, tagAnchor: "end" },
+  { id: "parameterised", at: { x: 262, y: 620 }, tagAt: { x: 125, y: 640 }, tagAnchor: "middle" },
+  { id: "contentPolicy", at: { x: 842, y: 530 }, tagAt: { x: 965, y: 640 }, tagAnchor: "middle" },
+  { id: "token", at: { x: 722, y: 435 }, tagAt: { x: 752, y: 435 }, tagAnchor: "start" },
+  { id: "internalIngress", at: { x: 838, y: 420 }, tagAt: { x: 965, y: 400 }, tagAnchor: "middle" },
+  { id: "entraQueue", at: { x: 650, y: 240 }, tagAt: { x: 705, y: 72 }, tagAnchor: "middle" },
+];
+
+export const SAFETY_PANEL: Rectangle = { x: 266, y: 400, width: 568, height: 450 };
+
+export type SafetyMechanism = "duplicate" | "race" | "lock" | "audit";
+
+export const SAFETY_MECHANISMS: readonly SafetyMechanism[] = ["duplicate", "race", "lock", "audit"];
+
+export const SAFETY_CELLS: Record<SafetyMechanism, Rectangle> = {
+  duplicate: { x: 276, y: 450, width: 270, height: 190 },
+  race: { x: 554, y: 450, width: 270, height: 190 },
+  lock: { x: 276, y: 650, width: 270, height: 190 },
+  audit: { x: 554, y: 650, width: 270, height: 190 },
 };
 
 export const CAMERAS = {
   overview: { x: 0, y: 0, size: POSTER_SIZE },
-  frontend: { x: 470, y: 250, size: 600 },
-  backend: { x: 208, y: 230, size: 660 },
-  cloud: { x: 190, y: 96, size: 760 },
+  reading: { x: 0, y: 0, size: 850 },
+  command: { x: 0, y: 0, size: 860 },
+  customer: { x: 270, y: 210, size: 810 },
+  safety: { x: 236, y: 320, size: 628 },
 } satisfies Record<string, Camera>;
 
-export type StepBadge = { step: number; at: Point };
-
-export const STEP_BADGES: readonly StepBadge[] = [
-  { step: 2, at: { x: 884, y: 482 } },
-  { step: 3, at: { x: 224, y: 672 } },
-  { step: 4, at: { x: 204, y: 110 } },
-];
-
-export const SECURITY_CONTROL_COUNT = 12;
-
-export const SECURITY_GATE_COUNT = 7;
+export const GATE_COUNT = 7;

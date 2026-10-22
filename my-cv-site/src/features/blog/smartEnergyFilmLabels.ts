@@ -1,266 +1,198 @@
 import { BUSINESS_PROFILE, type Locale } from "@/lib/seo";
-import type { ArrowId, ChipId, FrameId, NodeId } from "@/lib/smartEnergyFilm/layout";
+import type { BlockId, FrameId, LineKind, ShieldId } from "@/lib/smartEnergyFilm/layout";
 import type { FilmSceneId } from "@/lib/smartEnergyFilm/film";
 import type { LocalizedText } from "./types";
 
+export type FilmCaption = { headline: string; detail: string };
+
 export type SmartEnergyFilmLabels = {
-  title: string;
-  subtitle: string;
-  steps: readonly string[];
+  blocks: Record<BlockId, { title: readonly string[]; note: string }>;
   frames: Record<FrameId, string>;
-  nodes: Record<NodeId, { title: string; subtitle: string }>;
-  sourceNotes: readonly string[];
-  priceNotes: readonly string[];
-  consumerNotes: readonly string[];
-  serviceBusNotes: readonly string[];
-  replicaChip: string;
-  jobsLabel: string;
-  databaseTitle: string;
-  chips: Record<ChipId, string>;
-  databaseSummary: string;
-  arrows: Partial<Record<ArrowId, string>>;
-  backendCode: readonly string[];
-  controls: readonly string[];
-  gatesLabel: string;
+  cloudFrames: Record<FrameId, string>;
+  legend: Record<LineKind, string>;
+  shields: Record<ShieldId, string>;
   gates: readonly string[];
-  acceptedNote: string;
-  scenes: Record<FilmSceneId, { step: string; title: string; caption: string; beats: readonly string[] }>;
-  closing: string;
-  url: string;
+  safety: {
+    title: string;
+    duplicateKey: readonly string[];
+    duplicateResult: string;
+    raceWinner: string;
+    raceLoser: string;
+    lockName: string;
+    lockFirst: string;
+    lockSecond: string;
+    lockWaits: string;
+    lockDone: string;
+    auditChange: string;
+    auditRow: string;
+    auditTransaction: string;
+    mechanisms: readonly string[];
+  };
+  captions: Record<FilmSceneId, readonly FilmCaption[]>;
+  titleCard: readonly string[];
+  name: string;
+  role: string;
+  endCard: { read: string; link: string; ownWork: string };
 };
 
 type Localized<Shape> = Shape extends string
   ? LocalizedText
   : Shape extends readonly string[]
     ? readonly LocalizedText[]
-    : { [Key in keyof Shape]: Localized<Shape[Key]> };
+    : Shape extends readonly FilmCaption[]
+      ? readonly { headline: LocalizedText; detail: LocalizedText }[]
+      : { [Key in keyof Shape]: Localized<Shape[Key]> };
 
 const same = (text: string): LocalizedText => ({ en: text, nl: text });
 
-const COPY: Localized<Omit<SmartEnergyFilmLabels, "url">> = {
-  title: { en: "Smart energy steering, explained", nl: "Slim energie sturen, uitgelegd" },
-  subtitle: {
-    en: "Own proof of concept. It never ran at a client. Nothing is measured.",
-    nl: "Eigen proof of concept. Het heeft nooit bij een klant gedraaid. Er is niets gemeten.",
+const NO_NOTE = same("");
+
+const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> & { endCard: Localized<Omit<SmartEnergyFilmLabels["endCard"], "link">> } = {
+  blocks: {
+    battery: { title: [{ en: "Battery", nl: "Batterij" }], note: NO_NOTE },
+    prices: { title: [same("Day-ahead"), { en: "prices", nl: "prijzen" }], note: NO_NOTE },
+    iotHub: { title: [same("IoT Hub")], note: NO_NOTE },
+    serviceBus: { title: [same("Service Bus")], note: { en: "pro only", nl: "alleen pro" } },
+    gateway: { title: [same("Gateway")], note: NO_NOTE },
+    api: { title: [same("API")], note: NO_NOTE },
+    planner: { title: [same("Planner")], note: NO_NOTE },
+    steering: { title: [{ en: "Steering", nl: "Sturing" }], note: NO_NOTE },
+    dashboard: { title: [same("Dashboard")], note: NO_NOTE },
+    database: { title: [same("PostgreSQL")], note: same("TimescaleDB") },
+    browser: { title: [same("Browser")], note: { en: "customer", nl: "klant" } },
   },
-  steps: [
-    { en: "the whole application", nl: "de hele applicatie" },
-    { en: "frontend with backend", nl: "frontend met backend" },
-    { en: "backend patterns", nl: "backendpatronen" },
-    { en: "the cloud", nl: "de cloud" },
-    { en: "everything running", nl: "alles draait" },
-  ],
   frames: {
-    sources: { en: "SOURCES", nl: "BRONNEN" },
-    consumer: { en: "CONSUMER", nl: "GEBRUIKER" },
-    subscription: { en: "AZURE SUBSCRIPTION, OWN", nl: "AZURE-ABONNEMENT, EIGEN" },
-    resourceGroup: { en: "RESOURCE GROUP PER ENVIRONMENT: DEV, PRO", nl: "RESOURCE GROUP PER OMGEVING: DEV, PRO" },
-    containerApps: { en: "CONTAINER APPS ENVIRONMENT", nl: "CONTAINER APPS-OMGEVING" },
-    security: { en: "SECURITY ALONG THE FLOW", nl: "BEVEILIGING LANGS DE FLOW" },
+    azure: same("Azure"),
+    containerApps: same("Container Apps"),
+    gates: { en: "Gates for known advisories", nl: "Gates voor bekende advisories" },
   },
-  nodes: {
-    battery: { title: { en: "Battery", nl: "Batterij" }, subtitle: { en: "steerable", nl: "stuurbaar" } },
-    evCharger: { title: { en: "EV charger", nl: "Laadpaal" }, subtitle: { en: "simulated", nl: "gesimuleerd" } },
-    pvInverter: { title: { en: "PV inverter", nl: "PV-omvormer" }, subtitle: { en: "simulated", nl: "gesimuleerd" } },
-    heatPump: { title: { en: "Heat pump", nl: "Warmtepomp" }, subtitle: { en: "simulated", nl: "gesimuleerd" } },
-    prices: { title: { en: "Day-ahead prices", nl: "Day-ahead prijzen" }, subtitle: { en: "three adapters", nl: "drie adapters" } },
-    browser: { title: same("Browser"), subtitle: { en: "business customer", nl: "zakelijke klant" } },
-    iotHub: { title: same("IoT Hub"), subtitle: { en: "S1 in dev, F1 in pro", nl: "S1 in dev, F1 in pro" } },
-    blob: { title: same("Blob"), subtitle: same("checkpoints") },
-    budget: { title: same("Budget"), subtitle: { en: "35 euro each", nl: "35 euro per stuk" } },
-    keyVault: { title: same("Key Vault"), subtitle: { en: "device keys", nl: "apparaatsleutels" } },
-    serviceBus: { title: same("Service Bus"), subtitle: { en: "queue commands", nl: "wachtrij commands" } },
-    logAnalytics: { title: same("Log Analytics"), subtitle: same("App Insights") },
-    identities: { title: { en: "7 identities", nl: "7 identiteiten" }, subtitle: { en: "one per workload", nl: "een per workload" } },
-    gateway: { title: same("gateway"), subtitle: { en: "no ingress, KEDA on queue", nl: "KEDA op wachtrij" } },
-    api: { title: same("api"), subtitle: { en: "internal ingress", nl: "interne ingress" } },
-    dashboard: { title: same("dashboard"), subtitle: { en: "external ingress", nl: "externe ingress" } },
-    planner: { title: same("planner"), subtitle: { en: "hourly", nl: "elk uur" } },
-    steering: { title: { en: "steering", nl: "sturing" }, subtitle: { en: "every 15 min", nl: "elke 15 min" } },
-    retention: { title: { en: "retention", nl: "retentie" }, subtitle: { en: "nightly", nl: "elke nacht" } },
-    simulator: { title: same("simulator"), subtitle: { en: "manual", nl: "handmatig" } },
+  cloudFrames: {
+    azure: { en: "Azure, dev and pro", nl: "Azure, dev en pro" },
+    containerApps: { en: "Container Apps, 0 to 1 replica", nl: "Container Apps, 0 tot 1 replica" },
+    gates: { en: "Gates for known advisories", nl: "Gates voor bekende advisories" },
   },
-  sourceNotes: [
-    { en: "one device identity per asset", nl: "een apparaatidentiteit per asset" },
-    { en: "telemetry over MQTT", nl: "telemetrie over MQTT" },
-  ],
-  priceNotes: [same("synthetic, Energy-Charts,"), same("ENTSO-E")],
-  consumerNotes: [
-    { en: "polls every 10 s", nl: "pollt elke 10 s" },
-    { en: "only while visible", nl: "alleen als zichtbaar" },
-  ],
-  serviceBusNotes: [
-    { en: "pro only,", nl: "alleen pro," },
-    { en: "never applied", nl: "nooit uitgerold" },
-  ],
-  replicaChip: { en: "min 0, max 1 replica", nl: "min 0, max 1 replica" },
-  jobsLabel: { en: "Jobs, run once and exit", nl: "Jobs, draaien een keer en stoppen" },
-  databaseTitle: same("PostgreSQL Flexible Server B1ms, PG17, TimescaleDB"),
-  chips: {
-    readings: { en: "telemetry_readings hypertable", nl: "telemetry_readings hypertable" },
-    rollup: { en: "telemetry_15m rollup", nl: "telemetry_15m rollup" },
-    currentState: same("asset_current_state"),
-    command: { en: "command, unique idempotency key", nl: "command, unieke idempotency key" },
-    audit: same("command_audit"),
-    plans: { en: "plans and prices, versioned", nl: "plannen en prijzen, met versie" },
+  legend: {
+    telemetry: { en: "telemetry", nl: "telemetrie" },
+    commands: same("commands"),
+    reads: { en: "reads", nl: "lezen" },
+    control: { en: "plan", nl: "plan" },
   },
-  databaseSummary: {
-    en: "ON CONFLICT keys, forward-only current state, compare-and-set, advisory lock on migrate",
-    nl: "ON CONFLICT-sleutels, actuele stand alleen vooruit, compare-and-set, advisory lock bij migreren",
+  shields: {
+    deviceKey: { en: "SAS key", nl: "SAS-sleutel" },
+    hubIdentity: { en: "hub identity", nl: "hub-identiteit" },
+    parameterised: { en: "parameterised", nl: "geparametriseerd" },
+    contentPolicy: same("CSP, PKCE"),
+    token: same("JWT"),
+    internalIngress: { en: "internal only", nl: "alleen intern" },
+    entraQueue: { en: "Entra only", nl: "alleen Entra" },
   },
-  arrows: {
-    eventHubs: { en: "Event Hubs endpoint", nl: "Event Hubs-endpoint" },
-    checkpoint: same("checkpoint"),
-    batch: { en: "one batch, one transaction", nl: "een batch, een transactie" },
-    reads: { en: "reads", nl: "leest" },
-    calls: { en: "calls", nl: "roept aan" },
-    poll: same("/api/site, ETag, 304"),
-    prices: { en: "prices", nl: "prijzen" },
-    commands: { en: "commands with idempotency key", nl: "commands met idempotency key" },
-    sessions: { en: "sessions per asset", nl: "sessies per asset" },
-    cloudToDevice: { en: "cloud to device", nl: "cloud naar apparaat" },
-  },
-  backendCode: [
-    { en: "Postgres adapter or in-memory adapter behind one port, last registration wins", nl: "Postgres-adapter of in-memory adapter achter een poort, laatste registratie wint" },
-    same("ON CONFLICT (asset_id, measured_at) DO NOTHING"),
-    same("WHERE excluded.measured_at > asset_current_state.measured_at"),
-    { en: "ON CONFLICT (idempotency_key) DO NOTHING, then AlreadyIssued", nl: "ON CONFLICT (idempotency_key) DO NOTHING, daarna AlreadyIssued" },
-    { en: "UPDATE ... WHERE state = expected, 0 rows stops, audit row in the same transaction", nl: "UPDATE ... WHERE state = verwacht, 0 rijen stopt, auditrij in dezelfde transactie" },
-    { en: "SELECT pg_advisory_lock(@key) before migrate, a second host waits", nl: "SELECT pg_advisory_lock(@key) voor het migreren, een tweede host wacht" },
-  ],
-  controls: [
-    { en: "SAS key per device in Key Vault", nl: "SAS-sleutel per apparaat in Key Vault" },
-    { en: "identity from the hub, never the body", nl: "identiteit van de hub, nooit uit de body" },
-    { en: "bounded parser that never throws", nl: "begrensde parser die nooit gooit" },
-    { en: "time window on readings", nl: "tijdvenster op metingen" },
-    { en: "parameterised, one transaction per batch", nl: "geparametriseerd, een transactie per batch" },
-    { en: "api on internal ingress", nl: "api op interne ingress" },
-    { en: "bearer or Entra JWT, organisation per request", nl: "bearer of Entra JWT, organisatie per verzoek" },
-    { en: "raw reads capped at 86 400 rows", nl: "ruwe reads begrensd op 86 400 rijen" },
-    { en: "token bucket and 5 s cache on the dashboard", nl: "token bucket en 5 s cache op het dashboard" },
-    { en: "nonce CSP and PKCE sign-in", nl: "nonce CSP en PKCE-aanmelding" },
-    { en: "Entra-only queue with sessions", nl: "wachtrij alleen voor Entra, met sessies" },
-    { en: "migrations under an advisory lock", nl: "migraties onder een advisory lock" },
-  ],
-  gatesLabel: { en: "Gates for known advisories", nl: "Gates voor bekende advisories" },
   gates: [same("NuGet audit"), same("Grype"), same("Semgrep"), same("Gitleaks"), same("Trivy"), same("terraform test"), same("Dependabot")],
-  acceptedNote: {
-    en: "Accepted for now: S7 database network and logins, S8 events key that can steer, S16 smaller items. Each has its reason in the sweep.",
-    nl: "Voorlopig geaccepteerd: S7 databasenetwerk en logins, S8 events-sleutel die kan sturen, S16 kleinere punten. Elk heeft zijn reden in de sweep.",
+  safety: {
+    title: { en: "PostgreSQL keeps the data right", nl: "PostgreSQL houdt de data juist" },
+    duplicateKey: [same("asset_id,"), same("measured_at")],
+    duplicateResult: same("DO NOTHING"),
+    raceWinner: { en: "Sent to Acknowledged: 1 row", nl: "Sent naar Acknowledged: 1 rij" },
+    raceLoser: { en: "Sent to Expired: 0 rows", nl: "Sent naar Expired: 0 rijen" },
+    lockName: same("advisory lock"),
+    lockFirst: same("host 1"),
+    lockSecond: same("host 2"),
+    lockWaits: { en: "waits", nl: "wacht" },
+    lockDone: { en: "schema current", nl: "schema bij" },
+    auditChange: { en: "state change", nl: "statuswijziging" },
+    auditRow: { en: "audit row", nl: "auditrij" },
+    auditTransaction: { en: "one transaction", nl: "een transactie" },
+    mechanisms: [
+      { en: "duplicate", nl: "dubbel" },
+      { en: "race", nl: "race" },
+      { en: "migration", nl: "migratie" },
+      { en: "audit", nl: "audit" },
+    ],
   },
-  scenes: {
-    overview: {
-      step: same("01"),
-      title: { en: "The whole application", nl: "De hele applicatie" },
-      caption: {
-        en: "Four simulated assets on the left, the business customer's browser on the right, and in between one Azure subscription with IoT Hub, Container Apps, PostgreSQL and the jobs that plan and steer.",
-        nl: "Vier gesimuleerde assets links, de browser van de zakelijke klant rechts, en daartussen een Azure-abonnement met IoT Hub, Container Apps, PostgreSQL en de jobs die plannen en sturen.",
+  captions: {
+    title: [],
+    reading: [
+      {
+        headline: { en: "A reading leaves the battery", nl: "Een meting verlaat de batterij" },
+        detail: { en: "MQTT to IoT Hub, one device identity per asset", nl: "MQTT naar IoT Hub, een apparaatidentiteit per asset" },
       },
-      beats: [],
-    },
-    frontend: {
-      step: same("02"),
-      title: { en: "Frontend with backend", nl: "Frontend met backend" },
-      caption: {
-        en: "The browser talks only to the dashboard, and the dashboard talks to the api.",
-        nl: "De browser praat alleen met het dashboard, en het dashboard praat met de api.",
+      {
+        headline: { en: "The gateway picks it up", nl: "De gateway pakt hem op" },
+        detail: { en: "from the Event Hubs endpoint, with checkpoints in Blob", nl: "van het Event Hubs-endpoint, met checkpoints in Blob" },
       },
-      beats: [
-        {
-          en: "The browser polls the dashboard's own /api/site every 10 seconds with If-None-Match, only while the tab is visible, and backs off to 60 seconds on failure.",
-          nl: "De browser pollt elke 10 seconden de eigen /api/site van het dashboard met If-None-Match, alleen als het tabblad zichtbaar is, en wacht 60 seconden na een fout.",
-        },
-        {
-          en: "The dashboard route asks the api, which answers the site and the asset state with a weak ETag built from the newest measured moment.",
-          nl: "De dashboardroute vraagt het aan de api, die de site en de assetstand beantwoordt met een zwakke ETag op basis van het nieuwste meetmoment.",
-        },
-        {
-          en: "When nothing changed, the api answers 304 and the route passes it on, so an unchanged poll carries no body.",
-          nl: "Is er niets veranderd, dan antwoordt de api met 304 en geeft de route dat door, dus een ongewijzigde poll draagt geen body.",
-        },
-        {
-          en: "The plan, commands and savings routes keep a 5 second answer cache per caller, behind a token bucket of 60 burst and 1 per second.",
-          nl: "De routes voor plan, commands en besparing houden per aanroeper een antwoordcache van 5 seconden, achter een token bucket van 60 burst en 1 per seconde.",
-        },
-      ],
-    },
-    backend: {
-      step: same("03"),
-      title: { en: "Backend architecture and patterns", nl: "Backendarchitectuur en patronen" },
-      caption: {
-        en: "Ports and adapters, and the keys and conditions that keep the data right.",
-        nl: "Poorten en adapters, en de sleutels en voorwaarden die de data juist houden.",
+      {
+        headline: { en: "One batch, one transaction", nl: "Een batch, een transactie" },
+        detail: { en: "the raw readings, the 15 minute rollup and the current state", nl: "de ruwe metingen, de rollup per 15 minuten en de actuele stand" },
       },
-      beats: [
-        {
-          en: "Every store sits behind one port. The hosts register the in-memory adapter first and Postgres when a connection string is configured. The last registration wins.",
-          nl: "Elke store zit achter een poort. De hosts registreren eerst de in-memory adapter en Postgres als er een connection string is ingesteld. De laatste registratie wint.",
-        },
-        {
-          en: "The same reading twice: the primary key is the asset and the measured moment, and the insert does nothing on a conflict.",
-          nl: "Dezelfde meting twee keer: de primaire sleutel is de asset met het meetmoment, en de insert doet niets bij een conflict.",
-        },
-        {
-          en: "A late, older reading lands in the history. The current state only moves forward.",
-          nl: "Een late, oudere meting komt in de historie. De actuele stand gaat alleen vooruit.",
-        },
-        {
-          en: "Steering twice for one period meets the idempotency key of asset, period and plan version, and returns AlreadyIssued.",
-          nl: "Twee keer sturen voor een periode stuit op de idempotency key van asset, periode en planversie, en geeft AlreadyIssued terug.",
-        },
-        {
-          en: "Two transitions race on one command. The update carries the expected state, so the loser changes zero rows and stops. Each change writes its audit row in the same transaction.",
-          nl: "Twee overgangen racen op een commando. De update neemt de verwachte status mee, dus de verliezer wijzigt nul rijen en stopt. Elke wijziging schrijft zijn auditrij in dezelfde transactie.",
-        },
-        {
-          en: "Hosts migrate the schema under a PostgreSQL advisory lock, so a second host waits until the first has migrated.",
-          nl: "Hosts migreren het schema onder een advisory lock in PostgreSQL, dus een tweede host wacht tot de eerste gemigreerd heeft.",
-        },
-      ],
-    },
-    cloud: {
-      step: same("04"),
-      title: { en: "The cloud", nl: "De cloud" },
-      caption: {
-        en: "Everything in one own Azure subscription, described in Terraform.",
-        nl: "Alles in een eigen Azure-abonnement, beschreven in Terraform.",
+    ],
+    command: [
+      {
+        headline: { en: "Prices become a plan", nl: "Prijzen worden een plan" },
+        detail: { en: "the hourly planner stores a versioned plan", nl: "de planner slaat elk uur een plan met versie op" },
       },
-      beats: [
-        {
-          en: "One own Azure subscription with a resource group per environment. Dev was applied once on 29 September 2026 and destroyed the same morning. Pro was never applied.",
-          nl: "Een eigen Azure-abonnement met een resource group per omgeving. Dev is een keer uitgerold op 29 september 2026 en dezelfde ochtend afgebroken. Pro is nooit uitgerold.",
-        },
-        {
-          en: "Container Apps: the dashboard on external ingress, the api on internal ingress, the gateway without ingress and scaled by KEDA on queue length. Minimum 0 and maximum 1 replica, held by a Terraform test.",
-          nl: "Container Apps: het dashboard op externe ingress, de api op interne ingress, de gateway zonder ingress en geschaald door KEDA op de lengte van de wachtrij. Minimaal 0 en maximaal 1 replica, bewaakt door een Terraform-test.",
-        },
-        {
-          en: "Jobs run once and exit: the planner hourly, steering every 15 minutes, retention nightly and the simulator by hand.",
-          nl: "Jobs draaien een keer en stoppen: de planner elk uur, sturing elke 15 minuten, retentie elke nacht en de simulator met de hand.",
-        },
-        {
-          en: "IoT Hub S1 in dev and F1 in pro, Service Bus Standard in pro only, and PostgreSQL Flexible Server B1ms with PG17 and TimescaleDB.",
-          nl: "IoT Hub S1 in dev en F1 in pro, Service Bus Standard alleen in pro, en PostgreSQL Flexible Server B1ms met PG17 en TimescaleDB.",
-        },
-        {
-          en: "Key Vault for the device keys, one user-assigned identity per workload, seven in all, Log Analytics with App Insights and a 35 euro budget per environment.",
-          nl: "Key Vault voor de apparaatsleutels, een user-assigned identity per workload, zeven in totaal, Log Analytics met App Insights en een budget van 35 euro per omgeving.",
-        },
-      ],
-    },
-    running: {
-      step: same("05"),
-      title: { en: "Everything running", nl: "Alles draait" },
-      caption: {
-        en: "Telemetry comes in, plans become commands and the browser polls, while the band below lights each security control in flow order.",
-        nl: "Telemetrie komt binnen, plannen worden commando's en de browser pollt, terwijl de band eronder elke beveiligingscontrole oplicht in de volgorde van de flow.",
+      {
+        headline: { en: "Steering issues a command", nl: "Sturing geeft een commando uit" },
+        detail: { en: "every 15 minutes, with an idempotency key", nl: "elke 15 minuten, met een idempotency key" },
       },
-      beats: [],
-    },
+      {
+        headline: { en: "The command reaches the battery", nl: "Het commando bereikt de batterij" },
+        detail: { en: "queue in pro, in-memory channel on a laptop, then cloud to device", nl: "wachtrij in pro, in-memory kanaal op een laptop, dan cloud naar apparaat" },
+      },
+      {
+        headline: { en: "The next reading confirms it", nl: "De volgende meting bevestigt het" },
+        detail: { en: "Sent, Acknowledged, Confirmed", nl: "Sent, Acknowledged, Confirmed" },
+      },
+    ],
+    customer: [
+      {
+        headline: { en: "The customer opens the dashboard", nl: "De klant opent het dashboard" },
+        detail: { en: "the browser polls every 10 seconds while the tab is visible", nl: "de browser pollt elke 10 seconden zolang het tabblad zichtbaar is" },
+      },
+      {
+        headline: { en: "The dashboard asks the api", nl: "Het dashboard vraagt de api" },
+        detail: { en: "on internal ingress, reading from PostgreSQL", nl: "op interne ingress, lezend uit PostgreSQL" },
+      },
+      {
+        headline: { en: "Nothing changed, nothing sent", nl: "Niets veranderd, niets verstuurd" },
+        detail: { en: "a weak ETag and 304 Not Modified", nl: "een zwakke ETag en 304 Not Modified" },
+      },
+    ],
+    safety: [
+      {
+        headline: { en: "The same reading twice is stored once", nl: "Dezelfde meting twee keer wordt een keer opgeslagen" },
+        detail: { en: "key (asset_id, measured_at), ON CONFLICT DO NOTHING", nl: "sleutel (asset_id, measured_at), ON CONFLICT DO NOTHING" },
+      },
+      {
+        headline: { en: "A stale update changes nothing", nl: "Een verouderde update verandert niets" },
+        detail: { en: "UPDATE ... WHERE state = expected, 0 rows", nl: "UPDATE ... WHERE state = verwacht, 0 rijen" },
+      },
+      {
+        headline: { en: "One host migrates, the other waits", nl: "Een host migreert, de ander wacht" },
+        detail: { en: "a PostgreSQL advisory lock", nl: "een advisory lock in PostgreSQL" },
+      },
+      {
+        headline: { en: "Every state change leaves a trace", nl: "Elke statuswijziging laat een spoor na" },
+        detail: { en: "the audit row in the same transaction", nl: "de auditrij in dezelfde transactie" },
+      },
+    ],
+    cloud: [
+      {
+        headline: { en: "Containers in two environments", nl: "Containers in twee omgevingen" },
+        detail: { en: "Container Apps in dev and pro, KEDA on queue length", nl: "Container Apps in dev en pro, KEDA op de lengte van de wachtrij" },
+      },
+      {
+        headline: { en: "A control where it applies", nl: "Een controle waar die hoort" },
+        detail: { en: "seven managed identities and Key Vault", nl: "zeven managed identities en Key Vault" },
+      },
+    ],
+    end: [],
   },
-  closing: {
-    en: "Own work, built in two weeks. It never ran at a client.",
-    nl: "Eigen werk, gebouwd in twee weken. Het heeft nooit bij een klant gedraaid.",
+  titleCard: [
+    { en: "A battery that charges when power is cheap.", nl: "Een batterij die laadt als stroom goedkoop is." },
+    { en: "This is the whole platform that plans and steers it.", nl: "Dit is het hele platform dat hem plant en stuurt." },
+  ],
+  endCard: {
+    read: { en: "How it is built, step by step:", nl: "Hoe het gebouwd is, stap voor stap:" },
+    ownWork: { en: "Own work, never ran at a client.", nl: "Eigen werk, nooit bij een klant gedraaid." },
   },
 };
 
@@ -277,9 +209,16 @@ const resolve = (value: unknown, locale: Locale): unknown => {
   return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, entry]) => [key, resolve(entry, locale)]));
 };
 
+export const POST_SLUG = "smart-energy-steering-architecture";
+
 export function smartEnergyFilmLabels(locale: Locale): SmartEnergyFilmLabels {
+  const resolved = resolve(COPY, locale) as Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard"> & {
+    endCard: Omit<SmartEnergyFilmLabels["endCard"], "link">;
+  };
   return {
-    ...(resolve(COPY, locale) as Omit<SmartEnergyFilmLabels, "url">),
-    url: BUSINESS_PROFILE.CONTACT.WEBSITE.replace("https://", ""),
+    ...resolved,
+    name: BUSINESS_PROFILE.NAME,
+    role: BUSINESS_PROFILE.TITLE,
+    endCard: { ...resolved.endCard, link: `${BUSINESS_PROFILE.CONTACT.WEBSITE.replace("https://", "")}/${locale}/blog/${POST_SLUG}` },
   };
 }

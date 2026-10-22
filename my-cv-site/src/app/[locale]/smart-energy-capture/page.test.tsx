@@ -31,15 +31,15 @@ describe("smart energy capture route", () => {
 
   it("renders the requested frame in the requested language", async () => {
     vi.stubEnv("SMART_ENERGY_CAPTURE", "enabled");
-    render(await SmartEnergyCapturePage(props("nl", "400")));
-    expect(screen.getByText("Frontend met backend")).toBeInTheDocument();
+    render(await SmartEnergyCapturePage(props("nl", "160")));
+    expect(screen.getByText("Een meting verlaat de batterij")).toBeInTheDocument();
   });
 
   it("falls back to the first frame in English for anything else", async () => {
     vi.stubEnv("SMART_ENERGY_CAPTURE", "enabled");
     for (const frame of [undefined, "-3", "abc", "999999", ["1", "2"]]) {
       const { unmount } = render(await SmartEnergyCapturePage(props("de", frame)));
-      expect(screen.getByText("The whole application")).toBeInTheDocument();
+      expect(screen.getByText("A battery that charges when power is cheap.")).toBeInTheDocument();
       unmount();
     }
   });
