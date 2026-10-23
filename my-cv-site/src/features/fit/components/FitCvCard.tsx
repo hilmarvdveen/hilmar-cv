@@ -21,14 +21,14 @@ const EMAIL_ERROR_ID = "fit-cv-email-error";
 const FAILURE_ID = "fit-cv-failure";
 
 const FIELD_CLASS =
-  "w-full rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "w-full rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-ring";
 
 const LABEL_CLASS = "block text-sm font-semibold text-gray-900 mb-2";
 
 const ERROR_CLASS = "mt-2 text-sm font-semibold text-red-800";
 
 const INLINE_LINK_CLASS =
-  "inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring";
 
 type FitCvCardProps = {
   sessionId: string;
@@ -116,7 +116,7 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
             <h3
               ref={sentHeadingRef}
               tabIndex={-1}
-              className="text-subsection-title text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="text-subsection-title text-textMain focus-ring"
             >
               {t("sentTitle")}
             </h3>
@@ -126,7 +126,7 @@ export const FitCvCard = ({ sessionId, onSent }: FitCvCardProps) => {
             <button
               type="button"
               onClick={() => setSentTo("")}
-              className="mt-3 inline-flex min-h-6 cursor-pointer items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="mt-3 inline-flex min-h-6 cursor-pointer items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {t("resend")}
             </button>

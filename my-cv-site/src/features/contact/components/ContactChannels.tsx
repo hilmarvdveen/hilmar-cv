@@ -10,7 +10,7 @@ type ChannelCopy = {
 };
 
 const CHANNEL_LINK_CLASS_NAME =
-  "flex h-full items-start gap-3 rounded-lg border border-gray-300 bg-white p-4 text-gray-900 shadow-sm transition-colors hover:border-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "flex h-full items-start gap-3 rounded-lg border border-gray-300 bg-white p-4 text-gray-900 shadow-sm transition-colors hover:border-emerald-600 focus-ring";
 
 export const ContactChannels = () => {
   const t = useTranslations("contact");

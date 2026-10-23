@@ -16,7 +16,7 @@ type ValueBlock = {
 const ARTICLE_LIST_CLASS = "mt-3 flex flex-col items-start gap-1.5";
 
 const ARTICLE_LINK_CLASS =
-  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-ring";
 
 const blockNumber = (index: number) => String(index + 1).padStart(2, "0");
 

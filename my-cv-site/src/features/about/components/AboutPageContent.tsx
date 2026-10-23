@@ -29,10 +29,10 @@ type StandardsCard = {
 const standardsCardIcons = [Shield, Accessibility, Lock];
 
 const TEXT_LINK_CLASS =
-  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-primary underline underline-offset-4 focus-ring";
 
 const ON_NAVY_LINK_CLASS =
-  "inline-flex min-h-6 items-center text-white underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy";
+  "inline-flex min-h-6 items-center text-white underline underline-offset-4 focus-ring-on-dark";
 
 export function AboutPageContent() {
   const t = useTranslations("about");
@@ -73,7 +73,7 @@ export function AboutPageContent() {
             <a
               href="#about-hiring"
               data-placement="about-hero-facts"
-              className="inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-emerald-300 underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+              className="inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold text-emerald-300 underline underline-offset-4 focus-ring-on-dark"
             >
               {t("hero.factsLink")}
               <ArrowDown className="h-4 w-4" aria-hidden="true" />

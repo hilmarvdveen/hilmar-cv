@@ -38,7 +38,7 @@ export const FitNote = ({ note, requirement }: FitNoteProps) => {
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
         aria-controls={noteId}
-        className="mt-1 inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+        className="mt-1 inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
       >
         <span>
           {isOpen ? t("noteLess") : t("noteMore")}

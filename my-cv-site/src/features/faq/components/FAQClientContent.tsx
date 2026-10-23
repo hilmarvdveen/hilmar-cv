@@ -114,7 +114,7 @@ export function FAQClientContent() {
                         type="button"
                         onClick={() => toggleItem(globalIndex)}
                         aria-expanded={isOpen}
-                        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-bgLight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-bgLight focus-ring"
                       >
                         <span className="pr-4 text-lg font-medium text-textMain">
                           {faq.question}

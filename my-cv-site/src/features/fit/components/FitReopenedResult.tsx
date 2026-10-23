@@ -271,14 +271,14 @@ export const FitReopenedResult = ({
             <Link
               href="/fit"
               data-placement="fit-reopen-new-check"
-              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {labels.newCheck}
             </Link>
             <a
               href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
               data-placement="fit-reopen-failed-mail"
-              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {labels.mailAction}
             </a>
@@ -327,7 +327,7 @@ export const FitReopenedResult = ({
                 <a
                   href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                   data-placement="fit-download-mail"
-                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring"
                 >
                   {labels.mailAction}
                 </a>

@@ -132,7 +132,7 @@ export default async function FitPage({ params, searchParams }: Props) {
             <Link
               href="/fit"
               data-placement="fit-reopen-new-check"
-              className="inline-flex min-h-6 items-center rounded-sm py-1 text-base font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-6 items-center rounded-sm py-1 text-base font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {t("result.newCheck")}
             </Link>

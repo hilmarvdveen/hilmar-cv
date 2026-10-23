@@ -112,7 +112,7 @@ const ArticleLink = ({ article }: { article: ServiceArticleLink }) => (
     <Link
       href={article.href}
       data-placement={article.placement}
-      className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+      className="inline-flex min-h-6 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-ring"
     >
       {article.label}
     </Link>

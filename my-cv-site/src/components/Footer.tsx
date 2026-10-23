@@ -237,7 +237,7 @@ export const Footer = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="inline-block rounded-sm py-1 text-gray-400 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+                      className="inline-block rounded-sm py-1 text-gray-400 transition-colors duration-200 hover:text-white focus-ring-on-dark"
                     >
                       {link.name}
                     </Link>

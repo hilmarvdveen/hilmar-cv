@@ -16,7 +16,7 @@ export const FitDisclosure = () => {
         <Link
           href="/book"
           data-placement="fit-hero"
-          className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring"
         >
           {t("hero.noteLink")}
         </Link>

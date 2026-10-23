@@ -98,7 +98,7 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
             onChange={(event) => setQuestion(event.target.value)}
             maxLength={FIT_LIMITS.questionMaximum}
             placeholder={t("question.placeholder")}
-            className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-ring"
             required
             aria-required="true"
             aria-invalid={errorMessage !== ""}
@@ -147,7 +147,7 @@ export const FitQuestion = ({ sessionId, turnstileSiteKey }: FitQuestionProps) =
           <div
             ref={answerRef}
             tabIndex={-1}
-            className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="rounded-xl focus-ring"
           >
             <Card variant="tinted" className="p-5">
               <p className="text-xs font-bold uppercase tracking-widest text-primary">

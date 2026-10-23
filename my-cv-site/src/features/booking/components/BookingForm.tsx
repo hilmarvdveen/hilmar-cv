@@ -66,7 +66,7 @@ const STEP_KEYS: Record<BookingStep, string> = {
 
 const INPUT_CLASS =
   "w-full rounded-lg border bg-white px-4 py-3 text-base text-textMain placeholder:text-gray-500 " +
-  "transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-600";
+  "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600";
 
 const inputClass = (hasError: boolean) =>
   `${INPUT_CLASS} ${hasError ? "border-red-500" : "border-gray-500 focus:border-emerald-600"}`;
@@ -421,14 +421,14 @@ export const BookingForm = () => {
                 onChange={(event) => {
                   if (event.target.value) selectDay(event.target.value);
                 }}
-                className="h-11 rounded-lg border border-gray-500 px-3 text-base text-textMain focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                className="h-11 rounded-lg border border-gray-500 px-3 text-base text-textMain focus:border-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
               />
             </div>
           ) : (
             <button
               type="button"
               onClick={() => setShowDateInput(true)}
-              className="-my-2 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="-my-2 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {t("flow.moment.otherDate")}
             </button>
@@ -445,7 +445,7 @@ export const BookingForm = () => {
                 aria-pressed={selected}
                 aria-label={formatDayButtonName(day, locale)}
                 onClick={() => selectDay(day)}
-                className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:h-[68px] ${
+                className={`flex h-14 flex-col items-center justify-center rounded-lg border text-center transition-colors focus-ring sm:h-[68px] ${
                   selected
                     ? "border-emerald-700 bg-emerald-700 text-white"
                     : "border-gray-500 bg-white text-textMain hover:border-emerald-600"
@@ -505,7 +505,7 @@ export const BookingForm = () => {
                   <button
                     type="button"
                     onClick={retryLoadingSlots}
-                    className="-mb-2 mt-3 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    className="-mb-2 mt-3 rounded py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
                   >
                     {t("flow.moment.retry")}
                   </button>
@@ -544,7 +544,7 @@ export const BookingForm = () => {
                     type="button"
                     aria-pressed={selected}
                     onClick={() => selectSlot(slot.value)}
-                    className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                    className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-lg border text-sm font-semibold transition-colors focus-ring ${
                       selected
                         ? "border-emerald-700 bg-emerald-700 text-white"
                         : "border-gray-500 bg-white text-textMain hover:border-emerald-600 hover:text-emerald-800"
@@ -740,7 +740,7 @@ export const BookingForm = () => {
                 type="button"
                 onClick={handleBack}
                 disabled={status === "submitting"}
-                className="-my-2 inline-flex min-h-11 items-center gap-1.5 rounded py-2 text-sm font-semibold text-gray-600 hover:text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-50"
+                className="-my-2 inline-flex min-h-11 items-center gap-1.5 rounded py-2 text-sm font-semibold text-gray-600 hover:text-textMain focus-ring disabled:opacity-50"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 {t("navigation.back")}
@@ -838,7 +838,7 @@ const ConfirmRow = ({ label, editLabel, onEdit, children }: ConfirmRowProps) => 
     <button
       type="button"
       onClick={onEdit}
-      className="-mx-2 -my-2 flex-shrink-0 rounded px-2 py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+      className="-mx-2 -my-2 flex-shrink-0 rounded px-2 py-2 text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
       aria-label={`${editLabel}: ${label}`}
     >
       {editLabel}

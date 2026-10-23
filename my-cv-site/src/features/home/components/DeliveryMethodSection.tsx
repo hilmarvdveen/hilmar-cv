@@ -56,7 +56,7 @@ export const DeliveryMethodSection = () => {
           <Link
             href={CUT_OVER_POST_HREF}
             data-placement="home-method-article"
-            className="inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
+            className="inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-ring-on-dark"
           >
             {t("link")}
           </Link>

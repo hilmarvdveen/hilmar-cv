@@ -27,7 +27,7 @@ type PostCardProps = {
 const TRACK_ORDER: BlogTrack[] = ["frontend", "fullstack", "backend"];
 
 const REPOSITORY_LINK_CLASS =
-  "inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy";
+  "inline-flex min-h-6 items-center rounded-md font-semibold text-emerald-300 underline underline-offset-4 hover:text-white focus-ring-on-dark";
 
 function PostCard({ post, locale, labels, featured }: PostCardProps) {
   const Heading = featured ? "h2" : "h3";
@@ -37,7 +37,7 @@ function PostCard({ post, locale, labels, featured }: PostCardProps) {
       locale={locale}
       className={`group block ${featured ? "sm:col-span-2" : ""}`}
     >
-      <Card className="flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
+      <Card className="flex h-full flex-col transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
         <div className="flex flex-wrap items-center gap-3">
           <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
             {labels.category[post.category]}

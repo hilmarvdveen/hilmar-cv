@@ -68,7 +68,7 @@ export const WorkExperienceSection = () => {
 
     return (
       <article key={id} id={`experience-${id}`} className="scroll-mt-16">
-        <Card className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
+        <Card className="relative transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
           <div className="mb-4 flex items-center">
             <div
               className="relative mr-4 h-10 w-32 rounded"
@@ -143,7 +143,7 @@ export const WorkExperienceSection = () => {
 
           <Link
             href={`/experience/${id}`}
-            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']"
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-bgLight px-4 py-3 text-base font-semibold text-primary transition-colors hover:border-emerald-300 hover:bg-white focus-ring after:absolute after:inset-0 after:content-['']"
           >
             <span>{t("readMore", { company })}</span>
             <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -187,7 +187,7 @@ export const WorkExperienceSection = () => {
             <Link
               href="/projects"
               data-placement="experience-results"
-              className="inline-flex min-h-6 items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="inline-flex min-h-6 items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-ring"
             >
               {experiencePageT("resultsLink")}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

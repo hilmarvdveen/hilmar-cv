@@ -16,7 +16,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE =
   "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold " +
-  "transition-colors duration-200 focus:outline-none focus-visible:ring-2 " +
+  "transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 " +
   "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none";
 
 const SIZES: Record<ButtonSize, string> = {
@@ -29,9 +29,9 @@ const VARIANTS: Record<ButtonVariant, string> = {
   primary:
     "bg-emerald-700 text-white hover:bg-emerald-800 active:bg-emerald-900 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 shadow-sm hover:shadow-md",
   outline:
-    "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-700 hover:text-white active:bg-emerald-800 active:text-white focus-visible:ring-emerald-500",
+    "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-700 hover:text-white active:bg-emerald-800 active:text-white focus-visible:ring-emerald-600 focus-visible:ring-offset-2",
   outlineOnDark:
-    "border-2 border-emerald-500/60 text-emerald-300 hover:bg-emerald-700 hover:text-white hover:border-emerald-700 active:bg-emerald-800 active:text-white focus-visible:ring-emerald-400",
+    "border-2 border-emerald-500/60 text-emerald-300 hover:bg-emerald-700 hover:text-white hover:border-emerald-700 active:bg-emerald-800 active:text-white focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy",
   white:
     "bg-white text-emerald-700 hover:bg-emerald-50 active:bg-emerald-100 focus-visible:ring-white shadow-sm hover:shadow-md",
   neutral:

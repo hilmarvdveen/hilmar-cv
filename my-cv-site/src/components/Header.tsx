@@ -155,7 +155,7 @@ export const Header = () => {
           <div className="flex h-16 items-center justify-between">
             <Link
               href="/"
-              className="group flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="group flex items-center gap-3 rounded-md focus-ring"
             >
               <Image
                 className="h-10 w-10 lg:h-12 lg:w-12"
@@ -178,7 +178,7 @@ export const Header = () => {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative rounded-md px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                    className={`relative rounded-md px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-200 focus-ring ${
                       isActive
                         ? "text-textMain"
                         : "text-gray-600 hover:text-textMain"
@@ -195,7 +195,7 @@ export const Header = () => {
               <Link
                 href="/search"
                 aria-label={t("nav.search")}
-                className="ml-1 rounded-md p-2 text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                className="ml-1 rounded-md p-2 text-gray-600 transition-colors hover:text-gray-900 focus-ring"
               >
                 <Search className="h-5 w-5" aria-hidden="true" />
               </Link>
@@ -214,7 +214,7 @@ export const Header = () => {
               <div className="relative ml-6">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="flex items-center space-x-2 lg:px-2.5 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  className="flex items-center space-x-2 lg:px-2.5 xl:px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md transition-colors duration-200 focus-ring"
                   aria-label={currentLocaleData?.label}
                 >
                   <Flag code={currentLocale} className="w-5 h-3.5 rounded-sm flex-shrink-0" />
@@ -260,7 +260,7 @@ export const Header = () => {
               </Button>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="rounded-md p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                className="rounded-md p-3 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-ring"
                 aria-label={isMobileMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               >
                 {isMobileMenuOpen ? (
@@ -306,7 +306,7 @@ export const Header = () => {
             </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="rounded-md p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="rounded-md p-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 touch-manipulation focus-ring"
               aria-label={t("nav.closeMenu")}
             >
               <X className="w-6 h-6" />
@@ -323,7 +323,7 @@ export const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
               data-placement="drawer-whatsapp"
-              className="mt-3 inline-flex min-h-6 items-center gap-2 rounded-md text-sm font-medium text-gray-700 underline-offset-4 hover:text-gray-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="mt-3 inline-flex min-h-6 items-center gap-2 rounded-md text-sm font-medium text-gray-700 underline-offset-4 hover:text-gray-900 hover:underline focus-ring"
             >
               <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
               {t("whatsapp")}

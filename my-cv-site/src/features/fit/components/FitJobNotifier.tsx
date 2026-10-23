@@ -70,7 +70,7 @@ export const FitJobNotifier = () => {
             <Link
               href={FIT_PAGE_PATH}
               data-placement={kind === "ready" ? "fit-notifier-ready" : "fit-notifier-failed"}
-              className="mt-1 inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="mt-1 inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring"
             >
               {kind === "ready" ? t("readyLink") : t("failedLink")}
             </Link>
@@ -80,7 +80,7 @@ export const FitJobNotifier = () => {
           type="button"
           onClick={dismiss}
           aria-label={t("dismiss")}
-          className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 active:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 active:bg-gray-200 focus-ring"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>

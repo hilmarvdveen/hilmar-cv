@@ -90,7 +90,7 @@ export const FitVacancyForm = ({
             rows={10}
             maxLength={FIT_LIMITS.vacancyMaximum}
             placeholder={t("form.placeholder")}
-            className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="w-full resize-y rounded-lg border border-gray-500 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors duration-200 focus-ring"
             required
             aria-required="true"
             aria-describedby={fieldDescription}
@@ -131,7 +131,7 @@ export const FitVacancyForm = ({
               id={FAILURE_ID}
               ref={failureRef}
               tabIndex={-1}
-              className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="rounded-xl border-2 border-red-200 bg-red-50 px-5 py-4 text-red-800 focus-ring"
               role="alert"
             >
               <p>{failure.message}</p>
@@ -142,7 +142,7 @@ export const FitVacancyForm = ({
               ref={failureRef}
               tabIndex={-1}
               role="alert"
-              className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="rounded-xl focus-ring"
             >
               <Card variant="tinted" className="p-4">
                 <div className="flex items-start gap-3">
@@ -168,7 +168,7 @@ export const FitVacancyForm = ({
                       <a
                         href={`mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`}
                         data-placement="fit-failed-mail"
-                        className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
                       >
                         {t("errors.mailAction")}
                       </a>

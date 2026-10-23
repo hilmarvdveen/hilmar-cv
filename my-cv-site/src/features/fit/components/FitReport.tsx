@@ -114,7 +114,7 @@ export const FitReport = ({
           id={resultHeadingId}
           ref={headingRef}
           tabIndex={-1}
-          className="text-subsection-title text-textMain focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          className="text-subsection-title text-textMain focus-ring"
         >
           {t("report.title")}
         </h2>
@@ -165,7 +165,7 @@ export const FitReport = ({
                 <Link
                   href="/book"
                   data-placement="fit-result-next"
-                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring"
                 >
                   {nextStepsLinkLabel}
                 </Link>
@@ -230,7 +230,7 @@ export const FitReport = ({
         <section aria-labelledby={technologiesHeadingId}>
           <Card className="p-0">
             <details className="group">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:p-7 [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-4 focus-ring sm:p-7 [&::-webkit-details-marker]:hidden">
                 <span>
                   <h3 id={technologiesHeadingId} className="text-subsection-title text-textMain">
                     {t("report.technologiesTitle")}
@@ -276,7 +276,7 @@ export const FitReport = ({
                   <Link
                     href="/experience"
                     data-placement="fit-technologies-all"
-                    className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-6 items-center rounded-sm font-semibold text-primary underline underline-offset-4 focus-ring"
                   >
                     {t("report.technologiesAllLink", { count: RECORD_TECHNOLOGY_COUNT })}
                   </Link>

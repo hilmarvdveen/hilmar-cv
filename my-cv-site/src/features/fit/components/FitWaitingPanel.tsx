@@ -105,7 +105,7 @@ export const FitWaitingPanel = ({
         <Link
           href="/experience"
           data-placement="fit-waiting-browse"
-          className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+          className="inline-flex min-h-6 items-center rounded-sm text-sm font-semibold text-primary underline underline-offset-4 focus-ring"
         >
           {t("keepBrowsing")}
         </Link>

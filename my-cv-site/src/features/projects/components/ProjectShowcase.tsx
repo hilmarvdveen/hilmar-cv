@@ -55,7 +55,7 @@ export const ProjectShowcase = () => {
               return (
                 <Card
                   key={projectCase.href}
-                  className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                  className="relative transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <p className="text-figure text-emerald-700 text-balance">{projectCase.outcome}</p>
@@ -85,7 +85,7 @@ export const ProjectShowcase = () => {
                   <div className="mt-4 flex items-end justify-between gap-4">
                     <Link
                       href={projectCase.href}
-                      className="inline-flex min-h-6 items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']"
+                      className="inline-flex min-h-6 items-center gap-2 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-ring after:absolute after:inset-0 after:content-['']"
                     >
                       {work("readMore", { company: workEntry ? work(`${workEntry.id}.company`) : projectCase.client })}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />

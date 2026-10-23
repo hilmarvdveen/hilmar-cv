@@ -116,7 +116,7 @@ export default function ContactForm() {
                   key={tag}
                   type="button"
                   onClick={() => toggleTag(tag)}
-                  className={`min-h-10 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+                  className={`min-h-10 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border-2 focus-ring ${
                     selectedTags.includes(tag)
                       ? "bg-emerald-700 border-emerald-700 text-white shadow-md hover:bg-emerald-800 hover:border-emerald-700"
                       : "bg-white border-gray-500 text-gray-800 hover:border-emerald-300 hover:bg-emerald-50"
@@ -146,7 +146,7 @@ export default function ContactForm() {
                 type="text"
                 autoComplete="name"
                 maxLength={100}
-                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-ring transition-colors duration-200"
                 required
                 aria-required="true"
               />
@@ -168,7 +168,7 @@ export default function ContactForm() {
                 type="email"
                 autoComplete="email"
                 maxLength={254}
-                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-ring transition-colors duration-200"
                 required
                 aria-required="true"
               />
@@ -191,7 +191,7 @@ export default function ContactForm() {
                 type="text"
                 autoComplete="organization"
                 maxLength={LIMITS.name}
-                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-ring transition-colors duration-200"
               />
             </div>
 
@@ -210,7 +210,7 @@ export default function ContactForm() {
                 type="text"
                 maxLength={LIMITS.start}
                 placeholder={t("form.startPlaceholder")}
-                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200"
+                className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-ring transition-colors duration-200"
               />
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function ContactForm() {
               onChange={handleChange}
               rows={6}
               maxLength={5000}
-              className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 transition-colors duration-200 resize-none"
+              className="w-full px-4 py-3 border border-gray-500 rounded-lg text-gray-900 placeholder-gray-500 focus-ring transition-colors duration-200 resize-none"
               required
               aria-required="true"
             />

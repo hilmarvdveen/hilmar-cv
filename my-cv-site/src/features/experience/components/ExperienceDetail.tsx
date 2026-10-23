@@ -23,7 +23,7 @@ const TECHNOLOGY_HEADING_ID = "experience-technology-heading";
 const FACTS_HEADING_ID = "experience-facts-heading";
 
 const neighbourLinkClass =
-  "inline-flex min-h-6 items-center gap-2 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-2 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-ring";
 
 export const ExperienceDetail = ({ entry, previous, next, others = [] }: ExperienceDetailProps) => {
   const t = useTranslations("work");
@@ -91,7 +91,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
                     {fact.href ? (
                       <Link
                         href={fact.href}
-                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-ring"
                         data-placement="experience-detail-location"
                       >
                         {fact.value}
@@ -179,7 +179,7 @@ export const ExperienceDetail = ({ entry, previous, next, others = [] }: Experie
                 <li key={other.id}>
                   <Link
                     href={`/experience/${other.id}`}
-                    className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:border-emerald-600 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                    className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:border-emerald-600 hover:bg-emerald-50 focus-ring"
                   >
                     {t(`${other.id}.company`)}
                   </Link>

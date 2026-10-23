@@ -21,7 +21,7 @@ type MapSelection =
   | null;
 
 const cityChipClassName = (selected: boolean) =>
-  `inline-flex h-10 items-center whitespace-nowrap rounded-full border px-3.5 text-sm font-semibold transition-colors touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 ${
+  `inline-flex h-10 items-center whitespace-nowrap rounded-full border px-3.5 text-sm font-semibold transition-colors touch-manipulation focus-ring ${
     selected
       ? "border-emerald-600 bg-emerald-50 text-emerald-800"
       : "border-gray-300 bg-white text-textMain hover:border-emerald-600"
@@ -157,7 +157,7 @@ export const NetherlandsMap = () => {
                     {regionForCity(selectedCity.name) ? (
                       <Link
                         href={regionPath(regionForCity(selectedCity.name))}
-                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                        className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-ring"
                         data-placement="map-city"
                       >
                         {selectedCity.name}

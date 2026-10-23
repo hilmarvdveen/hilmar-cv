@@ -20,7 +20,7 @@ type RegionHubProps = {
 };
 
 const linkClass =
-  "inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-ring";
 
 export const RegionHub = ({
   regions,

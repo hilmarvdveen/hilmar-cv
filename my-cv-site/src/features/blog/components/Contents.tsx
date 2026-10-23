@@ -15,7 +15,7 @@ export function Contents({ label, items }: ContentsProps) {
             <span className="w-7 shrink-0 tabular-nums text-gray-500">{index + 1}.</span>
             <a
               href={`#${slugify(item)}`}
-              className="rounded-sm text-gray-800 underline-offset-4 hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+              className="rounded-sm text-gray-800 underline-offset-4 hover:text-primary hover:underline focus-ring"
             >
               {item}
             </a>

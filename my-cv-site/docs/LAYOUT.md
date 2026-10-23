@@ -42,7 +42,7 @@ scale so a new page never hand rolls its own hero markup:
 | Background and text | `bg-brand-navy text-white` |
 | Vertical padding | `py-16 sm:py-20`, or `py-12 sm:py-14` through the optional `padding="compact"` prop, which `PageHero` passes to `Section` |
 | Badge | optional uppercase eyebrow in `text-emerald-300`, with an optional icon |
-| Heading | `text-[1.75rem] leading-[1.15]` on phones (the shared `text-3xl` budget wrapped a 58-character title to four lines at 390), `sm:text-5xl` from `sm`, white, with an optional accent line |
+| Heading | `text-display`, the fluid page title role from `TYPOGRAPHY.md` (28 pixels on phones up to 48), white, with an optional accent line |
 | Description | `text-slate-300`, which meets 8.9:1 contrast on the navy background, hidden below `sm` through the optional `descriptionHiddenOnPhones` prop |
 | Breadcrumb | optional, rendered at the top of the band through the `breadcrumb` slot |
 | Aside | optional second column for a summary or preview |
@@ -54,7 +54,7 @@ a task page, so its hero shrinks to a title band on phones to keep the day
 picker in the first screen. Four overrides apply there and nowhere else:
 
 - Vertical padding steps down to `py-5 sm:py-12 lg:py-14`.
-- The heading drops to `text-lg` below `sm` instead of the shared `text-3xl`.
+- The heading drops to `text-lg` below `sm` and takes `text-display` from `sm` up.
 - The badge is hidden below `sm`.
 - The description is hidden below `sm`.
 
@@ -140,19 +140,12 @@ questions" and the code change list C-1 to C-6, C-20, C-21).
 
 ### `SectionTitle` sizes and character budgets
 
-`SectionTitle` takes `size?: "display" | "default" | "compact"`, default
-`"default"`, which is pixel-identical to the size every section used before
-this pass.
-
-| Size | Classes | Use | Budget (characters) |
-|---|---|---|---|
-| `display` | `text-3xl sm:text-4xl md:text-5xl` | the flagship heading only | 62, two lines at 1280, three at 390 |
-| `default` | `text-3xl md:text-4xl` | most sections | 47, two lines at 390 |
-| `compact` | `text-[26px] leading-[1.15] sm:text-3xl md:text-4xl` | headings that carry the whole message on their own (track record, method, standards, stack, hiring shapes, the projects showcase) | 55, two lines at 390 |
-
-This package applies `size="display"` to the flagship section, the only
-consumer inside its ownership. The `compact` consumers named above belong to
-other sections and still need the prop applied where those files are owned.
+The `size` prop this pass introduced (`display`, `default`, `compact`) is
+gone. `SectionTitle` now renders every section heading in the
+`text-section-title` role from `TYPOGRAPHY.md`, a fluid size from 24 to 36
+pixels, and takes `eyebrow`, `subtitle`, `align`, `onDark`, `id` and
+`className`. The character budgets still guide the copy: about 47
+characters keeps a section title on two lines at 390 pixels.
 
 ### Results strip: explicit rows instead of subgrid
 
@@ -190,8 +183,10 @@ indicator lines under the logos are gone, they repeated hero chips from two
 screens earlier. What is left under the title: one subtitle line and the
 invite line.
 
-Every logo sits in its own fixed box: a `relative h-12 w-full` span inside a
-`bg-white ring-1 ring-gray-200` frame with padding, holding a `next/image`
+Every logo sits in its own fixed box: a `relative w-full` span with a
+per-logo mark height from `h-6` to `h-12`, inside a link tile of
+`h-[4.5rem]` with `bg-white ring-1 ring-gray-300`, `p-3` and a chevron that
+marks it as a link to the engagement page, holding a `next/image`
 with `fill`, `object-contain` and `sizes="(min-width: 1024px) 160px, 40vw"`.
 The white frame also normalises the four rasters that read badly on the bare
 `bg-bgLight` section background: Opinity and Conclusion are dark rasters on a
@@ -350,11 +345,24 @@ Contrast and focus fixes applied after a UX-agent audit:
 | Primary button focus ring | `emerald-500`, no offset | `emerald-600` with `ring-offset-2` |
 | Small booking links (back, change) | text only | 24px minimum hit area via `-my-2 py-2` (and `-mx-2 px-2` for inline links) |
 
-One focus style is used everywhere: `focus-visible:outline-none
-focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2`
-on header links, the hamburger, the language switcher, and the day and time
-buttons in the booking flow. Links on the navy hero use `ring-emerald-300`
-because `emerald-600` disappears against navy.
+One focus style is used everywhere, defined once in `globals.css` as the
+`focus-ring` utility (`focus-visible:outline-none focus-visible:ring-2
+focus-visible:ring-emerald-600 focus-visible:ring-offset-2`). On navy
+surfaces `focus-ring-on-dark` swaps in `ring-emerald-300` with
+`ring-offset-brand-navy`, because `emerald-600` disappears against navy.
+Write the utility, never the class string. Since 23 October 2026 the
+`Button` variants follow the same pair (`outline` on emerald 600 with the
+offset, `outlineOnDark` on emerald 300 with the navy offset), and the form
+inputs use `focus-visible:` instead of `focus:`. Three named exceptions keep
+their own ring: drawer rows use `ring-inset` so the ring stays inside the
+panel, the secondary links in the navy close bands use a white ring, and
+`Button` builds its ring per variant.
+
+Reduced motion (23 October 2026): one `prefers-reduced-motion: reduce`
+block in `globals.css` turns off smooth scrolling and shortens every
+transition and animation to nothing, the drawer slide included. Hover lifts
+are written `motion-safe:hover:-translate-y-0.5` so they never move for a
+visitor who asked for less motion.
 
 Advisories that were logged at the time, and what became of them:
 

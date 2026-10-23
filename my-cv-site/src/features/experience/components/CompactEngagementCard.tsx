@@ -15,7 +15,7 @@ type CompactEngagementCardProps = {
 };
 
 const readMoreClass =
-  "mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 after:absolute after:inset-0 after:content-['']";
+  "mt-3 inline-flex min-h-6 items-center gap-1 rounded-md text-base font-semibold text-primary underline-offset-4 hover:underline focus-ring after:absolute after:inset-0 after:content-['']";
 
 export const CompactEngagementCard = ({
   id,
@@ -28,7 +28,7 @@ export const CompactEngagementCard = ({
   anchorId,
 }: CompactEngagementCardProps) => (
   <article id={anchorId} className="scroll-mt-16">
-    <Card className="relative transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
+    <Card className="relative transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
         <div className="relative mt-1 h-8 w-24 shrink-0">
           <Image src={`/logos/${logo}`} alt={logoAlt} fill sizes="96px" className="object-contain object-left" />

@@ -1,7 +1,7 @@
 import { BUSINESS_PROFILE } from "@/lib/seo/constants/meta-constants";
 
 const CONTACT_LINK_CLASS =
-  "rounded-sm font-semibold underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "rounded-sm font-semibold underline underline-offset-2 focus-ring";
 
 const CONTACT_LINKS: Record<string, string> = {
   [BUSINESS_PROFILE.CONTACT.EMAIL]: `mailto:${BUSINESS_PROFILE.CONTACT.EMAIL}`,

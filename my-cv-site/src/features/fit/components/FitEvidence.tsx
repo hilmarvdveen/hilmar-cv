@@ -26,7 +26,7 @@ export const FitEvidence = ({ engagements, placement }: FitEvidenceProps) => {
           <Link
             key={engagement.id}
             href={`/experience/${engagement.id}`}
-            className="inline-flex min-h-6 items-center rounded-sm px-1 text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="inline-flex min-h-6 items-center rounded-sm px-1 text-primary underline underline-offset-4 focus-ring"
             data-placement={placement}
           >
             {engagement.company}

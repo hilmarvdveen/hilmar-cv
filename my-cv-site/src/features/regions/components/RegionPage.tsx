@@ -30,7 +30,7 @@ type RegionPageProps = {
 };
 
 const linkClass =
-  "inline-flex min-h-6 items-center gap-1 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2";
+  "inline-flex min-h-6 items-center gap-1 rounded-md font-semibold text-primary underline-offset-4 hover:underline focus-ring";
 
 export const RegionPage = ({ region, locale, engagements, nearby, sector, posts, siblings, totalEngagements }: RegionPageProps) => {
   const t = useTranslations("regions");
@@ -137,7 +137,7 @@ export const RegionPage = ({ region, locale, engagements, nearby, sector, posts,
               {posts.map((post) => (
                 <Card
                   key={post.slug}
-                  className="relative flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                  className="relative flex h-full flex-col transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
                 >
                   <h3 className="text-lg font-bold text-textMain">{post.title[locale]}</h3>
                   <p className="mt-2 flex-1 text-base leading-relaxed text-gray-600">{post.description[locale]}</p>

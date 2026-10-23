@@ -32,7 +32,7 @@ type RequiredField = "name" | "email";
 type FormErrors = Partial<Record<RequiredField, string>>;
 
 const INPUT_CLASS =
-  "w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600";
+  "w-full pl-10 pr-3 py-2 border rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus:border-emerald-600";
 
 export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProps) => {
   const t = useTranslations("cvModal");
@@ -164,7 +164,7 @@ export const CVDownloadModal = ({ isOpen, onClose, locale }: CVDownloadModalProp
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors focus-ring"
             aria-label={t("close")}
           >
             <X className="w-5 h-5" aria-hidden="true" />

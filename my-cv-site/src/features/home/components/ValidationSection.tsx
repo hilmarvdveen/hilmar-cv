@@ -35,7 +35,7 @@ export const ValidationSection = () => {
                 <Link
                   href="/experience"
                   data-placement="validation-history"
-                  className="mt-4 inline-flex min-h-6 items-center text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                  className="mt-4 inline-flex min-h-6 items-center text-sm font-semibold text-primary underline-offset-4 hover:underline focus-ring"
                 >
                   {t("historyLink")}
                 </Link>

@@ -60,7 +60,7 @@ export const HiringSection = () => {
                   {fact.href ? (
                     <Link
                       href={fact.href}
-                      className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                      className="inline-flex min-h-6 items-center rounded-sm underline underline-offset-4 hover:text-primary focus-ring"
                       data-placement="hiring-location"
                     >
                       {fact.value}
@@ -87,7 +87,7 @@ export const HiringSection = () => {
               <Card
                 key={shape.title}
                 variant="quiet"
-                className="relative flex h-full flex-col transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                className="relative flex h-full flex-col transition motion-safe:hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
               >
                 <h3 className="text-base font-bold text-textMain mb-2">
                   {shape.title}

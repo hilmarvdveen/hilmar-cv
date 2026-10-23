@@ -51,7 +51,7 @@ const ClientCard = ({ name, id, logo, markHeight, priority }: ClientCardProps) =
       href={`/experience/${id}`}
       title={commonT("images.viewExperience", { company: name })}
       aria-label={commonT("images.viewExperience", { company: name })}
-      className="group relative flex h-[4.5rem] items-center justify-center rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-300 transition-colors hover:ring-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+      className="group relative flex h-[4.5rem] items-center justify-center rounded-lg bg-white p-3 shadow-sm ring-1 ring-gray-300 transition-colors hover:ring-emerald-300 focus-ring"
     >
       <span className={`relative w-full ${markHeight}`}>
         <Image
