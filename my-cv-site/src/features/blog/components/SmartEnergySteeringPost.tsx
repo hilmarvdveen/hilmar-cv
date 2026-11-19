@@ -1,14 +1,10 @@
 import type { Locale } from "@/lib/seo";
 import type { BlogPostMeta } from "../types";
 import { H2, P, Lead, UL, OL, LI, InlineCode } from "./prose";
-import { Callout } from "./Callout";
-import { CodeBlock } from "./CodeBlock";
-import { ProseTable } from "./ProseTable";
 import { ProseDetails } from "./ProseDetails";
-import { FlowDiagram } from "./FlowDiagram";
 import { FileTree, type FileNode } from "./FileTree";
 import { SmartEnergyPosterExplainer } from "./SmartEnergyPosterExplainer";
-import { flowNode, flowEdge } from "../flow";
+import { ConcurrencyFigure, FlowFigure, FrontendPathFigure, HexagonFigure, PipelineFigure } from "./smartEnergyGuide";
 
 export const meta: BlogPostMeta = {
   slug: "smart-energy-steering-architecture",
@@ -18,29 +14,31 @@ export const meta: BlogPostMeta = {
   updatedDate: "2026-11-19",
   readingTimeMin: 13,
   title: {
-    en: "One drawing, five questions about a steering platform",
-    nl: "Een tekening, vijf vragen over een stuurplatform",
+    en: "How to build an energy steering platform on Azure",
+    nl: "Een energiestuurplatform bouwen op Azure",
   },
   description: {
-    en: "My own proof of concept that plans a battery against day-ahead prices and steers it every 15 minutes, built on Azure in two weeks. How each part works.",
-    nl: "Mijn eigen proof of concept dat een batterij plant op day-ahead prijzen en elke 15 minuten stuurt, in twee weken gebouwd op Azure. Hoe elk deel werkt.",
+    en: "A hexagonal .NET core, IoT Hub, PostgreSQL, a React dashboard, Terraform tests and GitHub Actions: how an energy steering platform is built and why.",
+    nl: "Een hexagonale .NET-kern, IoT Hub, PostgreSQL, een React-dashboard, Terraform-tests en GitHub Actions: hoe een energiestuurplatform gebouwd is en waarom.",
   },
   excerpt: {
-    en: "Five questions about a platform that reads energy assets and steers a battery, answered with one animated drawing of my own proof of concept, plus how its data stays consistent and what keeps it clean of known vulnerabilities.",
-    nl: "Vijf vragen over een platform dat energie-assets uitleest en een batterij stuurt, beantwoord met een geanimeerde tekening van mijn eigen proof of concept, plus hoe de data consistent blijft en wat het vrij houdt van bekende kwetsbaarheden.",
+    en: "A guide through my own proof of concept that steers a battery on Azure: the hexagonal core and its adapters, how readings and commands flow, what happens when everything runs at once, the React frontend, security, Terraform and the pipelines.",
+    nl: "Een gids door mijn eigen proof of concept dat een batterij stuurt op Azure: de hexagonale kern en zijn adapters, hoe metingen en commando's stromen, wat er gebeurt als alles tegelijk draait, de React-frontend, beveiliging, Terraform en de pipelines.",
   },
   keywords: [
+    "energy steering architecture",
     "hexagonal architecture",
     "ports and adapters",
     "Azure IoT Hub",
+    "Azure Container Apps",
     "TimescaleDB",
-    "ETag conditional GET",
-    "KEDA",
-    "Service Bus sessions",
-    "Recharts versus SVG",
+    "Next.js dashboard",
+    "terraform test",
+    "GitHub Actions OIDC",
     "idempotency key",
   ],
 };
+
 
 const MECHANISMS = [
   { copy: "duplicate1", code: "ON CONFLICT (asset_id, measured_at) DO NOTHING" },
@@ -49,122 +47,6 @@ const MECHANISMS = [
   { copy: "compare1", code: "row.State == stateBeforeTheMove" },
   { copy: "sessions1", code: "SessionId = command.AssetId.Value" },
   { copy: "migration1", code: "SELECT pg_advisory_lock(@key)" },
-] as const;
-
-const SWEEP = [
-  {
-    id: "S1",
-    finding: { en: "A device's self-declared asset kind trusted over the catalogue", nl: "Een zelf opgegeven soort asset van een apparaat die boven de catalogus ging" },
-    state: { en: "Fixed and proven in CI", nl: "Opgelost en bewezen in CI" },
-  },
-  {
-    id: "S2",
-    finding: { en: "This site on Next 16.3.4 with an advisory in next/og", nl: "Deze site op Next 16.3.4 met een advisory in next/og" },
-    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
-  },
-  {
-    id: "S3",
-    finding: { en: "Next 16.3.6 and 16.3.4 with six advisories", nl: "Next 16.3.6 en 16.3.4 met zes advisories" },
-    state: { en: "Fixed in both on 16.3.8", nl: "In beide opgelost op 16.3.8" },
-  },
-  {
-    id: "S4",
-    finding: { en: "The laptop and CI database image 2.24.0 with PostgreSQL 17.7", nl: "Het database-image 2.24.0 op laptop en in CI met PostgreSQL 17.7" },
-    state: {
-      en: "Fixed on 2.30.2 with PostgreSQL 17.11, pinned by digest and proven in CI. Azure offers only 2.24.0, a backlog row",
-      nl: "Opgelost op 2.30.2 met PostgreSQL 17.11, vastgezet op digest en bewezen in CI. Azure biedt alleen 2.24.0, een backlogregel",
-    },
-  },
-  {
-    id: "S5",
-    finding: { en: "Brace-expansion advisories under eslint on this site", nl: "Advisories voor brace-expansion onder eslint op deze site" },
-    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
-  },
-  {
-    id: "S6",
-    finding: { en: "The Terraform job red on two rules, which hid new findings", nl: "De Terraform-job rood op twee regels, waardoor nieuwe bevindingen verborgen bleven" },
-    state: {
-      en: "Fixed with a reason per ignored rule. The networks stay open until a pending decision",
-      nl: "Opgelost met een reden per genegeerde regel. De netwerken blijven open tot een openstaand besluit",
-    },
-  },
-  {
-    id: "S7",
-    finding: {
-      en: "The database reachable from every Azure tenant, logging in with a password and treating every app as its administrator",
-      nl: "De database bereikbaar vanuit elke Azure-tenant, met een wachtwoord als login en elke app als beheerder",
-    },
-    state: { en: "Accepted. The structural fix is a backlog row", nl: "Geaccepteerd. De structurele oplossing is een backlogregel" },
-  },
-  {
-    id: "S8",
-    finding: {
-      en: "The gateway's events key also carries ServiceConnect, so a leaked events connection string can steer devices",
-      nl: "De events-sleutel van de gateway draagt ook ServiceConnect, dus een gelekte events connection string kan apparaten sturen",
-    },
-    state: {
-      en: "Accepted. The threat model names that key a steering credential, and the structural fix is a backlog row",
-      nl: "Geaccepteerd. Het threat model noemt die sleutel een stuurcredential, en de structurele oplossing is een backlogregel",
-    },
-  },
-  {
-    id: "S9",
-    finding: { en: "pnpm 10.34.5 with an advisory", nl: "pnpm 10.34.5 met een advisory" },
-    state: { en: "Fixed on 10.34.6", nl: "Opgelost op 10.34.6" },
-  },
-  {
-    id: "S10",
-    finding: { en: "No body limit on PUT /api/steering and the api's default of 30 MB", nl: "Geen limiet op de body van PUT /api/steering en de standaard van 30 MB in de api" },
-    state: {
-      en: "Fixed with 1 KB on the route and 64 KB in Kestrel. The Next proxy may still buffer up to 10 MB, a backlog row",
-      nl: "Opgelost met 1 KB op de route en 64 KB in Kestrel. De Next-proxy kan nog tot 10 MB bufferen, een backlogregel",
-    },
-  },
-  {
-    id: "S11",
-    finding: { en: "This site's CI on mutable action tags, Node 22, no Dependabot and no audit", nl: "De CI van deze site op verplaatsbare action-tags, Node 22, zonder Dependabot en zonder audit" },
-    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
-  },
-  {
-    id: "S12",
-    finding: { en: "Terraform 1.13.3, compose.yaml outside Dependabot and Semgrep 1.178.0", nl: "Terraform 1.13.3, compose.yaml buiten Dependabot en Semgrep 1.178.0" },
-    state: { en: "Fixed and proven in CI", nl: "Opgelost en bewezen in CI" },
-  },
-  {
-    id: "S13",
-    finding: {
-      en: "A deploy credential without a branch pin, no environment protection, no SECURITY.md and an SSL mode without a host name check",
-      nl: "Een deploy-credential zonder vaste branch, geen omgevingsbescherming, geen SECURITY.md en een SSL-modus zonder controle op de hostnaam",
-    },
-    state: {
-      en: "Fixed in code with VerifyFull and a SECURITY.md. VerifyFull is proven at the next apply. The repository settings are mine to change",
-      nl: "Opgelost in code met VerifyFull en een SECURITY.md. VerifyFull is bewezen bij de volgende uitrol. De repository-instellingen zijn aan mij",
-    },
-  },
-  {
-    id: "S14",
-    finding: {
-      en: "No diagnostic settings on PostgreSQL or Service Bus, and device strings unbounded in warning logs",
-      nl: "Geen diagnostische instellingen op PostgreSQL of Service Bus, en onbegrensde apparaatteksten in waarschuwingslogs",
-    },
-    state: {
-      en: "Fixed, with device strings bounded to 64 characters and the diagnostic settings added. Residual: Service Bus Standard has no login audit per attempt, and a login flood can fill the daily log cap",
-      nl: "Opgelost, met apparaatteksten begrensd op 64 tekens en de diagnostische instellingen toegevoegd. Rest: Service Bus Standard heeft geen login-audit per poging, en een stroom aanmeldingen kan de dagelijkse loglimiet vullen",
-    },
-  },
-  {
-    id: "S15",
-    finding: { en: "The threat model and the version notes behind the repository", nl: "Het threat model en de versienotities achter op de repository" },
-    state: { en: "Fixed", nl: "Opgelost" },
-  },
-  {
-    id: "S16",
-    finding: {
-      en: "Smaller items, among them a sliding session without an absolute cap and a command that stays Created after a failed send",
-      nl: "Kleinere punten, waaronder een sliding session zonder absolute grens en een commando dat op Created blijft staan na een mislukte verzending",
-    },
-    state: { en: "Accepted, each with its reason in the sweep", nl: "Geaccepteerd, elk met zijn reden in de sweep" },
-  },
 ] as const;
 
 const TERMS = [
@@ -233,78 +115,6 @@ const TERMS = [
   },
 ] as const;
 
-const FRAME_FUNCTION_CODE = `
-export const filmFrameAtMilliseconds = (elapsed: number): FilmFrame => {
-  const wrapped = wrapFilmElapsed(elapsed);
-  const sceneIndex = filmSceneIndexAt(wrapped);
-  const scene = FILM_SCENES[sceneIndex];
-  const sceneElapsed = wrapped - scene.startMilliseconds;
-  const previous = FILM_SCENES[(sceneIndex - 1 + FILM_SCENES.length) % FILM_SCENES.length];
-  const camera = interpolateCamera(SCENE_CAMERA[previous.id], SCENE_CAMERA[scene.id], sceneElapsed / CAMERA_MOVE_MILLISECONDS);
-  ...
-};
-`;
-
-const ASSISTANT_CODE = `
-public interface IAssistant
-{
-    Task<string> ExplainPlan(string planId, CancellationToken cancellationToken);
-}
-
-public sealed class NoAssistant : IAssistant
-{
-    public Task<string> ExplainPlan(string planId, CancellationToken cancellationToken) =>
-        Task.FromResult(string.Empty);
-}
-`;
-
-function buildCachingDiagram(locale: Locale) {
-  const copy = COPY;
-  const nodes = [
-    flowNode("gateway", copy.nodeGateway[locale], { x: 250, y: 0 }, { tone: "blue", subtitle: copy.nodeGatewaySub[locale], width: 190, direction: "TB" }),
-    flowNode("hypertable", copy.nodeHypertable[locale], { x: 0, y: 130 }, { tone: "emerald", subtitle: copy.nodeHypertableSub[locale], width: 190 }),
-    flowNode("rollup", copy.nodeRollup[locale], { x: 250, y: 130 }, { tone: "emerald", subtitle: copy.nodeRollupSub[locale], width: 190 }),
-    flowNode("currentState", copy.nodeCurrentState[locale], { x: 500, y: 130 }, { tone: "emerald", subtitle: copy.nodeCurrentStateSub[locale], width: 190 }),
-    flowNode("api", copy.nodeApi[locale], { x: 500, y: 290 }, { tone: "blue", subtitle: copy.nodeApiSub[locale], width: 190 }),
-    flowNode("routes", copy.nodeRoutes[locale], { x: 250, y: 290 }, { tone: "blue", subtitle: copy.nodeRoutesSub[locale], width: 190 }),
-    flowNode("browser", copy.nodeBrowser[locale], { x: 0, y: 290 }, { tone: "slate", subtitle: copy.nodeBrowserSub[locale], width: 190 }),
-  ];
-  const edges = [
-    flowEdge("gateway", "hypertable"),
-    flowEdge("gateway", "rollup"),
-    flowEdge("gateway", "currentState"),
-    flowEdge("currentState", "api"),
-    flowEdge("api", "routes"),
-    flowEdge("routes", "browser"),
-  ];
-  return { nodes, edges };
-}
-
-function buildStateDiagram(locale: Locale) {
-  const copy = COPY;
-  const nodes = [
-    flowNode("created", copy.stateCreated[locale], { x: 0, y: 120 }, { tone: "slate", width: 150 }),
-    flowNode("sent", copy.stateSent[locale], { x: 210, y: 120 }, { tone: "blue", width: 150 }),
-    flowNode("acknowledged", copy.stateAcknowledged[locale], { x: 420, y: 120 }, { tone: "blue", width: 150 }),
-    flowNode("confirmed", copy.stateConfirmed[locale], { x: 630, y: 120 }, { tone: "emerald", width: 150 }),
-    flowNode("rejected", copy.stateRejected[locale], { x: 0, y: 260 }, { tone: "slate", width: 150, direction: "TB" }),
-    flowNode("failed", copy.stateFailed[locale], { x: 210, y: 260 }, { tone: "slate", width: 150, direction: "TB" }),
-    flowNode("expired", copy.stateExpired[locale], { x: 420, y: 260 }, { tone: "slate", width: 150, direction: "TB" }),
-  ];
-  const edges = [
-    flowEdge("created", "sent"),
-    flowEdge("sent", "acknowledged"),
-    flowEdge("acknowledged", "confirmed"),
-    flowEdge("created", "rejected", { dashed: true }),
-    flowEdge("created", "failed", { dashed: true }),
-    flowEdge("created", "expired", { dashed: true }),
-    flowEdge("sent", "failed", { dashed: true }),
-    flowEdge("sent", "expired", { dashed: true }),
-    flowEdge("acknowledged", "expired", { dashed: true }),
-  ];
-  return { nodes, edges };
-}
-
 function buildTouchPoints(locale: Locale): FileNode[] {
   const copy = COPY;
   return [
@@ -320,20 +130,20 @@ function buildTouchPoints(locale: Locale): FileNode[] {
 
 export function Body({ locale }: { locale: Locale }) {
   const copy = COPY;
-  const caching = buildCachingDiagram(locale);
-  const states = buildStateDiagram(locale);
   return (
     <>
       <Lead>{copy.lead[locale]}</Lead>
       <SmartEnergyPosterExplainer locale={locale} />
-      <P>{copy.scope[locale]}</P>
-      <P>{copy.proof[locale]}</P>
-      <P>{copy.intro1[locale]}</P>
-      <P>{copy.intro2[locale]}</P>
 
-      <H2>{copy.householdTitle[locale]}</H2>
-      <P>{copy.household1[locale]}</P>
-      <P>{copy.household2[locale]}</P>
+      <H2>{copy.shapeTitle[locale]}</H2>
+      <P>{copy.shape1[locale]}</P>
+      <P>{copy.shape2[locale]}</P>
+      <HexagonFigure locale={locale} />
+      <P>{copy.shape3[locale]}</P>
+      <P>{copy.shape4[locale]}</P>
+      <P>{copy.kind1[locale]}</P>
+      <FileTree tree={buildTouchPoints(locale)} caption={copy.kindTreeCaption[locale]} />
+      <P>{copy.kind2[locale]}</P>
       <ProseDetails summary={copy.termsSummary[locale]}>
         <UL>
           {TERMS.map((entry) => (
@@ -344,48 +154,20 @@ export function Body({ locale }: { locale: Locale }) {
         </UL>
       </ProseDetails>
 
-      <H2>{copy.kindTitle[locale]}</H2>
-      <P>{copy.kind1[locale]}</P>
-      <FileTree tree={buildTouchPoints(locale)} caption={copy.kindTreeCaption[locale]} />
-      <P>{copy.kind2[locale]}</P>
+      <H2>{copy.flowTitle[locale]}</H2>
+      <P>{copy.flow1[locale]}</P>
+      <P>{copy.flow2[locale]}</P>
+      <P>{copy.flow3[locale]}</P>
+      <FlowFigure locale={locale} />
+      <P>{copy.flow4[locale]}</P>
+      <P>{copy.flow5[locale]}</P>
+      <P>{copy.flow6[locale]}</P>
 
-      <H2>{copy.readTitle[locale]}</H2>
-      <P>{copy.read1[locale]}</P>
-      <P>{copy.read2[locale]}</P>
-      <FlowDiagram
-        nodes={caching.nodes}
-        edges={caching.edges}
-        height={360}
-        ariaLabel={copy.cachingAria[locale]}
-        caption={copy.cachingCaption[locale]}
-      />
-      <P>{copy.read3[locale]}</P>
-
-      <H2>{copy.diagramTitle[locale]}</H2>
-      <P>{copy.diagram1[locale]}</P>
-      <P>{copy.diagram2[locale]}</P>
-      <CodeBlock lang="ts" filename="src/lib/smartEnergyFilm/film.ts" code={FRAME_FUNCTION_CODE} />
-      <P>{copy.diagram3[locale]}</P>
-
-      <H2>{copy.assistantTitle[locale]}</H2>
-      <P>{copy.assistant1[locale]}</P>
-      <P>{copy.assistant2[locale]}</P>
-      <CodeBlock lang="cs" filename={copy.assistantFilename[locale]} code={ASSISTANT_CODE} />
-      <P>{copy.assistant3[locale]}</P>
-
-      <H2>{copy.scaleTitle[locale]}</H2>
-      <P>{copy.scale1[locale]}</P>
-      <UL>
-        <LI>{copy.scaleOut[locale]}</LI>
-        <LI>{copy.scaleUp[locale]}</LI>
-        <LI>{copy.scaleDown[locale]}</LI>
-        <LI>{copy.scaleNot[locale]}</LI>
-      </UL>
-      <P>{copy.scale2[locale]}</P>
-
-      <H2>{copy.dataTitle[locale]}</H2>
-      <P>{copy.data1[locale]}</P>
-      <P>{copy.data2[locale]}</P>
+      <H2>{copy.onceTitle[locale]}</H2>
+      <P>{copy.once1[locale]}</P>
+      <ConcurrencyFigure locale={locale} />
+      <P>{copy.once2[locale]}</P>
+      <P>{copy.once3[locale]}</P>
       <OL>
         {MECHANISMS.map((mechanism) => (
           <LI key={mechanism.copy}>
@@ -393,34 +175,59 @@ export function Body({ locale }: { locale: Locale }) {
           </LI>
         ))}
       </OL>
-      <P>{copy.audit1[locale]}</P>
-      <FlowDiagram
-        nodes={states.nodes}
-        edges={states.edges}
-        height={360}
-        ariaLabel={copy.statesAria[locale]}
-        caption={copy.statesCaption[locale]}
-      />
-      <P>{copy.locks1[locale]}</P>
-      <Callout variant="info" title={copy.adaptersTitle[locale]}>
-        {copy.adaptersBody[locale]}
-      </Callout>
+      <P>{copy.once4[locale]}</P>
+      <P>{copy.once5[locale]}</P>
+
+      <H2>{copy.apiTitle[locale]}</H2>
+      <P>{copy.api1[locale]}</P>
+      <P>{copy.api2[locale]}</P>
+      <P>{copy.api3[locale]}</P>
+
+      <H2>{copy.frontTitle[locale]}</H2>
+      <P>{copy.front1[locale]}</P>
+      <P>{copy.front2[locale]}</P>
+      <FrontendPathFigure locale={locale} />
+      <P>{copy.front3[locale]}</P>
+      <P>{copy.front4[locale]}</P>
 
       <H2>{copy.securityTitle[locale]}</H2>
       <P>{copy.security1[locale]}</P>
       <P>{copy.security2[locale]}</P>
-      <P>{copy.sweepIntro[locale]}</P>
-      <ProseTable
-        caption={copy.sweepCaption[locale]}
-        columns={[copy.sweepFindingColumn[locale], copy.sweepWhatColumn[locale], copy.sweepStateColumn[locale]]}
-        rows={SWEEP.map((row) => ({ term: row.id, cells: [row.finding[locale], row.state[locale]] }))}
-      />
-      <ProseDetails summary={copy.referencesSummary[locale]}>
-        <P>{copy.references[locale]}</P>
-        <P>{copy.bumps1[locale]}</P>
-        <P>{copy.bumps2[locale]}</P>
-      </ProseDetails>
-      <P>{copy.clean[locale]}</P>
+      <P>{copy.security3[locale]}</P>
+      <P>{copy.security4[locale]}</P>
+      <P>{copy.security5[locale]}</P>
+      <P>{copy.security6[locale]}</P>
+
+      <H2>{copy.terraformTitle[locale]}</H2>
+      <P>{copy.terraform1[locale]}</P>
+      <P>{copy.terraform2[locale]}</P>
+      <UL>
+        <LI>{copy.invariantIngress[locale]}</LI>
+        <LI>{copy.invariantReplicas[locale]}</LI>
+        <LI>{copy.invariantQueue[locale]}</LI>
+        <LI>{copy.invariantPro[locale]}</LI>
+        <LI>{copy.invariantSteering[locale]}</LI>
+        <LI>{copy.invariantBudget[locale]}</LI>
+      </UL>
+      <P>{copy.terraform3[locale]}</P>
+      <P>{copy.terraform4[locale]}</P>
+
+      <H2>{copy.pipelineTitle[locale]}</H2>
+      <P>{copy.pipeline1[locale]}</P>
+      <P>{copy.pipeline2[locale]}</P>
+      <PipelineFigure locale={locale} />
+      <P>{copy.pipeline3[locale]}</P>
+
+      <H2>{copy.containersTitle[locale]}</H2>
+      <P>{copy.containers1[locale]}</P>
+      <P>{copy.containers2[locale]}</P>
+      <P>{copy.scale1[locale]}</P>
+      <UL>
+        <LI>{copy.scaleOut[locale]}</LI>
+        <LI>{copy.scaleUp[locale]}</LI>
+        <LI>{copy.scaleDown[locale]}</LI>
+        <LI>{copy.scaleNot[locale]}</LI>
+      </UL>
 
       <H2>{copy.closeTitle[locale]}</H2>
       <P>{copy.close1[locale]}</P>
@@ -429,70 +236,235 @@ export function Body({ locale }: { locale: Locale }) {
   );
 }
 
+
 const COPY = {
   lead: {
-    en: "A platform that reads simulated energy devices, plans a battery against tomorrow's electricity prices and sends it a command every 15 minutes. I built it as my own proof of concept in two weeks in September and October 2026, on my own Azure subscription, with Claude Code under my direction and review.",
-    nl: "Een platform dat gesimuleerde energieapparaten uitleest, een batterij plant op de stroomprijzen van morgen en die elke 15 minuten een commando stuurt. Ik bouwde het als eigen proof of concept in twee weken in september en oktober 2026, op mijn eigen Azure-abonnement, met Claude Code onder mijn regie en review.",
+    en: "A platform that reads simulated energy devices, plans a battery against tomorrow's electricity prices and sends it a command every 15 minutes. I built it in two weeks as my own proof of concept on Azure, with Claude Code under my direction and review. This guide walks through how it is built and why, from the device to the browser and from a push to a running container.",
+    nl: "Een platform dat gesimuleerde energieapparaten uitleest, een batterij plant op de stroomprijzen van morgen en die elke 15 minuten een commando stuurt. Ik bouwde het in twee weken als eigen proof of concept op Azure, met Claude Code onder mijn regie en review. Deze gids loopt door hoe het gebouwd is en waarom, van het apparaat tot de browser en van een push tot een draaiende container.",
   },
-  scope: {
-    en: "It never ran at a client, and no client system appears in it. Nothing in it was measured, so no number here describes speed or load. The infrastructure was applied once to dev on 29 September 2026 and destroyed the same morning. Pro was never applied.",
-    nl: "Het heeft nooit bij een klant gedraaid, en er komt geen systeem van een klant in voor. Er is niets gemeten, dus geen getal hier beschrijft snelheid of belasting. De infrastructuur is een keer op dev uitgerold op 29 september 2026 en dezelfde ochtend weer afgebroken. Pro is nooit uitgerold.",
+  shapeTitle: {
+    en: "A hexagonal core with ports and adapters",
+    nl: "Een hexagonale kern met poorten en adapters",
   },
-  proof: {
-    en: "The repository holds 904 backend tests, 439 dashboard tests and two Playwright journeys, and CI ran green on both commits this post describes.",
-    nl: "De repository bevat 904 backendtests, 439 dashboardtests en twee Playwright-journeys, en CI draaide groen op beide commits die dit artikel beschrijft.",
+  shape1: {
+    en: "The middle holds two projects. Domain has the rules: assets, telemetry, plans, prices and the state machine of a command. Application has the use cases and 18 ports, the interfaces the core needs from the outside world, such as ITelemetryStore, ICommandSender and IDayAheadPrices. Neither project knows anything about Azure, PostgreSQL or HTTP.",
+    nl: "Het midden bestaat uit twee projecten. Domain bevat de regels: assets, telemetrie, plannen, prijzen en de toestandsmachine van een commando. Application bevat de use cases en 18 poorten, de interfaces die de kern van de buitenwereld nodig heeft, zoals ITelemetryStore, ICommandSender en IDayAheadPrices. Geen van beide projecten weet iets van Azure, PostgreSQL of HTTP.",
   },
-  intro1: {
-    en: "The post answers five questions about it in turn. How does another asset kind get in? How do you keep often-read data cheap? How do the diagrams stay customizable? Where would an assistant fit? How does it scale? Two more sections follow: how the data stays consistent, and what keeps the code clean of known vulnerabilities.",
-    nl: "Het artikel beantwoordt er vijf vragen over, een voor een. Hoe komt er een andere soort asset bij? Hoe houd je vaak gelezen data goedkoop? Hoe blijven de diagrammen aanpasbaar? Waar past een assistent? Hoe schaalt het? Daarna volgen twee delen: hoe de data consistent blijft, en wat de code vrij houdt van bekende kwetsbaarheden.",
+  shape2: {
+    en: "Around that core sit the adapters. Almost every port has two: one in memory and one for Azure or PostgreSQL. The telemetry store is InMemoryTelemetryStore or PostgresTelemetryStore. Commands travel over InMemoryCommandChannel or a Service Bus sender and receiver. Prices come from a synthetic source, Energy-Charts or ENTSO-E. Five small hosts, Api, Gateway, Planner, Steering and Retention, connect the adapters to the use cases.",
+    nl: "Rond die kern zitten de adapters. Bijna elke poort heeft er twee: een in het geheugen en een voor Azure of PostgreSQL. De telemetriestore is InMemoryTelemetryStore of PostgresTelemetryStore. Commando's reizen over InMemoryCommandChannel of over een Service Bus-sender en -receiver. Prijzen komen uit een synthetische bron, Energy-Charts of ENTSO-E. Vijf kleine hosts, Api, Gateway, Planner, Steering en Retention, verbinden de adapters met de use cases.",
   },
-  intro2: {
-    en: "The simulator models a battery, an EV charger, a PV inverter and a heat pump, each with its own device identity in IoT Hub. A gateway stores the readings in PostgreSQL with TimescaleDB, an api serves them and a server-rendered dashboard shows them. An hourly planner and a steering job every 15 minutes turn day-ahead prices into commands for the battery.",
-    nl: "De simulator modelleert een batterij, een laadpaal, een PV-omvormer en een warmtepomp, elk met een eigen apparaatidentiteit in IoT Hub. Een gateway slaat de metingen op in PostgreSQL met TimescaleDB, een api serveert ze en een server-rendered dashboard toont ze. Een planner die elk uur draait en een stuurjob die elke 15 minuten draait, maken van day-ahead prijzen commando's voor de batterij.",
+  shape3: {
+    en: "Why this shape. A host registers the in-memory adapter first and the Azure or Postgres adapter only when it is configured, and the last registration wins. So the whole flow runs on a laptop without a database or a cloud account, and the same use case runs against PostgreSQL in Azure by configuration alone. Changing or scaling a part means adding an adapter, not rewriting a use case.",
+    nl: "Waarom deze vorm. Een host registreert eerst de in-memory adapter en de Azure- of Postgres-adapter alleen als die is ingesteld, en de laatste registratie wint. Zo draait de hele flow op een laptop zonder database of cloudaccount, en draait dezelfde use case op PostgreSQL in Azure door alleen configuratie. Een deel wijzigen of schalen betekent een adapter toevoegen, geen use case herschrijven.",
   },
-  householdTitle: {
-    en: "What the household sees",
-    nl: "Wat het huishouden ziet",
-  },
-  household1: {
-    en: "The household opens a dashboard that the server renders. It shows the site with the current state of each asset, a power chart and a plan chart, the commands with their status, and the savings.",
-    nl: "Het huishouden opent een dashboard dat de server rendert. Het toont de site met de actuele stand van elke asset, een vermogensgrafiek en een plangrafiek, de commando's met hun status, en de besparing.",
-  },
-  household2: {
-    en: "Confirmed means the next reading shows the battery carried out the command. A switch behind PUT /api/steering turns steering off.",
-    nl: "Confirmed betekent dat de volgende meting laat zien dat de batterij het commando uitvoerde. Een schakelaar achter PUT /api/steering zet de sturing uit.",
+  shape4: {
+    en: "Two rules keep the shape intact. Architecture tests fail the build when an adapter references another adapter, a host or the simulator, and when a host references another host. And each host registers only the groups of use cases it needs, never one shared bundle. A shared bundle once hid missing registrations and broke four of the five hosts at startup, which is why that rule exists.",
+    nl: "Twee regels houden de vorm intact. Architectuurtests laten de build falen als een adapter naar een andere adapter, een host of de simulator verwijst, en als een host naar een andere host verwijst. En elke host registreert alleen de groepen use cases die hij nodig heeft, nooit een gedeelde bundel. Een gedeelde bundel verborg ooit ontbrekende registraties en liet vier van de vijf hosts falen bij het starten, en daarom bestaat die regel.",
   },
   termsSummary: {
-    en: "Terms used in this post",
-    nl: "Begrippen in dit artikel",
+    en: "Terms used in this guide",
+    nl: "Begrippen in deze gids",
   },
-  sweepCaption: {
-    en: "Findings and their final state",
-    nl: "Bevindingen en hun eindstatus",
+  flowTitle: {
+    en: "How the data flows",
+    nl: "Hoe de data stroomt",
   },
-  sweepFindingColumn: {
-    en: "Finding",
-    nl: "Bevinding",
+  flow1: {
+    en: "Each simulated device, a battery, an EV charger, a PV inverter or a heat pump, has its own identity in IoT Hub and sends its readings over MQTT. The identities are not in Terraform. A script registers them and stores each device key in Key Vault.",
+    nl: "Elk gesimuleerd apparaat, een batterij, een laadpaal, een PV-omvormer of een warmtepomp, heeft een eigen identiteit in IoT Hub en stuurt zijn metingen over MQTT. De identiteiten staan niet in Terraform. Een script registreert ze en bewaart elke apparaatsleutel in Key Vault.",
   },
-  sweepWhatColumn: {
-    en: "What it was",
-    nl: "Wat het was",
+  flow2: {
+    en: "The gateway reads the built-in endpoint of the hub with an event processor, keeps its place with checkpoints in Blob storage and hands batches to a bounded channel, so a slow database slows the reader down instead of filling memory. Before anything is stored, the batch is checked. The device id comes from the hub, never from the message body. The catalogue decides the asset kind. A reading more than 5 minutes ahead or older than a day is refused.",
+    nl: "De gateway leest het ingebouwde endpoint van de hub met een event processor, houdt zijn plek bij met checkpoints in Blob storage en geeft batches door aan een begrensd kanaal, zodat een trage database de lezer afremt in plaats van het geheugen te vullen. Voordat er iets wordt opgeslagen, wordt de batch gecontroleerd. Het device id komt van de hub, nooit uit de berichtbody. De catalogus bepaalt de soort asset. Een meting die meer dan 5 minuten vooruitloopt of ouder is dan een dag, wordt geweigerd.",
   },
-  sweepStateColumn: {
-    en: "Final state",
-    nl: "Eindstatus",
+  flow3: {
+    en: "One transaction then writes three things: the raw reading into a TimescaleDB hypertable, the newest reading per asset into a current state table, and the touched 15 minute bucket of the rollup. Charts read the rollup and tiles read the current state, so neither has to scan history.",
+    nl: "Een transactie schrijft dan drie dingen: de ruwe meting in een hypertable van TimescaleDB, de nieuwste meting per asset in een tabel met de actuele stand, en de geraakte bucket van 15 minuten in de rollup. Grafieken lezen de rollup en tegels lezen de actuele stand, dus geen van beide hoeft door de historie te zoeken.",
   },
-  referencesSummary: {
-    en: "Advisory references and the dependency work",
-    nl: "Advisory-referenties en het dependency-werk",
+  flow4: {
+    en: "Every hour the planner reads the day-ahead prices and stores a new version of the battery plan. Every 15 minutes the steering job turns the current period of that plan into one command, with an idempotency key made of the asset, the period and the plan version. A switch per site can turn steering off.",
+    nl: "Elk uur leest de planner de day-ahead prijzen en slaat een nieuwe versie van het batterijplan op. Elke 15 minuten maakt de stuurjob van de huidige periode van dat plan een commando, met een idempotency key van de asset, de periode en de planversie. Een schakelaar per site kan de sturing uitzetten.",
   },
-  references: {
-    en: "S2 is GHSA-vcvr-r3jv-pc5j in next/og. S3 is GHSA-cjq9-62q9-8jv4 with five moderate advisories. S4 is CVE-2026-29089. S6 is AZU-0012 and AZU-0013. S9 is GHSA-xcpc-8h2w-3j85.",
-    nl: "S2 is GHSA-vcvr-r3jv-pc5j in next/og. S3 is GHSA-cjq9-62q9-8jv4 met vijf gemiddelde advisories. S4 is CVE-2026-29089. S6 is AZU-0012 en AZU-0013. S9 is GHSA-xcpc-8h2w-3j85.",
+  flow5: {
+    en: "The command travels over a Service Bus queue with one session per asset, so commands for one battery stay in order. On a laptop an in-memory channel takes its place. The gateway sends only commands that are still Created and not expired, cloud to device through IoT Hub. The next reading confirms the command when the power of the battery lands within a tolerance of the setpoint, the larger of 1 kW and 10 percent.",
+    nl: "Het commando reist over een Service Bus-wachtrij met een sessie per asset, zodat commando's voor een batterij op volgorde blijven. Op een laptop neemt een in-memory kanaal de plaats in. De gateway verstuurt alleen commando's die nog Created zijn en niet verlopen, cloud to device via IoT Hub. De volgende meting bevestigt het commando als het vermogen van de batterij binnen een marge van de setpoint valt, de grootste van 1 kW en 10 procent.",
   },
-  kindTitle: {
-    en: "How does another asset kind get in?",
-    nl: "Hoe komt er een andere soort asset bij?",
+  flow6: {
+    en: "A command moves from Created through Sent and Acknowledged to Confirmed, or ends as Rejected, Failed or Expired. That is seven states and nine allowed transitions, and every change writes its audit row in the same transaction as the change.",
+    nl: "Een commando gaat van Created via Sent en Acknowledged naar Confirmed, of eindigt als Rejected, Failed of Expired. Dat zijn zeven statussen en negen toegestane overgangen, en elke wijziging schrijft zijn auditrij in dezelfde transactie als de wijziging.",
+  },
+  onceTitle: {
+    en: "When everything runs at once",
+    nl: "Als alles tegelijk draait",
+  },
+  once1: {
+    en: "Picture a busy quarter of an hour. The batteries are charging, a heat pump is on, every device keeps sending readings, the steering job issues its commands and a household has the dashboard open. Every part reads and writes the same database. Three things keep that calm.",
+    nl: "Stel je een druk kwartier voor. De batterijen laden, een warmtepomp staat aan, elk apparaat blijft metingen sturen, de stuurjob geeft zijn commando's uit en een huishouden heeft het dashboard open. Elk deel leest en schrijft in dezelfde database. Drie dingen houden dat rustig.",
+  },
+  once2: {
+    en: "First, readers and writers pass each other. The dashboard reads one row per asset from the current state and a few buckets from the rollup. The gateway appends raw readings and updates those rows inside its batch transaction. PostgreSQL keeps versions of a row, so a reader sees the last committed state and never waits for a writer, and a writer never waits for a reader. The reads are plain queries without explicit locks.",
+    nl: "Ten eerste lopen lezers en schrijvers langs elkaar. Het dashboard leest een rij per asset uit de actuele stand en een paar buckets uit de rollup. De gateway voegt ruwe metingen toe en werkt die rijen bij binnen zijn batchtransactie. PostgreSQL houdt versies van een rij bij, dus een lezer ziet de laatst vastgelegde stand en wacht nooit op een schrijver, en een schrijver wacht nooit op een lezer. De leesacties zijn gewone queries zonder expliciete locks.",
+  },
+  once3: {
+    en: "Second, the database settles duplicates and races, not locks in the code. Six cases come up, each with the failure first:",
+    nl: "Ten tweede beslecht de database dubbelingen en races, niet locks in de code. Er zijn zes gevallen, elk met de fout eerst:",
+  },
+  once4: {
+    en: "Third, an unchanged answer stays small. The api builds a weak ETag from the newest measured moment, and the dashboard sends it back with every poll. While nothing changed, the answer is a 304 without a body. The route handler of the dashboard also keeps a 5 second answer cache per caller and shares one backend call between requests that arrive together.",
+    nl: "Ten derde blijft een ongewijzigd antwoord klein. De api maakt een zwakke ETag van het nieuwste meetmoment, en het dashboard stuurt die bij elke poll terug. Zolang er niets veranderde, is het antwoord een 304 zonder body. De route handler van het dashboard houdt ook per aanroeper een antwoordcache van 5 seconden en deelt een backendaanroep tussen verzoeken die tegelijk binnenkomen.",
+  },
+  once5: {
+    en: "The repository names where it would strain first: a chart over a full day of raw readings. That is why charts read the rollup, and why continuous aggregates in TimescaleDB and push instead of poll are the next steps.",
+    nl: "De repository noemt waar het als eerste zou knellen: een grafiek over een hele dag ruwe metingen. Daarom lezen grafieken de rollup, en daarom zijn continuous aggregates in TimescaleDB en push in plaats van poll de volgende stappen.",
+  },
+  apiTitle: {
+    en: "The api",
+    nl: "De api",
+  },
+  api1: {
+    en: "The api is a small REST surface under /v1: sites, asset state and telemetry, prices, plans, plan runs and savings, commands, and the steering switch. It runs on internal ingress only, so nothing outside the Container Apps environment reaches it. Health lives on /health/live and /health/ready.",
+    nl: "De api is een klein REST-oppervlak onder /v1: sites, de stand en telemetrie van een asset, prijzen, plannen, planruns en besparing, commando's en de stuurschakelaar. Hij draait alleen op interne ingress, dus niets buiten de Container Apps-omgeving bereikt hem. Health staat op /health/live en /health/ready.",
+  },
+  api2: {
+    en: "Authentication comes in two steps. First a bearer token, compared in constant time. Then Entra ID: an access token with the api scope, and the organisation of the caller resolved once per request from its object id, so every query is scoped to one organisation. A query for the site of another organisation finds nothing.",
+    nl: "Authenticatie komt in twee stappen. Eerst een bearer token, vergeleken in constante tijd. Daarna Entra ID: een access token met de api-scope, en de organisatie van de aanroeper een keer per verzoek bepaald uit zijn object id, zodat elke query bij een organisatie hoort. Een query naar de site van een andere organisatie vindt niets.",
+  },
+  api3: {
+    en: "Limits protect the database and the process. A raw telemetry read stops at 86 400 rows. Kestrel accepts at most 64 KB per body. The site and the asset state carry a weak ETag and answer 304 when nothing changed.",
+    nl: "Limieten beschermen de database en het proces. Een ruwe telemetrieread stopt bij 86 400 rijen. Kestrel accepteert hoogstens 64 KB per body. De site en de stand van een asset dragen een zwakke ETag en antwoorden 304 als er niets veranderde.",
+  },
+  frontTitle: {
+    en: "The React frontend",
+    nl: "De React-frontend",
+  },
+  front1: {
+    en: "The dashboard is a Next.js app on the App Router. The first view is rendered on the server: it loads the site and 24 hours of 15 minute data per asset in parallel, so the household sees the charts on the first paint.",
+    nl: "Het dashboard is een Next.js-app op de App Router. Het eerste beeld wordt op de server gerenderd: het laadt de site en 24 uur aan data per 15 minuten per asset tegelijk, zodat het huishouden de grafieken bij het eerste beeld ziet.",
+  },
+  front2: {
+    en: "After that, a small hook called usePolledJson keeps the screen current. It polls every 10 seconds while the tab is visible, doubles the wait after a failure up to 60 seconds, and sends If-None-Match with the last ETag. The live tiles poll every 10 seconds, the plan chart and the command timeline every 60.",
+    nl: "Daarna houdt een kleine hook, usePolledJson, het scherm actueel. Hij pollt elke 10 seconden zolang het tabblad zichtbaar is, verdubbelt de wachttijd na een fout tot 60 seconden, en stuurt If-None-Match met de laatste ETag. De live tegels pollen elke 10 seconden, de plangrafiek en de tijdlijn van commando's elke 60.",
+  },
+  front3: {
+    en: "The browser never talks to the api. It calls route handlers on its own origin, /api/site, /api/plan, /api/commands, /api/savings and /api/steering, and those call the internal api on the server. Tokens stay on the server, the api stays internal, and the route handler is the one place for rate limits and caching.",
+    nl: "De browser praat nooit met de api. Hij roept route handlers op de eigen origin aan, /api/site, /api/plan, /api/commands, /api/savings en /api/steering, en die roepen de interne api op de server aan. Tokens blijven op de server, de api blijft intern, en de route handler is de ene plek voor rate limits en caching.",
+  },
+  front4: {
+    en: "The screens follow the data. Live tiles show the current state of each asset. PowerChart and PlanChart use Recharts, each with a table for screen readers beside it. The steering panel has four states, idle, confirming, updating and failed, and asks for a confirmation before it sends the switch. The code is organised by feature: app for the routes, components for the shared building blocks, features for the account, sign-in and the site, and lib for the api, auth, charts and rate limiting.",
+    nl: "De schermen volgen de data. Live tegels tonen de actuele stand van elke asset. PowerChart en PlanChart gebruiken Recharts, elk met een tabel voor schermlezers ernaast. Het stuurpaneel heeft vier statussen, idle, confirming, updating en failed, en vraagt om een bevestiging voordat het de schakelaar verstuurt. De code is per feature georganiseerd: app voor de routes, components voor de gedeelde bouwstenen, features voor het account, het aanmelden en de site, en lib voor de api, auth, grafieken en rate limiting.",
+  },
+  securityTitle: {
+    en: "Security from device to browser",
+    nl: "Beveiliging van apparaat tot browser",
+  },
+  security1: {
+    en: "At the device. Each device has its own key, stored in Key Vault. The gateway takes the device id from the hub and never from the message. An event carries at most 12 readings and 2 buckets of 15 minutes, and a reading outside the time window is refused. An unknown asset, or a kind or site that does not match the catalogue, rejects the whole batch.",
+    nl: "Bij het apparaat. Elk apparaat heeft een eigen sleutel, bewaard in Key Vault. De gateway neemt het device id van de hub en nooit uit het bericht. Een event draagt hoogstens 12 metingen en 2 buckets van 15 minuten, en een meting buiten het tijdvenster wordt geweigerd. Een onbekende asset, of een soort of site die niet met de catalogus klopt, weigert de hele batch.",
+  },
+  security2: {
+    en: "In the api. Internal ingress, a bearer token compared in constant time or an Entra token with one organisation per request, parameterised SQL everywhere, a row cap and a body limit.",
+    nl: "In de api. Interne ingress, een bearer token vergeleken in constante tijd of een Entra-token met een organisatie per verzoek, geparametriseerde SQL overal, een limiet op rijen en een limiet op de body.",
+  },
+  security3: {
+    en: "In the dashboard. A content security policy with a fresh nonce per request and strict-dynamic, no framing, sign-in with PKCE and state, a session of 8 hours, HSTS and the other security headers, and a token bucket on every api route. A steering write needs a feature switch, an Origin header that matches the host and a body of at most 1 KB.",
+    nl: "In het dashboard. Een content security policy met een nieuwe nonce per verzoek en strict-dynamic, geen framing, aanmelden met PKCE en state, een sessie van 8 uur, HSTS en de andere security headers, en een token bucket op elke api-route. Een stuuractie heeft een feature switch nodig, een Origin-header die bij de host past en een body van hoogstens 1 KB.",
+  },
+  security4: {
+    en: "Between the services. One user-assigned managed identity per workload, with access to its own secrets only. App settings are Key Vault references, so no secret sits in a container definition. Storage has shared keys switched off. The command queue accepts Entra identities only.",
+    nl: "Tussen de diensten. Een user-assigned managed identity per workload, met toegang tot alleen de eigen secrets. App-instellingen zijn Key Vault-referenties, dus er staat geen secret in een containerdefinitie. Storage heeft shared keys uitgezet. De commandowachtrij accepteert alleen Entra-identiteiten.",
+  },
+  security5: {
+    en: "Two trade-offs stay open on purpose, each with a backlog row. The database is reachable from Azure services with a password login, because there is no virtual network yet. And the key of the gateway for the events endpoint can also send to devices, because the built-in endpoint accepts no Entra identity. The threat model names that key a steering credential.",
+    nl: "Twee afwegingen blijven bewust open, elk met een backlogregel. De database is bereikbaar vanuit Azure-diensten met een wachtwoord als login, omdat er nog geen virtueel netwerk is. En de sleutel van de gateway voor het events-endpoint kan ook naar apparaten sturen, omdat het ingebouwde endpoint geen Entra-identiteit accepteert. Het threat model noemt die sleutel een stuurcredential.",
+  },
+  security6: {
+    en: "Scanners run on every push: NuGet audit for the backend packages, pnpm audit for the dashboard, Grype on every container image, Semgrep on the code, Gitleaks over the full history, Trivy on the Terraform and Dependabot for the updates.",
+    nl: "Scanners draaien bij elke push: NuGet audit voor de backendpakketten, pnpm audit voor het dashboard, Grype op elk container-image, Semgrep op de code, Gitleaks over de hele historie, Trivy op de Terraform en Dependabot voor de updates.",
+  },
+  terraformTitle: {
+    en: "Keeping Terraform safe",
+    nl: "Terraform veilig houden",
+  },
+  terraform1: {
+    en: "The infrastructure is one flat Terraform root module with a file per concern: the container apps and jobs, the database, IoT Hub, Service Bus, identities, Key Vault, storage, observability and a budget. Two variable files describe dev and pro. State lives in Azure Storage with Entra authentication, with one state key per environment.",
+    nl: "De infrastructuur is een platte Terraform-rootmodule met een bestand per onderwerp: de container apps en jobs, de database, IoT Hub, Service Bus, identiteiten, Key Vault, storage, observability en een budget. Twee variabelenbestanden beschrijven dev en pro. De state staat in Azure Storage met Entra-authenticatie, met een state key per omgeving.",
+  },
+  terraform2: {
+    en: "Tests run before anything reaches Azure. terraform test runs 57 cases against mocked providers, and an invariants test runs once against each variable file. It checks that:",
+    nl: "Tests draaien voordat er iets Azure bereikt. terraform test draait 57 gevallen tegen gemockte providers, en een invariantentest draait een keer tegen elk variabelenbestand. Die controleert dat:",
+  },
+  invariantIngress: {
+    en: "the api never gets external ingress",
+    nl: "de api nooit externe ingress krijgt",
+  },
+  invariantReplicas: {
+    en: "every app has at most one replica and every job runs one at a time",
+    nl: "elke app hoogstens een replica heeft en elke job een tegelijk draait",
+  },
+  invariantQueue: {
+    en: "the queue and its KEDA rule always come together",
+    nl: "de wachtrij en zijn KEDA-regel altijd samen komen",
+  },
+  invariantPro: {
+    en: "pro locks the vault and the database, with purge protection",
+    nl: "pro de kluis en de database vergrendelt, met purge protection",
+  },
+  invariantSteering: {
+    en: "steering writes need sign-in",
+    nl: "stuuracties aanmelden vereisen",
+  },
+  invariantBudget: {
+    en: "tags are present and the budget alerts at 50 and 90 percent",
+    nl: "tags aanwezig zijn en het budget waarschuwt bij 50 en 90 procent",
+  },
+  terraform3: {
+    en: "Trivy scans the Terraform for high and critical findings, and an ignored rule needs a written reason. The deploy workflow refuses to destroy pro, an empty list of operator addresses fails closed, and a concurrency group allows one Terraform run per environment at a time.",
+    nl: "Trivy scant de Terraform op bevindingen van ernst high en critical, en een genegeerde regel heeft een geschreven reden nodig. De deploy-workflow weigert pro af te breken, een lege lijst met operatoradressen faalt dicht, en een concurrency group staat een Terraform-run per omgeving tegelijk toe.",
+  },
+  terraform4: {
+    en: "One lesson came from the first real apply: it found three things that no plan had shown. A plan proves that the configuration is consistent. Only an apply proves that Azure accepts it.",
+    nl: "Een les kwam uit de eerste echte apply: die vond drie dingen die geen plan had laten zien. Een plan bewijst dat de configuratie klopt. Alleen een apply bewijst dat Azure hem accepteert.",
+  },
+  pipelineTitle: {
+    en: "Pipelines on GitHub Actions",
+    nl: "Pipelines op GitHub Actions",
+  },
+  pipeline1: {
+    en: "CI runs on every push to main, every pull request, once a week and on demand, on GitHub-hosted ubuntu runners. Every action is pinned to a commit SHA with its version beside it, and no checkout keeps its credentials.",
+    nl: "CI draait bij elke push naar main, elke pull request, een keer per week en op verzoek, op runners van GitHub met ubuntu. Elke action staat vast op een commit-SHA met de versie ernaast, en geen checkout bewaart zijn credentials.",
+  },
+  pipeline2: {
+    en: "The jobs run side by side. Backend restores behind the vulnerable package gate, builds with warnings as errors and runs the tests. Dashboard runs pnpm audit, lint, the tests with a coverage gate, the type check, the build and the Playwright journeys against a stub api and a stub sign-in. Terraform formats, validates, tests and scans. Semgrep and Gitleaks run on their own.",
+    nl: "De jobs draaien naast elkaar. Backend herstelt achter de gate voor kwetsbare pakketten, bouwt met warnings als errors en draait de tests. Dashboard draait pnpm audit, lint, de tests met een coverage-gate, de typecheck, de build en de Playwright-journeys tegen een stub-api en een stub-aanmelding. Terraform formatteert, valideert, test en scant. Semgrep en Gitleaks draaien apart.",
+  },
+  pipeline3: {
+    en: "On main, seven container images are built, scanned by Grype and pushed to the GitHub registry. The deploy workflow logs in to Azure with OIDC, through a federated credential per GitHub environment, so no Azure secret is stored anywhere. It resolves every image tag to its digest, saves the Terraform plan and applies exactly that plan. A drift check runs every Monday.",
+    nl: "Op main worden zeven container-images gebouwd, gescand door Grype en naar de GitHub-registry gepusht. De deploy-workflow meldt aan bij Azure met OIDC, via een federated credential per GitHub-omgeving, dus er staat nergens een Azure-secret. Hij zet elke image-tag om naar zijn digest, bewaart het Terraform-plan en past precies dat plan toe. Elke maandag draait een driftcontrole.",
+  },
+  containersTitle: {
+    en: "Container Apps and how it scales",
+    nl: "Container Apps en hoe het schaalt",
+  },
+  containers1: {
+    en: "The parts that keep running are container apps: the api, the dashboard and the gateway. Work that runs and stops is a Container Apps job on a schedule: the planner at five past every hour, steering every 15 minutes and retention every night, each one at a time with one retry. The environment runs on the consumption plan and logs to Log Analytics.",
+    nl: "De delen die blijven draaien zijn container apps: de api, het dashboard en de gateway. Werk dat draait en stopt is een Container Apps-job op een schema: de planner om vijf over elk uur, de sturing elke 15 minuten en retentie elke nacht, elk een tegelijk met een nieuwe poging. De omgeving draait op het consumption plan en logt naar Log Analytics.",
+  },
+  containers2: {
+    en: "Every app runs at most one replica today, and a Terraform test holds that cap. Raising it means changing that test on purpose. Secrets reach the apps as Key Vault references through their managed identities.",
+    nl: "Elke app draait vandaag hoogstens een replica, en een Terraform-test bewaakt die grens. Hem verhogen betekent die test bewust aanpassen. Secrets bereiken de apps als Key Vault-referenties via hun managed identities.",
+  },
+  scale1: {
+    en: "Growing has three directions, plus the parts that change first.",
+    nl: "Groeien kan drie kanten op, plus de delen die als eerste veranderen.",
+  },
+  closeTitle: {
+    en: "What to take away",
+    nl: "Wat je meeneemt",
+  },
+  close2: {
+    en: "The same approach carries over to any platform that reads devices and acts on them: a core that knows nothing about the cloud, adapters you can swap, a database that settles conflicts, and a pipeline that proves the infrastructure before it touches Azure.",
+    nl: "Dezelfde aanpak past op elk platform dat apparaten uitleest en erop handelt: een kern die niets van de cloud weet, adapters die je kunt wisselen, een database die conflicten beslecht, en een pipeline die de infrastructuur bewijst voordat die Azure raakt.",
   },
   kind1: {
     en: "Every kind shares one telemetry event schema. Only the details differ per kind. A new kind touches seven places, and the gateway, the stores, the queue and the dashboard polling stay as they are.",
@@ -534,106 +506,6 @@ const COPY = {
     en: "the simulated device",
     nl: "het gesimuleerde apparaat",
   },
-  readTitle: {
-    en: "How do you keep often-read data cheap?",
-    nl: "Hoe houd je vaak gelezen data goedkoop?",
-  },
-  read1: {
-    en: "The gateway writes three things per batch. The raw readings go into the telemetry_readings hypertable, the newest reading per asset goes into asset_current_state, and the touched bucket of the 15 minute rollup is recomputed on ingest. A screen that wants the present reads one row per asset instead of scanning history.",
-    nl: "De gateway schrijft per batch drie dingen. De ruwe metingen gaan in de hypertable telemetry_readings, de nieuwste meting per asset gaat in asset_current_state, en de geraakte bucket van de rollup per 15 minuten wordt bij binnenkomst opnieuw berekend. Een scherm dat het heden wil, leest een rij per asset in plaats van door de historie te zoeken.",
-  },
-  read2: {
-    en: "The api answers the site and the asset state with a weak ETag built from the newest measured moment, and with a 304 when nothing changed. The telemetry series has no ETag. The dashboard page is server rendered and polls its own /api/site every 10 seconds with If-None-Match, backs off to 60 seconds on failure and polls only while the tab is visible. Its plan, commands and savings routes keep a 5 second answer cache per caller.",
-    nl: "De api beantwoordt de site en de assetstand met een zwakke ETag op basis van het nieuwste meetmoment, en met een 304 als er niets veranderde. De telemetriereeks heeft geen ETag. De dashboardpagina wordt op de server gerenderd en pollt elke 10 seconden de eigen /api/site met If-None-Match, wacht 60 seconden na een fout en pollt alleen als het tabblad zichtbaar is. De routes voor plan, commando's en besparing houden per aanroeper een antwoordcache van 5 seconden.",
-  },
-  cachingAria: {
-    en: "Diagram of the gateway writing the hypertable, the rollup and the current state in one batch, and the read path from the current state through the api and the dashboard routes to the browser",
-    nl: "Diagram van de gateway die de hypertable, de rollup en de actuele stand in een batch schrijft, en het leespad van de actuele stand via de api en de dashboardroutes naar de browser",
-  },
-  cachingCaption: {
-    en: "Writes prepare the reads. The api adds an ETag, the dashboard routes pass it on or cache for 5 seconds, and the browser polls with If-None-Match.",
-    nl: "Het schrijven bereidt het lezen voor. De api voegt een ETag toe, de dashboardroutes geven die door of cachen 5 seconden, en de browser pollt met If-None-Match.",
-  },
-  read3: {
-    en: "Beyond that ETag the api caches nothing, because in-memory caches do not scale as they are once there is more than one replica. The next steps, in order of cost: TimescaleDB continuous aggregates, response caching at the ingress or Front Door keyed on the ETag, Azure Cache for Redis once more than one dashboard replica exists, and push instead of poll. The repository lists chart performance on a day of ten-second samples as a risk not yet felt.",
-    nl: "Buiten die ETag cachet de api niets, omdat caches in het geheugen niet schalen zoals ze zijn zodra er meer dan een replica is. De volgende stappen, in volgorde van kosten: continuous aggregates in TimescaleDB, response caching bij de ingress of Front Door op basis van de ETag, Azure Cache for Redis zodra er meer dan een dashboardreplica is, en push in plaats van poll. De repository noemt de prestaties van een grafiek over een dag met samples van tien seconden als risico dat nog niet gevoeld is.",
-  },
-  diagramTitle: {
-    en: "How do the diagrams stay customizable?",
-    nl: "Hoe blijven de diagrammen aanpasbaar?",
-  },
-  diagram1: {
-    en: "The dashboard charts use Recharts 3 today, PowerChart and PlanChart, each with a table for screen readers beside it. The next steps follow the need: visx for custom marks, hand-written SVG with d3-scale and d3-shape for one-off drawings, and full d3 only for force layouts or very large point counts. One library per chart.",
-    nl: "De grafieken in het dashboard gebruiken vandaag Recharts 3, PowerChart en PlanChart, elk met een tabel voor schermlezers ernaast. De volgende stappen volgen de behoefte: visx voor eigen markeringen, handgeschreven SVG met d3-scale en d3-shape voor losse tekeningen, en volledige d3 alleen voor force layouts of heel veel punten. Een bibliotheek per grafiek.",
-  },
-  diagram2: {
-    en: "The drawing in this post sits at the hand-written end of that range, without any library. A pure function maps a moment in the loop to a frame.",
-    nl: "De tekening in dit artikel zit aan de handgeschreven kant van dat spectrum, zonder bibliotheek. Een pure functie zet een moment in de lus om naar een frame.",
-  },
-  diagram3: {
-    en: "A component without state draws that frame, and a small client island only keeps the clock. That split makes every scene testable at any millisecond and every still reproducible.",
-    nl: "Een component zonder state tekent dat frame, en een klein client-eiland houdt alleen de klok bij. Door die splitsing is elke scene op elke milliseconde te testen en elk stilstaand beeld te reproduceren.",
-  },
-  assistantTitle: {
-    en: "Where would an assistant fit?",
-    nl: "Waar past een assistent?",
-  },
-  assistant1: {
-    en: "This answer is design only. The seventh decision in the repository reads: No AI or model call anywhere. The README forbids claiming what was not built, and nothing of an assistant is coded.",
-    nl: "Dit antwoord is alleen ontwerp. Het zevende besluit in de repository luidt: No AI or model call anywhere. De README verbiedt te claimen wat niet gebouwd is, en er is niets van een assistent gecodeerd.",
-  },
-  assistant2: {
-    en: "What exists is the pattern it would follow. Every port lives in the application layer, most with an in-memory adapter and one Azure product adapter. Hosts register in-memory first, the Azure registration overrides when configured, and the last registration wins. IDayAheadPrices is the exception with three adapters: synthetic, Energy-Charts and ENTSO-E.",
-    nl: "Wat bestaat, is het patroon dat het zou volgen. Elke poort woont in de applicatielaag, de meeste met een in-memory adapter en een adapter voor een Azure-product. Hosts registreren eerst in-memory, de Azure-registratie gaat erover als die is ingesteld, en de laatste registratie wint. IDayAheadPrices is de uitzondering met drie adapters: synthetisch, Energy-Charts en ENTSO-E.",
-  },
-  assistantFilename: {
-    en: "not in the repository",
-    nl: "niet in de repository",
-  },
-  assistant3: {
-    en: "The port would be IAssistant or IPlanExplainer in Application/Planning, with NoAssistant as the in-memory adapter and a model adapter registered only when configured. The model would explain a plan. It never steers. In the drawing the assistant is the dotted port with no adapter.",
-    nl: "De poort zou IAssistant of IPlanExplainer in Application/Planning zijn, met NoAssistant als in-memory adapter en een modeladapter die alleen geregistreerd wordt als die is ingesteld. Het model zou een plan uitleggen. Het stuurt nooit. In de tekening is de assistent de gestippelde poort zonder adapter.",
-  },
-  scaleTitle: {
-    en: "How does it scale?",
-    nl: "Hoe schaalt het?",
-  },
-  scale1: {
-    en: "The levers go in three directions, plus the parts that would not scale as they are. The replica count in the Scale tab of the drawing is the lever, not a result.",
-    nl: "De knoppen gaan drie kanten op, plus de delen die zoals ze zijn niet schalen. Het aantal replica's in het tabblad Schalen van de tekening is de knop, geen resultaat.",
-  },
-  scaleOut: {
-    en: "Out: the gateway is stateless, KEDA scales it on queue length, and sessions per asset keep the command order per device.",
-    nl: "Uit: de gateway heeft geen state, KEDA schaalt hem op de lengte van de wachtrij, en sessies per asset houden de volgorde van commando's per apparaat vast.",
-  },
-  scaleUp: {
-    en: "Up: IoT Hub tiers, Service Bus Premium, a larger PostgreSQL tier, hypertable chunks and retention.",
-    nl: "Op: tiers van IoT Hub, Service Bus Premium, een grotere tier voor PostgreSQL, chunks van de hypertable en retentie.",
-  },
-  scaleDown: {
-    en: "Down: every app has a minimum of zero replicas, and the jobs run once and exit.",
-    nl: "Af: elke app heeft minimaal nul replica's, en de jobs draaien een keer en stoppen.",
-  },
-  scaleNot: {
-    en: "Not as it is: the planner loop over a single site, the rollup recompute in the application, and in-memory caches with more than one replica.",
-    nl: "Niet zoals het is: de plannerlus over een enkele site, het herberekenen van de rollup in de applicatie, en caches in het geheugen bij meer dan een replica.",
-  },
-  scale2: {
-    en: "Terraform caps the gateway, the api and the dashboard at one replica today, and a Terraform test holds that cap. Raising it means changing that test on purpose.",
-    nl: "Terraform houdt de gateway, de api en het dashboard vandaag op een replica, en een Terraform-test bewaakt die grens. Hem verhogen betekent die test bewust aanpassen.",
-  },
-  dataTitle: {
-    en: "How the data stays consistent",
-    nl: "Hoe de data consistent blijft",
-  },
-  data1: {
-    en: "The drawing shows data moving, and the question that follows is what keeps it right. The data lives in PostgreSQL with TimescaleDB, or in memory on a laptop. Every store sits behind one port with both adapters. The Postgres adapters are scoped and wrap each write in one transaction. The in-memory adapters are singletons, and the telemetry, command, plan, price and switch stores take a lock statement around each read and write.",
-    nl: "De tekening laat data bewegen, en de vraag die dan volgt is wat die data juist houdt. De data staat in PostgreSQL met TimescaleDB, of in het geheugen op een laptop. Elke store zit achter een poort met beide adapters. De Postgres-adapters zijn scoped en zetten elke schrijfactie in een transactie. De in-memory adapters zijn singletons, en de stores voor telemetrie, commando's, plannen, prijzen en de schakelaar nemen een lock statement rond elke lees- en schrijfactie.",
-  },
-  data2: {
-    en: "Which one runs depends on the host. The api picks Postgres when a connection string exists and in-memory otherwise. The gateway, the planner and the steering job register in-memory first and Postgres when configured. Retention runs on Postgres only, and the persistence tests run against a real database in Testcontainers. Six mechanisms keep the data right.",
-    nl: "Welke draait, hangt af van de host. De api kiest Postgres als er een connection string is en anders in-memory. De gateway, de planner en de stuurjob registreren eerst in-memory en Postgres als die is ingesteld. Retentie draait alleen op Postgres, en de persistence-tests draaien tegen een echte database in Testcontainers. Zes mechanismen houden de data juist.",
-  },
   duplicate1: {
     en: "The same reading can arrive twice. The primary key of telemetry_readings is the asset and the measured moment, and the insert does nothing on a conflict. The store counts what came back to know how many were duplicates.",
     nl: "Dezelfde meting kan twee keer binnenkomen. De primaire sleutel van telemetry_readings is de asset met het meetmoment, en de insert doet niets bij een conflict. De store telt wat terugkomt en weet zo hoeveel dubbel waren.",
@@ -658,89 +530,24 @@ const COPY = {
     en: "Two hosts can start at once and both try to migrate the schema. Each one takes a PostgreSQL advisory lock first and releases it when it is done, so a second host waits until the first has migrated and then finds the schema current.",
     nl: "Twee hosts kunnen tegelijk starten en allebei het schema willen migreren. Elke host neemt eerst een advisory lock in PostgreSQL en geeft die vrij als hij klaar is, dus een tweede host wacht tot de eerste gemigreerd heeft en vindt dan een bijgewerkt schema.",
   },
-  audit1: {
-    en: "Every state change of a command writes its audit row in the same transaction as the change. A new command gets its creation row only when this call inserted it. The state machine has seven states and nine allowed transitions.",
-    nl: "Elke statuswijziging van een commando schrijft zijn auditrij in dezelfde transactie als de wijziging. Een nieuw commando krijgt zijn aanmaakrij alleen als deze aanroep het invoegde. De toestandsmachine heeft zeven statussen en negen toegestane overgangen.",
+  scaleOut: {
+    en: "Out: the gateway is stateless, KEDA scales it on queue length, and sessions per asset keep the command order per device.",
+    nl: "Uit: de gateway heeft geen state, KEDA schaalt hem op de lengte van de wachtrij, en sessies per asset houden de volgorde van commando's per apparaat vast.",
   },
-  statesAria: {
-    en: "State diagram of a steering command with seven states and nine transitions",
-    nl: "Toestandsdiagram van een stuurcommando met zeven statussen en negen overgangen",
+  scaleUp: {
+    en: "Up: IoT Hub tiers, Service Bus Premium, a larger PostgreSQL tier, hypertable chunks and retention.",
+    nl: "Op: tiers van IoT Hub, Service Bus Premium, een grotere tier voor PostgreSQL, chunks van de hypertable en retentie.",
   },
-  statesCaption: {
-    en: "The main path runs from Created to Confirmed. The dashed lines are the side exits to Rejected, Failed and Expired.",
-    nl: "Het hoofdpad loopt van Created naar Confirmed. De gestippelde lijnen zijn de zijuitgangen naar Rejected, Failed en Expired.",
+  scaleDown: {
+    en: "Down: every app has a minimum of zero replicas, and the jobs run once and exit.",
+    nl: "Af: elke app heeft minimaal nul replica's, en de jobs draaien een keer en stoppen.",
   },
-  locks1: {
-    en: "In the data path the code takes a lock in three places only: the lock statement in the in-memory telemetry, command, plan, price and switch stores, the Service Bus session lock per asset and the migration advisory lock. Compare-and-set and the unique keys are not locks. A losing transition changes zero rows and stops. A duplicate insert does nothing.",
-    nl: "In het datapad neemt de code op drie plekken een lock: het lock statement in de in-memory stores voor telemetrie, commando's, plannen, prijzen en de schakelaar, de sessielock per asset in Service Bus en de advisory lock voor de migratie. Compare-and-set en de unieke sleutels zijn geen locks. Een verliezende overgang wijzigt nul rijen en stopt. Een dubbele insert doet niets.",
-  },
-  adaptersTitle: {
-    en: "Database or memory, one port",
-    nl: "Database of geheugen, een poort",
-  },
-  adaptersBody: {
-    en: "The same use case runs on both adapters, and only the registration differs. The in-memory stores let the whole flow run on a laptop without a database. The Postgres stores carry the keys, conditions and transactions above into a shared database.",
-    nl: "Dezelfde use case draait op beide adapters, alleen de registratie verschilt. Met de in-memory stores draait de hele flow op een laptop zonder database. De Postgres-stores brengen de sleutels, voorwaarden en transacties hierboven naar een gedeelde database.",
-  },
-  securityTitle: {
-    en: "What keeps it clean of known vulnerabilities",
-    nl: "Wat het vrij houdt van bekende kwetsbaarheden",
-  },
-  security1: {
-    en: "Known advisories are gated: NuGet audit for the backend packages, Grype on every container image in CI, Semgrep on the code, Gitleaks over the history, Trivy on the Terraform, terraform test for the invariants and Dependabot for the updates.",
-    nl: "Bekende advisories worden bewaakt door gates: NuGet audit voor de backendpakketten, Grype op elk container-image in CI, Semgrep op de code, Gitleaks over de historie, Trivy op de Terraform, terraform test voor de invarianten en Dependabot voor de updates.",
-  },
-  security2: {
-    en: "Along the flow most hops have a control, and three findings stay accepted, as the sweep below shows. Each device has its own SAS key in the vault. The asset identity comes from the hub's connection device id and never from the message body. The parser never throws, its input is bounded, and readings are accepted within a window of 5 minutes ahead and 1 day back by default. Statements are parameterised, with one transaction per batch. The api runs on internal ingress, checks a bearer or Entra JWT, resolves the organisation once per request and caps raw reads at 86 400 rows. The dashboard holds a token bucket and a nonce CSP and signs in with PKCE. In the Terraform the queue accepts Entra identities only, and that has not been applied.",
-    nl: "Langs de flow hebben de meeste stappen een controle, en drie bevindingen blijven geaccepteerd, zoals de sweep hieronder laat zien. Elk apparaat heeft een eigen SAS-sleutel in de kluis. De identiteit van de asset komt van het connection device id van de hub en nooit uit de berichtbody. De parser gooit nooit een fout, de invoer is begrensd, en metingen worden standaard geaccepteerd binnen een venster van 5 minuten vooruit en 1 dag terug. Statements zijn geparametriseerd, met een transactie per batch. De api draait op interne ingress, controleert een bearer of Entra JWT, bepaalt de organisatie een keer per verzoek en begrenst ruwe reads op 86 400 rijen. Het dashboard heeft een token bucket en een nonce CSP en meldt aan met PKCE. In de Terraform accepteert de wachtrij alleen Entra-identiteiten, en dat is nooit uitgerold.",
-  },
-  sweepIntro: {
-    en: "On 2 October 2026 I swept the repository and this site for findings, S1 to S16.",
-    nl: "Op 2 oktober 2026 liep ik de repository en deze site na op bevindingen, S1 tot en met S16.",
-  },
-  bumps1: {
-    en: "The dependency work of 20 October 2026 closed these advisories. In the dashboard sharp went to 0.35.5 against GHSA-wq5f-xc86-pv6w (CVE-2026-96889) and source-map-js to 1.2.2 against GHSA-68fv-2mgg-jv7q. In the backend System.Security.Cryptography.Xml and Pkcs are pinned to 10.0.13 against GHSA-c399-9853-6jmj, GHSA-r955-8q5j-3h83, GHSA-846f-f764-76mx and GHSA-2fmv-rv2c-59x7. The dashboard runtime image got a new zlib against CVE-2026-85091.",
-    nl: "Het werk aan de dependencies van 20 oktober 2026 sloot deze advisories. In het dashboard ging sharp naar 0.35.5 tegen GHSA-wq5f-xc86-pv6w (CVE-2026-96889) en source-map-js naar 1.2.2 tegen GHSA-68fv-2mgg-jv7q. In de backend staan System.Security.Cryptography.Xml en Pkcs vast op 10.0.13 tegen GHSA-c399-9853-6jmj, GHSA-r955-8q5j-3h83, GHSA-846f-f764-76mx en GHSA-2fmv-rv2c-59x7. Het runtime-image van het dashboard kreeg een nieuwe zlib tegen CVE-2026-85091.",
-  },
-  bumps2: {
-    en: "One advisory stayed open on 20 October 2026, only in development: GHSA-vfj7-8cjw-p6xm on braces 3.0.3 through eslint-config-next. GitHub withdrew it on 23 October 2026.",
-    nl: "Een advisory bleef op 20 oktober 2026 open, alleen in development: GHSA-vfj7-8cjw-p6xm op braces 3.0.3 via eslint-config-next. GitHub trok hem op 23 oktober 2026 in.",
-  },
-  clean: {
-    en: "The dashboard audit fails the build on high severity and above, and Grype checks every container image in CI. An advisory without a fix stays visible until one exists.",
-    nl: "De dashboard-audit laat de build falen vanaf ernst high, en Grype controleert elk container-image in CI. Een advisory zonder oplossing blijft zichtbaar tot er een is.",
-  },
-  closeTitle: {
-    en: "What to take away",
-    nl: "Wat je meeneemt",
+  scaleNot: {
+    en: "Not as it is: the planner loop over a single site, the rollup recompute in the application, and in-memory caches with more than one replica.",
+    nl: "Niet zoals het is: de plannerlus over een enkele site, het herberekenen van de rollup in de applicatie, en caches in het geheugen bij meer dan een replica.",
   },
   close1: {
-    en: "The answers share one habit. Each part sits behind a port, so the question of how to change it becomes which adapter to add. The data stays right through keys and conditions the database checks, and a lock appears only where a second writer has to wait. A port is a question you can answer later without rewriting what calls it.",
-    nl: "De antwoorden delen een gewoonte. Elk deel zit achter een poort, dus de vraag hoe je het verandert, wordt welke adapter je toevoegt. De data blijft juist door sleutels en voorwaarden die de database controleert, en een lock verschijnt alleen waar een tweede schrijver moet wachten. Een poort is een vraag die je later beantwoordt zonder te herschrijven wat hem aanroept.",
+    en: "Everything here follows one habit. Each part sits behind a port, so the question of how to change it becomes which adapter to add. The data stays right through keys and conditions the database checks, and a lock appears only where a second writer has to wait. A port is a question you can answer later without rewriting what calls it.",
+    nl: "Alles hier volgt een gewoonte. Elk deel zit achter een poort, dus de vraag hoe je het verandert, wordt welke adapter je toevoegt. De data blijft juist door sleutels en voorwaarden die de database controleert, en een lock verschijnt alleen waar een tweede schrijver moet wachten. Een poort is een vraag die je later beantwoordt zonder te herschrijven wat hem aanroept.",
   },
-  close2: {
-    en: "It is a proof of concept I built myself, and it never ran at a client. What it shows is how I reason about a platform like this, and that reasoning comes with me to the next one.",
-    nl: "Het is een proof of concept dat ik zelf bouwde, en het heeft nooit bij een klant gedraaid. Het laat zien hoe ik over een platform als dit nadenk, en dat denken neem ik mee naar het volgende.",
-  },
-  nodeGateway: { en: "Gateway", nl: "Gateway" },
-  nodeGatewaySub: { en: "one transaction per batch", nl: "een transactie per batch" },
-  nodeHypertable: { en: "telemetry_readings", nl: "telemetry_readings" },
-  nodeHypertableSub: { en: "hypertable, every reading", nl: "hypertable, elke meting" },
-  nodeRollup: { en: "telemetry_15m", nl: "telemetry_15m" },
-  nodeRollupSub: { en: "rollup written on ingest", nl: "rollup bij binnenkomst" },
-  nodeCurrentState: { en: "asset_current_state", nl: "asset_current_state" },
-  nodeCurrentStateSub: { en: "newest reading per asset", nl: "nieuwste meting per asset" },
-  nodeApi: { en: "API", nl: "API" },
-  nodeApiSub: { en: "weak ETag, 304", nl: "zwakke ETag, 304" },
-  nodeRoutes: { en: "Dashboard routes", nl: "Dashboardroutes" },
-  nodeRoutesSub: { en: "ETag passed on, 5 s cache", nl: "ETag doorgegeven, 5 s cache" },
-  nodeBrowser: { en: "Browser", nl: "Browser" },
-  nodeBrowserSub: { en: "polls every 10 s", nl: "pollt elke 10 s" },
-  stateCreated: { en: "Created", nl: "Created" },
-  stateSent: { en: "Sent", nl: "Sent" },
-  stateAcknowledged: { en: "Acknowledged", nl: "Acknowledged" },
-  stateConfirmed: { en: "Confirmed", nl: "Confirmed" },
-  stateRejected: { en: "Rejected", nl: "Rejected" },
-  stateFailed: { en: "Failed", nl: "Failed" },
-  stateExpired: { en: "Expired", nl: "Expired" },
 } as const;

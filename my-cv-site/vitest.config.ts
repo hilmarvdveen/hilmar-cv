@@ -23,7 +23,7 @@ export default defineConfig({
         "src/lib/**/*.ts",
         "src/hooks/**/*.ts",
         "src/components/**/*.tsx",
-        "src/features/**/components/*.tsx",
+        "src/features/**/components/**/*.tsx",
       ],
       exclude: [
         "src/**/index.ts",
