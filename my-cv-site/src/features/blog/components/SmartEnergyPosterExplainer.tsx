@@ -18,12 +18,14 @@ const TEXT = {
   commands: { en: "commands", nl: "commands" },
   plan: { en: "plan", nl: "plan" },
   textVersion: { en: "Text version of this step", nl: "Tekstversie van deze stap" },
+  step: { en: "Step", nl: "Stap" },
+  of: { en: "of", nl: "van" },
 } satisfies Record<string, LocalizedText>;
 
 const LEGEND_ITEMS = [
   { word: TEXT.data, colour: LINE_STYLES.telemetry.colour, dash: undefined },
-  { word: TEXT.commands, colour: LINE_STYLES.commands.colour, dash: "6 4" },
-  { word: TEXT.plan, colour: LINE_STYLES.control.colour, dash: "1 5" },
+  { word: TEXT.commands, colour: LINE_STYLES.commands.colour, dash: "7 7" },
+  { word: TEXT.plan, colour: LINE_STYLES.control.colour, dash: "1 6" },
 ];
 
 const TAB_SCENES = FILM_SCENES.filter((scene) => FILM_TABS.includes(scene.id));
@@ -53,6 +55,7 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
   const reducedMotion = usePrefersReducedMotion();
   const figureReference = useRef<HTMLElement>(null);
   const tabReferences = useRef<(HTMLButtonElement | null)[]>([]);
+  const tablistReference = useRef<HTMLDivElement>(null);
   const inView = useElementInView(figureReference, IN_VIEW_SHARE);
   const [elapsed, setElapsed] = useState(TAB_START);
   const [pausedByVisitor, setPausedByVisitor] = useState(false);
@@ -115,13 +118,24 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
     selectTab(target, true);
   };
 
-  const togglePause = () => {
-    if (pausedByVisitor) {
-      setHovered(false);
-      setFocusedWithin(false);
+  const togglePlayback = () => {
+    if (running) {
+      setPausedByVisitor(true);
+      return;
     }
-    setPausedByVisitor(!pausedByVisitor);
+    setHovered(false);
+    setFocusedWithin(false);
+    setPausedByVisitor(false);
   };
+
+  useEffect(() => {
+    const list = tablistReference.current;
+    const tab = tabReferences.current[activeIndex];
+    if (!list || !tab || list.contains(document.activeElement)) {
+      return;
+    }
+    list.scrollLeft = Math.max(0, tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2);
+  }, [activeIndex]);
 
   const leaveFocus = (event: FocusEvent<HTMLElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -140,7 +154,7 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
       onFocus={() => setFocusedWithin(true)}
       onBlur={leaveFocus}
     >
-      <div role="tablist" aria-label={TEXT.tablistLabel[locale]} className="flex overflow-x-auto border-b border-gray-200">
+      <div ref={tablistReference} role="tablist" aria-label={TEXT.tablistLabel[locale]} className="flex overflow-x-auto border-b border-gray-200">
         {FILM_TABS.map((tab, index) => {
           const selected = index === activeIndex;
           return (
@@ -153,7 +167,7 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
               type="button"
               role="tab"
               aria-selected={selected}
-              aria-controls={panelIdentifier}
+              aria-controls={selected ? panelIdentifier : undefined}
               tabIndex={selected ? 0 : -1}
               className={TAB_CLASSES}
               onClick={() => selectTab(index, false)}
@@ -193,7 +207,10 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
         </div>
       </div>
       <figcaption className="mt-4">
-        <p className="text-xs font-semibold text-gray-600">{`${activeIndex + 1} / ${FILM_TABS.length}`}</p>
+        <p className="text-xs font-semibold text-gray-600">
+          <span aria-hidden="true">{`${activeIndex + 1} / ${FILM_TABS.length}`}</span>
+          <span className="sr-only">{`${TEXT.step[locale]} ${activeIndex + 1} ${TEXT.of[locale]} ${FILM_TABS.length}`}</span>
+        </p>
         <p className="mt-1 text-lg font-bold text-textMain">{caption.headline}</p>
         <p className="mt-1 text-base text-gray-700">{caption.detail}</p>
         {FILM_TABS[activeIndex] === "cloud" && <p className="mt-1 text-sm text-gray-600">{labels.gatesLine}</p>}
@@ -218,8 +235,8 @@ export function SmartEnergyPosterExplainer({ locale }: SmartEnergyPosterExplaine
             ))}
           </ul>
           {!reducedMotion && (
-            <button type="button" className={BUTTON_CLASSES} onClick={togglePause}>
-              {pausedByVisitor ? TEXT.play[locale] : TEXT.pause[locale]}
+            <button type="button" className={BUTTON_CLASSES} onClick={togglePlayback}>
+              {running ? TEXT.pause[locale] : TEXT.play[locale]}
             </button>
           )}
         </div>

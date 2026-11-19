@@ -29,7 +29,7 @@ describe("SmartEnergyFilmPoster", () => {
     drawAt("reading", 0.95);
     expect(screen.getByText("1")).toBeInTheDocument();
     expect(screen.getByText("3")).toBeInTheDocument();
-    expect(screen.getByText("Dashboard").closest("g")).toHaveAttribute("opacity", "0.28");
+    expect(screen.getByText("Dashboard").closest("g")).toHaveAttribute("opacity", "0.55");
     expect(screen.getByText("Gateway").closest("g")).toHaveAttribute("opacity", "1");
   });
 
@@ -68,7 +68,7 @@ describe("SmartEnergyFilmPoster", () => {
   it("drops the apps to zero in the down beat and outlines what changes first", () => {
     const down = drawAt("scale", 0.7);
     expect(screen.getAllByText("0")).toHaveLength(3);
-    expect(screen.getByText("API").closest("g")).toHaveAttribute("opacity", "0.28");
+    expect(screen.getByText("API").closest("g")).toHaveAttribute("opacity", "0.55");
     down.unmount();
     drawAt("scale", 0.99);
     expect(screen.queryByText("1 to n")).not.toBeInTheDocument();

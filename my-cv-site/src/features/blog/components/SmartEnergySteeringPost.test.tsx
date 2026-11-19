@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { Body, meta } from "./SmartEnergySteeringPost";
 
 vi.mock("./SmartEnergyPosterExplainer", () => ({
@@ -43,11 +43,11 @@ describe("SmartEnergySteeringPost", () => {
     expect(meta.keywords.length).toBeGreaterThan(5);
   });
 
-  it("opens the English body with the poster explainer and keeps eight sections without a contents box", () => {
+  it("opens the English body with the poster explainer and keeps nine sections without a contents box", () => {
     render(<Body locale="en" />);
 
     expect(screen.getByRole("figure", { name: "poster explainer en" })).toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(8);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(9);
     expect(screen.getAllByRole("img")).toHaveLength(2);
     expect(screen.queryByRole("navigation", { name: "In this article" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
@@ -73,6 +73,34 @@ describe("SmartEnergySteeringPost", () => {
     expect(screen.getByText("Database or memory, one port")).toBeInTheDocument();
   });
 
+  it("shows the household view, the terms and the sweep as a table with its references", () => {
+    render(<Body locale="en" />);
+
+    expect(screen.getByRole("heading", { level: 2, name: "What the household sees" })).toBeInTheDocument();
+    expect(screen.getByText(/A switch behind PUT \/api\/steering turns steering off\./)).toBeInTheDocument();
+    expect(screen.getByText("Terms used in this post")).toBeInTheDocument();
+    expect(screen.getByText(/a named lock in PostgreSQL that makes a second host wait\./)).toBeInTheDocument();
+
+    const sweep = screen.getByRole("table", { name: "Findings and their final state" });
+    expect(within(sweep).getAllByRole("row")).toHaveLength(17);
+    expect(within(sweep).getByRole("rowheader", { name: "S8" })).toBeInTheDocument();
+    expect(screen.getByText("Advisory references and the dependency work")).toBeInTheDocument();
+    expect(screen.getByText(/GitHub withdrew it on 23 October 2026\./)).toBeInTheDocument();
+  });
+
+  it("lists the six consistency mechanisms with the failure first and the key line as code", () => {
+    render(<Body locale="en" />);
+
+    const mechanisms = screen.getAllByRole("list").find((list) => list.tagName === "OL");
+    expect(mechanisms).toBeDefined();
+    const items = within(mechanisms as HTMLElement).getAllByRole("listitem");
+    expect(items).toHaveLength(6);
+    expect(items[0]).toHaveTextContent(/^The same reading can arrive twice\./);
+    expect(items[4]).toHaveTextContent(/^Commands for one asset must arrive in order/);
+    expect(items[5]).toHaveTextContent(/^Two hosts can start at once/);
+    expect(within(items[2]).getByText("ON CONFLICT (idempotency_key) DO NOTHING")).toBeInTheDocument();
+  });
+
   it("names the advisory ids of the closed dependency findings", () => {
     const prose = proseOf("en");
     for (const advisory of CLOSED_ADVISORIES) {
@@ -84,7 +112,7 @@ describe("SmartEnergySteeringPost", () => {
     render(<Body locale="nl" />);
 
     expect(screen.getByRole("figure", { name: "poster explainer nl" })).toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(8);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(9);
     expect(screen.getAllByRole("img")).toHaveLength(2);
     expect(screen.getByText(/^Het heeft nooit bij een klant gedraaid/)).toBeInTheDocument();
     expect(screen.getByText(/904 backendtests, 439 dashboardtests/)).toBeInTheDocument();

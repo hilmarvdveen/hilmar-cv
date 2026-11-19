@@ -1,8 +1,10 @@
 import type { Locale } from "@/lib/seo";
 import type { BlogPostMeta } from "../types";
-import { H2, P, Lead, UL, LI } from "./prose";
+import { H2, P, Lead, UL, OL, LI, InlineCode } from "./prose";
 import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
+import { ProseTable } from "./ProseTable";
+import { ProseDetails } from "./ProseDetails";
 import { FlowDiagram } from "./FlowDiagram";
 import { FileTree, type FileNode } from "./FileTree";
 import { SmartEnergyPosterExplainer } from "./SmartEnergyPosterExplainer";
@@ -40,36 +42,196 @@ export const meta: BlogPostMeta = {
   ],
 };
 
-const READINGS_CODE = `
-ON CONFLICT (asset_id, measured_at) DO NOTHING
-RETURNING measured_at
-`;
+const MECHANISMS = [
+  { copy: "duplicate1", code: "ON CONFLICT (asset_id, measured_at) DO NOTHING" },
+  { copy: "late1", code: "WHERE excluded.measured_at > asset_current_state.measured_at" },
+  { copy: "idempotency1", code: "ON CONFLICT (idempotency_key) DO NOTHING" },
+  { copy: "compare1", code: "row.State == stateBeforeTheMove" },
+  { copy: "sessions1", code: "SessionId = command.AssetId.Value" },
+  { copy: "migration1", code: "SELECT pg_advisory_lock(@key)" },
+] as const;
 
-const CURRENT_STATE_CODE = `
-ON CONFLICT (asset_id) DO UPDATE SET ...
-WHERE excluded.measured_at > asset_current_state.measured_at
-`;
+const SWEEP = [
+  {
+    id: "S1",
+    finding: { en: "A device's self-declared asset kind trusted over the catalogue", nl: "Een zelf opgegeven soort asset van een apparaat die boven de catalogus ging" },
+    state: { en: "Fixed and proven in CI", nl: "Opgelost en bewezen in CI" },
+  },
+  {
+    id: "S2",
+    finding: { en: "This site on Next 16.3.4 with an advisory in next/og", nl: "Deze site op Next 16.3.4 met een advisory in next/og" },
+    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
+  },
+  {
+    id: "S3",
+    finding: { en: "Next 16.3.6 and 16.3.4 with six advisories", nl: "Next 16.3.6 en 16.3.4 met zes advisories" },
+    state: { en: "Fixed in both on 16.3.8", nl: "In beide opgelost op 16.3.8" },
+  },
+  {
+    id: "S4",
+    finding: { en: "The laptop and CI database image 2.24.0 with PostgreSQL 17.7", nl: "Het database-image 2.24.0 op laptop en in CI met PostgreSQL 17.7" },
+    state: {
+      en: "Fixed on 2.30.2 with PostgreSQL 17.11, pinned by digest and proven in CI. Azure offers only 2.24.0, a backlog row",
+      nl: "Opgelost op 2.30.2 met PostgreSQL 17.11, vastgezet op digest en bewezen in CI. Azure biedt alleen 2.24.0, een backlogregel",
+    },
+  },
+  {
+    id: "S5",
+    finding: { en: "Brace-expansion advisories under eslint on this site", nl: "Advisories voor brace-expansion onder eslint op deze site" },
+    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
+  },
+  {
+    id: "S6",
+    finding: { en: "The Terraform job red on two rules, which hid new findings", nl: "De Terraform-job rood op twee regels, waardoor nieuwe bevindingen verborgen bleven" },
+    state: {
+      en: "Fixed with a reason per ignored rule. The networks stay open until a pending decision",
+      nl: "Opgelost met een reden per genegeerde regel. De netwerken blijven open tot een openstaand besluit",
+    },
+  },
+  {
+    id: "S7",
+    finding: {
+      en: "The database reachable from every Azure tenant, logging in with a password and treating every app as its administrator",
+      nl: "De database bereikbaar vanuit elke Azure-tenant, met een wachtwoord als login en elke app als beheerder",
+    },
+    state: { en: "Accepted. The structural fix is a backlog row", nl: "Geaccepteerd. De structurele oplossing is een backlogregel" },
+  },
+  {
+    id: "S8",
+    finding: {
+      en: "The gateway's events key also carries ServiceConnect, so a leaked events connection string can steer devices",
+      nl: "De events-sleutel van de gateway draagt ook ServiceConnect, dus een gelekte events connection string kan apparaten sturen",
+    },
+    state: {
+      en: "Accepted. The threat model names that key a steering credential, and the structural fix is a backlog row",
+      nl: "Geaccepteerd. Het threat model noemt die sleutel een stuurcredential, en de structurele oplossing is een backlogregel",
+    },
+  },
+  {
+    id: "S9",
+    finding: { en: "pnpm 10.34.5 with an advisory", nl: "pnpm 10.34.5 met een advisory" },
+    state: { en: "Fixed on 10.34.6", nl: "Opgelost op 10.34.6" },
+  },
+  {
+    id: "S10",
+    finding: { en: "No body limit on PUT /api/steering and the api's default of 30 MB", nl: "Geen limiet op de body van PUT /api/steering en de standaard van 30 MB in de api" },
+    state: {
+      en: "Fixed with 1 KB on the route and 64 KB in Kestrel. The Next proxy may still buffer up to 10 MB, a backlog row",
+      nl: "Opgelost met 1 KB op de route en 64 KB in Kestrel. De Next-proxy kan nog tot 10 MB bufferen, een backlogregel",
+    },
+  },
+  {
+    id: "S11",
+    finding: { en: "This site's CI on mutable action tags, Node 22, no Dependabot and no audit", nl: "De CI van deze site op verplaatsbare action-tags, Node 22, zonder Dependabot en zonder audit" },
+    state: { en: "Fixed in the site", nl: "Opgelost in de site" },
+  },
+  {
+    id: "S12",
+    finding: { en: "Terraform 1.13.3, compose.yaml outside Dependabot and Semgrep 1.178.0", nl: "Terraform 1.13.3, compose.yaml buiten Dependabot en Semgrep 1.178.0" },
+    state: { en: "Fixed and proven in CI", nl: "Opgelost en bewezen in CI" },
+  },
+  {
+    id: "S13",
+    finding: {
+      en: "A deploy credential without a branch pin, no environment protection, no SECURITY.md and an SSL mode without a host name check",
+      nl: "Een deploy-credential zonder vaste branch, geen omgevingsbescherming, geen SECURITY.md en een SSL-modus zonder controle op de hostnaam",
+    },
+    state: {
+      en: "Fixed in code with VerifyFull and a SECURITY.md. VerifyFull is proven at the next apply. The repository settings are mine to change",
+      nl: "Opgelost in code met VerifyFull en een SECURITY.md. VerifyFull is bewezen bij de volgende uitrol. De repository-instellingen zijn aan mij",
+    },
+  },
+  {
+    id: "S14",
+    finding: {
+      en: "No diagnostic settings on PostgreSQL or Service Bus, and device strings unbounded in warning logs",
+      nl: "Geen diagnostische instellingen op PostgreSQL of Service Bus, en onbegrensde apparaatteksten in waarschuwingslogs",
+    },
+    state: {
+      en: "Fixed, with device strings bounded to 64 characters and the diagnostic settings added. Residual: Service Bus Standard has no login audit per attempt, and a login flood can fill the daily log cap",
+      nl: "Opgelost, met apparaatteksten begrensd op 64 tekens en de diagnostische instellingen toegevoegd. Rest: Service Bus Standard heeft geen login-audit per poging, en een stroom aanmeldingen kan de dagelijkse loglimiet vullen",
+    },
+  },
+  {
+    id: "S15",
+    finding: { en: "The threat model and the version notes behind the repository", nl: "Het threat model en de versienotities achter op de repository" },
+    state: { en: "Fixed", nl: "Opgelost" },
+  },
+  {
+    id: "S16",
+    finding: {
+      en: "Smaller items, among them a sliding session without an absolute cap and a command that stays Created after a failed send",
+      nl: "Kleinere punten, waaronder een sliding session zonder absolute grens en een commando dat op Created blijft staan na een mislukte verzending",
+    },
+    state: { en: "Accepted, each with its reason in the sweep", nl: "Geaccepteerd, elk met zijn reden in de sweep" },
+  },
+] as const;
 
-const COMMAND_INSERT_CODE = `
-ON CONFLICT (idempotency_key) DO NOTHING
-`;
-
-const COMPARE_AND_SET_CODE = `
-var updatedRowCount = await database.Commands
-    .Where(row => row.Id == movedId && row.State == stateBeforeTheMove)
-    .ExecuteUpdateAsync(...);
-`;
-
-const QUEUE_MESSAGE_CODE = `
-MessageId = command.IdempotencyKey,
-SessionId = command.AssetId.Value,
-TimeToLive = TimeSpan.FromMinutes(command.PeriodMinutes)
-`;
-
-const ADVISORY_LOCK_CODE = `
-SELECT pg_advisory_lock(@key)
-SELECT pg_advisory_unlock(@key)
-`;
+const TERMS = [
+  {
+    term: { en: "Day-ahead prices", nl: "Day-ahead prijzen" },
+    meaning: { en: "tomorrow's electricity prices, known a day ahead. The planner reads them every hour.", nl: "de stroomprijzen van morgen, een dag vooruit bekend. De planner leest ze elk uur." },
+  },
+  {
+    term: { en: "Telemetry", nl: "Telemetrie" },
+    meaning: { en: "the readings a device sends, such as the state of a battery.", nl: "de metingen die een apparaat stuurt, zoals de stand van een batterij." },
+  },
+  {
+    term: { en: "Asset", nl: "Asset" },
+    meaning: {
+      en: "one device. Here a battery, an EV charger, a PV inverter or a heat pump, all simulated.",
+      nl: "een apparaat. Hier een batterij, een laadpaal, een PV-omvormer of een warmtepomp, allemaal gesimuleerd.",
+    },
+  },
+  {
+    term: { en: "IoT Hub", nl: "IoT Hub" },
+    meaning: { en: "the Azure service devices connect to, with one identity per device.", nl: "de Azure-dienst waar apparaten mee verbinden, met een identiteit per apparaat." },
+  },
+  {
+    term: { en: "Hypertable and rollup", nl: "Hypertable en rollup" },
+    meaning: {
+      en: "the TimescaleDB table for time series, and the readings summed per 15 minutes so a chart does not scan every reading.",
+      nl: "de TimescaleDB-tabel voor tijdreeksen, en de metingen opgeteld per 15 minuten zodat een grafiek niet elke meting doorzoekt.",
+    },
+  },
+  {
+    term: { en: "ETag and 304", nl: "ETag en 304" },
+    meaning: {
+      en: "a version tag on an answer. The browser asks whether it changed, and a 304 means nothing changed and nothing is sent.",
+      nl: "een versielabel op een antwoord. De browser vraagt of het veranderde, en een 304 betekent dat er niets veranderde en niets verstuurd wordt.",
+    },
+  },
+  {
+    term: { en: "Idempotency key", nl: "Idempotency key" },
+    meaning: {
+      en: "the fingerprint of a command, made of the asset, the period and the plan version, so a second run issues nothing new.",
+      nl: "de vingerafdruk van een commando, gemaakt van de asset, de periode en de planversie, zodat een tweede run niets nieuws uitgeeft.",
+    },
+  },
+  {
+    term: { en: "Compare-and-set", nl: "Compare-and-set" },
+    meaning: { en: "an update that changes a row only while it is still in the expected state.", nl: "een update die een rij alleen wijzigt zolang die nog in de verwachte status staat." },
+  },
+  {
+    term: { en: "Advisory lock", nl: "Advisory lock" },
+    meaning: { en: "a named lock in PostgreSQL that makes a second host wait.", nl: "een benoemde lock in PostgreSQL die een tweede host laat wachten." },
+  },
+  {
+    term: { en: "Port and adapter", nl: "Poort en adapter" },
+    meaning: {
+      en: "an interface the core owns, with an implementation you can swap, in memory or on Azure.",
+      nl: "een interface die de kern bezit, met een implementatie die je kunt wisselen, in het geheugen of op Azure.",
+    },
+  },
+  {
+    term: { en: "KEDA", nl: "KEDA" },
+    meaning: { en: "scales the gateway on the length of the queue.", nl: "schaalt de gateway op de lengte van de wachtrij." },
+  },
+  {
+    term: { en: "Managed identity", nl: "Managed identity" },
+    meaning: { en: "an Azure login for a service, without a password in the code.", nl: "een Azure-login voor een dienst, zonder wachtwoord in de code." },
+  },
+] as const;
 
 const FRAME_FUNCTION_CODE = `
 export const filmFrameAtMilliseconds = (elapsed: number): FilmFrame => {
@@ -169,6 +331,19 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.intro1[locale]}</P>
       <P>{copy.intro2[locale]}</P>
 
+      <H2>{copy.householdTitle[locale]}</H2>
+      <P>{copy.household1[locale]}</P>
+      <P>{copy.household2[locale]}</P>
+      <ProseDetails summary={copy.termsSummary[locale]}>
+        <UL>
+          {TERMS.map((entry) => (
+            <LI key={entry.term.en}>
+              {entry.term[locale]}: {entry.meaning[locale]}
+            </LI>
+          ))}
+        </UL>
+      </ProseDetails>
+
       <H2>{copy.kindTitle[locale]}</H2>
       <P>{copy.kind1[locale]}</P>
       <FileTree tree={buildTouchPoints(locale)} caption={copy.kindTreeCaption[locale]} />
@@ -211,18 +386,13 @@ export function Body({ locale }: { locale: Locale }) {
       <H2>{copy.dataTitle[locale]}</H2>
       <P>{copy.data1[locale]}</P>
       <P>{copy.data2[locale]}</P>
-      <P>{copy.duplicate1[locale]}</P>
-      <CodeBlock lang="sql" filename="PostgresTelemetryStore.cs" code={READINGS_CODE} />
-      <P>{copy.late1[locale]}</P>
-      <CodeBlock lang="sql" filename="PostgresTelemetryStore.cs" code={CURRENT_STATE_CODE} />
-      <P>{copy.idempotency1[locale]}</P>
-      <CodeBlock lang="sql" filename="PostgresCommandStore.cs" code={COMMAND_INSERT_CODE} />
-      <P>{copy.compare1[locale]}</P>
-      <CodeBlock lang="cs" filename="PostgresCommandStore.cs" code={COMPARE_AND_SET_CODE} />
-      <P>{copy.sessions1[locale]}</P>
-      <CodeBlock lang="cs" filename="ServiceBusCommandMessage.cs" code={QUEUE_MESSAGE_CODE} />
-      <P>{copy.migration1[locale]}</P>
-      <CodeBlock lang="sql" filename="SchemaMigration.cs" code={ADVISORY_LOCK_CODE} />
+      <OL>
+        {MECHANISMS.map((mechanism) => (
+          <LI key={mechanism.copy}>
+            {copy[mechanism.copy][locale]} <InlineCode>{mechanism.code}</InlineCode>
+          </LI>
+        ))}
+      </OL>
       <P>{copy.audit1[locale]}</P>
       <FlowDiagram
         nodes={states.nodes}
@@ -240,25 +410,16 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.security1[locale]}</P>
       <P>{copy.security2[locale]}</P>
       <P>{copy.sweepIntro[locale]}</P>
-      <UL>
-        <LI>{copy.sweepS1[locale]}</LI>
-        <LI>{copy.sweepS2[locale]}</LI>
-        <LI>{copy.sweepS3[locale]}</LI>
-        <LI>{copy.sweepS4[locale]}</LI>
-        <LI>{copy.sweepS5[locale]}</LI>
-        <LI>{copy.sweepS6[locale]}</LI>
-        <LI>{copy.sweepS9[locale]}</LI>
-        <LI>{copy.sweepS10[locale]}</LI>
-        <LI>{copy.sweepS11[locale]}</LI>
-        <LI>{copy.sweepS12[locale]}</LI>
-        <LI>{copy.sweepS13[locale]}</LI>
-        <LI>{copy.sweepS14[locale]}</LI>
-        <LI>{copy.sweepS15[locale]}</LI>
-        <LI>{copy.sweepAccepted[locale]}</LI>
-      </UL>
-      <P>{copy.accepted1[locale]}</P>
-      <P>{copy.bumps1[locale]}</P>
-      <P>{copy.bumps2[locale]}</P>
+      <ProseTable
+        caption={copy.sweepCaption[locale]}
+        columns={[copy.sweepFindingColumn[locale], copy.sweepWhatColumn[locale], copy.sweepStateColumn[locale]]}
+        rows={SWEEP.map((row) => ({ term: row.id, cells: [row.finding[locale], row.state[locale]] }))}
+      />
+      <ProseDetails summary={copy.referencesSummary[locale]}>
+        <P>{copy.references[locale]}</P>
+        <P>{copy.bumps1[locale]}</P>
+        <P>{copy.bumps2[locale]}</P>
+      </ProseDetails>
       <P>{copy.clean[locale]}</P>
 
       <H2>{copy.closeTitle[locale]}</H2>
@@ -288,6 +449,46 @@ const COPY = {
   intro2: {
     en: "The simulator models a battery, an EV charger, a PV inverter and a heat pump, each with its own device identity in IoT Hub. A gateway stores the readings in PostgreSQL with TimescaleDB, an api serves them and a server-rendered dashboard shows them. An hourly planner and a steering job every 15 minutes turn day-ahead prices into commands for the battery.",
     nl: "De simulator modelleert een batterij, een laadpaal, een PV-omvormer en een warmtepomp, elk met een eigen apparaatidentiteit in IoT Hub. Een gateway slaat de metingen op in PostgreSQL met TimescaleDB, een api serveert ze en een server-rendered dashboard toont ze. Een planner die elk uur draait en een stuurjob die elke 15 minuten draait, maken van day-ahead prijzen commando's voor de batterij.",
+  },
+  householdTitle: {
+    en: "What the household sees",
+    nl: "Wat het huishouden ziet",
+  },
+  household1: {
+    en: "The household opens a dashboard that the server renders. It shows the site with the current state of each asset, a power chart and a plan chart, the commands with their status, and the savings.",
+    nl: "Het huishouden opent een dashboard dat de server rendert. Het toont de site met de actuele stand van elke asset, een vermogensgrafiek en een plangrafiek, de commando's met hun status, en de besparing.",
+  },
+  household2: {
+    en: "Confirmed means the next reading shows the battery carried out the command. A switch behind PUT /api/steering turns steering off.",
+    nl: "Confirmed betekent dat de volgende meting laat zien dat de batterij het commando uitvoerde. Een schakelaar achter PUT /api/steering zet de sturing uit.",
+  },
+  termsSummary: {
+    en: "Terms used in this post",
+    nl: "Begrippen in dit artikel",
+  },
+  sweepCaption: {
+    en: "Findings and their final state",
+    nl: "Bevindingen en hun eindstatus",
+  },
+  sweepFindingColumn: {
+    en: "Finding",
+    nl: "Bevinding",
+  },
+  sweepWhatColumn: {
+    en: "What it was",
+    nl: "Wat het was",
+  },
+  sweepStateColumn: {
+    en: "Final state",
+    nl: "Eindstatus",
+  },
+  referencesSummary: {
+    en: "Advisory references and the dependency work",
+    nl: "Advisory-referenties en het dependency-werk",
+  },
+  references: {
+    en: "S2 is GHSA-vcvr-r3jv-pc5j in next/og. S3 is GHSA-cjq9-62q9-8jv4 with five moderate advisories. S4 is CVE-2026-29089. S6 is AZU-0012 and AZU-0013. S9 is GHSA-xcpc-8h2w-3j85.",
+    nl: "S2 is GHSA-vcvr-r3jv-pc5j in next/og. S3 is GHSA-cjq9-62q9-8jv4 met vijf gemiddelde advisories. S4 is CVE-2026-29089. S6 is AZU-0012 en AZU-0013. S9 is GHSA-xcpc-8h2w-3j85.",
   },
   kindTitle: {
     en: "How does another asset kind get in?",
@@ -430,8 +631,8 @@ const COPY = {
     nl: "De tekening laat data bewegen, en de vraag die dan volgt is wat die data juist houdt. De data staat in PostgreSQL met TimescaleDB, of in het geheugen op een laptop. Elke store zit achter een poort met beide adapters. De Postgres-adapters zijn scoped en zetten elke schrijfactie in een transactie. De in-memory adapters zijn singletons, en de stores voor telemetrie, commando's, plannen, prijzen en de schakelaar nemen een lock statement rond elke lees- en schrijfactie.",
   },
   data2: {
-    en: "Which one runs depends on the host. The api picks Postgres when a connection string exists and in-memory otherwise. The gateway, the planner and the steering job register in-memory first and Postgres when configured. Retention runs on Postgres only, and the persistence tests run against a real database in Testcontainers. Six mechanisms keep the data right, in the order of the drawing.",
-    nl: "Welke draait, hangt af van de host. De api kiest Postgres als er een connection string is en anders in-memory. De gateway, de planner en de stuurjob registreren eerst in-memory en Postgres als die is ingesteld. Retentie draait alleen op Postgres, en de persistence-tests draaien tegen een echte database in Testcontainers. Zes mechanismen houden de data juist, in de volgorde van de tekening.",
+    en: "Which one runs depends on the host. The api picks Postgres when a connection string exists and in-memory otherwise. The gateway, the planner and the steering job register in-memory first and Postgres when configured. Retention runs on Postgres only, and the persistence tests run against a real database in Testcontainers. Six mechanisms keep the data right.",
+    nl: "Welke draait, hangt af van de host. De api kiest Postgres als er een connection string is en anders in-memory. De gateway, de planner en de stuurjob registreren eerst in-memory en Postgres als die is ingesteld. Retentie draait alleen op Postgres, en de persistence-tests draaien tegen een echte database in Testcontainers. Zes mechanismen houden de data juist.",
   },
   duplicate1: {
     en: "The same reading can arrive twice. The primary key of telemetry_readings is the asset and the measured moment, and the insert does nothing on a conflict. The store counts what came back to know how many were duplicates.",
@@ -450,12 +651,12 @@ const COPY = {
     nl: "Twee overgangen kunnen racen op een commando. De update neemt de status mee waarin het commando stond, dus alleen de overgang waarvan de verwachte status nog klopt, wijzigt een rij. De andere wijzigt nul rijen, gooit een fout en schrijft geen auditrij. Voordat een store wordt aangeroepen, weigert het domein al een stap die de toestandsmachine niet toestaat.",
   },
   sessions1: {
-    en: "Commands travel on a Service Bus queue with sessions. The session id is the asset, so each asset has its own lane, and the receiver handles one message per session at a time, up to eight sessions at once. The message id is the idempotency key, so the queue drops a duplicate inside a 30 minute window. A message lives for one period, and an expired one goes to the dead letter queue. The queue exists only in the pro environment, which has never been applied. On the laptop an in-memory command channel stands in.",
-    nl: "Commando's reizen over een Service Bus-wachtrij met sessies. Het session id is de asset, dus elke asset heeft een eigen rij, en de ontvanger handelt per sessie een bericht tegelijk af, tot acht sessies tegelijk. Het message id is de idempotency key, dus de wachtrij laat een dubbel bericht binnen een venster van 30 minuten vallen. Een bericht leeft een periode, en een verlopen bericht gaat naar de dead letter queue. De wachtrij bestaat alleen in de pro-omgeving, en die is nooit uitgerold. Op de laptop neemt een in-memory commandokanaal de plaats in.",
+    en: "Commands for one asset must arrive in order, and a duplicate must not arrive twice. Commands travel on a Service Bus queue with sessions. The session id is the asset, so each asset has its own lane, and the receiver handles one message per session at a time, up to eight sessions at once. The message id is the idempotency key, so the queue drops a duplicate inside a 30 minute window. A message lives for one period, and an expired one goes to the dead letter queue. The queue exists only in the pro environment, which has never been applied. On the laptop an in-memory command channel stands in.",
+    nl: "Commando's voor een asset moeten op volgorde aankomen, en een dubbel commando mag niet twee keer aankomen. Commando's reizen over een Service Bus-wachtrij met sessies. Het session id is de asset, dus elke asset heeft een eigen rij, en de ontvanger handelt per sessie een bericht tegelijk af, tot acht sessies tegelijk. Het message id is de idempotency key, dus de wachtrij laat een dubbel bericht binnen een venster van 30 minuten vallen. Een bericht leeft een periode, en een verlopen bericht gaat naar de dead letter queue. De wachtrij bestaat alleen in de pro-omgeving, en die is nooit uitgerold. Op de laptop neemt een in-memory commandokanaal de plaats in.",
   },
   migration1: {
-    en: "Several hosts migrate the schema when they start. Each one takes a PostgreSQL advisory lock first and releases it when it is done, so a second host waits until the first has migrated and then finds the schema current.",
-    nl: "Meerdere hosts migreren het schema als ze starten. Elke host neemt eerst een advisory lock in PostgreSQL en geeft die vrij als hij klaar is, dus een tweede host wacht tot de eerste gemigreerd heeft en vindt dan een bijgewerkt schema.",
+    en: "Two hosts can start at once and both try to migrate the schema. Each one takes a PostgreSQL advisory lock first and releases it when it is done, so a second host waits until the first has migrated and then finds the schema current.",
+    nl: "Twee hosts kunnen tegelijk starten en allebei het schema willen migreren. Elke host neemt eerst een advisory lock in PostgreSQL en geeft die vrij als hij klaar is, dus een tweede host wacht tot de eerste gemigreerd heeft en vindt dan een bijgewerkt schema.",
   },
   audit1: {
     en: "Every state change of a command writes its audit row in the same transaction as the change. A new command gets its creation row only when this call inserted it. The state machine has seven states and nine allowed transitions.",
@@ -494,80 +695,20 @@ const COPY = {
     nl: "Langs de flow hebben de meeste stappen een controle, en drie bevindingen blijven geaccepteerd, zoals de sweep hieronder laat zien. Elk apparaat heeft een eigen SAS-sleutel in de kluis. De identiteit van de asset komt van het connection device id van de hub en nooit uit de berichtbody. De parser gooit nooit een fout, de invoer is begrensd, en metingen worden standaard geaccepteerd binnen een venster van 5 minuten vooruit en 1 dag terug. Statements zijn geparametriseerd, met een transactie per batch. De api draait op interne ingress, controleert een bearer of Entra JWT, bepaalt de organisatie een keer per verzoek en begrenst ruwe reads op 86 400 rijen. Het dashboard heeft een token bucket en een nonce CSP en meldt aan met PKCE. In de Terraform accepteert de wachtrij alleen Entra-identiteiten, en dat is nooit uitgerold.",
   },
   sweepIntro: {
-    en: "On 2 October 2026 I swept the repository and this site for findings, S1 to S16. Each one has a final state.",
-    nl: "Op 2 oktober 2026 liep ik de repository en deze site na op bevindingen, S1 tot en met S16. Elke bevinding heeft een eindstatus.",
-  },
-  sweepS1: {
-    en: "S1, a device's self-declared asset kind trusted over the catalogue: fixed and proven in CI.",
-    nl: "S1, een zelf opgegeven soort asset van een apparaat die boven de catalogus ging: opgelost en bewezen in CI.",
-  },
-  sweepS2: {
-    en: "S2, this site on Next 16.3.4 with GHSA-vcvr-r3jv-pc5j in next/og: fixed in the site.",
-    nl: "S2, deze site op Next 16.3.4 met GHSA-vcvr-r3jv-pc5j in next/og: opgelost in de site.",
-  },
-  sweepS3: {
-    en: "S3, Next 16.3.6 and 16.3.4 with GHSA-cjq9-62q9-8jv4 and five moderate advisories: fixed in both on 16.3.8.",
-    nl: "S3, Next 16.3.6 en 16.3.4 met GHSA-cjq9-62q9-8jv4 en vijf gemiddelde advisories: in beide opgelost op 16.3.8.",
-  },
-  sweepS4: {
-    en: "S4, the laptop and CI database image 2.24.0 with CVE-2026-29089 and PostgreSQL 17.7: fixed on 2.30.2 with PostgreSQL 17.11, pinned by digest and proven in CI. Azure offers only 2.24.0, which stays a backlog row.",
-    nl: "S4, het database-image 2.24.0 op laptop en in CI met CVE-2026-29089 en PostgreSQL 17.7: opgelost op 2.30.2 met PostgreSQL 17.11, vastgezet op digest en bewezen in CI. Azure biedt alleen 2.24.0, dat blijft een backlogregel.",
-  },
-  sweepS5: {
-    en: "S5, brace-expansion advisories under eslint on this site: fixed in the site.",
-    nl: "S5, advisories voor brace-expansion onder eslint op deze site: opgelost in de site.",
-  },
-  sweepS6: {
-    en: "S6, the Terraform job red on AZU-0012 and AZU-0013, which hid new findings: fixed with a reason per ignored rule. The networks stay open until a pending decision.",
-    nl: "S6, de Terraform-job rood op AZU-0012 en AZU-0013, waardoor nieuwe bevindingen verborgen bleven: opgelost met een reden per genegeerde regel. De netwerken blijven open tot een openstaand besluit.",
-  },
-  sweepS9: {
-    en: "S9, pnpm 10.34.5 with GHSA-xcpc-8h2w-3j85: fixed on 10.34.6.",
-    nl: "S9, pnpm 10.34.5 met GHSA-xcpc-8h2w-3j85: opgelost op 10.34.6.",
-  },
-  sweepS10: {
-    en: "S10, no body limit on PUT /api/steering and the api's default of 30 MB: fixed with 1 KB on the route and 64 KB in Kestrel. The Next proxy may still buffer up to 10 MB, which is a backlog row.",
-    nl: "S10, geen limiet op de body van PUT /api/steering en de standaard van 30 MB in de api: opgelost met 1 KB op de route en 64 KB in Kestrel. De Next-proxy kan nog tot 10 MB bufferen, dat is een backlogregel.",
-  },
-  sweepS11: {
-    en: "S11, this site's CI on mutable action tags, Node 22, no Dependabot and no audit: fixed in the site.",
-    nl: "S11, de CI van deze site op verplaatsbare action-tags, Node 22, zonder Dependabot en zonder audit: opgelost in de site.",
-  },
-  sweepS12: {
-    en: "S12, Terraform 1.13.3, compose.yaml outside Dependabot and Semgrep 1.178.0: fixed and proven in CI.",
-    nl: "S12, Terraform 1.13.3, compose.yaml buiten Dependabot en Semgrep 1.178.0: opgelost en bewezen in CI.",
-  },
-  sweepS13: {
-    en: "S13, a deploy credential without a branch pin, no environment protection, no SECURITY.md and an SSL mode without a host name check: fixed in code with VerifyFull and a SECURITY.md. VerifyFull is proven at the next apply. The repository settings are mine to change.",
-    nl: "S13, een deploy-credential zonder vaste branch, geen omgevingsbescherming, geen SECURITY.md en een SSL-modus zonder controle op de hostnaam: opgelost in code met VerifyFull en een SECURITY.md. VerifyFull is bewezen bij de volgende uitrol. De repository-instellingen zijn aan mij.",
-  },
-  sweepS14: {
-    en: "S14, no diagnostic settings on PostgreSQL or Service Bus, and device strings unbounded in warning logs: fixed, with device strings bounded to 64 characters and the diagnostic settings added. Residual: Service Bus Standard has no login audit per attempt, and a login flood can fill the daily log cap.",
-    nl: "S14, geen diagnostische instellingen op PostgreSQL of Service Bus, en onbegrensde apparaatteksten in waarschuwingslogs: opgelost, met apparaatteksten begrensd op 64 tekens en de diagnostische instellingen toegevoegd. Rest: Service Bus Standard heeft geen login-audit per poging, en een stroom aanmeldingen kan de dagelijkse loglimiet vullen.",
-  },
-  sweepS15: {
-    en: "S15, the threat model and the version notes behind the repository: fixed.",
-    nl: "S15, het threat model en de versienotities achter op de repository: opgelost.",
-  },
-  sweepAccepted: {
-    en: "S7, S8 and S16 are accepted, as the next paragraph explains.",
-    nl: "S7, S8 en S16 zijn geaccepteerd, zoals de volgende alinea uitlegt.",
-  },
-  accepted1: {
-    en: "S7 means the database is reachable from every Azure tenant, logs in with a password and treats every app as its administrator. S8 means the gateway's events key also carries ServiceConnect, so a leaked events connection string can steer devices. The threat model names that key a steering credential. S16 is a list of smaller items, among them a sliding session without an absolute cap and a command that stays Created after a failed send. Each has its reason in the sweep, and the structural fixes for S7 and S8 are backlog rows.",
-    nl: "S7 betekent dat de database bereikbaar is vanuit elke Azure-tenant, met een wachtwoord inlogt en elke app als beheerder ziet. S8 betekent dat de events-sleutel van de gateway ook ServiceConnect draagt, dus een gelekte events connection string kan apparaten sturen. Het threat model noemt die sleutel een stuurcredential. S16 is een lijst kleinere punten, waaronder een sliding session zonder absolute grens en een commando dat op Created blijft staan na een mislukte verzending. Elk punt heeft zijn reden in de sweep, en de structurele oplossingen voor S7 en S8 zijn backlogregels.",
+    en: "On 2 October 2026 I swept the repository and this site for findings, S1 to S16.",
+    nl: "Op 2 oktober 2026 liep ik de repository en deze site na op bevindingen, S1 tot en met S16.",
   },
   bumps1: {
     en: "The dependency work of 20 October 2026 closed these advisories. In the dashboard sharp went to 0.35.5 against GHSA-wq5f-xc86-pv6w (CVE-2026-96889) and source-map-js to 1.2.2 against GHSA-68fv-2mgg-jv7q. In the backend System.Security.Cryptography.Xml and Pkcs are pinned to 10.0.13 against GHSA-c399-9853-6jmj, GHSA-r955-8q5j-3h83, GHSA-846f-f764-76mx and GHSA-2fmv-rv2c-59x7. The dashboard runtime image got a new zlib against CVE-2026-85091.",
     nl: "Het werk aan de dependencies van 20 oktober 2026 sloot deze advisories. In het dashboard ging sharp naar 0.35.5 tegen GHSA-wq5f-xc86-pv6w (CVE-2026-96889) en source-map-js naar 1.2.2 tegen GHSA-68fv-2mgg-jv7q. In de backend staan System.Security.Cryptography.Xml en Pkcs vast op 10.0.13 tegen GHSA-c399-9853-6jmj, GHSA-r955-8q5j-3h83, GHSA-846f-f764-76mx en GHSA-2fmv-rv2c-59x7. Het runtime-image van het dashboard kreeg een nieuwe zlib tegen CVE-2026-85091.",
   },
   bumps2: {
-    en: "One advisory stays open, and only in development: GHSA-vfj7-8cjw-p6xm on braces 3.0.3 through eslint-config-next, which has no patched release yet. The production audit does not include it.",
-    nl: "Een advisory blijft open, en alleen in development: GHSA-vfj7-8cjw-p6xm op braces 3.0.3 via eslint-config-next, waarvoor nog geen gepatchte release bestaat. De productie-audit bevat hem niet.",
+    en: "One advisory stayed open on 20 October 2026, only in development: GHSA-vfj7-8cjw-p6xm on braces 3.0.3 through eslint-config-next. GitHub withdrew it on 23 October 2026.",
+    nl: "Een advisory bleef op 20 oktober 2026 open, alleen in development: GHSA-vfj7-8cjw-p6xm op braces 3.0.3 via eslint-config-next. GitHub trok hem op 23 oktober 2026 in.",
   },
   clean: {
-    en: "The dashboard audit fails the build on high severity and above, and Grype checks every container image in CI. An advisory without a fix stays visible until one exists, like the one dev-only advisory above.",
-    nl: "De dashboard-audit laat de build falen vanaf ernst high, en Grype controleert elk container-image in CI. Een advisory zonder oplossing blijft zichtbaar tot er een is, zoals de ene advisory hierboven die alleen in development zit.",
+    en: "The dashboard audit fails the build on high severity and above, and Grype checks every container image in CI. An advisory without a fix stays visible until one exists.",
+    nl: "De dashboard-audit laat de build falen vanaf ernst high, en Grype controleert elk container-image in CI. Een advisory zonder oplossing blijft zichtbaar tot er een is.",
   },
   closeTitle: {
     en: "What to take away",

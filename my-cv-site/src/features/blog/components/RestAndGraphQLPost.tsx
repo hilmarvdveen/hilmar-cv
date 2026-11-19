@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/seo";
 import type { BlogPostMeta } from "../types";
 import { H2, P, Lead, UL, OL, LI, Strong, Quote, Divider, A, InlineCode } from "./prose";
+import { ProseTable } from "./ProseTable";
 import { Callout } from "./Callout";
 import { CodeBlock } from "./CodeBlock";
 import { FlowDiagram } from "./FlowDiagram";
@@ -38,51 +39,6 @@ export const meta: BlogPostMeta = {
 };
 
 type ReferenceRow = { term: string; cells: string[] };
-
-function ReferenceTable({
-  caption,
-  columns,
-  rows,
-  minimumWidth,
-}: {
-  caption: string;
-  columns: string[];
-  rows: ReferenceRow[];
-  minimumWidth: number;
-}) {
-  return (
-    <div className="my-8 overflow-x-auto rounded-xl border border-gray-200">
-      <table className="w-full border-collapse text-left text-sm" style={{ minWidth: minimumWidth }}>
-        <caption className="border-b border-gray-200 bg-gray-50 px-4 py-3 text-left text-sm text-gray-600">
-          {caption}
-        </caption>
-        <thead>
-          <tr className="border-b border-gray-200 bg-gray-50">
-            {columns.map((column) => (
-              <th key={column} scope="col" className="px-4 py-3 font-semibold text-textMain">
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.term} className="border-b border-gray-200 last:border-b-0">
-              <th scope="row" className="px-4 py-3 align-top font-semibold text-gray-800">
-                {row.term}
-              </th>
-              {row.cells.map((cell, position) => (
-                <td key={`${row.term}-${columns[position + 1]}`} className="px-4 py-3 align-top text-gray-700">
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 function buildTwoShapes(locale: Locale) {
   const copy = COPY;
@@ -226,7 +182,7 @@ export function Body({ locale }: { locale: Locale }) {
         </LI>
       </UL>
       <P>{copy.methods2[locale]}</P>
-      <ReferenceTable
+      <ProseTable
         caption={copy.methodTableCaption[locale]}
         columns={[
           copy.methodColumn[locale],
@@ -255,7 +211,7 @@ export function Body({ locale }: { locale: Locale }) {
         caption={copy.stagesCaption[locale]}
       />
       <P>{copy.status2[locale]}</P>
-      <ReferenceTable
+      <ProseTable
         caption={copy.statusTableCaption[locale]}
         columns={[copy.statusColumn[locale], copy.decidedByColumn[locale], copy.whenColumn[locale]]}
         rows={statusRows(locale)}
@@ -470,7 +426,7 @@ export function Body({ locale }: { locale: Locale }) {
 
       <H2>{copy.decisionTitle[locale]}</H2>
       <P>{copy.decision1[locale]}</P>
-      <ReferenceTable
+      <ProseTable
         caption={copy.decisionTableCaption[locale]}
         columns={[copy.questionColumn[locale], "REST", "GraphQL"]}
         rows={decisionRows(locale)}

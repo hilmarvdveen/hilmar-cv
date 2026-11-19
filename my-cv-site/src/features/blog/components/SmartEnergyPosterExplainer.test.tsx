@@ -139,9 +139,11 @@ describe("SmartEnergyPosterExplainer structure", () => {
     const dutch = smartEnergyFilmLabels("nl");
     expect(screen.getByRole("tablist", { name: "Stappen van het platform" })).toBeInTheDocument();
     expect(tabNamed(dutch.tabs.overview)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Pauzeer" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Afspelen" })).toBeInTheDocument();
+    expect(screen.getByText("Stap 1 van 7")).toBeInTheDocument();
     const legend = screen.getByRole("list", { name: "Soorten lijnen" });
     expect(within(legend).getByText("commands")).toBeInTheDocument();
+    scrollIntoView(true);
     fireEvent.click(screen.getByRole("button", { name: "Pauzeer" }));
     expect(screen.getByRole("button", { name: "Afspelen" })).toBeInTheDocument();
     expect(screen.getByRole("list", { name: "Tekstversie van deze stap" })).toBeInTheDocument();
@@ -227,14 +229,23 @@ describe("SmartEnergyPosterExplainer playback", () => {
     expect(pendingFrames()).toBe(1);
   });
 
-  it("pauses on hover and resumes on leave", () => {
+  it("pauses on hover, says Play while stopped and resumes on leave", () => {
     render(<SmartEnergyPosterExplainer locale="en" />);
     scrollIntoView(true);
     const figure = screen.getByRole("figure");
     fireEvent.pointerEnter(figure);
     expect(pendingFrames()).toBe(0);
+    expect(screen.getByRole("button", { name: "Play" })).toBeInTheDocument();
     fireEvent.pointerLeave(figure);
     expect(pendingFrames()).toBe(1);
+    expect(screen.getByRole("button", { name: "Pause" })).toBeInTheDocument();
+  });
+
+  it("reads the step counter as words and points only the selected tab at the panel", () => {
+    render(<SmartEnergyPosterExplainer locale="en" />);
+    expect(screen.getByText("Step 1 of 7")).toBeInTheDocument();
+    expect(tabNamed(labels.tabs.overview)).toHaveAttribute("aria-controls");
+    expect(tabNamed(labels.tabs.reading)).not.toHaveAttribute("aria-controls");
   });
 
   it("pauses while focus is inside and resumes when it leaves", () => {
