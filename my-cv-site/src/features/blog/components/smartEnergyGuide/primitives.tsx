@@ -1,14 +1,24 @@
 import type { ReactNode } from "react";
 import type { Point } from "@/lib/flowLayout";
 import { polylinePath } from "@/lib/smartEnergyExplainer/drawing";
+import type { FrameId } from "@/lib/smartEnergyFilm/layout";
+import {
+  ACTIVE_LINE_COLOUR,
+  BLOCK_STYLE,
+  COLOURS,
+  FRAME_STYLES,
+  LINE_STYLES,
+  PLATE_STYLE,
+  dashPattern,
+} from "@/lib/smartEnergyFilm/tokens";
 
-export const NAVY = "#12314e";
-export const EMERALD_TEXT = "#047857";
-export const EMERALD_LINE = "#059669";
-export const GRAY = "#374151";
-export const SLATE_LINE = "#6b7280";
-export const STORE_FILL = "#f9fafb";
-export const WHITE = "#ffffff";
+export const NAVY = COLOURS.navy;
+export const EMERALD_TEXT = COLOURS.emeraldText;
+export const EMERALD_LINE = COLOURS.emeraldLine;
+export const GRAY = COLOURS.gray;
+export const SLATE_LINE = COLOURS.grayLine;
+export const STORE_FILL = COLOURS.storeFill;
+export const WHITE = COLOURS.white;
 
 export const VIEW_WIDTH = 360;
 export const MARGIN = 6;
@@ -24,6 +34,7 @@ export const MINIMUM_RENDERED_SIZE = 11;
 const CHARACTER_WIDTH = 0.6;
 const FRAME_INSET = 12;
 const LABEL_PADDING = 4;
+const PLATE_GAP = 8;
 
 export const renderedSize = (fontUnits: number, viewBoxWidth: number, renderedWidth: number = PHONE_WIDTH): number =>
   (fontUnits * renderedWidth) / viewBoxWidth;
@@ -50,7 +61,7 @@ export const wrapText = (text: string, maxWidth: number, size: number): string[]
 
 type Tone = "slate" | "emerald";
 
-const TONE_COLOUR: Record<Tone, string> = { slate: SLATE_LINE, emerald: EMERALD_LINE };
+const TONE_COLOUR: Record<Tone, string> = { slate: LINE_STYLES.telemetry.colour, emerald: ACTIVE_LINE_COLOUR };
 
 type BoxContent = { title?: string; notes?: readonly string[]; highlights?: readonly string[] };
 
@@ -58,8 +69,8 @@ type BoxLine = { text: string; size: number; weight: number; colour: string };
 
 const boxLines = (width: number, { title, notes = [], highlights = [] }: BoxContent): BoxLine[] => {
   const inner = width - BOX_PADDING * 2;
-  const titleLines = (title === undefined ? [] : wrapText(title, inner, TITLE_SIZE)).map((text) => ({ text, size: TITLE_SIZE, weight: 700, colour: NAVY }));
-  const noteLines = notes.flatMap((note) => wrapText(note, inner, SMALL_SIZE)).map((text) => ({ text, size: SMALL_SIZE, weight: 500, colour: GRAY }));
+  const titleLines = (title === undefined ? [] : wrapText(title, inner, TITLE_SIZE)).map((text) => ({ text, size: TITLE_SIZE, weight: 700, colour: BLOCK_STYLE.titleColour }));
+  const noteLines = notes.flatMap((note) => wrapText(note, inner, SMALL_SIZE)).map((text) => ({ text, size: SMALL_SIZE, weight: 500, colour: BLOCK_STYLE.noteColour }));
   const highlightLines = highlights
     .flatMap((note) => wrapText(note, inner, SMALL_SIZE))
     .map((text) => ({ text, size: SMALL_SIZE, weight: 600, colour: EMERALD_TEXT }));
@@ -89,11 +100,11 @@ export function Box({ x, y, width, height, store = false, dashed = false, emphas
         y={y}
         width={width}
         height={fullHeight}
-        rx={12}
-        fill={store ? STORE_FILL : WHITE}
-        stroke={emphasised ? EMERALD_LINE : SLATE_LINE}
-        strokeWidth={STROKE}
-        strokeDasharray={dashed ? "6 4" : undefined}
+        rx={STROKE * BLOCK_STYLE.radiusRatio}
+        fill={store ? BLOCK_STYLE.storeFill : BLOCK_STYLE.computeFill}
+        stroke={emphasised ? BLOCK_STYLE.outline : BLOCK_STYLE.stroke}
+        strokeWidth={BLOCK_STYLE.strokeRatio * STROKE}
+        strokeDasharray={dashed ? BLOCK_STYLE.dashRatio.map((ratio) => ratio * STROKE).join(" ") : undefined}
       />
       {lines.map((line, index) => (
         <text
@@ -114,12 +125,17 @@ export function Box({ x, y, width, height, store = false, dashed = false, emphas
 }
 
 export const frameHeader = (width: number, title: string): number =>
-  wrapText(title, width - FRAME_INSET * 2, TITLE_SIZE).length * LINE_HEIGHT + BOX_PADDING * 2;
+  (wrapText(title, width - FRAME_INSET * 2, TITLE_SIZE).length - 0.5) * LINE_HEIGHT + PLATE_GAP;
 
-type FrameProps = { x: number; y: number; width: number; height: number; title: string; dashed?: boolean };
+type FrameProps = { x: number; y: number; width: number; height: number; title: string; dashed?: boolean; frame?: FrameId };
 
-export function Frame({ x, y, width, height, title, dashed = false }: FrameProps) {
+export function Frame({ x, y, width, height, title, dashed = false, frame = "azure" }: FrameProps) {
   const lines = wrapText(title, width - FRAME_INSET * 2, TITLE_SIZE);
+  const style = FRAME_STYLES[frame];
+  const strokeWidth = STROKE * style.strokeWidthRatio;
+  const plateWidth = Math.max(...lines.map((line) => textWidth(line, TITLE_SIZE))) + TITLE_SIZE * PLATE_STYLE.paddingRatio * 2;
+  const plateHeight = lines.length * LINE_HEIGHT;
+  const plateTop = y - LINE_HEIGHT / 2;
   return (
     <g>
       <rect
@@ -127,21 +143,29 @@ export function Frame({ x, y, width, height, title, dashed = false }: FrameProps
         y={y}
         width={width}
         height={height}
-        rx={16}
-        fill="none"
-        stroke={SLATE_LINE}
-        strokeWidth={STROKE}
-        strokeDasharray={dashed ? "6 4" : undefined}
+        rx={BLOCK_STYLE.radiusRatio * STROKE + 2}
+        fill={style.fill}
+        stroke={style.stroke}
+        strokeWidth={strokeWidth}
+        strokeDasharray={dashed ? BLOCK_STYLE.dashRatio.map((ratio) => ratio * STROKE).join(" ") : undefined}
+      />
+      <rect
+        x={x + FRAME_INSET - TITLE_SIZE * PLATE_STYLE.paddingRatio}
+        y={plateTop}
+        width={plateWidth}
+        height={plateHeight}
+        rx={LINE_HEIGHT * PLATE_STYLE.radiusRatio}
+        fill={PLATE_STYLE.fill}
       />
       {lines.map((line, index) => (
         <text
           key={`${line}-${index}`}
           x={x + FRAME_INSET}
-          y={y + BOX_PADDING + LINE_HEIGHT / 2 + index * LINE_HEIGHT}
+          y={plateTop + LINE_HEIGHT / 2 + index * LINE_HEIGHT}
           dominantBaseline="central"
           fontSize={TITLE_SIZE}
           fontWeight={700}
-          fill={GRAY}
+          fill={PLATE_STYLE.textColour}
         >
           {line}
         </text>
@@ -172,7 +196,7 @@ export function Connector({ prefix, points, tone = "slate", arrow = true, dashed
       stroke={TONE_COLOUR[tone]}
       strokeWidth={STROKE}
       strokeLinejoin="round"
-      strokeDasharray={dashed ? "6 4" : undefined}
+      strokeDasharray={dashed ? dashPattern("commands", STROKE) : undefined}
       markerEnd={arrow ? `url(#${prefix}-arrow-${tone})` : undefined}
     />
   );
@@ -195,7 +219,7 @@ export function Label({ x, y, text, maxWidth, anchor = "start", emphasised = fal
   const first = y - height / 2 + LINE_HEIGHT / 2;
   return (
     <g>
-      <rect x={left} y={y - height / 2} width={width} height={height} rx={4} fill={WHITE} />
+      <rect x={left} y={y - height / 2} width={width} height={height} rx={height * PLATE_STYLE.radiusRatio} fill={PLATE_STYLE.fill} />
       {lines.map((line, index) => (
         <text
           key={`${line}-${index}`}
@@ -205,7 +229,7 @@ export function Label({ x, y, text, maxWidth, anchor = "start", emphasised = fal
           dominantBaseline="central"
           fontSize={SMALL_SIZE}
           fontWeight={600}
-          fill={emphasised ? EMERALD_TEXT : GRAY}
+          fill={emphasised ? PLATE_STYLE.emphasisedTextColour : PLATE_STYLE.textColour}
         >
           {line}
         </text>
@@ -214,17 +238,17 @@ export function Label({ x, y, text, maxWidth, anchor = "start", emphasised = fal
   );
 }
 
-type FigureFrameProps = { prefix: string; height: number; caption: string; steps: readonly string[]; children: ReactNode };
+type FigureFrameProps = { prefix: string; height: number; width?: number; caption: string; steps: readonly string[]; stepsLabel?: string; children: ReactNode };
 
-export function FigureFrame({ prefix, height, caption, steps, children }: FigureFrameProps) {
+export function FigureFrame({ prefix, height, width = VIEW_WIDTH, caption, steps, stepsLabel, children }: FigureFrameProps) {
   return (
     <figure className="my-10">
-      <svg aria-hidden="true" viewBox={`0 0 ${VIEW_WIDTH} ${height}`} width="100%" className="mx-auto block h-auto w-full max-w-md">
+      <svg aria-hidden="true" viewBox={`0 0 ${width} ${height}`} width="100%" className="mx-auto block h-auto w-full max-w-md">
         <ArrowMarkers prefix={prefix} />
         {children}
       </svg>
       <figcaption className="mt-4 text-left text-sm text-gray-600">{caption}</figcaption>
-      <ol className="sr-only">
+      <ol aria-label={stepsLabel} className="sr-only">
         {steps.map((step) => (
           <li key={step}>{step}</li>
         ))}

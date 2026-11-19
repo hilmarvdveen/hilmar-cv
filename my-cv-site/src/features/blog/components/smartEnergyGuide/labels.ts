@@ -41,169 +41,6 @@ export const HEXAGON_LABELS = {
   ],
 } as const;
 
-export const FLOW_LABELS = {
-  caption: {
-    en: "Readings come in through one transaction. A plan becomes one command per period, and the next reading confirms it.",
-    nl: "Metingen komen binnen via een transactie. Een plan wordt een commando per periode, en de volgende meting bevestigt het.",
-  },
-  devices: { en: "Devices, simulated", nl: "Devices, gesimuleerd" },
-  devicesNote: {
-    en: "a battery, an EV charger, a PV inverter and a heat pump",
-    nl: "een batterij, een laadpaal, een PV inverter en een warmtepomp",
-  },
-  devicesConfirm: { en: "the next reading confirms the command", nl: "de volgende meting bevestigt het commando" },
-  hub: same("IoT Hub"),
-  hubNote: { en: "one identity per device", nl: "een identity per device" },
-  gateway: same("Gateway"),
-  gatewayNote: { en: "validates, batches", nl: "valideert, batcht" },
-  queue: { en: "Service Bus session queue", nl: "Service Bus session queue" },
-  queueNote: { en: "an in-memory channel on a laptop", nl: "een in-memory channel op een laptop" },
-  database: { en: "PostgreSQL with TimescaleDB", nl: "PostgreSQL met TimescaleDB" },
-  databaseNotes: [
-    { en: "raw reading", nl: "ruwe meting" },
-    { en: "current state", nl: "actuele stand" },
-    { en: "15 minute rollup", nl: "rollup per 15 minuten" },
-  ],
-  planner: same("Planner"),
-  plannerNotes: [
-    { en: "every hour", nl: "elk uur" },
-    { en: "reads day-ahead prices", nl: "leest day-ahead prijzen" },
-  ],
-  steering: same("Steering"),
-  steeringNotes: [
-    { en: "every 15 minutes", nl: "elke 15 minuten" },
-    { en: "issues a command with an idempotency key", nl: "geeft een commando uit met een idempotency key" },
-  ],
-  readingArrow: { en: "reading over MQTT", nl: "meting via MQTT" },
-  commandArrow: { en: "command, cloud to device", nl: "commando, cloud to device" },
-  endpointArrow: { en: "built-in endpoint", nl: "built-in endpoint" },
-  sendArrow: { en: "sends to the device", nl: "stuurt naar de device" },
-  transactionArrow: { en: "one transaction", nl: "een transactie" },
-  commandSmallArrow: { en: "command", nl: "commando" },
-  planArrow: { en: "stores a versioned plan", nl: "slaat een versioned plan op" },
-  steps: [
-    {
-      en: "A device (a battery, an EV charger, a PV inverter or a heat pump, simulated) sends a reading to IoT Hub over MQTT, with one identity per device.",
-      nl: "Een device (een batterij, een laadpaal, een PV inverter of een warmtepomp, gesimuleerd) stuurt een meting naar IoT Hub via MQTT, met een identity per device.",
-    },
-    { en: "The built-in endpoint of IoT Hub delivers it to the Gateway, which validates and batches.", nl: "Het built-in endpoint van IoT Hub levert het af bij de Gateway, die valideert en batcht." },
-    {
-      en: "The Gateway writes one transaction to PostgreSQL with TimescaleDB: the raw reading, the current state and the 15 minute rollup.",
-      nl: "De Gateway schrijft een transactie naar PostgreSQL met TimescaleDB: de ruwe meting, de actuele stand en de rollup per 15 minuten.",
-    },
-    { en: "The Planner runs every hour, reads day-ahead prices and stores a versioned plan.", nl: "De Planner draait elk uur, leest day-ahead prijzen en slaat een versioned plan op." },
-    { en: "Steering runs every 15 minutes and issues a command with an idempotency key.", nl: "Steering draait elke 15 minuten en geeft een commando uit met een idempotency key." },
-    {
-      en: "The command goes over a Service Bus session queue (an in-memory channel on a laptop) to the Gateway.",
-      nl: "Het commando gaat via een Service Bus session queue (een in-memory channel op een laptop) naar de Gateway.",
-    },
-    { en: "The Gateway sends it cloud to device through IoT Hub to the battery.", nl: "De Gateway stuurt het cloud to device via IoT Hub naar de batterij." },
-    { en: "The next reading confirms the command.", nl: "De volgende meting bevestigt het commando." },
-  ],
-} as const;
-
-export const CONCURRENCY_LABELS = {
-  caption: {
-    en: "Writes go in one transaction per batch. Reads hit the current state and the rollup, and an unchanged answer costs a 304.",
-    nl: "Schrijfacties gaan in een transactie per batch. Leesacties raken de actuele stand en de rollup, en een ongewijzigd antwoord kost een 304.",
-  },
-  axis: { en: "one 15 minute window", nl: "een venster van 15 minuten" },
-  devices: same("Devices"),
-  devicesNote: { en: "batteries charging, a heat pump on", nl: "batterijen laden, een warmtepomp aan" },
-  gateway: same("Gateway"),
-  gatewayNote: {
-    en: "one transaction per batch: raw, current state, rollup",
-    nl: "een transactie per batch: raw, actuele stand, rollup",
-  },
-  steering: same("Steering"),
-  steeringNote: {
-    en: "insert on conflict do nothing, then compare-and-set",
-    nl: "insert on conflict do nothing, dan compare-and-set",
-  },
-  steeringAnnotation: { en: "a second run issues nothing", nl: "een tweede run geeft niets uit" },
-  dashboard: same("Dashboard"),
-  dashboardNote: {
-    en: "every 10 seconds: read current state, ETag unchanged, 304",
-    nl: "elke 10 seconden: lees actuele stand, ETag ongewijzigd, 304",
-  },
-  dashboardAnnotations: [
-    { en: "readers do not wait for writers", nl: "lezers wachten niet op schrijvers" },
-    { en: "nothing changed, nothing sent", nl: "niets veranderd, niets verstuurd" },
-  ],
-  steps: [
-    { en: "Four lanes share one 15 minute window.", nl: "Vier lanes delen een venster van 15 minuten." },
-    { en: "Devices: batteries charging, a heat pump on.", nl: "Devices: batterijen laden, een warmtepomp aan." },
-    { en: "Gateway: repeated short blocks, one transaction per batch with the raw reading, the current state and the rollup.", nl: "Gateway: herhaalde korte blokken, een transactie per batch met de ruwe meting, de actuele stand en de rollup." },
-    {
-      en: "Steering: one block at the start of the period, insert on conflict do nothing, then compare-and-set. A second run issues nothing.",
-      nl: "Steering: een blok aan het begin van de periode, insert on conflict do nothing, dan compare-and-set. Een tweede run geeft niets uit.",
-    },
-    {
-      en: "Dashboard: a tick every 10 seconds, read current state, ETag unchanged, 304. Readers do not wait for writers. Nothing changed, nothing sent.",
-      nl: "Dashboard: een tick elke 10 seconden, lees actuele stand, ETag ongewijzigd, 304. Lezers wachten niet op schrijvers. Niets veranderd, niets verstuurd.",
-    },
-  ],
-} as const;
-
-export const FRONTEND_LABELS = {
-  caption: {
-    en: "The browser only talks to its own origin. The route handler calls the internal api, and when nothing changed the answer is a 304.",
-    nl: "De browser praat alleen met de eigen origin. De route handler roept de interne api aan, en als er niets veranderde is het antwoord een 304.",
-  },
-  browser: same("Browser"),
-  browserNotes: [
-    same("React"),
-    { en: "polls every 10 seconds while the tab is visible", nl: "pollt elke 10 seconden zolang de tab zichtbaar is" },
-    { en: "sends If-None-Match", nl: "stuurt If-None-Match mee" },
-  ],
-  handler: { en: "Next.js route handler", nl: "Next.js route handler" },
-  handlerNotes: [
-    same("/api/site"),
-    { en: "same origin", nl: "eigen origin" },
-    { en: "token bucket", nl: "token bucket" },
-    { en: "5 second answer cache per caller", nl: "antwoordcache van 5 seconden per aanroeper" },
-    { en: "passes the ETag on", nl: "geeft de ETag door" },
-  ],
-  api: same("Api"),
-  apiNotes: [
-    { en: "internal ingress", nl: "interne ingress" },
-    { en: "bearer or Entra token", nl: "bearer of Entra token" },
-    { en: "one organisation per request", nl: "een organisatie per verzoek" },
-    { en: "weak ETag", nl: "zwakke ETag" },
-  ],
-  database: same("PostgreSQL"),
-  databaseNote: { en: "current state per asset", nl: "actuele stand per asset" },
-  serverNote: {
-    en: "The first view is rendered on the server with 24 hours of 15 minute data.",
-    nl: "De eerste weergave wordt op de server gerenderd met 24 uur aan data per 15 minuten.",
-  },
-  requestArrow: { en: "request", nl: "verzoek" },
-  callArrow: { en: "internal call", nl: "interne call" },
-  readArrow: { en: "reads current state", nl: "leest actuele stand" },
-  returnTitle: { en: "304 Not Modified", nl: "304 Not Modified" },
-  returnNote: { en: "nothing sent", nl: "niets verstuurd" },
-  steps: [
-    {
-      en: "Browser: React, polls every 10 seconds while the tab is visible, sends If-None-Match.",
-      nl: "Browser: React, pollt elke 10 seconden zolang de tab zichtbaar is, stuurt If-None-Match mee.",
-    },
-    {
-      en: "Next.js route handler on /api/site: same origin, token bucket, a 5 second answer cache per caller, passes the ETag on.",
-      nl: "Next.js route handler op /api/site: eigen origin, token bucket, een antwoordcache van 5 seconden per aanroeper, geeft de ETag door.",
-    },
-    {
-      en: "Api: internal ingress, bearer or Entra token, one organisation per request, weak ETag.",
-      nl: "Api: interne ingress, bearer of Entra token, een organisatie per verzoek, zwakke ETag.",
-    },
-    { en: "PostgreSQL: current state per asset.", nl: "PostgreSQL: actuele stand per asset." },
-    { en: "When nothing changed, a 304 Not Modified goes back up and nothing is sent.", nl: "Als er niets veranderde, gaat een 304 Not Modified terug omhoog en wordt er niets verstuurd." },
-    {
-      en: "Side note: the first view is rendered on the server with 24 hours of 15 minute data.",
-      nl: "Kanttekening: de eerste weergave wordt op de server gerenderd met 24 uur aan data per 15 minuten.",
-    },
-  ],
-} as const;
-
 export const PIPELINE_LABELS = {
   caption: {
     en: "Every job runs on GitHub-hosted runners with actions pinned by SHA. Deploys log in with OIDC and roll out images by digest.",
@@ -247,4 +84,73 @@ export const PIPELINE_LABELS = {
     { en: "The result runs on Container Apps, as apps and cron jobs.", nl: "Het resultaat draait op Container Apps, als apps en cron jobs." },
     { en: "A drift check runs every Monday.", nl: "Een drift check draait elke maandag." },
   ],
+} as const;
+
+export const API_LABELS = {
+  caption: {
+    en: "The route handler calls the internal api. The api runs in one auth mode, scopes every query to an organisation and answers a matching ETag with a 304 and no body sent.",
+    nl: "De route handler roept de interne api aan. De api draait in een auth mode, beperkt elke query tot een organisatie en beantwoordt een passende ETag met een 304 zonder verstuurde body.",
+  },
+  caller: { en: "Browser and route handler", nl: "Browser en route handler" },
+  callerNotes: [
+    { en: "the browser polls its own origin", nl: "de browser pollt de eigen origin" },
+    { en: "the route handler adds a server-side token", nl: "de route handler voegt een server-side token toe" },
+  ],
+  ingress: { en: "internal ingress", nl: "interne ingress" },
+  api: { en: "Api, one of two auth modes", nl: "Api, een van twee auth modes" },
+  bearer: { en: "Static bearer", nl: "Static bearer" },
+  bearerNote: { en: "one fixed organisation", nl: "een vaste organisatie" },
+  entra: same("Entra"),
+  entraNote: { en: "the organisation per request", nl: "de organisatie per verzoek" },
+  endpoints: { en: "Endpoints under /v1", nl: "Endpoints onder /v1" },
+  endpointNotes: [same("/sites/{siteId}"), same("/assets/{assetId}/state"), same("/assets/{assetId}/telemetry")],
+  organisation: { en: "Organisation on every query", nl: "Organisatie op elke query" },
+  organisationNote: { en: "applied in one place", nl: "op een plek toegepast" },
+  limits: { en: "Limits", nl: "Limieten" },
+  limitNotes: [
+    { en: "86 400 rows for a raw series", nl: "86 400 rijen voor een ruwe reeks" },
+    { en: "64 KB request body", nl: "64 KB request body" },
+  ],
+  etag: { en: "Weak ETag", nl: "Zwakke ETag" },
+  etagNotes: [
+    { en: "on the site and the asset state", nl: "op de site en de asset state" },
+    { en: "a match in If-None-Match gives a 304", nl: "een match in If-None-Match geeft een 304" },
+  ],
+  etagResult: { en: "no body sent", nl: "geen body verstuurd" },
+  other: { en: "Another organisation", nl: "Een andere organisatie" },
+  otherNote: { en: "asks for the same site", nl: "vraagt om dezelfde site" },
+  otherResult: { en: "404, finds nothing", nl: "404, vindt niets" },
+  steps: [
+    {
+      en: "Browser and route handler: the browser polls its own origin and the route handler adds a server-side token.",
+      nl: "Browser en route handler: de browser pollt de eigen origin en de route handler voegt een server-side token toe.",
+    },
+    { en: "The route handler calls the api over internal ingress.", nl: "De route handler roept de api aan via interne ingress." },
+    {
+      en: "The api runs in one of two auth modes: a static bearer token for one fixed organisation, or Entra with the organisation per request.",
+      nl: "De api draait in een van twee auth modes: een static bearer token voor een vaste organisatie, of Entra met de organisatie per verzoek.",
+    },
+    { en: "Endpoints under /v1: /sites/{siteId}, /assets/{assetId}/state and /assets/{assetId}/telemetry.", nl: "Endpoints onder /v1: /sites/{siteId}, /assets/{assetId}/state en /assets/{assetId}/telemetry." },
+    { en: "The organisation is applied on every query, in one place.", nl: "De organisatie wordt op elke query toegepast, op een plek." },
+    { en: "Limits: 86 400 rows for a raw series and a 64 KB request body.", nl: "Limieten: 86 400 rijen voor een ruwe reeks en een request body van 64 KB." },
+    {
+      en: "The site and the asset state carry a weak ETag. A match in If-None-Match gives a 304 with no body sent.",
+      nl: "De site en de asset state dragen een zwakke ETag. Een match in If-None-Match geeft een 304 zonder verstuurde body.",
+    },
+    {
+      en: "Another organisation asking for the same site gets a 404 and finds nothing.",
+      nl: "Een andere organisatie die om dezelfde site vraagt krijgt een 404 en vindt niets.",
+    },
+  ],
+} as const;
+
+export const STILL_LABELS = {
+  blocks: { en: "Blocks", nl: "Blokken" },
+  hop: { en: "Hop", nl: "Stap" },
+  to: { en: "to", nl: "naar" },
+  list: { en: "Blocks and hops in view", nl: "Blokken en stappen in beeld" },
+} as const;
+
+export const FIGURE_LABELS = {
+  steps: { en: "Steps in the figure", nl: "Stappen in de figuur" },
 } as const;

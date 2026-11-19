@@ -1,5 +1,4 @@
-export { ConcurrencyFigure } from "./ConcurrencyFigure";
-export { FlowFigure } from "./FlowFigure";
-export { FrontendPathFigure } from "./FrontendPathFigure";
+export { ApiFigure, type ApiFigureProps } from "./ApiFigure";
 export { HexagonFigure } from "./HexagonFigure";
 export { PipelineFigure } from "./PipelineFigure";
+export { StaticBeat, type StaticBeatProps } from "./StaticBeat";

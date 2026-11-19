@@ -9,6 +9,7 @@ import {
   MINIMUM_RENDERED_SIZE,
   PHONE_WIDTH,
   SMALL_SIZE,
+  STROKE,
   TITLE_SIZE,
   VIEW_WIDTH,
   boxHeight,
@@ -18,6 +19,7 @@ import {
   textWidth,
   wrapText,
 } from "./primitives";
+import { ACTIVE_LINE_COLOUR, FRAME_STYLES, PLATE_STYLE } from "@/lib/smartEnergyFilm/tokens";
 
 const inDrawing = (node: React.ReactNode) => render(<svg>{node}</svg>);
 
@@ -74,12 +76,29 @@ describe("Frame", () => {
   it("draws its title and reserves a header above its content", () => {
     inDrawing(<Frame x={0} y={0} width={300} height={100} title="Frame title" dashed />);
     expect(screen.getByText("Frame title")).toBeInTheDocument();
-    expect(frameHeader(300, "Frame title")).toBe(LINE_HEIGHT + 20);
+    expect(frameHeader(300, "Frame title")).toBe(LINE_HEIGHT / 2 + 8);
   });
 
   it("draws a solid frame by default", () => {
     const { container } = inDrawing(<Frame x={0} y={0} width={300} height={100} title="Solid" />);
     expect(container.querySelector("rect")).not.toHaveAttribute("stroke-dasharray");
+  });
+
+  it("styles the frame from the shared tokens and puts the title on a plate over the border", () => {
+    const azure = inDrawing(<Frame x={0} y={20} width={300} height={100} title="Azure" />);
+    const azureRects = azure.container.querySelectorAll("rect");
+    expect(azureRects[0]).toHaveAttribute("fill", FRAME_STYLES.azure.fill);
+    expect(azureRects[0]).toHaveAttribute("stroke-width", String(STROKE * FRAME_STYLES.azure.strokeWidthRatio));
+    expect(azureRects[1]).toHaveAttribute("fill", PLATE_STYLE.fill);
+    expect(Number(azureRects[1].getAttribute("y"))).toBeLessThan(20);
+    const apps = inDrawing(<Frame x={0} y={0} width={300} height={100} title="Apps" frame="containerApps" />);
+    expect(apps.container.querySelector("rect")).toHaveAttribute("stroke", FRAME_STYLES.containerApps.stroke);
+  });
+
+  it("wraps a long title over several lines on the plate", () => {
+    const { container } = inDrawing(<Frame x={0} y={0} width={120} height={100} title="a frame title that is long enough to wrap" />);
+    expect(container.querySelectorAll("text").length).toBeGreaterThan(1);
+    expect(frameHeader(120, "a frame title that is long enough to wrap")).toBeGreaterThan(frameHeader(300, "short"));
   });
 });
 
@@ -93,7 +112,7 @@ describe("Connector", () => {
   it("can be emerald, dashed and without an arrowhead", () => {
     const { container } = inDrawing(<Connector prefix="test" tone="emerald" arrow={false} dashed points={[{ x: 0, y: 0 }, { x: 40, y: 0 }]} />);
     expect(container.querySelector("path")).not.toHaveAttribute("marker-end");
-    expect(container.querySelector("path")).toHaveAttribute("stroke", "#059669");
+    expect(container.querySelector("path")).toHaveAttribute("stroke", ACTIVE_LINE_COLOUR);
     expect(container.querySelector("path")).toHaveAttribute("stroke-dasharray");
   });
 });
@@ -107,7 +126,7 @@ describe("Label", () => {
 
   it("draws a plain label in gray", () => {
     const { container } = inDrawing(<Label x={0} y={0} text="plain" maxWidth={100} />);
-    expect(container.querySelector("text")).toHaveAttribute("fill", "#374151");
+    expect(container.querySelector("text")).toHaveAttribute("fill", PLATE_STYLE.textColour);
   });
 });
 
@@ -122,5 +141,15 @@ describe("FigureFrame", () => {
     expect(screen.getByText("A caption")).toBeInTheDocument();
     expect(within(screen.getByRole("list")).getAllByRole("listitem")).toHaveLength(2);
     expect(container.querySelector("svg")).toHaveAttribute("viewBox", "0 0 360 100");
+    expect(screen.queryByRole("list", { name: "Steps" })).not.toBeInTheDocument();
+  });
+
+  it("names the steps list when a label is given", () => {
+    render(
+      <FigureFrame prefix="test" height={100} caption="A caption" steps={["First step"]} stepsLabel="Steps">
+        <rect width={10} height={10} />
+      </FigureFrame>,
+    );
+    expect(screen.getByRole("list", { name: "Steps" })).toBeInTheDocument();
   });
 });

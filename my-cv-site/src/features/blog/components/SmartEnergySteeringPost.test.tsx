@@ -13,14 +13,24 @@ vi.mock("./smartEnergyGuide", () => {
     };
   return {
     HexagonFigure: standIn("hexagon"),
-    FlowFigure: standIn("flow"),
-    ConcurrencyFigure: standIn("concurrency"),
-    FrontendPathFigure: standIn("frontend path"),
+    ApiFigure: standIn("api"),
     PipelineFigure: standIn("pipeline"),
+    StaticBeat: ({ locale, tab, beat }: { locale: string; tab: string; beat: string }) => <figure aria-label={`still ${tab} ${beat} ${locale}`} />,
   };
 });
 
-const FIGURES = ["poster explainer", "hexagon", "flow", "concurrency", "frontend path", "pipeline"];
+const FIGURES = [
+  "poster explainer",
+  "hexagon",
+  "still reading transaction",
+  "still command confirm",
+  "still safety audit",
+  "api",
+  "still customer notModified",
+  "still cloud gates",
+  "pipeline",
+  "still scale levers",
+];
 
 const proseOf = (locale: "en" | "nl") => {
   const { container, unmount } = render(<Body locale={locale} />);
@@ -44,7 +54,7 @@ describe("SmartEnergySteeringPost", () => {
     expect(meta.keywords.length).toBeGreaterThan(5);
   });
 
-  it("walks through ten sections with the poster and five figures in English", () => {
+  it("walks through eleven sections with the poster, six stills and three figures in English", () => {
     render(<Body locale="en" />);
 
     expect(screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent)).toEqual([
@@ -57,6 +67,7 @@ describe("SmartEnergySteeringPost", () => {
       "Keeping Terraform safe",
       "Pipelines on GitHub Actions",
       "Container Apps and how it scales",
+      "Observing and testing it",
       "What to take away",
     ]);
     for (const figure of FIGURES) {
@@ -90,13 +101,20 @@ describe("SmartEnergySteeringPost", () => {
   it("renders the Dutch body with the same sections and figures", () => {
     render(<Body locale="nl" />);
 
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(10);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(11);
     expect(screen.getByRole("heading", { level: 2, name: "Als alles tegelijk draait" })).toBeInTheDocument();
     for (const figure of FIGURES) {
       expect(screen.getByRole("figure", { name: `${figure} nl` })).toBeInTheDocument();
     }
     expect(screen.getByText("Begrippen in deze gids")).toBeInTheDocument();
     expect(screen.getByText(/een Origin-header die bij de host past/)).toBeInTheDocument();
+  });
+
+  it("says it ran live on Azure for a demo and keeps pro marked as never applied", () => {
+    const prose = proseOf("en");
+    expect(prose).toMatch(/it ran live on Azure Container Apps for a demo/);
+    expect(prose).toMatch(/Pro was never applied/);
+    expect(prose).not.toMatch(/Eneco/);
   });
 
   it("reads as a guide, without the log of the repository", () => {

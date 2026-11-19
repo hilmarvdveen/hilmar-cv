@@ -7,7 +7,15 @@ vi.mock("next/navigation", () => ({
   },
 }));
 
+import { smartEnergyFilmLabels } from "@/features/blog/smartEnergyFilmLabels";
+import { filmMillisecondsForFrame, filmRenderStateAtMilliseconds, type BeatId } from "@/lib/smartEnergyFilm/film";
 import SmartEnergyCapturePage, { metadata } from "./page";
+
+const headlineAtFrame = (locale: "nl" | "en", frame: number) => {
+  const state = filmRenderStateAtMilliseconds(filmMillisecondsForFrame(frame));
+  const captions = smartEnergyFilmLabels(locale).captions[state.tab] as Record<BeatId, { headline: string }>;
+  return captions[state.beat.id].headline;
+};
 
 const props = (locale: string, frame?: string | string[]) => ({
   params: Promise.resolve({ locale }),
@@ -32,14 +40,14 @@ describe("smart energy capture route", () => {
   it("renders the requested frame in the requested language", async () => {
     vi.stubEnv("SMART_ENERGY_CAPTURE", "enabled");
     render(await SmartEnergyCapturePage(props("nl", "340")));
-    expect(screen.getByText("Een meting verlaat de batterij")).toBeInTheDocument();
+    expect(screen.getAllByText(headlineAtFrame("nl", 340)).length).toBeGreaterThan(0);
   });
 
   it("falls back to the first frame in English for anything else", async () => {
     vi.stubEnv("SMART_ENERGY_CAPTURE", "enabled");
     for (const frame of [undefined, "-3", "abc", "999999", ["1", "2"]]) {
       const { unmount } = render(await SmartEnergyCapturePage(props("de", frame)));
-      expect(screen.getByText("A battery that charges when power is cheap.")).toBeInTheDocument();
+      expect(screen.getAllByText(headlineAtFrame("en", 0)).length).toBeGreaterThan(0);
       unmount();
     }
   });

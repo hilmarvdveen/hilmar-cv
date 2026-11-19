@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/seo";
-import { HEXAGON_LABELS as LABELS, pick, pickAll } from "./labels";
+import { FIGURE_LABELS, HEXAGON_LABELS as LABELS, pick, pickAll } from "./labels";
 import { Box, CONTENT_WIDTH, Connector, FigureFrame, Frame, MARGIN, boxHeight, frameHeader } from "./primitives";
 
 const PREFIX = "hexagon";
@@ -41,7 +41,7 @@ export function HexagonFigure({ locale }: { locale: Locale }) {
   };
   const steps = pickAll(LABELS.steps, locale);
   return (
-    <FigureFrame prefix={PREFIX} height={height} caption={pick(LABELS.caption, locale)} steps={steps}>
+    <FigureFrame prefix={PREFIX} height={height} caption={pick(LABELS.caption, locale)} steps={steps} stepsLabel={pick(FIGURE_LABELS.steps, locale)}>
       <Box x={MARGIN} y={MARGIN} width={COLUMN_WIDTH} height={adapterHeight} store {...left} />
       <Box x={RIGHT_COLUMN} y={MARGIN} width={COLUMN_WIDTH} height={adapterHeight} store {...right} />
       <Frame x={MARGIN} y={ringTop} width={CONTENT_WIDTH} height={ringHeight} title={ringTitle} />

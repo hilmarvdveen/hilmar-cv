@@ -1,17 +1,19 @@
-import type { ReactNode } from "react";
-import { FILM_TABS, type FilmFrame } from "@/lib/smartEnergyFilm/film";
-import { LEGEND_KINDS } from "@/lib/smartEnergyFilm/layout";
-import type { SmartEnergyFilmLabels, TabId } from "../smartEnergyFilmLabels";
-import { LINE_STYLES, SmartEnergyFilmPoster } from "./SmartEnergyFilmPoster";
+import { FILM_TABS, type BeatId, type FilmRenderState } from "@/lib/smartEnergyFilm/film";
+import { STAGE_VIEWBOX } from "@/lib/smartEnergyFilm/layout";
+import { LINE_STYLES, dashPattern } from "@/lib/smartEnergyFilm/tokens";
+import type { SmartEnergyFilmLabels } from "../smartEnergyFilmLabels";
+import { SmartEnergyFilmPoster } from "./SmartEnergyFilmPoster";
 
-type SmartEnergyCaptureFrameProps = { frame: FilmFrame; labels: SmartEnergyFilmLabels };
+type SmartEnergyCaptureFrameProps = { state: FilmRenderState; labels: SmartEnergyFilmLabels };
 
-function Tabs({ frame, labels }: SmartEnergyCaptureFrameProps) {
+const LEGEND_STROKE_WIDTH = 5;
+
+function Tabs({ state, labels }: SmartEnergyCaptureFrameProps) {
   return (
     <div className="flex h-[104px] items-center justify-between gap-1 border-b border-gray-200 px-4">
       {FILM_TABS.map((tab, index) => {
-        const active = index === frame.tabIndex;
-        const done = frame.tabIndex !== null && index < frame.tabIndex;
+        const active = index === state.tabIndex;
+        const done = index < state.tabIndex;
         return (
           <p
             key={tab}
@@ -19,8 +21,8 @@ function Tabs({ frame, labels }: SmartEnergyCaptureFrameProps) {
               active ? "bg-brand-navy text-white" : done ? "text-brand-navy" : "text-gray-500"
             }`}
           >
-            {labels.tabs[tab as TabId]}
-            {active && <span className="absolute bottom-0 left-0 h-1.5 bg-emerald-400" style={{ width: `${frame.sceneProgress * 100}%` }} />}
+            {labels.tabs[tab]}
+            {active && <span className="absolute bottom-0 left-0 h-1.5 bg-emerald-400" style={{ width: `${state.tabProgress * 100}%` }} />}
           </p>
         );
       })}
@@ -28,87 +30,46 @@ function Tabs({ frame, labels }: SmartEnergyCaptureFrameProps) {
   );
 }
 
-function Legend({ labels }: { labels: SmartEnergyFilmLabels }) {
+function Legend({ state, labels }: SmartEnergyCaptureFrameProps) {
   return (
     <span className="flex items-center gap-6 text-3xl text-gray-600">
-      {LEGEND_KINDS.map((kind) => (
+      {state.legend.map((kind) => (
         <span key={kind} className="inline-flex items-center gap-2">
-          <svg width="44" height="14" aria-hidden="true">
-            <path d="M4 7 H40" stroke={LINE_STYLES[kind].colour} strokeWidth={5} strokeLinecap="round" strokeDasharray={LINE_STYLES[kind].dash} />
+          <svg width="56" height="14" aria-hidden="true">
+            <path
+              d="M4 7 H52"
+              stroke={LINE_STYLES[kind].colour}
+              strokeWidth={LEGEND_STROKE_WIDTH}
+              strokeLinecap="round"
+              strokeDasharray={dashPattern(kind, LEGEND_STROKE_WIDTH)}
+            />
           </svg>
-          {kind === "telemetry" ? labels.legendData : labels.legend[kind]}
+          {labels.legend[kind]}
         </span>
       ))}
     </span>
   );
 }
 
-function Card({ opacity, children }: { opacity: number; children: ReactNode }) {
-  return (
-    <div className="absolute inset-0 flex items-center bg-white/40 px-10" style={{ opacity }}>
-      <div className="flex w-full flex-col gap-6 rounded-3xl border border-gray-200 bg-white p-12 shadow-2xl">{children}</div>
-    </div>
-  );
-}
-
-const Eyebrow = ({ children }: { children: ReactNode }) => (
-  <p className="text-3xl font-semibold uppercase tracking-widest text-primary">{children}</p>
-);
-
-export function SmartEnergyCaptureFrame({ frame, labels }: SmartEnergyCaptureFrameProps) {
-  const split = labels.endCard.link.lastIndexOf("/") + 1;
-  const caption = frame.captionIndex === null ? null : labels.captions[frame.sceneId][frame.captionIndex];
-  const step =
-    frame.tabIndex === null
-      ? null
-      : labels.stepEyebrow.replace("{current}", String(frame.tabIndex + 1)).replace("{total}", String(FILM_TABS.length));
+export function SmartEnergyCaptureFrame({ state, labels }: SmartEnergyCaptureFrameProps) {
+  const caption = (labels.captions[state.tab] as Record<BeatId, SmartEnergyFilmLabels["captions"]["overview"]["orient"]>)[state.beat.id];
+  const beatIndicator = labels.beatIndicator.replace("{current}", String(state.beatIndex + 1)).replace("{total}", String(state.beatCount));
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-white">
-      <Tabs frame={frame} labels={labels} />
-      <div className="h-[960px] w-full border-b border-gray-200">
-        <SmartEnergyFilmPoster frame={frame} labels={labels} />
+      <Tabs state={state} labels={labels} />
+      <div className="w-full border-b border-gray-200" style={{ height: STAGE_VIEWBOX.landscape.height }}>
+        <SmartEnergyFilmPoster state={state} labels={labels} orientation="landscape" still />
       </div>
       <div className="flex flex-1 flex-col justify-center gap-2 px-12">
         <div className="flex items-center justify-between">
-          {step && <p className="text-3xl font-semibold text-gray-600">{step}</p>}
-          <Legend labels={labels} />
+          <p className="text-3xl font-semibold text-gray-600">{beatIndicator}</p>
+          <Legend state={state} labels={labels} />
         </div>
-        {caption && (
-          <>
-            <p className="text-5xl font-extrabold text-brand-navy">{caption.headline}</p>
-            <p className="text-3xl text-gray-700">{caption.detail}</p>
-          </>
-        )}
-        {frame.sceneId === "cloud" && <p className="text-2xl text-gray-600">{labels.gatesLine}</p>}
+        <p className="text-5xl font-extrabold text-brand-navy">{caption.headline}</p>
+        <p className="text-3xl text-gray-700">{caption.detail}</p>
+        <p className="text-3xl text-gray-600">{caption.why}</p>
+        {state.tab === "cloud" && state.beat.id === "gates" && <p className="text-2xl text-gray-600">{labels.gatesLine}</p>}
       </div>
-      {frame.titleCardOpacity > 0 && (
-        <Card opacity={frame.titleCardOpacity}>
-          <Eyebrow>{labels.titleCard.eyebrow}</Eyebrow>
-          <p className="text-balance text-5xl font-extrabold text-brand-navy">{labels.titleCard.headline}</p>
-          <p className="text-3xl text-gray-700">{labels.titleCard.support}</p>
-          <div className="mt-4 border-t border-gray-200 pt-6">
-            <p className="text-4xl font-bold text-textMain">{labels.name}</p>
-            <p className="mt-1 text-3xl font-semibold text-primary">{labels.role}</p>
-          </div>
-        </Card>
-      )}
-      {frame.endCardOpacity > 0 && (
-        <Card opacity={frame.endCardOpacity}>
-          <div>
-            <p className="text-5xl font-extrabold text-brand-navy">{labels.name}</p>
-            <p className="mt-2 text-4xl font-semibold text-primary">{labels.role}</p>
-          </div>
-          <div className="border-t border-gray-200 pt-6">
-            <p className="text-3xl text-gray-700">{labels.endCard.read}</p>
-            <p className="mt-2 text-3xl font-bold text-textMain">
-              {labels.endCard.link.slice(0, split)}
-              <br />
-              {labels.endCard.link.slice(split)}
-            </p>
-          </div>
-          <p className="text-3xl font-semibold text-gray-700">{labels.endCard.ownWork}</p>
-        </Card>
-      )}
     </div>
   );
 }

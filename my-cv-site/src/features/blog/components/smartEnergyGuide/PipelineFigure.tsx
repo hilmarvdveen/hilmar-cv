@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/seo";
-import { PIPELINE_LABELS as LABELS, pick, pickAll } from "./labels";
+import { FIGURE_LABELS, PIPELINE_LABELS as LABELS, pick, pickAll } from "./labels";
 import { Box, CONTENT_WIDTH, Connector, FigureFrame, Frame, MARGIN, boxHeight, frameHeader } from "./primitives";
 
 const PREFIX = "pipeline";
@@ -58,7 +58,7 @@ export function PipelineFigure({ locale }: { locale: Locale }) {
   const driftLeft = MARGIN + CONTENT_WIDTH - DRIFT_WIDTH;
 
   return (
-    <FigureFrame prefix={PREFIX} height={height} caption={pick(LABELS.caption, locale)} steps={pickAll(LABELS.steps, locale)}>
+    <FigureFrame prefix={PREFIX} height={height} caption={pick(LABELS.caption, locale)} steps={pickAll(LABELS.steps, locale)} stepsLabel={pick(FIGURE_LABELS.steps, locale)}>
       <Box x={MIDDLE - PUSH_WIDTH / 2} y={pushTop} width={PUSH_WIDTH} height={pushHeight} store {...push} />
       <Connector prefix={PREFIX} tone="emerald" points={[{ x: MIDDLE, y: pushTop + pushHeight }, { x: MIDDLE, y: ciTop }]} />
 

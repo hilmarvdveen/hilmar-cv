@@ -1,179 +1,264 @@
-import { ARROWS, BLOCKS, CAMERAS, FRAMES, JOURNEYS, SAFETY_CELLS, SAFETY_PANEL, SHIELDS, STAGE_BOTTOM, VIEWPORT_HEIGHT, cameraHeight, rectangleVisibility, stageHeight } from "./layout";
 import {
-  CAMERA_MOVE_MILLISECONDS,
-  CAPTION_COUNT,
-  CAPTION_OF_HOP,
-  FILM_DURATION_MILLISECONDS,
+  BEATS,
+  BEAT_IDS,
   FILM_FRAMES_PER_SECOND,
-  FILM_SCENES,
+  FILM_PASS_MILLISECONDS,
   FILM_TABS,
-  filmFrameAtMilliseconds,
+  RECOMMENDED_STILL,
+  arrowsAtFullStrength,
+  beatEndState,
+  beatIndexOf,
+  beatLengthMilliseconds,
+  beatRenderState,
   filmFrameCount,
   filmMillisecondsForFrame,
-  filmSceneIndexAt,
-  interpolateCamera,
-  wrapFilmElapsed,
-  type FilmSceneId,
+  filmRenderStateAtMilliseconds,
+  hopNumbers,
+  type TabId,
 } from "./film";
+import { FOCUS_LAYOUTS, SAFETY_MECHANISMS } from "./layout";
 
-const sceneOf = (id: FilmSceneId) => FILM_SCENES.find((scene) => scene.id === id) ?? FILM_SCENES[0];
+const orientations = ["landscape", "portrait"] as const;
 
-const frameIn = (id: FilmSceneId, offset: number) => filmFrameAtMilliseconds(sceneOf(id).startMilliseconds + offset);
+describe("beat table", () => {
+  it("holds the frozen beat ids per tab in order", () => {
+    for (const tab of FILM_TABS) {
+      expect(BEATS[tab].map((beat) => beat.id)).toEqual(BEAT_IDS[tab]);
+    }
+    expect(FILM_TABS).toEqual(["overview", "reading", "command", "customer", "safety", "scale", "cloud"]);
+  });
 
-const settledShare = (id: FilmSceneId, share: number) => frameIn(id, CAMERA_MOVE_MILLISECONDS + share * (sceneOf(id).lengthMilliseconds - CAMERA_MOVE_MILLISECONDS));
+  it("starts every tab with an orient beat on the whole drawing and gives only four tabs a focus beat", () => {
+    for (const tab of FILM_TABS) {
+      expect(BEATS[tab][0].kind).toBe("orient");
+      expect(BEATS[tab][0].layout).toBe("whole");
+      expect(BEATS[tab].some((beat) => beat.kind === "focus")).toBe(["reading", "command", "customer", "safety"].includes(tab));
+    }
+    expect(BEATS.overview.every((beat) => beat.layout === "whole")).toBe(true);
+    expect(BEATS.scale.every((beat) => beat.layout === "whole")).toBe(true);
+  });
+
+  it("emphasises only visible blocks and draws every visible block and every hop in the layout of its beat", () => {
+    for (const tab of FILM_TABS) {
+      for (const beat of BEATS[tab]) {
+        for (const orientation of orientations) {
+          const placement = FOCUS_LAYOUTS[beat.layout][orientation];
+          for (const id of beat.visible) {
+            expect(placement.blocks[id], `${tab} ${beat.id} ${orientation} ${id}`).toBeDefined();
+          }
+          for (const hop of beat.hops) {
+            expect(placement.arrows[hop.arrow], `${tab} ${beat.id} ${orientation} ${hop.arrow}`).toBeDefined();
+          }
+        }
+        for (const id of beat.emphasised) {
+          expect(beat.visible.has(id)).toBe(true);
+        }
+      }
+    }
+  });
+
+  it("keeps portrait chains of the single flow layouts between three and five blocks", () => {
+    for (const layout of Object.values(FOCUS_LAYOUTS)) {
+      expect(layout.landscape.viewBox).toEqual({ x: 0, y: 0, width: 1080, height: 860 });
+      expect(layout.portrait.viewBox).toEqual({ x: 0, y: 0, width: 320, height: 480 });
+    }
+    for (const id of ["reading", "customer", "safety"] as const) {
+      const count = Object.keys(FOCUS_LAYOUTS[id].portrait.blocks).length;
+      expect(count).toBeGreaterThanOrEqual(3);
+      expect(count).toBeLessThanOrEqual(5);
+    }
+  });
+
+  it("follows the corrected command storyboard", () => {
+    const hopsOf = (id: (typeof BEAT_IDS.command)[number]) => BEATS.command[beatIndexOf("command", id)].hops;
+    expect(hopsOf("plan")).toEqual([{ arrow: "pricesToPlanner" }, { arrow: "plannerToDatabase" }]);
+    expect(hopsOf("expire")).toEqual([{ arrow: "databaseToSteering" }]);
+    expect(hopsOf("store")).toEqual([{ arrow: "databaseToSteering", reverse: true }]);
+    expect(BEATS.command[beatIndexOf("command", "store")].chips).toEqual(["idempotencyKey"]);
+    expect(hopsOf("send")).toEqual([{ arrow: "steeringToQueue" }]);
+    expect(BEATS.command[beatIndexOf("command", "send")].chips).toEqual(["queueProOnly", "kedaProOnly"]);
+    expect(hopsOf("deliver").map((hop) => hop.arrow)).toEqual(["queueToGateway", "gatewayToHub", "hubToBattery"]);
+    expect(hopsOf("acknowledge")).toEqual([{ arrow: "gatewayToHub", reverse: true }]);
+    expect(hopsOf("confirm")).toEqual([{ arrow: "gatewayToDatabase" }]);
+  });
+
+  it("follows the corrected reading, household, consistency, scale and cloud storyboards", () => {
+    expect(BEATS.reading.map((beat) => beat.hops.length)).toEqual([0, 0, 1, 1, 0, 1]);
+    expect(BEATS.reading[beatIndexOf("reading", "checkpoint")].chips).toEqual(["blobCheckpoints"]);
+    expect(BEATS.reading[beatIndexOf("reading", "validation")].emphasised).toEqual(new Set(["gateway"]));
+    expect(BEATS.customer[beatIndexOf("customer", "routeHandler")].chips).toEqual(["token", "internalIngress"]);
+    expect(BEATS.safety.filter((beat) => beat.safety).map((beat) => beat.safety)).toEqual(SAFETY_MECHANISMS);
+    expect(BEATS.scale.filter((beat) => beat.scale).map((beat) => beat.scale)).toEqual(["out", "up", "down", "next", "levers"]);
+    expect(BEATS.scale[beatIndexOf("scale", "levers")].chips).toHaveLength(5);
+    expect(BEATS.cloud[beatIndexOf("cloud", "identities")].chips).toEqual(["keyVault"]);
+    expect(BEATS.cloud[beatIndexOf("cloud", "controls")].chips).toHaveLength(7);
+    expect(BEATS.cloud[beatIndexOf("cloud", "gates")].chips).toEqual([]);
+  });
+
+  it("lists only the line kinds a beat draws", () => {
+    expect(BEATS.reading[beatIndexOf("reading", "deviceToHub")].legend).toEqual(["telemetry"]);
+    expect(BEATS.command[beatIndexOf("command", "send")].legend).toEqual(["commands"]);
+    expect(BEATS.command[beatIndexOf("command", "plan")].legend).toEqual(["control"]);
+    expect(BEATS.customer[beatIndexOf("customer", "firstView")].legend).toEqual(["reads"]);
+    expect(BEATS.command[0].legend).toEqual(["telemetry", "commands", "control"]);
+    expect(BEATS.safety[beatIndexOf("safety", "race")].legend).toEqual([]);
+  });
+
+  it("recommends a still that exists in every tab", () => {
+    for (const tab of FILM_TABS) {
+      expect(beatIndexOf(tab, RECOMMENDED_STILL[tab] as never)).toBeGreaterThanOrEqual(0);
+    }
+  });
+});
+
+describe("hop numbers and full strength arrows", () => {
+  it("numbers a story across its beats and marks the current beat", () => {
+    const numbers = hopNumbers("command", beatIndexOf("command", "send"));
+    expect(numbers.map((item) => item.number)).toEqual([1, 2, 3, 4, 5]);
+    expect(numbers.filter((item) => item.current).map((item) => item.arrow)).toEqual(["steeringToQueue"]);
+    expect(numbers[3].reverse).toBe(true);
+  });
+
+  it("restarts the numbering in each overview beat and has none in the orient beat", () => {
+    expect(hopNumbers("overview", 2).map((item) => item.number)).toEqual([1, 2, 3, 4, 5]);
+    expect(hopNumbers("overview", 0)).toEqual([]);
+    expect(hopNumbers("overview", 3).map((item) => item.arrow)).toEqual(["browserToDashboard", "dashboardToApi", "apiToDatabase"]);
+  });
+
+  it("draws the arrows of the beats so far at full strength and the whole story in orient and focus", () => {
+    expect([...arrowsAtFullStrength("reading", 0)].sort()).toEqual(["batteryToHub", "gatewayToDatabase", "hubToGateway"]);
+    expect([...arrowsAtFullStrength("reading", 1)]).toHaveLength(3);
+    expect([...arrowsAtFullStrength("reading", beatIndexOf("reading", "checkpoint"))].sort()).toEqual(["batteryToHub", "hubToGateway"]);
+  });
+
+  it("falls back to the arrows between emphasised blocks when a tab has no hops", () => {
+    expect([...arrowsAtFullStrength("scale", beatIndexOf("scale", "out"))]).toEqual(["queueToGateway"]);
+    expect(arrowsAtFullStrength("safety", beatIndexOf("safety", "race")).size).toBe(0);
+  });
+});
+
+describe("beat render state", () => {
+  const checkpoint = beatIndexOf("reading", "checkpoint");
+
+  it("measures a beat as enter plus hops plus hold", () => {
+    const beat = BEATS.reading[checkpoint];
+    expect(beatLengthMilliseconds(beat)).toBe(beat.durations.enterMilliseconds + beat.durations.hopMilliseconds + beat.durations.holdMilliseconds);
+  });
+
+  it("enters first with no hop, then runs the packet, then holds with the hop still shown", () => {
+    const beat = BEATS.reading[checkpoint];
+    const length = beatLengthMilliseconds(beat);
+    const entering = beatRenderState("reading", checkpoint, 0.01);
+    expect(entering.hopsShown).toBe(0);
+    expect(entering.activeHop).toBeNull();
+    expect(entering.packet).toBeNull();
+    const running = beatRenderState("reading", checkpoint, (beat.durations.enterMilliseconds + beat.durations.hopMilliseconds * 0.4) / length);
+    expect(running.activeHop).toBe(0);
+    expect(running.packet?.arrow).toBe("hubToGateway");
+    expect(running.packet?.fraction).toBeGreaterThan(0);
+    const holding = beatRenderState("reading", checkpoint, 0.99);
+    expect(holding.hopsShown).toBe(1);
+    expect(holding.packet).toBeNull();
+    expect(holding.chips).toEqual(["blobCheckpoints"]);
+  });
+
+  it("runs a reverse hop from its end to its start", () => {
+    const index = beatIndexOf("command", "store");
+    const beat = BEATS.command[index];
+    const length = beatLengthMilliseconds(beat);
+    const early = beatRenderState("command", index, (beat.durations.enterMilliseconds + 20) / length);
+    const late = beatRenderState("command", index, (beat.durations.enterMilliseconds + beat.durations.hopMilliseconds * 0.8) / length);
+    expect(early.packet?.fraction).toBeGreaterThan(0.95);
+    expect(late.packet?.fraction).toBeLessThan(early.packet?.fraction ?? 0);
+  });
+
+  it("moves through several hops in order", () => {
+    const index = beatIndexOf("command", "deliver");
+    const beat = BEATS.command[index];
+    const length = beatLengthMilliseconds(beat);
+    const second = beatRenderState("command", index, (beat.durations.enterMilliseconds + beat.durations.hopMilliseconds * 1.2) / length);
+    expect(second.activeHop).toBe(1);
+    expect(second.hopsShown).toBe(2);
+    expect(second.packet?.arrow).toBe("gatewayToHub");
+  });
+
+  it("blends from the layout of the previous beat while the beat enters and settles at one", () => {
+    const focus = beatIndexOf("command", "focus");
+    expect(beatRenderState("command", focus, 0).fromLayout).toBe("whole");
+    expect(beatRenderState("command", focus, 0).layoutShare).toBe(0);
+    expect(beatRenderState("command", focus, 1).layoutShare).toBe(1);
+    const plan = beatRenderState("command", beatIndexOf("command", "plan"), 0);
+    expect(plan.fromLayout).toBe("command");
+    expect(plan.layoutShare).toBe(1);
+  });
+
+  it("takes the layout before the first beat of a tab from the end of the previous tab", () => {
+    expect(beatRenderState("reading", 0, 0).fromLayout).toBe("whole");
+    expect(beatRenderState("safety", 0, 0).fromLayout).toBe("customer");
+    expect(beatRenderState("overview", 0, 0).fromLayout).toBe("whole");
+    expect(beatRenderState("overview", 0, 0).layoutShare).toBe(1);
+  });
+
+  it("reports safety progress with the finished mechanisms and scale progress", () => {
+    const lock = beatRenderState("safety", beatIndexOf("safety", "lock"), 1);
+    expect(lock.safety).toEqual({ mechanism: "lock", progress: 1, finished: ["duplicate", "race"] });
+    expect(beatRenderState("safety", beatIndexOf("safety", "focus"), 1).safety).toBeNull();
+    const down = beatRenderState("scale", beatIndexOf("scale", "down"), 1);
+    expect(down.scale).toEqual({ step: "down", progress: 1 });
+    expect(beatRenderState("scale", 0, 1).scale).toBeNull();
+  });
+
+  it("clamps progress and beat index and treats a missing number as the start", () => {
+    expect(beatRenderState("reading", 99, 2).beatIndex).toBe(BEATS.reading.length - 1);
+    expect(beatRenderState("reading", -4, -1).beatIndex).toBe(0);
+    expect(beatRenderState("reading", 0, Number.NaN).progress).toBe(0);
+    expect(beatRenderState("reading", 0, 0.5).beatCount).toBe(6);
+  });
+
+  it("ends every beat with all hops shown and no packet", () => {
+    for (const tab of FILM_TABS) {
+      BEATS[tab].forEach((beat, index) => {
+        const end = beatEndState(tab as TabId, index);
+        expect(end.hopsShown).toBe(beat.hops.length);
+        expect(end.packet).toBeNull();
+        expect(end.activeHop).toBe(beat.hops.length === 0 ? null : beat.hops.length - 1);
+        expect(end.progress).toBe(1);
+      });
+    }
+  });
+});
 
 describe("film timeline", () => {
-  it("runs nine steps for 80 seconds at 30 frames per second with seven tabs", () => {
-    expect(FILM_SCENES.map((scene) => scene.id)).toEqual(["title", "overview", "reading", "command", "customer", "safety", "scale", "cloud", "end"]);
-    expect(FILM_TABS).toEqual(["overview", "reading", "command", "customer", "safety", "scale", "cloud"]);
-    expect(FILM_DURATION_MILLISECONDS).toBe(80000);
+  it("is one linear pass over every beat with a whole number of frames", () => {
+    const total = FILM_TABS.flatMap((tab) => BEATS[tab]).reduce((sum, beat) => sum + beatLengthMilliseconds(beat), 0);
+    expect(FILM_PASS_MILLISECONDS).toBe(total);
     expect(FILM_FRAMES_PER_SECOND).toBe(30);
-    expect(filmFrameCount).toBe(2400);
+    expect(Number.isInteger(filmFrameCount)).toBe(true);
+    expect(filmFrameCount).toBe((FILM_PASS_MILLISECONDS * 30) / 1000);
     expect(filmMillisecondsForFrame(0)).toBe(0);
+    expect(filmMillisecondsForFrame(30)).toBe(1000);
   });
 
-  it("wraps negative, not a number and past the end, and loops to the first frame", () => {
-    expect(wrapFilmElapsed(-1000)).toBe(79000);
-    expect(wrapFilmElapsed(Number.NaN)).toBe(0);
-    expect(filmSceneIndexAt(FILM_DURATION_MILLISECONDS)).toBe(0);
-    expect(filmFrameAtMilliseconds(FILM_DURATION_MILLISECONDS)).toEqual(filmFrameAtMilliseconds(0));
+  it("opens on the overview orient beat and closes on the last cloud beat", () => {
+    const first = filmRenderStateAtMilliseconds(0);
+    expect(first.tab).toBe("overview");
+    expect(first.beat.id).toBe("orient");
+    expect(first.tabIndex).toBe(0);
+    expect(first.tabProgress).toBe(0);
+    const last = filmRenderStateAtMilliseconds(FILM_PASS_MILLISECONDS);
+    expect(last.tab).toBe("cloud");
+    expect(last.beat.id).toBe("gates");
+    expect(last.tabProgress).toBe(1);
+    expect(filmRenderStateAtMilliseconds(Number.NaN).beatIndex).toBe(0);
+    expect(filmRenderStateAtMilliseconds(-5).tab).toBe("overview");
+    expect(filmRenderStateAtMilliseconds(FILM_PASS_MILLISECONDS * 3).tab).toBe("cloud");
   });
 
-  it("interpolates a camera with easing", () => {
-    expect(interpolateCamera({ x: 0, y: 0, width: 100 }, { x: 100, y: 50, width: 50 }, 0.5)).toEqual({ x: 50, y: 25, width: 75 });
-  });
-
-  it("maps every hop to a caption that exists", () => {
-    for (const [journey, captions] of Object.entries(CAPTION_OF_HOP)) {
-      expect(captions).toHaveLength(JOURNEYS[journey as keyof typeof JOURNEYS].length);
-      expect(Math.max(...captions)).toBe(CAPTION_COUNT[journey as FilmSceneId] - 1);
+  it("visits every tab in order as the time runs", () => {
+    const seen = new Set<TabId>();
+    for (let frame = 0; frame < filmFrameCount; frame += 15) {
+      seen.add(filmRenderStateAtMilliseconds(filmMillisecondsForFrame(frame)).tab);
     }
-  });
-});
-
-describe("film layout", () => {
-  it("keeps every block, frame and safety cell on the poster and inside its panel", () => {
-    for (const box of [...BLOCKS, ...FRAMES]) {
-      expect(box.x + box.width).toBeLessThanOrEqual(1080);
-      expect(box.y + box.height).toBeLessThanOrEqual(1080);
-    }
-    for (const cell of Object.values(SAFETY_CELLS)) {
-      expect(cell.x).toBeGreaterThanOrEqual(SAFETY_PANEL.x);
-      expect(cell.y + cell.height).toBeLessThanOrEqual(SAFETY_PANEL.y + SAFETY_PANEL.height);
-    }
-  });
-
-  it("joins every arrow to two blocks that exist and keeps eleven blocks", () => {
-    const blockIds = new Set(BLOCKS.map((block) => block.id));
-    expect(BLOCKS).toHaveLength(11);
-    for (const arrow of ARROWS) {
-      expect(arrow.ends.every((end) => blockIds.has(end))).toBe(true);
-    }
-    expect(SHIELDS).toHaveLength(7);
-  });
-
-  it("frames every zoom inside the poster", () => {
-    for (const camera of Object.values(CAMERAS)) {
-      expect(camera.x + camera.width).toBeLessThanOrEqual(1080);
-      expect(camera.y + cameraHeight(camera)).toBeLessThanOrEqual(1080);
-    }
-    expect(cameraHeight(CAMERAS.overview)).toBe(VIEWPORT_HEIGHT);
-    expect(CAMERAS.safety.x).toBeLessThanOrEqual(SAFETY_PANEL.x);
-    expect(CAMERAS.safety.y + cameraHeight(CAMERAS.safety)).toBeGreaterThanOrEqual(SAFETY_PANEL.y + SAFETY_PANEL.height);
-  });
-});
-
-describe("stage crop and visibility", () => {
-  it("crops the stage to the content and never past the camera", () => {
-    expect(stageHeight(CAMERAS.overview)).toBe(STAGE_BOTTOM);
-    expect(stageHeight(CAMERAS.reading)).toBe(cameraHeight(CAMERAS.reading));
-    expect(stageHeight(CAMERAS.customer)).toBe(STAGE_BOTTOM - CAMERAS.customer.y);
-  });
-
-  it("shows a block whole or fades it out", () => {
-    const browser = BLOCKS.find((block) => block.id === "browser") as (typeof BLOCKS)[number];
-    const battery = BLOCKS.find((block) => block.id === "battery") as (typeof BLOCKS)[number];
-    expect(rectangleVisibility(browser, CAMERAS.overview)).toBe(1);
-    expect(rectangleVisibility(browser, CAMERAS.command)).toBe(0);
-    expect(rectangleVisibility(battery, CAMERAS.customer)).toBe(0);
-    expect(rectangleVisibility(browser, { x: 0, y: 0, width: browser.x + browser.width - 12 })).toBeCloseTo(0.5);
-  });
-
-  it("keeps every drawn label point and zero badge on the poster", () => {
-    for (const shield of SHIELDS) {
-      expect(shield.at.x).toBeGreaterThan(0);
-      expect(shield.at.x).toBeLessThan(1080);
-    }
-  });
-});
-
-describe("filmFrameAtMilliseconds", () => {
-  it("opens on the title card over the overview and fades it out", () => {
-    const first = filmFrameAtMilliseconds(0);
-    expect(first).toMatchObject({ sceneId: "title", camera: CAMERAS.overview, titleCardOpacity: 1, captionIndex: null, journey: null, tabIndex: null });
-    expect(frameIn("title", 3999).titleCardOpacity).toBeLessThan(0.01);
-  });
-
-  it("shows the overview tab with its caption and its progress", () => {
-    const overview = frameIn("overview", 3000);
-    expect(overview).toMatchObject({ tabIndex: 0, captionIndex: 0, sceneProgress: 0.5, journey: null });
-    expect(overview.elapsed).toBe(7000);
-    expect(frameIn("reading", 0).tabIndex).toBe(1);
-  });
-
-  it("walks journey A hop by hop with its captions", () => {
-    expect(frameIn("reading", 0).journey).toBeNull();
-    expect(frameIn("reading", 0).captionIndex).toBe(0);
-    expect(frameIn("reading", CAMERA_MOVE_MILLISECONDS).camera).toEqual(CAMERAS.reading);
-    const first = settledShare("reading", 0.1);
-    expect(first.journey).toMatchObject({ id: "reading", hopsShown: 1, activeHop: 0, packet: { arrow: "batteryToHub" } });
-    const last = settledShare("reading", 0.95);
-    expect(last.journey).toMatchObject({ hopsShown: 3, activeHop: 2, packet: { arrow: "gatewayToDatabase", fraction: 1 } });
-    expect(last.captionIndex).toBe(2);
-  });
-
-  it("walks journey B to the battery and back to the confirming reading", () => {
-    const fifth = settledShare("command", 4.5 / 8);
-    expect(fifth.journey?.packet.arrow).toBe("queueToGateway");
-    expect(fifth.captionIndex).toBe(2);
-    const confirm = settledShare("command", 7.9 / 8);
-    expect(confirm.journey).toMatchObject({ hopsShown: 8, packet: { arrow: "batteryToHub" } });
-    expect(confirm.captionIndex).toBe(3);
-  });
-
-  it("walks journey C forward and back with the packet reversed", () => {
-    const back = settledShare("customer", 3.65 / 5);
-    expect(back.journey?.packet).toMatchObject({ arrow: "dashboardToApi" });
-    expect(back.journey?.packet.fraction).toBeLessThan(0.1);
-    expect(back.captionIndex).toBe(2);
-  });
-
-  it("animates the four safety mechanisms in order", () => {
-    expect(frameIn("safety", 0).safety).toBeNull();
-    expect(frameIn("safety", 0).captionIndex).toBe(0);
-    expect(settledShare("safety", 0.1).safety).toMatchObject({ mechanism: "duplicate", finished: [] });
-    const audit = settledShare("safety", 0.99);
-    expect(audit.safety).toMatchObject({ mechanism: "audit", progress: 1, finished: ["duplicate", "race", "lock"] });
-    expect(audit.captionIndex).toBe(3);
-  });
-
-  it("walks the four scale beats over the overview", () => {
-    expect(frameIn("scale", 0).scale).toBeNull();
-    expect(frameIn("scale", 0).captionIndex).toBe(0);
-    expect(settledShare("scale", 0.1).scale).toMatchObject({ beat: "out" });
-    expect(settledShare("scale", 0.3).scale?.beat).toBe("up");
-    expect(settledShare("scale", 0.6).scale?.beat).toBe("down");
-    const next = settledShare("scale", 0.99);
-    expect(next.scale).toMatchObject({ beat: "next", progress: 1 });
-    expect(next).toMatchObject({ captionIndex: 3, tabIndex: 5, camera: CAMERAS.overview });
-  });
-
-  it("lights the shields one by one in the cloud and keeps them on the end card", () => {
-    expect(frameIn("cloud", 0).shieldsShown).toBe(0);
-    expect(frameIn("cloud", CAMERA_MOVE_MILLISECONDS).shieldsShown).toBe(1);
-    expect(frameIn("cloud", 5999).shieldsShown).toBe(7);
-    expect(frameIn("cloud", 5999).captionIndex).toBe(1);
-    const end = frameIn("end", 1000);
-    expect(end).toMatchObject({ shieldsShown: 7, endCardOpacity: 1, captionIndex: null });
+    expect([...seen]).toEqual(FILM_TABS);
   });
 });

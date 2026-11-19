@@ -4,7 +4,7 @@ import { H2, P, Lead, UL, OL, LI, InlineCode } from "./prose";
 import { ProseDetails } from "./ProseDetails";
 import { FileTree, type FileNode } from "./FileTree";
 import { SmartEnergyPosterExplainer } from "./SmartEnergyPosterExplainer";
-import { ConcurrencyFigure, FlowFigure, FrontendPathFigure, HexagonFigure, PipelineFigure } from "./smartEnergyGuide";
+import { ApiFigure, HexagonFigure, PipelineFigure, StaticBeat } from "./smartEnergyGuide";
 
 export const meta: BlogPostMeta = {
   slug: "smart-energy-steering-architecture",
@@ -12,7 +12,7 @@ export const meta: BlogPostMeta = {
   track: "fullstack",
   publishedDate: "2026-10-02",
   updatedDate: "2026-11-19",
-  readingTimeMin: 13,
+  readingTimeMin: 16,
   title: {
     en: "How to build an energy steering platform on Azure",
     nl: "Een energiestuurplatform bouwen op Azure",
@@ -158,14 +158,18 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.flow1[locale]}</P>
       <P>{copy.flow2[locale]}</P>
       <P>{copy.flow3[locale]}</P>
-      <FlowFigure locale={locale} />
+      <StaticBeat locale={locale} tab="reading" beat="transaction" />
       <P>{copy.flow4[locale]}</P>
+      <P>{copy.planner1[locale]}</P>
       <P>{copy.flow5[locale]}</P>
+      <StaticBeat locale={locale} tab="command" beat="confirm" />
       <P>{copy.flow6[locale]}</P>
+      <P>{copy.failure1[locale]}</P>
+      <P>{copy.failure2[locale]}</P>
 
       <H2>{copy.onceTitle[locale]}</H2>
       <P>{copy.once1[locale]}</P>
-      <ConcurrencyFigure locale={locale} />
+      <StaticBeat locale={locale} tab="safety" beat="audit" />
       <P>{copy.once2[locale]}</P>
       <P>{copy.once3[locale]}</P>
       <OL>
@@ -180,13 +184,14 @@ export function Body({ locale }: { locale: Locale }) {
 
       <H2>{copy.apiTitle[locale]}</H2>
       <P>{copy.api1[locale]}</P>
+      <ApiFigure locale={locale} />
       <P>{copy.api2[locale]}</P>
       <P>{copy.api3[locale]}</P>
 
       <H2>{copy.frontTitle[locale]}</H2>
       <P>{copy.front1[locale]}</P>
       <P>{copy.front2[locale]}</P>
-      <FrontendPathFigure locale={locale} />
+      <StaticBeat locale={locale} tab="customer" beat="notModified" />
       <P>{copy.front3[locale]}</P>
       <P>{copy.front4[locale]}</P>
 
@@ -195,6 +200,7 @@ export function Body({ locale }: { locale: Locale }) {
       <P>{copy.security2[locale]}</P>
       <P>{copy.security3[locale]}</P>
       <P>{copy.security4[locale]}</P>
+      <StaticBeat locale={locale} tab="cloud" beat="gates" />
       <P>{copy.security5[locale]}</P>
       <P>{copy.security6[locale]}</P>
 
@@ -228,6 +234,13 @@ export function Body({ locale }: { locale: Locale }) {
         <LI>{copy.scaleDown[locale]}</LI>
         <LI>{copy.scaleNot[locale]}</LI>
       </UL>
+      <StaticBeat locale={locale} tab="scale" beat="levers" />
+
+      <H2>{copy.observeTitle[locale]}</H2>
+      <P>{copy.observe1[locale]}</P>
+      <P>{copy.observe2[locale]}</P>
+      <P>{copy.testing1[locale]}</P>
+      <P>{copy.testing2[locale]}</P>
 
       <H2>{copy.closeTitle[locale]}</H2>
       <P>{copy.close1[locale]}</P>
@@ -239,8 +252,8 @@ export function Body({ locale }: { locale: Locale }) {
 
 const COPY = {
   lead: {
-    en: "A platform that reads simulated energy devices, plans a battery against tomorrow's electricity prices and sends it a command every 15 minutes. I built it in two weeks as my own proof of concept on Azure, with Claude Code under my direction and review. This guide walks through how it is built and why, from the device to the browser and from a push to a running container.",
-    nl: "Een platform dat gesimuleerde energieapparaten uitleest, een batterij plant op de stroomprijzen van morgen en die elke 15 minuten een commando stuurt. Ik bouwde het in twee weken als eigen proof of concept op Azure, met Claude Code onder mijn regie en review. Deze gids loopt door hoe het gebouwd is en waarom, van het apparaat tot de browser en van een push tot een draaiende container.",
+    en: "A platform that reads simulated energy devices, plans a battery against tomorrow's electricity prices and sends it a command every 15 minutes. I built it in two weeks as my own proof of concept on Azure, with Claude Code under my direction and review, and it ran live on Azure Container Apps for a demo. This guide walks through how it is built and why, from the device to the browser and from a push to a running container.",
+    nl: "Een platform dat gesimuleerde energieapparaten uitleest, een batterij plant op de stroomprijzen van morgen en die elke 15 minuten een commando stuurt. Ik bouwde het in twee weken als eigen proof of concept op Azure, met Claude Code onder mijn regie en review, en het draaide live op Azure Container Apps voor een demo. Deze gids loopt door hoe het gebouwd is en waarom, van het apparaat tot de browser en van een push tot een draaiende container.",
   },
   shapeTitle: {
     en: "A hexagonal core with ports and adapters",
@@ -283,12 +296,12 @@ const COPY = {
     nl: "Een transactie schrijft dan drie dingen: de ruwe meting in een hypertable van TimescaleDB, de nieuwste meting per asset in een tabel met de actuele stand, en de geraakte bucket van 15 minuten in de rollup. Grafieken lezen de rollup en tegels lezen de actuele stand, dus geen van beide hoeft door de historie te zoeken.",
   },
   flow4: {
-    en: "Every hour the planner reads the day-ahead prices and stores a new version of the battery plan. Every 15 minutes the steering job turns the current period of that plan into one command, with an idempotency key made of the asset, the period and the plan version. A switch per site can turn steering off.",
-    nl: "Elk uur leest de planner de day-ahead prijzen en slaat een nieuwe versie van het batterijplan op. Elke 15 minuten maakt de stuurjob van de huidige periode van dat plan een commando, met een idempotency key van de asset, de periode en de planversie. Een schakelaar per site kan de sturing uitzetten.",
+    en: "Every hour the planner reads the day-ahead prices and stores a new version of the battery plan. Every 15 minutes the steering job turns the current period of that plan into one command, with an idempotency key made of the asset, the period and the plan version, and stores it as Created with an audit row before anything is sent. A switch per site can turn steering off.",
+    nl: "Elk uur leest de planner de day-ahead prijzen en slaat een nieuwe versie van het batterijplan op. Elke 15 minuten maakt de stuurjob van de huidige periode van dat plan een commando, met een idempotency key van de asset, de periode en de planversie, en slaat het op als Created met een auditrij voordat er iets verstuurd wordt. Een schakelaar per site kan de sturing uitzetten.",
   },
   flow5: {
-    en: "The command travels over a Service Bus queue with one session per asset, so commands for one battery stay in order. On a laptop an in-memory channel takes its place. The gateway sends only commands that are still Created and not expired, cloud to device through IoT Hub. The next reading confirms the command when the power of the battery lands within a tolerance of the setpoint, the larger of 1 kW and 10 percent.",
-    nl: "Het commando reist over een Service Bus-wachtrij met een sessie per asset, zodat commando's voor een batterij op volgorde blijven. Op een laptop neemt een in-memory kanaal de plaats in. De gateway verstuurt alleen commando's die nog Created zijn en niet verlopen, cloud to device via IoT Hub. De volgende meting bevestigt het commando als het vermogen van de batterij binnen een marge van de setpoint valt, de grootste van 1 kW en 10 procent.",
+    en: "In pro the command travels over a Service Bus queue with one session per asset, so commands for one battery stay in order. Pro was never applied, and in dev and on a laptop an in-memory channel takes its place. The gateway sends only commands that are still Created and not expired, cloud to device through IoT Hub, and the command becomes Sent. The hub reports the delivery back to the gateway, which moves it to Acknowledged. A later reading confirms it in the gateway when the power of the battery lands within a tolerance of the setpoint, the larger of 1 kW and 10 percent.",
+    nl: "In pro reist het commando over een Service Bus-wachtrij met een sessie per asset, zodat commando's voor een batterij op volgorde blijven. Pro is nooit uitgerold, en in dev en op een laptop neemt een in-memory kanaal de plaats in. De gateway verstuurt alleen commando's die nog Created zijn en niet verlopen, cloud to device via IoT Hub, en het commando wordt Sent. De hub meldt de aflevering terug aan de gateway, die het naar Acknowledged zet. Een latere meting bevestigt het in de gateway als het vermogen van de batterij binnen een marge van de setpoint valt, de grootste van 1 kW en 10 procent.",
   },
   flow6: {
     en: "A command moves from Created through Sent and Acknowledged to Confirmed, or ends as Rejected, Failed or Expired. That is seven states and nine allowed transitions, and every change writes its audit row in the same transaction as the change.",
@@ -307,12 +320,12 @@ const COPY = {
     nl: "Ten eerste lopen lezers en schrijvers langs elkaar. Het dashboard leest een rij per asset uit de actuele stand en een paar buckets uit de rollup. De gateway voegt ruwe metingen toe en werkt die rijen bij binnen zijn batchtransactie. PostgreSQL houdt versies van een rij bij, dus een lezer ziet de laatst vastgelegde stand en wacht nooit op een schrijver, en een schrijver wacht nooit op een lezer. De leesacties zijn gewone queries zonder expliciete locks.",
   },
   once3: {
-    en: "Second, the database settles duplicates and races, not locks in the code. Six cases come up, each with the failure first:",
-    nl: "Ten tweede beslecht de database dubbelingen en races, niet locks in de code. Er zijn zes gevallen, elk met de fout eerst:",
+    en: "Second, in the Postgres path the database settles duplicates and races, not locks in the code. Six cases come up, each with the failure first:",
+    nl: "Ten tweede beslecht de database in het Postgres-pad dubbelingen en races, niet locks in de code. Er zijn zes gevallen, elk met de fout eerst:",
   },
   once4: {
-    en: "Third, an unchanged answer stays small. The api builds a weak ETag from the newest measured moment, and the dashboard sends it back with every poll. While nothing changed, the answer is a 304 without a body. The route handler of the dashboard also keeps a 5 second answer cache per caller and shares one backend call between requests that arrive together.",
-    nl: "Ten derde blijft een ongewijzigd antwoord klein. De api maakt een zwakke ETag van het nieuwste meetmoment, en het dashboard stuurt die bij elke poll terug. Zolang er niets veranderde, is het antwoord een 304 zonder body. De route handler van het dashboard houdt ook per aanroeper een antwoordcache van 5 seconden en deelt een backendaanroep tussen verzoeken die tegelijk binnenkomen.",
+    en: "Third, an unchanged answer stays small. The api builds a weak ETag from the newest measured moment, and the dashboard sends it back with every poll. While nothing changed, the answer is a 304 without a body. The plan, commands and savings routes of the dashboard also keep a 5 second answer cache per caller and share one backend call between requests that arrive together.",
+    nl: "Ten derde blijft een ongewijzigd antwoord klein. De api maakt een zwakke ETag van het nieuwste meetmoment, en het dashboard stuurt die bij elke poll terug. Zolang er niets veranderde, is het antwoord een 304 zonder body. De routes voor plan, commando's en besparing van het dashboard houden ook per aanroeper een antwoordcache van 5 seconden en delen een backendaanroep tussen verzoeken die tegelijk binnenkomen.",
   },
   once5: {
     en: "The repository names where it would strain first: a chart over a full day of raw readings. That is why charts read the rollup, and why continuous aggregates in TimescaleDB and push instead of poll are the next steps.",
@@ -323,16 +336,16 @@ const COPY = {
     nl: "De api",
   },
   api1: {
-    en: "The api is a small REST surface under /v1: sites, asset state and telemetry, prices, plans, plan runs and savings, commands, and the steering switch. It runs on internal ingress only, so nothing outside the Container Apps environment reaches it. Health lives on /health/live and /health/ready.",
-    nl: "De api is een klein REST-oppervlak onder /v1: sites, de stand en telemetrie van een asset, prijzen, plannen, planruns en besparing, commando's en de stuurschakelaar. Hij draait alleen op interne ingress, dus niets buiten de Container Apps-omgeving bereikt hem. Health staat op /health/live en /health/ready.",
+    en: "The api is a small REST surface under /v1: sites, asset state and telemetry, prices, plans, plan runs and savings, commands, and the steering switch. It runs on internal ingress only, so nothing outside the Container Apps environment reaches it. Health lives on /health/live and /health/ready, and readiness checks the database when the host uses one.",
+    nl: "De api is een klein REST-oppervlak onder /v1: sites, de stand en telemetrie van een asset, prijzen, plannen, planruns en besparing, commando's en de stuurschakelaar. Hij draait alleen op interne ingress, dus niets buiten de Container Apps-omgeving bereikt hem. Health staat op /health/live en /health/ready, en readiness controleert de database als de host er een gebruikt.",
   },
   api2: {
-    en: "Authentication comes in two steps. First a bearer token, compared in constant time. Then Entra ID: an access token with the api scope, and the organisation of the caller resolved once per request from its object id, so every query is scoped to one organisation. A query for the site of another organisation finds nothing.",
-    nl: "Authenticatie komt in twee stappen. Eerst een bearer token, vergeleken in constante tijd. Daarna Entra ID: een access token met de api-scope, en de organisatie van de aanroeper een keer per verzoek bepaald uit zijn object id, zodat elke query bij een organisatie hoort. Een query naar de site van een andere organisatie vindt niets.",
+    en: "The api runs in one of two authentication modes. With a static bearer token, compared in constant time, every caller belongs to one fixed organisation. With Entra ID, an access token needs the api scope, and the organisation of the caller is resolved once per request from its object id. Either way every query is scoped to one organisation, and a query for the site of another organisation finds nothing.",
+    nl: "De api draait in een van twee authenticatiemodi. Met een vast bearer token, vergeleken in constante tijd, hoort elke aanroeper bij een vaste organisatie. Met Entra ID heeft een access token de api-scope nodig, en wordt de organisatie van de aanroeper een keer per verzoek bepaald uit zijn object id. In beide gevallen hoort elke query bij een organisatie, en een query naar de site van een andere organisatie vindt niets.",
   },
   api3: {
-    en: "Limits protect the database and the process. A raw telemetry read stops at 86 400 rows. Kestrel accepts at most 64 KB per body. The site and the asset state carry a weak ETag and answer 304 when nothing changed.",
-    nl: "Limieten beschermen de database en het proces. Een ruwe telemetrieread stopt bij 86 400 rijen. Kestrel accepteert hoogstens 64 KB per body. De site en de stand van een asset dragen een zwakke ETag en antwoorden 304 als er niets veranderde.",
+    en: "Limits protect the database and the process. A raw telemetry read stops at 86 400 rows. Kestrel accepts at most 64 KB per body. The site and the asset state carry a weak ETag and answer 304 when nothing changed. The telemetry series carries none.",
+    nl: "Limieten beschermen de database en het proces. Een ruwe telemetrieread stopt bij 86 400 rijen. Kestrel accepteert hoogstens 64 KB per body. De site en de stand van een asset dragen een zwakke ETag en antwoorden 304 als er niets veranderde. De telemetriereeks draagt er geen.",
   },
   frontTitle: {
     en: "The React frontend",
@@ -457,6 +470,38 @@ const COPY = {
   scale1: {
     en: "Growing has three directions, plus the parts that change first.",
     nl: "Groeien kan drie kanten op, plus de delen die als eerste veranderen.",
+  },
+  planner1: {
+    en: "The planner itself is a pure function in the domain, GreedyBatteryPlanner. It takes the prices and the limits of the battery and returns a plan, clipped at the bounds of the state of charge, for one battery on one site. Because it needs no database and no clock, every case is a plain unit test. Each run saves the next version of the plan, and a unique index on the site, the day and the version stops a double save.",
+    nl: "De planner zelf is een pure functie in het domein, GreedyBatteryPlanner. Hij neemt de prijzen en de grenzen van de batterij en geeft een plan terug, begrensd op de laadtoestand, voor een batterij op een site. Omdat hij geen database en geen klok nodig heeft, is elk geval een gewone unittest. Elke run slaat de volgende versie van het plan op, en een unieke index op de site, de dag en de versie voorkomt een dubbele opslag.",
+  },
+  failure1: {
+    en: "Not every command lands. A send error moves it to Failed. A command whose period ends without a confirming reading becomes Expired at the next steering run. The command is sent after its row is committed and there is no outbox, so a send that fails after the commit leaves the command Created until it expires. That is an accepted trade-off, and the expiry pass closes it.",
+    nl: "Niet elk commando komt aan. Een fout bij het versturen zet het op Failed. Een commando waarvan de periode eindigt zonder bevestigende meting wordt Expired bij de volgende stuurrun. Het commando wordt verstuurd nadat de rij is vastgelegd en er is geen outbox, dus een verzending die na de commit faalt, laat het commando op Created staan tot het verloopt. Dat is een geaccepteerde afweging, en de verloopronde sluit hem af.",
+  },
+  failure2: {
+    en: "On the queue in pro, a message is delivered at most five times with a lock of one minute, a message past its time to live goes to the dead letter queue, and an alert watches the depth of that queue.",
+    nl: "Op de wachtrij in pro wordt een bericht hoogstens vijf keer afgeleverd met een lock van een minuut, gaat een bericht voorbij zijn time to live naar de dead letter queue, en bewaakt een alert de diepte van die wachtrij.",
+  },
+  observeTitle: {
+    en: "Observing and testing it",
+    nl: "Het observeren en testen",
+  },
+  observe1: {
+    en: "The gateway counts what it does with OpenTelemetry: readings ingested, readings rejected and duplicate batches. Every container app and job logs to Log Analytics, with Application Insights beside it. Alerts fire when an app keeps restarting, when retention did not run and when commands stay unconfirmed. Each environment also has a budget, so a mistake in the infrastructure shows up as a cost alert before it shows up on an invoice.",
+    nl: "De gateway telt met OpenTelemetry wat hij doet: opgenomen metingen, geweigerde metingen en dubbele batches. Elke container app en job logt naar Log Analytics, met Application Insights ernaast. Alerts gaan af als een app blijft herstarten, als retentie niet draaide en als commando's onbevestigd blijven. Elke omgeving heeft ook een budget, zodat een fout in de infrastructuur als kostenalert verschijnt voordat hij op een factuur verschijnt.",
+  },
+  observe2: {
+    en: "Retention deletes raw readings older than 30 days in batches. The rollup stays, so the charts keep their history while the hypertable stays small.",
+    nl: "Retentie verwijdert ruwe metingen ouder dan 30 dagen in batches. De rollup blijft, dus de grafieken houden hun historie terwijl de hypertable klein blijft.",
+  },
+  testing1: {
+    en: "Each layer has its own tests. Domain and Application run without any infrastructure, so the planner, the state machine and every use case are fast unit tests against the in-memory adapters. The Postgres adapters run against a real TimescaleDB in Testcontainers, the same engine as in Azure. That choice came from a lesson: a retention query once deleted rows from the wrong chunk of a hypertable, and only the production engine showed it.",
+    nl: "Elke laag heeft zijn eigen tests. Domain en Application draaien zonder infrastructuur, dus de planner, de toestandsmachine en elke use case zijn snelle unittests tegen de in-memory adapters. De Postgres-adapters draaien tegen een echte TimescaleDB in Testcontainers, dezelfde engine als in Azure. Die keuze kwam uit een les: een retentiequery verwijderde ooit rijen uit de verkeerde chunk van een hypertable, en alleen de productie-engine liet dat zien.",
+  },
+  testing2: {
+    en: "The persistence tests prove the safety rules from the busy quarter of an hour: a second create under the same key gives the first row back with one audit row, a transition from a stale state is refused, a late reading leaves the current state alone, and three hosts migrating an empty database at once all succeed. Every host also has a startup test, so a missing registration fails in CI instead of at deploy.",
+    nl: "De persistence-tests bewijzen de veiligheidsregels uit het drukke kwartier: een tweede create onder dezelfde sleutel geeft de eerste rij terug met een auditrij, een overgang vanuit een verouderde status wordt geweigerd, een late meting laat de actuele stand met rust, en drie hosts die tegelijk een lege database migreren slagen allemaal. Elke host heeft ook een starttest, zodat een ontbrekende registratie in CI faalt in plaats van bij de deploy.",
   },
   closeTitle: {
     en: "What to take away",
