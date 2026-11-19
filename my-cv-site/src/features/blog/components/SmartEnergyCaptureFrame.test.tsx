@@ -12,7 +12,9 @@ describe("SmartEnergyCaptureFrame", () => {
     expect(screen.getByText("A battery that charges when power is cheap.")).toBeInTheDocument();
     expect(screen.getByText("Hilmar van der Veen")).toBeInTheDocument();
     expect(screen.getByText("Senior Frontend Engineer")).toBeInTheDocument();
-    expect(screen.getByText("telemetry")).toBeInTheDocument();
+    expect(screen.getByText("data")).toBeInTheDocument();
+    expect(screen.getByText("commands")).toBeInTheDocument();
+    expect(screen.getByText("plan")).toBeInTheDocument();
     expect(screen.queryByText("Own work, never ran at a client.")).not.toBeInTheDocument();
   });
 
@@ -22,6 +24,13 @@ describe("SmartEnergyCaptureFrame", () => {
     expect(screen.getByText("Een meting verlaat de batterij")).toBeInTheDocument();
     expect(screen.getByText("MQTT naar IoT Hub, een apparaatidentiteit per asset")).toBeInTheDocument();
     expect(screen.queryByText("Een batterij die laadt als stroom goedkoop is.")).not.toBeInTheDocument();
+  });
+
+  it("counts the step as a fraction and lists the gate tools in one line on the cloud step", () => {
+    const labels = smartEnergyFilmLabels("en");
+    render(<SmartEnergyCaptureFrame frame={filmFrameAtMilliseconds(startOf("cloud") + CAMERA_MOVE_MILLISECONDS + 100)} labels={labels} />);
+    expect(screen.getByText("7 / 7")).toBeInTheDocument();
+    expect(screen.getByText("NuGet audit, Grype, Semgrep, Gitleaks, Trivy, terraform test, Dependabot")).toBeInTheDocument();
   });
 
   it("ends on the card with the post link and own work said once", () => {

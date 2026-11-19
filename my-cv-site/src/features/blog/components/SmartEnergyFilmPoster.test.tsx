@@ -7,10 +7,10 @@ const labels = smartEnergyFilmLabels("en");
 
 const sceneOf = (id: FilmSceneId) => FILM_SCENES.find((scene) => scene.id === id) ?? FILM_SCENES[0];
 
-const drawAt = (id: FilmSceneId, share: number) => {
+const drawAt = (id: FilmSceneId, share: number, chrome?: "film" | "stage") => {
   const scene = sceneOf(id);
   const elapsed = scene.startMilliseconds + CAMERA_MOVE_MILLISECONDS + share * (scene.lengthMilliseconds - CAMERA_MOVE_MILLISECONDS);
-  return render(<SmartEnergyFilmPoster frame={filmFrameAtMilliseconds(elapsed)} labels={labels} />);
+  return render(<SmartEnergyFilmPoster frame={filmFrameAtMilliseconds(elapsed)} labels={labels} chrome={chrome} />);
 };
 
 describe("SmartEnergyFilmPoster", () => {
@@ -81,6 +81,25 @@ describe("SmartEnergyFilmPoster", () => {
     }
     expect(screen.getByText("Azure, dev and pro")).toBeInTheDocument();
     expect(screen.getByText("Container Apps, 0 to 1 replica")).toBeInTheDocument();
-    expect(screen.getByText("Dependabot")).toBeInTheDocument();
+    expect(screen.queryByText("Dependabot")).not.toBeInTheDocument();
+  });
+
+  it("fades a block that the camera would cut instead of cutting it", () => {
+    drawAt("command", 0.5);
+    expect(screen.getByText("Browser").closest("g")).toHaveAttribute("opacity", "0");
+    expect(screen.getByText("Gateway").closest("g")).toHaveAttribute("opacity", "1");
+  });
+
+  it("keeps the film chrome as an image with the full camera height", () => {
+    drawAt("overview", 0.5, "film");
+    expect(screen.getByRole("img")).toHaveAttribute("viewBox", "0 0 1080 960");
+  });
+
+  it("draws only the stage in the stage chrome, hidden from assistive technology and cropped", () => {
+    const { container } = drawAt("overview", 0.5, "stage");
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector("svg")).toHaveAttribute("viewBox", "0 0 1080 860");
+    expect(screen.getByText("Gateway")).toBeInTheDocument();
   });
 });

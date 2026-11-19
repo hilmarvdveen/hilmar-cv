@@ -1,4 +1,4 @@
-import { ARROWS, BLOCKS, CAMERAS, FRAMES, GATES_ROW, JOURNEYS, SAFETY_CELLS, SAFETY_PANEL, SHIELDS, VIEWPORT_HEIGHT, cameraHeight } from "./layout";
+import { ARROWS, BLOCKS, CAMERAS, FRAMES, JOURNEYS, SAFETY_CELLS, SAFETY_PANEL, SHIELDS, STAGE_BOTTOM, VIEWPORT_HEIGHT, cameraHeight, rectangleVisibility, stageHeight } from "./layout";
 import {
   CAMERA_MOVE_MILLISECONDS,
   CAPTION_COUNT,
@@ -78,9 +78,32 @@ describe("film layout", () => {
       expect(camera.y + cameraHeight(camera)).toBeLessThanOrEqual(1080);
     }
     expect(cameraHeight(CAMERAS.overview)).toBe(VIEWPORT_HEIGHT);
-    expect(GATES_ROW.y + GATES_ROW.height).toBeLessThanOrEqual(VIEWPORT_HEIGHT);
     expect(CAMERAS.safety.x).toBeLessThanOrEqual(SAFETY_PANEL.x);
     expect(CAMERAS.safety.y + cameraHeight(CAMERAS.safety)).toBeGreaterThanOrEqual(SAFETY_PANEL.y + SAFETY_PANEL.height);
+  });
+});
+
+describe("stage crop and visibility", () => {
+  it("crops the stage to the content and never past the camera", () => {
+    expect(stageHeight(CAMERAS.overview)).toBe(STAGE_BOTTOM);
+    expect(stageHeight(CAMERAS.reading)).toBe(cameraHeight(CAMERAS.reading));
+    expect(stageHeight(CAMERAS.customer)).toBe(STAGE_BOTTOM - CAMERAS.customer.y);
+  });
+
+  it("shows a block whole or fades it out", () => {
+    const browser = BLOCKS.find((block) => block.id === "browser") as (typeof BLOCKS)[number];
+    const battery = BLOCKS.find((block) => block.id === "battery") as (typeof BLOCKS)[number];
+    expect(rectangleVisibility(browser, CAMERAS.overview)).toBe(1);
+    expect(rectangleVisibility(browser, CAMERAS.command)).toBe(0);
+    expect(rectangleVisibility(battery, CAMERAS.customer)).toBe(0);
+    expect(rectangleVisibility(browser, { x: 0, y: 0, width: browser.x + browser.width - 12 })).toBeCloseTo(0.5);
+  });
+
+  it("keeps every drawn label point and zero badge on the poster", () => {
+    for (const shield of SHIELDS) {
+      expect(shield.at.x).toBeGreaterThan(0);
+      expect(shield.at.x).toBeLessThan(1080);
+    }
   });
 });
 

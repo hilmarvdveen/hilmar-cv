@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { FILM_TABS, type FilmFrame } from "@/lib/smartEnergyFilm/film";
-import { LINE_KINDS } from "@/lib/smartEnergyFilm/layout";
+import { LEGEND_KINDS } from "@/lib/smartEnergyFilm/layout";
 import type { SmartEnergyFilmLabels, TabId } from "../smartEnergyFilmLabels";
 import { LINE_STYLES, SmartEnergyFilmPoster } from "./SmartEnergyFilmPoster";
 
@@ -31,12 +31,12 @@ function Tabs({ frame, labels }: SmartEnergyCaptureFrameProps) {
 function Legend({ labels }: { labels: SmartEnergyFilmLabels }) {
   return (
     <span className="flex items-center gap-6 text-3xl text-gray-600">
-      {LINE_KINDS.map((kind) => (
+      {LEGEND_KINDS.map((kind) => (
         <span key={kind} className="inline-flex items-center gap-2">
           <svg width="44" height="14" aria-hidden="true">
             <path d="M4 7 H40" stroke={LINE_STYLES[kind].colour} strokeWidth={5} strokeLinecap="round" strokeDasharray={LINE_STYLES[kind].dash} />
           </svg>
-          {labels.legend[kind]}
+          {kind === "telemetry" ? labels.legendData : labels.legend[kind]}
         </span>
       ))}
     </span>
@@ -70,7 +70,7 @@ export function SmartEnergyCaptureFrame({ frame, labels }: SmartEnergyCaptureFra
       </div>
       <div className="flex flex-1 flex-col justify-center gap-2 px-12">
         <div className="flex items-center justify-between">
-          {step && <Eyebrow>{step}</Eyebrow>}
+          {step && <p className="text-3xl font-semibold text-gray-600">{step}</p>}
           <Legend labels={labels} />
         </div>
         {caption && (
@@ -79,6 +79,7 @@ export function SmartEnergyCaptureFrame({ frame, labels }: SmartEnergyCaptureFra
             <p className="text-3xl text-gray-700">{caption.detail}</p>
           </>
         )}
+        {frame.sceneId === "cloud" && <p className="text-2xl text-gray-600">{labels.gatesLine}</p>}
       </div>
       {frame.titleCardOpacity > 0 && (
         <Card opacity={frame.titleCardOpacity}>

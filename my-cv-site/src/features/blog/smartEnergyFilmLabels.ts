@@ -12,8 +12,10 @@ export type SmartEnergyFilmLabels = {
   frames: Record<FrameId, string>;
   cloudFrames: Record<FrameId, string>;
   legend: Record<LineKind, string>;
+  legendData: string;
   shields: Record<ShieldId, string>;
   gates: readonly string[];
+  gatesLine: string;
   safety: {
     title: string;
     duplicateKey: readonly string[];
@@ -52,7 +54,7 @@ const same = (text: string): LocalizedText => ({ en: text, nl: text });
 
 const NO_NOTE = same("");
 
-const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> & { endCard: Localized<Omit<SmartEnergyFilmLabels["endCard"], "link">> } = {
+const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard" | "gatesLine">> & { endCard: Localized<Omit<SmartEnergyFilmLabels["endCard"], "link">> } = {
   blocks: {
     battery: { title: [{ en: "Battery", nl: "Batterij" }], note: NO_NOTE },
     prices: { title: [same("Day-ahead"), { en: "prices", nl: "prijzen" }], note: NO_NOTE },
@@ -64,7 +66,7 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     steering: { title: [{ en: "Steering", nl: "Sturing" }], note: NO_NOTE },
     dashboard: { title: [same("Dashboard")], note: NO_NOTE },
     database: { title: [same("PostgreSQL")], note: same("TimescaleDB") },
-    browser: { title: [same("Browser")], note: { en: "customer", nl: "klant" } },
+    browser: { title: [same("Browser")], note: { en: "household", nl: "huishouden" } },
   },
   frames: {
     azure: same("Azure"),
@@ -80,6 +82,7 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     reads: { en: "reads", nl: "lezen" },
     control: { en: "plan", nl: "plan" },
   },
+  legendData: same("data"),
   shields: {
     deviceKey: { en: "SAS key", nl: "SAS-sleutel" },
     hubIdentity: { en: "hub identity", nl: "hub-identiteit" },
@@ -116,7 +119,7 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     overview: [
       {
         headline: { en: "The whole platform at a glance", nl: "Het hele platform in een oogopslag" },
-        detail: { en: "readings come in, plans go out, a customer watches", nl: "metingen komen binnen, plannen gaan eruit, een klant kijkt mee" },
+        detail: { en: "readings come in, plans go out, a household watches", nl: "metingen komen binnen, plannen gaan eruit, een huishouden kijkt mee" },
       },
     ],
     reading: [
@@ -153,7 +156,7 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     ],
     customer: [
       {
-        headline: { en: "The customer opens the dashboard", nl: "De klant opent het dashboard" },
+        headline: { en: "The household opens the dashboard", nl: "Het huishouden opent het dashboard" },
         detail: { en: "the browser polls every 10 seconds while the tab is visible", nl: "de browser pollt elke 10 seconden zolang het tabblad zichtbaar is" },
       },
       {
@@ -217,8 +220,8 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     overview: { en: "Overview", nl: "Overzicht" },
     reading: { en: "Reading", nl: "Meting" },
     command: { en: "Command", nl: "Commando" },
-    customer: { en: "Customer", nl: "Klant" },
-    safety: { en: "Safety", nl: "Veiligheid" },
+    customer: { en: "Household", nl: "Huishouden" },
+    safety: { en: "Consistency", nl: "Consistentie" },
     scale: { en: "Scale", nl: "Schalen" },
     cloud: same("Cloud"),
   },
@@ -230,7 +233,7 @@ const COPY: Localized<Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard">> 
     database: { en: "larger tier, chunks, retention", nl: "grotere tier, chunks, retentie" },
     zero: same("0"),
   },
-  stepEyebrow: { en: "Step {current} of {total}", nl: "Stap {current} van {total}" },
+  stepEyebrow: same("{current} / {total}"),
   titleCard: {
     eyebrow: { en: "Architecture in one minute", nl: "Architectuur in een minuut" },
     headline: { en: "A battery that charges when power is cheap.", nl: "Een batterij die laadt als stroom goedkoop is." },
@@ -258,11 +261,12 @@ const resolve = (value: unknown, locale: Locale): unknown => {
 export const POST_SLUG = "smart-energy-steering-architecture";
 
 export function smartEnergyFilmLabels(locale: Locale): SmartEnergyFilmLabels {
-  const resolved = resolve(COPY, locale) as Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard"> & {
+  const resolved = resolve(COPY, locale) as Omit<SmartEnergyFilmLabels, "name" | "role" | "endCard" | "gatesLine"> & {
     endCard: Omit<SmartEnergyFilmLabels["endCard"], "link">;
   };
   return {
     ...resolved,
+    gatesLine: resolved.gates.join(", "),
     name: BUSINESS_PROFILE.NAME,
     role: BUSINESS_PROFILE.TITLE,
     endCard: { ...resolved.endCard, link: `${BUSINESS_PROFILE.CONTACT.WEBSITE.replace("https://", "")}/${locale}/blog/${POST_SLUG}` },

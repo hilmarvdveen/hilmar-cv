@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
-import { Body, meta, smartEnergyExplainerLabels } from "./SmartEnergySteeringPost";
+import { render, screen } from "@testing-library/react";
+import { Body, meta } from "./SmartEnergySteeringPost";
 
-vi.mock("@/hooks/usePrefersReducedMotion", () => ({
-  usePrefersReducedMotion: () => true,
+vi.mock("./SmartEnergyPosterExplainer", () => ({
+  SmartEnergyPosterExplainer: ({ locale }: { locale: string }) => <figure aria-label={`poster explainer ${locale}`} />,
 }));
 
 const CLOSED_ADVISORIES = [
@@ -20,6 +20,13 @@ const CLOSED_ADVISORIES = [
   "CVE-2026-85091",
 ];
 
+const proseOf = (locale: "en" | "nl") => {
+  const { container, unmount } = render(<Body locale={locale} />);
+  const prose = container.textContent ?? "";
+  unmount();
+  return prose;
+};
+
 describe("SmartEnergySteeringPost", () => {
   it("has bilingual metadata within the title and description limits", () => {
     expect(meta.slug).toBe("smart-energy-steering-architecture");
@@ -32,27 +39,21 @@ describe("SmartEnergySteeringPost", () => {
     expect(meta.title.nl.length).toBeLessThan(60);
     expect(meta.description.en.length).toBeLessThan(160);
     expect(meta.description.nl.length).toBeLessThan(160);
+    expect(meta.description.en).toMatch(/^My own proof of concept that plans a battery/);
     expect(meta.keywords.length).toBeGreaterThan(5);
   });
 
-  it("renders the English body with eight sections, three images, three buttons and the contents list", () => {
+  it("opens the English body with the poster explainer and keeps eight sections without a contents box", () => {
     render(<Body locale="en" />);
 
+    expect(screen.getByRole("figure", { name: "poster explainer en" })).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(8);
-    expect(screen.getAllByRole("img")).toHaveLength(3);
-    expect(screen.getAllByRole("button")).toHaveLength(3);
-
-    const contents = screen.getByRole("navigation", { name: "In this article" });
-    expect(within(contents).getAllByRole("listitem")).toHaveLength(8);
-    expect(within(contents).getByRole("link", { name: "How does another asset kind get in?" })).toHaveAttribute(
-      "href",
-      "#how-does-another-asset-kind-get-in"
-    );
-    expect(within(contents).getByRole("link", { name: "How the data stays consistent" })).toBeInTheDocument();
-    expect(within(contents).getByRole("link", { name: "What to take away" })).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(2);
+    expect(screen.queryByRole("navigation", { name: "In this article" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
-  it("carries both captions and the explainer status in English", () => {
+  it("carries both diagram captions in English", () => {
     render(<Body locale="en" />);
 
     expect(
@@ -61,62 +62,61 @@ describe("SmartEnergySteeringPost", () => {
     expect(
       screen.getByText("The main path runs from Created to Confirmed. The dashed lines are the side exits to Rejected, Failed and Expired.")
     ).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("One drawing, five questions.");
   });
 
-  it("states what it never claims and quotes decision 7", () => {
+  it("states the scope once, gives the proof and quotes decision 7 in the text", () => {
     render(<Body locale="en" />);
 
-    expect(screen.getByText("What this never claims")).toBeInTheDocument();
-    expect(screen.getByText(/it never ran at a client\. No client of mine/)).toBeInTheDocument();
-    expect(screen.getByText(/No AI or model call anywhere/)).toBeInTheDocument();
+    expect(screen.getByText(/^It never ran at a client, and no client system appears in it\./)).toBeInTheDocument();
+    expect(screen.getByText(/904 backend tests, 439 dashboard tests and two Playwright journeys/)).toBeInTheDocument();
+    expect(screen.getByText(/The seventh decision in the repository reads: No AI or model call anywhere\./)).toBeInTheDocument();
+    expect(screen.getByText("Database or memory, one port")).toBeInTheDocument();
   });
 
   it("names the advisory ids of the closed dependency findings", () => {
-    const { container } = render(<Body locale="en" />);
-    const prose = container.textContent ?? "";
+    const prose = proseOf("en");
     for (const advisory of CLOSED_ADVISORIES) {
       expect(prose).toContain(advisory);
     }
   });
 
-  it("renders the Dutch body with eight sections, three images and the contents list", () => {
+  it("renders the Dutch body with the poster explainer, the scope line and the captions", () => {
     render(<Body locale="nl" />);
 
+    expect(screen.getByRole("figure", { name: "poster explainer nl" })).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(8);
-    expect(screen.getAllByRole("img")).toHaveLength(3);
-    const contents = screen.getByRole("navigation", { name: "In dit artikel" });
-    expect(within(contents).getAllByRole("listitem")).toHaveLength(8);
-    expect(within(contents).getByRole("link", { name: "Hoe de data consistent blijft" })).toBeInTheDocument();
-    expect(screen.getByText("Wat dit nooit claimt")).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(2);
+    expect(screen.getByText(/^Het heeft nooit bij een klant gedraaid/)).toBeInTheDocument();
+    expect(screen.getByText(/904 backendtests, 439 dashboardtests/)).toBeInTheDocument();
     expect(
       screen.getByText("Het hoofdpad loopt van Created naar Confirmed. De gestippelde lijnen zijn de zijuitgangen naar Rejected, Failed en Expired.")
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Volgende scene" })).toBeInTheDocument();
+  });
+
+  it("drops the asked framing, the honesty line and the repeated not measured remark", () => {
+    const english = proseOf("en");
+    expect(english).not.toMatch(/\basked\b/);
+    expect(english).not.toMatch(/and no more/);
+    expect(english).not.toMatch(/None of (it|them) is (measured|a measurement)/);
+    expect(english.match(/measured, so no number/g)).toHaveLength(1);
+
+    const dutch = proseOf("nl");
+    expect(dutch).not.toMatch(/\bgesteld\b/);
+    expect(dutch).not.toMatch(/vroeg niemand/);
+    expect(dutch).not.toMatch(/en niet meer/);
+    expect(dutch).not.toMatch(/Niets daarvan is gemeten|Geen ervan is een meting/);
+    expect(dutch.match(/niets gemeten/g)).toHaveLength(1);
   });
 
   it("keeps out claims the snapshot does not record and every measured number", () => {
     for (const locale of ["en", "nl"] as const) {
-      const { container, unmount } = render(<Body locale={locale} />);
-      const prose = container.textContent ?? "";
+      const prose = proseOf(locale);
       expect(prose).not.toMatch(/\d+\s?%/);
       expect(prose).not.toMatch(/CVE proof/i);
       expect(prose).not.toMatch(/unhackable/i);
       expect(prose).not.toMatch(/SELECT FOR UPDATE/i);
       expect(prose).not.toMatch(/outbox pattern/i);
       expect(prose).not.toMatch(/cannot be hacked/i);
-      unmount();
     }
-  });
-
-  it("mirrors every English label in Dutch", () => {
-    const english = smartEnergyExplainerLabels("en");
-    const dutch = smartEnergyExplainerLabels("nl");
-    expect(Object.keys(dutch.scenes)).toEqual(Object.keys(english.scenes));
-    expect(Object.keys(dutch.consistency)).toEqual(Object.keys(english.consistency));
-    expect(dutch.title.questions).toHaveLength(english.title.questions.length);
-    expect(dutch.security.gates).toEqual(english.security.gates);
-    expect(dutch.scenes.consistency.title).toBe("Hoe de data consistent blijft");
-    expect(english.closing.url).toBe("www.hilmarvanderveen.com");
   });
 });
