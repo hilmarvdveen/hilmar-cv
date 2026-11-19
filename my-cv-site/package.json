@@ -48,7 +48,8 @@
     "overrides": {
       "vite@<8.1.6": "8.1.7",
       "undici@>=7.0.0 <7.30.1": "7.30.2",
-      "zod@>=4.0.0 <4.6.6": "4.6.7"
+      "zod@>=4.0.0 <4.6.6": "4.6.7",
+      "source-map-js@<1.2.2": "1.2.2"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
