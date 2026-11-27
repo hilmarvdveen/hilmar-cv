@@ -21,6 +21,7 @@ import { meta as federationMeta, Body as FederationBody } from "./components/Fed
 import { meta as apolloAcrossStackMeta, Body as ApolloAcrossStackBody } from "./components/ApolloAcrossStackPost";
 import { meta as restAndGraphQLMeta, Body as RestAndGraphQLBody } from "./components/RestAndGraphQLPost";
 import { meta as smartEnergySteeringMeta, Body as SmartEnergySteeringBody } from "./components/SmartEnergySteeringPost";
+import { meta as vueFolderStructureMeta, Body as VueFolderStructureBody } from "./components/VueFolderStructurePost";
 
 const POSTS: BlogPost[] = [
   { ...folderStructureMeta, track: "frontend", Body: FolderStructureBody },
@@ -45,6 +46,7 @@ const POSTS: BlogPost[] = [
   { ...apolloAcrossStackMeta, track: "fullstack", Body: ApolloAcrossStackBody },
   { ...restAndGraphQLMeta, track: "fullstack", Body: RestAndGraphQLBody },
   { ...smartEnergySteeringMeta, track: "fullstack", Body: SmartEnergySteeringBody },
+  { ...vueFolderStructureMeta, track: "fullstack", Body: VueFolderStructureBody },
 ];
 
 const featuredFirst = (first: BlogPost, second: BlogPost) => Number(second.featured ?? false) - Number(first.featured ?? false);
